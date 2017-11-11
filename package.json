@@ -7,13 +7,15 @@
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-jest": "^21.2.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
+    "jest": "^21.2.1",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "webpack --progress -p",
     "watch": "webpack --progress --watch",
     "serve": "webpack-dev-server --open"
