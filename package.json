@@ -1,0 +1,8 @@
+{
+  "name": "doppelkopf",
+  "version": "0.0.1",
+  "description": "doppelkopf card game in your browser",
+  "main": "index.js",
+  "author": "Ham Vocke",
+  "license": "MIT"
+}
