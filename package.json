@@ -4,5 +4,8 @@
   "description": "doppelkopf card game in your browser",
   "main": "index.js",
   "author": "Ham Vocke",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^3.8.1"
+  }
 }
