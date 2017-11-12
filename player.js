@@ -1,4 +1,4 @@
-export default class Plater {
+export default class Player {
     constructor(name) {
 	this.name = name;
     }
