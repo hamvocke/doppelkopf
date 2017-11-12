@@ -4,7 +4,7 @@ export default class Card {
 	this.rank = rank;
     }
 
-    value() {
+    get value() {
 	return values[this.rank];
     }
 }
