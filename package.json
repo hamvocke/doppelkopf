@@ -20,5 +20,8 @@
     "build": "webpack --progress -p",
     "watch": "webpack --progress --watch",
     "serve": "webpack-dev-server --open"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
   }
 }
