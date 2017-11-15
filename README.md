@@ -4,7 +4,7 @@
 An in-browser implementation of the traditional German [Doppelkopf](https://en.wikipedia.org/wiki/Doppelkopf) card game.
 
 ## Getting started
-This game is implemented using ES2015. The source code is transpiled using Babel and bundled and loaded with Webpack.
+This game is implemented using ES2016. The source code is transpiled using Babel and bundled and loaded with Webpack.
 
 ## Building
 
