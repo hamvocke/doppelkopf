@@ -11,6 +11,6 @@ test('deck has two aces of diamonds', () => {
     const deck = new Deck();
 
     const expectedCard = new Card('diamonds','ace');
-    const foundCards = deck.cards.filter(card => isEqual(card, expectedCard)); 
+    const foundCards = deck.cards.filter(card => isEqual(card, expectedCard));
     expect(foundCards.length).toBe(2);
 });

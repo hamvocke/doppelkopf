@@ -1,11 +1,11 @@
 export default class Card {
     constructor(suite, rank) {
-	this.suite = suite;
-	this.rank = rank;
+        this.suite = suite;
+        this.rank = rank;
     }
 
     get value() {
-	return values[this.rank];
+        return values[this.rank];
     }
 }
 
