@@ -1,11 +1,12 @@
 import Card from './card';
 import { ranks, suites } from './cardConstants';
+import { shuffle } from 'lodash';
 
 export default class Deck {
     constructor() {
-        this.cards = []
-        .concat(...individualCards)
-        .concat(...individualCards);
+        this.cards = shuffle([]
+            .concat(...individualCards)
+            .concat(...individualCards));
     }
 
     get value() {
