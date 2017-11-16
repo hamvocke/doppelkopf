@@ -20,7 +20,7 @@ test('deck is shuffled', () => {
     const anotherDeck = new Deck();
 
     expect(oneDeck.cards).not.toHaveSameOrderAs(anotherDeck.cards);
-})
+});
 
 expect.extend({
     toHaveSameOrderAs(received, expected) {
