@@ -1,5 +1,5 @@
 import Card from './card';
-import { ranks, suites } from './cardConstants';
+import { ranks, suites } from './card';
 import { shuffle } from 'lodash';
 
 export default class Deck {
