@@ -13,4 +13,10 @@ export default class Hand {
     isKontra() {
         return !this.isReh();
     }
+
+    value() {
+        return this.cards
+            .map(card => card.value)
+            .reduce((acc, value) => acc + value, 0);
+    }
 }

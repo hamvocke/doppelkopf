@@ -1,20 +1,39 @@
 import Hand from './hand';
-import { ace, ten, king, queen, jack } from './card';
+import { suites, ace, ten, king, queen, jack } from './card';
 
-test('a deck with queen of clubs makes reh', () => {
+test('a hand with queen of clubs is reh', () => {
     const cards = [
-        queen.of('clubs')
+        queen.of(suites.clubs)
     ]
     const hand = new Hand(cards);
+
     expect(hand.isReh()).toBeTruthy();
     expect(hand.isKontra()).toBeFalsy();
-})
+});
 
-test('hand is kontra', () => {
+test('a hand without queen of clubs is kontra', () => {
     const cards = [
-        queen.of('spades')
+        queen.of(suites.spades)
     ]
-    const hand = new Hand();
+    const hand = new Hand(cards);
+
     expect(hand.isKontra()).toBeTruthy();
     expect(hand.isReh()).toBeFalsy();
-})
+});
+
+test('hand has a value', () => {
+    const cards = [
+        queen.of(suites.spades),
+        ten.of(suites.hearts),
+        ace.of(suites.diamonds)
+    ]
+    const hand = new Hand(cards);
+
+    expect(hand.value()).toBe(24);
+});
+
+test('empty hand has a value of 0', () => {
+    const hand = new Hand([]);
+
+    expect(hand.value()).toBe(0);
+});
