@@ -14,11 +14,11 @@ export default class Deck {
     }
 }
 
-const individualCards = ranks.map(rank => {
+const individualCards = Object.values(ranks).map(rank => {
     return [
-        new Card(suites[0], rank),
-        new Card(suites[1], rank),
-        new Card(suites[2], rank),
-        new Card(suites[3], rank),
+        new Card(suites.clubs, rank),
+        new Card(suites.spades, rank),
+        new Card(suites.hearts, rank),
+        new Card(suites.diamonds, rank),
     ];
 });

@@ -1,5 +1,17 @@
-export const suites = ['clubs', 'diamonds', 'hearts', 'spades'];
-export const ranks = ['ace', 'ten', 'king', 'queen', 'jack'];
+export const suites = {
+    clubs: 'clubs',
+    diamonds: 'diamonds',
+    hearts: 'hearts',
+    spades: 'spades'
+};
+
+export const ranks = {
+    ace: 'ace',
+    ten: 'ten',
+    king: 'king',
+    queen: 'queen',
+    jack: 'jack'
+};
 
 export default class Card {
     constructor(suite=suites[0], rank) {
@@ -16,16 +28,16 @@ export default class Card {
     }
 }
 
-export const ace = new Card(suites[0], ranks[0]);
-export const ten = new Card(suites[0], ranks[1]);
-export const king = new Card(suites[0], ranks[2]);
-export const queen = new Card(suites[0], ranks[3]);
-export const jack = new Card(suites[0], ranks[4]);
+export const ace = new Card(suites.clubs, ranks.ace);
+export const ten = new Card(suites.clubs, ranks.ten);
+export const king = new Card(suites.clubs, ranks.king);
+export const queen = new Card(suites.clubs, ranks.queen);
+export const jack = new Card(suites.clubs, ranks.jack);
 
 const values = {
-    "ace": 11,
-    "ten": 10,
-    "king": 4,
-    "queen": 3,
-    "jack": 2
+    'ace': 11,
+    'ten': 10,
+    'king': 4,
+    'queen': 3,
+    'jack': 2
 }
