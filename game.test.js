@@ -26,8 +26,6 @@ test('game has a deck', () => {
 test('game deals cards to each player', () => {
     const game = new Game(defaultPlayers);
 
-    game.deal();
-
     expect(game.players[0].hand).toHaveLength(10);
     expect(game.players[1].hand).toHaveLength(10);
     expect(game.players[2].hand).toHaveLength(10);

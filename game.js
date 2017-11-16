@@ -9,6 +9,7 @@ export default class Game {
         }
         this.players = players.map(player => new Player(player));
         this.deck = new Deck();
+        this.deal();
     }
 
     deal() {
