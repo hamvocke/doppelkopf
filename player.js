@@ -1,5 +1,4 @@
 import Hand from './hand';
-import { find, pull } from 'lodash';
 
 export default class Player {
     constructor(name, game) {
@@ -16,6 +15,6 @@ export default class Player {
         }
 
         this.game.currentTrick.add(cardToBePlayed);
-        pull(this.hand.cards, cardToBePlayed);
+        this.hand.remove(cardToBePlayed);
     }
 }

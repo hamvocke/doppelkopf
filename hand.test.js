@@ -39,19 +39,37 @@ test('empty hand has a value of 0', () => {
 });
 
 test('can find card on hand', () => {
-    const cards = [
-        queen.of(suites.spades)
-    ]
+    const cards = [queen.of(suites.spades)];
     const hand = new Hand(cards);
 
     expect(hand.find(cards[0])).toEqual(queen.of(suites.spades));
 });
 
 test('can not find non-existing card on hand', () => {
-    const cards = [
-        queen.of(suites.spades)
-    ]
+    const cards = [queen.of(suites.spades)];
     const hand = new Hand(cards);
 
     expect(hand.find(king.of(suites.spades))).toBeUndefined();
+});
+
+test('can remove card from hand', () => {
+    const cards = [queen.of(suites.spades)];
+    const hand = new Hand(cards);
+    expect(hand.find(cards[0])).toBeDefined();
+
+    hand.remove(cards[0]);
+
+    expect(hand.find(cards[0])).toBeUndefined();
+});
+
+test('cannot remove non-existing card from hand', () => {
+    const cards = [queen.of(suites.spades)];
+    const hand = new Hand(cards);
+    expect(hand.find(cards[0])).toBeDefined();
+
+    function invalidRemove() {
+        hand.remove(king.of(suites.diamonds));
+    }
+
+    expect(invalidRemove).toThrowError('can\'t remove card that isn\'nt on hand');
 });
