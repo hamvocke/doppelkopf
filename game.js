@@ -1,5 +1,6 @@
 import Player from './player';
 import Deck from './deck';
+import Trick from './trick';
 import { take } from 'lodash';
 
 export default class Game {
@@ -7,8 +8,10 @@ export default class Game {
         if(players.length !== 4) {
             throw 'a game must have four players';
         }
+
         this.players = players.map(player => new Player(player));
         this.deck = new Deck();
+        this.currentTrick = new Trick();
         this.deal();
     }
 
