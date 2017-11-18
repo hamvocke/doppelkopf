@@ -4,12 +4,13 @@ import Trick from './trick';
 import { take } from 'lodash';
 
 export default class Game {
-    constructor(players) {
-        if(players.length !== 4) {
-            throw 'a game must have four players';
-        }
-
-        this.players = players.map(player => new Player(player));
+    constructor() {
+        this.players = [
+            new Player('Player 1'),
+            new Player('Player 2'),
+            new Player('Player 3'),
+            new Player('Player 4'),
+        ];
         this.deck = new Deck();
         this.currentTrick = new Trick();
         this.deal();

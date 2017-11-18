@@ -2,20 +2,12 @@ import Game from './game';
 
 const defaultPlayers = ["Player 1", "Player 2", "Player 3", "Player 4"];
 
-test('game has players', () => {
+test('game has 4 players', () => {
     const game = new Game(defaultPlayers);
     expect(game.players[0].name).toBe("Player 1");
     expect(game.players[1].name).toBe("Player 2");
     expect(game.players[2].name).toBe("Player 3");
     expect(game.players[3].name).toBe("Player 4");
-});
-
-test('game must have four players', () => {
-    function newGame() {
-        new Game(["Player 1", "Player 2", "Player 3"]);
-    }
-
-    expect(newGame).toThrowError('a game must have four players');
 });
 
 test('game has a deck', () => {
