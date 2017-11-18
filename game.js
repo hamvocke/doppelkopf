@@ -6,10 +6,10 @@ import { take } from 'lodash';
 export default class Game {
     constructor() {
         this.players = [
-            new Player('Player 1'),
-            new Player('Player 2'),
-            new Player('Player 3'),
-            new Player('Player 4'),
+            new Player('Player 1', this),
+            new Player('Player 2', this),
+            new Player('Player 3', this),
+            new Player('Player 4', this),
         ];
         this.deck = new Deck();
         this.currentTrick = new Trick();

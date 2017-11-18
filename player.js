@@ -1,9 +1,10 @@
 import { find, pull } from 'lodash';
 
 export default class Player {
-    constructor(name) {
+    constructor(name, game) {
         this.name = name;
         this.hand = [];
+        this.game = game;
     }
 
     play(card) {
@@ -13,6 +14,7 @@ export default class Player {
             throw 'can\'t play a card that\'s not on the player\'s hand';
         }
 
+        this.game.currentTrick.add(cardToBePlayed);
         pull(this.hand, cardToBePlayed);
     }
 }
