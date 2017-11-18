@@ -1,5 +1,6 @@
 import Player from './player';
 import Game from './game';
+import Hand from './hand';
 import { king, queen, suites } from './card';
 
 let game;
@@ -19,34 +20,31 @@ test('player knows their game', () => {
 });
 
 test('new player has an empty hand', () => {
-    expect(player.hand).toHaveLength(0);
+    expect(player.hand).toEqual(new Hand());
 });
 
 test('player can play card from hand', () => {
     const kingOnHand = king.of(suites.diamonds);
     const queenOnHand = queen.of(suites.spades);
-    player.hand = [kingOnHand, queenOnHand];
+    player.hand = new Hand([kingOnHand, queenOnHand]);
 
     player.play(king.of(suites.diamonds));
 
-    expect(player.hand).not.toContain(kingOnHand);
-    expect(player.hand).toContain(queenOnHand);
+    expect(player.hand.cards).not.toContain(kingOnHand);
+    expect(player.hand.cards).toContain(queenOnHand);
 });
 
 test('playing a card adds it to the current trick', () => {
     const queenOnHand = queen.of(suites.spades);
-    player.hand = [queenOnHand];
+    player.hand = new Hand([queenOnHand]);
 
     player.play(queen.of(suites.spades));
 
     expect(game.currentTrick.cards).toEqual([queenOnHand]);
 });
 
-
 test('player cannot play card that is not on their hand', () => {
-    player.hand = [
-        king.of(suites.diamonds)
-    ];
+    player.hand = new Hand([king.of(suites.diamonds)]);
 
     function invalidMove() {
         player.play(queen.of(suites.diamonds));

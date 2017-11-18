@@ -19,4 +19,8 @@ export default class Hand {
             .map(card => card.value)
             .reduce((acc, value) => acc + value, 0);
     }
+
+    find(card) {
+        return find(this.cards, card);
+    }
 }

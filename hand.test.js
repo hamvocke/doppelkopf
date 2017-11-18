@@ -37,3 +37,21 @@ test('empty hand has a value of 0', () => {
 
     expect(hand.value()).toBe(0);
 });
+
+test('can find card on hand', () => {
+    const cards = [
+        queen.of(suites.spades)
+    ]
+    const hand = new Hand(cards);
+
+    expect(hand.find(cards[0])).toEqual(queen.of(suites.spades));
+});
+
+test('can not find non-existing card on hand', () => {
+    const cards = [
+        queen.of(suites.spades)
+    ]
+    const hand = new Hand(cards);
+
+    expect(hand.find(king.of(suites.spades))).toBeUndefined();
+});
