@@ -1,6 +1,7 @@
 import Player from './player';
 import Deck from './deck';
 import Trick from './trick';
+import Hand from './hand';
 import { take } from 'lodash';
 
 export default class Game {
@@ -17,9 +18,9 @@ export default class Game {
     }
 
     deal() {
-        this.players[0].hand = this.deck.cards.slice(0, 10);
-        this.players[1].hand = this.deck.cards.slice(10, 20);
-        this.players[2].hand = this.deck.cards.slice(20, 30);
-        this.players[3].hand = this.deck.cards.slice(30, 40);
+        this.players[0].hand = new Hand(this.deck.cards.slice(0, 10));
+        this.players[1].hand = new Hand(this.deck.cards.slice(10, 20));
+        this.players[2].hand = new Hand(this.deck.cards.slice(20, 30));
+        this.players[3].hand = new Hand(this.deck.cards.slice(30, 40));
     }
 }

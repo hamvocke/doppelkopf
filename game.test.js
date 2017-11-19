@@ -18,10 +18,10 @@ test('game has a deck', () => {
 test('game deals cards to each player', () => {
     const game = new Game(defaultPlayers);
 
-    expect(game.players[0].hand).toHaveLength(10);
-    expect(game.players[1].hand).toHaveLength(10);
-    expect(game.players[2].hand).toHaveLength(10);
-    expect(game.players[3].hand).toHaveLength(10);
+    expect(game.players[0].hand.cards).toHaveLength(10);
+    expect(game.players[1].hand.cards).toHaveLength(10);
+    expect(game.players[2].hand.cards).toHaveLength(10);
+    expect(game.players[3].hand.cards).toHaveLength(10);
 });
 
 test('game starts with an empty trick', () => {
