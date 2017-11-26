@@ -6,12 +6,12 @@ export default class Hand {
         this.cards = cards;
     }
 
-    isReh() {
+    isRe() {
         return find(this.cards, queen.of(suites.clubs));
     }
 
     isKontra() {
-        return !this.isReh();
+        return !this.isRe();
     }
 
     value() {

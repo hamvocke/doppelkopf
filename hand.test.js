@@ -1,13 +1,13 @@
 import Hand from './hand';
 import { suites, ace, ten, king, queen, jack } from './card';
 
-test('a hand with queen of clubs is reh', () => {
+test('a hand with queen of clubs is re', () => {
     const cards = [
         queen.of(suites.clubs)
     ]
     const hand = new Hand(cards);
 
-    expect(hand.isReh()).toBeTruthy();
+    expect(hand.isRe()).toBeTruthy();
     expect(hand.isKontra()).toBeFalsy();
 });
 
@@ -18,7 +18,7 @@ test('a hand without queen of clubs is kontra', () => {
     const hand = new Hand(cards);
 
     expect(hand.isKontra()).toBeTruthy();
-    expect(hand.isReh()).toBeFalsy();
+    expect(hand.isRe()).toBeFalsy();
 });
 
 test('hand has a value', () => {
