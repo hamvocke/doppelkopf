@@ -1,5 +1,6 @@
 import Hand from './hand';
 import { suites, ace, ten, king, queen, jack } from './card';
+import { Deck, allCards } from './deck';
 
 test('a hand with queen of clubs is re', () => {
     const cards = [
@@ -71,5 +72,38 @@ test('cannot remove non-existing card from hand', () => {
         hand.remove(king.of(suites.diamonds));
     }
 
-    expect(invalidRemove).toThrowError('can\'t remove card that isn\'nt on hand');
+    expect(invalidRemove).toThrowError('can\'t remove card that isn\'t on hand');
+});
+
+// FIXME: only trumps are sorted in a stable way right now. non-trumps are sorted arbitrarily because two non-trumps of a different suite are said to be equal
+test.skip('should sort hand', () => {
+    const cards = allCards;
+
+    const hand = new Hand(cards);
+    hand.sort();
+
+    const sortedHand = [
+        ten.of(suites.hearts),
+        queen.of(suites.clubs),
+        queen.of(suites.spades),
+        queen.of(suites.hearts),
+        queen.of(suites.diamonds),
+        jack.of(suites.clubs),
+        jack.of(suites.spades),
+        jack.of(suites.hearts),
+        jack.of(suites.diamonds),
+        ace.of(suites.diamonds),
+        ten.of(suites.diamonds),
+        king.of(suites.diamonds),
+        ace.of(suites.clubs),
+        ten.of(suites.clubs),
+        king.of(suites.clubs),
+        ace.of(suites.spades),
+        ten.of(suites.spades),
+        king.of(suites.spades),
+        ace.of(suites.hearts),
+        king.of(suites.hearts),
+    ];
+
+    expect(hand.cards).toBe(sortedHand);
 });

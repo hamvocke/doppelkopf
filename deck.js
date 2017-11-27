@@ -1,12 +1,12 @@
-import Card from './card';
+import { Card } from './card';
 import { ranks, suites } from './card';
-import { shuffle } from 'lodash';
+import { shuffle, flatten } from 'lodash';
 
-export default class Deck {
+export class Deck {
     constructor() {
         this.cards = shuffle([]
-            .concat(...individualCards)
-            .concat(...individualCards));
+            .concat(...allCards)
+            .concat(...allCards));
     }
 
     get value() {
@@ -14,11 +14,11 @@ export default class Deck {
     }
 }
 
-const individualCards = Object.values(ranks).map(rank => {
+export const allCards = flatten(Object.values(ranks).map(rank => {
     return [
         new Card(suites.clubs, rank),
         new Card(suites.spades, rank),
         new Card(suites.hearts, rank),
         new Card(suites.diamonds, rank),
     ];
-});
+}));

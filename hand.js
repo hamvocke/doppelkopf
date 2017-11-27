@@ -1,4 +1,4 @@
-import { queen, suites } from './card';
+import { queen, suites, compare } from './card';
 import { find, pull } from 'lodash';
 
 export default class Hand {
@@ -26,9 +26,13 @@ export default class Hand {
 
     remove(card) {
         if(!this.find(card)) {
-            throw 'can\'t remove card that isn\'nt on hand';
+            throw 'can\'t remove card that isn\'t on hand';
         }
 
         pull(this.cards, card);
+    }
+
+    sort() {
+        this.cards.sort(compare).reverse();
     }
 }

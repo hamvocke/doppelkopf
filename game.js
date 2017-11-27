@@ -1,5 +1,5 @@
 import Player from './player';
-import Deck from './deck';
+import { Deck } from './deck';
 import Trick from './trick';
 import Hand from './hand';
 import { take } from 'lodash';
