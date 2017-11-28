@@ -81,6 +81,10 @@ test('jack of diamonds is lower than jack of hearts', () => {
     expect(compare(jack.of(suites.diamonds), jack.of(suites.hearts))).toBe(-1);
 })
 
+test('king of diamonds is lower than jack of hearts', () => {
+    expect(compare(king.of(suites.diamonds), jack.of(suites.hearts))).toBeLessThanOrEqual(-1);
+})
+
 test('ace of diamonds is equal to ace of diamonds', () => {
     expect(compare(ace.of(suites.diamonds), ace.of(suites.diamonds))).toBe(0);
 })
@@ -102,7 +106,7 @@ test('ace of spades is higher than ten of spades', () => {
 })
 
 test('king of clubs is lower than ten of clubs', () => {
-    expect(compare(king.of(suites.spades), ten.of(suites.spades))).toBe(-1);
+    expect(compare(king.of(suites.spades), ten.of(suites.spades))).toBeLessThanOrEqual(-1);
 })
 
 test('ace of hearts is equal to ace of hearts', () => {

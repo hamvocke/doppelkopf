@@ -55,37 +55,16 @@ function compare(oneCard, anotherCard) {
     }
 
     if (aIsTrump && bIsTrump) {
-        const aIndex = findIndex(trumps, oneCard);
-        const bIndex = findIndex(trumps, anotherCard);
-
-        if(aIndex == bIndex) {
-            return 0;
-        }
-
-        if(aIndex < bIndex) {
-            return 1;
-        }
-
-        return -1;
+        return findIndex(trumps, anotherCard) - findIndex(trumps, oneCard);
     }
 
     if (!aIsTrump && !bIsTrump) {
         if(oneCard.suite === anotherCard.suite) {
-            if(oneCard.value > anotherCard.value) {
-                return 1;
-            }
-
-            if(oneCard.value == anotherCard.value) {
-                return 0;
-            }
-
-            return -1
+            return oneCard.value - anotherCard.value;
         }
-
-        return 0;
     }
 
-    return -1;
+    return 0;
 }
 
 export const ace = new Card(suites.clubs, ranks.ace);
