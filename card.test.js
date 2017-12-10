@@ -73,42 +73,42 @@ test('finds all non-trumps', () => {
     })
 })
 
-test('queen of clubs is higher than queen of spades', () => {
-    expect(compare(queen.of(suites.clubs), queen.of(suites.spades))).toBe(1);
+test('queen of clubs beats queen of spades', () => {
+    expect(queen.of(suites.clubs).beats(queen.of(suites.spades))).toBeTruthy();
 })
 
-test('jack of diamonds is lower than jack of hearts', () => {
-    expect(compare(jack.of(suites.diamonds), jack.of(suites.hearts))).toBe(-1);
+test('jack of diamonds is beaten by jack of hearts', () => {
+    expect(jack.of(suites.diamonds).beats(jack.of(suites.hearts))).toBeFalsy();
 })
 
-test('king of diamonds is lower than jack of hearts', () => {
-    expect(compare(king.of(suites.diamonds), jack.of(suites.hearts))).toBeLessThanOrEqual(-1);
+test('king of diamonds is beaten by jack of hearts', () => {
+    expect(king.of(suites.diamonds).beats( jack.of(suites.hearts))).toBeFalsy();
 })
 
-test('ace of diamonds is equal to ace of diamonds', () => {
-    expect(compare(ace.of(suites.diamonds), ace.of(suites.diamonds))).toBe(0);
+test('first card of two equal cards beats second card', () => {
+    expect(ace.of(suites.diamonds).beats(ace.of(suites.diamonds))).toBeTruthy();
 })
 
-test('trump is higher than non-trump', () => {
-    expect(compare(king.of(suites.diamonds), king.of(suites.spades))).toBe(1);
+test('trump beats non-trump', () => {
+    expect(king.of(suites.diamonds).beats(king.of(suites.spades))).toBeTruthy();
 })
 
-test('non-trump is lower than trump', () => {
-    expect(compare(ten.of(suites.clubs), king.of(suites.diamonds))).toBe(-1);
+test('non-trump is beaten by trump', () => {
+    expect(ten.of(suites.clubs).beats(king.of(suites.diamonds))).toBeFalsy();
 })
 
-test('two non-trumps are equal if they belong to different suites', () => {
-    expect(compare(ten.of(suites.clubs), king.of(suites.spades))).toBe(0);
+test('non-trumps does not beat other non-trump if they belong to different suites', () => {
+    expect(ten.of(suites.clubs).beats(king.of(suites.spades))).toBeFalsy();
 })
 
-test('ace of spades is higher than ten of spades', () => {
-    expect(compare(ace.of(suites.spades), ten.of(suites.spades))).toBe(1);
+test('ace of spades beats ten of spades', () => {
+    expect(ace.of(suites.spades).beats(ten.of(suites.spades))).toBeTruthy();
 })
 
-test('king of clubs is lower than ten of clubs', () => {
-    expect(compare(king.of(suites.spades), ten.of(suites.spades))).toBeLessThanOrEqual(-1);
+test('king of clubs is beaten by ten of clubs', () => {
+    expect(king.of(suites.spades).beats(ten.of(suites.spades))).toBeFalsy();
 })
 
-test('ace of hearts is equal to ace of hearts', () => {
-    expect(compare(ace.of(suites.hearts), ace.of(suites.hearts))).toBe(0);
+test('first non-trump beats other non-trump of same card', () => {
+    expect(ace.of(suites.hearts).beats(ace.of(suites.hearts))).toBeTruthy();
 })

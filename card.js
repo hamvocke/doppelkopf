@@ -40,31 +40,35 @@ export class Card {
     isTrump() {
         return some(trumps, this);
     }
+
+    beats(anotherCard) {
+        const thisIsTrump = this.isTrump();
+        const otherCardIsTrump = anotherCard.isTrump();
+
+        if(thisIsTrump && !otherCardIsTrump) {
+            return true;
+        }
+
+        if(!thisIsTrump && otherCardIsTrump) {
+            return false;
+        }
+
+        if (thisIsTrump && otherCardIsTrump) {
+            return findIndex(trumps, anotherCard) - findIndex(trumps, this) >= 0 ? true : false;
+        }
+
+        if (!thisIsTrump && !otherCardIsTrump) {
+            if(this.suite === anotherCard.suite) {
+                return this.value - anotherCard.value >= 0 ? true : false;
+            }
+        }
+
+        return false;
+    }
 }
 
 function compare(oneCard, anotherCard) {
-    const aIsTrump = oneCard.isTrump();
-    const bIsTrump = anotherCard.isTrump();
-
-    if(aIsTrump && !bIsTrump) {
-        return 1;
-    }
-
-    if(!aIsTrump && bIsTrump) {
-        return -1;
-    }
-
-    if (aIsTrump && bIsTrump) {
-        return findIndex(trumps, anotherCard) - findIndex(trumps, oneCard);
-    }
-
-    if (!aIsTrump && !bIsTrump) {
-        if(oneCard.suite === anotherCard.suite) {
-            return oneCard.value - anotherCard.value;
-        }
-    }
-
-    return 0;
+    return findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard);
 }
 
 export const ace = new Card(suites.clubs, ranks.ace);
@@ -86,6 +90,29 @@ const trumps = [
     ace.of(suites.diamonds),
     ten.of(suites.diamonds),
     king.of(suites.diamonds),
+];
+
+const cardOrder = [
+    ten.of(suites.hearts),
+    queen.of(suites.clubs),
+    queen.of(suites.spades),
+    queen.of(suites.hearts),
+    queen.of(suites.diamonds),
+    jack.of(suites.clubs),
+    jack.of(suites.spades),
+    jack.of(suites.hearts),
+    jack.of(suites.diamonds),
+    ace.of(suites.diamonds),
+    ten.of(suites.diamonds),
+    king.of(suites.diamonds),
+    ace.of(suites.clubs),
+    ten.of(suites.clubs),
+    king.of(suites.clubs),
+    ace.of(suites.spades),
+    ten.of(suites.spades),
+    king.of(suites.spades),
+    ace.of(suites.hearts),
+    king.of(suites.hearts),
 ];
 
 export { compare };

@@ -1,6 +1,7 @@
 import Hand from './hand';
 import { suites, ace, ten, king, queen, jack } from './card';
 import { Deck, allCards } from './deck';
+import { shuffle } from 'lodash';
 
 test('a hand with queen of clubs is re', () => {
     const cards = [
@@ -75,11 +76,10 @@ test('cannot remove non-existing card from hand', () => {
     expect(invalidRemove).toThrowError('can\'t remove card that isn\'t on hand');
 });
 
-// FIXME: only trumps are sorted in a stable way right now. non-trumps are sorted arbitrarily because two non-trumps of a different suite are said to be equal
-test.skip('should sort hand', () => {
+test('should sort hand by visual order', () => {
     const cards = allCards;
 
-    const hand = new Hand(cards);
+    const hand = new Hand(shuffle(cards));
     hand.sort();
 
     const sortedHand = [
@@ -105,5 +105,5 @@ test.skip('should sort hand', () => {
         king.of(suites.hearts),
     ];
 
-    expect(hand.cards).toBe(sortedHand);
+    expect(hand.cards).toEqual(sortedHand);
 });
