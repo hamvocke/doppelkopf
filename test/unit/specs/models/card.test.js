@@ -1,5 +1,5 @@
-import { Card } from './card';
-import {ace, ten, king, queen, jack, suites, compare} from './card';
+import { Card } from '@/models/card';
+import {ace, ten, king, queen, jack, suites, compare} from '@/models/card';
 
 test('ace has a value of 11', () => {
     const aceOfClubs = ace.of(suites.clubs);

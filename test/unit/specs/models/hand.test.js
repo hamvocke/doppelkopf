@@ -1,6 +1,6 @@
-import Hand from './hand';
-import { suites, ace, ten, king, queen, jack } from './card';
-import { Deck, allCards } from './deck';
+import Hand from '@/models/hand';
+import { suites, ace, ten, king, queen, jack } from '@/models/card';
+import { Deck, allCards } from '@/models/deck';
 import { shuffle } from 'lodash';
 
 test('a hand with queen of clubs is re', () => {

@@ -1,5 +1,5 @@
-import { Deck, allCards } from './deck';
-import { Card, ace, suites } from './card';
+import { Deck, allCards } from '@/models/deck';
+import { Card, ace, suites } from '@/models/card';
 import isEqual from 'lodash/isEqual';
 
 test('deck has 40 cards', () => {

@@ -1,5 +1,5 @@
-import Trick from './trick';
-import { queen, suites } from './card';
+import Trick from '@/models/trick';
+import { queen, suites } from '@/models/card';
 
 test('new trick is empty', () => {
     expect(new Trick().cards).toHaveLength(0);

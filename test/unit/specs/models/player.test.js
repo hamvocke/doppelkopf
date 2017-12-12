@@ -1,7 +1,7 @@
-import Player from './player';
-import Game from './game';
-import Hand from './hand';
-import { king, queen, suites } from './card';
+import Player from '@/models/player';
+import Game from '@/models/game';
+import Hand from '@/models/hand';
+import { king, queen, suites } from '@/models/card';
 
 let game;
 let player;
