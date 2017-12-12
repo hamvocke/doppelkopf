@@ -10,5 +10,6 @@ game.players.forEach(player => logPlayer(player));
 function logPlayer(player) {
     console.log('Player', player.name);
     console.log('Cards on hand:');
-    player.hand.cards.forEach(card => console.log('\t' + card.rank + ' of ' + card.suite));
+    player.hand.sort();
+    player.hand.cards.forEach(card => console.log('\t' + card.toString()));
 }

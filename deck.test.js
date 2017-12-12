@@ -1,5 +1,5 @@
 import { Deck, allCards } from './deck';
-import { Card, ace } from './card';
+import { Card, ace, suites } from './card';
 import isEqual from 'lodash/isEqual';
 
 test('deck has 40 cards', () => {
@@ -10,7 +10,7 @@ test('deck has 40 cards', () => {
 test('deck has two aces of diamonds', () => {
     const deck = new Deck();
 
-    const expectedCard = ace.of('diamonds');
+    const expectedCard = ace.of(suites.diamonds);
     const foundCards = deck.cards.filter(card => isEqual(card, expectedCard));
     expect(foundCards).toHaveLength(2);
 });

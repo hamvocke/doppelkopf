@@ -1,26 +1,26 @@
 import { some, findIndex } from 'lodash';
 
 export const suites = {
-    clubs: 'clubs',
-    diamonds: 'diamonds',
-    hearts: 'hearts',
-    spades: 'spades'
+    clubs: '♣',
+    diamonds: '♦',
+    hearts: '♥',
+    spades: '♠'
 };
 
 export const ranks = {
-    ace: 'ace',
-    ten: 'ten',
-    king: 'king',
-    queen: 'queen',
-    jack: 'jack'
+    ace: 'A',
+    ten: '10',
+    king: 'K',
+    queen: 'Q',
+    jack: 'J'
 };
 
 const values = {
-    'ace': 11,
-    'ten': 10,
-    'king': 4,
-    'queen': 3,
-    'jack': 2
+    'A': 11,
+    '10': 10,
+    'K': 4,
+    'Q': 3,
+    'J': 2
 };
 
 export class Card {
@@ -39,6 +39,10 @@ export class Card {
 
     isTrump() {
         return some(trumps, this);
+    }
+
+    toString() {
+        return `${this.rank}${this.suite}`
     }
 
     beats(anotherCard) {
