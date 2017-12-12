@@ -1,26 +1,26 @@
-import { Deck, allCards } from '@/models/deck';
-import { Card, ace, suites } from '@/models/card';
-import isEqual from 'lodash/isEqual';
+import { Deck, allCards } from '@/models/deck'
+import { Card, ace, suites } from '@/models/card'
+import isEqual from 'lodash/isEqual'
 
 test('deck has 40 cards', () => {
-    const deck = new Deck();
-    expect(deck.cards).toHaveLength(40);
-});
+    const deck = new Deck()
+    expect(deck.cards).toHaveLength(40)
+})
 
 test('deck has two aces of diamonds', () => {
-    const deck = new Deck();
+    const deck = new Deck()
 
-    const expectedCard = ace.of(suites.diamonds);
-    const foundCards = deck.cards.filter(card => isEqual(card, expectedCard));
-    expect(foundCards).toHaveLength(2);
-});
+    const expectedCard = ace.of(suites.diamonds)
+    const foundCards = deck.cards.filter(card => isEqual(card, expectedCard))
+    expect(foundCards).toHaveLength(2)
+})
 
 test('deck is shuffled', () => {
-    const oneDeck = new Deck();
-    const anotherDeck = new Deck();
+    const oneDeck = new Deck()
+    const anotherDeck = new Deck()
 
-    expect(oneDeck.cards).not.toHaveSameOrderAs(anotherDeck.cards);
-});
+    expect(oneDeck.cards).not.toHaveSameOrderAs(anotherDeck.cards)
+})
 
 expect.extend({
     toHaveSameOrderAs(received, expected) {
@@ -30,10 +30,10 @@ expect.extend({
                     `expected ${received} and ${expected} to have same length`
                 ),
                 pass: false,
-            };
+            }
         }
 
-        for(let i = 0; i <= expected.length; i++) {
+        for(let i = 0 i <= expected.length i++) {
             if(received[i] != expected[i]) {
                 return {
                     message: () => (
@@ -43,7 +43,7 @@ expect.extend({
                         `
                     ),
                     pass: false,
-                };
+                }
             }
         }
 
@@ -56,4 +56,4 @@ expect.extend({
             pass: true,
         }
     },
-});
+})
