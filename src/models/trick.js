@@ -1,9 +1,9 @@
 export default class Trick {
-    constructor() {
-        this.cards = [];
-    }
+  constructor () {
+    this.cards = []
+  }
 
-    add(card) {
-        this.cards.push(card);
-    }
+  add (card) {
+    this.cards.push(card)
+  }
 }
