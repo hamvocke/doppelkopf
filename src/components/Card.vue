@@ -24,12 +24,17 @@ export default {
 <style scoped>
 
 .card {
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   padding: 8px;
-  border-radius: 8px;
+  margin: 4px;
+  border-radius: 12px;
   display: inline-block;
   height: 200px;
+  line-height: 200px;
   width: 150px;
+  box-shadow: 1px 3px 2px rgba(10, 10, 10, 0.1);
+  font-size: 2em;
+  background: linear-gradient(to bottom, #fefefe, #eeeeee);
 }
 
 .red {
