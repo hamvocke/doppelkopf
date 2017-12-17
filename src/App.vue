@@ -2,7 +2,7 @@
   <div id="app">
     <h1>Doppelkopf</h1>
     <div class="hand">
-        <Card v-for='card in cards' v-bind:suite='card.suite' v-bind:rank='card.rank' :key='card.suite-card.rank' />
+      <Card v-for='card in cards' :card='card' :key='card.suite-card.rank' />
     </div>
   </div>
 </template>

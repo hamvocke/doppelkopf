@@ -1,13 +1,13 @@
 <template>
   <div class="card">
-    {{ rank }} {{ suite }}
+    {{ card.rank }} {{ card.suite }}
   </div>
 </template>
 
 <script>
 export default {
   name: 'Card',
-  props: ['suite', 'rank']
+  props: ['card']
 }
 </script>
 
