@@ -1,6 +1,8 @@
 <template>
-  <div class="card" v-bind:class='classObject'>
-    {{ card.rank }} {{ card.suite }}
+  <div class="card">
+    <span class="suitTop" v-bind:class='classObject'>{{ card.suite }}</span>
+    <span class="rank">{{ card.rank }}</span>
+    <span class="suitBottom" v-bind:class='classObject'>{{ card.suite }}</span>
   </div>
 </template>
 
@@ -24,17 +26,34 @@ export default {
 <style scoped>
 
 .card {
+  position: relative;
   border: 1px solid #ccc;
   padding: 8px;
-  margin: 4px;
+  margin: 12px;
   border-radius: 12px;
   display: inline-block;
   height: 200px;
-  line-height: 200px;
   width: 150px;
-  box-shadow: 1px 3px 2px rgba(10, 10, 10, 0.1);
-  font-size: 2em;
-  background: linear-gradient(to bottom, #fefefe, #eeeeee);
+  box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+.suitTop {
+  position: absolute;
+  font-size: 1.5em;
+  left: 8px;
+  top: 8px;
+}
+
+.suitBottom {
+  position: absolute;
+  font-size: 1.5em;
+  right: 8px;
+  bottom: 8px;
+}
+
+.rank {
+  font-size: 4em;
+  line-height: 200px;
 }
 
 .red {
