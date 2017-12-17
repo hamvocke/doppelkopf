@@ -15,7 +15,7 @@ export const ranks = {
   jack: 'J'
 }
 
-const values = {
+export const values = {
   'A': 11,
   '10': 10,
   'K': 4,
