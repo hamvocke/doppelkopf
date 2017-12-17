@@ -7,12 +7,7 @@
 <script>
 export default {
   name: 'Card',
-  data () {
-    return {
-      rank: 'Q',
-      suite: '♥'
-    }
-  }
+  props: ['suite', 'rank']
 }
 </script>
 

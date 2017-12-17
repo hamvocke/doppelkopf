@@ -1,15 +1,27 @@
 <template>
   <div id="app">
     <h1>Doppelkopf</h1>
-    <Card/>
+    <div class="hand">
+        <Card v-for='card in cards' v-bind:suite='card.suite' v-bind:rank='card.rank' :key='card.suite-card.rank' />
+    </div>
   </div>
 </template>
 
 <script>
 import Card from './components/Card'
+import Game from './models/game'
+
+const gameData = new Game()
+const cards = gameData.players[0].hand.cards
 
 export default {
   name: 'app',
+  data () {
+    return {
+      game: gameData,
+      cards: cards
+    }
+  },
   components: {
     Card
   }
