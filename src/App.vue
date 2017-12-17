@@ -12,6 +12,7 @@ import Card from './components/Card'
 import Game from './models/game'
 
 const gameData = new Game()
+gameData.players[0].hand.sort()
 const cards = gameData.players[0].hand.cards
 
 export default {
