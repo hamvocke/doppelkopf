@@ -11,7 +11,7 @@ export default class Player {
     let cardToBePlayed = this.hand.find(card)
 
     if (!cardToBePlayed) {
-      throw 'can\'t play a card that\'s not on the player\'s hand'
+      throw new Error('can\'t play a card that\'s not on the player\'s hand')
     }
 
     this.game.currentTrick.add(cardToBePlayed)

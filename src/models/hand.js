@@ -26,7 +26,7 @@ export default class Hand {
 
   remove (card) {
     if (!this.find(card)) {
-      throw 'can\'t remove card that isn\'t on hand'
+      throw new Error('can\'t remove card that isn\'t on hand')
     }
 
     pull(this.cards, card)
