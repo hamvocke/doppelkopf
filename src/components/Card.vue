@@ -28,6 +28,7 @@ export default {
 .card {
   position: relative;
   border: 1px solid #ccc;
+  background: #fff;
   padding: 8px;
   margin: 12px;
   border-radius: 12px;
