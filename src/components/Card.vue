@@ -1,13 +1,13 @@
 <template>
   <div class="card">
-    <span class="suitTop" v-bind:class='classObject'>{{ card.suite }}</span>
+    <span class="suitTop" v-bind:class='classObject'>{{ card.suit }}</span>
     <span class="rank">{{ card.rank }}</span>
-    <span class="suitBottom" v-bind:class='classObject'>{{ card.suite }}</span>
+    <span class="suitBottom" v-bind:class='classObject'>{{ card.suit }}</span>
   </div>
 </template>
 
 <script>
-import { suites } from '@/models/card'
+import { suits } from '@/models/card'
 
 export default {
   name: 'Card',
@@ -15,8 +15,8 @@ export default {
   computed: {
     classObject: function () {
       return {
-        'red': this.card.suite === suites.hearts || this.card.suite === suites.diamonds,
-        'black': this.card.suite === suites.pikes || this.card.suite === suites.spades
+        'red': this.card.suit === suits.hearts || this.card.suit === suits.diamonds,
+        'black': this.card.suit === suits.pikes || this.card.suit === suits.spades
       }
     }
   }

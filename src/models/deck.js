@@ -1,4 +1,4 @@
-import { Card, values, ranks, suites } from '@/models/card'
+import { Card, values, ranks, suits } from '@/models/card'
 import { shuffle, flatten } from 'lodash'
 
 export class Deck {
@@ -15,9 +15,9 @@ export class Deck {
 
 export const allCards = flatten(Object.values(ranks).map(rank => {
   return [
-    new Card(suites.clubs, rank),
-    new Card(suites.spades, rank),
-    new Card(suites.hearts, rank),
-    new Card(suites.diamonds, rank)
+    new Card(suits.clubs, rank),
+    new Card(suits.spades, rank),
+    new Card(suits.hearts, rank),
+    new Card(suits.diamonds, rank)
   ]
 }))

@@ -1,5 +1,5 @@
 import { Deck } from '@/models/deck'
-import { ace, suites } from '@/models/card'
+import { ace, suits } from '@/models/card'
 import isEqual from 'lodash/isEqual'
 
 test('deck has 40 cards', () => {
@@ -10,7 +10,7 @@ test('deck has 40 cards', () => {
 test('deck has two aces of diamonds', () => {
   const deck = new Deck()
 
-  const expectedCard = ace.of(suites.diamonds)
+  const expectedCard = ace.of(suits.diamonds)
   const foundCards = deck.cards.filter(card => isEqual(card, expectedCard))
   expect(foundCards).toHaveLength(2)
 })

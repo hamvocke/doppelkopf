@@ -1,11 +1,11 @@
 import Hand from '@/models/hand'
-import { suites, ace, ten, king, queen, jack } from '@/models/card'
+import { suits, ace, ten, king, queen, jack } from '@/models/card'
 import { allCards } from '@/models/deck'
 import { shuffle } from 'lodash'
 
 test('a hand with queen of clubs is re', () => {
   const cards = [
-    queen.of(suites.clubs)
+    queen.of(suits.clubs)
   ]
   const hand = new Hand(cards)
 
@@ -15,7 +15,7 @@ test('a hand with queen of clubs is re', () => {
 
 test('a hand without queen of clubs is kontra', () => {
   const cards = [
-    queen.of(suites.spades)
+    queen.of(suits.spades)
   ]
   const hand = new Hand(cards)
 
@@ -25,9 +25,9 @@ test('a hand without queen of clubs is kontra', () => {
 
 test('hand has a value', () => {
   const cards = [
-    queen.of(suites.spades),
-    ten.of(suites.hearts),
-    ace.of(suites.diamonds)
+    queen.of(suits.spades),
+    ten.of(suits.hearts),
+    ace.of(suits.diamonds)
   ]
   const hand = new Hand(cards)
 
@@ -41,21 +41,21 @@ test('empty hand has a value of 0', () => {
 })
 
 test('can find card on hand', () => {
-  const cards = [queen.of(suites.spades)]
+  const cards = [queen.of(suits.spades)]
   const hand = new Hand(cards)
 
-  expect(hand.find(cards[0])).toEqual(queen.of(suites.spades))
+  expect(hand.find(cards[0])).toEqual(queen.of(suits.spades))
 })
 
 test('can not find non-existing card on hand', () => {
-  const cards = [queen.of(suites.spades)]
+  const cards = [queen.of(suits.spades)]
   const hand = new Hand(cards)
 
-  expect(hand.find(king.of(suites.spades))).toBeUndefined()
+  expect(hand.find(king.of(suits.spades))).toBeUndefined()
 })
 
 test('can remove card from hand', () => {
-  const cards = [queen.of(suites.spades)]
+  const cards = [queen.of(suits.spades)]
   const hand = new Hand(cards)
   expect(hand.find(cards[0])).toBeDefined()
 
@@ -65,12 +65,12 @@ test('can remove card from hand', () => {
 })
 
 test('cannot remove non-existing card from hand', () => {
-  const cards = [queen.of(suites.spades)]
+  const cards = [queen.of(suits.spades)]
   const hand = new Hand(cards)
   expect(hand.find(cards[0])).toBeDefined()
 
   function invalidRemove () {
-    hand.remove(king.of(suites.diamonds))
+    hand.remove(king.of(suits.diamonds))
   }
 
   expect(invalidRemove).toThrowError('can\'t remove card that isn\'t on hand')
@@ -83,26 +83,26 @@ test('should sort hand by visual order', () => {
   hand.sort()
 
   const sortedHand = [
-    ten.of(suites.hearts),
-    queen.of(suites.clubs),
-    queen.of(suites.spades),
-    queen.of(suites.hearts),
-    queen.of(suites.diamonds),
-    jack.of(suites.clubs),
-    jack.of(suites.spades),
-    jack.of(suites.hearts),
-    jack.of(suites.diamonds),
-    ace.of(suites.diamonds),
-    ten.of(suites.diamonds),
-    king.of(suites.diamonds),
-    ace.of(suites.clubs),
-    ten.of(suites.clubs),
-    king.of(suites.clubs),
-    ace.of(suites.spades),
-    ten.of(suites.spades),
-    king.of(suites.spades),
-    ace.of(suites.hearts),
-    king.of(suites.hearts)
+    ten.of(suits.hearts),
+    queen.of(suits.clubs),
+    queen.of(suits.spades),
+    queen.of(suits.hearts),
+    queen.of(suits.diamonds),
+    jack.of(suits.clubs),
+    jack.of(suits.spades),
+    jack.of(suits.hearts),
+    jack.of(suits.diamonds),
+    ace.of(suits.diamonds),
+    ten.of(suits.diamonds),
+    king.of(suits.diamonds),
+    ace.of(suits.clubs),
+    ten.of(suits.clubs),
+    king.of(suits.clubs),
+    ace.of(suits.spades),
+    ten.of(suits.spades),
+    king.of(suits.spades),
+    ace.of(suits.hearts),
+    king.of(suits.hearts)
   ]
 
   expect(hand.cards).toEqual(sortedHand)

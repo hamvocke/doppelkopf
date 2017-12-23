@@ -1,6 +1,6 @@
 import { some, findIndex } from 'lodash'
 
-export const suites = {
+export const suits = {
   clubs: '♣',
   diamonds: '♦',
   hearts: '♥',
@@ -24,8 +24,8 @@ export const values = {
 }
 
 export class Card {
-  constructor (suite = suites[0], rank) {
-    this.suite = suite
+  constructor (suit = suits[0], rank) {
+    this.suit = suit
     this.rank = rank
   }
 
@@ -33,8 +33,8 @@ export class Card {
     return values[this.rank]
   }
 
-  of (suite) {
-    return new Card(suite, this.rank)
+  of (suit) {
+    return new Card(suit, this.rank)
   }
 
   isTrump () {
@@ -42,7 +42,7 @@ export class Card {
   }
 
   toString () {
-    return `${this.rank}${this.suite}`
+    return `${this.rank}${this.suit}`
   }
 
   beats (anotherCard) {
@@ -62,7 +62,7 @@ export class Card {
     }
 
     if (!thisIsTrump && !otherCardIsTrump) {
-      if (this.suite === anotherCard.suite) {
+      if (this.suit === anotherCard.suit) {
         return this.value - anotherCard.value >= 0
       }
     }
@@ -75,46 +75,46 @@ export function compare (oneCard, anotherCard) {
   return findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard)
 }
 
-export const ace = new Card(suites.clubs, ranks.ace)
-export const ten = new Card(suites.clubs, ranks.ten)
-export const king = new Card(suites.clubs, ranks.king)
-export const queen = new Card(suites.clubs, ranks.queen)
-export const jack = new Card(suites.clubs, ranks.jack)
+export const ace = new Card(suits.clubs, ranks.ace)
+export const ten = new Card(suits.clubs, ranks.ten)
+export const king = new Card(suits.clubs, ranks.king)
+export const queen = new Card(suits.clubs, ranks.queen)
+export const jack = new Card(suits.clubs, ranks.jack)
 
 const trumps = [
-  ten.of(suites.hearts),
-  queen.of(suites.clubs),
-  queen.of(suites.spades),
-  queen.of(suites.hearts),
-  queen.of(suites.diamonds),
-  jack.of(suites.clubs),
-  jack.of(suites.spades),
-  jack.of(suites.hearts),
-  jack.of(suites.diamonds),
-  ace.of(suites.diamonds),
-  ten.of(suites.diamonds),
-  king.of(suites.diamonds)
+  ten.of(suits.hearts),
+  queen.of(suits.clubs),
+  queen.of(suits.spades),
+  queen.of(suits.hearts),
+  queen.of(suits.diamonds),
+  jack.of(suits.clubs),
+  jack.of(suits.spades),
+  jack.of(suits.hearts),
+  jack.of(suits.diamonds),
+  ace.of(suits.diamonds),
+  ten.of(suits.diamonds),
+  king.of(suits.diamonds)
 ]
 
 const cardOrder = [
-  ten.of(suites.hearts),
-  queen.of(suites.clubs),
-  queen.of(suites.spades),
-  queen.of(suites.hearts),
-  queen.of(suites.diamonds),
-  jack.of(suites.clubs),
-  jack.of(suites.spades),
-  jack.of(suites.hearts),
-  jack.of(suites.diamonds),
-  ace.of(suites.diamonds),
-  ten.of(suites.diamonds),
-  king.of(suites.diamonds),
-  ace.of(suites.clubs),
-  ten.of(suites.clubs),
-  king.of(suites.clubs),
-  ace.of(suites.spades),
-  ten.of(suites.spades),
-  king.of(suites.spades),
-  ace.of(suites.hearts),
-  king.of(suites.hearts)
+  ten.of(suits.hearts),
+  queen.of(suits.clubs),
+  queen.of(suits.spades),
+  queen.of(suits.hearts),
+  queen.of(suits.diamonds),
+  jack.of(suits.clubs),
+  jack.of(suits.spades),
+  jack.of(suits.hearts),
+  jack.of(suits.diamonds),
+  ace.of(suits.diamonds),
+  ten.of(suits.diamonds),
+  king.of(suits.diamonds),
+  ace.of(suits.clubs),
+  ten.of(suits.clubs),
+  king.of(suits.clubs),
+  ace.of(suits.spades),
+  ten.of(suits.spades),
+  king.of(suits.spades),
+  ace.of(suits.hearts),
+  king.of(suits.hearts)
 ]

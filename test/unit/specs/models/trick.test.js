@@ -1,5 +1,5 @@
 import Trick from '@/models/trick'
-import { queen, suites } from '@/models/card'
+import { queen, suits } from '@/models/card'
 
 test('new trick is empty', () => {
   expect(new Trick().cards).toHaveLength(0)
@@ -7,7 +7,7 @@ test('new trick is empty', () => {
 
 test('can add card to trick', () => {
   const trick = new Trick()
-  const cardToBePlayed = queen.of(suites.spades)
+  const cardToBePlayed = queen.of(suits.spades)
 
   trick.add(cardToBePlayed)
 

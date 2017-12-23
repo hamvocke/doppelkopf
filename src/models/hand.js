@@ -1,4 +1,4 @@
-import { queen, suites, compare } from '@/models/card'
+import { queen, suits, compare } from '@/models/card'
 import { find, pull } from 'lodash'
 
 export default class Hand {
@@ -7,7 +7,7 @@ export default class Hand {
   }
 
   isRe () {
-    return find(this.cards, queen.of(suites.clubs))
+    return find(this.cards, queen.of(suits.clubs))
   }
 
   isKontra () {
