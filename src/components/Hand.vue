@@ -25,6 +25,13 @@ export default {
 </script>
 
 <style scoped>
-
+.party {
+  border: 1px solid #aaa;
+  background: #eee;
+  color: #333;
+  border-radius: 4px;
+  padding: 8px;
+  display: inline-block;
+}
 
 </style>
