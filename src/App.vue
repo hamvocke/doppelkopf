@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <h1>Doppelkopf</h1>
-    <Hand :hand='game.players[0].hand'/>
+    <Player v-for='player in game.players' :player='player' :key='player.name' />
   </div>
 </template>
 
 <script>
-import Hand from './components/Hand'
+import Player from './components/Player'
 import { Game } from './models/game'
 
 const gameData = new Game()
@@ -19,7 +19,7 @@ export default {
     }
   },
   components: {
-    Hand
+    Player
   }
 }
 </script>
