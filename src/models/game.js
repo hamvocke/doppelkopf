@@ -1,9 +1,9 @@
-import Player from '@/models/player'
+import { Player } from '@/models/player'
 import { Deck } from '@/models/deck'
-import Trick from '@/models/trick'
+import { Trick } from '@/models/trick'
 import { Hand } from '@/models/hand'
 
-export default class Game {
+export class Game {
   constructor () {
     this.players = [
       new Player('Player 1', this),

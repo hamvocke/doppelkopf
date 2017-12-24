@@ -1,5 +1,5 @@
-import Player from '@/models/player'
-import Game from '@/models/game'
+import { Player } from '@/models/player'
+import { Game } from '@/models/game'
 import { Hand } from '@/models/hand'
 import { king, queen, suits } from '@/models/card'
 let game

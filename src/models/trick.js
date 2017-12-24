@@ -1,4 +1,4 @@
-export default class Trick {
+export class Trick {
   constructor () {
     this.cards = []
   }

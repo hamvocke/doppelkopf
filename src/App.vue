@@ -7,7 +7,7 @@
 
 <script>
 import Hand from './components/Hand'
-import Game from './models/game'
+import { Game } from './models/game'
 
 const gameData = new Game()
 

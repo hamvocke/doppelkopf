@@ -1,6 +1,6 @@
 import { Hand } from '@/models/hand'
 
-export default class Player {
+export class Player {
   constructor (name, game) {
     this.name = name
     this.hand = new Hand()

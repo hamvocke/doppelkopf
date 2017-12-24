@@ -1,4 +1,4 @@
-import Trick from '@/models/trick'
+import { Trick } from '@/models/trick'
 import { queen, suits } from '@/models/card'
 
 test('new trick is empty', () => {
