@@ -1,6 +1,6 @@
 import Player from '@/models/player'
 import Game from '@/models/game'
-import Hand from '@/models/hand'
+import { Hand } from '@/models/hand'
 import { king, queen, suits } from '@/models/card'
 let game
 let player

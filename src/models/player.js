@@ -1,4 +1,4 @@
-import Hand from '@/models/hand'
+import { Hand } from '@/models/hand'
 
 export default class Player {
   constructor (name, game) {

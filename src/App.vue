@@ -1,30 +1,25 @@
 <template>
   <div id="app">
     <h1>Doppelkopf</h1>
-    <div class="hand">
-      <Card v-for='card in cards' :card='card' :key='card.suite-card.rank' />
-    </div>
+    <Hand :hand='game.players[0].hand'/>
   </div>
 </template>
 
 <script>
-import Card from './components/Card'
+import Hand from './components/Hand'
 import Game from './models/game'
 
 const gameData = new Game()
-gameData.players[0].hand.sort()
-const cards = gameData.players[0].hand.cards
 
 export default {
   name: 'app',
   data () {
     return {
-      game: gameData,
-      cards: cards
+      game: gameData
     }
   },
   components: {
-    Card
+    Hand
   }
 }
 </script>

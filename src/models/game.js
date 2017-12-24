@@ -1,7 +1,7 @@
 import Player from '@/models/player'
 import { Deck } from '@/models/deck'
 import Trick from '@/models/trick'
-import Hand from '@/models/hand'
+import { Hand } from '@/models/hand'
 
 export default class Game {
   constructor () {

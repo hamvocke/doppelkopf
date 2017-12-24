@@ -1,4 +1,4 @@
-import Hand from '@/models/hand'
+import { Hand } from '@/models/hand'
 import { suits, ace, ten, king, queen, jack } from '@/models/card'
 import { allCards } from '@/models/deck'
 import { shuffle } from 'lodash'

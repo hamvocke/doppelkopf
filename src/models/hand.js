@@ -1,7 +1,7 @@
 import { queen, suits, compare } from '@/models/card'
 import { find, pull } from 'lodash'
 
-export default class Hand {
+export class Hand {
   constructor (cards = []) {
     this.cards = cards
   }
@@ -33,6 +33,6 @@ export default class Hand {
   }
 
   sort () {
-    this.cards.sort(compare).reverse()
+    return new Hand(this.cards.sort(compare).reverse())
   }
 }
