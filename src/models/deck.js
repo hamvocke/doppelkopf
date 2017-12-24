@@ -1,4 +1,4 @@
-import { Card, values, ranks, suits } from '@/models/card'
+import { Card, ranks, suits } from '@/models/card'
 import { shuffle, flatten } from 'lodash'
 
 export class Deck {
@@ -6,10 +6,6 @@ export class Deck {
     this.cards = shuffle([]
         .concat(...allCards)
         .concat(...allCards))
-  }
-
-  get value () {
-    return values[this.rank]
   }
 }
 
