@@ -33,8 +33,8 @@ export default {
   margin: 12px;
   border-radius: 12px;
   display: inline-block;
-  height: 200px;
-  width: 150px;
+  height: 180px;
+  width: 120px;
   box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.2);
 }
 
