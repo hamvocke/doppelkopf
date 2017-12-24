@@ -12,7 +12,7 @@ export default {
   props: ['hand'],
   data: function () {
     return {
-      sortedHhand: this.hand.sort()
+      sortedHand: this.hand.sort()
     }
   },
   components: {

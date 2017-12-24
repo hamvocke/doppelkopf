@@ -80,7 +80,6 @@ test('should sort hand by visual order', () => {
   const cards = allCards
 
   const hand = new Hand(shuffle(cards))
-  hand.sort()
 
   const sortedHand = [
     ten.of(suits.hearts),

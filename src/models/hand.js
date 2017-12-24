@@ -4,6 +4,7 @@ import { find, pull } from 'lodash'
 export class Hand {
   constructor (cards = []) {
     this.cards = cards
+    this.sort()
   }
 
   isRe () {
@@ -33,6 +34,6 @@ export class Hand {
   }
 
   sort () {
-    return new Hand(this.cards.sort(compare).reverse())
+    return this.cards.sort(compare).reverse()
   }
 }
