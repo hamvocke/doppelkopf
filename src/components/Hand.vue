@@ -1,6 +1,9 @@
 <template>
   <div class="hand">
     <Card v-for='card in hand.cards' :card='card' :key='card.suit-card.rank' />
+    <div class="party">
+      {{ hand.isRe() ? "Re" : "Kontra" }}
+    </div>
   </div>
 </template>
 

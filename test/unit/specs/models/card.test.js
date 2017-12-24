@@ -16,8 +16,8 @@ test('king has a value of 4', () => {
 })
 
 test('queen has a value of 3', () => {
-  const queenOfPikes = queen.of(suits.pikes)
-  expect(queenOfPikes.value).toBe(3)
+  const queenOfClubs = queen.of(suits.clubs)
+  expect(queenOfClubs.value).toBe(3)
 })
 
 test('jack has a value of 2', () => {
