@@ -20,4 +20,10 @@ describe('Card.vue', () => {
     const vm = new Constructor({propsData: { card: ace.of(suits.spades) }}).$mount()
     expect(vm.classObject).toEqual({'red': false, 'black': true})
   })
+
+  it('should render selected card', () => {
+    const Constructor = Vue.extend(Card)
+    const vm = new Constructor({propsData: { card: ace.of(suits.spades), isSelected: true }}).$mount()
+    expect(vm.$el.classList).toContain('selected')
+  })
 })

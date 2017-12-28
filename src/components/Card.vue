@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-bind:class="{ selected: isSelected}">
     <span class="suitTop" v-bind:class='classObject'>{{ card.suit }}</span>
     <span class="rank">{{ card.rank }}</span>
     <span class="suitBottom" v-bind:class='classObject'>{{ card.suit }}</span>
@@ -11,7 +11,7 @@ import { suits } from '@/models/card'
 
 export default {
   name: 'Card',
-  props: ['card'],
+  props: ['card', 'isSelected'],
   computed: {
     classObject: function () {
       return {
@@ -36,6 +36,12 @@ export default {
   height: 180px;
   width: 120px;
   box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+.selected {
+  box-shadow: 1px 13px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  top: -10px;
 }
 
 .suitTop {

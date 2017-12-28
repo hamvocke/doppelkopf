@@ -32,4 +32,11 @@ describe('Hand.vue', () => {
     const vm = new Constructor({propsData: { hand: kontraHand }}).$mount()
     expect(vm.$el.querySelector('div.party').textContent.trim()).toEqual('Kontra')
   })
+
+  test('should keep track of selected card', () => {
+    const Constructor = Vue.extend(Hand)
+    const vm = new Constructor({propsData: { hand: kontraHand }}).$mount()
+    vm.select(ace.of(suits.hearts))
+    expect(vm.selectedCard).toEqual(ace.of(suits.hearts))
+  })
 })

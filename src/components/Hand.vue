@@ -1,6 +1,6 @@
 <template>
   <div class="hand">
-    <Card v-for='card in hand.cards' :card='card' :key='card.suit-card.rank' />
+    <Card v-for='card in hand.cards' :card='card' :key='card.suit-card.rank' :isSelected='isSelected(card)' v-on:click.native='select(card)' />
     <div class="party">
       {{ hand.isRe() ? "Re" : "Kontra" }}
     </div>
@@ -13,13 +13,21 @@ import Card from './Card'
 export default {
   name: 'Hand',
   props: ['hand'],
-  data: function () {
-    return {
-      sortedHand: this.hand.sort()
-    }
-  },
   components: {
     Card
+  },
+  data: function () {
+    return {
+      selectedCard: {}
+    }
+  },
+  methods: {
+    isSelected: function (card) {
+      return card === this.selectedCard
+    },
+    select: function (card) {
+      this.selectedCard = card
+    }
   }
 }
 </script>
