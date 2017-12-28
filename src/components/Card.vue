@@ -24,7 +24,6 @@ export default {
 </script>
 
 <style scoped>
-
 .card {
   position: relative;
   border: 1px solid #ccc;

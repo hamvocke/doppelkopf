@@ -26,7 +26,11 @@ export default {
       return card === this.selectedCard
     },
     select: function (card) {
-      this.selectedCard = card
+      if (this.selectedCard === card) {
+        this.$emit('play')
+      } else {
+        this.selectedCard = card
+      }
     }
   }
 }

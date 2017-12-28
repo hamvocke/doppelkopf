@@ -34,6 +34,10 @@ test('compare two cards', () => {
   expect(jack.of(suits.clubs)).toEqual(jack.of(suits.clubs))
 })
 
+test('compare identity two cards', () => {
+  expect(jack.of(suits.clubs)).not.toBe(jack.of(suits.clubs))
+})
+
 test('finds all trumps', () => {
   const trumps = [
     ten.of(suits.hearts),
