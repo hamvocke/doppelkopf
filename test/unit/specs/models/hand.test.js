@@ -1,5 +1,5 @@
 import { Hand } from '@/models/hand'
-import { suits, ace, ten, king, queen, jack } from '@/models/card'
+import { Card, ranks, suits, ace, ten, king, queen } from '@/models/card'
 import { allCards } from '@/models/deck'
 import { shuffle } from 'lodash'
 
@@ -81,28 +81,54 @@ test('should sort hand by visual order', () => {
 
   const hand = new Hand(shuffle(cards))
 
-  const sortedHand = [
-    ten.of(suits.hearts),
-    queen.of(suits.clubs),
-    queen.of(suits.spades),
-    queen.of(suits.hearts),
-    queen.of(suits.diamonds),
-    jack.of(suits.clubs),
-    jack.of(suits.spades),
-    jack.of(suits.hearts),
-    jack.of(suits.diamonds),
-    ace.of(suits.diamonds),
-    ten.of(suits.diamonds),
-    king.of(suits.diamonds),
-    ace.of(suits.clubs),
-    ten.of(suits.clubs),
-    king.of(suits.clubs),
-    ace.of(suits.spades),
-    ten.of(suits.spades),
-    king.of(suits.spades),
-    ace.of(suits.hearts),
-    king.of(suits.hearts)
+  const sortedDeck = [
+    new Card(ranks.ten, suits.hearts, 0),
+    new Card(ranks.ten, suits.hearts, 1),
+
+    new Card(ranks.queen, suits.clubs, 0),
+    new Card(ranks.queen, suits.clubs, 1),
+    new Card(ranks.queen, suits.spades, 0),
+    new Card(ranks.queen, suits.spades, 1),
+    new Card(ranks.queen, suits.hearts, 0),
+    new Card(ranks.queen, suits.hearts, 1),
+    new Card(ranks.queen, suits.diamonds, 0),
+    new Card(ranks.queen, suits.diamonds, 1),
+
+    new Card(ranks.jack, suits.clubs, 0),
+    new Card(ranks.jack, suits.clubs, 1),
+    new Card(ranks.jack, suits.spades, 0),
+    new Card(ranks.jack, suits.spades, 1),
+    new Card(ranks.jack, suits.hearts, 0),
+    new Card(ranks.jack, suits.hearts, 1),
+    new Card(ranks.jack, suits.diamonds, 0),
+    new Card(ranks.jack, suits.diamonds, 1),
+
+    new Card(ranks.ace, suits.diamonds, 0),
+    new Card(ranks.ace, suits.diamonds, 1),
+    new Card(ranks.ten, suits.diamonds, 0),
+    new Card(ranks.ten, suits.diamonds, 1),
+    new Card(ranks.king, suits.diamonds, 0),
+    new Card(ranks.king, suits.diamonds, 1),
+
+    new Card(ranks.ace, suits.clubs, 0),
+    new Card(ranks.ace, suits.clubs, 1),
+    new Card(ranks.ten, suits.clubs, 0),
+    new Card(ranks.ten, suits.clubs, 1),
+    new Card(ranks.king, suits.clubs, 0),
+    new Card(ranks.king, suits.clubs, 1),
+
+    new Card(ranks.ace, suits.spades, 0),
+    new Card(ranks.ace, suits.spades, 1),
+    new Card(ranks.ten, suits.spades, 0),
+    new Card(ranks.ten, suits.spades, 1),
+    new Card(ranks.king, suits.spades, 0),
+    new Card(ranks.king, suits.spades, 1),
+
+    new Card(ranks.ace, suits.hearts, 0),
+    new Card(ranks.ace, suits.hearts, 1),
+    new Card(ranks.king, suits.hearts, 0),
+    new Card(ranks.king, suits.hearts, 1)
   ]
 
-  expect(hand.cards).toEqual(sortedHand)
+  expect(hand.cards).toEqual(sortedDeck)
 })

@@ -1,5 +1,5 @@
 import { Deck } from '@/models/deck'
-import { ace, suits } from '@/models/card'
+import { Card, ranks, suits } from '@/models/card'
 import isEqual from 'lodash/isEqual'
 
 test('deck has 40 cards', () => {
@@ -10,9 +10,10 @@ test('deck has 40 cards', () => {
 test('deck has two aces of diamonds', () => {
   const deck = new Deck()
 
-  const expectedCard = ace.of(suits.diamonds)
-  const foundCards = deck.cards.filter(card => isEqual(card, expectedCard))
-  expect(foundCards).toHaveLength(2)
+  const firstAce = new Card(ranks.ace, suits.diamonds, 0)
+  const secondAce = new Card(ranks.ace, suits.diamonds, 1)
+  expect(deck.cards.filter(card => isEqual(card, firstAce))).toHaveLength(1)
+  expect(deck.cards.filter(card => isEqual(card, secondAce))).toHaveLength(1)
 })
 
 test('deck is shuffled', () => {

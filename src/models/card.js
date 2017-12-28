@@ -24,9 +24,10 @@ export const values = {
 }
 
 export class Card {
-  constructor (suit = suits[0], rank) {
-    this.suit = suit
+  constructor (rank, suit = suits[0], id = 0) {
     this.rank = rank
+    this.suit = suit
+    this.id = id
   }
 
   get value () {
@@ -34,7 +35,7 @@ export class Card {
   }
 
   of (suit) {
-    return new Card(suit, this.rank)
+    return new Card(this.rank, suit)
   }
 
   isTrump () {
@@ -75,11 +76,11 @@ export function compare (oneCard, anotherCard) {
   return findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard)
 }
 
-export const ace = new Card(suits.clubs, ranks.ace)
-export const ten = new Card(suits.clubs, ranks.ten)
-export const king = new Card(suits.clubs, ranks.king)
-export const queen = new Card(suits.clubs, ranks.queen)
-export const jack = new Card(suits.clubs, ranks.jack)
+export const ace = new Card(ranks.ace, suits.clubs)
+export const ten = new Card(ranks.ten, suits.clubs)
+export const king = new Card(ranks.king, suits.clubs)
+export const queen = new Card(ranks.queen, suits.clubs)
+export const jack = new Card(ranks.jack, suits.clubs)
 
 const trumps = [
   ten.of(suits.hearts),
@@ -97,24 +98,50 @@ const trumps = [
 ]
 
 const cardOrder = [
-  ten.of(suits.hearts),
-  queen.of(suits.clubs),
-  queen.of(suits.spades),
-  queen.of(suits.hearts),
-  queen.of(suits.diamonds),
-  jack.of(suits.clubs),
-  jack.of(suits.spades),
-  jack.of(suits.hearts),
-  jack.of(suits.diamonds),
-  ace.of(suits.diamonds),
-  ten.of(suits.diamonds),
-  king.of(suits.diamonds),
-  ace.of(suits.clubs),
-  ten.of(suits.clubs),
-  king.of(suits.clubs),
-  ace.of(suits.spades),
-  ten.of(suits.spades),
-  king.of(suits.spades),
-  ace.of(suits.hearts),
-  king.of(suits.hearts)
+  new Card(ranks.ten, suits.hearts, 0),
+  new Card(ranks.ten, suits.hearts, 1),
+
+  new Card(ranks.queen, suits.clubs, 0),
+  new Card(ranks.queen, suits.clubs, 1),
+  new Card(ranks.queen, suits.spades, 0),
+  new Card(ranks.queen, suits.spades, 1),
+  new Card(ranks.queen, suits.hearts, 0),
+  new Card(ranks.queen, suits.hearts, 1),
+  new Card(ranks.queen, suits.diamonds, 0),
+  new Card(ranks.queen, suits.diamonds, 1),
+
+  new Card(ranks.jack, suits.clubs, 0),
+  new Card(ranks.jack, suits.clubs, 1),
+  new Card(ranks.jack, suits.spades, 0),
+  new Card(ranks.jack, suits.spades, 1),
+  new Card(ranks.jack, suits.hearts, 0),
+  new Card(ranks.jack, suits.hearts, 1),
+  new Card(ranks.jack, suits.diamonds, 0),
+  new Card(ranks.jack, suits.diamonds, 1),
+
+  new Card(ranks.ace, suits.diamonds, 0),
+  new Card(ranks.ace, suits.diamonds, 1),
+  new Card(ranks.ten, suits.diamonds, 0),
+  new Card(ranks.ten, suits.diamonds, 1),
+  new Card(ranks.king, suits.diamonds, 0),
+  new Card(ranks.king, suits.diamonds, 1),
+
+  new Card(ranks.ace, suits.clubs, 0),
+  new Card(ranks.ace, suits.clubs, 1),
+  new Card(ranks.ten, suits.clubs, 0),
+  new Card(ranks.ten, suits.clubs, 1),
+  new Card(ranks.king, suits.clubs, 0),
+  new Card(ranks.king, suits.clubs, 1),
+
+  new Card(ranks.ace, suits.spades, 0),
+  new Card(ranks.ace, suits.spades, 1),
+  new Card(ranks.ten, suits.spades, 0),
+  new Card(ranks.ten, suits.spades, 1),
+  new Card(ranks.king, suits.spades, 0),
+  new Card(ranks.king, suits.spades, 1),
+
+  new Card(ranks.ace, suits.hearts, 0),
+  new Card(ranks.ace, suits.hearts, 1),
+  new Card(ranks.king, suits.hearts, 0),
+  new Card(ranks.king, suits.hearts, 1)
 ]
