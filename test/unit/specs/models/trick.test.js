@@ -13,3 +13,14 @@ test('can add card to trick', () => {
 
   expect(trick.cards).toContain(cardToBePlayed)
 })
+
+test('should finish a trick if four cards have been played', () => {
+  const trick = new Trick()
+
+  trick.add(queen.of(suits.spades))
+  trick.add(queen.of(suits.hearts))
+  trick.add(queen.of(suits.clubs))
+  trick.add(queen.of(suits.diamonds))
+
+  expect(trick.isFinished).toBeTruthy()
+})
