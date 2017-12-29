@@ -51,3 +51,13 @@ test('player cannot play card that is not on their hand', () => {
 
   expect(invalidMove).toThrowError('can\'t play a card that\'s not on the player\'s hand')
 })
+
+test('player cannot play undefined card', () => {
+  player.hand = new Hand([king.of(suits.diamonds)])
+
+  function invalidMove () {
+    player.play()
+  }
+
+  expect(invalidMove).toThrowError('can\'t play a card that\'s not on the player\'s hand')
+})

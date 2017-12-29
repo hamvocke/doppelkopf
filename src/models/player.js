@@ -10,7 +10,7 @@ export class Player {
   play (card) {
     let cardToBePlayed = this.hand.find(card)
 
-    if (!cardToBePlayed) {
+    if (!card || !cardToBePlayed) {
       throw new Error('can\'t play a card that\'s not on the player\'s hand')
     }
 
