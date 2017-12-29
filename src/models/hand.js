@@ -1,5 +1,5 @@
 import { queen, suits, compare } from '@/models/card'
-import { find, pull } from 'lodash'
+import { find, without } from 'lodash'
 
 export class Hand {
   constructor (cards = []) {
@@ -30,7 +30,7 @@ export class Hand {
       throw new Error('can\'t remove card that isn\'t on hand')
     }
 
-    pull(this.cards, card)
+    this.cards = without(this.cards, card)
   }
 
   sort () {
