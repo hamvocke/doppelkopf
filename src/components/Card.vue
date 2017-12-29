@@ -35,6 +35,12 @@ export default {
   height: 180px;
   width: 120px;
   box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.2);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .selected {
