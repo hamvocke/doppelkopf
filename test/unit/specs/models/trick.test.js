@@ -11,27 +11,23 @@ test('can add card to trick', () => {
   const trick = game.nextTrick()
   const cardToBePlayed = queen.of(suits.spades)
 
-  trick.add(cardToBePlayed)
+  trick.add(cardToBePlayed, game.players[0])
 
-  expect(trick.cards).toContain(cardToBePlayed)
-})
+  const expectedCard = {
+    card: cardToBePlayed,
+    playedBy: game.players[0].name
+  }
 
-test('can add card to trick', () => {
-  const trick = game.nextTrick()
-  const cardToBePlayed = queen.of(suits.spades)
-
-  trick.add(cardToBePlayed)
-
-  expect(trick.cards).toContain(cardToBePlayed)
+  expect(trick.playedCards()).toEqual([expectedCard])
 })
 
 test('should finish a trick if four cards have been played', () => {
   const trick = game.nextTrick()
 
-  trick.add(queen.of(suits.spades))
-  trick.add(queen.of(suits.hearts))
-  trick.add(queen.of(suits.clubs))
-  trick.add(queen.of(suits.diamonds))
+  trick.add(queen.of(suits.spades), game.players[0])
+  trick.add(queen.of(suits.hearts), game.players[0])
+  trick.add(queen.of(suits.clubs), game.players[0])
+  trick.add(queen.of(suits.diamonds), game.players[0])
 
   expect(trick.isFinished()).toBeTruthy()
 })

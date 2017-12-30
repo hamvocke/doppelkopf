@@ -1,4 +1,3 @@
-import { Player } from '@/models/player'
 import { Game } from '@/models/game'
 import { Hand } from '@/models/hand'
 import { king, queen, suits } from '@/models/card'
@@ -7,19 +6,15 @@ let player
 
 beforeEach(() => {
   game = new Game()
-  player = new Player('Ham', game)
+  player = game.players[0]
 })
 
 test('player has a name', () => {
-  expect(player.name).toBe('Ham')
+  expect(player.name).toBe('Player 1')
 })
 
 test('player knows their game', () => {
   expect(player.game).toBeDefined()
-})
-
-test('new player has an empty hand', () => {
-  expect(player.hand).toEqual(new Hand())
 })
 
 test('player can play card from hand', () => {
@@ -39,7 +34,9 @@ test('playing a card adds it to the current trick', () => {
 
   player.play(queen.of(suits.spades))
 
-  expect(game.currentTrick.cards).toEqual([queenOnHand])
+  const expectedCard = { card: queenOnHand, playedBy: player.name }
+
+  expect(game.currentTrick.playedCards()).toEqual([expectedCard])
 })
 
 test('player cannot play card that is not on their hand', () => {

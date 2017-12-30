@@ -14,7 +14,7 @@ export class Player {
       throw new Error('can\'t play a card that\'s not on the player\'s hand')
     }
 
-    this.game.currentTrick.add(cardToBePlayed)
+    this.game.currentTrick.add(cardToBePlayed, this)
     this.hand.remove(cardToBePlayed)
   }
 }

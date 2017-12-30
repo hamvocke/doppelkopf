@@ -5,12 +5,20 @@ export class Trick {
     this.finished = false
   }
 
-  add (card) {
-    this.cards.push(card)
+  add (card, player) {
+    const playedCard = {
+      card: card,
+      playedBy: player.name
+    }
+    this.cards.push(playedCard)
 
     if (this.cards.length === this.expectedNumberOfCards) {
       this.finished = true
     }
+  }
+
+  playedCards () {
+    return this.cards
   }
 
   isFinished () {

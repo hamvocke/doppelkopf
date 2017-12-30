@@ -1,7 +1,7 @@
 <template>
   <div class="trick">
     <h2>Aktueller Stich</h2>
-    <Card v-for='card in cards' :card='card' :key='card.suit-card.rank' />
+    <Card v-for='playedCard in cards' :card='playedCard.card' :key='playedCard.card.suit-playedCard.card.rank' />
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   props: ['currentTrick'],
   computed: {
     cards: function () {
-      return this.currentTrick.cards
+      return this.currentTrick.playedCards()
     }
   },
   components: {

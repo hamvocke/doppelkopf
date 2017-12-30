@@ -5,14 +5,14 @@ import { ace, suits } from '@/models/card'
 
 const game = new Game()
 
-describe('Player.vue', () => {
+describe('Trick.vue', () => {
   test('should show empty trick on initialization', () => {
     const wrapper = mount(Trick, {propsData: { currentTrick: game.currentTrick }})
     expect(wrapper.findAll('div.card').length).toEqual(0)
   })
 
   test('should render cards in current trick', () => {
-    game.currentTrick.add(ace.of(suits.hearts))
+    game.currentTrick.add(ace.of(suits.hearts), game.players[0])
 
     const wrapper = mount(Trick, {propsData: { currentTrick: game.currentTrick }})
 
