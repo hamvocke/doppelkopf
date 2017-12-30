@@ -12,7 +12,7 @@ export class Game {
       new Player('Player 4', this)
     ]
     this.deck = new Deck()
-    this.currentTrick = new Trick()
+    this.currentTrick = this.nextTrick()
     this.deal()
   }
 
@@ -21,5 +21,9 @@ export class Game {
     this.players[1].hand = new Hand(this.deck.cards.slice(10, 20))
     this.players[2].hand = new Hand(this.deck.cards.slice(20, 30))
     this.players[3].hand = new Hand(this.deck.cards.slice(30, 40))
+  }
+
+  nextTrick () {
+    return new Trick(this.players.length)
   }
 }

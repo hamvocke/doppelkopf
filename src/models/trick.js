@@ -1,5 +1,6 @@
 export class Trick {
-  constructor () {
+  constructor (expectedNumberOfCards) {
+    this.expectedNumberOfCards = expectedNumberOfCards
     this.cards = []
     this.finished = false
   }
@@ -7,7 +8,7 @@ export class Trick {
   add (card) {
     this.cards.push(card)
 
-    if (this.cards.length === 4) {
+    if (this.cards.length === this.expectedNumberOfCards) {
       this.finished = true
     }
   }
