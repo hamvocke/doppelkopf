@@ -45,3 +45,14 @@ test('should find card played by player', () => {
   expect(trick.cardBy(game.players[0])).toEqual(expectedCard)
   expect(trick.cardBy(game.players[1])).toBeUndefined()
 })
+
+test('should prohibit multiple cards from same player', () => {
+  const trick = game.nextTrick()
+
+  function invalidMove () {
+    trick.add(queen.of(suits.spades), game.players[0])
+    trick.add(queen.of(suits.pikes), game.players[0])
+  }
+
+  expect(invalidMove).toThrowError('Player ' + game.players[0].name + ' already played a card')
+})

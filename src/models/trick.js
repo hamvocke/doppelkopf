@@ -8,6 +8,10 @@ export class Trick {
   }
 
   add (card, player) {
+    if (this.cardBy(player)) {
+      throw Error(`Player ${player.name} already played a card`)
+    }
+
     const playedCard = {
       card: card,
       playedBy: player.name
