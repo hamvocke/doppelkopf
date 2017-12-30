@@ -1,3 +1,5 @@
+import { find } from 'lodash'
+
 export class Trick {
   constructor (expectedNumberOfCards) {
     this.expectedNumberOfCards = expectedNumberOfCards
@@ -19,6 +21,10 @@ export class Trick {
 
   playedCards () {
     return this.cards
+  }
+
+  cardBy (player) {
+    return find(this.cards, ['playedBy', player.name])
   }
 
   isFinished () {
