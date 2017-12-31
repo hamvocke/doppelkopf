@@ -29,4 +29,32 @@ describe('Trick.vue', () => {
 
     expect(wrapper.find('div.winner').text()).toContain(game.players[0].name)
   })
+
+  test('should not render winner if trick is empty', () => {
+    const trick = game.nextTrick()
+
+    const wrapper = mount(Trick, {propsData: { currentTrick: trick }})
+
+    expect(wrapper.find('div.winner').exists()).toBe(false)
+  })
+
+  test('should render next button if trick is finished', () => {
+    const trick = game.nextTrick()
+    trick.add(ace.of(suits.hearts), game.players[0])
+    trick.add(ace.of(suits.hearts), game.players[1])
+    trick.add(ace.of(suits.hearts), game.players[2])
+    trick.add(ace.of(suits.hearts), game.players[3])
+
+    const wrapper = mount(Trick, {propsData: { currentTrick: trick }})
+
+    expect(wrapper.find('div.next').exists()).toBe(true)
+  })
+
+  test('should not render winner if trick is empty', () => {
+    const trick = game.nextTrick()
+
+    const wrapper = mount(Trick, {propsData: { currentTrick: trick }})
+
+    expect(wrapper.find('div.next').exists()).toBe(false)
+  })
 })

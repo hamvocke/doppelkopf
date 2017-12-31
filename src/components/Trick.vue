@@ -2,8 +2,11 @@
   <div class="trick">
     <h2>Aktueller Stich</h2>
     <Card v-for='playedCard in cards' :card='playedCard.card' :key='playedCard.card.suit-playedCard.card.rank' />
-    <div class="winner">
+    <div class="winner" v-if='winner'>
       Stich geht an: {{ winner }}
+    </div>
+    <div class="next" v-if='currentTrick.isFinished()'>
+      Next >>
     </div>
   </div>
 </template>
