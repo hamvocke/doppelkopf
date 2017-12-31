@@ -1,6 +1,6 @@
 import { Game } from '@/models/game'
 import { PlayedCard } from '@/models/playedCard'
-import { queen, suits } from '@/models/card'
+import { queen, jack, king, suits } from '@/models/card'
 
 const game = new Game()
 
@@ -76,12 +76,12 @@ test('winner for an empty trick should be undefined', () => {
 test('should find winner for a finished trick', () => {
   const trick = game.nextTrick()
 
-  trick.add(queen.of(suits.spades), game.players[0])
-  trick.add(queen.of(suits.clubs), game.players[1])
-  trick.add(queen.of(suits.diamonds), game.players[2])
   trick.add(queen.of(suits.hearts), game.players[3])
+  trick.add(jack.of(suits.clubs), game.players[0])
+  trick.add(king.of(suits.diamonds), game.players[1])
+  trick.add(jack.of(suits.hearts), game.players[2])
 
-  expect(trick.winner()).toEqual(game.players[1].name)
+  expect(trick.winner()).toEqual(game.players[3].name)
 })
 
 test('should find winner for an unfinished trick', () => {

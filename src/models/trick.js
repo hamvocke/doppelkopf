@@ -47,6 +47,6 @@ export class Trick {
       return undefined
     }
 
-    return this.playedCards.sort(beats)[0].player
+    return this.playedCards.slice().sort(beats)[0].player
   }
 }
