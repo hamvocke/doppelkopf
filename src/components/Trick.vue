@@ -2,6 +2,9 @@
   <div class="trick">
     <h2>Aktueller Stich</h2>
     <Card v-for='playedCard in cards' :card='playedCard.card' :key='playedCard.card.suit-playedCard.card.rank' />
+    <div class="winner">
+      Stich geht an: {{ winner }}
+    </div>
   </div>
 </template>
 
@@ -14,6 +17,9 @@ export default {
   computed: {
     cards: function () {
       return this.currentTrick.cards()
+    },
+    winner: function () {
+      return this.currentTrick.winner()
     }
   },
   components: {

@@ -7,15 +7,26 @@ const game = new Game()
 
 describe('Trick.vue', () => {
   test('should show empty trick on initialization', () => {
-    const wrapper = mount(Trick, {propsData: { currentTrick: game.currentTrick }})
+    const trick = game.nextTrick()
+    const wrapper = mount(Trick, {propsData: { currentTrick: trick }})
     expect(wrapper.findAll('div.card').length).toEqual(0)
   })
 
   test('should render cards in current trick', () => {
-    game.currentTrick.add(ace.of(suits.hearts), game.players[0])
+    const trick = game.nextTrick()
+    trick.add(ace.of(suits.hearts), game.players[0])
 
-    const wrapper = mount(Trick, {propsData: { currentTrick: game.currentTrick }})
+    const wrapper = mount(Trick, {propsData: { currentTrick: trick }})
 
     expect(wrapper.findAll('div.card').length).toEqual(1)
+  })
+
+  test('should render winner', () => {
+    const trick = game.nextTrick()
+    trick.add(ace.of(suits.hearts), game.players[0])
+
+    const wrapper = mount(Trick, {propsData: { currentTrick: trick }})
+
+    expect(wrapper.find('div.winner').text()).toContain(game.players[0].name)
   })
 })
