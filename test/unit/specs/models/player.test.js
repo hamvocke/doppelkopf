@@ -1,6 +1,8 @@
 import { Game } from '@/models/game'
 import { Hand } from '@/models/hand'
+import { PlayedCard } from '@/models/playedCard'
 import { king, queen, suits } from '@/models/card'
+
 let game
 let player
 
@@ -34,9 +36,9 @@ test('playing a card adds it to the current trick', () => {
 
   player.play(queen.of(suits.spades))
 
-  const expectedCard = { card: queenOnHand, playedBy: player.name }
+  const expectedCard = new PlayedCard(queenOnHand, player.name)
 
-  expect(game.currentTrick.playedCards()).toEqual([expectedCard])
+  expect(game.currentTrick.cards()).toEqual([expectedCard])
 })
 
 test('player cannot play card that is not on their hand', () => {

@@ -1,4 +1,5 @@
 import { Game } from '@/models/game'
+import { PlayedCard } from '@/models/playedCard'
 import { queen, suits } from '@/models/card'
 
 const game = new Game()
@@ -13,12 +14,9 @@ test('can add card to trick', () => {
 
   trick.add(cardToBePlayed, game.players[0])
 
-  const expectedCard = {
-    card: cardToBePlayed,
-    playedBy: game.players[0].name
-  }
+  const expectedCard = new PlayedCard(cardToBePlayed, game.players[0].name)
 
-  expect(trick.playedCards()).toEqual([expectedCard])
+  expect(trick.cards()).toEqual([expectedCard])
 })
 
 test('should finish a trick if four cards have been played', () => {
@@ -37,10 +35,7 @@ test('should find card played by player', () => {
 
   trick.add(queen.of(suits.spades), game.players[0])
 
-  const expectedCard = {
-    card: queen.of(suits.spades),
-    playedBy: game.players[0].name
-  }
+  const expectedCard = new PlayedCard(queen.of(suits.spades), game.players[0].name)
 
   expect(trick.cardBy(game.players[0])).toEqual(expectedCard)
   expect(trick.cardBy(game.players[1])).toBeUndefined()
@@ -70,4 +65,31 @@ test('should return undefined base card for empty trick', () => {
   const trick = game.nextTrick()
 
   expect(trick.baseCard()).toBeUndefined()
+})
+
+test('winner for an empty trick should be undefined', () => {
+  const trick = game.nextTrick()
+
+  expect(trick.winner()).toBeUndefined()
+})
+
+test('should find winner for a finished trick', () => {
+  const trick = game.nextTrick()
+
+  trick.add(queen.of(suits.spades), game.players[0])
+  trick.add(queen.of(suits.clubs), game.players[1])
+  trick.add(queen.of(suits.diamonds), game.players[2])
+  trick.add(queen.of(suits.hearts), game.players[3])
+
+  expect(trick.winner()).toEqual(game.players[1].name)
+})
+
+test('should find winner for an unfinished trick', () => {
+  const trick = game.nextTrick()
+
+  trick.add(queen.of(suits.spades), game.players[2])
+  trick.add(queen.of(suits.diamonds), game.players[3])
+  trick.add(queen.of(suits.clubs), game.players[0])
+
+  expect(trick.winner()).toEqual(game.players[0].name)
 })

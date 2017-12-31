@@ -13,7 +13,7 @@ export default {
   props: ['currentTrick'],
   computed: {
     cards: function () {
-      return this.currentTrick.playedCards()
+      return this.currentTrick.cards()
     }
   },
   components: {

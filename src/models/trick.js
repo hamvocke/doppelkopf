@@ -1,9 +1,10 @@
 import { find } from 'lodash'
+import { PlayedCard, beats } from '@/models/playedCard'
 
 export class Trick {
   constructor (expectedNumberOfCards) {
     this.expectedNumberOfCards = expectedNumberOfCards
-    this.cards = []
+    this.playedCards = []
     this.finished = false
   }
 
@@ -12,24 +13,21 @@ export class Trick {
       throw Error(`Player ${player.name} already played a card`)
     }
 
-    const playedCard = {
-      card: card,
-      playedBy: player.name
-    }
+    const playedCard = new PlayedCard(card, player.name)
 
-    this.cards.push(playedCard)
+    this.playedCards.push(playedCard)
 
-    if (this.cards.length === this.expectedNumberOfCards) {
+    if (this.playedCards.length === this.expectedNumberOfCards) {
       this.finished = true
     }
   }
 
-  playedCards () {
-    return this.cards
+  cards () {
+    return this.playedCards
   }
 
   cardBy (player) {
-    return find(this.cards, ['playedBy', player.name])
+    return find(this.playedCards, ['player', player.name])
   }
 
   isFinished () {
@@ -37,10 +35,18 @@ export class Trick {
   }
 
   baseCard () {
-    if (!this.cards[0]) {
+    if (!this.playedCards[0]) {
       return undefined
     }
 
-    return this.cards[0].card
+    return this.playedCards[0].card
+  }
+
+  winner () {
+    if (!this.playedCards[0]) {
+      return undefined
+    }
+
+    return this.playedCards.sort(beats)[0].player
   }
 }
