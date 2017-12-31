@@ -16,6 +16,7 @@ export class Trick {
       card: card,
       playedBy: player.name
     }
+
     this.cards.push(playedCard)
 
     if (this.cards.length === this.expectedNumberOfCards) {
@@ -33,5 +34,13 @@ export class Trick {
 
   isFinished () {
     return this.finished
+  }
+
+  baseCard () {
+    if (!this.cards[0]) {
+      return undefined
+    }
+
+    return this.cards[0].card
   }
 }

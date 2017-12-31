@@ -56,3 +56,18 @@ test('should prohibit multiple cards from same player', () => {
 
   expect(invalidMove).toThrowError('Player ' + game.players[0].name + ' already played a card')
 })
+
+test('should find base card of a trick', () => {
+  const trick = game.nextTrick()
+
+  trick.add(queen.of(suits.spades), game.players[0])
+  trick.add(queen.of(suits.pikes), game.players[1])
+
+  expect(trick.baseCard()).toEqual(queen.of(suits.spades))
+})
+
+test('should return undefined base card for empty trick', () => {
+  const trick = game.nextTrick()
+
+  expect(trick.baseCard()).toBeUndefined()
+})
