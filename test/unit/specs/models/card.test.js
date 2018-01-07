@@ -31,11 +31,11 @@ test('jack has a value of 2', () => {
 })
 
 test('compare two cards', () => {
-  expect(jack.of(suits.clubs)).toEqual(jack.of(suits.clubs))
+  expect(jack.of(suits.clubs).first()).toEqual(jack.of(suits.clubs).first())
 })
 
 test('compare identity two cards', () => {
-  expect(jack.of(suits.clubs)).not.toBe(jack.of(suits.clubs))
+  expect(jack.of(suits.clubs).first()).not.toBe(jack.of(suits.clubs).first())
 })
 
 test('finds all trumps', () => {

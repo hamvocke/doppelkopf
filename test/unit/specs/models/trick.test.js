@@ -32,10 +32,11 @@ test('should finish a trick if four cards have been played', () => {
 
 test('should find card played by player', () => {
   const trick = game.nextTrick()
+  const cardToBePlayed = queen.of(suits.spades)
 
-  trick.add(queen.of(suits.spades), game.players[0])
+  trick.add(cardToBePlayed, game.players[0])
 
-  const expectedCard = new PlayedCard(queen.of(suits.spades), game.players[0].name)
+  const expectedCard = new PlayedCard(cardToBePlayed, game.players[0].name)
 
   expect(trick.cardBy(game.players[0])).toEqual(expectedCard)
   expect(trick.cardBy(game.players[1])).toBeUndefined()
@@ -55,10 +56,12 @@ test('should prohibit multiple cards from same player', () => {
 test('should find base card of a trick', () => {
   const trick = game.nextTrick()
 
-  trick.add(queen.of(suits.spades), game.players[0])
+  const expectedBaseCard = queen.of(suits.spades)
+
+  trick.add(expectedBaseCard, game.players[0])
   trick.add(queen.of(suits.pikes), game.players[1])
 
-  expect(trick.baseCard()).toEqual(queen.of(suits.spades))
+  expect(trick.baseCard()).toEqual(expectedBaseCard)
 })
 
 test('should return undefined base card for empty trick', () => {

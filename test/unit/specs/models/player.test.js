@@ -24,7 +24,7 @@ test('player can play card from hand', () => {
   const queenOnHand = queen.of(suits.spades)
   player.hand = new Hand([kingOnHand, queenOnHand])
 
-  player.play(king.of(suits.diamonds))
+  player.play(kingOnHand)
 
   expect(player.hand.cards).not.toContain(kingOnHand)
   expect(player.hand.cards).toContain(queenOnHand)
@@ -34,7 +34,7 @@ test('playing a card adds it to the current trick', () => {
   const queenOnHand = queen.of(suits.spades)
   player.hand = new Hand([queenOnHand])
 
-  player.play(queen.of(suits.spades))
+  player.play(queenOnHand)
 
   const expectedCard = new PlayedCard(queenOnHand, player.name)
 

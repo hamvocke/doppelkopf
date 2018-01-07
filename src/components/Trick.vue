@@ -42,4 +42,12 @@ export default {
   background: #ccc;
 }
 
+.next {
+  padding: 12px;
+  margin: 12px;
+  border: 1px solid #999;
+  display: inline-block;
+  background-color: #247ba0;
+}
+
 </style>

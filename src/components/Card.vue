@@ -69,11 +69,11 @@ export default {
 }
 
 .red {
-  color: red;
+  color: #f25f5c;
 }
 
 .black {
-  color: black;
+  color: #50514f;
 }
 
 </style>

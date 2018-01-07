@@ -1,4 +1,4 @@
-import { some, findIndex } from 'lodash'
+import { some, findIndex, uniqueId } from 'lodash'
 
 export const suits = {
   clubs: '♣',
@@ -24,7 +24,7 @@ export const values = {
 }
 
 export class Card {
-  constructor (rank, suit = suits[0], id = 0) {
+  constructor (rank, suit = suits[0], id = uniqueId('card_')) {
     this.rank = rank
     this.suit = suit
     this.id = id
@@ -38,8 +38,16 @@ export class Card {
     return new Card(this.rank, suit)
   }
 
+  first () {
+    return new Card(this.rank, this.suit, 0)
+  }
+
+  second () {
+    return new Card(this.rank, this.suit, 1)
+  }
+
   isTrump () {
-    return some(trumps, this)
+    return some(trumps, {'rank': this.rank, 'suit': this.suit})
   }
 
   toString () {
@@ -59,7 +67,7 @@ export class Card {
     }
 
     if (thisIsTrump && otherCardIsTrump) {
-      return findIndex(trumps, anotherCard) - findIndex(trumps, this) >= 0
+      return findIndex(trumps, {'rank': anotherCard.rank, 'suit': anotherCard.suit}) - findIndex(trumps, {'rank': this.rank, 'suit': this.suit}) >= 0
     }
 
     if (!thisIsTrump && !otherCardIsTrump) {

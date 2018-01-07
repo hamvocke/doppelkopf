@@ -32,19 +32,20 @@ describe('Hand.vue', () => {
 
   test('should keep track of selected card', () => {
     const wrapper = mount(Hand, { propsData: { hand: kontraHand } })
-    wrapper.vm.select(ace.of(suits.hearts))
-    expect(wrapper.vm.selectedCard).toEqual(ace.of(suits.hearts))
+    const cardToBeSelected = kontraHand.cards[0]
+    wrapper.vm.select(cardToBeSelected)
+    expect(wrapper.vm.selectedCard).toEqual(cardToBeSelected)
   })
 
   test('clicking on card should select card', () => {
     const wrapper = mount(Hand, { propsData: { hand: kontraHand } })
     wrapper.findAll('div.card').at(0).trigger('click')
-    expect(wrapper.vm.selectedCard).toEqual(ace.of(suits.clubs))
+    expect(wrapper.vm.selectedCard).toEqual(kontraHand.cards[0])
   })
 
   test('trigger play event when clicking on already selected card', () => {
     const wrapper = mount(Hand, { propsData: { hand: kontraHand } })
-    const card = ace.of(suits.hearts)
+    const card = kontraHand.cards[1]
 
     wrapper.vm.select(card)
     wrapper.vm.select(card)
