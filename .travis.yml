@@ -19,8 +19,9 @@ script:
   - yarn test
   - yarn build
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  - docker build -t hamvocke/doppelkopf .
+  - docker-compose build
   - docker push hamvocke/doppelkopf:latest
+  - ./deploy.sh
 
 after_script:
   - "sh -e /etc/init.d/xvfb stop"

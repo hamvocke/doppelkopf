@@ -9,7 +9,7 @@ RUN mkdir -p /usr/src/app && cp -a /tmp/node_modules /usr/src/app
 WORKDIR /usr/src/app
 ADD . /usr/src/app
 
-RUN npm run build
+RUN yarn build
 RUN rm -rf ./build
 RUN rm -rf ./test
 RUN rm -rf ./src
