@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-yarn build
-docker build -t "doppelkopf:latest" .
+ssh root@ham.codes 'docker pull hamvocke/doppelkopf'
+ssh root@ham.codes 'docker stop doppelkopf'
+ssh root@ham.codes 'docker run -it -d -p 80:8080 --name doppelkopf hamvocke/doppelkopf'
