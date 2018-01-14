@@ -1,6 +1,6 @@
 import Trick from '@/components/Trick'
 import { Game } from '@/models/game'
-import { mount } from 'vue-test-utils'
+import { mount } from '@vue/test-utils'
 import { ace, suits } from '@/models/card'
 
 const game = new Game()
