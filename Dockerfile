@@ -1,20 +1,18 @@
 FROM node:carbon
 
-# Create app directory
+# use changes to package.json to force Docker not to use the cache
+# when we change our application's nodejs dependencies:
+ADD package.json /tmp/package.json
+RUN cd /tmp && yarn install
+RUN mkdir -p /usr/src/app && cp -a /tmp/node_modules /usr/src/app
+
 WORKDIR /usr/src/app
+ADD . /usr/src/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
-
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
-
-# Bundle app source
-COPY dist/ .
-COPY server.js .
+RUN npm run build
+RUN rm -rf ./build
+RUN rm -rf ./test
+RUN rm -rf ./src
 
 EXPOSE 8080
 CMD [ "npm", "run", "start-prod" ]
