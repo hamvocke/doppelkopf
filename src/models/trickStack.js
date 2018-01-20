@@ -6,6 +6,10 @@ export class TrickStack {
   }
 
   add (trick) {
+    if (!trick.isFinished()) {
+      throw new Error('can not add an unfinished trick to the trick stack')
+    }
+    
     this.tricks.push(trick)
   }
 }
