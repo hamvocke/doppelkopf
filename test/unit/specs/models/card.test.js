@@ -38,6 +38,10 @@ test('compare identity two cards', () => {
   expect(jack.of(suits.clubs).first()).not.toBe(jack.of(suits.clubs).first())
 })
 
+test('should get unique id of a card', () => {
+  expect(jack.of(suits.clubs).first().cardId).toBe('J-♣-0')
+})
+
 test('finds all trumps', () => {
   const trumps = [
     ten.of(suits.hearts),

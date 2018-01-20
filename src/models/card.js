@@ -34,6 +34,10 @@ export class Card {
     return values[this.rank]
   }
 
+  get cardId () {
+    return `${this.rank}-${this.suit}-${this.id}`
+  }
+
   of (suit) {
     return new Card(this.rank, suit)
   }

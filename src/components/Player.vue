@@ -1,7 +1,7 @@
 <template>
   <div class="player">
     <h2 class="name">{{ player.name }}</h2>
-    <Hand :hand='player.hand' v-on:play="play"/>
+    <Hand :hand='hand' v-on:play="play"/>
   </div>
 </template>
 
@@ -12,7 +12,9 @@ export default {
   name: 'Player',
   props: ['player'],
   data: function () {
-    return {}
+    return {
+      hand: this.player.hand
+    }
   },
   components: {
     Hand

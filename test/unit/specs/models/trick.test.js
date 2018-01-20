@@ -47,7 +47,7 @@ test('should prohibit multiple cards from same player', () => {
 
   function invalidMove () {
     trick.add(queen.of(suits.spades), game.players[0])
-    trick.add(queen.of(suits.pikes), game.players[0])
+    trick.add(queen.of(suits.clubs), game.players[0])
   }
 
   expect(invalidMove).toThrowError('Player ' + game.players[0].name + ' already played a card')
@@ -59,7 +59,7 @@ test('should find base card of a trick', () => {
   const expectedBaseCard = queen.of(suits.spades)
 
   trick.add(expectedBaseCard, game.players[0])
-  trick.add(queen.of(suits.pikes), game.players[1])
+  trick.add(queen.of(suits.clubs), game.players[1])
 
   expect(trick.baseCard()).toEqual(expectedBaseCard)
 })

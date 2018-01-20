@@ -1,6 +1,6 @@
 <template>
   <div class="hand">
-    <Card v-for='card in hand.cards' :card='card' :key='card.suit-card.rank' :isSelected='isSelected(card)' v-on:click.native='select(card)' />
+    <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :isSelected='isSelected(card)' v-on:click.native='select(card)' />
     <div class="party">
       {{ hand.isRe() ? "Re" : "Kontra" }}
     </div>
