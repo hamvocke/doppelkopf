@@ -16,7 +16,7 @@ export default {
     classObject: function () {
       return {
         'red': this.card.suit === suits.hearts || this.card.suit === suits.diamonds,
-        'black': this.card.suit === suits.pikes || this.card.suit === suits.spades
+        'black': this.card.suit === suits.clubs || this.card.suit === suits.spades
       }
     }
   }
