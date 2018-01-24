@@ -26,7 +26,6 @@ export default {
 <style scoped>
 .card {
   position: relative;
-  border: 1px solid #ccc;
   background: #fff;
   padding: 8px;
   margin: 12px;
