@@ -38,11 +38,10 @@ export default {
 
 <style scoped>
 .party {
-  border: 1px solid #aaa;
-  background: #eee;
-  color: #333;
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
-  padding: 8px;
+  font-size: 1.2em;
+  padding: 12px;
   display: inline-block;
 }
 

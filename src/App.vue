@@ -28,11 +28,14 @@ export default {
 
 <style>
 body {
-  background: #ddd;
+  background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+  /*background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);*/
+  /*background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%);*/
+  /*background-image: linear-gradient(to top, #505285 0%, #585e92 12%, #65689f 25%, #7474b0 37%, #7e7ebb 50%, #8389c7 62%, #9795d4 75%, #a2a1dc 87%, #b5aee4 100%);*/
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

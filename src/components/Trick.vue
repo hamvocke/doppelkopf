@@ -34,20 +34,19 @@ export default {
 <style scoped>
 
 .trick {
-  border: 1px solid #999;
   padding: 12px;
   border-radius: 8px;
   display: inline-block;
-  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
-  background: #ccc;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .next {
   padding: 12px;
   margin: 12px;
-  border: 1px solid #999;
+  border: 1px solid #000;
+  color: #000;
+  border-radius: 4px;
   display: inline-block;
-  background-color: #247ba0;
 }
 
 </style>
