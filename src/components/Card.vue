@@ -27,12 +27,12 @@ export default {
 .card {
   position: relative;
   background: #fff;
-  padding: 8px;
-  margin: 12px;
+  padding: 12px;
+  margin: 0 6px 18px -32px;
   border-radius: 12px;
   display: inline-block;
-  height: 180px;
-  width: 120px;
+  height: 90px;
+  width: 60px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   top: 0px;
   transition: all 0.25s cubic-bezier(.25,.8,.25,1);
@@ -44,28 +44,33 @@ export default {
   user-select: none;
 }
 
+.card:first-of-type {
+  margin-left: 0;
+}
+
 .selected {
   top: -10px;
   box-shadow: 0 20px 38px rgba(0,0,0,0.25), 0 15px 12px rgba(0,0,0,0.22);
+  z-index: 9999;
 }
 
 .suitTop {
   position: absolute;
-  font-size: 1.7em;
+  font-size: 1.3em;
   left: 8px;
   top: 8px;
 }
 
 .suitBottom {
   position: absolute;
-  font-size: 1.7em;
+  font-size: 1.3em;
   right: 8px;
   bottom: 8px;
 }
 
 .rank {
-  font-size: 4em;
-  line-height: 180px;
+  font-size: 2em;
+  line-height: 90px;
 }
 
 .red {
