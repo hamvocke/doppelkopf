@@ -1,3 +1,4 @@
+import { Player } from '@/models/player'
 import { Game } from '@/models/game'
 import { Hand } from '@/models/hand'
 import { PlayedCard } from '@/models/playedCard'
@@ -17,6 +18,10 @@ test('player has a name', () => {
 
 test('player knows their game', () => {
   expect(player.game).toBeDefined()
+})
+
+test('player is not human by default', () => {
+  expect(new Player('some player', {}).isHuman).toBe(false)
 })
 
 test('player can play card from hand', () => {

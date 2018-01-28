@@ -5,11 +5,13 @@ import { Hand } from '@/models/hand'
 
 export class Game {
   constructor () {
+    const isHuman = true
+    const isComputer = false
     this.players = [
-      new Player('Player 1', this),
-      new Player('Player 2', this),
-      new Player('Player 3', this),
-      new Player('Player 4', this)
+      new Player('Player 1', this, isHuman),
+      new Player('Player 2', this, isComputer),
+      new Player('Player 3', this, isComputer),
+      new Player('Player 4', this, isComputer)
     ]
     this.deck = new Deck()
     this.currentTrick = this.nextTrick()

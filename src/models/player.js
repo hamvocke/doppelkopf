@@ -1,10 +1,11 @@
 import { Hand } from '@/models/hand'
 
 export class Player {
-  constructor (name, game) {
+  constructor (name, game, isHuman = false) {
     this.name = name
     this.hand = new Hand()
     this.game = game
+    this.isHuman = isHuman
   }
 
   play (card) {

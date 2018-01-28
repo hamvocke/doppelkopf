@@ -10,6 +10,14 @@ test('game has 4 players', () => {
   expect(game.players[3].name).toBe('Player 4')
 })
 
+test('game has 1 human player', () => {
+  const game = new Game(defaultPlayers)
+  expect(game.players[0].isHuman).toBe(true)
+  expect(game.players[1].isHuman).toBe(false)
+  expect(game.players[2].isHuman).toBe(false)
+  expect(game.players[3].isHuman).toBe(false)
+})
+
 test('game has a deck', () => {
   const game = new Game(defaultPlayers, [])
   expect(game.deck).toBeDefined()
