@@ -1,8 +1,12 @@
 <template>
   <div class="hand">
-    <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :isSelected='isSelected(card)' v-on:click.native='select(card)' />
-    <div class="party">
-      {{ hand.isRe() ? "Re" : "Kontra" }}
+    <div class="cards">
+      <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :isSelected='isSelected(card)' v-on:click.native='select(card)' />
+    </div>
+    <div class="info">
+      <div class="party">
+        {{ hand.isRe() ? "Re" : "Kontra" }}
+      </div>
     </div>
   </div>
 </template>
@@ -37,7 +41,7 @@ export default {
 </script>
 
 <style scoped>
-.party {
+.info > div {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
   font-size: 1.2em;
