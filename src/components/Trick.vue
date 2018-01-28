@@ -37,6 +37,7 @@ export default {
   padding: 12px;
   border-radius: 8px;
   display: inline-block;
+  min-height: 220px;
   background: rgba(255, 255, 255, 0.3);
 }
 
