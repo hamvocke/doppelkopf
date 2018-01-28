@@ -13,6 +13,18 @@ test('a hand with queen of clubs is re', () => {
   expect(hand.isKontra()).toBeFalsy()
 })
 
+test('a re hand that played the queen of clubs is still re', () => {
+  const queenOfClubs = queen.of(suits.clubs)
+  const tenOfHearts = ten.of(suits.hearts)
+  const hand = new Hand([queenOfClubs, tenOfHearts])
+  hand.remove(queenOfClubs)
+
+  console.log(hand)
+
+  expect(hand.isRe()).toBeTruthy()
+  expect(hand.isKontra()).toBeFalsy()
+})
+
 test('a hand without queen of clubs is kontra', () => {
   const cards = [
     queen.of(suits.spades)

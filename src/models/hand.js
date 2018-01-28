@@ -5,10 +5,11 @@ export class Hand {
   constructor (cards = []) {
     this.cards = cards
     this.sort()
+    this.isReParty = find(this.cards, {suit: suits.clubs, rank: ranks.queen})
   }
 
   isRe () {
-    return find(this.cards, {suit: suits.clubs, rank: ranks.queen})
+    return this.isReParty
   }
 
   isKontra () {
@@ -17,8 +18,8 @@ export class Hand {
 
   value () {
     return this.cards
-        .map(card => card.value)
-        .reduce((acc, value) => acc + value, 0)
+      .map(card => card.value)
+      .reduce((acc, value) => acc + value, 0)
   }
 
   find (card) {
