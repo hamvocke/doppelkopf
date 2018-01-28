@@ -1,7 +1,7 @@
 <template>
   <div class="player">
     <h2 class="name">{{ player.name }}</h2>
-    <Hand :hand='hand' v-on:play="play"/>
+    <Hand :hand='hand' :is-covered='false' v-on:play="play"/>
   </div>
 </template>
 

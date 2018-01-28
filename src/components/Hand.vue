@@ -1,7 +1,7 @@
 <template>
   <div class="hand">
     <div class="cards">
-      <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='true' v-on:click.native='select(card)' />
+      <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' v-on:click.native='select(card)' />
     </div>
     <div class="info">
       <div class="party">
@@ -16,7 +16,16 @@ import Card from './Card'
 
 export default {
   name: 'Hand',
-  props: ['hand'],
+  props: {
+    hand: {
+      type: Object,
+      required: true
+    },
+    isCovered: {
+      type: Boolean,
+      required: false
+    }
+  },
   components: {
     Card
   },

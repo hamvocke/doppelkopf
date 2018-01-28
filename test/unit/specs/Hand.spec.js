@@ -20,6 +20,12 @@ describe('Hand.vue', () => {
     expect(wrapper.findAll('div.card').length).toBe(4)
   })
 
+  test('should render cards covered', () => {
+    const wrapper = mount(Hand, { propsData: { hand: reHand, isCovered: true } })
+    const firstCard = wrapper.findAll('div.card').at(0)
+    expect(firstCard.find('div.background').exists()).toBe(true)
+  })
+
   test('should tell if hand is re', () => {
     const wrapper = mount(Hand, { propsData: { hand: reHand } })
     expect(wrapper.find('div.party').text()).toEqual('Re')
