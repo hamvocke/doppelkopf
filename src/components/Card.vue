@@ -56,14 +56,14 @@ export default {
 
 .suitTop {
   position: absolute;
-  font-size: 1.3em;
+  font-size: 1.2em;
   left: 8px;
   top: 8px;
 }
 
 .suitBottom {
   position: absolute;
-  font-size: 1.3em;
+  font-size: 1.2em;
   right: 8px;
   bottom: 8px;
 }
