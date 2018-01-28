@@ -58,4 +58,15 @@ describe('Card.vue', () => {
     expect(wrapper.text()).not.toContain('A')
     expect(wrapper.text()).not.toContain('♥')
   })
+
+  it('should render covered card', () => {
+    const wrapper = mount(Card, {
+      propsData: {
+        card: ace.of(suits.spades),
+        isCovered: true
+      }
+    })
+
+    expect(wrapper.find('.background').exists()).toBe(true)
+  })
 })

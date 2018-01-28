@@ -1,6 +1,7 @@
 <template>
-  <div class="card" v-bind:class="{ selected: isSelected}">
+  <div class="card" v-bind:class="{ selected: isSelected }">
     <template v-if='isCovered'>
+      <div class="background"></div>
     </template>
     <template v-else>
       <span class="suitTop" v-bind:class='classObject'>{{ card.suit }}</span>
@@ -44,7 +45,7 @@ export default {
 .card {
   position: relative;
   background: #fff;
-  padding: 12px;
+  padding: 6px;
   margin: 0 6px 18px -32px;
   border-radius: 12px;
   display: inline-block;
@@ -96,6 +97,13 @@ export default {
 
 .black {
   color: #50514f;
+}
+
+.background {
+  background: #f25f5c;
+  height: 100%;
+  weight: 100%;
+  border-radius: 6px;
 }
 
 </style>
