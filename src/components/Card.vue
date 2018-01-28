@@ -1,8 +1,12 @@
 <template>
   <div class="card" v-bind:class="{ selected: isSelected}">
-    <span class="suitTop" v-bind:class='classObject'>{{ card.suit }}</span>
-    <span class="rank">{{ card.rank }}</span>
-    <span class="suitBottom" v-bind:class='classObject'>{{ card.suit }}</span>
+    <template v-if='isCovered'>
+    </template>
+    <template v-else>
+      <span class="suitTop" v-bind:class='classObject'>{{ card.suit }}</span>
+      <span class="rank">{{ card.rank }}</span>
+      <span class="suitBottom" v-bind:class='classObject'>{{ card.suit }}</span>
+    </template>
   </div>
 </template>
 
@@ -11,7 +15,20 @@ import { suits } from '@/models/card'
 
 export default {
   name: 'Card',
-  props: ['card', 'isSelected'],
+  props: {
+    card: {
+      type: Object,
+      required: true
+    },
+    isSelected: {
+      type: Boolean,
+      required: false
+    },
+    isCovered: {
+      type: Boolean,
+      required: false
+    }
+  },
   computed: {
     classObject: function () {
       return {

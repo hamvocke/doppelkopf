@@ -1,7 +1,7 @@
 <template>
   <div class="hand">
     <div class="cards">
-      <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :isSelected='isSelected(card)' v-on:click.native='select(card)' />
+      <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='true' v-on:click.native='select(card)' />
     </div>
     <div class="info">
       <div class="party">

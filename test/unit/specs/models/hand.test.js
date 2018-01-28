@@ -17,9 +17,8 @@ test('a re hand that played the queen of clubs is still re', () => {
   const queenOfClubs = queen.of(suits.clubs)
   const tenOfHearts = ten.of(suits.hearts)
   const hand = new Hand([queenOfClubs, tenOfHearts])
-  hand.remove(queenOfClubs)
 
-  console.log(hand)
+  hand.remove(queenOfClubs)
 
   expect(hand.isRe()).toBeTruthy()
   expect(hand.isKontra()).toBeFalsy()
