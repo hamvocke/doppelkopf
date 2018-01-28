@@ -1,7 +1,8 @@
 <template>
   <div class="player">
     <h2 class="name">{{ player.name }}</h2>
-    <Hand :hand='hand' :is-covered='false' v-on:play="play"/>
+    <Hand :hand='hand' :is-covered='isCovered' v-on:play="play"/>
+    <label><input type="checkbox" v-model="isCovered"> Hide Cards</label>
   </div>
 </template>
 
@@ -10,7 +11,16 @@ import Hand from './Hand'
 
 export default {
   name: 'Player',
-  props: ['player'],
+  props: {
+    player: {
+      type: Object,
+      required: true
+    },
+    isCovered: {
+      type: Boolean,
+      required: false
+    }
+  },
   data: function () {
     return {
       hand: this.player.hand

@@ -102,7 +102,8 @@ export default {
 .background {
   background: #f25f5c;
   height: 100%;
-  weight: 100%;
+  width: 100%;
+  display: inline-block;
   border-radius: 6px;
 }
 
