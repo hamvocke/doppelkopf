@@ -10,7 +10,7 @@ describe('Player.vue', () => {
   test('should display player\'s name', () => {
     const player = new PlayerModel('some player', {}, false)
     const wrapper = mount(Player, {propsData: { player: player }})
-    expect(wrapper.find('h2.name').text()).toEqual('some player')
+    expect(wrapper.find('.name').text()).toEqual('some player')
   })
 
   test('should play card', () => {

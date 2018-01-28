@@ -1,8 +1,10 @@
 <template>
   <div class="player">
-    <h2 class="name">{{ player.name }}</h2>
+    <div class="info">
+      <div class="name">{{ player.name }}</div>
+      <label><input type="checkbox" v-model="isCovered"> Hide Cards</label>
+    </div>
     <Hand :hand='hand' :is-covered='isCovered' v-on:play="play"/>
-    <label><input type="checkbox" v-model="isCovered"> Hide Cards</label>
   </div>
 </template>
 
@@ -35,5 +37,19 @@ export default {
 </script>
 
 <style scoped>
+.player {
+  padding: 6px;
+  margin: 6px;
+}
+
+.info {
+  text-align: left;
+  padding: 12px 0;
+}
+
+.name {
+  font-weight: bold;
+  line-height: 2gem;
+}
 
 </style>
