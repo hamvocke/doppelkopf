@@ -3,7 +3,7 @@
     <div class="cards">
       <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' v-on:click.native='select(card)' />
     </div>
-    <div class="info">
+    <div class="info" v-if='!isCovered'>
       <div class="party">
         {{ hand.isRe() ? "Re" : "Kontra" }}
       </div>

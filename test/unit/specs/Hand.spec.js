@@ -36,6 +36,11 @@ describe('Hand.vue', () => {
     expect(wrapper.find('div.party').text()).toEqual('Kontra')
   })
 
+  test('should not show party if cards are covered', () => {
+    const wrapper = mount(Hand, { propsData: { hand: reHand, isCovered: true } })
+    expect(wrapper.find('div.info').exists()).toBe(false)
+  })
+
   test('should keep track of selected card', () => {
     const wrapper = mount(Hand, { propsData: { hand: kontraHand } })
     const cardToBeSelected = kontraHand.cards[0]
