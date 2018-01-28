@@ -1,3 +1,4 @@
+import { Player as PlayerModel } from '@/models/player'
 import Player from '@/components/Player'
 import { Game } from '@/models/game'
 import { mount } from '@vue/test-utils'
@@ -7,8 +8,9 @@ const game = new Game()
 
 describe('Player.vue', () => {
   test('should display player\'s name', () => {
-    const wrapper = mount(Player, {propsData: { player: game.players[0] }})
-    expect(wrapper.find('h2.name').text()).toEqual('Player 1')
+    const player = new PlayerModel('some player', {}, false)
+    const wrapper = mount(Player, {propsData: { player: player }})
+    expect(wrapper.find('h2.name').text()).toEqual('some player')
   })
 
   test('should play card', () => {
@@ -21,5 +23,13 @@ describe('Player.vue', () => {
     wrapper.vm.play(cards[0])
 
     expect(game.players[0].hand.cards).toHaveLength(0)
+  })
+
+  test('should hide cards for computer player', () => {
+    const player = new PlayerModel('some player', {}, false)
+    player.hand.cards = [ace.of(suits.spades)]
+    const wrapper = mount(Player, {propsData: { player: player }})
+
+    expect(wrapper.vm.isCovered).toBe(true)
   })
 })

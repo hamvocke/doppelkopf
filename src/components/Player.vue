@@ -15,15 +15,12 @@ export default {
     player: {
       type: Object,
       required: true
-    },
-    isCovered: {
-      type: Boolean,
-      required: false
     }
   },
   data: function () {
     return {
-      hand: this.player.hand
+      hand: this.player.hand,
+      isCovered: !this.player.isHuman
     }
   },
   components: {
