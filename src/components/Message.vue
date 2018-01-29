@@ -7,7 +7,12 @@
 <script>
 export default {
   name: 'Message',
-  props: ['message', 'level']
+  props: {
+    message: {
+      type: String,
+      required: true
+    }
+  }
 }
 </script>
 
