@@ -1,9 +1,9 @@
-import Message from '@/components/Message'
+import Notifications from '@/components/Notifications'
 import { mount } from '@vue/test-utils'
 
-describe('Message.vue', () => {
+describe('Notifications.vue', () => {
   it('should display message', () => {
-    const wrapper = mount(Message, {
+    const wrapper = mount(Notifications, {
       propsData: {
         message: 'Hello World'
       }
