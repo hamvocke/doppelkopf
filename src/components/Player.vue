@@ -43,13 +43,13 @@ export default {
 }
 
 .info {
-  text-align: left;
+  text-align: center;
   padding: 12px 0;
 }
 
 .name {
   font-weight: bold;
-  line-height: 2gem;
+  line-height: 2em;
 }
 
 </style>

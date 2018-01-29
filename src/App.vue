@@ -28,6 +28,8 @@ export default {
 
 <style>
 body {
+  height: 100%;
+  width: 100%;
   background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
   /*background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);*/
   /*background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%);*/
