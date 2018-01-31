@@ -1,5 +1,6 @@
 import { Game } from '@/models/game'
 import { PlayedCard } from '@/models/playedCard'
+import { Trick } from '@/models/trick'
 import { queen, jack, king, suits } from '@/models/card'
 
 const game = new Game()
@@ -95,4 +96,14 @@ test('should find winner for an unfinished trick', () => {
   trick.add(queen.of(suits.clubs), game.players[0])
 
   expect(trick.winner()).toEqual(game.players[0].name)
+})
+
+test('should register event observers', () => {
+  const trick = new Trick()
+
+  const callbackFunction = jest.fn()
+
+  trick.subscribe(callbackFunction)
+
+  expect(trick.subscribers).toEqual([callbackFunction])
 })

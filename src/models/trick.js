@@ -6,6 +6,7 @@ export class Trick {
     this.expectedNumberOfCards = expectedNumberOfCards
     this.playedCards = []
     this.finished = false
+    this.subscribers = []
   }
 
   add (card, player) {
@@ -48,5 +49,9 @@ export class Trick {
     }
 
     return this.playedCards.slice().sort(beats)[0].player
+  }
+
+  subscribe (callbackFunction) {
+    this.subscribers.push(callbackFunction)
   }
 }
