@@ -71,3 +71,11 @@ test('player cannot play undefined card', () => {
 
   expect(invalidMove).toThrowError('can\'t play a card that\'s not on the player\'s hand')
 })
+
+test('player can win a trick', () => {
+  const trick = { isFinished: () => true }
+
+  player.win(trick)
+
+  expect(player.trickStack.tricks).toEqual([trick])
+})

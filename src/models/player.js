@@ -20,4 +20,8 @@ export class Player {
     this.game.currentTrick.add(cardToBePlayed, this)
     this.hand.remove(cardToBePlayed)
   }
+
+  win (trick) {
+    this.trickStack.add(trick)
+  }
 }
