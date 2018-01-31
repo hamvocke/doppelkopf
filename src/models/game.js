@@ -27,11 +27,7 @@ export class Game {
 
   nextTrick () {
     const trick = new Trick(this.players.length)
-    trick.subscribe(this.finishTrick)
+    trick.subscribe(() => {})
     return trick
-  }
-
-  finishTrick () {
-
   }
 }

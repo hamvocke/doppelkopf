@@ -42,5 +42,5 @@ test('game starts with an empty trick', () => {
 test('should subscribe to trick', () => {
   const game = new Game(defaultPlayers)
 
-  expect(game.currentTrick.subscribers).toEqual([game.finishTrick])
+  expect(game.currentTrick.subscribers.length).toBe(1)
 })
