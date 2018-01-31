@@ -1,4 +1,5 @@
 import { Hand } from '@/models/hand'
+import { TrickStack } from '@/models/trickStack'
 
 export class Player {
   constructor (name, game, isHuman = false) {
@@ -6,6 +7,7 @@ export class Player {
     this.hand = new Hand()
     this.game = game
     this.isHuman = isHuman
+    this.trickStack = new TrickStack()
   }
 
   play (card) {

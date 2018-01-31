@@ -3,6 +3,7 @@ import { Game } from '@/models/game'
 import { Hand } from '@/models/hand'
 import { PlayedCard } from '@/models/playedCard'
 import { king, queen, suits } from '@/models/card'
+import { TrickStack } from '@/models/trickStack'
 
 let game
 let player
@@ -22,6 +23,11 @@ test('player knows their game', () => {
 
 test('player is not human by default', () => {
   expect(new Player('some player', {}).isHuman).toBe(false)
+})
+
+test('player has a trick stack', () => {
+  expect(new Player('some player', {}).trickStack).toBeDefined()
+  expect(new Player('some player', {}).trickStack instanceof TrickStack).toBe(true)
 })
 
 test('player can play card from hand', () => {
