@@ -20,6 +20,7 @@ export class Trick {
 
     if (this.playedCards.length === this.expectedNumberOfCards) {
       this.finished = true
+      this.subscribers.forEach(subscriber => subscriber())
     }
   }
 
