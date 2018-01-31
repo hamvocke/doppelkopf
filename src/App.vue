@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Notifications message="Hello World!"/>
+    <Notifications/>
     <h1>Doppelkopf</h1>
     <Trick :currentTrick='game.currentTrick' />
     <Player v-for='player in game.players' :player='player' :key='player.name' />

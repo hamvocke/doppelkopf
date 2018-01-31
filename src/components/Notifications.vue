@@ -1,16 +1,19 @@
 <template>
-  <div class="message">
-    {{ message }}
+  <div class="notifications" >
+    <div class="message" v-for='message in messages'>
+      {{ message }}
+    </div>
   </div>
 </template>
 
 <script>
+import { Notifier } from '@/models/notifier'
+
 export default {
   name: 'Notifications',
-  props: {
-    message: {
-      type: String,
-      required: true
+  data: function () {
+    return {
+      messages: new Notifier().messages
     }
   }
 }

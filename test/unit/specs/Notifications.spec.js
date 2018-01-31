@@ -1,14 +1,13 @@
 import Notifications from '@/components/Notifications'
+import { Notifier } from '@/models/notifier'
 import { mount } from '@vue/test-utils'
 
 describe('Notifications.vue', () => {
   it('should display message', () => {
-    const wrapper = mount(Notifications, {
-      propsData: {
-        message: 'Hello World'
-      }
-    })
+    const wrapper = mount(Notifications)
 
-    expect(wrapper.text()).toBe('Hello World')
+    new Notifier().info('Hello World')
+
+    expect(wrapper.vm.messages).toEqual(['Hello World'])
   })
 })
