@@ -26,8 +26,6 @@ export class Game {
   }
 
   nextTrick () {
-    const trick = new Trick(this.players.length)
-    trick.subscribe(() => {})
-    return trick
+    return new Trick(this.players.length)
   }
 }

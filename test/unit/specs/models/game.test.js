@@ -38,9 +38,3 @@ test('game starts with an empty trick', () => {
   expect(game.currentTrick).toBeDefined()
   expect(game.currentTrick.cards).toHaveLength(0)
 })
-
-test('should subscribe to trick', () => {
-  const game = new Game(defaultPlayers)
-
-  expect(game.currentTrick.subscribers.length).toBe(1)
-})

@@ -20,7 +20,6 @@ export class Trick {
 
     if (this.playedCards.length === this.expectedNumberOfCards) {
       this.finished = true
-      this.subscribers.forEach(subscriber => subscriber())
     }
   }
 
@@ -50,9 +49,5 @@ export class Trick {
     }
 
     return this.playedCards.slice().sort(beats)[0].player
-  }
-
-  subscribe (callbackFunction) {
-    this.subscribers.push(callbackFunction)
   }
 }

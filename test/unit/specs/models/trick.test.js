@@ -1,6 +1,5 @@
 import { Game } from '@/models/game'
 import { PlayedCard } from '@/models/playedCard'
-import { Trick } from '@/models/trick'
 import { queen, jack, king, suits } from '@/models/card'
 
 const game = new Game()
@@ -96,30 +95,4 @@ test('should find winner for an unfinished trick', () => {
   trick.add(queen.of(suits.clubs), game.players[0])
 
   expect(trick.winner()).toEqual(game.players[0].name)
-})
-
-test('should subscribe to events', () => {
-  const trick = new Trick()
-
-  const callbackFunction = jest.fn()
-
-  trick.subscribe(callbackFunction)
-
-  expect(trick.subscribers).toEqual([callbackFunction])
-})
-
-test('should notify subscribers when trick is finished', () => {
-  const trick = game.nextTrick()
-  const callbackFunction = jest.fn()
-  trick.subscribe(callbackFunction)
-
-  expect(callbackFunction.mock.calls.length).toBe(0)
-
-  trick.add(queen.of(suits.spades), game.players[2])
-  trick.add(queen.of(suits.diamonds), game.players[3])
-  trick.add(queen.of(suits.clubs), game.players[0])
-  trick.add(queen.of(suits.clubs), game.players[1])
-
-  expect(callbackFunction.mock.calls.length).toBe(1)
-  expect(callbackFunction.mock.calls[0][0]).toBe(undefined)
 })
