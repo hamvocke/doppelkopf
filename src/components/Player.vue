@@ -4,12 +4,14 @@
       <div class="name">{{ player.name }}</div>
       <label><input type="checkbox" v-model="isCovered"> Hide Cards</label>
     </div>
-    <Hand :hand='hand' :is-covered='isCovered' v-on:play="play"/>
+    <Hand :hand="hand" :is-covered="isCovered" v-on:play="play"/>
+    <TrickStack :trickStack="player.trickStack"/>
   </div>
 </template>
 
 <script>
 import Hand from './Hand'
+import TrickStack from './TrickStack'
 
 export default {
   name: 'Player',
@@ -26,7 +28,7 @@ export default {
     }
   },
   components: {
-    Hand
+    Hand, TrickStack
   },
   methods: {
     play: function (card) {
