@@ -19,7 +19,7 @@ export default {
   },
   data: function () {
     return {
-      cards: this.trickStack.tricks.map(trick => trick.playedCards)
+      cards: this.trickStack.cards()
     }
   }
 }
