@@ -50,11 +50,24 @@ describe('Trick.vue', () => {
     expect(wrapper.find('div.next').exists()).toBe(true)
   })
 
-  test('should not render winner if trick is empty', () => {
+  test('should not render next button if trick is empty', () => {
     const trick = game.nextTrick()
 
     const wrapper = mount(Trick, {propsData: { currentTrick: trick }})
 
     expect(wrapper.find('div.next').exists()).toBe(false)
+  })
+
+  test('should emit next trick event if next button is clicked', () => {
+    const trick = game.nextTrick()
+    trick.add(ace.of(suits.hearts), game.players[0])
+    trick.add(ace.of(suits.hearts), game.players[1])
+    trick.add(ace.of(suits.hearts), game.players[2])
+    trick.add(ace.of(suits.hearts), game.players[3])
+    const wrapper = mount(Trick, {propsData: { currentTrick: trick }})
+
+    wrapper.vm.triggerNextTrick()
+
+    expect(wrapper.emitted().nextTrick.length).toBe(1)
   })
 })

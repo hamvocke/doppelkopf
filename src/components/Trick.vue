@@ -27,6 +27,11 @@ export default {
   },
   components: {
     Card
+  },
+  methods: {
+    triggerNextTrick: function (card) {
+      this.$emit('nextTrick')
+    }
   }
 }
 </script>
