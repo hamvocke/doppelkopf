@@ -1,4 +1,5 @@
 import { Game } from '@/models/game'
+import { jack, suits } from '@/models/card'
 
 const defaultPlayers = ['Player 1', 'Player 2', 'Player 3', 'Player 4']
 
@@ -37,4 +38,16 @@ test('game starts with an empty trick', () => {
 
   expect(game.currentTrick).toBeDefined()
   expect(game.currentTrick.cards).toHaveLength(0)
+})
+
+test('should give current trick to winner', () => {
+  const game = new Game(defaultPlayers)
+  game.currentTrick.add(jack.of(suits.hearts), game.players[3])
+  game.currentTrick.add(jack.of(suits.spades), game.players[2])
+  game.currentTrick.add(jack.of(suits.diamonds), game.players[1])
+  game.currentTrick.add(jack.of(suits.clubs), game.players[0])
+
+  game.finishTrick()
+
+  expect(game.players[0].trickStack.tricks).toHaveLength(1)
 })

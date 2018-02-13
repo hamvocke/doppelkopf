@@ -55,4 +55,8 @@ export default {
   display: inline-block;
 }
 
+.next:hover, .next:active {
+  background: rgba(255, 255, 255, 0.2)
+}
+
 </style>

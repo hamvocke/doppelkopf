@@ -2,6 +2,7 @@ import { Player } from '@/models/player'
 import { Deck } from '@/models/deck'
 import { Trick } from '@/models/trick'
 import { Hand } from '@/models/hand'
+import { find } from 'lodash'
 
 export class Game {
   constructor () {
@@ -27,5 +28,11 @@ export class Game {
 
   nextTrick () {
     return new Trick(this.players.length)
+  }
+
+  finishTrick () {
+    const playerName = this.currentTrick.winner()
+    const player = find(this.players, { name: playerName })
+    player.win(this.currentTrick)
   }
 }
