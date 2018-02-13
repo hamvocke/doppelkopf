@@ -1,6 +1,6 @@
 <template>
   <div class="trickStack">
-    <Card v-for='card in cards' is-covered="true" :key='card.cardId' />
+    <Card v-for='card in this.trickStack.cards()' is-covered='true' :key='card.cardId' :card='card' />
   </div>
 </template>
 
@@ -15,11 +15,6 @@ export default {
     trickStack: {
       type: Object,
       required: true
-    }
-  },
-  data: function () {
-    return {
-      cards: this.trickStack.cards()
     }
   }
 }

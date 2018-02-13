@@ -2,7 +2,7 @@
   <div id="app">
     <Notifications/>
     <h1>Doppelkopf</h1>
-    <Trick :currentTrick='game.currentTrick' />
+    <Trick :currentTrick='game.currentTrick' v-on:nextTrick="finishTrick"/>
     <Player v-for='player in game.players' :player='player' :key='player.name' />
   </div>
 </template>
@@ -24,6 +24,11 @@ export default {
   },
   components: {
     Player, Trick, Notifications
+  },
+  methods: {
+    finishTrick: function () {
+      this.game.finishTrick()
+    }
   }
 }
 </script>

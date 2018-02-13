@@ -17,7 +17,6 @@ describe('TrickStack.vue', () => {
     trickStack.add(trick)
     const wrapper = mount(TrickStack, { propsData: { trickStack: trickStack } })
     expect(trick.playedCards).toHaveLength(2)
-    expect(wrapper.vm.cards).toHaveLength(2)
     expect(wrapper.findAll('div.card')).toHaveLength(2)
   })
 })

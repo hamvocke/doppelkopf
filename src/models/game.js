@@ -34,5 +34,6 @@ export class Game {
     const playerName = this.currentTrick.winner()
     const player = find(this.players, { name: playerName })
     player.win(this.currentTrick)
+    this.currentTrick = this.nextTrick()
   }
 }

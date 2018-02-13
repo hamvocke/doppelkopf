@@ -6,7 +6,6 @@ export class Trick {
     this.expectedNumberOfCards = expectedNumberOfCards
     this.playedCards = []
     this.finished = false
-    this.subscribers = []
   }
 
   add (card, player) {
