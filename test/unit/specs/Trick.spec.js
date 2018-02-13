@@ -66,7 +66,7 @@ describe('Trick.vue', () => {
     trick.add(ace.of(suits.hearts), game.players[3])
     const wrapper = mount(Trick, {propsData: { currentTrick: trick }})
 
-    wrapper.vm.triggerNextTrick()
+    wrapper.find('div.next').trigger('click')
 
     expect(wrapper.emitted().nextTrick.length).toBe(1)
   })

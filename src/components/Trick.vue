@@ -5,7 +5,7 @@
     <div class="winner" v-if='winner'>
       Stich geht an: {{ winner }}
     </div>
-    <div class="next" v-if='currentTrick.isFinished()'>
+    <div class="next" v-if='currentTrick.isFinished()' v-on:click='triggerNextTrick()'>
       Next >>
     </div>
   </div>
@@ -29,7 +29,7 @@ export default {
     Card
   },
   methods: {
-    triggerNextTrick: function (card) {
+    triggerNextTrick: function () {
       this.$emit('nextTrick')
     }
   }
