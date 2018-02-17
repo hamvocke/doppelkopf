@@ -145,3 +145,48 @@ test('should sort hand by visual order', () => {
 
   expect(hand.cards).toEqual(sortedDeck)
 })
+
+test('should highlight matching non-trumps only when player needs to serve', () => {
+  const baseCard = ace.of(suits.spades)
+  const matchingNonTrump = ten.of(suits.spades)
+  const cards = [
+    queen.of(suits.spades),
+    ten.of(suits.diamonds),
+    queen.of(suits.diamonds),
+    matchingNonTrump
+  ]
+  const hand = new Hand(cards)
+
+  const playableCards = hand.playableCards(baseCard)
+
+  expect(playableCards).toEqual([matchingNonTrump])
+})
+
+test('should highlight trumps only when player needs to serve trump', () => {
+  const baseCard = ace.of(suits.diamonds)
+  const trumps = [ten.of(suits.hearts), queen.of(suits.clubs), ten.of(suits.diamonds)]
+  const cards = [
+    ...trumps,
+    ace.of(suits.clubs),
+    ten.of(suits.spades)
+  ]
+  const hand = new Hand(cards)
+
+  const playableCards = hand.playableCards(baseCard)
+
+  expect(playableCards).toEqual(expect.arrayContaining(trumps))
+})
+
+test('should highlight all cards when player cannot serve', () => {
+  const baseCard = ten.of(suits.spades)
+  const cards = [
+    queen.of(suits.diamonds),
+    ace.of(suits.diamonds),
+    ace.of(suits.clubs)
+  ]
+  const hand = new Hand(cards)
+
+  const playableCards = hand.playableCards(baseCard)
+
+  expect(playableCards).toEqual(cards)
+})

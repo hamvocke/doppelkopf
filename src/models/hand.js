@@ -37,4 +37,16 @@ export class Hand {
   sort () {
     return this.cards.sort(compare).reverse()
   }
+
+  playableCards (baseCard) {
+    if (!baseCard.isTrump()) {
+      const matchingNonTrumps = this.cards
+        .filter(card => card.suit === baseCard.suit)
+        .filter(card => card.isTrump() === false)
+      return matchingNonTrumps.length > 0 ? matchingNonTrumps : this.cards
+    }
+
+    const trumps = this.cards.filter(card => card.isTrump() === true)
+    return trumps.length > 0 ? trumps : this.cards
+  }
 }
