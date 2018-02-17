@@ -42,11 +42,11 @@ export class Hand {
     if (!baseCard.isTrump()) {
       const matchingNonTrumps = this.cards
         .filter(card => card.suit === baseCard.suit)
-        .filter(card => card.isTrump() === false)
+        .filter(card => !card.isTrump())
       return matchingNonTrumps.length > 0 ? matchingNonTrumps : this.cards
     }
 
-    const trumps = this.cards.filter(card => card.isTrump() === true)
+    const trumps = this.cards.filter(card => card.isTrump())
     return trumps.length > 0 ? trumps : this.cards
   }
 }
