@@ -8,7 +8,7 @@ const game = new Game()
 
 describe('Player.vue', () => {
   test('should display player\'s name', () => {
-    const player = new PlayerModel('some player', {}, false)
+    const player = new PlayerModel('some player', false)
     const wrapper = mount(Player, {propsData: { player: player }})
     expect(wrapper.find('.name').text()).toEqual('some player')
   })
@@ -26,7 +26,7 @@ describe('Player.vue', () => {
   })
 
   test('should hide cards for computer player', () => {
-    const player = new PlayerModel('some player', {}, false)
+    const player = new PlayerModel('some player', false)
     player.hand.cards = [ace.of(suits.spades)]
     const wrapper = mount(Player, {propsData: { player: player }})
 

@@ -4,6 +4,7 @@ import { Hand } from '@/models/hand'
 import { PlayedCard } from '@/models/playedCard'
 import { king, queen, suits } from '@/models/card'
 import { TrickStack } from '@/models/trickStack'
+import { trickRegistry } from '@/models/trickRegistry'
 
 let game
 let player
@@ -17,17 +18,13 @@ test('player has a name', () => {
   expect(player.name).toBe('Player 1')
 })
 
-test('player knows their game', () => {
-  expect(player.game).toBeDefined()
-})
-
 test('player is not human by default', () => {
-  expect(new Player('some player', {}).isHuman).toBe(false)
+  expect(new Player('some player').isHuman).toBe(false)
 })
 
 test('player has a trick stack', () => {
-  expect(new Player('some player', {}).trickStack).toBeDefined()
-  expect(new Player('some player', {}).trickStack instanceof TrickStack).toBe(true)
+  expect(new Player('some player').trickStack).toBeDefined()
+  expect(new Player('some player').trickStack instanceof TrickStack).toBe(true)
 })
 
 test('player can play card from hand', () => {
@@ -49,7 +46,7 @@ test('playing a card adds it to the current trick', () => {
 
   const expectedCard = new PlayedCard(queenOnHand, player.name)
 
-  expect(game.currentTrick.cards()).toEqual([expectedCard])
+  expect(trickRegistry.current().cards()).toEqual([expectedCard])
 })
 
 test('player cannot play card that is not on their hand', () => {

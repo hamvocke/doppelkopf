@@ -2,7 +2,7 @@
   <div id="app">
     <Notifications/>
     <h1>Doppelkopf</h1>
-    <Trick :currentTrick='game.currentTrick' v-on:nextTrick="finishTrick"/>
+    <Trick :currentTrick='currentTrick' v-on:nextTrick="finishTrick"/>
     <Player v-for='player in game.players' :player='player' :key='player.name' />
   </div>
 </template>
@@ -12,6 +12,7 @@ import Player from './components/Player'
 import Notifications from './components/Notifications'
 import Trick from './components/Trick'
 import { Game } from './models/game'
+import { trickRegistry } from './models/trickRegistry'
 
 const gameData = new Game()
 
@@ -19,7 +20,8 @@ export default {
   name: 'app',
   data () {
     return {
-      game: gameData
+      game: gameData,
+      currentTrick: trickRegistry.current()
     }
   },
   components: {

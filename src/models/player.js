@@ -1,11 +1,11 @@
 import { Hand } from '@/models/hand'
 import { TrickStack } from '@/models/trickStack'
+import { trickRegistry } from '@/models/trickRegistry'
 
 export class Player {
-  constructor (name, game, isHuman = false) {
+  constructor (name, isHuman = false) {
     this.name = name
     this.hand = new Hand()
-    this.game = game
     this.isHuman = isHuman
     this.trickStack = new TrickStack()
   }
@@ -17,7 +17,7 @@ export class Player {
       throw new Error('can\'t play a card that\'s not on the player\'s hand')
     }
 
-    this.game.currentTrick.add(cardToBePlayed, this)
+    trickRegistry.current().add(cardToBePlayed, this)
     this.hand.remove(cardToBePlayed)
   }
 

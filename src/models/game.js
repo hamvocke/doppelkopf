@@ -2,6 +2,7 @@ import { Player } from '@/models/player'
 import { Deck } from '@/models/deck'
 import { Trick } from '@/models/trick'
 import { Hand } from '@/models/hand'
+import { trickRegistry } from '@/models/trickRegistry'
 import { find } from 'lodash'
 
 export class Game {
@@ -9,13 +10,13 @@ export class Game {
     const isHuman = true
     const isComputer = false
     this.players = [
-      new Player('Player 1', this, isHuman),
-      new Player('Player 2', this, isComputer),
-      new Player('Player 3', this, isComputer),
-      new Player('Player 4', this, isComputer)
+      new Player('Player 1', isHuman),
+      new Player('Player 2', isComputer),
+      new Player('Player 3', isComputer),
+      new Player('Player 4', isComputer)
     ]
     this.deck = new Deck()
-    this.currentTrick = this.nextTrick()
+    this.nextTrick()
     this.deal()
   }
 
@@ -27,13 +28,13 @@ export class Game {
   }
 
   nextTrick () {
-    return new Trick(this.players.length)
+    trickRegistry.add(new Trick(this.players.length))
   }
 
   finishTrick () {
-    const playerName = this.currentTrick.winner()
+    const playerName = trickRegistry.current().winner()
     const player = find(this.players, { name: playerName })
-    player.win(this.currentTrick)
-    this.currentTrick = this.nextTrick()
+    player.win(trickRegistry.current())
+    this.nextTrick()
   }
 }

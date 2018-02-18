@@ -1,10 +1,14 @@
 import { Game } from '@/models/game'
+import { trickRegistry } from '@/models/trickRegistry'
 import { jack, suits } from '@/models/card'
 
-const defaultPlayers = ['Player 1', 'Player 2', 'Player 3', 'Player 4']
+let game
+
+beforeEach(() => {
+  game = new Game()
+})
 
 test('game has 4 players', () => {
-  const game = new Game(defaultPlayers)
   expect(game.players[0].name).toBe('Player 1')
   expect(game.players[1].name).toBe('Player 2')
   expect(game.players[2].name).toBe('Player 3')
@@ -12,7 +16,6 @@ test('game has 4 players', () => {
 })
 
 test('game has 1 human player', () => {
-  const game = new Game(defaultPlayers)
   expect(game.players[0].isHuman).toBe(true)
   expect(game.players[1].isHuman).toBe(false)
   expect(game.players[2].isHuman).toBe(false)
@@ -20,13 +23,10 @@ test('game has 1 human player', () => {
 })
 
 test('game has a deck', () => {
-  const game = new Game(defaultPlayers, [])
   expect(game.deck).toBeDefined()
 })
 
 test('game deals cards to each player', () => {
-  const game = new Game(defaultPlayers)
-
   expect(game.players[0].hand.cards).toHaveLength(10)
   expect(game.players[1].hand.cards).toHaveLength(10)
   expect(game.players[2].hand.cards).toHaveLength(10)
@@ -34,18 +34,14 @@ test('game deals cards to each player', () => {
 })
 
 test('game starts with an empty trick', () => {
-  const game = new Game(defaultPlayers)
-
-  expect(game.currentTrick).toBeDefined()
-  expect(game.currentTrick.cards).toHaveLength(0)
+  expect(trickRegistry.current()).toBeDefined()
 })
 
 test('should give current trick to winner', () => {
-  const game = new Game(defaultPlayers)
-  game.currentTrick.add(jack.of(suits.hearts), game.players[3])
-  game.currentTrick.add(jack.of(suits.spades), game.players[2])
-  game.currentTrick.add(jack.of(suits.diamonds), game.players[1])
-  game.currentTrick.add(jack.of(suits.clubs), game.players[0])
+  trickRegistry.current().add(jack.of(suits.hearts), game.players[3])
+  trickRegistry.current().add(jack.of(suits.spades), game.players[2])
+  trickRegistry.current().add(jack.of(suits.diamonds), game.players[1])
+  trickRegistry.current().add(jack.of(suits.clubs), game.players[0])
 
   game.finishTrick()
 

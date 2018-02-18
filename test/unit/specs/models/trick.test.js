@@ -1,98 +1,102 @@
-import { Game } from '@/models/game'
+import { Trick } from '@/models/trick'
+import { Player } from '@/models/player'
 import { PlayedCard } from '@/models/playedCard'
 import { queen, jack, king, suits } from '@/models/card'
 
-const game = new Game()
+const player1 = new Player('Player 1')
+const player2 = new Player('Player 2')
+const player3 = new Player('Player 3')
+const player4 = new Player('Player 4')
 
 test('new trick is empty', () => {
-  expect(game.nextTrick().cards).toHaveLength(0)
+  expect(new Trick(4).cards).toHaveLength(0)
 })
 
 test('can add card to trick', () => {
-  const trick = game.nextTrick()
+  const trick = new Trick(4)
   const cardToBePlayed = queen.of(suits.spades)
 
-  trick.add(cardToBePlayed, game.players[0])
+  trick.add(cardToBePlayed, player1)
 
-  const expectedCard = new PlayedCard(cardToBePlayed, game.players[0].name)
+  const expectedCard = new PlayedCard(cardToBePlayed, player1.name)
 
   expect(trick.cards()).toEqual([expectedCard])
 })
 
 test('should finish a trick if four cards have been played', () => {
-  const trick = game.nextTrick()
+  const trick = new Trick(4)
 
-  trick.add(queen.of(suits.spades), game.players[0])
-  trick.add(queen.of(suits.hearts), game.players[1])
-  trick.add(queen.of(suits.clubs), game.players[2])
-  trick.add(queen.of(suits.diamonds), game.players[3])
+  trick.add(queen.of(suits.spades), player1)
+  trick.add(queen.of(suits.hearts), player2)
+  trick.add(queen.of(suits.clubs), player3)
+  trick.add(queen.of(suits.diamonds), player4)
 
   expect(trick.isFinished()).toBeTruthy()
 })
 
 test('should find card played by player', () => {
-  const trick = game.nextTrick()
+  const trick = new Trick(4)
   const cardToBePlayed = queen.of(suits.spades)
 
-  trick.add(cardToBePlayed, game.players[0])
+  trick.add(cardToBePlayed, player1)
 
-  const expectedCard = new PlayedCard(cardToBePlayed, game.players[0].name)
+  const expectedCard = new PlayedCard(cardToBePlayed, player1.name)
 
-  expect(trick.cardBy(game.players[0])).toEqual(expectedCard)
-  expect(trick.cardBy(game.players[1])).toBeUndefined()
+  expect(trick.cardBy(player1)).toEqual(expectedCard)
+  expect(trick.cardBy(player2)).toBeUndefined()
 })
 
 test('should prohibit multiple cards from same player', () => {
-  const trick = game.nextTrick()
+  const trick = new Trick(4)
 
   function invalidMove () {
-    trick.add(queen.of(suits.spades), game.players[0])
-    trick.add(queen.of(suits.clubs), game.players[0])
+    trick.add(queen.of(suits.spades), player1)
+    trick.add(queen.of(suits.clubs), player1)
   }
 
-  expect(invalidMove).toThrowError('Player ' + game.players[0].name + ' already played a card')
+  expect(invalidMove).toThrowError('Player ' + player1.name + ' already played a card')
 })
 
 test('should find base card of a trick', () => {
-  const trick = game.nextTrick()
+  const trick = new Trick(4)
 
   const expectedBaseCard = queen.of(suits.spades)
 
-  trick.add(expectedBaseCard, game.players[0])
-  trick.add(queen.of(suits.clubs), game.players[1])
+  trick.add(expectedBaseCard, player1)
+  trick.add(queen.of(suits.clubs), player2)
 
   expect(trick.baseCard()).toEqual(expectedBaseCard)
 })
 
 test('should return undefined base card for empty trick', () => {
-  const trick = game.nextTrick()
+  const trick = new Trick(4)
 
   expect(trick.baseCard()).toBeUndefined()
 })
 
 test('winner for an empty trick should be undefined', () => {
-  const trick = game.nextTrick()
+  const trick = new Trick(4)
 
   expect(trick.winner()).toBeUndefined()
 })
 
 test('should find winner for a finished trick', () => {
-  const trick = game.nextTrick()
+  const trick = new Trick(4)
 
-  trick.add(queen.of(suits.hearts), game.players[3])
-  trick.add(jack.of(suits.clubs), game.players[0])
-  trick.add(king.of(suits.diamonds), game.players[1])
-  trick.add(jack.of(suits.hearts), game.players[2])
+  trick.add(queen.of(suits.hearts), player4)
+  trick.add(jack.of(suits.clubs), player1)
+  trick.add(king.of(suits.diamonds), player2)
+  trick.add(jack.of(suits.hearts), player3)
 
-  expect(trick.winner()).toEqual(game.players[3].name)
+  expect(trick.winner()).toEqual(player4.name)
 })
 
 test('should find winner for an unfinished trick', () => {
-  const trick = game.nextTrick()
+  const trick = new Trick(4)
 
-  trick.add(queen.of(suits.spades), game.players[2])
-  trick.add(queen.of(suits.diamonds), game.players[3])
-  trick.add(queen.of(suits.clubs), game.players[0])
+  trick.add(queen.of(suits.spades), player3)
+  trick.add(queen.of(suits.diamonds), player4)
+  trick.add(queen.of(suits.clubs), player1)
 
-  expect(trick.winner()).toEqual(game.players[0].name)
+  expect(trick.winner()).toEqual(player1.name)
 })
