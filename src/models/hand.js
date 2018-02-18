@@ -39,6 +39,10 @@ export class Hand {
   }
 
   playableCards (baseCard) {
+    if (!baseCard) {
+      return this.cards
+    }
+
     if (!baseCard.isTrump()) {
       const matchingNonTrumps = this.cards
         .filter(card => card.suit === baseCard.suit)

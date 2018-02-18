@@ -177,6 +177,20 @@ test('should highlight trumps only when player needs to serve trump', () => {
   expect(playableCards).toEqual(expect.arrayContaining(trumps))
 })
 
+test('should highlight all cards when no base card is defined', () => {
+  const baseCard = undefined
+  const cards = [
+    ace.of(suits.clubs),
+    ten.of(suits.spades),
+    queen.of(suits.diamonds)
+  ]
+  const hand = new Hand(cards)
+
+  const playableCards = hand.playableCards(baseCard)
+
+  expect(playableCards).toEqual(cards)
+})
+
 test('should highlight all cards when player cannot serve', () => {
   const baseCard = ten.of(suits.spades)
   const cards = [
