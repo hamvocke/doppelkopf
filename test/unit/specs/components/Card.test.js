@@ -69,4 +69,16 @@ describe('Card.vue', () => {
 
     expect(wrapper.find('.background').exists()).toBe(true)
   })
+
+  it('should render highlighted card', () => {
+    const wrapper = mount(Card, {
+      propsData: {
+        card: ace.of(suits.spades),
+        isCovered: false,
+        isHighlighted: true
+      }
+    })
+
+    expect(wrapper.classes()).toContain('highlighted')
+  })
 })

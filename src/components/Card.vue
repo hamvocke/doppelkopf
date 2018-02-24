@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-bind:class="{ selected: isSelected }">
+  <div class="card" v-bind:class="{ selected: isSelected, highlighted: isHighlighted }">
     <template v-if='isCovered'>
       <div class="background"></div>
     </template>
@@ -26,6 +26,10 @@ export default {
       required: false
     },
     isCovered: {
+      type: Boolean,
+      required: false
+    },
+    isHighlighted: {
       type: Boolean,
       required: false
     }
