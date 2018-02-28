@@ -1,4 +1,4 @@
-import { find } from 'lodash'
+import { find, uniqueId } from 'lodash'
 import { PlayedCard, beats } from '@/models/playedCard'
 
 export class Trick {
@@ -6,6 +6,7 @@ export class Trick {
     this.expectedNumberOfCards = expectedNumberOfCards
     this.playedCards = []
     this.finished = false
+    this.id = uniqueId('trick_')
   }
 
   add (card, player) {

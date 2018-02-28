@@ -1,5 +1,4 @@
 import { Game } from '@/models/game'
-import { trickRegistry } from '@/models/trickRegistry'
 import { jack, suits } from '@/models/card'
 
 let game
@@ -34,14 +33,14 @@ test('game deals cards to each player', () => {
 })
 
 test('game starts with an empty trick', () => {
-  expect(trickRegistry.current()).toBeDefined()
+  expect(game.currentTrick).toBeDefined()
 })
 
 test('should give current trick to winner', () => {
-  trickRegistry.current().add(jack.of(suits.hearts), game.players[3])
-  trickRegistry.current().add(jack.of(suits.spades), game.players[2])
-  trickRegistry.current().add(jack.of(suits.diamonds), game.players[1])
-  trickRegistry.current().add(jack.of(suits.clubs), game.players[0])
+  game.currentTrick.add(jack.of(suits.spades), game.players[2])
+  game.currentTrick.add(jack.of(suits.hearts), game.players[3])
+  game.currentTrick.add(jack.of(suits.diamonds), game.players[1])
+  game.currentTrick.add(jack.of(suits.clubs), game.players[0])
 
   game.finishTrick()
 

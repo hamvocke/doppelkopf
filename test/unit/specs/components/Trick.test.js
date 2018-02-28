@@ -1,6 +1,5 @@
 import Trick from '@/components/Trick'
 import { Game } from '@/models/game'
-import { trickRegistry } from '@/models/trickRegistry'
 import { mount } from '@vue/test-utils'
 import { ace, suits } from '@/models/card'
 
@@ -9,7 +8,7 @@ let trick
 
 beforeEach(() => {
   game = new Game()
-  trick = trickRegistry.current()
+  trick = game.currentTrick
 })
 
 describe('Trick.vue', () => {

@@ -1,6 +1,6 @@
 <template>
   <div class="trickStack">
-    <Card v-for='card in this.trickStack.cards()' is-covered='true' :key='card.cardId' :card='card' />
+    <Card v-for='card in this.trickStack.cards()' :is-covered='true' :key='card.cardId' :card='card' />
   </div>
 </template>
 
