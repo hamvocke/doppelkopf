@@ -2,6 +2,7 @@ import { Player } from '@/models/player'
 import { Deck } from '@/models/deck'
 import { Trick } from '@/models/trick'
 import { Hand } from '@/models/hand'
+import { RingQueue } from '@/models/ringQueue'
 import { find } from 'lodash'
 
 export class Game {
@@ -16,6 +17,7 @@ export class Game {
     ]
     this.deck = new Deck()
     this.currentTrick = this.nextTrick()
+    this.playerOrder = new RingQueue(this.players)
     this.deal()
   }
 
@@ -30,10 +32,15 @@ export class Game {
     return new Trick(this.players.length)
   }
 
+  waitingForPlayer () {
+    return this.playerOrder.next()
+  }
+
   finishTrick () {
     const playerName = this.currentTrick.winner()
-    const player = find(this.players, { name: playerName })
-    player.win(this.currentTrick)
+    const winner = find(this.players, { name: playerName })
+    winner.win(this.currentTrick)
     this.currentTrick = this.nextTrick()
+    this.playerOrder.prioritize(winner)
   }
 }

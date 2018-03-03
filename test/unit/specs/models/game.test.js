@@ -46,3 +46,20 @@ test('should give current trick to winner', () => {
 
   expect(game.players[0].trickStack.tricks).toHaveLength(1)
 })
+
+describe('player order', () => {
+  test('should start with human player', () => {
+    expect(game.waitingForPlayer()).toBe(game.players[0])
+  })
+
+  test('should put player on top of player order if player wins a trick', () => {
+    game.currentTrick.add(jack.of(suits.spades), game.players[2])
+    game.currentTrick.add(jack.of(suits.clubs), game.players[3])
+    game.currentTrick.add(jack.of(suits.diamonds), game.players[1])
+    game.currentTrick.add(jack.of(suits.clubs), game.players[0])
+
+    game.finishTrick()
+
+    expect(game.waitingForPlayer()).toBe(game.players[3])
+  })
+})
