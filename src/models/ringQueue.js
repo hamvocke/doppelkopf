@@ -15,11 +15,10 @@ export class RingQueue {
   prioritize (element) {
     const foundIndex = this.elements.indexOf(element)
 
-    if(foundIndex === -1) {
+    if (foundIndex === -1) {
       throw new Error(`can't prioritize unknown element '${element}'`)
     }
 
     this.currentIndex = foundIndex
-
   }
 }
