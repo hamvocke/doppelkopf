@@ -38,6 +38,10 @@ test('compare identity two cards', () => {
   expect(jack.of(suits.clubs).first()).not.toBe(jack.of(suits.clubs).first())
 })
 
+test('compare two cards with same face', () => {
+  expect(jack.of(suits.clubs).first()).not.toBe(jack.of(suits.clubs).second())
+})
+
 test('should get unique id of a card', () => {
   expect(jack.of(suits.clubs).first().cardId).toBe('J-♣-0')
 })

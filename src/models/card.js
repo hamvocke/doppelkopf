@@ -54,10 +54,6 @@ export class Card {
     return some(trumps, {'rank': this.rank, 'suit': this.suit})
   }
 
-  toString () {
-    return `${this.rank}${this.suit}`
-  }
-
   beats (anotherCard) {
     const thisIsTrump = this.isTrump()
     const otherCardIsTrump = anotherCard.isTrump()
