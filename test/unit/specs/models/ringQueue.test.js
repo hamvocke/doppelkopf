@@ -12,4 +12,24 @@ describe('ring queue', () => {
     expect(queue.next()).toBe(2)
     expect(queue.next()).toBe(1)
   })
+
+  test('should change order', () => {
+    const queue = new RingQueue([1, 2, 3])
+
+    queue.prioritize(2)
+
+    expect(queue.next()).toBe(2)
+    expect(queue.next()).toBe(3)
+    expect(queue.next()).toBe(1)
+  })
+
+  test('should throw exception when prioritizing unknown element', () => {
+    const queue = new RingQueue([1, 2, 3])
+
+    function invalidOperation () {
+      queue.prioritize(4)
+    }
+
+    expect(invalidOperation).toThrowError('can\'t prioritize unknown element \'4\'')
+  })
 })
