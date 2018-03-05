@@ -12,6 +12,15 @@ describe('App.vue', () => {
     expect(wrapper.findAll('.player')).toHaveLength(4)
   })
 
+  test('should render current players', () => {
+    const wrapper = mount(App, {
+      propsData: {
+        game: new Game()
+      }
+    })
+    expect(wrapper.find('.currentPlayer').text()).toBe('Waiting for: Player 1')
+  })
+
   test('should render current trick', () => {
     const wrapper = mount(App, {
       propsData: {
