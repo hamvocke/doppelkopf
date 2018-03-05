@@ -62,4 +62,9 @@ describe('player order', () => {
 
     expect(game.waitingForPlayer()).toBe(game.players[3])
   })
+
+  test('should switch to next player', () => {
+    game.nextPlayer()
+    expect(game.waitingForPlayer()).toBe(game.players[1])
+  })
 })

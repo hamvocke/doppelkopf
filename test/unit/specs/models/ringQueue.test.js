@@ -13,6 +13,12 @@ describe('ring queue', () => {
     expect(queue.next()).toBe(1)
   })
 
+  test('should return current element', () => {
+    const queue = new RingQueue([1, 2])
+    expect(queue.current()).toBe(1)
+    expect(queue.current()).toBe(1)
+  })
+
   test('should change order', () => {
     const queue = new RingQueue([1, 2, 3])
 

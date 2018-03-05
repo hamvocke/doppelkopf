@@ -12,6 +12,10 @@ export class RingQueue {
     return this.elements[this.currentIndex++ % this.elements.length]
   }
 
+  current () {
+    return this.elements[this.currentIndex]
+  }
+
   prioritize (element) {
     const foundIndex = this.elements.indexOf(element)
 

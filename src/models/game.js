@@ -32,8 +32,12 @@ export class Game {
     return new Trick(this.players.length)
   }
 
+  nextPlayer () {
+    this.playerOrder.next()
+  }
+
   waitingForPlayer () {
-    return this.playerOrder.next()
+    return this.playerOrder.current()
   }
 
   finishTrick () {
