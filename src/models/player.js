@@ -24,7 +24,7 @@ export class Player {
   }
 
   autoplay () {
-    const cardToBePlayed = this.behavior.cardToPlay(this.hand, this.game.currentTrick.baseCard)
+    const cardToBePlayed = this.behavior.cardToPlay(this.hand, this.game.currentTrick.baseCard())
     this.play(cardToBePlayed)
   }
 

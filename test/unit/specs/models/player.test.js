@@ -1,6 +1,7 @@
 import { Player } from '@/models/player'
 import { Game } from '@/models/game'
 import { Hand } from '@/models/hand'
+import { Card } from '@/models/card'
 import { PlayedCard } from '@/models/playedCard'
 import { king, queen, suits } from '@/models/card'
 import { TrickStack } from '@/models/trickStack'
@@ -79,12 +80,14 @@ test('player can win a trick', () => {
 test('should autoplay a card', () => {
   const queenOnHand = queen.of(suits.spades)
   const kingOnHand = king.of(suits.hearts)
+  player.game.currentTrick.baseCard = () => queen.of(suits.diamonds)
   player.hand = new Hand([queenOnHand, kingOnHand])
   player.behavior = {
-    cardToPlay: (hand, baseCard) => kingOnHand
+    cardToPlay: jest.fn((hand, baseCard) => kingOnHand)
   }
 
   player.autoplay()
 
   expect(player.hand.cards).not.toContain(kingOnHand)
+  expect(player.behavior.cardToPlay).toBeCalledWith(player.hand, expect.any(Card))
 })
