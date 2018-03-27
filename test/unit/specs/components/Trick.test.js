@@ -67,4 +67,12 @@ describe('Trick.vue', () => {
 
     expect(wrapper.emitted().nextTrick.length).toBe(1)
   })
+
+  test('should emit next move event if next move button is clicked', () => {
+    const wrapper = mount(Trick, {propsData: { currentTrick: trick }})
+
+    wrapper.find('div.nextMove').trigger('click')
+
+    expect(wrapper.emitted().nextMove.length).toBe(1)
+  })
 })

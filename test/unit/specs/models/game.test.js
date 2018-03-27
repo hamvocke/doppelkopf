@@ -47,6 +47,26 @@ test('should give current trick to winner', () => {
   expect(game.players[0].trickStack.tricks).toHaveLength(1)
 })
 
+test('should autoplay for computer players', () => {
+  const mockedComputerPlayer = game.players[1]
+  mockedComputerPlayer.autoplay = jest.fn()
+  game.playerOrder.prioritize(mockedComputerPlayer)
+
+  game.nextMove()
+
+  expect(mockedComputerPlayer.autoplay.mock.calls.length).toBe(1)
+})
+
+test('should not autoplay for human players', () => {
+  const mockedComputerPlayer = game.players[0]
+  mockedComputerPlayer.autoplay = jest.fn()
+  game.playerOrder.prioritize(mockedComputerPlayer)
+
+  game.nextMove()
+
+  expect(mockedComputerPlayer.autoplay.mock.calls.length).toBe(0)
+})
+
 describe('player order', () => {
   test('should start with human player', () => {
     expect(game.waitingForPlayer()).toBe(game.players[0])
@@ -64,7 +84,11 @@ describe('player order', () => {
   })
 
   test('should change active player on next move', () => {
+    const playFirstCardBehavior = {
+      cardToPlay: (hand) => hand.cards[0]
+    }
     game.playerOrder.prioritize(game.players[1])
+    game.players[1].behavior = playFirstCardBehavior
 
     game.nextMove()
 

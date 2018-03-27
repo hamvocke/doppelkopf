@@ -41,9 +41,9 @@ export class Game {
   }
 
   nextMove () {
-    // if (!this.waitingForPlayer().isHuman) {
-    //   this.waitingForPlayer().autoplay()
-    // }
+    if (!this.waitingForPlayer().isHuman) {
+      this.waitingForPlayer().autoplay()
+    }
     this.playerOrder.next()
   }
 

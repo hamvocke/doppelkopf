@@ -11,7 +11,8 @@ describe('Highest Card Behavior', () => {
     king.of(suits.hearts).first()
   ])
 
-  test('should play highest possible card', () =>
-    expect(behavior.cardToPlay(hand, ten.of(suits.diamonds))).toEqual(queen.of(suits.spades).second())
-  )
+  test('should play highest possible card', () => {
+    const cardToPlay = behavior.cardToPlay(hand, ten.of(suits.diamonds))
+    expect(cardToPlay).toEqual(queen.of(suits.spades).second())
+  })
 })

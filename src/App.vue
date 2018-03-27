@@ -2,7 +2,7 @@
   <div id="app">
     <Notifications/>
     <h1>Doppelkopf</h1>
-    <Trick :currentTrick='game.currentTrick' v-on:nextTrick="finishTrick"/>
+    <Trick :currentTrick='game.currentTrick' v-on:nextTrick="finishTrick" v-on:nextMove="nextMove"/>
     <div class="currentPlayer">
       Waiting for: {{ game.waitingForPlayer().name }}
     </div>
@@ -29,6 +29,9 @@ export default {
     Player, Trick, Notifications
   },
   methods: {
+    nextMove: function () {
+      this.game.nextMove()
+    },
     finishTrick: function () {
       this.game.finishTrick()
     }

@@ -9,7 +9,7 @@ export class Player {
     this.isHuman = isHuman
     this.trickStack = new TrickStack()
     this.game = game
-    this.behavior = HighestCardBehavior
+    this.behavior = new HighestCardBehavior()
   }
 
   play (card) {
@@ -21,7 +21,6 @@ export class Player {
 
     this.game.currentTrick.add(cardToBePlayed, this)
     this.hand.remove(cardToBePlayed)
-    this.game.nextMove()
   }
 
   autoplay () {
