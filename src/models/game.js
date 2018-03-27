@@ -40,6 +40,13 @@ export class Game {
     return this.playerOrder.current()
   }
 
+  nextMove () {
+    // if (!this.waitingForPlayer().isHuman) {
+    //   this.waitingForPlayer().autoplay()
+    // }
+    this.playerOrder.next()
+  }
+
   finishTrick () {
     const playerName = this.currentTrick.winner()
     const winner = find(this.players, { name: playerName })

@@ -63,8 +63,11 @@ describe('player order', () => {
     expect(game.waitingForPlayer()).toBe(game.players[3])
   })
 
-  test('should switch to next player', () => {
-    game.nextPlayer()
-    expect(game.waitingForPlayer()).toBe(game.players[1])
+  test('should change active player on next move', () => {
+    game.playerOrder.prioritize(game.players[1])
+
+    game.nextMove()
+
+    expect(game.waitingForPlayer()).toBe(game.players[2])
   })
 })

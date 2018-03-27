@@ -19,8 +19,16 @@ export class Player {
 
     this.game.currentTrick.add(cardToBePlayed, this)
     this.hand.remove(cardToBePlayed)
-    this.game.nextPlayer()
+    this.game.nextMove()
   }
+
+  // autoplay () {
+  //   const cardToBePlayed = this.hand.playableCards(this.game.currentTrick.baseCard())[0]
+  //
+  //   console.log(`${this.name}: playing ${this.card}`)
+  //
+  //   this.play(cardToBePlayed)
+  // }
 
   win (trick) {
     this.trickStack.add(trick)

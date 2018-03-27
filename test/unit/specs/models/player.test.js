@@ -80,12 +80,12 @@ test('should tell game to move to next player after making a move', () => {
   const queenOnHand = queen.of(suits.spades)
   player.hand = new Hand([queenOnHand])
   const gameMock = {
-    nextPlayer: jest.fn(),
+    nextMove: jest.fn(),
     currentTrick: { add: jest.fn() }
   }
   player.game = gameMock
 
   player.play(queenOnHand)
 
-  expect(gameMock.nextPlayer.mock.calls.length).toBe(1)
+  expect(gameMock.nextMove.mock.calls.length).toBe(1)
 })
