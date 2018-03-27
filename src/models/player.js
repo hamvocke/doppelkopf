@@ -1,5 +1,6 @@
 import { Hand } from '@/models/hand'
 import { TrickStack } from '@/models/trickStack'
+import { HighestCardBehavior } from '@/models/behaviors'
 
 export class Player {
   constructor (name, isHuman = false, game = {}) {
@@ -8,6 +9,7 @@ export class Player {
     this.isHuman = isHuman
     this.trickStack = new TrickStack()
     this.game = game
+    this.behavior = HighestCardBehavior
   }
 
   play (card) {
@@ -22,13 +24,10 @@ export class Player {
     this.game.nextMove()
   }
 
-  // autoplay () {
-  //   const cardToBePlayed = this.hand.playableCards(this.game.currentTrick.baseCard())[0]
-  //
-  //   console.log(`${this.name}: playing ${this.card}`)
-  //
-  //   this.play(cardToBePlayed)
-  // }
+  autoplay () {
+    const cardToBePlayed = this.behavior.cardToPlay(this.hand, this.game.currentTrick.baseCard)
+    this.play(cardToBePlayed)
+  }
 
   win (trick) {
     this.trickStack.add(trick)

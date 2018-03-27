@@ -89,3 +89,16 @@ test('should tell game to move to next player after making a move', () => {
 
   expect(gameMock.nextMove.mock.calls.length).toBe(1)
 })
+
+test('should autoplay a card', () => {
+  const queenOnHand = queen.of(suits.spades)
+  const kingOnHand = king.of(suits.hearts)
+  player.hand = new Hand([queenOnHand, kingOnHand])
+  player.behavior = {
+    cardToPlay: (hand, baseCard) => kingOnHand
+  }
+
+  player.autoplay()
+
+  expect(player.hand.cards).not.toContain(kingOnHand)
+})
