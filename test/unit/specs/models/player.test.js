@@ -1,9 +1,8 @@
 import { Player } from '@/models/player'
 import { Game } from '@/models/game'
 import { Hand } from '@/models/hand'
-import { Card } from '@/models/card'
 import { PlayedCard } from '@/models/playedCard'
-import { king, queen, suits } from '@/models/card'
+import { king, queen, suits, Card } from '@/models/card'
 import { TrickStack } from '@/models/trickStack'
 
 let game
