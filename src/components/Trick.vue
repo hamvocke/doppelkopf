@@ -48,7 +48,8 @@ export default {
   padding: 12px;
   border-radius: 8px;
   display: inline-block;
-  min-height: 220px;
+  min-height: 90%;
+  width: 100%;
   background: rgba(255, 255, 255, 0.3);
 }
 

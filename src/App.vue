@@ -1,12 +1,20 @@
 <template>
   <div id="app">
     <Notifications/>
-    <h1>Doppelkopf</h1>
-    <Trick :currentTrick='game.currentTrick' v-on:nextTrick="finishTrick" v-on:nextMove="nextMove"/>
-    <div class="currentPlayer">
-      Waiting for: {{ game.waitingForPlayer().name }}
+    <Player :player='game.players[1]' class='left' />
+    <Player :player='game.players[2]' class='top' />
+
+    <div class="center">
+      <Trick :currentTrick='game.currentTrick' v-on:nextTrick="finishTrick" v-on:nextMove="nextMove"/>
+      <div class="currentPlayer">
+        Waiting for: {{ game.waitingForPlayer().name }}
+      </div>
     </div>
-    <Player v-for='player in game.players' :player='player' :key='player.name' />
+
+
+    <Player :player='game.players[3]' class='right'/>
+    <Player :player='game.players[0]' class='bottom' />
+
   </div>
 </template>
 
@@ -56,5 +64,38 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+
+  display: grid;
+  grid-template-columns: 25% auto 25%;
+  grid-template-rows: 50px 15% auto 15%;
+  grid-template-areas:
+    "notifications notifications  notifications"
+    "top top top"
+    "left center right"
+    "bottom bottom bottom";
+}
+
+.trick {
+  grid-area: center;
+}
+
+.top {
+  grid-area: top;
+}
+
+.right {
+  grid-area: right;
+}
+
+.center {
+  grid-area: center;
+}
+
+.bottom {
+  grid-area: bottom;
+}
+
+.left {
+  grid-area: left;
 }
 </style>
