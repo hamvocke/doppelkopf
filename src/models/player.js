@@ -21,6 +21,7 @@ export class Player {
 
     this.game.currentTrick.add(cardToBePlayed, this)
     this.hand.remove(cardToBePlayed)
+    this.game.nextPlayer()
   }
 
   autoplay () {

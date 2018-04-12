@@ -44,7 +44,6 @@ export class Game {
     if (!this.waitingForPlayer().isHuman) {
       this.waitingForPlayer().autoplay()
     }
-    this.playerOrder.next()
   }
 
   finishTrick () {
