@@ -96,15 +96,15 @@ export default {
 }
 
 .red {
-  color: #f25f5c;
+  color: var(--red);
 }
 
 .black {
-  color: #50514f;
+  color: var(--black);
 }
 
 .background {
-  background: #f25f5c;
+  background-color: var(--red);
   height: 100%;
   width: 100%;
   display: inline-block;

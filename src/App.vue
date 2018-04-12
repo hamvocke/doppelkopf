@@ -48,6 +48,11 @@ export default {
 </script>
 
 <style>
+:root {
+  --red: #f25f5c;
+  --black: #50514f;
+}
+
 body {
   height: 100%;
   width: 100%;
