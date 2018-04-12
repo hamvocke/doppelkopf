@@ -5,11 +5,11 @@
     <div class="winner" v-if='winner'>
       Stich geht an: {{ winner }}
     </div>
-    <div class="button nextMove" v-on:click='triggerNextMove()'>
-      Next Move >>
-    </div>
     <div class="button next" v-if='currentTrick.isFinished()' v-on:click='triggerNextTrick()'>
       Next Trick >>
+    </div>
+    <div v-else class="button nextMove" v-on:click='triggerNextMove()'>
+      Next Move >>
     </div>
   </div>
 </template>

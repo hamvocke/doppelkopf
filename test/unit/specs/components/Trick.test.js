@@ -48,12 +48,14 @@ describe('Trick.vue', () => {
     const wrapper = mount(Trick, {propsData: { currentTrick: trick }})
 
     expect(wrapper.find('div.next').exists()).toBe(true)
+    expect(wrapper.find('div.nextMove').exists()).toBe(false)
   })
 
   test('should not render next button if trick is empty', () => {
     const wrapper = mount(Trick, {propsData: { currentTrick: trick }})
 
     expect(wrapper.find('div.next').exists()).toBe(false)
+    expect(wrapper.find('div.nextMove').exists()).toBe(true)
   })
 
   test('should emit next trick event if next button is clicked', () => {
