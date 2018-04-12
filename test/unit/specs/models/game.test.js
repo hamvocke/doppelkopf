@@ -72,6 +72,10 @@ describe('player order', () => {
     expect(game.waitingForPlayer()).toBe(game.players[0])
   })
 
+  test('should continue with first player after last', () => {
+    expect(game.waitingForPlayer()).toBe(game.players[0])
+  })
+
   test('should put player on top of player order if player wins a trick', () => {
     game.currentTrick.add(jack.of(suits.spades), game.players[2])
     game.currentTrick.add(jack.of(suits.clubs), game.players[3])
@@ -87,11 +91,11 @@ describe('player order', () => {
     const playFirstCardBehavior = {
       cardToPlay: (hand) => hand.cards[0]
     }
-    game.playerOrder.prioritize(game.players[1])
-    game.players[1].behavior = playFirstCardBehavior
+    game.playerOrder.prioritize(game.players[3])
+    game.players[3].behavior = playFirstCardBehavior
 
     game.nextMove()
 
-    expect(game.waitingForPlayer()).toBe(game.players[2])
+    expect(game.waitingForPlayer()).toBe(game.players[0])
   })
 })

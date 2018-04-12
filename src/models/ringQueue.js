@@ -9,7 +9,8 @@ export class RingQueue {
   }
 
   next () {
-    return this.elements[this.currentIndex++ % this.elements.length]
+    this.currentIndex = (this.currentIndex + 1) % this.elements.length
+    return this.elements[this.currentIndex]
   }
 
   current () {

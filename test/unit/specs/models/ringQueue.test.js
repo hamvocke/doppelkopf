@@ -8,9 +8,9 @@ describe('ring queue', () => {
 
   test('should return next element', () => {
     const queue = new RingQueue([1, 2])
-    expect(queue.next()).toBe(1)
     expect(queue.next()).toBe(2)
     expect(queue.next()).toBe(1)
+    expect(queue.next()).toBe(2)
   })
 
   test('should return current element', () => {
@@ -19,12 +19,19 @@ describe('ring queue', () => {
     expect(queue.current()).toBe(1)
   })
 
+  test('should return current element after starting new', () => {
+    const queue = new RingQueue([1, 2])
+    expect(queue.next()).toBe(2)
+    expect(queue.next()).toBe(1)
+    expect(queue.current()).toBe(1)
+  })
+
   test('should change order', () => {
     const queue = new RingQueue([1, 2, 3])
 
     queue.prioritize(2)
 
-    expect(queue.next()).toBe(2)
+    expect(queue.current()).toBe(2)
     expect(queue.next()).toBe(3)
     expect(queue.next()).toBe(1)
   })
