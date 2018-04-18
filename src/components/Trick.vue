@@ -5,12 +5,6 @@
     <div class="winner" v-if='winner'>
       Stich geht an: {{ winner }}
     </div>
-    <div class="button next" v-if='currentTrick.isFinished()' v-on:click='triggerNextTrick()'>
-      Next Trick >>
-    </div>
-    <div v-else class="button nextMove" v-on:click='triggerNextMove()'>
-      Next Move >>
-    </div>
   </div>
 </template>
 
@@ -30,14 +24,6 @@ export default {
   },
   components: {
     Card
-  },
-  methods: {
-    triggerNextMove: function () {
-      this.$emit('nextMove')
-    },
-    triggerNextTrick: function () {
-      this.$emit('nextTrick')
-    }
   }
 }
 </script>
@@ -51,19 +37,6 @@ export default {
   min-height: 90%;
   width: 100%;
   background: rgba(255, 255, 255, 0.3);
-}
-
-.button {
-  padding: 12px;
-  margin: 12px;
-  border: 1px solid #000;
-  color: #000;
-  border-radius: 4px;
-  display: inline-block;
-}
-
-.button:hover, .button:active {
-  background: rgba(255, 255, 255, 0.2)
 }
 
 </style>
