@@ -28,11 +28,13 @@ describe('Card.vue', () => {
     const wrapper = mount(Card, {
       propsData: {
         card: ace.of(suits.clubs),
-        isCovered: false
+        isCovered: false,
+        side: false
       }
     })
     expect(wrapper.find('.suitTop').classes()).toContain('black')
     expect(wrapper.find('.suitTop').classes()).not.toContain('red')
+    expect(wrapper.classes()).not.toContain('side')
   })
 
   it('should render selected card', () => {
@@ -44,6 +46,17 @@ describe('Card.vue', () => {
       }
     })
     expect(wrapper.classes()).toContain('selected')
+  })
+
+  it('should cards sideways', () => {
+    const wrapper = mount(Card, {
+      propsData: {
+        card: ace.of(suits.spades),
+        isSelected: true,
+        side: true
+      }
+    })
+    expect(wrapper.classes()).toContain('side')
   })
 
   it('covered card should not show rank and suit', () => {

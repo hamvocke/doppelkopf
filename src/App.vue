@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Notifications/>
-    <Player :player='game.players[1]' class='left' />
+    <Player :player='game.players[1]' :side='true' class='left' />
     <Player :player='game.players[2]' class='top' />
 
     <div class="center">
@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <Player :player='game.players[3]' class='right'/>
+    <Player :player='game.players[3]' :side='true' class='right'/>
     <Player :player='game.players[0]' class='bottom' />
 
     <Controls :currentTrick='game.currentTrick'  v-on:nextTrick="finishTrick" v-on:nextMove="nextMove"/>
@@ -53,8 +53,6 @@ export default {
 @import "assets/css/colors.css";
 
 body {
-  height: 100%;
-  width: 100%;
   padding: 0;
   margin: 0;
   background: var(--background);
@@ -67,16 +65,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-
+  height: 100vh;
   display: grid;
-  grid-template-columns: 25% auto 25%;
-  grid-template-rows: 50px 20% auto 20%;
+  grid-template-columns: 15% auto 15%;
+  grid-template-rows: 50px 200px auto 300px 50px;
   grid-template-areas:
     "notifications notifications notifications"
-    "top top top"
+    "left top right"
     "left center right"
-    "bottom bottom bottom"
+    "left bottom right"
     "controls controls controls";
+  justify-content: stretch;
 }
 
 .trick {

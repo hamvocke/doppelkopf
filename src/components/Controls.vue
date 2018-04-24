@@ -37,7 +37,7 @@ export default {
   border: 1px solid color(var(--background) lightness(80%));
   color: #000;
   border-radius: 4px;
-  display: inline-block;
+  display: inline;
 }
 
 .button:hover, .button:active {

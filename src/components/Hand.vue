@@ -1,7 +1,7 @@
 <template>
   <div class="hand">
     <div class="cards">
-      <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' v-on:click.native='select(card)' />
+      <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' :side='side' v-on:click.native='select(card)' />
     </div>
     <div class="info" v-if='!isCovered'>
       <div class="party">
@@ -22,6 +22,10 @@ export default {
       required: true
     },
     isCovered: {
+      type: Boolean,
+      required: false
+    },
+    side: {
       type: Boolean,
       required: false
     }
@@ -50,6 +54,12 @@ export default {
 </script>
 
 <style scoped>
+.hand {
+  margin: auto;
+  text-align: center;
+  display: block;
+}
+
 .info > div {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
@@ -57,5 +67,4 @@ export default {
   padding: 12px;
   display: inline-block;
 }
-
 </style>
