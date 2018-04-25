@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style>
-@import "assets/css/colors.css";
+@import "./assets/css/colors.css";
 
 body {
   padding: 0;

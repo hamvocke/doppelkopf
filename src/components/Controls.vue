@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style scoped>
-@import "assets/css/colors.css";
+@import "../assets/css/colors.css";
 
 .controls {
   grid-area: controls;

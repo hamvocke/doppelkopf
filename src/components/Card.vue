@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style scoped>
-@import "assets/css/colors.css";
+@import "../assets/css/colors.css";
 
 .card {
   position: relative;
