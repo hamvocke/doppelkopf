@@ -57,7 +57,7 @@ body {
   margin: 0;
   background: var(--background);
   /* background: linear-gradient(to right, #00CDAC, #02AAB0); */
-  background: linear-gradient(to left, #d3cce3, #e9e4f0);
+  background: radial-gradient(#e9e4f0, #d3cce3);
 }
 
 #app {
