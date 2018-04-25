@@ -1,7 +1,7 @@
 <template>
   <div class="hand">
-    <div class="cards">
-      <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' :side='side' v-on:click.native='select(card)' />
+    <div class="cards" :class="position">
+      <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' :position='position' v-on:click.native='select(card)' />
     </div>
     <div class="info" v-if='!isCovered'>
       <div class="party">
@@ -25,8 +25,8 @@ export default {
       type: Boolean,
       required: false
     },
-    side: {
-      type: Boolean,
+    position: {
+      type: String,
       required: false
     }
   },
@@ -58,6 +58,58 @@ export default {
   margin: auto;
   text-align: center;
   display: block;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 12px;
+}
+
+.top {
+  flex-direction: row-reverse;
+}
+
+.top .card, .bottom .card {
+  margin-left: -24px;
+}
+
+.top .card:last-child, .bottom .card:first-child {
+  margin-left: 0;
+}
+
+.left .card, .right .card {
+  margin-top: -48px;
+}
+
+.top .card {
+  transform: rotate(180deg);
+}
+
+.left .card {
+  transform: rotate(90deg);
+}
+
+.right .card {
+  transform: rotate(-90deg);
+}
+
+.left .card:first-child, .right .card:last-child {
+  margin-top: 0;
+}
+
+.bottom {
+  flex-direction: row;
+}
+
+.left {
+  flex-direction: column;
+}
+
+.right {
+  flex-direction: column-reverse;
 }
 
 .info > div {

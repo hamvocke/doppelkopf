@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Notifications/>
-    <Player :player='game.players[1]' :side='true' class='left' />
-    <Player :player='game.players[2]' class='top' />
+    <Player :player='game.players[1]' position='left' class='left' />
+    <Player :player='game.players[2]' position='top' class='top' />
 
     <div class="center">
       <Trick :currentTrick='game.currentTrick'/>
@@ -11,8 +11,8 @@
       </div>
     </div>
 
-    <Player :player='game.players[3]' :side='true' class='right'/>
-    <Player :player='game.players[0]' class='bottom' />
+    <Player :player='game.players[3]' position='right' class='right'/>
+    <Player :player='game.players[0]' position='bottom' class='bottom' />
 
     <Controls :currentTrick='game.currentTrick'  v-on:nextTrick="finishTrick" v-on:nextMove="nextMove"/>
 

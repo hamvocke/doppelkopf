@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-bind:class="{ selected: isSelected, highlighted: isHighlighted, side: side }">
+  <div class="card" :class="{ selected: isSelected, highlighted: isHighlighted }">
     <template v-if='isCovered'>
       <div class="background"></div>
     </template>
@@ -32,10 +32,6 @@ export default {
     isHighlighted: {
       type: Boolean,
       required: false
-    },
-    side: {
-      type: Boolean,
-      required: false
     }
   },
   computed: {
@@ -54,33 +50,16 @@ export default {
 
 .card {
   position: relative;
+  top: 0px; /* necessary for css transition */
   background: #fff;
   padding: 6px;
-  margin: 0 6px 18px -32px;
   border-radius: 12px;
-  display: inline-block;
   text-align: center;
   height: 90px;
   width: 60px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.25s cubic-bezier(.25,.8,.25,1);
   user-select: none;
-}
-
-.card:first-of-type {
-  margin-left: 0;
-}
-
-.card.side {
-  /* TODO: use flex layout instead */
-  width: 90px;
-  height: 60px;
-  display: block;
-  margin: -20px 0;
-}
-
-.card.side:first-of-type {
-  margin: 0;
 }
 
 .selected {

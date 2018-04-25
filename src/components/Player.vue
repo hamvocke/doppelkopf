@@ -4,7 +4,7 @@
       <div class="name">{{ player.name }}</div>
       <label><input type="checkbox" v-model="isCovered"> Hide Cards</label>
     </div>
-    <Hand :hand="hand" :is-covered="isCovered" :side='side' v-on:play="play"/>
+    <Hand :hand="hand" :is-covered="isCovered" :position='position' v-on:play="play"/>
     <TrickStack :trickStack="player.trickStack"/>
   </div>
 </template>
@@ -20,8 +20,8 @@ export default {
       type: Object,
       required: true
     },
-    side: {
-      type: Boolean,
+    position: {
+      type: String,
       required: false
     }
   },

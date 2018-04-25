@@ -20,6 +20,11 @@ describe('Hand.vue', () => {
     expect(wrapper.findAll('div.card').length).toBe(4)
   })
 
+  it('should render card position', () => {
+    const wrapper = mount(Hand, { propsData: { hand: reHand, position: 'left' } })
+    expect(wrapper.find('div.cards').classes()).toContain('left')
+  })
+
   test('should render cards covered', () => {
     const wrapper = mount(Hand, { propsData: { hand: reHand, isCovered: true } })
     const firstCard = wrapper.findAll('div.card').at(0)
