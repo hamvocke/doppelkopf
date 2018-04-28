@@ -60,6 +60,10 @@ body {
   background: radial-gradient(#e9e4f0, #d3cce3);
 }
 
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
 #app {
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;

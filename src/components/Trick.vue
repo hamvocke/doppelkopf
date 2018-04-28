@@ -31,6 +31,7 @@ export default {
 
 .trick {
   padding: 12px;
+  margin: 12px;
   border-radius: 8px;
   min-height: 90%;
   background: rgba(255, 255, 255, 0.3);

@@ -55,8 +55,8 @@ export default {
   padding: 6px;
   border-radius: 12px;
   text-align: center;
-  height: 90px;
-  width: 60px;
+  height: 100px;
+  width: 70px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.25s cubic-bezier(.25,.8,.25,1);
   user-select: none;
