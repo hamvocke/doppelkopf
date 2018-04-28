@@ -21,11 +21,14 @@ export default {
 
 <style scoped>
 
+.notifications {
+  grid-area: notifications;
+}
+
 .message {
-  position: relative;
-  top: 0px;
+  text-align: center;
   margin: 0px auto 6px;
-  width: 80%;
+  width: 100%;
   padding: 6px;
   background: rgba(255, 255, 255, 0.3);
   color: #333;
