@@ -3,6 +3,7 @@ import { Deck } from '@/models/deck'
 import { Trick } from '@/models/trick'
 import { Hand } from '@/models/hand'
 import { RingQueue } from '@/models/ringQueue'
+import { Scorecard } from '@/models/scorecard'
 import { find } from 'lodash'
 
 export class Game {
@@ -18,6 +19,7 @@ export class Game {
     this.deck = new Deck()
     this.currentTrick = this.nextTrick()
     this.playerOrder = new RingQueue(this.players)
+    this.scorecard = new Scorecard(this.players)
     this.deal()
   }
 

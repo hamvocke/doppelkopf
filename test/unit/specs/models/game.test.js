@@ -36,6 +36,10 @@ test('game starts with an empty trick', () => {
   expect(game.currentTrick).toBeDefined()
 })
 
+test('game starts with an empty scorecard', () => {
+  expect(game.scorecard).toBeDefined()
+})
+
 test('should give current trick to winner', () => {
   game.currentTrick.add(jack.of(suits.spades), game.players[2])
   game.currentTrick.add(jack.of(suits.hearts), game.players[3])
