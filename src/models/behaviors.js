@@ -1,5 +1,7 @@
+import { playableCards } from '@/models/playableCardFinder'
+
 export class HighestCardBehavior {
   cardToPlay (hand, baseCard) {
-    return hand.playableCards(baseCard)[0]
+    return playableCards(hand.cards, baseCard)[0]
   }
 }
