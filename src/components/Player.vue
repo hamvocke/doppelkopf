@@ -4,7 +4,7 @@
       <div class="name">{{ player.name }}</div>
       <label><input type="checkbox" v-model="isCovered"> Hide Cards</label>
     </div>
-    <Hand :hand="hand" :is-covered="isCovered" :position='position' v-on:play="play"/>
+    <Hand :hand="hand" :is-covered="isCovered" :position='position' :playable-cards="playable()" v-on:play="play"/>
     <TrickStack :trickStack="player.trickStack"/>
   </div>
 </template>
@@ -12,6 +12,7 @@
 <script>
 import Hand from './Hand'
 import TrickStack from './TrickStack'
+import { playableCards } from '@/models/playableCardFinder'
 
 export default {
   name: 'Player',
@@ -37,6 +38,9 @@ export default {
   methods: {
     play: function (card) {
       this.player.play(card)
+    },
+    playable: function () {
+      return playableCards(this.player.hand.cards, this.player.game.currentTrick.baseCard())
     }
   }
 }

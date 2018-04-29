@@ -103,4 +103,8 @@ export default {
   border-radius: 6px;
 }
 
+.highlighted {
+  background: hotpink;
+}
+
 </style>

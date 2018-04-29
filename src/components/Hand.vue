@@ -1,7 +1,7 @@
 <template>
   <div class="hand">
     <div class="cards" :class="position">
-      <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' :position='position' v-on:click.native='select(card)' />
+      <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' :is-highlighted='highlight(card)' :position='position' v-on:click.native='select(card)' />
     </div>
     <div class="info" v-if='!isCovered'>
       <div class="party">
@@ -28,6 +28,10 @@ export default {
     position: {
       type: String,
       required: false
+    },
+    playableCards: {
+      type: Array,
+      required: true
     }
   },
   components: {
@@ -48,6 +52,9 @@ export default {
       } else {
         this.selectedCard = card
       }
+    },
+    highlight: function (card) {
+      return this.playableCards.includes(card)
     }
   }
 }
