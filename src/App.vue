@@ -71,19 +71,13 @@ body {
   text-align: center;
   height: 100vh;
   display: grid;
-  grid-template-columns: 15% auto 15%;
-  grid-template-rows: 50px 200px auto 300px 50px;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto 50px;
   grid-template-areas:
-    "notifications notifications notifications"
-    "left top right"
+    "top top top"
     "left center right"
-    "left bottom right"
+    "bottom bottom bottom"
     "controls controls controls";
-  justify-content: stretch;
-}
-
-.trick {
-  grid-area: center;
 }
 
 .top {

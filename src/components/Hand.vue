@@ -62,9 +62,7 @@ export default {
 
 <style scoped>
 .hand {
-  margin: auto;
-  text-align: center;
-  display: block;
+  flex: 2 1;
 }
 
 .cards {
@@ -88,19 +86,7 @@ export default {
 }
 
 .left .card, .right .card {
-  margin-top: -48px;
-}
-
-.top .card {
-  transform: rotate(180deg);
-}
-
-.left .card {
-  transform: rotate(90deg);
-}
-
-.right .card {
-  transform: rotate(-90deg);
+  margin-top: -42px;
 }
 
 .left .card:first-child, .right .card:last-child {
@@ -125,5 +111,23 @@ export default {
   font-size: 1.2em;
   padding: 12px;
   display: inline-block;
+}
+
+@media screen and (max-width: 680px) {
+  .top .card, .bottom .card {
+    margin-left: -12px;
+  }
+
+  .top .card:last-child, .bottom .card:first-child {
+    margin-left: 0;
+  }
+
+  .left .card, .right .card {
+    margin-top: -24px;
+  }
+
+  .left .card:first-child, .right .card:last-child {
+    margin-top: 0;
+  }
 }
 </style>

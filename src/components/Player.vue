@@ -4,8 +4,10 @@
       <div class="name">{{ player.name }}</div>
       <label><input type="checkbox" v-model="isCovered"> Hide Cards</label>
     </div>
-    <Hand :hand="hand" :is-covered="isCovered" :position='position' :playable-cards="playable()" v-on:play="play"/>
-    <TrickStack :trickStack="player.trickStack"/>
+    <div class="container">
+      <Hand :hand="hand" :is-covered="isCovered" :position='position' :playable-cards="playable()" v-on:play="play"/>
+      <TrickStack :trickStack="player.trickStack"/>
+    </div>
   </div>
 </template>
 
@@ -52,14 +54,17 @@ export default {
   margin: 6px;
 }
 
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .info {
   text-align: center;
-  padding: 0 0 12px 0;
 }
 
 .name {
   font-weight: bold;
-  line-height: 2em;
 }
 
 </style>

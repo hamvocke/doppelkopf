@@ -22,7 +22,8 @@ export default {
 <style scoped>
 
 .notifications {
-  grid-area: notifications;
+  position: absolute;
+  top: 0px;
 }
 
 .message {

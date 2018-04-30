@@ -1,12 +1,12 @@
 <template>
-  <div class="card" :class="{ selected: isSelected, highlighted: isHighlighted }">
+  <div class="card" :class="cardClasses">
     <template v-if='isCovered'>
       <div class="background"></div>
     </template>
     <template v-else>
-      <span class="suitTop" v-bind:class='classObject'>{{ card.suit }}</span>
+      <span class="suitTop" :class='classObject'>{{ card.suit }}</span>
       <span class="rank">{{ card.rank }}</span>
-      <span class="suitBottom" v-bind:class='classObject'>{{ card.suit }}</span>
+      <span class="suitBottom" :class='classObject'>{{ card.suit }}</span>
     </template>
   </div>
 </template>
@@ -32,6 +32,10 @@ export default {
     isHighlighted: {
       type: Boolean,
       required: false
+    },
+    position: {
+      type: String,
+      required: false
     }
   },
   computed: {
@@ -39,6 +43,16 @@ export default {
       return {
         'red': this.card.suit === suits.hearts || this.card.suit === suits.diamonds,
         'black': this.card.suit === suits.clubs || this.card.suit === suits.spades
+      }
+    },
+    cardClasses: function () {
+      return {
+        'selected': this.isSelected,
+        'highlighted': this.isHighlighted,
+        'left': this.position === 'left',
+        'right': this.position === 'right',
+        'top': this.position === 'top',
+        'bottom': this.position === 'bottom'
       }
     }
   }
@@ -55,11 +69,19 @@ export default {
   padding: 6px;
   border-radius: 12px;
   text-align: center;
-  height: 100px;
-  width: 70px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.25s cubic-bezier(.25,.8,.25,1);
   user-select: none;
+}
+
+.top, .bottom {
+  height: 100px;
+  width: 70px;
+}
+
+.left, .right {
+  height: 70px;
+  width: 100px;
 }
 
 .selected {
@@ -104,7 +126,47 @@ export default {
 }
 
 .highlighted {
-  background: hotpink;
+
+}
+
+@media screen and (max-width: 680px) {
+  .card {
+    border-radius: 8px;
+    padding: 4px;
+  }
+
+  .top, .bottom {
+    height: 60px;
+    width: 40px;
+  }
+
+  .left, .right {
+    height: 40px;
+    width: 60px;
+  }
+
+  .selected {
+    top: -6px;
+    box-shadow: 0 20px 38px rgba(0,0,0,0.25), 0 15px 12px rgba(0,0,0,0.22);
+    z-index: 9999;
+  }
+
+  .rank {
+    line-height: 60px;
+    font-size: 1.3em;
+  }
+
+  .suitTop {
+    font-size: 1em;
+    left: 4px;
+    bottom: 4px;
+  }
+
+  .suitBottom {
+    font-size: 1em;
+    right: 4px;
+    bottom: 4px;
+  }
 }
 
 </style>

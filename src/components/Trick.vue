@@ -1,6 +1,8 @@
 <template>
   <div class="trick">
-    <Card v-for='playedCard in cards' :card='playedCard.card' :key='playedCard.card.suit-playedCard.card.rank' />
+    <div class="cards">
+      <Card v-for='playedCard in cards' :card='playedCard.card' :key='playedCard.card.suit-playedCard.card.rank' />
+    </div>
     <div class="winner" v-if='winner'>
       Stich geht an: {{ winner }}
     </div>
@@ -35,6 +37,12 @@ export default {
   border-radius: 8px;
   min-height: 90%;
   background: rgba(255, 255, 255, 0.3);
+  justify-content: center;
+}
+
+.cards {
+  display: flex;
+  justify-content: space-around;
 }
 
 </style>

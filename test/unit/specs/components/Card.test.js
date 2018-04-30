@@ -47,6 +47,17 @@ describe('Card.vue', () => {
     expect(wrapper.classes()).toContain('selected')
   })
 
+  it('should apply position class', () => {
+    const wrapper = mount(Card, {
+      propsData: {
+        card: ace.of(suits.spades),
+        isSelected: true,
+        position: 'left'
+      }
+    })
+    expect(wrapper.classes()).toContain('left')
+  })
+
   it('covered card should not show rank and suit', () => {
     const wrapper = mount(Card, {
       propsData: {

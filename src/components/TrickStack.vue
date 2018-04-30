@@ -1,11 +1,12 @@
 <template>
   <div class="trickStack" v-if='this.trickStack.tricks.length > 0'>
+    <div class="cards">
+      <Card :is-covered='true' :card='this.trickStack.cards()[0]' />
+      <Card :is-covered='true' :card='this.trickStack.cards()[1]' />
+      <Card :is-covered='true' :card='this.trickStack.cards()[2]' />
+      <Card :is-covered='true' :card='this.trickStack.cards()[3]' />
+    </div>
     <p class="trickCount">Stiche: {{ this.trickStack.tricks.length }}</p>
-
-    <Card :is-covered='true' :card='this.trickStack.cards()[0]' />
-    <Card :is-covered='true' :card='this.trickStack.cards()[1]' />
-    <Card :is-covered='true' :card='this.trickStack.cards()[2]' />
-    <Card :is-covered='true' :card='this.trickStack.cards()[3]' />
   </div>
 </template>
 
@@ -29,13 +30,25 @@ export default {
 @import "../assets/css/colors.css";
 
 .trickStack {
-  margin: 6px;
-  padding: 6px;
-  display: inline-block;
+  margin-top: 12px;
+  flex: 1 1;
+}
+
+.trickCount {
+  display: block;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
 }
 
 .card {
-  margin-left: -60px;
+  margin-left: -40px;
+}
+
+.card:first-of-type {
+  margin-left: 0;
 }
 
 </style>
