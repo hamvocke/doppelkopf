@@ -2,10 +2,9 @@
   <div class="player">
     <div class="info">
       <div class="name">{{ player.name }}</div>
-      <label><input type="checkbox" v-model="isCovered"> Hide Cards</label>
     </div>
     <div class="container">
-      <Hand :hand="hand" :is-covered="isCovered" :position='position' :playable-cards="playable()" v-on:play="play"/>
+      <Hand :hand="hand" :is-covered="isCovered" :is-selectable='isHandSelectable' :position='position' :playable-cards="playable()" v-on:play="play"/>
       <TrickStack :trickStack="player.trickStack"/>
     </div>
   </div>
@@ -31,7 +30,8 @@ export default {
   data: function () {
     return {
       hand: this.player.hand,
-      isCovered: !this.player.isHuman
+      isCovered: !this.player.isHuman,
+      isHandSelectable: this.player.isHuman
     }
   },
   components: {

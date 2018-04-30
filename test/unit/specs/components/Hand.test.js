@@ -47,25 +47,31 @@ describe('Hand.vue', () => {
   })
 
   test('should keep track of selected card', () => {
-    const wrapper = mount(Hand, { propsData: { hand: kontraHand, playableCards: [] } })
+    const wrapper = mount(Hand, { propsData: { hand: kontraHand, playableCards: [], isSelectable: true } })
     const cardToBeSelected = kontraHand.cards[0]
     wrapper.vm.select(cardToBeSelected)
     expect(wrapper.vm.selectedCard).toEqual(cardToBeSelected)
   })
 
   test('clicking on card should select card', () => {
-    const wrapper = mount(Hand, { propsData: { hand: kontraHand, playableCards: [] } })
+    const wrapper = mount(Hand, { propsData: { hand: kontraHand, playableCards: [], isSelectable: true } })
     wrapper.findAll('div.card').at(0).trigger('click')
     expect(wrapper.vm.selectedCard).toEqual(kontraHand.cards[0])
   })
 
   test('trigger play event when clicking on already selected card', () => {
-    const wrapper = mount(Hand, { propsData: { hand: kontraHand, playableCards: [] } })
+    const wrapper = mount(Hand, { propsData: { hand: kontraHand, playableCards: [], isSelectable: true } })
     const card = kontraHand.cards[1]
 
     wrapper.vm.select(card)
     wrapper.vm.select(card)
 
     expect(wrapper.emitted().play.length).toBe(1)
+  })
+
+  test('should not select cards if hand is marked as not selectable', () => {
+    const wrapper = mount(Hand, { propsData: { hand: kontraHand, playableCards: [], selectable: false } })
+    wrapper.findAll('div.card').at(0).trigger('click')
+    expect(wrapper.vm.selectedCard).toEqual({})
   })
 })

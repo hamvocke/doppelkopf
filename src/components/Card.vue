@@ -4,9 +4,9 @@
       <div class="background"></div>
     </template>
     <template v-else>
-      <span class="suitTop" :class='classObject'>{{ card.suit }}</span>
+      <span class="suitTop" :class='colorClasses'>{{ card.suit }}</span>
       <span class="rank">{{ card.rank }}</span>
-      <span class="suitBottom" :class='classObject'>{{ card.suit }}</span>
+      <span class="suitBottom" :class='colorClasses'>{{ card.suit }}</span>
     </template>
   </div>
 </template>
@@ -39,7 +39,7 @@ export default {
     }
   },
   computed: {
-    classObject: function () {
+    colorClasses: function () {
       return {
         'red': this.card.suit === suits.hearts || this.card.suit === suits.diamonds,
         'black': this.card.suit === suits.clubs || this.card.suit === suits.spades

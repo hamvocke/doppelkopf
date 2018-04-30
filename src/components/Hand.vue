@@ -32,6 +32,11 @@ export default {
     playableCards: {
       type: Array,
       required: true
+    },
+    isSelectable: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   components: {
@@ -47,6 +52,8 @@ export default {
       return card === this.selectedCard
     },
     select: function (card) {
+      if (!this.isSelectable) return
+
       if (this.selectedCard === card) {
         this.$emit('play', card)
       } else {

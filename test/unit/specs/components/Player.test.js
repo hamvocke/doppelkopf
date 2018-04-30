@@ -31,4 +31,12 @@ describe('Player.vue', () => {
 
     expect(wrapper.vm.isCovered).toBe(true)
   })
+
+  test('should make hand of computer player non-selectable', () => {
+    game.players[0].isHuman = false
+
+    const wrapper = mount(Player, {propsData: { player: game.players[0] }})
+
+    expect(wrapper.vm.isHandSelectable).toBe(false)
+  })
 })
