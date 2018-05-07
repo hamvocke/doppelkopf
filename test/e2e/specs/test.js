@@ -11,8 +11,7 @@ module.exports = {
     browser
       .url(devServer)
       .waitForElementVisible('#app', 5000)
-      .assert.elementPresent('.card')
-      .assert.containsText('h1', 'Doppelkopf')
+      .assert.elementPresent('.player')
       .end()
   }
 }
