@@ -46,7 +46,7 @@ export class Game {
   }
 
   nextMove () {
-    if (this.waitingForPlayer() === this.players[0]) {
+    if (this.waitingForPlayer().isHuman) {
       notifier.info('Du bist dran!')
       return
     }
