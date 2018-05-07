@@ -1,8 +1,10 @@
 <template>
   <div class="notifications" >
-    <div class="message" v-for='message in messages'>
-      {{ message }}
-    </div>
+    <transition-group name="message">
+      <div v-for='message in messages' :key='message' class="message">
+        {{ message }}
+      </div>
+    </transition-group>
   </div>
 </template>
 
@@ -20,19 +22,35 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/css/colors.css";
 
 .notifications {
+  width: 100%;
   position: absolute;
   top: 0px;
+  z-index: 9999;
 }
 
 .message {
   text-align: center;
   margin: 0px auto 6px;
-  width: 100%;
-  padding: 6px;
-  background: rgba(255, 255, 255, 0.3);
-  color: #333;
+  line-height: 42px;
+  height: 100%;
+  width: 80%;
+  font-size: 1em;
+  background: var(--black);
+  color: var(--white);
+  border-radius: 6px;
+  box-shadow: 0 12px 18px rgba(0,0,0,0.12);
+}
+
+.message-enter-active, .message-leave-active {
+  transition: all 0.25s cubic-bezier(.25,.8,.25,1);
+}
+
+.message-enter, .message-leave-to {
+  opacity: 0;
+  transform: translateY(-48px);
 }
 
 </style>
