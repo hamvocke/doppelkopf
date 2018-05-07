@@ -1,4 +1,5 @@
 import { Game } from '@/models/game'
+import { Notifier } from '@/models/notifier'
 import { jack, suits } from '@/models/card'
 
 let game
@@ -69,6 +70,20 @@ test('should not autoplay for human players', () => {
   game.nextMove()
 
   expect(mockedComputerPlayer.autoplay.mock.calls.length).toBe(0)
+})
+
+test('should show notification when triggering next move for human player', () => {
+  let notifier = new Notifier()
+  notifier.messages = []
+  const mockedComputerPlayer = game.players[0]
+  mockedComputerPlayer.autoplay = jest.fn()
+  game.playerOrder.prioritize(mockedComputerPlayer)
+
+  expect(notifier.messages).toHaveLength(0)
+
+  game.nextMove()
+
+  expect(notifier.messages).toHaveLength(1)
 })
 
 describe('player order', () => {

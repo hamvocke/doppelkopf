@@ -2,9 +2,12 @@ import { Player } from '@/models/player'
 import { Deck } from '@/models/deck'
 import { Trick } from '@/models/trick'
 import { Hand } from '@/models/hand'
+import { Notifier } from '@/models/notifier'
 import { RingQueue } from '@/models/ringQueue'
 import { Scorecard } from '@/models/scorecard'
 import { find } from 'lodash'
+
+const notifier = new Notifier()
 
 export class Game {
   constructor () {
@@ -43,9 +46,12 @@ export class Game {
   }
 
   nextMove () {
-    if (!this.waitingForPlayer().isHuman) {
-      this.waitingForPlayer().autoplay()
+    if (this.waitingForPlayer() === this.players[0]) {
+      notifier.info('Du bist dran!')
+      return
     }
+
+    this.waitingForPlayer().autoplay()
   }
 
   finishTrick () {
