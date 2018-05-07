@@ -13,5 +13,6 @@ export class Notifier {
 
   info (message) {
     this.messages.push(message)
+    window.setTimeout(() => { this.messages.pop() }, 4000)
   }
 }
