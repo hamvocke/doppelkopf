@@ -42,7 +42,11 @@ export default {
 
 .cards {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+}
+
+.cards .card {
+  margin: 6px;
 }
 
 </style>

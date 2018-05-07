@@ -65,6 +65,8 @@ export default {
 .card {
   position: relative;
   top: 0px; /* necessary for css transition */
+  height: 100px;
+  width: 70px;
   background: #fff;
   padding: 6px;
   border-radius: 12px;
@@ -131,8 +133,10 @@ export default {
 
 @media screen and (max-width: 680px) {
   .card {
+    height: 60px;
+    width: 40px;
     border-radius: 8px;
-    padding: 4px;
+    padding: 3px;
   }
 
   .top, .bottom {
@@ -152,18 +156,18 @@ export default {
   }
 
   .rank {
-    line-height: 60px;
+    line-height: 55px;
     font-size: 1.3em;
   }
 
   .suitTop {
-    font-size: 1em;
+    font-size: 0.8em;
     left: 4px;
-    bottom: 4px;
+    top: 4px;
   }
 
   .suitBottom {
-    font-size: 1em;
+    font-size: 0.8em;
     right: 4px;
     bottom: 4px;
   }
