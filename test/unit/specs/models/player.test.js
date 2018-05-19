@@ -4,6 +4,7 @@ import { Hand } from '@/models/hand'
 import { PlayedCard } from '@/models/playedCard'
 import { king, queen, suits, Card } from '@/models/card'
 import { TrickStack } from '@/models/trickStack'
+import { Notifier } from '@/models/notifier'
 
 let game
 let player
@@ -11,6 +12,7 @@ let player
 beforeEach(() => {
   game = new Game()
   player = game.players[0]
+  player.game.waitingForPlayer = () => game.players[0]
 })
 
 test('player has a name', () => {
@@ -89,4 +91,25 @@ test('should autoplay a card', () => {
 
   expect(player.hand.cards).not.toContain(kingOnHand)
   expect(player.behavior.cardToPlay).toBeCalledWith(player.hand, expect.any(Card))
+})
+
+test('should not play a card if its not the players turn', () => {
+  const queenOnHand = queen.of(suits.spades)
+  player.hand = new Hand([queenOnHand])
+  player.game.waitingForPlayer = () => game.players[1]
+
+  player.play(queenOnHand)
+
+  expect(player.hand.cards).toContain(queenOnHand)
+})
+
+test('should show notification if trying to play a card when its not your turn', () => {
+  const queenOnHand = queen.of(suits.spades)
+  player.hand = new Hand([queenOnHand])
+  player.game.waitingForPlayer = () => game.players[1]
+
+  player.play(queenOnHand)
+
+  const notifier = new Notifier()
+  expect(notifier.messages).toContain('It\'s not your turn, buddy!')
 })
