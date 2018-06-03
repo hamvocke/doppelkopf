@@ -87,6 +87,10 @@ test('should show notification when triggering next move for human player', () =
 })
 
 describe('player order', () => {
+  beforeEach(() => {
+    game = new Game()
+  })
+
   test('should start with human player', () => {
     expect(game.waitingForPlayer()).toBe(game.players[0])
   })

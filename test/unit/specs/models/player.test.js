@@ -2,12 +2,13 @@ import { Player } from '@/models/player'
 import { Game } from '@/models/game'
 import { Hand } from '@/models/hand'
 import { PlayedCard } from '@/models/playedCard'
-import { king, queen, suits, Card } from '@/models/card'
+import { king, queen, ten, suits, Card } from '@/models/card'
 import { TrickStack } from '@/models/trickStack'
 import { Notifier } from '@/models/notifier'
 
 let game
 let player
+const notifier = new Notifier()
 
 beforeEach(() => {
   game = new Game()
@@ -80,7 +81,7 @@ test('player can win a trick', () => {
 
 test('should autoplay a card', () => {
   const queenOnHand = queen.of(suits.spades)
-  const kingOnHand = king.of(suits.hearts)
+  const kingOnHand = king.of(suits.diamonds)
   player.game.currentTrick.baseCard = () => queen.of(suits.diamonds)
   player.hand = new Hand([queenOnHand, kingOnHand])
   player.behavior = {
@@ -96,7 +97,7 @@ test('should autoplay a card', () => {
 test('should not play a card if its not the players turn', () => {
   const queenOnHand = queen.of(suits.spades)
   player.hand = new Hand([queenOnHand])
-  player.game.waitingForPlayer = () => game.players[1]
+  game.waitingForPlayer = () => game.players[1]
 
   player.play(queenOnHand)
 
@@ -106,10 +107,50 @@ test('should not play a card if its not the players turn', () => {
 test('should show notification if trying to play a card when its not your turn', () => {
   const queenOnHand = queen.of(suits.spades)
   player.hand = new Hand([queenOnHand])
-  player.game.waitingForPlayer = () => game.players[1]
+  game.waitingForPlayer = () => game.players[1]
 
   player.play(queenOnHand)
 
-  const notifier = new Notifier()
   expect(notifier.messages).toContain('It\'s not your turn, buddy!')
+})
+
+test('should validate playable cards', () => {
+  const queenOnHand = queen.of(suits.spades)
+  const tenOnHand = ten.of(suits.spades)
+  player.hand = new Hand([queenOnHand, tenOnHand])
+
+  game.currentTrick.baseCard = () => ten.of(suits.spades)
+
+  expect(player.canPlay(queenOnHand)).toBe(false)
+  expect(player.canPlay(tenOnHand)).toBe(true)
+})
+
+test('should validate playable cards if no card has been played yet', () => {
+  const queenOnHand = queen.of(suits.spades)
+  const tenOnHand = ten.of(suits.spades)
+  player.hand = new Hand([queenOnHand, tenOnHand])
+
+  game.currentTrick.baseCard = () => undefined
+
+  expect(player.canPlay(queenOnHand)).toBe(true)
+  expect(player.canPlay(tenOnHand)).toBe(true)
+})
+
+test('should not play unplayable card', () => {
+  const queenOnHand = queen.of(suits.spades)
+  const tenOnHand = ten.of(suits.spades)
+  const baseCard = ten.of(suits.spades)
+
+  const player3 = game.players[3]
+  game.waitingForPlayer = () => game.players[3]
+
+  player.hand = new Hand([queenOnHand, tenOnHand])
+  player3.hand = new Hand([baseCard])
+  player3.play(baseCard)
+
+  game.waitingForPlayer = () => game.players[0]
+  player.play(queenOnHand)
+
+  expect(player.hand.cards).toContain(queenOnHand)
+  expect(notifier.messages).toContain(`Kannste so nicht spielen`)
 })

@@ -1,7 +1,9 @@
+import { includes } from 'lodash'
 import { Hand } from '@/models/hand'
 import { TrickStack } from '@/models/trickStack'
 import { HighestCardBehavior } from '@/models/behaviors'
 import { Notifier } from '@/models/notifier'
+import { playableCards } from '@/models/playableCardFinder'
 
 const notifier = new Notifier()
 
@@ -26,9 +28,20 @@ export class Player {
       throw new Error('can\'t play a card that\'s not on the player\'s hand')
     }
 
+    if (!this.canPlay(card)) {
+      notifier.info(`Kannste so nicht spielen`)
+      return
+    }
+
     this.game.currentTrick.add(cardToBePlayed, this)
     this.hand.remove(cardToBePlayed)
     this.game.nextPlayer()
+  }
+
+  canPlay (card) {
+    const baseCard = this.game.currentTrick.baseCard()
+    const playable = playableCards(this.hand.cards, baseCard)
+    return includes(playable, card)
   }
 
   autoplay () {
