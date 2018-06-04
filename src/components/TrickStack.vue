@@ -1,10 +1,7 @@
 <template>
   <div class="trickStack" v-if='this.trickStack.tricks.length > 0'>
     <div class="cards">
-      <Card :is-covered='true' :card='this.trickStack.cards()[0]' />
-      <Card :is-covered='true' :card='this.trickStack.cards()[1]' />
-      <Card :is-covered='true' :card='this.trickStack.cards()[2]' />
-      <Card :is-covered='true' :card='this.trickStack.cards()[3]' />
+      <Card :is-covered='true' :card='{}' />
     </div>
     <p class="trickCount">Stiche: {{ this.trickStack.tricks.length }}</p>
   </div>

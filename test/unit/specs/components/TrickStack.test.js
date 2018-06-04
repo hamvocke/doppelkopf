@@ -24,7 +24,7 @@ describe('TrickStack.vue', () => {
     const wrapper = mount(TrickStack, { propsData: { trickStack: trickStack } })
     expect(trick.playedCards).toHaveLength(2)
     expect(wrapper.find('div.trickStack').exists()).toBe(true)
-    expect(wrapper.findAll('div.card')).toHaveLength(4)
+    expect(wrapper.findAll('div.card')).toHaveLength(1)
   })
 
   test('should display number of won tricks', () => {
