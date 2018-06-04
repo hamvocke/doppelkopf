@@ -1,7 +1,7 @@
 <template>
   <div class="trick">
     <div class="cards">
-      <Card v-for='playedCard in cards' :card='playedCard.card' :key='playedCard.card.suit-playedCard.card.rank' />
+      <Card v-for='playedCard in cards' :card='playedCard.card' :key='playedCard.card.cardId' />
     </div>
     <div class="winner" v-if='winner'>
       Stich geht an: {{ winner }}
