@@ -1,8 +1,8 @@
 <template>
   <div class="notifications" >
     <transition-group name="message">
-      <div v-for='message in messages' :key='message' class="message">
-        {{ message }}
+      <div v-for='message in messages' :key='message.id' class="message">
+        {{ message.text }}
       </div>
     </transition-group>
   </div>

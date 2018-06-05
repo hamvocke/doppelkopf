@@ -8,6 +8,7 @@ describe('Notifications.vue', () => {
 
     new Notifier().info('Hello World')
 
-    expect(wrapper.vm.messages).toEqual(['Hello World'])
+    expect(wrapper.vm.messages).toHaveLength(1)
+    expect(wrapper.vm.messages[0].text).toBe('Hello World')
   })
 })

@@ -10,6 +10,8 @@ let game
 let player
 const notifier = new Notifier()
 
+jest.useFakeTimers()
+
 beforeEach(() => {
   game = new Game()
   player = game.players[0]
@@ -111,7 +113,7 @@ test('should show notification if trying to play a card when its not your turn',
 
   player.play(queenOnHand)
 
-  expect(notifier.messages).toContain('It\'s not your turn, buddy!')
+  expect(notifier.messages[0].text).toBe('It\'s not your turn, buddy!')
 })
 
 test('should validate playable cards', () => {
@@ -134,23 +136,4 @@ test('should validate playable cards if no card has been played yet', () => {
 
   expect(player.canPlay(queenOnHand)).toBe(true)
   expect(player.canPlay(tenOnHand)).toBe(true)
-})
-
-test('should not play unplayable card', () => {
-  const queenOnHand = queen.of(suits.spades)
-  const tenOnHand = ten.of(suits.spades)
-  const baseCard = ten.of(suits.spades)
-
-  const player3 = game.players[3]
-  game.waitingForPlayer = () => game.players[3]
-
-  player.hand = new Hand([queenOnHand, tenOnHand])
-  player3.hand = new Hand([baseCard])
-  player3.play(baseCard)
-
-  game.waitingForPlayer = () => game.players[0]
-  player.play(queenOnHand)
-
-  expect(player.hand.cards).toContain(queenOnHand)
-  expect(notifier.messages).toContain(`Kannste so nicht spielen`)
 })

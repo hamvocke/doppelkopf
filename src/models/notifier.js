@@ -1,3 +1,4 @@
+import { uniqueId } from 'lodash'
 let instance
 
 export class Notifier {
@@ -12,7 +13,7 @@ export class Notifier {
   }
 
   info (message) {
-    this.messages.push(message)
+    this.messages.push({id: uniqueId('message_'), text: message})
     window.setTimeout(() => { this.messages.pop() }, 4000)
   }
 }
