@@ -47,7 +47,7 @@ export class Game {
 
   nextMove () {
     if (this.waitingForPlayer().isHuman) {
-      notifier.info('Du bist dran!')
+      notifier.info('It\'s your turn!')
       return
     }
 

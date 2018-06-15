@@ -29,7 +29,7 @@ export class Player {
     }
 
     if (!this.canPlay(card)) {
-      notifier.info(`Kannste so nicht spielen`)
+      notifier.info(`You can't play that card`)
       return
     }
 
