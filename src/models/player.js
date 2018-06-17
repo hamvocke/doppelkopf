@@ -1,7 +1,7 @@
 import { includes } from 'lodash'
 import { Hand } from '@/models/hand'
 import { TrickStack } from '@/models/trickStack'
-import { HighestCardBehavior } from '@/models/behaviors'
+import { RandomCardBehavior } from '@/models/behaviors'
 import { Notifier } from '@/models/notifier'
 import { playableCards } from '@/models/playableCardFinder'
 
@@ -14,7 +14,7 @@ export class Player {
     this.isHuman = isHuman
     this.trickStack = new TrickStack()
     this.game = game
-    this.behavior = new HighestCardBehavior()
+    this.behavior = new RandomCardBehavior()
   }
 
   play (card) {
