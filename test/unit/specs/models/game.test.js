@@ -128,7 +128,13 @@ describe('finish game', () => {
     game = new Game()
   })
 
-  test('should set game to finished', () => {
+  test('should not mark fresh game as finished', () => {
     expect(game.isFinished).toBe(false)
+  })
+
+  test('should mark finished game as finished', () => {
+    game.finishGame()
+
+    expect(game.isFinished).toBe(true)
   })
 })

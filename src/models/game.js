@@ -64,6 +64,6 @@ export class Game {
   }
 
   finishGame () {
-
+    this.isFinished = true
   }
 }
