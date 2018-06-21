@@ -18,8 +18,7 @@ export class Hand {
 
   value () {
     return this.cards
-      .map(card => card.value)
-      .reduce((acc, value) => acc + value, 0)
+      .reduce((acc, card) => acc + card.value, 0)
   }
 
   find (card) {
