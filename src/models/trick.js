@@ -50,4 +50,8 @@ export class Trick {
 
     return this.playedCards.slice().sort(beats)[0].player
   }
+
+  points () {
+    return this.playedCards.reduce((acc, playedCard) => acc + playedCard.card.value, 0)
+  }
 }

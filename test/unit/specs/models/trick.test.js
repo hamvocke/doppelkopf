@@ -100,3 +100,14 @@ test('should find winner for an unfinished trick', () => {
 
   expect(trick.winner()).toEqual(player1.name)
 })
+
+test('should return points in a trick', () => {
+  const trick = new Trick(4)
+
+  trick.add(queen.of(suits.spades), player3)
+  trick.add(queen.of(suits.diamonds), player4)
+  trick.add(queen.of(suits.clubs), player1)
+  trick.add(queen.of(suits.clubs), player2)
+
+  expect(trick.points()).toEqual(12)
+})

@@ -1,7 +1,7 @@
 import { TrickStack } from '@/models/trickStack'
 import { Trick } from '@/models/trick'
 import { Game } from '@/models/game'
-import { ace, suits } from '@/models/card'
+import { ace, ten, king, queen, suits } from '@/models/card'
 
 let trickStack
 const game = new Game()
@@ -43,4 +43,23 @@ test('should throw error if adding non-finished trick to stack', () => {
   }
 
   expect(invalidMove).toThrowError(`can not add an unfinished trick to the trick stack`)
+})
+
+test('should calculate points of trick', () => {
+  const someTrick = new Trick(4)
+  someTrick.add(ace.of(suits.hearts), game.players[0])
+  someTrick.add(ten.of(suits.hearts), game.players[1])
+  someTrick.add(king.of(suits.hearts), game.players[2])
+  someTrick.add(ace.of(suits.hearts), game.players[3])
+
+  const anotherTrick = new Trick(4)
+  anotherTrick.add(ace.of(suits.spades), game.players[0])
+  anotherTrick.add(queen.of(suits.clubs), game.players[1])
+  anotherTrick.add(king.of(suits.spades), game.players[2])
+  anotherTrick.add(ten.of(suits.clubs), game.players[3])
+
+  trickStack.add(someTrick)
+  trickStack.add(anotherTrick)
+
+  expect(trickStack.points()).toBe(64)
 })
