@@ -9,7 +9,7 @@ export class Hand {
   }
 
   isRe () {
-    return this.isReParty
+    return !!this.isReParty
   }
 
   isKontra () {

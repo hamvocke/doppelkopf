@@ -17,6 +17,14 @@ export class Player {
     this.behavior = new RandomCardBehavior()
   }
 
+  isRe () {
+    return this.hand.isRe()
+  }
+
+  isKontra () {
+    return this.hand.isKontra()
+  }
+
   play (card) {
     if (this.game.waitingForPlayer() !== this) {
       notifier.info(`It's not your turn, buddy!`)

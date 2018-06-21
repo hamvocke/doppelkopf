@@ -31,6 +31,20 @@ test('player has a trick stack', () => {
   expect(new Player('some player').trickStack instanceof TrickStack).toBe(true)
 })
 
+test('should belong to re party', () => {
+  player.hand = new Hand([queen.of(suits.clubs)])
+
+  expect(player.isRe()).toBe(true)
+  expect(player.isKontra()).toBe(false)
+})
+
+test('should belong to kontra party', () => {
+  player.hand = new Hand([queen.of(suits.spades)])
+
+  expect(player.isRe()).toBe(false)
+  expect(player.isKontra()).toBe(true)
+})
+
 test('player can play card from hand', () => {
   const kingOnHand = king.of(suits.diamonds)
   const queenOnHand = queen.of(suits.spades)
