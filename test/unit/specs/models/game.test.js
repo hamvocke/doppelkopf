@@ -122,3 +122,13 @@ describe('player order', () => {
     expect(game.waitingForPlayer()).toBe(game.players[0])
   })
 })
+
+describe('finish game', () => {
+  beforeEach(() => {
+    game = new Game()
+  })
+
+  test('should set game to finished', () => {
+    expect(game.isFinished).toBe(false)
+  })
+})

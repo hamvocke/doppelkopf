@@ -23,6 +23,7 @@ export class Game {
     this.currentTrick = this.nextTrick()
     this.playerOrder = new RingQueue(this.players)
     this.scorecard = new Scorecard(this.players)
+    this.isFinished = false
     this.deal()
   }
 
@@ -60,5 +61,9 @@ export class Game {
     winner.win(this.currentTrick)
     this.currentTrick = this.nextTrick()
     this.playerOrder.prioritize(winner)
+  }
+
+  finishGame () {
+
   }
 }
