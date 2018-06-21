@@ -22,7 +22,7 @@ export class Player {
   }
 
   isKontra () {
-    return this.hand.isKontra()
+    return !this.isRe()
   }
 
   play (card) {

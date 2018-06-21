@@ -72,6 +72,26 @@ test('should not autoplay for human players', () => {
   expect(mockedComputerPlayer.autoplay.mock.calls.length).toBe(0)
 })
 
+test('should return players for each party', () => {
+  game.players[0].isRe = () => true
+  game.players[1].isRe = () => false
+  game.players[2].isRe = () => true
+  game.players[3].isRe = () => false
+
+  const parties = game.findParties()
+
+  const expectedParties = {
+    're': [
+      game.players[0],
+      game.players[2]],
+    'kontra': [
+      game.players[1],
+      game.players[3]]
+  }
+
+  expect(parties).toEqual(expectedParties)
+})
+
 test('should show notification when triggering next move for human player', () => {
   let notifier = new Notifier()
   notifier.messages = []

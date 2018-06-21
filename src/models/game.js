@@ -55,6 +55,13 @@ export class Game {
     this.waitingForPlayer().autoplay()
   }
 
+  findParties () {
+    return {
+      're': this.players.filter(player => player.isRe()),
+      'kontra': this.players.filter(player => player.isKontra())
+    }
+  }
+
   finishTrick () {
     const playerName = this.currentTrick.winner()
     const winner = find(this.players, { name: playerName })
