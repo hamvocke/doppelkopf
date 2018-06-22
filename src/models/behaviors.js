@@ -1,4 +1,4 @@
-import { random } from 'lodash'
+import { sample } from 'lodash'
 import { playableCards } from '@/models/playableCardFinder'
 
 export class HighestCardBehavior {
@@ -9,8 +9,6 @@ export class HighestCardBehavior {
 
 export class RandomCardBehavior {
   cardToPlay (hand, baseCard) {
-    const cardsPlayable = playableCards(hand.cards, baseCard)
-    const randomCardIndex = random(0, cardsPlayable.length - 1)
-    return cardsPlayable[randomCardIndex]
+    return sample(playableCards(hand.cards, baseCard))
   }
 }
