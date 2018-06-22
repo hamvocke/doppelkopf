@@ -11,6 +11,15 @@ describe('score', () => {
     expect(score.kontraPoints).toEqual(122)
   })
 
+  test('should validate score', () => {
+    function invalidScore () {
+      /* eslint-disable no-new */
+      new Score(121, 120)
+    }
+
+    expect(invalidScore).toThrowError(`A score must have a total of 240 points`)
+  })
+
   test('should declare Kontra as winner if both have 120 points and there are no announcements', () => {
     const rePoints = 120
     const kontraPoints = 120

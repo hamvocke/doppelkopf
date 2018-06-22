@@ -1,5 +1,9 @@
 export class Score {
   constructor (rePoints, kontraPoints) {
+    if (rePoints + kontraPoints !== 240) {
+      throw Error(`A score must have a total of 240 points`)
+    }
+
     this.rePoints = rePoints
     this.kontraPoints = kontraPoints
   }
