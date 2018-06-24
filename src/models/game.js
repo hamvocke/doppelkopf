@@ -1,13 +1,8 @@
+import { Round } from '@/models/round'
 import { Player } from '@/models/player'
 import { Deck } from '@/models/deck'
-import { Trick } from '@/models/trick'
 import { Hand } from '@/models/hand'
-import { Notifier } from '@/models/notifier'
-import { RingQueue } from '@/models/ringQueue'
 import { Scorecard } from '@/models/scorecard'
-import { find } from 'lodash'
-
-const notifier = new Notifier()
 
 export class Game {
   constructor () {
@@ -20,57 +15,43 @@ export class Game {
       new Player('Player 4', isComputer, this)
     ]
     this.deck = new Deck()
-    this.currentTrick = this.nextTrick()
-    this.playerOrder = new RingQueue(this.players)
+    this.currentRound = new Round(this.players)
     this.scorecard = new Scorecard(this.players)
-    this.isFinished = false
     this.deal()
   }
 
   deal () {
-    this.players[0].hand = new Hand(this.deck.cards.slice(0, 10))
-    this.players[1].hand = new Hand(this.deck.cards.slice(10, 20))
-    this.players[2].hand = new Hand(this.deck.cards.slice(20, 30))
-    this.players[3].hand = new Hand(this.deck.cards.slice(30, 40))
+    this.currentRound.players[0].hand = new Hand(this.deck.cards.slice(0, 10))
+    this.currentRound.players[1].hand = new Hand(this.deck.cards.slice(10, 20))
+    this.currentRound.players[2].hand = new Hand(this.deck.cards.slice(20, 30))
+    this.currentRound.players[3].hand = new Hand(this.deck.cards.slice(30, 40))
+  }
+
+  get currentTrick () {
+    return this.currentRound.currentTrick
   }
 
   nextTrick () {
-    return new Trick(this.players.length)
+    return this.currentRound.nextTrick()
   }
 
   nextPlayer () {
-    this.playerOrder.next()
+    this.currentRound.nextPlayer()
   }
 
   waitingForPlayer () {
-    return this.playerOrder.current()
+    return this.currentRound.waitingForPlayer()
   }
 
   nextMove () {
-    if (this.waitingForPlayer().isHuman) {
-      notifier.info('It\'s your turn!')
-      return
-    }
-
-    this.waitingForPlayer().autoplay()
+    this.currentRound.nextMove()
   }
 
   findParties () {
-    return {
-      're': this.players.filter(player => player.isRe()),
-      'kontra': this.players.filter(player => player.isKontra())
-    }
+    return this.currentRound.findParties()
   }
 
   finishTrick () {
-    const playerName = this.currentTrick.winner()
-    const winner = find(this.players, { name: playerName })
-    winner.win(this.currentTrick)
-    this.currentTrick = this.nextTrick()
-    this.playerOrder.prioritize(winner)
-  }
-
-  finishGame () {
-    this.isFinished = true
+    this.currentRound.finishTrick()
   }
 }
