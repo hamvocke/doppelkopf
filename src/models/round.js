@@ -1,6 +1,7 @@
 import { Trick } from '@/models/trick'
 import { Notifier } from '@/models/notifier'
 import { RingQueue } from '@/models/ringQueue'
+import { Score } from '@/models/score'
 import { find } from 'lodash'
 
 const notifier = new Notifier()
@@ -53,5 +54,15 @@ export class Round {
     this.isFinished = true
     // calculate score
     // add special events (fox, doppelkopf) to score - 'extrasRegistry'?
+  }
+
+  calculateScore () {
+    // return Score with points, extra points (fuchs gefangen...)
+    // use extra point detector to find out if trick contains extra points. use here and when finishing a trick (to display notifications)
+    const parties = this.findParties()
+    const reducer = (acc, player) => acc + player.points()
+    const rePoints = parties['re'].reduce(reducer, 0)
+    const kontraPoints = parties['kontra'].reduce(reducer, 0)
+    return new Score(rePoints, kontraPoints)
   }
 }

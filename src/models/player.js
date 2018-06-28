@@ -60,4 +60,8 @@ export class Player {
   win (trick) {
     this.trickStack.add(trick)
   }
+
+  points () {
+    return this.trickStack.points()
+  }
 }

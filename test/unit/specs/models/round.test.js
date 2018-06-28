@@ -129,4 +129,25 @@ describe('finish round', () => {
 
     expect(round.isFinished).toBe(true)
   })
+
+  test('should calculate score', () => {
+    const firstTrickStack = { points: () => 63 }
+    const secondTrickStack = { points: () => 56 }
+    const thirdTrickStack = { points: () => 64 }
+    const fourthTrickStack = { points: () => 57 }
+
+    round.players[0].isRe = () => true
+    round.players[1].isRe = () => true
+    round.players[2].isRe = () => false
+    round.players[3].isRe = () => false
+
+    round.players[0].trickStack = firstTrickStack
+    round.players[1].trickStack = secondTrickStack
+    round.players[2].trickStack = thirdTrickStack
+    round.players[3].trickStack = fourthTrickStack
+
+    const score = round.calculateScore()
+
+    expect(score).toBeDefined()
+  })
 })
