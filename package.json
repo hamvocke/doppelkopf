@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
+    "raven-js": "^3.26.3",
     "vue": "^2.5.2"
   },
   "devDependencies": {
