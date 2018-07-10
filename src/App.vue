@@ -7,7 +7,7 @@
     <div class="center">
       <Trick :currentTrick='game.currentTrick'/>
       <div class="currentPlayer">
-        Waiting for: {{ game.waitingForPlayer().name }}
+        Waiting for: {{ game.currentRound.waitingForPlayer().name }}
       </div>
     </div>
 
@@ -40,10 +40,10 @@ export default {
   },
   methods: {
     nextMove: function () {
-      this.game.nextMove()
+      this.game.currentRound.nextMove()
     },
     finishTrick: function () {
-      this.game.finishTrick()
+      this.game.currentRound.finishTrick()
     }
   }
 }

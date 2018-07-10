@@ -15,7 +15,7 @@ jest.useFakeTimers()
 beforeEach(() => {
   game = new Game()
   player = game.players[0]
-  player.game.waitingForPlayer = () => game.players[0]
+  player.game.currentRound.waitingForPlayer = () => game.players[0]
 })
 
 test('player has a name', () => {
@@ -113,7 +113,7 @@ test('should autoplay a card', () => {
 test('should not play a card if its not the players turn', () => {
   const queenOnHand = queen.of(suits.spades)
   player.hand = new Hand([queenOnHand])
-  game.waitingForPlayer = () => game.players[1]
+  game.currentRound.waitingForPlayer = () => game.players[1]
 
   player.play(queenOnHand)
 
@@ -123,7 +123,7 @@ test('should not play a card if its not the players turn', () => {
 test('should show notification if trying to play a card when its not your turn', () => {
   const queenOnHand = queen.of(suits.spades)
   player.hand = new Hand([queenOnHand])
-  game.waitingForPlayer = () => game.players[1]
+  game.currentRound.waitingForPlayer = () => game.players[1]
 
   player.play(queenOnHand)
 

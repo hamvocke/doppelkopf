@@ -30,28 +30,4 @@ export class Game {
   get currentTrick () {
     return this.currentRound.currentTrick
   }
-
-  nextTrick () {
-    return this.currentRound.nextTrick()
-  }
-
-  nextPlayer () {
-    this.currentRound.nextPlayer()
-  }
-
-  waitingForPlayer () {
-    return this.currentRound.waitingForPlayer()
-  }
-
-  nextMove () {
-    this.currentRound.nextMove()
-  }
-
-  findParties () {
-    return this.currentRound.findParties()
-  }
-
-  finishTrick () {
-    this.currentRound.finishTrick()
-  }
 }

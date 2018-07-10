@@ -26,7 +26,7 @@ export class Player {
   }
 
   play (card) {
-    if (this.game.waitingForPlayer() !== this) {
+    if (this.game.currentRound.waitingForPlayer() !== this) {
       notifier.info(`It's not your turn, buddy!`)
       return
     }
@@ -43,7 +43,7 @@ export class Player {
 
     this.game.currentTrick.add(cardToBePlayed, this)
     this.hand.remove(cardToBePlayed)
-    this.game.nextPlayer()
+    this.game.currentRound.nextPlayer()
   }
 
   canPlay (card) {
