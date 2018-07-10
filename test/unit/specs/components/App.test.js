@@ -3,13 +3,13 @@ import { mount } from '@vue/test-utils'
 import { Game } from '@/models/game'
 
 describe('App.vue', () => {
-  test('should render 4 players', () => {
+  test('should render Table', () => {
     const wrapper = mount(App, {
       propsData: {
         game: new Game()
       }
     })
-    expect(wrapper.findAll('.player')).toHaveLength(4)
+    expect(wrapper.findAll('.table').exists()).toBe(true)
   })
 
   test('should render current players', () => {

@@ -1,28 +1,14 @@
 <template>
   <div id="app">
     <Notifications/>
-    <Player :player='game.players[1]' position='left' class='left' />
-    <Player :player='game.players[2]' position='top' class='top' />
-
-    <div class="center">
-      <Trick :currentTrick='game.currentTrick'/>
-      <div class="currentPlayer">
-        Waiting for: {{ game.currentRound.waitingForPlayer().name }}
-      </div>
-    </div>
-
-    <Player :player='game.players[3]' position='right' class='right'/>
-    <Player :player='game.players[0]' position='bottom' class='bottom' />
-
+    <Table :game='game' />
     <Controls :currentTrick='game.currentTrick'  v-on:nextTrick="finishTrick" v-on:nextMove="nextMove"/>
-
   </div>
 </template>
 
 <script>
-import Player from './components/Player'
 import Notifications from './components/Notifications'
-import Trick from './components/Trick'
+import Table from './components/Table'
 import Controls from './components/Controls'
 import { Game } from './models/game'
 
@@ -36,7 +22,7 @@ export default {
     }
   },
   components: {
-    Player, Trick, Notifications, Controls
+    Table, Notifications, Controls
   },
   methods: {
     nextMove: function () {
@@ -70,33 +56,5 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   height: 100vh;
-  display: grid;
-  grid-template-columns: auto auto auto;
-  grid-template-rows: auto auto auto 50px;
-  grid-template-areas:
-    "top top top"
-    "left center right"
-    "bottom bottom bottom"
-    "controls controls controls";
-}
-
-.top {
-  grid-area: top;
-}
-
-.right {
-  grid-area: right;
-}
-
-.center {
-  grid-area: center;
-}
-
-.bottom {
-  grid-area: bottom;
-}
-
-.left {
-  grid-area: left;
 }
 </style>
