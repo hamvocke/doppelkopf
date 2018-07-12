@@ -1,4 +1,5 @@
 import { Score } from '@/models/score'
+import { kontra } from '@/models/parties'
 
 describe('score', () => {
   test('should have score for each party', () => {
@@ -6,7 +7,7 @@ describe('score', () => {
     const kontraPoints = 122
     const score = new Score(rePoints, kontraPoints)
 
-    expect(score.winner()).toEqual('Kontra')
+    expect(score.winner()).toEqual(kontra)
     expect(score.rePoints).toBe(118)
     expect(score.kontraPoints).toEqual(122)
   })
@@ -25,6 +26,6 @@ describe('score', () => {
     const kontraPoints = 120
     const score = new Score(rePoints, kontraPoints)
 
-    expect(score.winner()).toEqual('Kontra')
+    expect(score.winner()).toEqual(kontra)
   })
 })

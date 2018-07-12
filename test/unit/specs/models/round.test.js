@@ -1,6 +1,7 @@
 import { Game } from '@/models/game'
 import { Notifier } from '@/models/notifier'
 import { jack, suits } from '@/models/card'
+import { re, kontra } from '@/models/parties'
 
 const game = new Game()
 let round = game.currentRound
@@ -53,10 +54,10 @@ test('should return players for each party', () => {
   const parties = round.findParties()
 
   const expectedParties = {
-    're': [
+    [re]: [
       round.players[0],
       round.players[2]],
-    'kontra': [
+    [kontra]: [
       round.players[1],
       round.players[3]]
   }

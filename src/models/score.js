@@ -1,3 +1,5 @@
+import { re, kontra } from '@/models/parties'
+
 export class Score {
   constructor (rePoints, kontraPoints) {
     if (rePoints + kontraPoints !== 240) {
@@ -9,6 +11,6 @@ export class Score {
   }
 
   winner () {
-    return this.rePoints > this.kontraPoints ? 'Re' : 'Kontra'
+    return this.rePoints > this.kontraPoints ? re : kontra
   }
 }

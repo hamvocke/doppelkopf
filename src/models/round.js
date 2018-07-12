@@ -2,6 +2,7 @@ import { Trick } from '@/models/trick'
 import { Notifier } from '@/models/notifier'
 import { RingQueue } from '@/models/ringQueue'
 import { Score } from '@/models/score'
+import { re, kontra } from '@/models/parties'
 import { find } from 'lodash'
 
 const notifier = new Notifier()
@@ -37,8 +38,8 @@ export class Round {
 
   findParties () {
     return {
-      're': this.players.filter(player => player.isRe()),
-      'kontra': this.players.filter(player => player.isKontra())
+      [re]: this.players.filter(player => player.isRe()),
+      [kontra]: this.players.filter(player => player.isKontra())
     }
   }
 
@@ -61,8 +62,8 @@ export class Round {
     // use extra point detector to find out if trick contains extra points. use here and when finishing a trick (to display notifications)
     const parties = this.findParties()
     const reducer = (acc, player) => acc + player.points()
-    const rePoints = parties['re'].reduce(reducer, 0)
-    const kontraPoints = parties['kontra'].reduce(reducer, 0)
+    const rePoints = parties[re].reduce(reducer, 0)
+    const kontraPoints = parties[kontra].reduce(reducer, 0)
     return new Score(rePoints, kontraPoints)
   }
 }
