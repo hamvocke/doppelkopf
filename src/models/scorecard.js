@@ -9,13 +9,11 @@ export class Scorecard {
   addScore (winningPlayers, points) {
     let scoreLine = {}
 
-    for (let player of this.players) {
-      if (includes(winningPlayers, player)) {
-        scoreLine[player.name] = points
-      } else {
-        scoreLine[player.name] = -points
-      }
-    }
+    this.players.forEach(player => {
+      scoreLine[player.name] = includes(winningPlayers, player)
+        ? points
+        : -points
+    })
 
     this.scoreLines.push(scoreLine)
   }
