@@ -17,20 +17,8 @@ describe('Scorecard', () => {
   })
 
   test('should calculate scores', () => {
-    const firstScore = {}
-    firstScore[players[0].name] = 4
-    firstScore[players[1].name] = -4
-    firstScore[players[2].name] = -4
-    firstScore[players[3].name] = 4
-
-    const secondScore = {}
-    secondScore[players[0].name] = -2
-    secondScore[players[1].name] = 2
-    secondScore[players[2].name] = -2
-    secondScore[players[3].name] = 2
-
-    scorecard.addScoreLine(firstScore)
-    scorecard.addScoreLine(secondScore)
+    scorecard.addScore([players[0], players[3]], 4)
+    scorecard.addScore([players[1], players[3]], 2)
 
     expect(scorecard.scoreFor(players[0])).toBe(2)
     expect(scorecard.scoreFor(players[1])).toBe(-2)

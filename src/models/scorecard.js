@@ -1,10 +1,22 @@
+import { includes } from 'lodash'
+
 export class Scorecard {
   constructor (players) {
     this.players = players
     this.scoreLines = []
   }
 
-  addScoreLine (scoreLine) {
+  addScore (winningPlayers, points) {
+    let scoreLine = {}
+
+    for (let player of this.players) {
+      if (includes(winningPlayers, player)) {
+        scoreLine[player.name] = points
+      } else {
+        scoreLine[player.name] = -points
+      }
+    }
+
     this.scoreLines.push(scoreLine)
   }
 
