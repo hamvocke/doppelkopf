@@ -28,4 +28,9 @@ describe('score', () => {
 
     expect(score.winner()).toEqual(kontra)
   })
+
+  test('should return points won in this round', () => {
+    const score = new Score(150, 90)
+    expect(score.points()).toBe(1)
+  })
 })

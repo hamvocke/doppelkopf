@@ -53,7 +53,8 @@ export class Round {
 
   finishRound () {
     this.isFinished = true
-    // calculate score
+    // const score = this.calculateScore()
+    // const parties = this.findParties()
     // add special events (fox, doppelkopf) to score - 'extrasRegistry'?
   }
 
@@ -61,9 +62,9 @@ export class Round {
     // return Score with points, extra points (fuchs gefangen...)
     // use extra point detector to find out if trick contains extra points. use here and when finishing a trick (to display notifications)
     const parties = this.findParties()
-    const reducer = (acc, player) => acc + player.points()
-    const rePoints = parties[re].reduce(reducer, 0)
-    const kontraPoints = parties[kontra].reduce(reducer, 0)
+    const sumPointsForParty = (acc, player) => acc + player.points()
+    const rePoints = parties[re].reduce(sumPointsForParty, 0)
+    const kontraPoints = parties[kontra].reduce(sumPointsForParty, 0)
     return new Score(rePoints, kontraPoints)
   }
 }

@@ -13,4 +13,8 @@ export class Score {
   winner () {
     return this.rePoints > this.kontraPoints ? re : kontra
   }
+
+  points () {
+    return 1
+  }
 }
