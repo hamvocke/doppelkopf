@@ -149,6 +149,6 @@ describe('finish round', () => {
 
     const score = round.calculateScore()
 
-    expect(score).toBeDefined()
+    expect(score.winner()).toEqual(kontra)
   })
 })
