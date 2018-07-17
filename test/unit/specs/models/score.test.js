@@ -1,5 +1,5 @@
 import { Score } from '@/models/score'
-import { kontra } from '@/models/parties'
+import { re, kontra } from '@/models/parties'
 
 describe('score', () => {
   test('should have score for each party', () => {
@@ -27,6 +27,14 @@ describe('score', () => {
     const score = new Score(rePoints, kontraPoints)
 
     expect(score.winner()).toEqual(kontra)
+  })
+
+  test('should declare Re as winner', () => {
+    const rePoints = 121
+    const kontraPoints = 119
+    const score = new Score(rePoints, kontraPoints)
+
+    expect(score.winner()).toEqual(re)
   })
 
   test('should return points won in this round', () => {
