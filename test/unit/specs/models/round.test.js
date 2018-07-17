@@ -137,6 +137,18 @@ describe('finish round', () => {
     expect(round.isFinished).toBe(true)
   })
 
+  test('should throw error when finishing a finished round', () => {
+    setupGameKontraWins()
+
+    round.finishRound()
+
+    function finishFinishedRound () {
+      round.finishRound()
+    }
+
+    expect(finishFinishedRound).toThrowError(`Can't finish a round that's already finished`)
+  })
+
   test('should calculate score', () => {
     setupGameKontraWins()
 
