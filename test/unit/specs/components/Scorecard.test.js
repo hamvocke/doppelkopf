@@ -7,6 +7,6 @@ describe('Scorecard.vue', () => {
     const model = new ScorecardModel()
     const wrapper = mount(Scorecard, {propsData: { scorecard: model }})
 
-    expect(wrapper.find('.players').exists()).toBe(true)
+    expect(wrapper.find('table').exists()).toBe(true)
   })
 })
