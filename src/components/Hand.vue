@@ -1,7 +1,9 @@
 <template>
   <div class="hand">
     <div class="cards" :class="position">
-      <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' :is-highlighted='highlight(card)' :position='position' v-on:click.native='select(card)' />
+      <transition-group name="card" tag="span">
+        <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' :is-highlighted='highlight(card)' :position='position' v-on:click.native='select(card)' />
+      </transition-group>
     </div>
     <div class="info" v-if='!isCovered'>
       <div class="party">
@@ -72,7 +74,7 @@ export default {
   flex: 2 1;
 }
 
-.cards {
+.cards > span {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -80,8 +82,44 @@ export default {
   margin: 12px;
 }
 
-.top {
+.top > span {
   flex-direction: row-reverse;
+}
+
+.bottom > span {
+  flex-direction: row;
+}
+
+.left > span {
+  flex-direction: column;
+}
+
+.right > span {
+  flex-direction: column-reverse;
+}
+
+.card-leave-active {
+  transition: all 1s !important;
+}
+
+.top .card-leave-to {
+  opacity: 0;
+  transform: translateY(120px);
+}
+
+.bottom .card-leave-to {
+  opacity: 0;
+  transform: translateY(-120px);
+}
+
+.left .card-leave-to {
+  opacity: 0;
+  transform: translateX(120px);
+}
+
+.right .card-leave-to {
+  opacity: 0;
+  transform: translateX(-120px);
 }
 
 .top .card, .bottom .card {
@@ -98,18 +136,6 @@ export default {
 
 .left .card:first-child, .right .card:last-child {
   margin-top: 0;
-}
-
-.bottom {
-  flex-direction: row;
-}
-
-.left {
-  flex-direction: column;
-}
-
-.right {
-  flex-direction: column-reverse;
 }
 
 .info > div {
