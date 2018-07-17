@@ -30,4 +30,8 @@ export class Game {
   get currentTrick () {
     return this.currentRound.currentTrick
   }
+
+  addScore (winningParty, score) {
+    this.scorecard.addScore(winningParty, score)
+  }
 }

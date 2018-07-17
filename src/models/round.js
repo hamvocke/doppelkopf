@@ -56,7 +56,7 @@ export class Round {
     this.isFinished = true
     const score = this.calculateScore()
     const winningParty = this.findParties()[score.winner()]
-    this.game.scorecard.addScore(winningParty, score.points())
+    this.game.addScore(winningParty, score.points())
     // add special events (fox, doppelkopf) to score - 'extrasRegistry'?
   }
 

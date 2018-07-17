@@ -152,7 +152,6 @@ describe('finish round', () => {
 
     const scorecard = round.game.scorecard
 
-    expect(scorecard.scoreLines).toHaveLength(1)
     expect(scorecard.scoreFor(round.players[0])).toBe(-1)
     expect(scorecard.scoreFor(round.players[1])).toBe(-1)
     expect(scorecard.scoreFor(round.players[2])).toBe(1)
