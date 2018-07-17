@@ -1,11 +1,15 @@
 <template>
   <div class="scorecard" >
-    <div class="players">
-      <span class="player" v-for='player in scorecard.players'>{{ player.name }}</span>
-    </div>
-    <div class="score" v-for='scoreLine in scorecard.scoreLines'>
-      {{ message }}
-    </div>
+    <table>
+      <tr>
+        <th class="player" v-for='player in scorecard.players'>{{ player.name }}</th>
+      </tr>
+      <tr class="scoreLine" v-for='scoreLine in scorecard.scoreLines'>
+        <td v-for='score in scoreLine'>
+          {{ score }}
+        </td>
+      </tr>
+    </table>
   </div>
 </template>
 
@@ -22,18 +26,18 @@ export default {
 </script>
 
 <style scoped>
+.scorecard {
+  background: white;
+  display: inline-block;
+  padding: 6px;
+  margin: 6px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 
-.notifications {
-  grid-area: notifications;
 }
 
-.message {
-  text-align: center;
-  margin: 0px auto 6px;
-  width: 100%;
+.scorecard th, .scorecard td {
   padding: 6px;
-  background: rgba(255, 255, 255, 0.3);
-  color: #333;
 }
 
 </style>
