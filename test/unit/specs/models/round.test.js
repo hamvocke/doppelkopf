@@ -10,6 +10,10 @@ test('round has 4 players', () => {
   expect(round.players).toHaveLength(4)
 })
 
+test('should know its game', () => {
+  expect(round.game).toBe(game)
+})
+
 test('game starts with an empty trick', () => {
   expect(round.currentTrick).toBeDefined()
 })
@@ -126,29 +130,49 @@ describe('finish round', () => {
   })
 
   test('should mark finished round as finished', () => {
+    setupGameKontraWins()
+
     round.finishRound()
 
     expect(round.isFinished).toBe(true)
   })
 
   test('should calculate score', () => {
-    const firstTrickStack = { points: () => 63 }
-    const secondTrickStack = { points: () => 56 }
-    const thirdTrickStack = { points: () => 64 }
-    const fourthTrickStack = { points: () => 57 }
-
-    round.players[0].isRe = () => true
-    round.players[1].isRe = () => true
-    round.players[2].isRe = () => false
-    round.players[3].isRe = () => false
-
-    round.players[0].trickStack = firstTrickStack
-    round.players[1].trickStack = secondTrickStack
-    round.players[2].trickStack = thirdTrickStack
-    round.players[3].trickStack = fourthTrickStack
+    setupGameKontraWins()
 
     const score = round.calculateScore()
 
     expect(score.winner()).toEqual(kontra)
   })
+
+  test('should add score to scorecard', () => {
+    setupGameKontraWins()
+
+    round.finishRound()
+
+    const scorecard = round.game.scorecard
+
+    expect(scorecard.scoreLines).toHaveLength(1)
+    expect(scorecard.scoreFor(round.players[0])).toBe(-1)
+    expect(scorecard.scoreFor(round.players[1])).toBe(-1)
+    expect(scorecard.scoreFor(round.players[2])).toBe(1)
+    expect(scorecard.scoreFor(round.players[3])).toBe(1)
+  })
 })
+
+function setupGameKontraWins () {
+  const firstTrickStack = { points: () => 63 }
+  const secondTrickStack = { points: () => 56 }
+  const thirdTrickStack = { points: () => 64 }
+  const fourthTrickStack = { points: () => 57 }
+
+  round.players[0].isRe = () => true
+  round.players[1].isRe = () => true
+  round.players[2].isRe = () => false
+  round.players[3].isRe = () => false
+
+  round.players[0].trickStack = firstTrickStack
+  round.players[1].trickStack = secondTrickStack
+  round.players[2].trickStack = thirdTrickStack
+  round.players[3].trickStack = fourthTrickStack
+}
