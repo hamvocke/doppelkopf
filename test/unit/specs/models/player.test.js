@@ -16,6 +16,7 @@ beforeEach(() => {
   game = new Game()
   player = game.players[0]
   player.game.currentRound.waitingForPlayer = () => game.players[0]
+  jest.runAllTimers()
 })
 
 test('player has a name', () => {
@@ -128,6 +129,19 @@ test('should show notification if trying to play a card when its not your turn',
   player.play(queenOnHand)
 
   expect(notifier.messages[0].text).toBe('It\'s not your turn, buddy!')
+})
+
+test('should not play card and show notification if trying to play an invalid card', () => {
+  const queenOnHand = queen.of(suits.spades)
+  const tenOnHand = ten.of(suits.spades)
+  player.hand = new Hand([queenOnHand, tenOnHand])
+  game.currentRound.waitingForPlayer = () => player
+  game.currentTrick.baseCard = () => ten.of(suits.spades)
+
+  player.play(queenOnHand)
+
+  expect(player.hand.cards).toContain(queenOnHand)
+  expect(notifier.messages[0].text).toBe(`You can't play that card`)
 })
 
 test('should validate playable cards', () => {
