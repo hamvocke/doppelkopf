@@ -34,6 +34,10 @@ export class Round {
       return
     }
 
+    if (this.currentTrick.isFinished()) {
+      return
+    }
+
     this.waitingForPlayer().autoplay()
   }
 

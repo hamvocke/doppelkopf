@@ -40,9 +40,20 @@ test('should autoplay for computer players', () => {
 })
 
 test('should not autoplay for human players', () => {
-  const mockedComputerPlayer = round.players[0]
+  const mockedHumanPlayer = round.players[0]
+  mockedHumanPlayer.autoplay = jest.fn()
+  round.playerOrder.prioritize(mockedHumanPlayer)
+
+  round.nextMove()
+
+  expect(mockedHumanPlayer.autoplay.mock.calls.length).toBe(0)
+})
+
+test('should not autoplay if trick is finished', () => {
+  const mockedComputerPlayer = round.players[1]
   mockedComputerPlayer.autoplay = jest.fn()
   round.playerOrder.prioritize(mockedComputerPlayer)
+  round.currentTrick.finished = true
 
   round.nextMove()
 
