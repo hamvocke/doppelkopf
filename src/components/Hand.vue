@@ -70,10 +70,6 @@ export default {
 </script>
 
 <style scoped>
-.hand {
-  flex: 2 1;
-}
-
 .cards > span {
   display: flex;
   flex-wrap: wrap;

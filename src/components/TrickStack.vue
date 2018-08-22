@@ -28,7 +28,6 @@ export default {
 
 .trickStack {
   margin-top: 12px;
-  flex: 1 1;
 }
 
 .trickCount {

@@ -1,7 +1,7 @@
 <template>
   <div class="player">
     <div class="info">
-      <div class="name">{{ player.name }}</div>
+      <div class="name" :class="position">{{ player.name }}</div>
     </div>
     <div class="container">
       <Hand :hand="hand" :is-covered="isCovered" :is-selectable='isHandSelectable' :position='position' :playable-cards="playable()" v-on:play="play"/>
@@ -56,11 +56,15 @@ export default {
 
 .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .info {
   text-align: center;
+}
+
+.left .container, .right .container {
+  flex-direction: column;
 }
 
 .name {
