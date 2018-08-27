@@ -57,6 +57,16 @@ test('player can play card from hand', () => {
   expect(player.hand.cards).toContain(queenOnHand)
 })
 
+test('should move to next player after playing a card', () => {
+  player.game.currentRound.nextPlayer = jest.fn()
+  const kingOnHand = king.of(suits.diamonds)
+  player.hand = new Hand([kingOnHand])
+
+  player.play(kingOnHand)
+
+  expect(player.game.currentRound.nextPlayer.mock.calls).toHaveLength(1)
+})
+
 test('playing a card adds it to the current trick', () => {
   const queenOnHand = queen.of(suits.spades)
   player.hand = new Hand([queenOnHand])
