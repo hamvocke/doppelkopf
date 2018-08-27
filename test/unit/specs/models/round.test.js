@@ -117,10 +117,6 @@ describe('player order', () => {
     expect(round.waitingForPlayer()).toBe(round.players[0])
   })
 
-  test('should continue with first player after last', () => {
-    expect(round.waitingForPlayer()).toBe(round.players[0])
-  })
-
   test('should put player on top of player order if player wins a trick', () => {
     round.currentTrick.add(jack.of(suits.spades), round.players[2])
     round.currentTrick.add(jack.of(suits.clubs), round.players[3])
