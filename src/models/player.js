@@ -25,6 +25,15 @@ export class Player {
     return !this.isRe()
   }
 
+  autoplay () {
+    const cardToBePlayed = this.behavior.cardToPlay(
+      this.hand,
+      this.game.currentTrick.baseCard()
+    )
+    this.play(cardToBePlayed)
+  }
+
+  // TODO: Make this one async to allow updates to be scheduled correctly
   play (card) {
     if (this.game.currentRound.waitingForPlayer() !== this) {
       notifier.info(`It's not your turn, buddy!`)
@@ -43,21 +52,14 @@ export class Player {
 
     this.game.currentTrick.add(cardToBePlayed, this)
     this.hand.remove(cardToBePlayed)
-    this.game.currentRound.nextPlayer()
+
+    // setTimeout(() => this.game.currentRound.nextMove(), 500)
   }
 
   canPlay (card) {
     const baseCard = this.game.currentTrick.baseCard()
     const playable = playableCards(this.hand.cards, baseCard)
     return includes(playable, card)
-  }
-
-  autoplay () {
-    const cardToBePlayed = this.behavior.cardToPlay(
-      this.hand,
-      this.game.currentTrick.baseCard()
-    )
-    this.play(cardToBePlayed)
   }
 
   win (trick) {

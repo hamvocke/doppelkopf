@@ -39,6 +39,7 @@ export class Round {
     }
 
     this.waitingForPlayer().autoplay()
+    this.nextPlayer()
   }
 
   findParties () {
