@@ -1,5 +1,5 @@
 <template>
-  <div class="trickStack" v-if='this.trickStack.tricks.length > 0'>
+  <div class="trickStack" :class="{ hidden: isHidden }">
     <div class="cards">
       <Card :is-covered='true' :card='{}' />
     </div>
@@ -14,6 +14,9 @@ export default {
   components: {
     Card
   },
+  computed: {
+    isHidden: function () { return this.trickStack.tricks.length < 1 }
+  },
   props: {
     trickStack: {
       type: Object,
@@ -25,6 +28,10 @@ export default {
 
 <style scoped>
 @import "../assets/css/colors.css";
+
+.hidden {
+  visibility: hidden;
+}
 
 .trickStack {
   margin-top: 12px;
