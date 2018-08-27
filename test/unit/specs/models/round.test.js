@@ -29,6 +29,20 @@ test('should give current trick to winner', () => {
   expect(round.players[0].trickStack.tricks).toHaveLength(1)
 })
 
+test('should trigger next move when finishing trick', () => {
+  round.game.autoplay = true
+
+  round.players[1].autoplay = jest.fn()
+  round.currentTrick.add(jack.of(suits.clubs), round.players[1])
+  round.currentTrick.add(jack.of(suits.spades), round.players[2])
+  round.currentTrick.add(jack.of(suits.hearts), round.players[3])
+  round.currentTrick.add(jack.of(suits.diamonds), round.players[0])
+
+  round.finishTrick()
+
+  expect(round.players[1].autoplay.mock.calls.length).toBe(1)
+})
+
 test('should autoplay for computer players', () => {
   const mockedComputerPlayer = round.players[1]
   mockedComputerPlayer.autoplay = jest.fn()
@@ -115,7 +129,7 @@ describe('player order', () => {
 
     round.finishTrick()
 
-    expect(round.waitingForPlayer()).toBe(round.players[3])
+    expect(round.waitingForPlayer().name).toBe(round.players[3].name)
   })
 
   test('should change active player on next move', () => {

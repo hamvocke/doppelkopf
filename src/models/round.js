@@ -54,6 +54,10 @@ export class Round {
     winner.win(this.currentTrick)
     this.currentTrick = this.nextTrick()
     this.playerOrder.prioritize(winner)
+
+    if (this.game.autoplay === true) {
+      this.nextMove()
+    }
   }
 
   finishRound () {
