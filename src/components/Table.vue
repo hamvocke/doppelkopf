@@ -41,7 +41,7 @@ export default {
   grid-template-areas:
     "top top top"
     "left center right"
-    "bottom bottom bottom"
+    "left bottom right"
     "controls controls controls";
 }
 .top {

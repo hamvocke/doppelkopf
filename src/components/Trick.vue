@@ -32,12 +32,10 @@ export default {
 </script>
 
 <style scoped>
-
 .trick {
   padding: 12px;
-  margin: 12px;
   border-radius: 8px;
-  min-height: 90%;
+  min-height: 160px;
   background: rgba(255, 255, 255, 0.3);
   justify-content: center;
 }
