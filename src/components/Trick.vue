@@ -6,7 +6,7 @@
       </transition-group>
     </div>
     <div class="winner" v-if='winner'>
-      Stich geht an: {{ winner }}
+      Trick goes to: {{ winner }}
     </div>
   </div>
 </template>
