@@ -1,7 +1,7 @@
 <template>
   <div class="controls">
     <div class="button next" v-if='currentTrick.isFinished()' v-on:click='triggerNextTrick()'>
-      Next Trick >>
+      Next ➡
     </div>
   </div>
 </template>
@@ -28,14 +28,16 @@ export default {
 .button {
   padding: 12px;
   margin: 12px;
-  border: 1px solid color(var(--background) lightness(80%));
-  color: #000;
+  border: 1px solid color(var(--red) shade(20%));
+  color: var(--white);
+  background: var(--red);
   border-radius: 4px;
   display: inline;
+  font-size: 1.1em;
 }
 
 .button:hover, .button:active {
-  background: rgba(255, 255, 255, 0.2)
+  background: color(var(--red) shade(10%));
 }
 
 </style>
