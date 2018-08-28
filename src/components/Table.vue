@@ -5,9 +5,6 @@
 
     <div class="center">
       <Trick :currentTrick='game.currentTrick'/>
-      <div class="currentPlayer">
-        Waiting for: {{ game.currentRound.waitingForPlayer().name }}
-      </div>
     </div>
 
     <Player :player='game.players[3]' position='right' class='right'/>

@@ -13,4 +13,9 @@ describe('Table.vue', () => {
     const wrapper = mount(Table, {propsData: { game: game }})
     expect(wrapper.findAll('div.player')).toHaveLength(4)
   })
+
+  test('should render trick', () => {
+    const wrapper = mount(Table, {propsData: { game: game }})
+    expect(wrapper.find('div.trick').exists()).toBe(true)
+  })
 })
