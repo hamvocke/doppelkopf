@@ -17,7 +17,6 @@ export class Game {
     this.deck = new Deck()
     this.currentRound = new Round(this.players, this)
     this.scorecard = new Scorecard(this.players)
-    this.autoplay = false
     this.deal()
   }
 

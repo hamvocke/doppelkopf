@@ -3,6 +3,7 @@ import { Notifier } from '@/models/notifier'
 import { RingQueue } from '@/models/ringQueue'
 import { Score } from '@/models/score'
 import { re, kontra } from '@/models/parties'
+import { options } from '@/models/options'
 import { find } from 'lodash'
 
 const notifier = new Notifier()
@@ -55,7 +56,7 @@ export class Round {
     this.currentTrick = this.nextTrick()
     this.playerOrder.prioritize(winner)
 
-    if (this.game.autoplay === true) {
+    if (options.autoplay === true) {
       this.nextMove()
     }
   }

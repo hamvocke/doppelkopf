@@ -1,10 +1,15 @@
 import { Game } from '@/models/game'
 import { Notifier } from '@/models/notifier'
 import { jack, suits } from '@/models/card'
+import { options } from '@/models/options'
 import { re, kontra } from '@/models/parties'
 
 const game = new Game()
 let round = game.currentRound
+
+beforeEach(() => {
+  options.autoplay = false
+})
 
 test('round has 4 players', () => {
   expect(round.players).toHaveLength(4)
@@ -30,7 +35,7 @@ test('should give current trick to winner', () => {
 })
 
 test('should trigger next move when finishing trick', () => {
-  round.game.autoplay = true
+  options.autoplay = true
 
   round.players[1].autoplay = jest.fn()
   round.currentTrick.add(jack.of(suits.clubs), round.players[1])
@@ -40,7 +45,7 @@ test('should trigger next move when finishing trick', () => {
 
   round.finishTrick()
 
-  expect(round.players[1].autoplay.mock.calls.length).toBe(1)
+  expect(round.players[1].autoplay).toBeCalled()
 })
 
 test('should autoplay for computer players', () => {
@@ -50,7 +55,7 @@ test('should autoplay for computer players', () => {
 
   round.nextMove()
 
-  expect(mockedComputerPlayer.autoplay.mock.calls.length).toBe(1)
+  expect(mockedComputerPlayer.autoplay).toBeCalled()
 })
 
 test('should not autoplay for human players', () => {
@@ -60,7 +65,7 @@ test('should not autoplay for human players', () => {
 
   round.nextMove()
 
-  expect(mockedHumanPlayer.autoplay.mock.calls.length).toBe(0)
+  expect(mockedHumanPlayer.autoplay).not.toBeCalled()
 })
 
 test('should not autoplay if trick is finished', () => {
@@ -71,7 +76,7 @@ test('should not autoplay if trick is finished', () => {
 
   round.nextMove()
 
-  expect(mockedComputerPlayer.autoplay.mock.calls.length).toBe(0)
+  expect(mockedComputerPlayer.autoplay).not.toBeCalled()
 })
 
 test('should return players for each party', () => {
