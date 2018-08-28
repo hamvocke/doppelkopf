@@ -3,9 +3,6 @@
     <div class="button next" v-if='currentTrick.isFinished()' v-on:click='triggerNextTrick()'>
       Next Trick >>
     </div>
-    <div v-else class="button nextMove" v-on:click='triggerNextMove()'>
-      Next Move >>
-    </div>
   </div>
 </template>
 
@@ -14,9 +11,6 @@ export default {
   name: 'Controls',
   props: ['currentTrick'],
   methods: {
-    triggerNextMove: function () {
-      this.$emit('nextMove')
-    },
     triggerNextTrick: function () {
       this.$emit('nextTrick')
     }

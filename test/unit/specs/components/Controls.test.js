@@ -12,7 +12,7 @@ beforeEach(() => {
 })
 
 describe('Controls.vue', () => {
-  test('should render next button if trick is finished', () => {
+  test('should render next trick button if trick is finished', () => {
     trick.add(ace.of(suits.hearts), game.players[0])
     trick.add(ace.of(suits.hearts), game.players[1])
     trick.add(ace.of(suits.hearts), game.players[2])
@@ -21,14 +21,12 @@ describe('Controls.vue', () => {
     const wrapper = mount(Controls, {propsData: { currentTrick: trick }})
 
     expect(wrapper.find('div.next').exists()).toBe(true)
-    expect(wrapper.find('div.nextMove').exists()).toBe(false)
   })
 
   test('should not render next button if trick is empty', () => {
     const wrapper = mount(Controls, {propsData: { currentTrick: trick }})
 
     expect(wrapper.find('div.next').exists()).toBe(false)
-    expect(wrapper.find('div.nextMove').exists()).toBe(true)
   })
 
   test('should emit next trick event if next button is clicked', () => {
@@ -41,13 +39,5 @@ describe('Controls.vue', () => {
     wrapper.find('div.next').trigger('click')
 
     expect(wrapper.emitted().nextTrick.length).toBe(1)
-  })
-
-  test('should emit next move event if next move button is clicked', () => {
-    const wrapper = mount(Controls, {propsData: { currentTrick: trick }})
-
-    wrapper.find('div.nextMove').trigger('click')
-
-    expect(wrapper.emitted().nextMove.length).toBe(1)
   })
 })
