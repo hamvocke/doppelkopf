@@ -40,6 +40,10 @@ export default {
   justify-content: center;
 }
 
+.winner {
+  padding: 12px;
+}
+
 .cards > span {
   display: flex;
   justify-content: center;
