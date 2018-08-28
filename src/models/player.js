@@ -3,6 +3,7 @@ import { Hand } from '@/models/hand'
 import { TrickStack } from '@/models/trickStack'
 import { RandomCardBehavior } from '@/models/behaviors'
 import { Notifier } from '@/models/notifier'
+import { options } from '@/models/options'
 import { playableCards } from '@/models/playableCardFinder'
 
 const notifier = new Notifier()
@@ -33,7 +34,7 @@ export class Player {
     this.play(cardToBePlayed)
   }
 
-  // TODO: Make this one async to allow updates to be scheduled correctly
+  // TODO: Make this one async to allow updates to be scheduled correctly?
   play (card) {
     if (this.game.currentRound.waitingForPlayer() !== this) {
       notifier.info(`It's not your turn, buddy!`)
@@ -54,7 +55,9 @@ export class Player {
     this.hand.remove(cardToBePlayed)
     this.game.currentRound.nextPlayer()
 
-    // setTimeout(() => this.game.currentRound.nextMove(), 500)
+    if (options.autoplay === true) {
+      setTimeout(() => this.game.currentRound.nextMove(), 500)
+    }
   }
 
   canPlay (card) {

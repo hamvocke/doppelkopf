@@ -5,6 +5,7 @@ import { PlayedCard } from '@/models/playedCard'
 import { king, queen, ten, suits, Card } from '@/models/card'
 import { TrickStack } from '@/models/trickStack'
 import { Notifier } from '@/models/notifier'
+import { options } from '@/models/options'
 
 let game
 let player
@@ -16,6 +17,7 @@ beforeEach(() => {
   game = new Game()
   player = game.players[0]
   player.game.currentRound.waitingForPlayer = () => game.players[0]
+  options.autoplay = false
   jest.runAllTimers()
 })
 
@@ -64,7 +66,31 @@ test('should move to next player after playing a card', () => {
 
   player.play(kingOnHand)
 
-  expect(player.game.currentRound.nextPlayer.mock.calls).toHaveLength(1)
+  expect(player.game.currentRound.nextPlayer).toBeCalled()
+})
+
+test('should trigger next move if autoplay option is enabled', () => {
+  options.autoplay = true
+  player.game.currentRound.nextMove = jest.fn()
+  const kingOnHand = king.of(suits.diamonds)
+  player.hand = new Hand([kingOnHand])
+
+  player.play(kingOnHand)
+  jest.runAllTimers()
+
+  expect(player.game.currentRound.nextMove).toBeCalled()
+})
+
+test('should not trigger next move if autoplay option is disabled', () => {
+  options.autoplay = false
+  player.game.currentRound.nextMove = jest.fn()
+  const kingOnHand = king.of(suits.diamonds)
+  player.hand = new Hand([kingOnHand])
+
+  player.play(kingOnHand)
+  jest.runAllTimers()
+
+  expect(player.game.currentRound.nextMove).not.toBeCalled()
 })
 
 test('playing a card adds it to the current trick', () => {
