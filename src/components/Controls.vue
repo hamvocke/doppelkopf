@@ -1,7 +1,10 @@
 <template>
   <div class="controls">
-    <div class="button next" v-if='currentTrick.isFinished()' v-on:click='triggerNextTrick()'>
+    <div class="button next" v-if='game.currentTrick.isFinished()' v-on:click='triggerNextTrick()'>
       Next ➡
+    </div>
+    <div class="button finish" v-if='game.currentRound.isFinished()' v-on:click='triggerFinish()'>
+      Finish ⏩
     </div>
   </div>
 </template>
@@ -9,10 +12,18 @@
 <script>
 export default {
   name: 'Controls',
-  props: ['currentTrick'],
+  props: {
+    game: {
+      type: Object,
+      required: true
+    }
+  },
   methods: {
     triggerNextTrick: function () {
       this.$emit('nextTrick')
+    },
+    triggerFinish: function () {
+      this.$emit('finishRound')
     }
   }
 }

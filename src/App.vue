@@ -2,7 +2,7 @@
   <div id="app">
     <Notifications/>
     <Table :game='game' />
-    <Controls :currentTrick='game.currentTrick'  v-on:nextTrick="finishTrick" v-on:nextMove="nextMove"/>
+    <Controls :game='game'  v-on:nextTrick="finishTrick" v-on:nextMove="nextMove"/>
   </div>
 </template>
 
