@@ -151,28 +151,24 @@ describe('finish round', () => {
     round = new Game().currentRound
   })
 
-  test('should not mark fresh round as finished', () => {
-    expect(round.isFinished).toBe(false)
+  test('should mark round as finished if players have no more cards on hand', () => {
+    expect(round.isFinished()).toBe(false)
+
+    round.players[0].hand.cards = []
+    round.players[1].hand.cards = []
+    round.players[2].hand.cards = []
+    round.players[3].hand.cards = []
+
+    expect(round.isFinished()).toBe(true)
   })
 
-  test('should mark finished round as finished', () => {
-    setupGameKontraWins()
+  test('should not mark round as finished if player has card left on hand', () => {
+    round.players[0].hand.cards = []
+    round.players[1].hand.cards = []
+    round.players[2].hand.cards = []
+    round.players[3].hand.cards = [jack.of(suits.hearts)]
 
-    round.finishRound()
-
-    expect(round.isFinished).toBe(true)
-  })
-
-  test('should throw error when finishing a finished round', () => {
-    setupGameKontraWins()
-
-    round.finishRound()
-
-    function finishFinishedRound () {
-      round.finishRound()
-    }
-
-    expect(finishFinishedRound).toThrowError(`Can't finish a round that's already finished`)
+    expect(round.isFinished()).toBe(false)
   })
 
   test('should calculate score', () => {
@@ -207,6 +203,11 @@ function setupGameKontraWins () {
   round.players[1].isRe = () => true
   round.players[2].isRe = () => false
   round.players[3].isRe = () => false
+
+  round.players[0].hand.cards = []
+  round.players[1].hand.cards = []
+  round.players[2].hand.cards = []
+  round.players[3].hand.cards = []
 
   round.players[0].trickStack = firstTrickStack
   round.players[1].trickStack = secondTrickStack

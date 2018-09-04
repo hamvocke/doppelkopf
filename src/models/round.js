@@ -13,7 +13,6 @@ export class Round {
     this.players = players
     this.playerOrder = new RingQueue(this.players)
     this.currentTrick = this.nextTrick()
-    this.isFinished = false
     this.game = game
   }
 
@@ -49,6 +48,12 @@ export class Round {
     }
   }
 
+  isFinished () {
+    const sumCardsFn = (acc, player) => acc + player.hand.cards.length
+    const sumOfCardsLeft = this.players.reduce(sumCardsFn, 0)
+    return sumOfCardsLeft === 0
+  }
+
   finishTrick () {
     const playerName = this.currentTrick.winner()
     const winner = find(this.players, { name: playerName })
@@ -62,11 +67,10 @@ export class Round {
   }
 
   finishRound () {
-    if (this.isFinished) {
-      throw new Error(`Can't finish a round that's already finished`)
+    if (!this.isFinished()) {
+      throw new Error(`Can't finish a round before all cards have been played`)
     }
 
-    this.isFinished = true
     const score = this.calculateScore()
     const winningParty = this.findParties()[score.winner()]
     this.game.addScore(winningParty, score.points())
