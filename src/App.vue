@@ -2,7 +2,7 @@
   <div id="app">
     <Notifications/>
     <Table :game='game' />
-    <Controls :game='game'  v-on:nextTrick="finishTrick" v-on:nextMove="nextMove"/>
+    <Controls :game='game'  v-on:nextTrick="finishTrick" v-on:nextMove="nextMove" v-on:finishRound="finishRound"/>
   </div>
 </template>
 
@@ -12,13 +12,14 @@ import Table from './components/Table'
 import Controls from './components/Controls'
 import { Game } from './models/game'
 
-const gameData = new Game()
-
 export default {
   name: 'app',
-  data () {
-    return {
-      game: gameData
+  props: {
+    game: {
+      type: Object,
+      default: function () {
+        return new Game()
+      }
     }
   },
   components: {
@@ -30,6 +31,9 @@ export default {
     },
     finishTrick: function () {
       this.game.currentRound.finishTrick()
+    },
+    finishRound: function () {
+      this.game.currentRound.finishRound()
     }
   }
 }
