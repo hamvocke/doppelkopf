@@ -191,6 +191,16 @@ describe('finish round', () => {
     expect(scorecard.scoreFor(round.players[2])).toBe(1)
     expect(scorecard.scoreFor(round.players[3])).toBe(1)
   })
+
+  test('should throw exception if round is not yet finished', () => {
+    round.players[0].hand.cards = [jack.of(suits.hearts)]
+
+    function finishUnfinishedRound () {
+      round.finishRound()
+    }
+
+    expect(finishUnfinishedRound).toThrowError(`Can't finish a round before all cards have been played`)
+  })
 })
 
 function setupGameKontraWins () {
