@@ -1,10 +1,10 @@
 <template>
   <div class="controls">
     <div class="button next" v-if='game.currentTrick.isFinished()' v-on:click='triggerNextTrick()'>
-      Next ➡
+      ➡ Nächster Stich
     </div>
     <div class="button finish" v-if='game.currentRound.isFinished()' v-on:click='triggerFinish()'>
-      Finish ⏩
+      ⏩ Auszählen
     </div>
   </div>
 </template>
@@ -44,10 +44,13 @@ export default {
   border-radius: 6px;
   display: inline;
   font-size: 1.2em;
+  border-bottom: 5px solid color(var(--red) shade(10%));
 }
 
 .button:hover, .button:active {
-  background: color(var(--red) shade(10%));
+  border-bottom: 3px solid color(var(--red) shade(10%));
+  position: relative;
+  top: 2px;
 }
 
 </style>
