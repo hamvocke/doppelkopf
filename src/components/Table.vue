@@ -7,6 +7,8 @@
       <Trick :currentTrick='game.currentTrick'/>
     </div>
 
+    <Controls :game='game'  v-on:nextTrick="finishTrick" v-on:nextMove="nextMove" v-on:finishRound="finishRound"/>
+
     <Player :player='game.players[3]' position='right' class='right'/>
     <Player :player='game.players[0]' position='bottom' class='bottom' />
   </div>
@@ -15,6 +17,7 @@
 <script>
 import Player from './Player'
 import Trick from './Trick'
+import Controls from './Controls'
 
 export default {
   name: 'Table',
@@ -25,7 +28,18 @@ export default {
     }
   },
   components: {
-    Player, Trick
+    Player, Trick, Controls
+  },
+  methods: {
+    nextMove: function () {
+      this.game.currentRound.nextMove()
+    },
+    finishTrick: function () {
+      this.game.currentRound.finishTrick()
+    },
+    finishRound: function () {
+      this.game.currentRound.finishRound()
+    }
   }
 }
 </script>
@@ -38,8 +52,8 @@ export default {
   grid-template-areas:
     "top top top"
     "left center right"
-    "left bottom right"
-    "controls controls controls";
+    "left controls right"
+    "left bottom right";
 }
 .top {
   grid-area: top;

@@ -34,9 +34,7 @@ export default {
 <style scoped>
 .trick {
   padding: 12px;
-  border-radius: 8px;
-  min-height: 160px;
-  background: rgba(255, 255, 255, 0.3);
+  min-height: 180px;
   justify-content: center;
 }
 
