@@ -37,14 +37,13 @@ export default {
 }
 
 .button {
-  padding: 12px;
-  margin: 12px;
-  border: 1px solid color(var(--red) shade(20%));
+  padding: 18px;
+  margin: 6px;
   color: var(--white);
   background: var(--red);
-  border-radius: 4px;
+  border-radius: 6px;
   display: inline;
-  font-size: 1.1em;
+  font-size: 1.2em;
 }
 
 .button:hover, .button:active {

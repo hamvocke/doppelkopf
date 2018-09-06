@@ -67,7 +67,8 @@ export default {
   top: 0px; /* necessary for css transition */
   height: 100px;
   width: 70px;
-  background: #fff;
+  color: var(--black);
+  background: var(--white);
   padding: 6px;
   border-radius: 12px;
   text-align: center;
