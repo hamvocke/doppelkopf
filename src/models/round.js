@@ -13,6 +13,7 @@ export class Round {
     this.players = players
     this.playerOrder = new RingQueue(this.players)
     this.currentTrick = this.nextTrick()
+    this.finished = false
     this.game = game
   }
 
@@ -48,10 +49,14 @@ export class Round {
     }
   }
 
-  isFinished () {
+  canBeFinished () {
     const sumCardsFn = (acc, player) => acc + player.hand.cards.length
     const sumOfCardsLeft = this.players.reduce(sumCardsFn, 0)
     return sumOfCardsLeft === 0
+  }
+
+  isFinished () {
+    return this.finished
   }
 
   finishTrick () {
@@ -67,13 +72,14 @@ export class Round {
   }
 
   finishRound () {
-    if (!this.isFinished()) {
+    if (!this.canBeFinished()) {
       throw new Error(`Can't finish a round before all cards have been played`)
     }
 
     const score = this.calculateScore()
     const winningParty = this.findParties()[score.winner()]
     this.game.addScore(winningParty, score.points())
+    this.finished = true
     // add special events (fox, doppelkopf) to score - 'extrasRegistry'?
   }
 

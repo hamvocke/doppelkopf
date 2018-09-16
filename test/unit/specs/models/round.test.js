@@ -151,24 +151,21 @@ describe('finish round', () => {
     round = new Game().currentRound
   })
 
-  test('should mark round as finished if players have no more cards on hand', () => {
-    expect(round.isFinished()).toBe(false)
+  test('should be able to finish round if players have no more cards on hand', () => {
+    expect(round.canBeFinished()).toBe(false)
 
-    round.players[0].hand.cards = []
-    round.players[1].hand.cards = []
-    round.players[2].hand.cards = []
-    round.players[3].hand.cards = []
+    setupNoCards()
 
-    expect(round.isFinished()).toBe(true)
+    expect(round.canBeFinished()).toBe(true)
   })
 
-  test('should not mark round as finished if player has card left on hand', () => {
+  test('should not be able to finish round if player has card left on hand', () => {
     round.players[0].hand.cards = []
     round.players[1].hand.cards = []
     round.players[2].hand.cards = []
     round.players[3].hand.cards = [jack.of(suits.hearts)]
 
-    expect(round.isFinished()).toBe(false)
+    expect(round.canBeFinished()).toBe(false)
   })
 
   test('should calculate score', () => {
@@ -190,6 +187,15 @@ describe('finish round', () => {
     expect(scorecard.scoreFor(round.players[1])).toBe(-1)
     expect(scorecard.scoreFor(round.players[2])).toBe(1)
     expect(scorecard.scoreFor(round.players[3])).toBe(1)
+  })
+
+  test('should mark round as finished', () => {
+    expect(round.isFinished()).toBe(false)
+
+    setupGameKontraWins()
+
+    round.finishRound()
+    expect(round.isFinished()).toBe(true)
   })
 
   test('should throw exception if round is not yet finished', () => {
@@ -214,13 +220,17 @@ function setupGameKontraWins () {
   round.players[2].isRe = () => false
   round.players[3].isRe = () => false
 
-  round.players[0].hand.cards = []
-  round.players[1].hand.cards = []
-  round.players[2].hand.cards = []
-  round.players[3].hand.cards = []
+  setupNoCards()
 
   round.players[0].trickStack = firstTrickStack
   round.players[1].trickStack = secondTrickStack
   round.players[2].trickStack = thirdTrickStack
   round.players[3].trickStack = fourthTrickStack
+}
+
+function setupNoCards () {
+  round.players[0].hand.cards = []
+  round.players[1].hand.cards = []
+  round.players[2].hand.cards = []
+  round.players[3].hand.cards = []
 }
