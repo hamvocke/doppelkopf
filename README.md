@@ -3,7 +3,12 @@
 
 An in-browser implementation of the traditional German [Doppelkopf](https://en.wikipedia.org/wiki/Doppelkopf) card game.
 
-## Getting started
+## Live Demo
+The game is still in early stages. Playing it will probably be a frustrating and confusing experience. If you're curious enough to give it a try (and play against a really shitty AI), I encourage you to do so:
+
+### [Try the Live Demo](https://doppelkopf.ham.codes/)
+
+## Development
 This game is implemented using ES2016. The source code is transpiled using Babel and bundled and loaded with Webpack. The frontend is written in [vue.js](https://vuejs.org/)
 
 ``` bash
@@ -28,5 +33,3 @@ yarn e2e
 # run all tests
 yarn test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
