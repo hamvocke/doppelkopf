@@ -50,21 +50,23 @@ export default {
 
 <style scoped>
 .player {
-  padding: 6px;
   margin: 6px;
 }
 
 .container {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .info {
+  margin: 6px;
   text-align: center;
 }
 
 .left .container, .right .container {
   flex-direction: column;
+  align-items: center;
 }
 
 .name {

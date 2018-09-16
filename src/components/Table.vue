@@ -48,12 +48,12 @@ export default {
 .table {
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-template-rows: auto auto auto 50px;
+  grid-template-rows: auto auto 120px auto;
   grid-template-areas:
     "top top top"
     "left center right"
     "left controls right"
-    "left bottom right";
+    "bottom bottom bottom";
 }
 .top {
   grid-area: top;

@@ -75,7 +75,7 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin: 12px;
+  margin: 6px;
 }
 
 .top > span {

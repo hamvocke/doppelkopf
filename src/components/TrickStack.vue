@@ -34,7 +34,7 @@ export default {
 }
 
 .trickStack {
-  margin-top: 12px;
+  margin: 6px;
 }
 
 .trickCount {
@@ -45,13 +45,4 @@ export default {
   display: flex;
   justify-content: center;
 }
-
-.card {
-  margin-left: -40px;
-}
-
-.card:first-of-type {
-  margin-left: 0;
-}
-
 </style>
