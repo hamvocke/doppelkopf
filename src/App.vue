@@ -29,17 +29,12 @@ export default {
 
 <style>
 @import "./assets/css/colors.css";
+@import "./assets/css/normalize.css";
 
 body {
-  padding: 0;
-  margin: 0;
   background: var(--background);
   /* background: linear-gradient(to right, #00CDAC, #02AAB0); */
   background: radial-gradient(#e9e4f0, #d3cce3);
-}
-
-*, *:before, *:after {
-  box-sizing: border-box;
 }
 
 #app {

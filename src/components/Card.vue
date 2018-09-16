@@ -65,8 +65,8 @@ export default {
 .card {
   position: relative;
   top: 0px; /* necessary for css transition */
-  height: 100px;
-  width: 70px;
+  height: 80px;
+  width: 56px;
   color: var(--black);
   background: var(--white);
   padding: 6px;
@@ -78,13 +78,13 @@ export default {
 }
 
 .top, .bottom {
-  height: 100px;
-  width: 70px;
+  height: 80px;
+  width: 56px;
 }
 
 .left, .right {
-  height: 70px;
-  width: 100px;
+  height: 56px;
+  width: 80px;
 }
 
 .selected {

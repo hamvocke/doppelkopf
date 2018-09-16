@@ -47,8 +47,8 @@ export default {
 <style scoped>
 .table {
   display: grid;
-  grid-template-columns: auto auto auto;
-  grid-template-rows: auto auto 120px auto;
+  grid-template-columns: 200px auto 200px;
+  grid-template-rows: auto 300px 120px auto;
   grid-template-areas:
     "top top top"
     "left center right"
