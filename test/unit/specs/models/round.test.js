@@ -79,6 +79,18 @@ test('should not autoplay if trick is finished', () => {
   expect(mockedComputerPlayer.autoplay).not.toBeCalled()
 })
 
+test('should not autoplay if round is finished', () => {
+  const mockedComputerPlayer = round.players[1]
+  mockedComputerPlayer.autoplay = jest.fn()
+  round.playerOrder.prioritize(mockedComputerPlayer)
+  round.currentTrick.finished = false
+  round.finished = true
+
+  round.nextMove()
+
+  expect(mockedComputerPlayer.autoplay).not.toBeCalled()
+})
+
 test('should return players for each party', () => {
   round.players[0].isRe = () => true
   round.players[1].isRe = () => false

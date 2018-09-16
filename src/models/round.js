@@ -35,7 +35,7 @@ export class Round {
       return
     }
 
-    if (this.currentTrick.isFinished()) {
+    if (this.currentTrick.isFinished() || this.isFinished()) {
       return
     }
 
