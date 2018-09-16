@@ -109,7 +109,7 @@ export default {
 
 .rank {
   font-size: 2em;
-  line-height: 90px;
+  line-height: 80px;
 }
 
 .red {
