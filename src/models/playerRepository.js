@@ -1,3 +1,5 @@
+import { find } from 'lodash'
+
 let instance
 
 export class PlayerRepository {
@@ -12,7 +14,10 @@ export class PlayerRepository {
   }
 
   register (player) {
-    this.messages.push({id: uniqueId('message_'), text: message})
-    window.setTimeout(() => { this.messages.pop() }, 4000)
+    this.players.push(player)
+  }
+
+  findByName (name) {
+    return find(this.players, { name: name })
   }
 }
