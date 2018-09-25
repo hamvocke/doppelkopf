@@ -1,10 +1,10 @@
 <template>
   <div class="controls">
     <div class="button next" v-if='game.currentTrick.isFinished()' v-on:click='triggerNextTrick()'>
-      ➡ Nächster Stich
+      ➡ Next trick
     </div>
     <div class="button finish" v-if='game.currentRound.isFinished()' v-on:click='triggerFinish()'>
-      ⏩ Auszählen
+      ⏩ Finish round
     </div>
   </div>
 </template>
