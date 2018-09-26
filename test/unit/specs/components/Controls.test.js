@@ -18,9 +18,19 @@ describe('Controls.vue', () => {
     trick.add(ace.of(suits.hearts), game.players[2])
     trick.add(ace.of(suits.hearts), game.players[3])
 
+    game.currentRound.canBeFinished = () => false
+
     const wrapper = mount(Controls, {propsData: { game: game }})
 
     expect(wrapper.find('div.next').exists()).toBe(true)
+  })
+
+  test('should not render next trick button if round can be finished', () => {
+    game.currentRound.canBeFinished = () => false
+
+    const wrapper = mount(Controls, {propsData: { game: game }})
+
+    expect(wrapper.find('div.next').exists()).toBe(false)
   })
 
   test('should not render next button if trick is empty', () => {
@@ -41,16 +51,16 @@ describe('Controls.vue', () => {
     expect(wrapper.emitted().nextTrick.length).toBe(1)
   })
 
-  test('should not render finish button if round is not finished', () => {
-    game.currentRound.isFinished = () => false
+  test('should not render finish button if round can not be finished', () => {
+    game.currentRound.canBeFinished = () => false
 
     const wrapper = mount(Controls, {propsData: { game: game }})
 
     expect(wrapper.find('div.finish').exists()).toBe(false)
   })
 
-  test('should render finish button if round is finished', () => {
-    game.currentRound.isFinished = () => true
+  test('should render finish button if round can be finished', () => {
+    game.currentRound.canBeFinished = () => true
 
     const wrapper = mount(Controls, {propsData: { game: game }})
 
@@ -58,7 +68,7 @@ describe('Controls.vue', () => {
   })
 
   test('should emit finish event if finish button is clicked', () => {
-    game.currentRound.isFinished = () => true
+    game.currentRound.canBeFinished = () => true
     const wrapper = mount(Controls, {propsData: { game: game }})
 
     wrapper.find('div.finish').trigger('click')

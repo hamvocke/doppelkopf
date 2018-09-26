@@ -1,9 +1,9 @@
 <template>
   <div class="controls">
-    <div class="button next" v-if='game.currentTrick.isFinished()' v-on:click='triggerNextTrick()'>
+    <div class="button next" v-if='game.currentTrick.isFinished() && !game.currentRound.canBeFinished()' v-on:click='triggerNextTrick()'>
       ➡ Next trick
     </div>
-    <div class="button finish" v-if='game.currentRound.isFinished()' v-on:click='triggerFinish()'>
+    <div class="button finish" v-if='game.currentRound.canBeFinished()' v-on:click='triggerFinish()'>
       ⏩ Finish round
     </div>
   </div>
