@@ -60,21 +60,30 @@ export class Round {
   }
 
   finishTrick () {
-    const playerName = this.currentTrick.winner()
-    const winner = find(this.players, { name: playerName })
-    winner.win(this.currentTrick)
+    this.evaluateLastTrick()
+
     this.currentTrick = this.nextTrick()
-    this.playerOrder.prioritize(winner)
 
     if (options.autoplay === true) {
       this.nextMove()
     }
   }
 
+  evaluateLastTrick () {
+    const playerName = this.currentTrick.winner()
+    const winner = find(this.players, { name: playerName })
+    winner.win(this.currentTrick)
+    this.playerOrder.prioritize(winner)
+  }
+
   finishRound () {
     if (!this.canBeFinished()) {
       throw new Error(`Can't finish a round before all cards have been played`)
     }
+
+    this.evaluateLastTrick()
+
+    this.currentTrick = this.nextTrick()
 
     const score = this.calculateScore()
     const winningParty = this.findParties()[score.winner()]

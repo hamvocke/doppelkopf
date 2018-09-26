@@ -166,7 +166,7 @@ describe('finish round', () => {
   test('should be able to finish round if players have no more cards on hand', () => {
     expect(round.canBeFinished()).toBe(false)
 
-    setupNoCards()
+    setupNoCardsLeft()
 
     expect(round.canBeFinished()).toBe(true)
   })
@@ -210,6 +210,16 @@ describe('finish round', () => {
     expect(round.isFinished()).toBe(true)
   })
 
+  test('should finish trick when finishing round', () => {
+    setupGameKontraWins()
+
+    expect(round.currentTrick.cards()).toHaveLength(4)
+
+    round.finishRound()
+
+    expect(round.currentTrick.cards()).toHaveLength(0)
+  })
+
   test('should throw exception if round is not yet finished', () => {
     round.players[0].hand.cards = [jack.of(suits.hearts)]
 
@@ -232,7 +242,14 @@ function setupGameKontraWins () {
   round.players[2].isRe = () => false
   round.players[3].isRe = () => false
 
-  setupNoCards()
+  round.players[3].win = jest.fn()
+
+  round.currentTrick.add(jack.of(suits.hearts), round.players[0])
+  round.currentTrick.add(jack.of(suits.spades), round.players[1])
+  round.currentTrick.add(jack.of(suits.hearts), round.players[2])
+  round.currentTrick.add(jack.of(suits.clubs), round.players[3])
+
+  setupNoCardsLeft()
 
   round.players[0].trickStack = firstTrickStack
   round.players[1].trickStack = secondTrickStack
@@ -240,7 +257,7 @@ function setupGameKontraWins () {
   round.players[3].trickStack = fourthTrickStack
 }
 
-function setupNoCards () {
+function setupNoCardsLeft () {
   round.players[0].hand.cards = []
   round.players[1].hand.cards = []
   round.players[2].hand.cards = []
