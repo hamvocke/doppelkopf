@@ -32,4 +32,8 @@ yarn e2e
 
 # run all tests
 yarn test
+
+# run storybook
+yarn storybook
 ```
+
