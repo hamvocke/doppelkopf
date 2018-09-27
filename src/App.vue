@@ -35,9 +35,6 @@ body {
   background: var(--background);
   /* background: linear-gradient(to right, #00CDAC, #02AAB0); */
   background: radial-gradient(#e9e4f0, #d3cce3);
-}
-
-#app {
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

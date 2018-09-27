@@ -1,5 +1,6 @@
 <template>
   <div class="scorecard" >
+    <h1>Score</h1>
     <table>
       <tr>
         <th class="player" v-for='player in scorecard.players'>{{ player.name }}</th>
@@ -27,13 +28,14 @@ export default {
 
 <style scoped>
 .scorecard {
+  font-family: sans-serif;
+  text-align: center;
   background: white;
   display: inline-block;
   padding: 6px;
   margin: 6px;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-
 }
 
 .scorecard th, .scorecard td {
