@@ -9,31 +9,56 @@ The game is still in early stages. Playing it will probably be a frustrating and
 ### [Try the Live Demo](https://doppelkopf.ham.codes/)
 
 ## Development
-This game is implemented using ES2016. The source code is transpiled using Babel and bundled and loaded with Webpack. The frontend is written in [vue.js](https://vuejs.org/)
+This game is implemented using ES2017. The source code is transpiled using Babel and bundled and loaded with Webpack. The frontend is written in [vue.js](https://vuejs.org/).
 
-``` bash
-# install dependencies
-yarn install
+The backend part is written in Python and using the [Flask](http://flask.pocoo.org/) microframework.
 
-# serve with hot reload at localhost:8080
-yarn dev
+### Getting Started
+Install frontend and backend dependencies:
 
-# build for production with minification
-yarn build
+  $ yarn install
+  $ pipenv install --dev
 
-# build for production and view the bundle analyzer report
-yarn build --report
+To serve the frontend as a standalone application, run
 
-# run unit tests
-yarn unit
+  $ yarn dev
 
-# run e2e tests
-yarn e2e
+To start the backend, run
 
-# run all tests
-yarn test
+  $ make run
 
-# run storybook
-yarn storybook
-```
+### Run Tests
+Tests for both, frontend and backend, are included in the `test` directory. Backend tests are implemented with [pytest](https://docs.pytest.org/), frontend tests with [Jest](https://jestjs.io/).
 
+To run the frontend tests, use
+
+  $ yarn test
+
+Backend tests can be run with
+
+  $ make unit
+
+### Storybook
+The application uses [storybook.js](https://storybook.js.org/) to showcase all vue.js components in different states. You can use the storybook to take a look at components and use it as a visual test case. It's great for getting fast feedback when designing components.
+
+For new components, add a new story to `src/stories`.
+
+You can view the storybook by running
+
+  $ yarn storybook
+
+and then pointing your browser to [localhost:6006](http://localhost:6006)
+
+### More Helpful Commands
+
+Build the frontend application for production, with minification:
+
+  $ yarn build
+
+Build for production and view the bundle analyzer report
+
+  $ yarn build --report
+
+Run only frontend unit tests (skip e2e tets)
+
+  $ yarn unit
