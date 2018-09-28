@@ -16,27 +16,27 @@ The backend part is written in Python and using the [Flask](http://flask.pocoo.o
 ### Getting Started
 Install frontend and backend dependencies:
 
-  $ yarn install
-  $ pipenv install --dev
+    $ yarn install
+    $ pipenv install --dev
 
 To serve the frontend as a standalone application, run
 
-  $ yarn dev
+    $ yarn dev
 
 To start the backend, run
 
-  $ make run
+    $ make run
 
 ### Run Tests
 Tests for both, frontend and backend, are included in the `test` directory. Backend tests are implemented with [pytest](https://docs.pytest.org/), frontend tests with [Jest](https://jestjs.io/).
 
 To run the frontend tests, use
 
-  $ yarn test
+    $ yarn test
 
 Backend tests can be run with
 
-  $ make unit
+    $ make unit
 
 ### Storybook
 The application uses [storybook.js](https://storybook.js.org/) to showcase all vue.js components in different states. You can use the storybook to take a look at components and use it as a visual test case. It's great for getting fast feedback when designing components.
@@ -45,7 +45,7 @@ For new components, add a new story to `src/stories`.
 
 You can view the storybook by running
 
-  $ yarn storybook
+    $ yarn storybook
 
 and then pointing your browser to [localhost:6006](http://localhost:6006)
 
@@ -53,12 +53,12 @@ and then pointing your browser to [localhost:6006](http://localhost:6006)
 
 Build the frontend application for production, with minification:
 
-  $ yarn build
+    $ yarn build
 
 Build for production and view the bundle analyzer report
 
-  $ yarn build --report
+    $ yarn build --report
 
 Run only frontend unit tests (skip e2e tets)
 
-  $ yarn unit
+    $ yarn unit
