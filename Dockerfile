@@ -3,6 +3,7 @@ FROM node:alpine as frontend-builder
 COPY . /frontend
 WORKDIR /frontend
 
+RUN yarn install
 RUN yarn build
 
 
@@ -18,4 +19,4 @@ COPY --from=frontend-builder /frontend/dist /app/dist
 
 EXPOSE 5000
 
-CMD ["make", "run"]
+CMD gunicorn --workers=2 backend:app -b localhost:5000
