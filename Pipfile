@@ -9,6 +9,7 @@ flask = "*"
 [dev-packages]
 black = "*"
 pytest = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.6"
