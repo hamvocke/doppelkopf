@@ -6,3 +6,6 @@ run:
 
 unit:
 	pipenv run pytest
+
+mypy:
+	pipenv run mypy .

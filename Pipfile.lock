@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ff8f5eb1ac317f3c8c25714da4e5a93c8565f885bc3bc06cf63d8c86be242f8f"
+            "sha256": "54b4c229d161b7f635f87d4df46f1151a96a795ad69c3500830b09d0d7523d8c"
         },
         "requires": {
             "python_version": "3.6"
@@ -62,6 +62,12 @@
         "more-itertools": {
             "version": "==4.3.0"
         },
+        "mypy": {
+            "version": "==0.630"
+        },
+        "mypy-extensions": {
+            "version": "==0.4.1"
+        },
         "pluggy": {
             "version": "==0.7.1"
         },
@@ -85,6 +91,9 @@
         },
         "toml": {
             "version": "==0.9.6"
+        },
+        "typed-ast": {
+            "version": "==1.1.0"
         }
     }
 }

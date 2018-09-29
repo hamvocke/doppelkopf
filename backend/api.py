@@ -2,5 +2,5 @@ from backend import app
 
 
 @app.route("/")
-def hello():
+def hello() -> str:
     return "Hello World!"
