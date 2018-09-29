@@ -9,3 +9,6 @@ unit:
 
 mypy:
 	pipenv run mypy .
+
+flake8:
+	pipenv run flake8 .
