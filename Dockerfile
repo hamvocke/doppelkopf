@@ -1,7 +1,21 @@
-FROM nginx:alpine
+FROM node:alpine as frontend-builder
 
-COPY nginx.default.conf /etc/nginx/conf.d/default.conf
+COPY . /frontend
+WORKDIR /frontend
 
-EXPOSE 8012
+RUN yarn build
 
-COPY dist /usr/share/nginx/html
+
+FROM python:3.7-alpine3.7
+
+COPY . /app
+WORKDIR /app
+
+RUN pip install pipenv
+RUN pipenv install --system
+
+COPY --from=frontend-builder /frontend/dist /app/dist
+
+EXPOSE 5000
+
+CMD ["make", "run"]
