@@ -3,7 +3,6 @@ import { Player } from '@/models/player'
 import { Deck } from '@/models/deck'
 import { Hand } from '@/models/hand'
 import { Scorecard } from '@/models/scorecard'
-import { Evaluator } from '@/models/evaluator'
 
 export class Game {
   constructor () {
@@ -16,7 +15,6 @@ export class Game {
       new Player('Player 4', isComputer, this)
     ]
     this.deck = new Deck()
-    this.evaluator = new Evaluator(this)
     this.currentRound = new Round(this.players, this)
     this.scorecard = new Scorecard(this.players)
     this.deal()

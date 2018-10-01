@@ -24,10 +24,6 @@ test('game has a deck', () => {
   expect(game.deck).toBeDefined()
 })
 
-test('game has an evaluator', () => {
-  expect(game.evaluator).toBeDefined()
-})
-
 test('game has a current round', () => {
   expect(game.currentRound).toBeDefined()
 })
