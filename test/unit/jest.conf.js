@@ -25,6 +25,6 @@ module.exports = {
     'src/**/*.{js,vue}',
     '!src/main.js',
     '!**/node_modules/**',
-    '!src/stories/'
+    '!src/stories/**'
   ]
 }
