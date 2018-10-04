@@ -15,7 +15,7 @@ before_script:
   - sleep 3
 
 script:
-  - yarn test
+  - yarn test:unit
   - yarn build
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker build -t hamvocke/doppelkopf .
