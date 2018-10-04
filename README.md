@@ -21,7 +21,7 @@ Install frontend and backend dependencies:
 
 To serve the frontend as a standalone application, run
 
-    $ yarn dev
+    $ yarn serve
 
 To start the backend, run
 
@@ -32,7 +32,8 @@ Tests for both, frontend and backend, are included in the `test` directory. Back
 
 To run the frontend tests, use
 
-    $ yarn test
+    $ yarn test:unit
+    $ yarn test:e2e
 
 Backend tests can be run with
 
@@ -59,6 +60,3 @@ Build for production and view the bundle analyzer report
 
     $ yarn build --report
 
-Run only frontend unit tests (skip e2e tets)
-
-    $ yarn unit
