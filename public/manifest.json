@@ -1,6 +1,6 @@
 {
-  "name": "doko",
-  "short_name": "doko",
+  "name": "Doppelkopf",
+  "short_name": "Doppelkopf",
   "icons": [
     {
       "src": "/img/icons/android-chrome-192x192.png",
@@ -15,6 +15,6 @@
   ],
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#1d3557",
+  "theme_color": "#d3cce3"
 }
