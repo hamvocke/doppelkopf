@@ -11,12 +11,12 @@
 </template>
 
 <script>
-import Hand from './Hand'
-import TrickStack from './TrickStack'
-import { playableCards } from '@/models/playableCardFinder'
+import Hand from "./Hand";
+import TrickStack from "./TrickStack";
+import { playableCards } from "@/models/playableCardFinder";
 
 export default {
-  name: 'Player',
+  name: "Player",
   props: {
     player: {
       type: Object,
@@ -27,25 +27,29 @@ export default {
       required: false
     }
   },
-  data: function () {
+  data: function() {
     return {
       hand: this.player.hand,
       isCovered: !this.player.isHuman,
       isHandSelectable: this.player.isHuman
-    }
+    };
   },
   components: {
-    Hand, TrickStack
+    Hand,
+    TrickStack
   },
   methods: {
-    play: function (card) {
-      this.player.play(card)
+    play: function(card) {
+      this.player.play(card);
     },
-    playable: function () {
-      return playableCards(this.player.hand.cards, this.player.game.currentTrick.baseCard())
+    playable: function() {
+      return playableCards(
+        this.player.hand.cards,
+        this.player.game.currentTrick.baseCard()
+      );
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -64,7 +68,8 @@ export default {
   text-align: center;
 }
 
-.left .container, .right .container {
+.left .container,
+.right .container {
   flex-direction: column;
   align-items: center;
 }
@@ -72,5 +77,4 @@ export default {
 .name {
   font-weight: bold;
 }
-
 </style>

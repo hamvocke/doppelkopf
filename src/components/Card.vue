@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import { suits } from '@/models/card'
+import { suits } from "@/models/card";
 
 export default {
-  name: 'Card',
+  name: "Card",
   props: {
     card: {
       type: Object,
@@ -39,24 +39,25 @@ export default {
     }
   },
   computed: {
-    colorClasses: function () {
+    colorClasses: function() {
       return {
-        'red': this.card.suit === suits.hearts || this.card.suit === suits.diamonds,
-        'black': this.card.suit === suits.clubs || this.card.suit === suits.spades
-      }
+        red:
+          this.card.suit === suits.hearts || this.card.suit === suits.diamonds,
+        black: this.card.suit === suits.clubs || this.card.suit === suits.spades
+      };
     },
-    cardClasses: function () {
+    cardClasses: function() {
       return {
-        'selected': this.isSelected,
-        'highlighted': this.isHighlighted,
-        'left': this.position === 'left',
-        'right': this.position === 'right',
-        'top': this.position === 'top',
-        'bottom': this.position === 'bottom'
-      }
+        selected: this.isSelected,
+        highlighted: this.isHighlighted,
+        left: this.position === "left",
+        right: this.position === "right",
+        top: this.position === "top",
+        bottom: this.position === "bottom"
+      };
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -72,24 +73,26 @@ export default {
   padding: 6px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.25s cubic-bezier(.25,.8,.25,1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   user-select: none;
 }
 
-.top, .bottom {
+.top,
+.bottom {
   height: 80px;
   width: 56px;
 }
 
-.left, .right {
+.left,
+.right {
   height: 56px;
   width: 80px;
 }
 
 .selected {
   top: -10px;
-  box-shadow: 0 20px 38px rgba(0,0,0,0.25), 0 15px 12px rgba(0,0,0,0.22);
+  box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
   z-index: 9999;
 }
 
@@ -129,7 +132,6 @@ export default {
 }
 
 .highlighted {
-
 }
 
 @media screen and (max-width: 680px) {
@@ -140,19 +142,21 @@ export default {
     padding: 3px;
   }
 
-  .top, .bottom {
+  .top,
+  .bottom {
     height: 60px;
     width: 40px;
   }
 
-  .left, .right {
+  .left,
+  .right {
     height: 40px;
     width: 60px;
   }
 
   .selected {
     top: -6px;
-    box-shadow: 0 20px 38px rgba(0,0,0,0.25), 0 15px 12px rgba(0,0,0,0.22);
+    box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
     z-index: 9999;
   }
 
@@ -173,5 +177,4 @@ export default {
     bottom: 4px;
   }
 }
-
 </style>

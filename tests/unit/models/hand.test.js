@@ -1,98 +1,94 @@
-import { Hand } from '@/models/hand'
-import { Card, ranks, suits, ace, ten, king, queen } from '@/models/card'
-import { allCards } from '@/models/deck'
-import { shuffle } from 'lodash'
+import { Hand } from "@/models/hand";
+import { Card, ranks, suits, ace, ten, king, queen } from "@/models/card";
+import { allCards } from "@/models/deck";
+import { shuffle } from "lodash";
 
-test('a hand with queen of clubs is re', () => {
-  const cards = [
-    queen.of(suits.clubs)
-  ]
-  const hand = new Hand(cards)
+test("a hand with queen of clubs is re", () => {
+  const cards = [queen.of(suits.clubs)];
+  const hand = new Hand(cards);
 
-  expect(hand.isRe()).toBeTruthy()
-  expect(hand.isKontra()).toBeFalsy()
-})
+  expect(hand.isRe()).toBeTruthy();
+  expect(hand.isKontra()).toBeFalsy();
+});
 
-test('a re hand that played the queen of clubs is still re', () => {
-  const queenOfClubs = queen.of(suits.clubs)
-  const tenOfHearts = ten.of(suits.hearts)
-  const hand = new Hand([queenOfClubs, tenOfHearts])
+test("a re hand that played the queen of clubs is still re", () => {
+  const queenOfClubs = queen.of(suits.clubs);
+  const tenOfHearts = ten.of(suits.hearts);
+  const hand = new Hand([queenOfClubs, tenOfHearts]);
 
-  hand.remove(queenOfClubs)
+  hand.remove(queenOfClubs);
 
-  expect(hand.isRe()).toBeTruthy()
-  expect(hand.isKontra()).toBeFalsy()
-})
+  expect(hand.isRe()).toBeTruthy();
+  expect(hand.isKontra()).toBeFalsy();
+});
 
-test('a hand without queen of clubs is kontra', () => {
-  const cards = [
-    queen.of(suits.spades)
-  ]
-  const hand = new Hand(cards)
+test("a hand without queen of clubs is kontra", () => {
+  const cards = [queen.of(suits.spades)];
+  const hand = new Hand(cards);
 
-  expect(hand.isKontra()).toBeTruthy()
-  expect(hand.isRe()).toBeFalsy()
-})
+  expect(hand.isKontra()).toBeTruthy();
+  expect(hand.isRe()).toBeFalsy();
+});
 
-test('hand has a value', () => {
+test("hand has a value", () => {
   const cards = [
     queen.of(suits.spades),
     ten.of(suits.hearts),
     ace.of(suits.diamonds)
-  ]
-  const hand = new Hand(cards)
+  ];
+  const hand = new Hand(cards);
 
-  expect(hand.value()).toBe(24)
-})
+  expect(hand.value()).toBe(24);
+});
 
-test('empty hand has a value of 0', () => {
-  const hand = new Hand([])
+test("empty hand has a value of 0", () => {
+  const hand = new Hand([]);
 
-  expect(hand.value()).toBe(0)
-})
+  expect(hand.value()).toBe(0);
+});
 
-test('can find card on hand', () => {
-  const queenOfSpades = queen.of(suits.spades)
-  const cards = [queenOfSpades]
-  const hand = new Hand(cards)
+test("can find card on hand", () => {
+  const queenOfSpades = queen.of(suits.spades);
+  const cards = [queenOfSpades];
+  const hand = new Hand(cards);
 
-  expect(hand.find(cards[0])).toEqual(queenOfSpades)
-})
+  expect(hand.find(cards[0])).toEqual(queenOfSpades);
+});
 
-test('can not find non-existing card on hand', () => {
-  const queenOfSpades = queen.of(suits.spades)
-  const cards = [queenOfSpades]
-  const hand = new Hand(cards)
+test("can not find non-existing card on hand", () => {
+  const queenOfSpades = queen.of(suits.spades);
+  const cards = [queenOfSpades];
+  const hand = new Hand(cards);
 
-  expect(hand.find(king.of(suits.spades))).toBeUndefined()
-})
+  expect(hand.find(king.of(suits.spades))).toBeUndefined();
+});
 
-test('can remove card from hand', () => {
-  const cards = [queen.of(suits.spades)]
-  const hand = new Hand(cards)
-  expect(hand.find(cards[0])).toBeDefined()
+test("can remove card from hand", () => {
+  const cards = [queen.of(suits.spades)];
+  const hand = new Hand(cards);
+  expect(hand.find(cards[0])).toBeDefined();
 
-  hand.remove(cards[0])
+  hand.remove(cards[0]);
 
-  expect(hand.find(cards[0])).toBeUndefined()
-})
+  expect(hand.find(cards[0])).toBeUndefined();
+});
 
-test('cannot remove non-existing card from hand', () => {
-  const cards = [queen.of(suits.spades)]
-  const hand = new Hand(cards)
-  expect(hand.find(cards[0])).toBeDefined()
+test("cannot remove non-existing card from hand", () => {
+  const cards = [queen.of(suits.spades)];
+  const hand = new Hand(cards);
+  expect(hand.find(cards[0])).toBeDefined();
 
-  function invalidRemove () {
-    hand.remove(king.of(suits.diamonds))
+  function invalidRemove() {
+    hand.remove(king.of(suits.diamonds));
   }
 
-  expect(invalidRemove).toThrowError('can\'t remove card that isn\'t on hand')
-})
+  expect(invalidRemove).toThrowError("can't remove card that isn't on hand");
+});
 
-test('should sort hand by visual order', () => {
-  const cards = allCards
+test("should sort hand by visual order", () => {
+  const cards = allCards;
 
-  const hand = new Hand(shuffle(cards))
+  const hand = new Hand(shuffle(cards));
 
   const sortedDeck = [
     new Card(ranks.ten, suits.hearts, 0),
@@ -141,7 +137,7 @@ test('should sort hand by visual order', () => {
     new Card(ranks.ace, suits.hearts, 1),
     new Card(ranks.king, suits.hearts, 0),
     new Card(ranks.king, suits.hearts, 1)
-  ]
+  ];
 
-  expect(hand.cards).toEqual(sortedDeck)
-})
+  expect(hand.cards).toEqual(sortedDeck);
+});

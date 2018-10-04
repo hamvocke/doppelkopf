@@ -1,2 +1,2 @@
-export const re = 'Re'
-export const kontra = 'Kontra'
+export const re = "Re";
+export const kontra = "Kontra";

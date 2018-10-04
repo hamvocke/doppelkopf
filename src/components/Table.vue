@@ -15,12 +15,12 @@
 </template>
 
 <script>
-import Player from './Player'
-import Trick from './Trick'
-import Controls from './Controls'
+import Player from "./Player";
+import Trick from "./Trick";
+import Controls from "./Controls";
 
 export default {
-  name: 'Table',
+  name: "Table",
   props: {
     game: {
       type: Object,
@@ -28,20 +28,22 @@ export default {
     }
   },
   components: {
-    Player, Trick, Controls
+    Player,
+    Trick,
+    Controls
   },
   methods: {
-    nextMove: function () {
-      this.game.currentRound.nextMove()
+    nextMove: function() {
+      this.game.currentRound.nextMove();
     },
-    finishTrick: function () {
-      this.game.currentRound.finishTrick()
+    finishTrick: function() {
+      this.game.currentRound.finishTrick();
     },
-    finishRound: function () {
-      this.game.currentRound.finishRound()
+    finishRound: function() {
+      this.game.currentRound.finishRound();
     }
   }
-}
+};
 </script>
 
 <style scoped>

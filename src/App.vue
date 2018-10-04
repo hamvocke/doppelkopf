@@ -6,25 +6,26 @@
 </template>
 
 <script>
-import Notifications from './components/Notifications'
-import Table from './components/Table'
+import Notifications from "./components/Notifications";
+import Table from "./components/Table";
 
-import { Game } from './models/game'
+import { Game } from "./models/game";
 
 export default {
-  name: 'app',
+  name: "app",
   props: {
     game: {
       type: Object,
-      default: function () {
-        return new Game()
+      default: function() {
+        return new Game();
       }
     }
   },
   components: {
-    Table, Notifications
+    Table,
+    Notifications
   }
-}
+};
 </script>
 
 <style>

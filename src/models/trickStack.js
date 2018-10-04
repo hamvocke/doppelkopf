@@ -1,24 +1,24 @@
-import { flatMap } from 'lodash'
+import { flatMap } from "lodash";
 
 export class TrickStack {
-  constructor (tricks = []) {
-    this.tricks = tricks
+  constructor(tricks = []) {
+    this.tricks = tricks;
   }
 
-  add (trick) {
+  add(trick) {
     if (!trick.isFinished()) {
-      throw new Error('can not add an unfinished trick to the trick stack')
+      throw new Error("can not add an unfinished trick to the trick stack");
     }
 
-    this.tricks.push(trick)
+    this.tricks.push(trick);
   }
 
-  cards () {
-    const playedCards = flatMap(this.tricks, (trick) => trick.playedCards)
-    return playedCards.map(playedCard => playedCard.card)
+  cards() {
+    const playedCards = flatMap(this.tricks, trick => trick.playedCards);
+    return playedCards.map(playedCard => playedCard.card);
   }
 
-  points () {
-    return this.tricks.reduce((acc, trick) => acc + trick.points(), 0)
+  points() {
+    return this.tricks.reduce((acc, trick) => acc + trick.points(), 0);
   }
 }

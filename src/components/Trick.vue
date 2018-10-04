@@ -12,23 +12,23 @@
 </template>
 
 <script>
-import Card from './Card'
+import Card from "./Card";
 
 export default {
-  name: 'Trick',
-  props: ['currentTrick'],
+  name: "Trick",
+  props: ["currentTrick"],
   computed: {
-    cards: function () {
-      return this.currentTrick.cards()
+    cards: function() {
+      return this.currentTrick.cards();
     },
-    winner: function () {
-      return this.currentTrick.winner()
+    winner: function() {
+      return this.currentTrick.winner();
     }
   },
   components: {
     Card
   }
-}
+};
 </script>
 
 <style scoped>
@@ -56,14 +56,14 @@ export default {
   transition-delay: 0.5s;
 }
 
-.card-leave-active, .card-leave {
+.card-leave-active,
+.card-leave {
   transition-delay: 0s;
   transition: none;
 }
 
 .card-enter {
   opacity: 0;
-  transform: scale(2, 2)
+  transform: scale(2, 2);
 }
-
 </style>

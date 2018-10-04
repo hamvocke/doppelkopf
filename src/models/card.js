@@ -1,94 +1,98 @@
-import { some, findIndex, uniqueId } from 'lodash'
+import { some, findIndex, uniqueId } from "lodash";
 
 export const suits = {
-  clubs: '♣',
-  diamonds: '♦',
-  hearts: '♥',
-  spades: '♠'
-}
+  clubs: "♣",
+  diamonds: "♦",
+  hearts: "♥",
+  spades: "♠"
+};
 
 export const ranks = {
-  ace: 'A',
-  ten: '10',
-  king: 'K',
-  queen: 'Q',
-  jack: 'J'
-}
+  ace: "A",
+  ten: "10",
+  king: "K",
+  queen: "Q",
+  jack: "J"
+};
 
 export const values = {
-  'A': 11,
-  '10': 10,
-  'K': 4,
-  'Q': 3,
-  'J': 2
-}
+  A: 11,
+  "10": 10,
+  K: 4,
+  Q: 3,
+  J: 2
+};
 
 export class Card {
-  constructor (rank, suit = suits[0], id = uniqueId('card_')) {
-    this.rank = rank
-    this.suit = suit
-    this.id = id
+  constructor(rank, suit = suits[0], id = uniqueId("card_")) {
+    this.rank = rank;
+    this.suit = suit;
+    this.id = id;
   }
 
-  get value () {
-    return values[this.rank]
+  get value() {
+    return values[this.rank];
   }
 
-  get cardId () {
-    return `${this.rank}-${this.suit}-${this.id}`
+  get cardId() {
+    return `${this.rank}-${this.suit}-${this.id}`;
   }
 
-  of (suit) {
-    return new Card(this.rank, suit)
+  of(suit) {
+    return new Card(this.rank, suit);
   }
 
-  first () {
-    return new Card(this.rank, this.suit, 0)
+  first() {
+    return new Card(this.rank, this.suit, 0);
   }
 
-  second () {
-    return new Card(this.rank, this.suit, 1)
+  second() {
+    return new Card(this.rank, this.suit, 1);
   }
 
-  isTrump () {
-    return some(trumps, {'rank': this.rank, 'suit': this.suit})
+  isTrump() {
+    return some(trumps, { rank: this.rank, suit: this.suit });
   }
 
-  beats (anotherCard) {
-    const thisIsTrump = this.isTrump()
-    const otherCardIsTrump = anotherCard.isTrump()
+  beats(anotherCard) {
+    const thisIsTrump = this.isTrump();
+    const otherCardIsTrump = anotherCard.isTrump();
 
     if (thisIsTrump && !otherCardIsTrump) {
-      return true
+      return true;
     }
 
     if (!thisIsTrump && otherCardIsTrump) {
-      return false
+      return false;
     }
 
     if (thisIsTrump && otherCardIsTrump) {
-      return findIndex(trumps, {'rank': anotherCard.rank, 'suit': anotherCard.suit}) - findIndex(trumps, {'rank': this.rank, 'suit': this.suit}) >= 0
+      return (
+        findIndex(trumps, { rank: anotherCard.rank, suit: anotherCard.suit }) -
+          findIndex(trumps, { rank: this.rank, suit: this.suit }) >=
+        0
+      );
     }
 
     if (!thisIsTrump && !otherCardIsTrump) {
       if (this.suit === anotherCard.suit) {
-        return this.value - anotherCard.value >= 0
+        return this.value - anotherCard.value >= 0;
       }
     }
 
-    return false
+    return false;
   }
 }
 
-export function compare (oneCard, anotherCard) {
-  return findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard)
+export function compare(oneCard, anotherCard) {
+  return findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard);
 }
 
-export const ace = new Card(ranks.ace, suits.clubs)
-export const ten = new Card(ranks.ten, suits.clubs)
-export const king = new Card(ranks.king, suits.clubs)
-export const queen = new Card(ranks.queen, suits.clubs)
-export const jack = new Card(ranks.jack, suits.clubs)
+export const ace = new Card(ranks.ace, suits.clubs);
+export const ten = new Card(ranks.ten, suits.clubs);
+export const king = new Card(ranks.king, suits.clubs);
+export const queen = new Card(ranks.queen, suits.clubs);
+export const jack = new Card(ranks.jack, suits.clubs);
 
 const trumps = [
   ten.of(suits.hearts),
@@ -103,7 +107,7 @@ const trumps = [
   ace.of(suits.diamonds),
   ten.of(suits.diamonds),
   king.of(suits.diamonds)
-]
+];
 
 const cardOrder = [
   new Card(ranks.ten, suits.hearts, 0),
@@ -152,4 +156,4 @@ const cardOrder = [
   new Card(ranks.ace, suits.hearts, 1),
   new Card(ranks.king, suits.hearts, 0),
   new Card(ranks.king, suits.hearts, 1)
-]
+];

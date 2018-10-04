@@ -1,23 +1,23 @@
-import { find } from 'lodash'
+import { find } from "lodash";
 
-let instance
+let instance;
 
 export class PlayerRepository {
-  constructor () {
+  constructor() {
     if (instance) {
-      return instance
+      return instance;
     }
 
-    this.players = []
+    this.players = [];
 
-    instance = this
+    instance = this;
   }
 
-  register (player) {
-    this.players.push(player)
+  register(player) {
+    this.players.push(player);
   }
 
-  findByName (name) {
-    return find(this.players, { name: name })
+  findByName(name) {
+    return find(this.players, { name: name });
   }
 }

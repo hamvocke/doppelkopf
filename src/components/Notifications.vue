@@ -9,16 +9,16 @@
 </template>
 
 <script>
-import { Notifier } from '@/models/notifier'
+import { Notifier } from "@/models/notifier";
 
 export default {
-  name: 'Notifications',
-  data: function () {
+  name: "Notifications",
+  data: function() {
     return {
       messages: new Notifier().messages
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>
@@ -41,16 +41,17 @@ export default {
   background: var(--black);
   color: var(--white);
   border-radius: 6px;
-  box-shadow: 0 12px 18px rgba(0,0,0,0.12);
+  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.12);
 }
 
-.message-enter-active, .message-leave-active {
-  transition: all 0.25s cubic-bezier(.25,.8,.25,1);
+.message-enter-active,
+.message-leave-active {
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.message-enter, .message-leave-to {
+.message-enter,
+.message-leave-to {
   opacity: 0;
   transform: translateY(-48px);
 }
-
 </style>

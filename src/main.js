@@ -10,8 +10,6 @@ new Vue({
   render: h => h(App)
 }).$mount("#app");
 
-Raven
-     .config('https://69b3af20d4fa454f851a6be71502334c@sentry.io/1235644')
-     .addPlugin(RavenVue, Vue)
-     .install()
-
+Raven.config("https://69b3af20d4fa454f851a6be71502334c@sentry.io/1235644")
+  .addPlugin(RavenVue, Vue)
+  .install();

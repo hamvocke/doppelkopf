@@ -8,14 +8,16 @@
 </template>
 
 <script>
-import Card from './Card'
+import Card from "./Card";
 export default {
-  name: 'TrickStack',
+  name: "TrickStack",
   components: {
     Card
   },
   computed: {
-    isHidden: function () { return this.trickStack.tricks.length < 1 }
+    isHidden: function() {
+      return this.trickStack.tricks.length < 1;
+    }
   },
   props: {
     trickStack: {
@@ -23,7 +25,7 @@ export default {
       required: true
     }
   }
-}
+};
 </script>
 
 <style scoped>

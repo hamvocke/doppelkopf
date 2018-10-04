@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'Controls',
+  name: "Controls",
   props: {
     game: {
       type: Object,
@@ -19,14 +19,14 @@ export default {
     }
   },
   methods: {
-    triggerNextTrick: function () {
-      this.$emit('nextTrick')
+    triggerNextTrick: function() {
+      this.$emit("nextTrick");
     },
-    triggerFinish: function () {
-      this.$emit('finishRound')
+    triggerFinish: function() {
+      this.$emit("finishRound");
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -47,10 +47,10 @@ export default {
   border-bottom: 5px solid color(var(--red) shade(20%));
 }
 
-.button:hover, .button:active {
+.button:hover,
+.button:active {
   border-bottom: 3px solid color(var(--red) shade(20%));
   position: relative;
   top: 2px;
 }
-
 </style>

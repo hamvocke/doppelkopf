@@ -1,19 +1,21 @@
-import { uniqueId } from 'lodash'
-let instance
+import { uniqueId } from "lodash";
+let instance;
 
 export class Notifier {
-  constructor () {
+  constructor() {
     if (instance) {
-      return instance
+      return instance;
     }
 
-    this.messages = []
+    this.messages = [];
 
-    instance = this
+    instance = this;
   }
 
-  info (message) {
-    this.messages.push({id: uniqueId('message_'), text: message})
-    window.setTimeout(() => { this.messages.pop() }, 4000)
+  info(message) {
+    this.messages.push({ id: uniqueId("message_"), text: message });
+    window.setTimeout(() => {
+      this.messages.pop();
+    }, 4000);
   }
 }

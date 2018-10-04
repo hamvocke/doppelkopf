@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import Card from './Card'
+import Card from "./Card";
 
 export default {
-  name: 'Hand',
+  name: "Hand",
   props: {
     hand: {
       type: Object,
@@ -44,29 +44,29 @@ export default {
   components: {
     Card
   },
-  data: function () {
+  data: function() {
     return {
       selectedCard: {}
-    }
+    };
   },
   methods: {
-    isSelected: function (card) {
-      return card === this.selectedCard
+    isSelected: function(card) {
+      return card === this.selectedCard;
     },
-    select: function (card) {
-      if (!this.isSelectable) return
+    select: function(card) {
+      if (!this.isSelectable) return;
 
       if (this.selectedCard === card) {
-        this.$emit('play', card)
+        this.$emit("play", card);
       } else {
-        this.selectedCard = card
+        this.selectedCard = card;
       }
     },
-    highlight: function (card) {
-      return this.playableCards.includes(card)
+    highlight: function(card) {
+      return this.playableCards.includes(card);
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -118,19 +118,23 @@ export default {
   transform: translateX(-120px);
 }
 
-.top .card, .bottom .card {
+.top .card,
+.bottom .card {
   margin-left: -24px;
 }
 
-.top .card:last-child, .bottom .card:first-child {
+.top .card:last-child,
+.bottom .card:first-child {
   margin-left: 0;
 }
 
-.left .card, .right .card {
+.left .card,
+.right .card {
   margin-top: -42px;
 }
 
-.left .card:first-child, .right .card:last-child {
+.left .card:first-child,
+.right .card:last-child {
   margin-top: 0;
 }
 
@@ -143,19 +147,23 @@ export default {
 }
 
 @media screen and (max-width: 680px) {
-  .top .card, .bottom .card {
+  .top .card,
+  .bottom .card {
     margin-left: -12px;
   }
 
-  .top .card:last-child, .bottom .card:first-child {
+  .top .card:last-child,
+  .bottom .card:first-child {
     margin-left: 0;
   }
 
-  .left .card, .right .card {
+  .left .card,
+  .right .card {
     margin-top: -24px;
   }
 
-  .left .card:first-child, .right .card:last-child {
+  .left .card:first-child,
+  .right .card:last-child {
     margin-top: 0;
   }
 }

@@ -16,14 +16,14 @@
 
 <script>
 export default {
-  name: 'Scorecard',
+  name: "Scorecard",
   props: {
     scorecard: {
       type: Object,
       required: true
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -35,11 +35,11 @@ export default {
   padding: 6px;
   margin: 6px;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-.scorecard th, .scorecard td {
+.scorecard th,
+.scorecard td {
   padding: 6px;
 }
-
 </style>
