@@ -164,11 +164,11 @@ describe('finish round', () => {
   })
 
   test('should be able to finish round if players have no more cards on hand', () => {
-    expect(round.canBeFinished()).toBe(false)
+    expect(round.noMoreCardsLeft()).toBe(false)
 
     setupNoCardsLeft()
 
-    expect(round.canBeFinished()).toBe(true)
+    expect(round.noMoreCardsLeft()).toBe(true)
   })
 
   test('should not be able to finish round if player has card left on hand', () => {
@@ -177,7 +177,7 @@ describe('finish round', () => {
     round.players[2].hand.cards = []
     round.players[3].hand.cards = [jack.of(suits.hearts)]
 
-    expect(round.canBeFinished()).toBe(false)
+    expect(round.noMoreCardsLeft()).toBe(false)
   })
 
   test('should calculate score', () => {

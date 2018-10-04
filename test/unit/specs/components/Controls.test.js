@@ -18,7 +18,7 @@ describe('Controls.vue', () => {
     trick.add(ace.of(suits.hearts), game.players[2])
     trick.add(ace.of(suits.hearts), game.players[3])
 
-    game.currentRound.canBeFinished = () => false
+    game.currentRound.noMoreCardsLeft = () => false
 
     const wrapper = mount(Controls, {propsData: { game: game }})
 
@@ -26,7 +26,7 @@ describe('Controls.vue', () => {
   })
 
   test('should not render next trick button if round can be finished', () => {
-    game.currentRound.canBeFinished = () => false
+    game.currentRound.noMoreCardsLeft = () => false
 
     const wrapper = mount(Controls, {propsData: { game: game }})
 
@@ -51,24 +51,33 @@ describe('Controls.vue', () => {
     expect(wrapper.emitted().nextTrick.length).toBe(1)
   })
 
-  test('should not render finish button if round can not be finished', () => {
-    game.currentRound.canBeFinished = () => false
+  test('should not render finish button if there are still cards left on hands', () => {
+    game.currentRound.noMoreCardsLeft = () => false
 
     const wrapper = mount(Controls, {propsData: { game: game }})
 
     expect(wrapper.find('div.finish').exists()).toBe(false)
   })
 
-  test('should render finish button if round can be finished', () => {
-    game.currentRound.canBeFinished = () => true
+  test('should render finish button if no more cards are left', () => {
+    game.currentRound.noMoreCardsLeft = () => true
 
     const wrapper = mount(Controls, {propsData: { game: game }})
 
     expect(wrapper.find('div.finish').exists()).toBe(true)
   })
 
+  test('should not render finish button after round has been finished', () => {
+    game.currentRound.noMoreCardsLeft = () => true
+    game.currentRound.isFinished = () => true
+
+    const wrapper = mount(Controls, {propsData: { game: game }})
+
+    expect(wrapper.find('div.finish').exists()).toBe(false)
+  })
+
   test('should emit finish event if finish button is clicked', () => {
-    game.currentRound.canBeFinished = () => true
+    game.currentRound.noMoreCardsLeft = () => true
     const wrapper = mount(Controls, {propsData: { game: game }})
 
     wrapper.find('div.finish').trigger('click')

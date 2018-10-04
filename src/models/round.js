@@ -49,7 +49,7 @@ export class Round {
     }
   }
 
-  canBeFinished () {
+  noMoreCardsLeft () {
     const sumCardsFn = (acc, player) => acc + player.hand.cards.length
     const sumOfCardsLeft = this.players.reduce(sumCardsFn, 0)
     return sumOfCardsLeft === 0
@@ -77,7 +77,7 @@ export class Round {
   }
 
   finishRound () {
-    if (!this.canBeFinished()) {
+    if (!this.noMoreCardsLeft()) {
       throw new Error(`Can't finish a round before all cards have been played`)
     }
 
