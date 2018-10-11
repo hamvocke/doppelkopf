@@ -56,4 +56,22 @@ describe("Table.vue", () => {
 
     expect(mockGame.currentRound.finishTrick).toBeCalled();
   });
+
+  test("should hide Scorecard if game is not finished", () => {
+    const mockGame = new Game();
+    mockGame.currentRound.isFinished = () => false;
+
+    const wrapper = mount(Table, { propsData: { game: mockGame } });
+
+    expect(wrapper.find("div.scorecard").exists()).toBe(false);
+  });
+
+  test("should show Scorecard if game is finished", () => {
+    const mockGame = new Game();
+    mockGame.currentRound.isFinished = () => true;
+
+    const wrapper = mount(Table, { propsData: { game: mockGame } });
+
+    expect(wrapper.find("div.scorecard").exists()).toBe(true);
+  });
 });

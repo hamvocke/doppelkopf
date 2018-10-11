@@ -11,6 +11,8 @@
 
     <Player :player='game.players[3]' position='right' class='right'/>
     <Player :player='game.players[0]' position='bottom' class='bottom' />
+
+    <Scorecard :scorecard='game.scorecard' v-if='game.currentRound.isFinished()' />
   </div>
 </template>
 
@@ -18,6 +20,7 @@
 import Player from "./Player";
 import Trick from "./Trick";
 import Controls from "./Controls";
+import Scorecard from "./Scorecard";
 
 export default {
   name: "Table",
@@ -30,7 +33,8 @@ export default {
   components: {
     Player,
     Trick,
-    Controls
+    Controls,
+    Scorecard
   },
   methods: {
     nextMove: function() {
