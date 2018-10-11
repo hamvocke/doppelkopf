@@ -1,4 +1,4 @@
-import { includes } from "lodash";
+import { includes, uniqueId } from "lodash";
 import { Hand } from "@/models/hand";
 import { TrickStack } from "@/models/trickStack";
 import { RandomCardBehavior } from "@/models/behaviors";
@@ -10,6 +10,7 @@ const notifier = new Notifier();
 
 export class Player {
   constructor(name, isHuman = false, game = {}) {
+    this.id = uniqueId("player_");
     this.name = name;
     this.hand = new Hand();
     this.isHuman = isHuman;

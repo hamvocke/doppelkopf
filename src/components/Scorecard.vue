@@ -3,7 +3,7 @@
     <h1>Score</h1>
     <table>
       <tr>
-        <th class="player" v-for='player in scorecard.players'>{{ player.name }}</th>
+        <th class="player" v-for='player in scorecard.players' :key='player.id'>{{ player.name }}</th>
       </tr>
       <tr class="scoreLine" v-for='scoreLine in scorecard.scoreLines'>
         <td v-for='score in scoreLine'>
