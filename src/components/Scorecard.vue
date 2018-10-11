@@ -31,11 +31,17 @@ export default {
   font-family: sans-serif;
   text-align: center;
   background: white;
-  display: inline-block;
   padding: 6px;
   margin: 6px;
-  border-radius: 8px;
+  border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  position: fixed;
+  top: 24px;
+  left: calc(-50vw + 50%);
+  right: calc(-50vw + 50%);
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 .scorecard th,
