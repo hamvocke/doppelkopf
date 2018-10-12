@@ -1,9 +1,9 @@
 {
   "name": "doppelkopf",
   "version": "0.0.1",
+  "private": true,
   "description": "doppelkopf card game in your browser",
   "author": "Ham Vocke <hermann.vocke@gmail.com>",
-  "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.4",
-    "@vue/cli-plugin-e2e-cypress": "^3.0.4",
+    "@vue/cli-plugin-e2e-nightwatch": "^3.0.5",
     "@vue/cli-plugin-eslint": "^3.0.4",
     "@vue/cli-plugin-pwa": "^3.0.4",
     "@vue/cli-plugin-unit-jest": "^3.0.4",

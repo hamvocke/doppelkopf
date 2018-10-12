@@ -1,8 +1,13 @@
-// https://docs.cypress.io/api/introduction/api.html
+// For authoring Nightwatch tests, see
+// http://nightwatchjs.org/guide#usage
 
-describe("My First Test", () => {
-  it("Visits the app root url", () => {
-    cy.visit("/");
-    cy.contains("h1", "Welcome to Your Vue.js App");
-  });
-});
+module.exports = {
+  'default e2e tests': browser => {
+    browser
+      .url(process.env.VUE_DEV_SERVER_URL)
+      .waitForElementVisible('#app', 5000)
+      .assert.elementPresent('.table')
+      .assert.elementCount('div.player', 4)
+      .end()
+  }
+}
