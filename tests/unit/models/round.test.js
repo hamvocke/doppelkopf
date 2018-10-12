@@ -5,6 +5,7 @@ import { options } from "@/models/options";
 import { re, kontra } from "@/models/parties";
 
 const game = new Game();
+game.startGame();
 let round = game.currentRound;
 
 beforeEach(() => {
@@ -123,7 +124,9 @@ test("should show notification when triggering next move for human player", () =
 
 describe("player order", () => {
   beforeEach(() => {
-    round = new Game().currentRound;
+    const game = new Game();
+    game.startGame();
+    round = game.currentRound;
   });
 
   test("should start with human player", () => {
@@ -156,7 +159,9 @@ describe("player order", () => {
 
 describe("finish round", () => {
   beforeEach(() => {
-    round = new Game().currentRound;
+    const game = new Game();
+    game.startGame();
+    round = game.currentRound;
   });
 
   test("should be able to finish round if players have no more cards on hand", () => {

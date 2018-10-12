@@ -6,8 +6,7 @@ module.exports = {
     browser
       .url(process.env.VUE_DEV_SERVER_URL)
       .waitForElementVisible('#app', 5000)
-      .assert.elementPresent('.table')
-      .assert.elementCount('div.player', 4)
+      .assert.elementPresent('.welcome')
       .end()
   }
 }

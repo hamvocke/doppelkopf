@@ -6,6 +6,10 @@ import { Scorecard } from "@/models/scorecard";
 
 export class Game {
   constructor() {
+    this.started = false;
+  }
+
+  startGame() {
     const isHuman = true;
     const isComputer = false;
     this.players = [
@@ -18,6 +22,11 @@ export class Game {
     this.currentRound = new Round(this.players, this);
     this.scorecard = new Scorecard(this.players);
     this.deal();
+    this.started = true;
+  }
+
+  isStarted() {
+    return this.started;
   }
 
   deal() {
