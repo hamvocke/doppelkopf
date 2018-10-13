@@ -1,11 +1,3 @@
-FROM node:alpine as frontend-builder
-
-COPY . /frontend
-WORKDIR /frontend
-
-RUN yarn install && yarn build
-
-
 FROM python:3.7-alpine3.7
 
 COPY . /app
@@ -13,8 +5,6 @@ WORKDIR /app
 
 RUN pip install pipenv && pipenv install --system
 
-COPY --from=frontend-builder /frontend/dist /app/dist
-
 EXPOSE 5000
 
-CMD gunicorn --workers=2 backend:app -b localhost:5000
+CMD gunicorn --workers=2 backend:app -b :5000
