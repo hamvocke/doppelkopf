@@ -15,8 +15,8 @@ before_script:
   - sleep 3
 
 script:
-  - yarn test:unit
-  - yarn build
+  - pushd frontend && yarn test:unit && popd
+  - pushd frontend && yarn build && popd
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker-compose build
   - docker-compose push
