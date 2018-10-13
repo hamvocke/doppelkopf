@@ -5,6 +5,7 @@ services:
     build: "./frontend"
     ports:
       - "8088:80"
+    image: hamvocke/doppelkopf-backend
     depends_on:
       - backend
 
@@ -15,3 +16,4 @@ services:
       - "5000"
     ports:
       - "5000:5000"
+    image: hamvocke/doppelkopf-backend
