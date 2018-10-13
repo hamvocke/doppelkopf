@@ -12,3 +12,6 @@ mypy:
 
 flake8:
 	pipenv run flake8 .
+
+serve-frontend:
+	pushd frontend && yarn serve && popd

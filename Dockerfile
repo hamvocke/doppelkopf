@@ -3,8 +3,7 @@ FROM node:alpine as frontend-builder
 COPY . /frontend
 WORKDIR /frontend
 
-RUN yarn install
-RUN yarn build
+RUN yarn install && yarn build
 
 
 FROM python:3.7-alpine3.7
@@ -12,8 +11,7 @@ FROM python:3.7-alpine3.7
 COPY . /app
 WORKDIR /app
 
-RUN pip install pipenv
-RUN pipenv install --system
+RUN pip install pipenv && pipenv install --system
 
 COPY --from=frontend-builder /frontend/dist /app/dist
 
