@@ -18,8 +18,8 @@ script:
   - pushd frontend && yarn test:unit && popd
   - pushd frontend && yarn build && popd
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  - docker-compose build
-  - docker-compose push
+  - docker build -t hamvocke/doppelkopf .
+  - docker push hamvocke/doppelkopf:latest
 
 after_script:
   - sh -e /etc/init.d/xvfb stop
