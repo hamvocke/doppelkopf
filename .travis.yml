@@ -20,7 +20,7 @@ script:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker build -t hamvocke/doppelkopf .
   - docker push hamvocke/doppelkopf:latest
-  - ./ci/deploy_frontend/sh
+  - ./ci/deploy_frontend.sh
 
 after_script:
   - sh -e /etc/init.d/xvfb stop
