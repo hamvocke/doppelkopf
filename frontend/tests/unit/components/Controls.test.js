@@ -8,7 +8,6 @@ let trick;
 
 beforeEach(() => {
   game = new Game();
-  game.startGame();
   trick = game.currentTrick;
 });
 

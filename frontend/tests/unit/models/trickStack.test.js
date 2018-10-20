@@ -5,7 +5,6 @@ import { ace, ten, king, queen, suits } from "@/models/card";
 
 let trickStack;
 const game = new Game();
-game.startGame();
 
 beforeEach(() => {
   trickStack = new TrickStack();

@@ -1,13 +1,11 @@
 <template>
   <div id="app">
     <Notifications/>
-    <WelcomeScreen v-if='!game.started' :game='game' />
-    <Table :game='game' v-else />
+    <Table :game='game' />
   </div>
 </template>
 
 <script>
-import WelcomeScreen from "./components/WelcomeScreen";
 import Notifications from "./components/Notifications";
 import Table from "./components/Table";
 
@@ -24,7 +22,6 @@ export default {
     }
   },
   components: {
-    WelcomeScreen,
     Table,
     Notifications
   }

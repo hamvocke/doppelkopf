@@ -6,7 +6,6 @@ let game;
 
 beforeEach(() => {
   game = new Game();
-  game.startGame();
 });
 
 describe("Table.vue", () => {
@@ -27,7 +26,6 @@ describe("Table.vue", () => {
 
   test("should handle nextMove", () => {
     const mockGame = new Game();
-    mockGame.startGame();
     mockGame.currentRound.nextMove = jest.fn();
 
     const wrapper = mount(Table, { propsData: { game: mockGame } });
@@ -39,7 +37,6 @@ describe("Table.vue", () => {
 
   test("should handle finishRound", () => {
     const mockGame = new Game();
-    mockGame.startGame();
     mockGame.currentRound.finishRound = jest.fn();
 
     const wrapper = mount(Table, { propsData: { game: mockGame } });
@@ -51,7 +48,6 @@ describe("Table.vue", () => {
 
   test("should handle finishTrick event", () => {
     const mockGame = new Game();
-    mockGame.startGame();
     mockGame.currentRound.finishTrick = jest.fn();
 
     const wrapper = mount(Table, { propsData: { game: mockGame } });
@@ -63,7 +59,6 @@ describe("Table.vue", () => {
 
   test("should hide Scorecard if game is not finished", () => {
     const mockGame = new Game();
-    mockGame.startGame();
     mockGame.currentRound.isFinished = () => false;
 
     const wrapper = mount(Table, { propsData: { game: mockGame } });
@@ -73,7 +68,6 @@ describe("Table.vue", () => {
 
   test("should show Scorecard if game is finished", () => {
     const mockGame = new Game();
-    mockGame.startGame();
     mockGame.currentRound.isFinished = () => true;
 
     const wrapper = mount(Table, { propsData: { game: mockGame } });

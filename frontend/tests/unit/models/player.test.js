@@ -15,7 +15,6 @@ jest.useFakeTimers();
 
 beforeEach(() => {
   game = new Game();
-  game.startGame();
   player = game.players[0];
   player.game.currentRound.waitingForPlayer = () => game.players[0];
   options.autoplay = false;

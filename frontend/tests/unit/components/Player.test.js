@@ -4,7 +4,6 @@ import { mount } from "@vue/test-utils";
 import { ace, suits } from "@/models/card";
 
 const game = new Game();
-game.startGame();
 
 describe("Player.vue", () => {
   test("should display player's name", () => {
