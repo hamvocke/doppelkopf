@@ -11,7 +11,7 @@ e_mute "Done"
 
 e_step "Archive old website, activate current version"
 ssh -T root@ham.codes << EOF
-    rm -rf /data/archive/doppelkopf
+    rm -rf /data/archive/doppelkopf_bak/
     mkdir -p /data/archive && mv /data/doppelkopf/ /data/archive/doppelkopf_bak/
     mv /tmp/doppelkopf/ /data/doppelkopf
 EOF
