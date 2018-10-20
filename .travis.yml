@@ -3,6 +3,9 @@ services:
   - docker
 
 addons:
+  ssh_known_hosts: ham.codes
+
+addons:
   chrome: stable
 
 node_js:
