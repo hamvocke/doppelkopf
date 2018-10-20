@@ -1,16 +1,20 @@
 #! /usr/bin/env bash
 
-source _colors.sh
+source ${BASH_SOURCE%/*}/_colors.sh
 set -e
 
 e_header "Deploying frontend"
 
 e_step "Upload static content..."
-rsync -rvz frontend/dist/ root@ham.codes:/tmp/frontend
+rsync -rvz frontend/dist/ root@ham.codes:/tmp/doppelkopf
 e_mute "Done"
 
-e_step "Backup old version..."
-ssh root@ham.codes 'mv /data/doppelkopf /data/backup/doppelkopf_bak'
+e_step "Archive old website, activate current version"
+ssh -T root@ham.codes << EOF
+    rm -rf /data/archive/doppelkopf
+    mkdir -p /data/archive && mv /data/doppelkopf/ /data/archive/doppelkopf_bak/
+    mv /tmp/doppelkopf/ /data/doppelkopf
+EOF
 e_mute "Done"
 
 e_step "Activate new version..."
