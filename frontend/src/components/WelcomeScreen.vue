@@ -2,7 +2,7 @@
   <div class="welcome" >
     <h1>Doppelkopf</h1>
 
-    <div class="button" v-on:click='game.startGame()'>
+    <div class="button" v-on:click='game.start()'>
       Start Game!
     </div>
   </div>
