@@ -36,3 +36,5 @@ deploy:
     - docker build -t hamvocke/doppelkopf .
     - docker push hamvocke/doppelkopf:latest
     - ./ci/deploy_frontend.sh
+  on:
+    branch: master
