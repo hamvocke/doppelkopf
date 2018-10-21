@@ -18,7 +18,7 @@ before_script:
   - sleep 3
 
 script:
-  - pushd frontend && yarn test:unit && popd
+  - pushd frontend && yarn test:unit && yarn test:e2e && popd
   - pushd frontend && yarn build && popd
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker build -t hamvocke/doppelkopf .
