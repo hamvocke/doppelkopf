@@ -28,6 +28,15 @@ test("game has a current round", () => {
   expect(game.currentRound).toBeDefined();
 });
 
+test("new game is not started", () => {
+  expect(game.isStarted()).toBe(false);
+});
+
+test("should start a game", () => {
+  game.start();
+  expect(game.isStarted()).toBe(true);
+});
+
 test("game deals cards to each player", () => {
   expect(game.players[0].hand.cards).toHaveLength(10);
   expect(game.players[1].hand.cards).toHaveLength(10);

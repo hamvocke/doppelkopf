@@ -14,10 +14,19 @@ export class Game {
       new Player("Player 3", isComputer, this),
       new Player("Player 4", isComputer, this)
     ];
+    this.started = false;
     this.deck = new Deck();
     this.currentRound = new Round(this.players, this);
     this.scorecard = new Scorecard(this.players);
     this.deal();
+  }
+
+  start() {
+    this.started = true;
+  }
+
+  isStarted() {
+    return this.started;
   }
 
   deal() {
