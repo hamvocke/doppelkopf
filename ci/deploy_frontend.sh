@@ -6,7 +6,7 @@ set -e
 e_header "Deploying frontend"
 
 e_step "Upload static content..."
-rsync -rvz frontend/dist/ root@ham.codes:/tmp/doppelkopf -e "ssh -o StrictHostKeyChecking=no"
+rsync -rvz --quiet --delete-after frontend/dist/ root@ham.codes:/tmp/doppelkopf -e "ssh -o StrictHostKeyChecking=no"
 e_mute "Done"
 
 e_step "Archive old website, activate current version"

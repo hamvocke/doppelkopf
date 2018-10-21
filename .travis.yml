@@ -1,9 +1,7 @@
 language: node_js
+
 services:
   - docker
-
-addons:
-  ssh_known_hosts: ham.codes
 
 addons:
   chrome: stable
@@ -20,10 +18,21 @@ before_script:
 script:
   - pushd frontend && yarn test:unit && yarn test:e2e && popd
   - pushd frontend && yarn build && popd
-  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  - docker build -t hamvocke/doppelkopf .
-  - docker push hamvocke/doppelkopf:latest
-  - ./ci/deploy_frontend.sh
 
 after_script:
   - sh -e /etc/init.d/xvfb stop
+
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 /tmp/travis\_rsa
+  - ssh-add /tmp/travis\_rsa
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script:
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    - docker build -t hamvocke/doppelkopf .
+    - docker push hamvocke/doppelkopf:latest
+    - ./ci/deploy_frontend.sh
