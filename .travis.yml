@@ -31,10 +31,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script:
-    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-    - docker build -t hamvocke/doppelkopf .
-    - docker push hamvocke/doppelkopf:latest
-    - ./ci/deploy_frontend.sh
+  script: bash ci/deploy.sh
   on:
     branch: master

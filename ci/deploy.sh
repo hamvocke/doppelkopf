@@ -3,6 +3,17 @@
 source ${BASH_SOURCE%/*}/_colors.sh
 set -e
 
+e_header "Deploying backend"
+
+e_step "Build Docker container"
+docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+docker build -t hamvocke/doppelkopf .
+e_mute "Done"
+
+e_step "Push Docker container"
+docker push hamvocke/doppelkopf:latest
+e_mute "Done"
+
 e_header "Deploying frontend"
 
 e_step "Upload static content..."
