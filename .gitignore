@@ -4,8 +4,8 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/tests/unit/coverage/
-/tests/e2e/reports/
+frontend/tests/unit/coverage/
+frontend/tests/e2e/reports/
 selenium-debug.log
 
 # Editor directories and files
