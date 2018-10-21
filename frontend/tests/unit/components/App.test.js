@@ -11,7 +11,7 @@ describe("App.vue", () => {
 
   test("should render Table if game is started", () => {
     const startedGame = new Game();
-    startedGame.startGame();
+    startedGame.start();
 
     const wrapper = mount(App, { propsData: { game: startedGame } });
 
