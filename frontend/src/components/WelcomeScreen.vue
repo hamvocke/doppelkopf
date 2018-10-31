@@ -2,6 +2,11 @@
   <div class="welcome" >
     <h1>Doppelkopf</h1>
 
+    <h2>👋 Hey there!</h2>
+    <p>This is an online version of <a href="https://en.wikipedia.org/wiki/Doppelkopf">Doppelkopf</a>, a German card game. It's playable but still a work in progress. Feel free to mess around with the game as much as you like. Some of the basics will work. It won't be a lot of fun as you're playing against a shitty AI and a lot of elements of the game are missing.</p>
+
+    <p>If you want to take a look behind the scenes, you can find the source code on <a href="https://github.com/hamvocke/doppelkopf">GitHub</a> and more details on <a href="https://www.hamvocke.com/blog/doppelkopf/">my blog</a>.</p>
+
     <div class="button start-game" v-on:click='game.start()'>
       Start Game!
     </div>
@@ -29,12 +34,19 @@ export default {
 
 .welcome h1 {
   font-size: 8em;
-  color: #fff;
-  text-shadow: #ccc 0 1px 0, #c9c9c9 0 2px 0, #bbb 0 3px 0, #b9b9b9 0 4px 0,
-    #aaa 0 5px 0, rgba(0, 0, 0, 0.1) 0 6px 1px, rgba(0, 0, 0, 0.1) 0 0 5px,
-    rgba(0, 0, 0, 0.3) 0 1px 3px, rgba(0, 0, 0, 0.15) 0 3px 5px,
-    rgba(0, 0, 0, 0.2) 0 5px 10px, rgba(0, 0, 0, 0.2) 0 10px 10px,
-    rgba(0, 0, 0, 0.1) 0 20px 20px;
+  color: var(--black);
+  text-transform: uppercase;
+  letter-spacing: -0.06em;
+}
+
+.welcome h2 {
+  font-size: 2em;
+  color: var(--black);
+}
+
+.welcome p {
+  width: 50%;
+  margin: 2em auto;
 }
 
 .button {
@@ -43,7 +55,7 @@ export default {
   color: var(--white);
   background: var(--red);
   border-radius: 6px;
-  display: inline;
+  display: inline-block;
   font-size: 1.2em;
   border-bottom: 5px solid color(var(--red) shade(20%));
 }
