@@ -48,7 +48,6 @@ body {
 
 p {
   text-align: left;
-  font-size: 1.2em;
   line-height: 1.4em;
   color: var(--black);
 }
@@ -57,11 +56,13 @@ a {
   color: var(--red);
 }
 
-a:hover, a:active, a:focus {
+a:hover,
+a:active,
+a:focus {
   color: color(var(--red) tint(20%));
 }
 
 a:visited {
-  color: color(var(--red) shade(20%))
+  color: color(var(--red) shade(20%));
 }
 </style>

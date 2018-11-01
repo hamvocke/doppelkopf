@@ -47,6 +47,7 @@ export default {
 .welcome p {
   width: 50%;
   margin: 2em auto;
+  font-size: 1.2em;
 }
 
 .button {
