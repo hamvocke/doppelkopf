@@ -1,4 +1,4 @@
-import { Scorecard } from "@/models/scorecard";
+import { Scorecard, Scoreline } from "@/models/scorecard";
 import { Player } from "@/models/player";
 
 describe("Scorecard", () => {
@@ -21,7 +21,17 @@ describe("Scorecard", () => {
     expect(scorecard.scoreFor(players[3])).toBe(0);
   });
 
-  test("should calculate scores", () => {
+  test("should calculate score line", () => {
+    scorecard.addScore([players[0], players[3]], 4);
+
+    expect(scorecard.lines[0]).toBeDefined();
+    expect(scorecard.lines[0].points).toEqual(4);
+    expect(scorecard.lines[0].winners).toEqual(players[0], players[3]);
+    expect(scorecard.lines[0].score[players[0]]).toEqual(4);
+    expect(scorecard.lines[0].score[players[2]]).toEqual(-4);
+  });
+
+  test("should calculate final scores", () => {
     scorecard.addScore([players[0], players[3]], 4);
     scorecard.addScore([players[1], players[3]], 2);
 

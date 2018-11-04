@@ -7,15 +7,8 @@ export class Scorecard {
   }
 
   addScore(winningPlayers, points) {
-    let scoreLine = {};
-
-    this.players.forEach(player => {
-      scoreLine[player.name] = includes(winningPlayers, player)
-        ? points
-        : -points;
-    });
-
-    this.scoreLines.push(scoreLine);
+    const scoreline = new Scoreline(this.players, points, winningPlayers);
+    this.scoreLines.push(scoreline);
   }
 
   scoreFor(player) {
@@ -23,5 +16,17 @@ export class Scorecard {
       acc += scoreLine[player.name];
       return acc;
     }, 0);
+  }
+}
+
+export class Scoreline {
+  constructor(players, points, winners) {
+    this.points = points;
+    this.winners = winners;
+    this.score = {};
+
+    players.forEach(player => {
+      this.score[player.name] = includes(winners, player) ? points : -points;
+    });
   }
 }
