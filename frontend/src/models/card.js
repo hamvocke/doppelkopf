@@ -54,33 +54,32 @@ export class Card {
     return some(trumps, { rank: this.rank, suit: this.suit });
   }
 
-  beats(anotherCard) {
+  compareTo(anotherCard) {
     const thisIsTrump = this.isTrump();
     const otherCardIsTrump = anotherCard.isTrump();
 
     if (thisIsTrump && !otherCardIsTrump) {
-      return true;
+      return -1;
     }
 
     if (!thisIsTrump && otherCardIsTrump) {
-      return false;
+      return 1;
     }
 
     if (thisIsTrump && otherCardIsTrump) {
       return (
-        findIndex(trumps, { rank: anotherCard.rank, suit: anotherCard.suit }) -
-          findIndex(trumps, { rank: this.rank, suit: this.suit }) >=
-        0
+        findIndex(trumps, { rank: this.rank, suit: this.suit }) -
+        findIndex(trumps, { rank: anotherCard.rank, suit: anotherCard.suit })
       );
     }
 
     if (!thisIsTrump && !otherCardIsTrump) {
       if (this.suit === anotherCard.suit) {
-        return this.value - anotherCard.value >= 0;
+        return anotherCard.value - this.value;
       }
     }
 
-    return false;
+    return 0;
   }
 }
 

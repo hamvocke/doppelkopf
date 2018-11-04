@@ -6,5 +6,5 @@ export class PlayedCard {
 }
 
 export function beats(one, two) {
-  return one.card.beats(two.card) ? -1 : 1;
+  return one.card.compareTo(two.card);
 }

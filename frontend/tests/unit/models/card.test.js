@@ -85,41 +85,41 @@ test("finds all non-trumps", () => {
 });
 
 test("queen of clubs beats queen of spades", () => {
-  expect(queen.of(suits.clubs).beats(queen.of(suits.spades))).toBeTruthy();
+  expect(queen.of(suits.clubs).compareTo(queen.of(suits.spades))).toBeLessThan(0);
 });
 
 test("jack of diamonds is beaten by jack of hearts", () => {
-  expect(jack.of(suits.diamonds).beats(jack.of(suits.hearts))).toBeFalsy();
+  expect(jack.of(suits.diamonds).compareTo(jack.of(suits.hearts))).toBeGreaterThan(0);
 });
 
 test("king of diamonds is beaten by jack of hearts", () => {
-  expect(king.of(suits.diamonds).beats(jack.of(suits.hearts))).toBeFalsy();
+  expect(king.of(suits.diamonds).compareTo(jack.of(suits.hearts))).toBeGreaterThan(0);
 });
 
 test("first card of two equal cards beats second card", () => {
-  expect(ace.of(suits.diamonds).beats(ace.of(suits.diamonds))).toBeTruthy();
+  expect(ace.of(suits.diamonds).compareTo(ace.of(suits.diamonds))).toEqual(0);
 });
 
 test("trump beats non-trump", () => {
-  expect(king.of(suits.diamonds).beats(king.of(suits.spades))).toBeTruthy();
+  expect(king.of(suits.diamonds).compareTo(king.of(suits.spades))).toBeLessThan(0);
 });
 
 test("non-trump is beaten by trump", () => {
-  expect(ten.of(suits.clubs).beats(king.of(suits.diamonds))).toBeFalsy();
+  expect(ten.of(suits.clubs).compareTo(king.of(suits.diamonds))).toBeGreaterThan(0);
 });
 
 test("non-trumps does not beat other non-trump if they belong to different suits", () => {
-  expect(ten.of(suits.clubs).beats(king.of(suits.spades))).toBeFalsy();
+  expect(ten.of(suits.clubs).compareTo(king.of(suits.spades))).toEqual(0);
 });
 
 test("ace of spades beats ten of spades", () => {
-  expect(ace.of(suits.spades).beats(ten.of(suits.spades))).toBeTruthy();
+  expect(ace.of(suits.spades).compareTo(ten.of(suits.spades))).toBeLessThan(0);
 });
 
 test("king of clubs is beaten by ten of clubs", () => {
-  expect(king.of(suits.spades).beats(ten.of(suits.spades))).toBeFalsy();
+  expect(king.of(suits.spades).compareTo(ten.of(suits.spades))).toBeGreaterThan(0);
 });
 
 test("first non-trump beats other non-trump of same card", () => {
-  expect(ace.of(suits.hearts).beats(ace.of(suits.hearts))).toBeTruthy();
+  expect(ace.of(suits.hearts).compareTo(ace.of(suits.hearts))).toEqual(0);
 });
