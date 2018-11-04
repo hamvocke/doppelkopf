@@ -1,4 +1,4 @@
-import { includes } from "lodash";
+import { includes, last } from "lodash";
 
 export class Scorecard {
   constructor(players) {
@@ -7,26 +7,29 @@ export class Scorecard {
   }
 
   addScore(winningPlayers, points) {
-    const scoreline = new Scoreline(this.players, points, winningPlayers);
+    const score = {};
+    this.players.forEach(player => {
+      score[player.name] = includes(winningPlayers, player)
+        ? this.scoreFor(player) + points
+        : this.scoreFor(player) - points;
+    });
+
+    const scoreline = new Scoreline(score, winningPlayers, points);
     this.scoreLines.push(scoreline);
   }
 
   scoreFor(player) {
-    return this.scoreLines.reduce((acc, scoreLine) => {
-      acc += scoreLine[player.name];
-      return acc;
-    }, 0);
+    if (!last(this.scoreLines)) {
+      return 0;
+    }
+    return last(this.scoreLines).score[player.name];
   }
 }
 
 export class Scoreline {
-  constructor(players, points, winners) {
-    this.points = points;
+  constructor(score, winners, points) {
+    this.score = score;
     this.winners = winners;
-    this.score = {};
-
-    players.forEach(player => {
-      this.score[player.name] = includes(winners, player) ? points : -points;
-    });
+    this.points = points;
   }
 }
