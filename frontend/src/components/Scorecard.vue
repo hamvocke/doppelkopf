@@ -3,12 +3,16 @@
     <h1>Score</h1>
     <table>
       <tr>
-        <th class="player" v-for='player in scorecard.players' :key='player.id'>{{ player.name }}</th>
+        <th class="player" v-for='player in players' :key='player.id'>
+          {{ player.name }}
+        </th>
+        <th>Punkte</th>
       </tr>
-      <tr class="scoreLine" v-for='scoreLine in scorecard.scoreLines'>
-        <td v-for='score in scoreLine'>
-          {{ score }}
+      <tr class="scoreLine" v-for='scoreLine in scorecard.scoreLines' :key='scoreLine.id'>
+        <td v-for='player in players' :key='player.id'>
+          {{ scoreLine.score[player.id] }}
         </td>
+        <td>{{ scoreLine.points }}</td>
       </tr>
     </table>
   </div>
@@ -20,6 +24,10 @@ export default {
   props: {
     scorecard: {
       type: Object,
+      required: true
+    },
+    players: {
+      type: Array,
       required: true
     }
   }
@@ -44,8 +52,18 @@ export default {
   width: 50%;
 }
 
+.scorecard table {
+  width: 90%;
+  padding: 6px;
+}
+
 .scorecard th,
 .scorecard td {
-  padding: 6px;
+  line-height: 2em;
+  text-align: right;
+}
+
+.scorecard td {
+  border-bottom: 1px solid #aaa;
 }
 </style>

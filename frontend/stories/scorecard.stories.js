@@ -13,8 +13,8 @@ const players = [
 const sc = new ScorecardModel(players);
 
 sc.addScore([players[0], players[2]], 3);
-sc.addScore([players[1], players[3]], 6);
-sc.addScore([players[0], players[2]], 2);
+sc.addScore([players[2], players[3]], 2);
+sc.addScore([players[0], players[2]], 4);
 sc.addScore([players[2], players[0]], 1);
 
 storiesOf("Scorecard", module)
@@ -24,5 +24,5 @@ storiesOf("Scorecard", module)
   }))
   .add("with data", () => ({
     components: { Scorecard },
-    template: "<Scorecard :scorecard='" + JSON.stringify(sc) + "' />"
+    template: "<Scorecard :scorecard='" + JSON.stringify(sc) + "' :players='" + JSON.stringify(players) + "' />"
   }));
