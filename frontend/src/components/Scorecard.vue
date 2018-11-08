@@ -63,7 +63,7 @@ export default {
   text-align: right;
 }
 
-.scorecard td {
-  border-bottom: 1px solid #aaa;
+.scorecard th {
+  border-bottom: 1px solid #eee;
 }
 </style>

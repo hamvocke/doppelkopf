@@ -31,8 +31,8 @@ describe("Scorecard", () => {
     expect(scorecard.scoreLines[0]).toBeDefined();
     expect(scorecard.scoreLines[0].points).toEqual(4);
     expect(scorecard.scoreLines[0].winners).toEqual([players[0], players[3]]);
-    expect(scorecard.scoreLines[0].score[players[0].name]).toEqual(4);
-    expect(scorecard.scoreLines[0].score[players[2].name]).toEqual(-4);
+    expect(scorecard.scoreLines[0].score[players[0].id]).toEqual(4);
+    expect(scorecard.scoreLines[0].score[players[2].id]).toEqual(-4);
   });
 
   test("should calculate final scores", () => {
