@@ -4,6 +4,8 @@ import Scorecard from "@/components/Scorecard";
 import { Player } from "@/models/player";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 
+import "@/assets/css/colors.css";
+
 const players = [
   new Player("Player 1"),
   new Player("Player 2"),
