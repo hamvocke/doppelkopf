@@ -7,9 +7,9 @@
 
     <p>If you want to take a look behind the scenes, you can find the source code on <a href="https://github.com/hamvocke/doppelkopf">GitHub</a> and more details on <a href="https://www.hamvocke.com/blog/doppelkopf/">my blog</a>.</p>
 
-    <div class="button start-game" v-on:click='game.start()'>
+    <button class="button start-game" v-on:click='game.start()'>
       Start Game!
-    </div>
+    </button>
   </div>
 </template>
 

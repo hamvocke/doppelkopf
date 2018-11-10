@@ -6,15 +6,24 @@
   border-radius: 6px;
   display: inline;
   font-size: 1.2em;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 5px solid color(var(--red) shade(20%));
+  border: none;
 }
 
 .button:hover,
-.button:active {
-  border-bottom: 3px solid color(var(--red) shade(20%));
-  position: relative;
-  top: 2px;
+.button:active,
+.button:focus {
+  background: color(var(--red) shade(20%));
+}
+
+.button.outline {
+  background: none;
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+
+.button.outline:hover,
+.button.outline:active,
+.button.outline:focus {
+  border: 1px solid color(var(--red) shade(20%));
+  color: color(var(--red) shade(20%));
 }

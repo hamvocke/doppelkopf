@@ -1,11 +1,11 @@
 <template>
   <div class="controls">
-    <div class="button next" v-if='game.currentTrick.isFinished() && !game.currentRound.noMoreCardsLeft()' v-on:click='triggerNextTrick()'>
+    <button class="button next" v-if='game.currentTrick.isFinished() && !game.currentRound.noMoreCardsLeft()' v-on:click='triggerNextTrick()'>
       ➡ Next trick
-    </div>
-    <div class="button finish" v-if='game.currentRound.noMoreCardsLeft() && !game.currentRound.isFinished()' v-on:click='triggerFinish()'>
+    </button>
+    <button class="button finish" v-if='game.currentRound.noMoreCardsLeft() && !game.currentRound.isFinished()' v-on:click='triggerFinish()'>
       ⏩ Finish round
-    </div>
+    </button>
   </div>
 </template>
 
