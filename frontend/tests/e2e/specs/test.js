@@ -9,7 +9,7 @@ module.exports = {
 
     client.expect.element(".welcome").to.be.present;
 
-    client.click("div.start-game");
+    client.click("button.start-game");
 
     client.assert.elementCount(".player", 4);
 
