@@ -11,6 +11,6 @@ beforeEach(() => {
 describe("WelcomeScreen.vue", () => {
   test("should show start button", () => {
     const wrapper = mount(WelcomeScreen, { propsData: { game: game } });
-    expect(wrapper.find("div.button").exists()).toBe(true);
+    expect(wrapper.find("button").exists()).toBe(true);
   });
 });
