@@ -30,39 +30,3 @@ export default {
   }
 };
 </script>
-
-<style>
-@import "./assets/css/colors.css";
-@import "./assets/css/normalize.css";
-
-body {
-  background: var(--background);
-  /* background: linear-gradient(to right, #00CDAC, #02AAB0); */
-  background: radial-gradient(#e9e4f0, #d3cce3);
-  font-family: sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  height: 100vh;
-}
-
-p {
-  text-align: left;
-  line-height: 1.4em;
-  color: var(--black);
-}
-
-a {
-  color: var(--red);
-}
-
-a:hover,
-a:active,
-a:focus {
-  color: color(var(--red) tint(20%));
-}
-
-a:visited {
-  color: color(var(--red) shade(20%));
-}
-</style>

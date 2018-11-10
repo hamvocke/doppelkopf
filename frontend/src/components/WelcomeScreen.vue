@@ -49,22 +49,4 @@ export default {
   margin: 2em auto;
   font-size: 1.2em;
 }
-
-.button {
-  padding: 18px;
-  margin: 6px;
-  color: var(--white);
-  background: var(--red);
-  border-radius: 6px;
-  display: inline-block;
-  font-size: 1.2em;
-  border-bottom: 5px solid color(var(--red) shade(20%));
-}
-
-.button:hover,
-.button:active {
-  border-bottom: 3px solid color(var(--red) shade(20%));
-  position: relative;
-  top: 2px;
-}
 </style>

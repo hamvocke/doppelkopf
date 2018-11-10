@@ -30,27 +30,9 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/css/colors.css";
+@import "../assets/css/app.css";
 
 .controls {
   grid-area: controls;
-}
-
-.button {
-  padding: 18px;
-  margin: 6px;
-  color: var(--white);
-  background: var(--red);
-  border-radius: 6px;
-  display: inline;
-  font-size: 1.2em;
-  border-bottom: 5px solid color(var(--red) shade(20%));
-}
-
-.button:hover,
-.button:active {
-  border-bottom: 3px solid color(var(--red) shade(20%));
-  position: relative;
-  top: 2px;
 }
 </style>

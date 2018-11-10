@@ -4,6 +4,8 @@ import "./registerServiceWorker";
 import Raven from "raven-js";
 import RavenVue from "raven-js/plugins/vue";
 
+import "@/assets/css/app.css";
+
 Vue.config.productionTip = false;
 
 new Vue({
