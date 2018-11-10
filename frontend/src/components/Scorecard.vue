@@ -15,6 +15,8 @@
         <td>{{ scoreLine.points }}</td>
       </tr>
     </table>
+
+    <button class="button next-round" @click="triggerNextRound">Next Round</button>
   </div>
 </template>
 
@@ -29,6 +31,11 @@ export default {
     players: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    triggerNextRound: function() {
+      this.$emit("nextRound");
     }
   }
 };

@@ -1,10 +1,11 @@
 import { storiesOf } from "@storybook/vue";
+import { actions } from "@storybook/vue";
 
 import Scorecard from "@/components/Scorecard";
 import { Player } from "@/models/player";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 
-import "@/assets/css/colors.css";
+import "@/assets/css/app.css";
 
 const players = [
   new Player("Player 1"),
@@ -26,5 +27,10 @@ storiesOf("Scorecard", module)
   }))
   .add("with data", () => ({
     components: { Scorecard },
-    template: "<Scorecard :scorecard='" + JSON.stringify(sc) + "' :players='" + JSON.stringify(players) + "' />"
+    template:
+      "<Scorecard :scorecard='" +
+      JSON.stringify(sc) +
+      "' :players='" +
+      JSON.stringify(players) +
+      "' />"
   }));

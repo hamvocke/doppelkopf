@@ -22,4 +22,29 @@ describe("Scorecard.vue", () => {
 
     expect(wrapper.find("table").exists()).toBe(true);
   });
+
+  it("should display next round button", () => {
+    const model = new ScorecardModel();
+    const wrapper = mount(Scorecard, {
+      propsData: {
+        scorecard: model,
+        players: players
+      }
+    });
+
+    expect(wrapper.find("button.next-round").exists()).toBe(true);
+  });
+
+  test("should emit next round event if next round button is clicked", () => {
+    const model = new ScorecardModel();
+    const wrapper = mount(Scorecard, {
+      propsData: {
+        scorecard: model,
+        players: players
+      }
+    });
+    wrapper.find("button.next-round").trigger("click");
+
+    expect(wrapper.emitted().nextRound).toHaveLength(1);
+  });
 });
