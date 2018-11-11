@@ -44,8 +44,12 @@ export class Game {
 
   nextRound() {
     this.currentRound = new Round(this.players, this);
-    // remove trick stack
+    this.clearTrickStacks();
     this.deal();
+  }
+
+  clearTrickStacks() {
+    this.players.forEach(player => player.clearTrickStack());
   }
 
   addScore(winningParty, score) {

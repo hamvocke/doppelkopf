@@ -1,4 +1,6 @@
 import { Game } from "@/models/game";
+import { TrickStack } from "@/models/trickStack";
+import { Trick } from "@/models/trick";
 
 let game;
 
@@ -56,4 +58,17 @@ test("should start a new round", () => {
 
   expect(game.currentRound).not.toBe(previousRound);
   expect(game.players[0].hand.cards).toHaveLength(10);
+});
+
+test("should clear trick stacks", () => {
+  const someTrickStack = new TrickStack([new Trick(4), new Trick(4)]);
+  game.players.forEach(player => (player.trickStack = someTrickStack));
+
+  game.clearTrickStacks();
+
+  const freshTrickStack = new TrickStack();
+  expect(game.players[0].trickStack).toEqual(freshTrickStack);
+  expect(game.players[1].trickStack).toEqual(freshTrickStack);
+  expect(game.players[2].trickStack).toEqual(freshTrickStack);
+  expect(game.players[3].trickStack).toEqual(freshTrickStack);
 });

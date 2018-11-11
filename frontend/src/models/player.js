@@ -71,6 +71,10 @@ export class Player {
     this.trickStack.add(trick);
   }
 
+  clearTrickStack() {
+    this.trickStack = new TrickStack();
+  }
+
   points() {
     return this.trickStack.points();
   }
