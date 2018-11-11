@@ -30,10 +30,12 @@ export class Game {
   }
 
   deal() {
-    this.currentRound.players[0].hand = new Hand(this.deck.cards.slice(0, 10));
-    this.currentRound.players[1].hand = new Hand(this.deck.cards.slice(10, 20));
-    this.currentRound.players[2].hand = new Hand(this.deck.cards.slice(20, 30));
-    this.currentRound.players[3].hand = new Hand(this.deck.cards.slice(30, 40));
+    this.deck = new Deck();
+
+    this.players[0].hand = new Hand(this.deck.cards.slice(0, 10));
+    this.players[1].hand = new Hand(this.deck.cards.slice(10, 20));
+    this.players[2].hand = new Hand(this.deck.cards.slice(20, 30));
+    this.players[3].hand = new Hand(this.deck.cards.slice(30, 40));
   }
 
   get currentTrick() {
@@ -42,6 +44,7 @@ export class Game {
 
   nextRound() {
     this.currentRound = new Round(this.players, this);
+    // remove trick stack
     this.deal();
   }
 
