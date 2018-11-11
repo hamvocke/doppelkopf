@@ -74,4 +74,15 @@ describe("Table.vue", () => {
 
     expect(wrapper.find("div.scorecard").exists()).toBe(true);
   });
+
+  test("should handle nextRound event", () => {
+    const mockGame = new Game();
+    mockGame.nextRound = jest.fn();
+
+    const wrapper = mount(Table, { propsData: { game: mockGame } });
+
+    wrapper.vm.nextRound();
+
+    expect(mockGame.nextRound).toBeCalled();
+  });
 });

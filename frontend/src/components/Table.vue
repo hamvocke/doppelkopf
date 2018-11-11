@@ -12,7 +12,7 @@
     <Player :player='game.players[3]' position='right' class='right'/>
     <Player :player='game.players[0]' position='bottom' class='bottom' />
 
-    <Scorecard :scorecard='game.scorecard' :players='game.players' v-if='game.currentRound.isFinished()' />
+    <Scorecard :scorecard='game.scorecard' :players='game.players' v-if='game.currentRound.isFinished()' v-on:nextRound='nextRound' />
   </div>
 </template>
 
@@ -45,6 +45,9 @@ export default {
     },
     finishRound: function() {
       this.game.currentRound.finishRound();
+    },
+    nextRound: function() {
+      this.game.nextRound();
     }
   }
 };

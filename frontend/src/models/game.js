@@ -40,6 +40,10 @@ export class Game {
     return this.currentRound.currentTrick;
   }
 
+  nextRound() {
+
+  }
+
   addScore(winningParty, score) {
     this.scorecard.addScore(winningParty, score);
   }
