@@ -47,3 +47,13 @@ test("game deals cards to each player", () => {
 test("game starts with an empty scorecard", () => {
   expect(game.scorecard).toBeDefined();
 });
+
+test("should start a new round", () => {
+  const previousRound = game.currentRound;
+  game.players[0].hand.cards = [];
+
+  game.nextRound();
+
+  expect(game.currentRound).not.toBe(previousRound);
+  expect(game.players[0].hand.cards).toHaveLength(10);
+});

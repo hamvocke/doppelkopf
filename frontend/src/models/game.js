@@ -41,7 +41,8 @@ export class Game {
   }
 
   nextRound() {
-
+    this.currentRound = new Round(this.players, this);
+    this.deal();
   }
 
   addScore(winningParty, score) {
