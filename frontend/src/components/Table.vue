@@ -56,13 +56,14 @@ export default {
 <style scoped>
 .table {
   display: grid;
-  grid-template-columns: 200px auto 200px;
-  grid-template-rows: auto 300px 120px auto;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: 100% 300px 120px 100%;
   grid-template-areas:
     "top top top"
     "left center right"
     "left controls right"
     "bottom bottom bottom";
+  overflow: hidden;
 }
 .top {
   grid-area: top;

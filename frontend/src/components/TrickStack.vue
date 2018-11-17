@@ -47,4 +47,10 @@ export default {
   display: flex;
   justify-content: center;
 }
+
+@media screen and (max-width: 680px) {
+  .trickStack {
+    display: none;
+  }
+}
 </style>

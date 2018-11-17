@@ -1,7 +1,7 @@
 <template>
   <div class="player">
     <div class="info">
-      <div class="name" :class="position">{{ player.name }}</div>
+      <div class="name">{{ player.name }}</div>
     </div>
     <div class="container">
       <Hand :hand="player.hand" :is-covered="isCovered" :is-selectable='isHandSelectable' :position='position' :playable-cards="playable()" v-on:play="play"/>
@@ -75,5 +75,22 @@ export default {
 
 .name {
   font-weight: bold;
+}
+
+@media screen and (max-width: 680px) {
+  .top {
+    position: relative;
+    top: -50px;
+  }
+
+  .left {
+    position: relative;
+    left: -60px;
+  }
+
+  .right {
+    position: relative;
+    right: -60px;
+  }
 }
 </style>

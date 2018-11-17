@@ -33,9 +33,10 @@ export default {
 
 <style scoped>
 .trick {
-  padding: 12px;
   min-height: 180px;
+  min-width: 180px;
   justify-content: center;
+  align-items: stretch;
 }
 
 .winner {
@@ -45,6 +46,7 @@ export default {
 .cards > span {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .cards .card {

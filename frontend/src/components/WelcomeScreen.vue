@@ -1,13 +1,15 @@
 <template>
   <div class="welcome">
-    <div class="logo">
-      🤖
-    </div>
-    <h1>Doppelkopf</h1>
+    <div class="container">
+      <div class="logo">
+        🤖
+      </div>
+      <h1>Doppelkopf</h1>
 
-    <button class="button start-game" v-on:click='game.start()'>
-      Start Game!
-    </button>
+      <button class="button start-game" v-on:click='game.start()'>
+        Start Game!
+      </button>
+    </div>
   </div>
 </template>
 
@@ -27,15 +29,21 @@ export default {
 @import "../assets/css/colors.css";
 
 .welcome {
-  padding-top: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .logo {
-  font-size: 8em;
+  font-size: 5em;
+  display: block;
 }
 
 .welcome h1 {
-  font-size: 5em;
+  font-size: 3em;
   color: var(--black);
+  text-transform: uppercase;
+  display: block;
 }
 </style>
