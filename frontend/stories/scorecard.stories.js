@@ -23,7 +23,7 @@ sc.addScore([players[2], players[0]], 1);
 storiesOf("Scorecard", module)
   .add("empty", () => ({
     components: { Scorecard },
-    template: "<Scorecard :scorecard='{}' />"
+    template: "<Scorecard :scorecard='{}' :players='{}'/>"
   }))
   .add("with data", () => ({
     components: { Scorecard },

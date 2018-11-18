@@ -73,4 +73,10 @@ export default {
 .scorecard th {
   border-bottom: 1px solid #eee;
 }
+
+@media screen and (max-width: 680px) {
+  .scorecard {
+    width: 90%;
+  }
+}
 </style>
