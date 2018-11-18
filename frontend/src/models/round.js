@@ -1,12 +1,9 @@
 import { Trick } from "@/models/trick";
-import { Notifier } from "@/models/notifier";
 import { RingQueue } from "@/models/ringQueue";
 import { Score } from "@/models/score";
 import { re, kontra } from "@/models/parties";
 import { options } from "@/models/options";
 import { find } from "lodash";
-
-const notifier = new Notifier();
 
 export class Round {
   constructor(players = [], game = {}) {
@@ -31,7 +28,6 @@ export class Round {
 
   nextMove() {
     if (this.waitingForPlayer().isHuman) {
-      notifier.info("It's your turn!");
       return;
     }
 

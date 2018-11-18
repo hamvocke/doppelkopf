@@ -1,5 +1,4 @@
 import { Game } from "@/models/game";
-import { Notifier } from "@/models/notifier";
 import { jack, suits } from "@/models/card";
 import { options } from "@/models/options";
 import { re, kontra } from "@/models/parties";
@@ -105,20 +104,6 @@ test("should return players for each party", () => {
   };
 
   expect(parties).toEqual(expectedParties);
-});
-
-test("should show notification when triggering next move for human player", () => {
-  let notifier = new Notifier();
-  notifier.messages = [];
-  const mockedComputerPlayer = round.players[0];
-  mockedComputerPlayer.autoplay = jest.fn();
-  round.playerOrder.prioritize(mockedComputerPlayer);
-
-  expect(notifier.messages).toHaveLength(0);
-
-  round.nextMove();
-
-  expect(notifier.messages).toHaveLength(1);
 });
 
 describe("player order", () => {
