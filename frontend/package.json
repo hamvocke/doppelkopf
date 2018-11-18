@@ -14,8 +14,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@sentry/browser": "^4.3.2",
     "lodash": "^4.17.11",
-    "raven-js": "^3.27.0",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.17"
   },
