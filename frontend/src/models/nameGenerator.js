@@ -85,7 +85,6 @@ const names = [
   "Hartmut",
   "Reinhold",
   "Hans-Joachim",
-  "Adolf",
   "Detlef",
   "Oliver",
   "Christoph",
