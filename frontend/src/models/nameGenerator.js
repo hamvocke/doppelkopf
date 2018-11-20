@@ -1,7 +1,7 @@
-import { sample } from "lodash";
+import { sampleSize } from "lodash";
 
-export function generate() {
-  return sample(names);
+export function generateNames(numberOfNames) {
+  return sampleSize(names, numberOfNames);
 }
 
 const names = [
