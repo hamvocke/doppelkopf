@@ -9,10 +9,10 @@ beforeEach(() => {
 });
 
 test("game has 4 players", () => {
-  expect(game.players[0].name).toBe("Player 1");
-  expect(game.players[1].name).toBe("Player 2");
-  expect(game.players[2].name).toBe("Player 3");
-  expect(game.players[3].name).toBe("Player 4");
+  expect(game.players[0].name).toBeDefined();
+  expect(game.players[1].name).toBeDefined();
+  expect(game.players[2].name).toBeDefined();
+  expect(game.players[3].name).toBeDefined();
 });
 
 test("game has 1 human player", () => {

@@ -3,16 +3,18 @@ import { Player } from "@/models/player";
 import { Deck } from "@/models/deck";
 import { Hand } from "@/models/hand";
 import { Scorecard } from "@/models/scorecard";
+import { generateNames } from "@/models/nameGenerator";
 
 export class Game {
   constructor() {
     const isHuman = true;
     const isComputer = false;
+    const randomNames = generateNames(4);
     this.players = [
-      new Player("Player 1", isHuman, this),
-      new Player("Player 2", isComputer, this),
-      new Player("Player 3", isComputer, this),
-      new Player("Player 4", isComputer, this)
+      new Player(randomNames[0], isHuman, this),
+      new Player(randomNames[1], isComputer, this),
+      new Player(randomNames[2], isComputer, this),
+      new Player(randomNames[3], isComputer, this)
     ];
     this.started = false;
     this.deck = new Deck();
