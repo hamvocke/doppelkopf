@@ -62,6 +62,7 @@ export default {
 .scorecard table {
   width: 90%;
   padding: 6px;
+  table-layout: fixed;
 }
 
 .scorecard th,

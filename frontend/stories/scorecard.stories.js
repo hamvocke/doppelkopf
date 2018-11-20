@@ -1,5 +1,4 @@
 import { storiesOf } from "@storybook/vue";
-import { actions } from "@storybook/vue";
 
 import Scorecard from "@/components/Scorecard";
 import { Player } from "@/models/player";
@@ -8,10 +7,10 @@ import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import "@/assets/css/app.css";
 
 const players = [
-  new Player("Player 1"),
-  new Player("Player 2"),
-  new Player("Player 3"),
-  new Player("Player 4")
+  new Player("Oswald"),
+  new Player("Mercedes"),
+  new Player("Ulf"),
+  new Player("Giovanni")
 ];
 const sc = new ScorecardModel(players);
 
