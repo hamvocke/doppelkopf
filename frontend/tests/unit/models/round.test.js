@@ -123,7 +123,7 @@ describe("player order", () => {
 
     round.finishTrick();
 
-    expect(round.waitingForPlayer().name).toEqual(round.players[3].name);
+    expect(round.waitingForPlayer().id).toEqual(round.players[3].id);
   });
 
   test("should change active player on next move", () => {

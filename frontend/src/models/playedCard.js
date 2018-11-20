@@ -1,7 +1,8 @@
 export class PlayedCard {
   constructor(card, player) {
     this.card = card;
-    this.player = player;
+    this.playerId = player.id;
+    this.name = player.name;
   }
 }
 

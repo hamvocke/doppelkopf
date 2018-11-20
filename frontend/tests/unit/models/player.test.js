@@ -99,7 +99,7 @@ test("playing a card adds it to the current trick", () => {
 
   player.play(queenOnHand);
 
-  const expectedCard = new PlayedCard(queenOnHand, player.name);
+  const expectedCard = new PlayedCard(queenOnHand, player);
 
   expect(game.currentTrick.cards()).toEqual([expectedCard]);
 });

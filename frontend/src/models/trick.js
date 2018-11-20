@@ -14,7 +14,7 @@ export class Trick {
       throw Error(`Player ${player.name} already played a card`);
     }
 
-    const playedCard = new PlayedCard(card, player.name);
+    const playedCard = new PlayedCard(card, player);
 
     this.playedCards.push(playedCard);
 
@@ -28,7 +28,7 @@ export class Trick {
   }
 
   cardBy(player) {
-    return find(this.playedCards, ["player", player.name]);
+    return find(this.playedCards, { playerId: player.id });
   }
 
   isFinished() {
@@ -48,7 +48,11 @@ export class Trick {
       return undefined;
     }
 
-    return this.playedCards.slice().sort(beats)[0].player;
+    const winningPlayer = this.playedCards.slice().sort(beats)[0];
+    return {
+      id: winningPlayer.playerId,
+      name: winningPlayer.name
+    };
   }
 
   points() {

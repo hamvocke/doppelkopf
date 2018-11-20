@@ -66,8 +66,8 @@ export class Round {
   }
 
   evaluateLastTrick() {
-    const playerName = this.currentTrick.winner();
-    const winner = find(this.players, { name: playerName });
+    const playerId = this.currentTrick.winner().id;
+    const winner = find(this.players, { id: playerId });
     winner.win(this.currentTrick);
     this.playerOrder.prioritize(winner);
   }

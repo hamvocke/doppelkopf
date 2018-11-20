@@ -18,7 +18,7 @@ test("can add card to trick", () => {
 
   trick.add(cardToBePlayed, player1);
 
-  const expectedCard = new PlayedCard(cardToBePlayed, player1.name);
+  const expectedCard = new PlayedCard(cardToBePlayed, player1);
 
   expect(trick.cards()).toEqual([expectedCard]);
 });
@@ -40,7 +40,7 @@ test("should find card played by player", () => {
 
   trick.add(cardToBePlayed, player1);
 
-  const expectedCard = new PlayedCard(cardToBePlayed, player1.name);
+  const expectedCard = new PlayedCard(cardToBePlayed, player1);
 
   expect(trick.cardBy(player1)).toEqual(expectedCard);
   expect(trick.cardBy(player2)).toBeUndefined();
@@ -90,7 +90,7 @@ test("should find winner for a finished trick", () => {
   trick.add(king.of(suits.diamonds), player2);
   trick.add(jack.of(suits.hearts), player3);
 
-  expect(trick.winner()).toEqual(player4.name);
+  expect(trick.winner()).toEqual({ id: player4.id, name: player4.name });
 });
 
 test("should find winner for an unfinished trick", () => {
@@ -100,7 +100,7 @@ test("should find winner for an unfinished trick", () => {
   trick.add(queen.of(suits.diamonds), player4);
   trick.add(queen.of(suits.clubs), player1);
 
-  expect(trick.winner()).toEqual(player1.name);
+  expect(trick.winner()).toEqual({ id: player1.id, name: player1.name });
 });
 
 test("should return points in a trick", () => {
