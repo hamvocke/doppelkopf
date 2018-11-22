@@ -25,6 +25,10 @@ test("player has a name", () => {
   expect(player.name).toBeDefined();
 });
 
+test("player has a position", () => {
+  expect(player.tablePosition).toBeDefined();
+});
+
 test("player is not human by default", () => {
   expect(new Player("some player").isHuman).toBe(false);
 });

@@ -94,12 +94,12 @@ export default {
 }
 
 .card-leave-active {
-  transition: all 0.5s cubic-bezier(0.55, 0.055, 0.675, 0.19) !important;
+  transition: all 0.5s cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
 
 .top .card-leave-to {
   opacity: 0;
-  transform: translateY(120px);
+  transform: translateY(120px) rotate(180deg);
 }
 
 .bottom .card-leave-to {
@@ -109,12 +109,12 @@ export default {
 
 .left .card-leave-to {
   opacity: 0;
-  transform: translateX(120px);
+  transform: translateX(120px) rotate(90deg);
 }
 
 .right .card-leave-to {
   opacity: 0;
-  transform: translateX(-120px);
+  transform: translateX(-120px) rotate(-90deg);
 }
 
 .top .card,
@@ -129,7 +129,7 @@ export default {
 
 .left .card,
 .right .card {
-  margin-top: -42px;
+  margin-top: -60px;
 }
 
 .left .card:first-child,

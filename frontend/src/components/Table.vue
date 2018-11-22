@@ -1,7 +1,7 @@
 <template>
   <div class="table">
-    <Player :player='game.players[1]' position='left' class='left' />
-    <Player :player='game.players[2]' position='top' class='top' />
+    <Player :player='game.players[1]' class='left' />
+    <Player :player='game.players[2]' class='top' />
 
     <div class="center">
       <Trick :currentTrick='game.currentTrick'/>
@@ -9,8 +9,8 @@
 
     <Controls :game='game'  v-on:nextTrick="finishTrick" v-on:nextMove="nextMove" v-on:finishRound="finishRound"/>
 
-    <Player :player='game.players[3]' position='right' class='right'/>
-    <Player :player='game.players[0]' position='bottom' class='bottom' />
+    <Player :player='game.players[3]' class='right'/>
+    <Player :player='game.players[0]' class='bottom' />
 
     <Scorecard :scorecard='game.scorecard' :players='game.players' v-if='game.currentRound.isFinished()' v-on:nextRound='nextRound' />
   </div>

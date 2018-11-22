@@ -74,20 +74,21 @@ export default {
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: top 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   user-select: none;
 }
 
-.top,
-.bottom {
-  height: 80px;
-  width: 56px;
+.top {
+  transform: rotate(180deg);
 }
 
-.left,
+.left {
+  transform: rotate(90deg);
+}
+
 .right {
-  height: 56px;
-  width: 80px;
+  transform: rotate(-90deg);
 }
 
 .selected {
@@ -140,18 +141,6 @@ export default {
     width: 40px;
     border-radius: 8px;
     padding: 3px;
-  }
-
-  .top,
-  .bottom {
-    height: 60px;
-    width: 40px;
-  }
-
-  .left,
-  .right {
-    height: 40px;
-    width: 60px;
   }
 
   .selected {

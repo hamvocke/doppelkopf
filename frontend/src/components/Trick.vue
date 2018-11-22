@@ -2,7 +2,7 @@
   <div class="trick">
     <div class="cards">
       <transition-group name="card" tag="span">
-        <Card v-for='playedCard in cards' :card='playedCard.card' :key='playedCard.card.cardId' />
+        <Card v-for='playedCard in cards' :card='playedCard.card' :key='playedCard.card.cardId' :class="playedCard.playedFromPosition" />
       </transition-group>
     </div>
     <div class="winner" v-if='winner'>

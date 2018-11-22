@@ -4,7 +4,7 @@
       <div class="name">{{ player.name }}</div>
     </div>
     <div class="container">
-      <Hand :hand="player.hand" :is-covered="isCovered" :is-selectable='isHandSelectable' :position='position' :playable-cards="playable()" v-on:play="play"/>
+      <Hand :hand="player.hand" :is-covered="isCovered" :is-selectable='isHandSelectable' :position='player.tablePosition' :playable-cards="playable()" v-on:play="play"/>
       <TrickStack :trickStack="player.trickStack"/>
     </div>
   </div>
@@ -21,10 +21,6 @@ export default {
     player: {
       type: Object,
       required: true
-    },
-    position: {
-      type: String,
-      required: false
     }
   },
   data: function() {
