@@ -90,22 +90,6 @@ test("should not autoplay if round is finished", () => {
   expect(mockedComputerPlayer.autoplay).not.toBeCalled();
 });
 
-test("should return players for each party", () => {
-  round.players[0].isRe = () => true;
-  round.players[1].isRe = () => false;
-  round.players[2].isRe = () => true;
-  round.players[3].isRe = () => false;
-
-  const parties = round.findParties();
-
-  const expectedParties = {
-    [re]: [round.players[0], round.players[2]],
-    [kontra]: [round.players[1], round.players[3]]
-  };
-
-  expect(parties).toEqual(expectedParties);
-});
-
 describe("player order", () => {
   beforeEach(() => {
     round = new Game().currentRound;
@@ -159,14 +143,6 @@ describe("finish round", () => {
     round.players[3].hand.cards = [jack.of(suits.hearts)];
 
     expect(round.noMoreCardsLeft()).toBe(false);
-  });
-
-  test("should calculate score", () => {
-    setupGameKontraWins();
-
-    const score = round.calculateScore();
-
-    expect(score.winner()).toEqual(kontra);
   });
 
   test("should add score to scorecard", () => {

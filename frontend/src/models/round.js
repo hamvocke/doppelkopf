@@ -1,7 +1,6 @@
 import { Trick } from "@/models/trick";
 import { RingQueue } from "@/models/ringQueue";
 import { Score } from "@/models/score";
-import { re, kontra } from "@/models/parties";
 import { options } from "@/models/options";
 import { find } from "lodash";
 
@@ -36,13 +35,6 @@ export class Round {
     }
 
     this.waitingForPlayer().autoplay();
-  }
-
-  findParties() {
-    return {
-      [re]: this.players.filter(player => player.isRe()),
-      [kontra]: this.players.filter(player => player.isKontra())
-    };
   }
 
   noMoreCardsLeft() {
@@ -82,8 +74,7 @@ export class Round {
     this.currentTrick = this.nextTrick();
 
     const score = this.calculateScore();
-    const winningParty = this.findParties()[score.winner()];
-    this.game.addScore(winningParty, score.points());
+    this.game.addScore(score.winner(), score.points());
     this.finished = true;
     // add special events (fox, doppelkopf) to score - 'extrasRegistry'?
   }
@@ -91,10 +82,6 @@ export class Round {
   calculateScore() {
     // return Score with points, extra points (fuchs gefangen...)
     // use extra point detector to find out if trick contains extra points. use here and when finishing a trick (to display notifications)
-    const parties = this.findParties();
-    const sumPointsForParty = (acc, player) => acc + player.points();
-    const rePoints = parties[re].reduce(sumPointsForParty, 0);
-    const kontraPoints = parties[kontra].reduce(sumPointsForParty, 0);
-    return new Score(rePoints, kontraPoints);
+    return new Score(this.players);
   }
 }

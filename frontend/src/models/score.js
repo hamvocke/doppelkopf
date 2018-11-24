@@ -1,19 +1,28 @@
 import { re, kontra } from "@/models/parties";
 
 export class Score {
-  constructor(rePoints, kontraPoints) {
-    if (rePoints + kontraPoints !== 240) {
+  constructor(players) {
+    this.parties = {
+      [re]: players.filter(player => player.isRe()),
+      [kontra]: players.filter(player => player.isKontra())
+    };
+
+    const sumPointsForParty = (acc, player) => acc + player.points();
+    this.rePoints = this.parties[re].reduce(sumPointsForParty, 0);
+    this.kontraPoints = this.parties[kontra].reduce(sumPointsForParty, 0);
+
+    if (this.rePoints + this.kontraPoints !== 240) {
       throw Error(
-        `A score must have a total of 240 points. Got ${rePoints} for re, ${kontraPoints} for kontra`
+        `A score must have a total of 240 points. Got
+        ${this.rePoints} for Re, ${this.kontraPoints} for Kontra`
       );
     }
-
-    this.rePoints = rePoints;
-    this.kontraPoints = kontraPoints;
   }
 
   winner() {
-    return this.rePoints > this.kontraPoints ? re : kontra;
+    return this.rePoints > this.kontraPoints
+      ? this.parties[re]
+      : this.parties[kontra];
   }
 
   points() {
