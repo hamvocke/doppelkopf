@@ -54,7 +54,7 @@ export class Game {
     this.players.forEach(player => player.clearTrickStack());
   }
 
-  addScore(winningParty, score) {
-    this.scorecard.addScore(winningParty, score);
+  addScore(score) {
+    this.scorecard.addScore(score.winner(), score.points());
   }
 }

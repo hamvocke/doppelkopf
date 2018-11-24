@@ -167,6 +167,15 @@ describe("finish round", () => {
     expect(round.isFinished()).toBe(true);
   });
 
+  test("should save score when finishing round", () => {
+    expect(round.score).toBeUndefined();
+
+    setupGameKontraWins();
+
+    round.finishRound();
+    expect(round.score).toBeDefined();
+  });
+
   test("should finish trick when finishing round", () => {
     setupGameKontraWins();
 

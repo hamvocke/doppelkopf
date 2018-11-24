@@ -74,8 +74,9 @@ export class Round {
     this.currentTrick = this.nextTrick();
 
     const score = this.calculateScore();
-    this.game.addScore(score.winner(), score.points());
+    this.game.addScore(score);
     this.finished = true;
+    this.score = score;
     // add special events (fox, doppelkopf) to score - 'extrasRegistry'?
   }
 
