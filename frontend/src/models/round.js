@@ -77,12 +77,9 @@ export class Round {
     this.game.addScore(score);
     this.finished = true;
     this.score = score;
-    // add special events (fox, doppelkopf) to score - 'extrasRegistry'?
   }
 
   calculateScore() {
-    // return Score with points, extra points (fuchs gefangen...)
-    // use extra point detector to find out if trick contains extra points. use here and when finishing a trick (to display notifications)
     return new Score(this.players);
   }
 }

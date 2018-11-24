@@ -1,13 +1,10 @@
 import { re, kontra } from "@/models/parties";
 
+const sumPointsForParty = (acc, player) => acc + player.points();
+
 export class Score {
   constructor(players) {
-    this.parties = {
-      [re]: players.filter(player => player.isRe()),
-      [kontra]: players.filter(player => player.isKontra())
-    };
-
-    const sumPointsForParty = (acc, player) => acc + player.points();
+    this.parties = this.findParties(players);
     this.rePoints = this.parties[re].reduce(sumPointsForParty, 0);
     this.kontraPoints = this.parties[kontra].reduce(sumPointsForParty, 0);
 
@@ -17,6 +14,13 @@ export class Score {
         ${this.rePoints} for Re, ${this.kontraPoints} for Kontra`
       );
     }
+  }
+
+  findParties(players) {
+    return {
+      [re]: players.filter(player => player.isRe()),
+      [kontra]: players.filter(player => player.isKontra())
+    };
   }
 
   winner() {
