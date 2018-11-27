@@ -1,5 +1,6 @@
 import Table from "@/components/Table";
 import { Game } from "@/models/game";
+import { Score } from "@/models/score";
 import { mount } from "@vue/test-utils";
 
 let game;
@@ -68,6 +69,11 @@ describe("Table.vue", () => {
 
   test("should show Scorecard if game is finished", () => {
     const mockGame = new Game();
+    game.players[0].points = () => 120;
+    game.players[1].points = () => 120;
+    const stubScore = new Score(game.players);
+    stubScore.winner = () => [game.players[0], game.players[3]];
+    mockGame.currentRound.score = stubScore;
     mockGame.currentRound.isFinished = () => true;
 
     const wrapper = mount(Table, { propsData: { game: mockGame } });

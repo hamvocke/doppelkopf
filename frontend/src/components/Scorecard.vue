@@ -1,6 +1,6 @@
 <template>
   <div class="scorecard" >
-    <h1>Score</h1>
+    <h1 class="message">{{ message }}</h1>
     <table>
       <tr>
         <th class="player number" v-for='player in players' :key='player.id'>
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { includes } from "lodash";
+
 export default {
   name: "Scorecard",
   props: {
@@ -31,6 +33,17 @@ export default {
     players: {
       type: Array,
       required: true
+    },
+    currentScore: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    message: function() {
+      return includes(this.currentScore.winner(), this.players[0])
+        ? "Yay, you win!"
+        : "You lose";
     }
   },
   methods: {
@@ -71,8 +84,9 @@ td.number {
   text-align: right;
 }
 
-th, td {
-  line-height: 2em
+th,
+td {
+  line-height: 2em;
 }
 
 .scorecard th {
