@@ -16,7 +16,9 @@
       </tr>
     </table>
 
-    <button class="button next-round" @click="triggerNextRound">Next Round</button>
+    <div class="button-row">
+      <button class="button next-round" @click="triggerNextRound">Next Round</button>
+    </div>
   </div>
 </template>
 
@@ -42,7 +44,7 @@ export default {
   computed: {
     message: function() {
       return includes(this.currentScore.winner(), this.players[0])
-        ? "Yay, you win!"
+        ? "Yay, you win! 🏆"
         : "You lose";
     }
   },
@@ -59,7 +61,7 @@ export default {
   font-family: sans-serif;
   text-align: center;
   background: white;
-  padding: 6px;
+  padding: 12px;
   margin: 6px;
   border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -74,14 +76,9 @@ export default {
 
 .scorecard table {
   text-align: left;
-  width: 90%;
+  width: 100%;
   padding: 6px;
   table-layout: fixed;
-}
-
-th.number,
-td.number {
-  text-align: right;
 }
 
 th,
@@ -89,8 +86,16 @@ td {
   line-height: 2em;
 }
 
-.scorecard th {
+th {
   border-bottom: 1px solid #eee;
+}
+
+.number {
+  text-align: right;
+}
+
+.button-row {
+  text-align: right;
 }
 
 @media screen and (max-width: 680px) {
