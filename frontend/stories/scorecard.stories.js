@@ -2,6 +2,7 @@ import { storiesOf } from "@storybook/vue";
 
 import Scorecard from "@/components/Scorecard";
 import { Player } from "@/models/player";
+import { Score } from "@/models/score";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 
 import "@/assets/css/app.css";
@@ -19,17 +20,19 @@ sc.addScore([players[2], players[3]], 2);
 sc.addScore([players[0], players[2]], 4);
 sc.addScore([players[2], players[0]], 1);
 
-storiesOf("Scorecard", module)
-  .add("empty", () => ({
-    components: { Scorecard },
-    template: "<Scorecard :scorecard='{}' :players='{}'/>"
-  }))
-  .add("with data", () => ({
-    components: { Scorecard },
-    template:
-      "<Scorecard :scorecard='" +
-      JSON.stringify(sc) +
-      "' :players='" +
-      JSON.stringify(players) +
-      "' />"
-  }));
+players[0].points = () => 123;
+players[1].points = () => 117;
+const score = new Score(players);
+
+storiesOf("Scorecard", module).add("with player winning", () => ({
+  components: { Scorecard },
+  data() {
+    return {
+      scorecard: sc,
+      players: players,
+      score: score
+    };
+  },
+  template:
+    "<Scorecard :scorecard='scorecard' :players='players' :currentScore='score'/>"
+}));
