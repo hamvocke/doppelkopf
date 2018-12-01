@@ -8,11 +8,13 @@
         </th>
         <th class="number">Punkte</th>
       </tr>
-      <tr class="scoreLine" v-for='scoreLine in scorecard.scoreLines' :key='scoreLine.id'>
+      <tr class="scoreLine" v-for='(scoreLine, index) in scorecard.scoreLines' :key='scoreLine.id' :class='{ bold: isLastLine(index) }'>
         <td v-for='player in players' :key='player.id' class="number">
           {{ scoreLine.score[player.id] }}
         </td>
-        <td class="number">{{ scoreLine.points }}</td>
+        <td class="number">
+          {{ scoreLine.points }}
+        </td>
       </tr>
     </table>
 
@@ -51,6 +53,9 @@ export default {
   methods: {
     triggerNextRound: function() {
       this.$emit("nextRound");
+    },
+    isLastLine(index) {
+      return index === this.scorecard.scoreLines.length - 1;
     }
   }
 };
@@ -92,6 +97,10 @@ th {
 
 .number {
   text-align: right;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .button-row {

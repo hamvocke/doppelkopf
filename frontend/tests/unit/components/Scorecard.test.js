@@ -6,7 +6,7 @@ import { mount } from "@vue/test-utils";
 
 let players;
 
-const scorecard = new ScorecardModel();
+let scorecard;
 
 function stubScore() {
   players[0].points = () => 120;
@@ -23,6 +23,8 @@ beforeEach(() => {
     new Player("Player 3"),
     new Player("Player 4")
   ];
+
+  scorecard = new ScorecardModel(players);
 });
 
 describe("Scorecard.vue", () => {
@@ -73,5 +75,23 @@ describe("Scorecard.vue", () => {
     });
 
     expect(wrapper.find("h1.message").text()).toContain("Yay, you win!");
+  });
+
+  it("should make last scoreline bold", () => {
+    scorecard.addScore([players[0], players[1]], 2);
+    scorecard.addScore([players[1], players[3]], 4);
+
+    const wrapper = mount(Scorecard, {
+      propsData: {
+        scorecard: scorecard,
+        players: players,
+        currentScore: stubScore()
+      }
+    });
+
+    const scorelines = wrapper.findAll(".scoreLine");
+    expect(scorelines).toHaveLength(2);
+    expect(scorelines.at(0).classes("bold")).toBe(false);
+    expect(scorelines.at(1).classes("bold")).toBe(true);
   });
 });
