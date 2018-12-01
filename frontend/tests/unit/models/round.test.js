@@ -1,7 +1,7 @@
 import { Game } from "@/models/game";
+import { Round } from "@/models/round";
 import { jack, suits } from "@/models/card";
 import { options } from "@/models/options";
-import { re, kontra } from "@/models/parties";
 
 const game = new Game();
 let round = game.currentRound;
@@ -95,8 +95,9 @@ describe("player order", () => {
     round = new Game().currentRound;
   });
 
-  test("should start with human player", () => {
-    expect(round.waitingForPlayer()).toBe(round.players[0]);
+  test("should start with given player", () => {
+    round = new Round(game.players, game, game.players[2]);
+    expect(round.waitingForPlayer().id).toBe(round.players[2].id);
   });
 
   test("should put player on top of player order if player wins a trick", () => {

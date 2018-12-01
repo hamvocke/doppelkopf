@@ -20,7 +20,11 @@ export class Game {
     this.playerOpeningOrder = new RingQueue(this.players);
     this.started = false;
     this.deck = new Deck();
-    this.currentRound = new Round(this.players, this);
+    this.currentRound = new Round(
+      this.players,
+      this,
+      this.playerOpeningOrder.current()
+    );
     this.scorecard = new Scorecard(this.players);
     this.deal();
   }
@@ -51,9 +55,12 @@ export class Game {
   }
 
   nextRound() {
-    this.currentRound = new Round(this.players, this);
+    this.currentRound = new Round(
+      this.players,
+      this,
+      this.playerOpeningOrder.next()
+    );
     this.clearTrickStacks();
-    this.playerOpeningOrder.next();
     this.deal();
   }
 

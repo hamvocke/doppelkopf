@@ -5,12 +5,16 @@ import { options } from "@/models/options";
 import { find } from "lodash";
 
 export class Round {
-  constructor(players = [], game = {}) {
+  constructor(players = [], game = {}, openingPlayer) {
     this.players = players;
-    this.playerOrder = new RingQueue(this.players);
-    this.currentTrick = this.nextTrick();
-    this.finished = false;
     this.game = game;
+    this.finished = false;
+    this.currentTrick = this.nextTrick();
+
+    this.playerOrder = new RingQueue(this.players);
+    if (openingPlayer) {
+      this.playerOrder.prioritize(openingPlayer);
+    }
   }
 
   nextTrick() {
