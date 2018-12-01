@@ -3,6 +3,7 @@ import { Player } from "@/models/player";
 import { Deck } from "@/models/deck";
 import { Hand } from "@/models/hand";
 import { Scorecard } from "@/models/scorecard";
+import { RingQueue } from "@/models/ringQueue";
 import { generateNames } from "@/models/nameGenerator";
 
 export class Game {
@@ -16,6 +17,7 @@ export class Game {
       new Player(randomNames[2], isComputer, "top", this),
       new Player(randomNames[3], isComputer, "right", this)
     ];
+    this.playerOpeningOrder = new RingQueue(this.players);
     this.started = false;
     this.deck = new Deck();
     this.currentRound = new Round(this.players, this);
@@ -40,6 +42,10 @@ export class Game {
     this.players[3].hand = new Hand(this.deck.cards.slice(30, 40));
   }
 
+  get playerOpening() {
+    return this.playerOpeningOrder.current();
+  }
+
   get currentTrick() {
     return this.currentRound.currentTrick;
   }
@@ -47,6 +53,7 @@ export class Game {
   nextRound() {
     this.currentRound = new Round(this.players, this);
     this.clearTrickStacks();
+    this.playerOpeningOrder.next();
     this.deal();
   }
 

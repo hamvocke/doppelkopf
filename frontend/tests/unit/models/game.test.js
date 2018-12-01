@@ -72,3 +72,21 @@ test("should clear trick stacks", () => {
   expect(game.players[2].trickStack).toEqual(freshTrickStack);
   expect(game.players[3].trickStack).toEqual(freshTrickStack);
 });
+
+test("should let human player open the game", () => {
+  expect(game.playerOpening).toBe(game.players[0]);
+});
+
+test("should keep track of opening order", () => {
+  game.nextRound();
+  expect(game.playerOpening).toBe(game.players[1]);
+
+  game.nextRound();
+  expect(game.playerOpening).toBe(game.players[2]);
+
+  game.nextRound();
+  expect(game.playerOpening).toBe(game.players[3]);
+
+  game.nextRound();
+  expect(game.playerOpening).toBe(game.players[0]);
+});
