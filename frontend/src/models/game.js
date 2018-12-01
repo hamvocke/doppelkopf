@@ -62,6 +62,7 @@ export class Game {
     );
     this.clearTrickStacks();
     this.deal();
+    this.currentRound.nextMove();
   }
 
   clearTrickStacks() {

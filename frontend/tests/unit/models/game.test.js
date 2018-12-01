@@ -80,14 +80,14 @@ test("should let human player open the game", () => {
 
 test("should keep track of opening order", () => {
   game.nextRound();
-  expect(game.currentRound.waitingForPlayer()).toBe(game.players[1]);
+  expect(game.playerOpening).toBe(game.players[1]);
 
   game.nextRound();
-  expect(game.currentRound.waitingForPlayer()).toBe(game.players[2]);
+  expect(game.playerOpening).toBe(game.players[2]);
 
   game.nextRound();
-  expect(game.currentRound.waitingForPlayer()).toBe(game.players[3]);
+  expect(game.playerOpening).toBe(game.players[3]);
 
   game.nextRound();
-  expect(game.currentRound.waitingForPlayer()).toBe(game.players[0]);
+  expect(game.playerOpening).toBe(game.players[0]);
 });
