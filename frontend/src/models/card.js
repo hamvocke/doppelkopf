@@ -77,6 +77,8 @@ export class Card {
       if (this.suit === anotherCard.suit) {
         return anotherCard.value - this.value;
       }
+
+      return -1;
     }
 
     return 0;

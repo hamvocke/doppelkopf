@@ -93,6 +93,17 @@ test("should find winner for a finished trick", () => {
   expect(trick.winner()).toEqual({ id: player1.id, name: player1.name });
 });
 
+test("should find winner for a finished trick - clubs", () => {
+  const trick = new Trick(4);
+
+  trick.add(king.of(suits.clubs), player2);
+  trick.add(ten.of(suits.spades), player3);
+  trick.add(king.of(suits.clubs), player4);
+  trick.add(ace.of(suits.clubs), player1);
+
+  expect(trick.winner()).toEqual({ id: player1.id, name: player1.name });
+});
+
 test("should find winner for an unfinished trick", () => {
   const trick = new Trick(4);
 
