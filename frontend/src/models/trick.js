@@ -48,10 +48,21 @@ export class Trick {
       return undefined;
     }
 
-    const winningPlayer = this.playedCards.slice().sort(beats)[0];
+    const winner = this.playedCards.reduce((acc, playedCard) => {
+      if (!acc) {
+        return playedCard;
+      }
+
+      if (beats(playedCard, acc) < 0) {
+        return playedCard;
+      }
+
+      return acc;
+    });
+
     return {
-      id: winningPlayer.playerId,
-      name: winningPlayer.name
+      id: winner.playerId,
+      name: winner.name
     };
   }
 
