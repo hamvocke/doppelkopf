@@ -48,21 +48,16 @@ export class Trick {
       return undefined;
     }
 
-    const winner = this.playedCards.reduce((acc, playedCard) => {
-      if (!acc) {
-        return playedCard;
+    let highestCard = this.playedCards[0];
+    for (let card of this.playedCards) {
+      if (beats(card, highestCard) < 0) {
+        highestCard = card;
       }
-
-      if (beats(playedCard, acc) < 0) {
-        return playedCard;
-      }
-
-      return acc;
-    });
+    }
 
     return {
-      id: winner.playerId,
-      name: winner.name
+      id: highestCard.playerId,
+      name: highestCard.name
     };
   }
 
