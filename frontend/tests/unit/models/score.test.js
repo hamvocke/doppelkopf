@@ -1,4 +1,4 @@
-import { Score } from "@/models/score";
+import { Score, WIN, BEAT_RE } from "@/models/score";
 import { Player } from "@/models/player";
 import { re, kontra } from "@/models/parties";
 
@@ -89,7 +89,13 @@ describe("evaluate score", () => {
   });
 });
 
-describe("adding points", () => {
+describe("calculating extras", () => {
+  test("should start without extras", () => {
+    const score = new Score();
+    expect(score.reExtras).toEqual(new Map());
+    expect(score.kontraExtras).toEqual(new Map());
+  });
+
   test("should give 1 point if nothing else happens", () => {
     const score = new Score();
 
@@ -98,11 +104,35 @@ describe("adding points", () => {
     expect(score.points()).toBe(1);
   });
 
+  test("should add extra point", () => {
+    const score = new Score();
+
+    score.addExtra(re, WIN);
+
+    const expectedExtras = new Map();
+    expectedExtras.set(WIN, 1);
+
+    expect(score.listExtras(re)).toEqual(expectedExtras);
+  });
+
   test("should give extra point if kontra wins against re", () => {
     const score = new Score();
 
     score.evaluate(playersWithKontraWinning);
 
     expect(score.points()).toBe(2);
+  });
+
+  test("should list extra points for both parties", () => {
+    const score = new Score();
+
+    score.evaluate(playersWithKontraWinning);
+
+    expect(score.listExtras(re)).toEqual(new Map());
+
+    const expectedExtrasForKontra = new Map();
+    expectedExtrasForKontra.set(WIN, 1);
+    expectedExtrasForKontra.set(BEAT_RE, 1);
+    expect(score.listExtras(kontra)).toEqual(expectedExtrasForKontra);
   });
 });
