@@ -9,6 +9,13 @@ const playersWithReWinning = [
   stubPlayer("Player 4", kontra, 60)
 ];
 
+const playersWithKontraWinning = [
+  stubPlayer("Player 1", re, 50),
+  stubPlayer("Player 2", re, 60),
+  stubPlayer("Player 3", kontra, 70),
+  stubPlayer("Player 4", kontra, 60)
+];
+
 function stubPlayer(name, party, points) {
   const stubbedPlayer = new Player(name);
   stubbedPlayer.isRe = () => party === re;
@@ -17,7 +24,7 @@ function stubPlayer(name, party, points) {
   return stubbedPlayer;
 }
 
-describe("score", () => {
+describe("evaluate score", () => {
   test("should have score for each party", () => {
     const score = new Score();
 
@@ -80,10 +87,22 @@ describe("score", () => {
 
     expect(score.winner()).toEqual([players[1], players[3]]);
   });
+});
 
-  test("should return points won in this round", () => {
+describe("adding points", () => {
+  test("should give 1 point if nothing else happens", () => {
     const score = new Score();
+
     score.evaluate(playersWithReWinning);
+
     expect(score.points()).toBe(1);
+  });
+
+  test("should give extra point if kontra wins against re", () => {
+    const score = new Score();
+
+    score.evaluate(playersWithKontraWinning);
+
+    expect(score.points()).toBe(2);
   });
 });
