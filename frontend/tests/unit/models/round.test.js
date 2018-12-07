@@ -22,6 +22,10 @@ test("game starts with an empty trick", () => {
   expect(round.currentTrick).toBeDefined();
 });
 
+test("should have score", () => {
+  expect(round.score).toBeDefined();
+});
+
 test("should give current trick to winner", () => {
   round.currentTrick.add(jack.of(suits.spades), round.players[2]);
   round.currentTrick.add(jack.of(suits.hearts), round.players[3]);
@@ -166,15 +170,6 @@ describe("finish round", () => {
 
     round.finishRound();
     expect(round.isFinished()).toBe(true);
-  });
-
-  test("should save score when finishing round", () => {
-    expect(round.score).toBeUndefined();
-
-    setupGameKontraWins();
-
-    round.finishRound();
-    expect(round.score).toBeDefined();
   });
 
   test("should finish trick when finishing round", () => {

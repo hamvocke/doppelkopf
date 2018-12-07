@@ -3,7 +3,9 @@ import { re, kontra } from "@/models/parties";
 const sumPointsForParty = (acc, player) => acc + player.points();
 
 export class Score {
-  constructor(players) {
+  constructor() {}
+
+  evaluate(players) {
     this.parties = this.findParties(players);
     this.rePoints = this.parties[re].reduce(sumPointsForParty, 0);
     this.kontraPoints = this.parties[kontra].reduce(sumPointsForParty, 0);

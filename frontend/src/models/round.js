@@ -10,6 +10,7 @@ export class Round {
     this.game = game;
     this.finished = false;
     this.currentTrick = this.nextTrick();
+    this.score = new Score();
 
     this.playerOrder = new RingQueue(this.players);
     if (openingPlayer) {
@@ -77,13 +78,8 @@ export class Round {
 
     this.currentTrick = this.nextTrick();
 
-    const score = this.calculateScore();
-    this.game.addScore(score);
+    this.score.evaluate(this.players);
+    this.game.addScore(this.score);
     this.finished = true;
-    this.score = score;
-  }
-
-  calculateScore() {
-    return new Score(this.players);
   }
 }

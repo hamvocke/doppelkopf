@@ -19,14 +19,17 @@ function stubPlayer(name, party, points) {
 
 describe("score", () => {
   test("should have score for each party", () => {
-    const score = new Score(playersWithReWinning);
+    const score = new Score();
+
+    score.evaluate(playersWithReWinning);
 
     expect(score.rePoints).toBe(130);
     expect(score.kontraPoints).toEqual(110);
   });
 
   test("should return players for each party", () => {
-    const score = new Score(playersWithReWinning);
+    const score = new Score();
+    score.evaluate(playersWithReWinning);
 
     const expectedParties = {
       [re]: [playersWithReWinning[0], playersWithReWinning[1]],
@@ -38,8 +41,7 @@ describe("score", () => {
 
   test("should validate score", () => {
     function invalidScore() {
-      /* eslint-disable no-new */
-      new Score([
+      new Score().evaluate([
         stubPlayer("Player 1", re, 60),
         stubPlayer("Player 2", re, 59),
         stubPlayer("Player 3", kontra, 60),
@@ -60,7 +62,8 @@ describe("score", () => {
       stubPlayer("Player 4", re, 60)
     ];
 
-    const score = new Score(players);
+    const score = new Score();
+    score.evaluate(players);
 
     expect(score.winner()).toEqual([players[0], players[2]]);
   });
@@ -72,13 +75,15 @@ describe("score", () => {
       stubPlayer("Player 3", kontra, 59),
       stubPlayer("Player 4", re, 60)
     ];
-    const score = new Score(players);
+    const score = new Score();
+    score.evaluate(players);
 
     expect(score.winner()).toEqual([players[1], players[3]]);
   });
 
   test("should return points won in this round", () => {
-    const score = new Score(playersWithReWinning);
+    const score = new Score();
+    score.evaluate(playersWithReWinning);
     expect(score.points()).toBe(1);
   });
 });
