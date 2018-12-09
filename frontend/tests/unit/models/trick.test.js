@@ -115,6 +115,15 @@ test("should find winner for a finished trick - trumps", () => {
   expect(trick.winner()).toEqual({ id: player4.id, name: player4.name });
 });
 
+test("should find winner for an unfinished trick - non-trumps", () => {
+  const trick = new Trick(4);
+
+  trick.add(ten.of(suits.spades), player3);
+  trick.add(ace.of(suits.hearts), player4);
+
+  expect(trick.winner()).toEqual({ id: player3.id, name: player3.name });
+});
+
 test("should find winner for an unfinished trick", () => {
   const trick = new Trick(4);
 

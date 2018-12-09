@@ -120,8 +120,8 @@ test("non-trump is beaten by trump", () => {
   expect(nonTrump.compareTo(trump)).toBeGreaterThan(0);
 });
 
-test("first non-trump beats other non-trump if they belong to different suits", () => {
-  expect(ten.of(suits.clubs).compareTo(king.of(suits.spades))).toEqual(-1);
+test("non-trump does not beat other non-trump if they belong to different suits", () => {
+  expect(ten.of(suits.clubs).compareTo(king.of(suits.spades))).toEqual(0);
 });
 
 test("ace of spades beats ten of spades", () => {
