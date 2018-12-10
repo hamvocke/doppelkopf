@@ -6,12 +6,15 @@ name = "pypi"
 [packages]
 flask = "*"
 gunicorn = "*"
+influxdb = "*"
 
 [dev-packages]
 black = "*"
 pytest = "*"
-flake8 = "*"
 mypy = "*"
 
 [requires]
 python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true
