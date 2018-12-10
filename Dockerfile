@@ -7,4 +7,6 @@ RUN pip install pipenv && pipenv install --system
 
 EXPOSE 5000
 
+ENV APP_PROFILE=backend.config.ProductionConfig
+
 CMD gunicorn --workers=2 backend:app -b :5000
