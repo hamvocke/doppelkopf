@@ -1,5 +1,6 @@
 from backend import app, metrics
 
+
 @app.route("/")
 def hello() -> str:
     return "Hello World!"
