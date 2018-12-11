@@ -7,6 +7,12 @@ run:
 	export FLASK_APP=backend/__init__.py && \
 	pipenv run flask run
 
+run_prod:
+	export FLASK_ENV=production && \
+	export APP_PROFILE=backend.config.ProductionConfig && \
+	export FLASK_APP=backend/__init__.py && \
+	pipenv run flask run
+
 unit:
 	pipenv run pytest
 
