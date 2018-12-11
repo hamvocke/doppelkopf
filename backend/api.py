@@ -1,5 +1,4 @@
-from backend import app
-
+from backend import app, metrics
 
 @app.route("/")
 def hello() -> str:
@@ -8,4 +7,5 @@ def hello() -> str:
 
 @app.route("/game/new", methods=["POST"])
 def new_game() -> str:
+    metrics.send("game")
     return "Registered new game", 201

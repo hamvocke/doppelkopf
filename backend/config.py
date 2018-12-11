@@ -7,12 +7,20 @@ class Config(object):
     SECRET_KEY = "someSecretKey"
     SENTRY_DSN = "someSentryDsn"
     SERVER_NAME = "localhost:5000"
+    INFLUXDB_HOST = "localhost"
+    INFLUXDB_PATH = "/influx"
+    INFLUXDB_USER = "user"
+    INFLUXDB_PASS = "pass"
+    INFLUXDB_DB = "doppelkopf"
 
 
 class ProductionConfig(Config):
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
     SECRET_KEY = os.environ.get("SECRET_KEY")
-    SERVER_NAME = "doppelkopf.ham.codes"
+    SERVER_NAME = "0.0.0.0:5000"
+    INFLUXDB_HOST = os.environ.get("INFLUXDB_HOST")
+    INFLUXDB_USER = os.environ.get("INFLUXDB_USER")
+    INFLUXDB_PASS = os.environ.get("INFLUXDB_PASS")
 
 
 class DevelopmentConfig(Config):
