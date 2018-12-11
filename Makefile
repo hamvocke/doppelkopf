@@ -11,7 +11,7 @@ run_prod:
 	export FLASK_ENV=production && \
 	export APP_PROFILE=backend.config.ProductionConfig && \
 	export FLASK_APP=backend/__init__.py && \
-	pipenv run flask run
+	pipenv run gunicorn --workers=2 backend:app -b :5000
 
 unit:
 	pipenv run pytest
