@@ -6,7 +6,7 @@ class Config(object):
     TESTING = False
     SECRET_KEY = "someSecretKey"
     SENTRY_DSN = "someSentryDsn"
-    SERVER_NAME = "localhost:5001"
+    SERVER_NAME = "localhost:5000"
 
 
 class ProductionConfig(Config):
