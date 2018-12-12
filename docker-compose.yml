@@ -1,0 +1,9 @@
+version: '3'
+services:
+  doppelkopf_backend:
+    build: .
+    image: hamvocke/doppelkopf:latest
+    env_file: /opt/doppelkopf_secrets.env
+    ports:
+      - "5000:5000"
+    restart: always

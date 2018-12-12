@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Color codes and utility functions to produce fancy bash output
 
 bold=$(tput bold)

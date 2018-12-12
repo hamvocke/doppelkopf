@@ -28,13 +28,19 @@ ssh -T root@ham.codes << EOF
 EOF
 e_mute "Done"
 
-e_step "Smoke test..."
-status=`curl --silent --head https://doppelkopf.ham.codes | head -1 | cut -f 2 -d' '`
-if [ "$status" != "200" ]
-then
-    error "Failed: status was other than '200': was '$status'"
-    exit 1
-fi
+e_header "Deploying backend"
+
+e_step "Start Docker container"
+scp docker-compose.yml root@ham.codes:/data/doppelkopf/docker-compose.yml -e "ssh -o StrictHostKeyChecking=no"
+ssh -T root@ham.codes << EOF
+    docker-compose pull
+    docker-compose restart
+EOF
+e_mute "Done"
+
+e_step "Smoke tests..."
+smoke_test https://doppelkopf.ham.codes
+smoke_test https://doppelkopf.ham.codes/api
 e_mute "Done"
 
 e_success "Done. All good."
