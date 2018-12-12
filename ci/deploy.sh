@@ -33,6 +33,7 @@ e_header "Deploying backend"
 e_step "Start Docker container"
 scp docker-compose.yml root@ham.codes:/data/doppelkopf/docker-compose.yml
 ssh -T root@ham.codes << EOF
+    cd /data/doppelkopf
     docker-compose pull
     docker-compose restart
 EOF
