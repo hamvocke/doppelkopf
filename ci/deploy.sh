@@ -19,7 +19,7 @@ scp docker-compose.yml root@ham.codes:/data/doppelkopf/docker-compose.yml
 ssh -T root@ham.codes << EOF
     cd /data/doppelkopf
     docker-compose pull
-    docker-compose restart
+    docker-compose up -d
 EOF
 e_mute "Done"
 
