@@ -31,7 +31,7 @@ e_mute "Done"
 e_header "Deploying backend"
 
 e_step "Start Docker container"
-scp docker-compose.yml root@ham.codes:/data/doppelkopf/docker-compose.yml -e "ssh -o StrictHostKeyChecking=no"
+scp docker-compose.yml root@ham.codes:/data/doppelkopf/docker-compose.yml
 ssh -T root@ham.codes << EOF
     docker-compose pull
     docker-compose restart
