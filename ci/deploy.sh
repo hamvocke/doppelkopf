@@ -14,6 +14,16 @@ e_step "Push Docker container"
 docker push hamvocke/doppelkopf:latest
 e_mute "Done"
 
+e_step "Start Docker container"
+scp docker-compose.yml root@ham.codes:/data/doppelkopf/docker-compose.yml
+ssh -T root@ham.codes << EOF
+    cd /data/doppelkopf
+    docker-compose pull
+    docker-compose restart
+EOF
+e_mute "Done"
+
+
 e_header "Deploying frontend"
 
 e_step "Upload static content..."
@@ -28,16 +38,6 @@ ssh -T root@ham.codes << EOF
 EOF
 e_mute "Done"
 
-e_header "Deploying backend"
-
-e_step "Start Docker container"
-scp docker-compose.yml root@ham.codes:/data/doppelkopf/docker-compose.yml
-ssh -T root@ham.codes << EOF
-    cd /data/doppelkopf
-    docker-compose pull
-    docker-compose restart
-EOF
-e_mute "Done"
 
 e_step "Smoke tests..."
 smoke_test https://doppelkopf.ham.codes
