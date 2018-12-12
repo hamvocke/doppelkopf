@@ -11,3 +11,6 @@ Makefile
 README.md
 pytest.ini
 .editorconfig
+.mypy_cache/
+.pytest_cache/
+.git/
