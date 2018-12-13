@@ -57,7 +57,7 @@ export default {
 .table {
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-template-rows: 100% 300px 120px 100%;
+  grid-template-rows: auto 300px 120px auto;
   grid-template-areas:
     "top top top"
     "left center right"
