@@ -1,6 +1,8 @@
 #! /usr/bin/env bash
 
 source ${BASH_SOURCE%/*}/_colors.sh
+source ${BASH_SOURCE%/*}/smoke_test.sh
+
 set -e
 
 e_header "Deploying backend"
