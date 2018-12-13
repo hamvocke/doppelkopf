@@ -15,7 +15,7 @@ docker push hamvocke/doppelkopf:latest
 e_mute "Done"
 
 e_step "Start Docker container"
-scp docker-compose.yml root@ham.codes:/data/doppelkopf/docker-compose.yml -o StrictHostKeyChecking=no 
+scp -o StrictHostKeyChecking=no docker-compose.yml root@ham.codes:/data/doppelkopf/docker-compose.yml  
 ssh -T root@ham.codes -o StrictHostKeyChecking=no << EOF
     cd /data/doppelkopf
     docker-compose pull
