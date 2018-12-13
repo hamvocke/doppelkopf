@@ -43,7 +43,7 @@ e_mute "Done"
 
 e_step "Smoke tests..."
 smoke_test https://doppelkopf.ham.codes
-smoke_test https://doppelkopf.ham.codes/api
+smoke_test https://doppelkopf.ham.codes/api/
 e_mute "Done"
 
 e_success "Done. All good."
