@@ -3,25 +3,33 @@ import { storiesOf } from "@storybook/vue";
 import Scorecard from "@/components/Scorecard";
 import { Player } from "@/models/player";
 import { Score } from "@/models/score";
+import { re, kontra } from "@/models/parties";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 
 import "@/assets/css/app.css";
 
 const players = [
-  new Player("Oswald"),
-  new Player("Mercedes"),
-  new Player("Annegret"),
-  new Player("Giovanni")
+  stubPlayer("Oswald", re, 50),
+  stubPlayer("Mercedes", re, 60),
+  stubPlayer("Annegret", kontra, 70),
+  stubPlayer("Giovanni", kontra, 60)
 ];
+
 const sc = new ScorecardModel(players);
+
+function stubPlayer(name, party, points) {
+  const stubbedPlayer = new Player(name);
+  stubbedPlayer.isRe = () => party === re;
+  stubbedPlayer.isKontra = () => party !== re;
+  stubbedPlayer.points = () => points;
+  return stubbedPlayer;
+}
 
 sc.addScore([players[0], players[2]], 3);
 sc.addScore([players[2], players[3]], 2);
 sc.addScore([players[0], players[2]], 4);
 sc.addScore([players[2], players[0]], 1);
 
-players[0].points = () => 123;
-players[1].points = () => 117;
 const score = new Score();
 score.evaluate(players);
 

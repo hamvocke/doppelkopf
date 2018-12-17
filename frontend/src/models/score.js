@@ -7,8 +7,8 @@ export const BEAT_RE = "beat_re";
 
 export class Score {
   constructor() {
-    this.reExtras = new Map();
-    this.kontraExtras = new Map();
+    this.reExtras = {};
+    this.kontraExtras = {};
   }
 
   evaluate(players) {
@@ -50,9 +50,9 @@ export class Score {
 
   addExtra(party, extraKey) {
     if (party === re) {
-      this.reExtras.set(extraKey, 1);
+      this.reExtras[extraKey] = 1;
     } else if (party === kontra) {
-      this.kontraExtras.set(extraKey, 1);
+      this.kontraExtras[extraKey] = 1;
     }
   }
 
