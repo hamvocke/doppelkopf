@@ -17,7 +17,7 @@ docker push hamvocke/doppelkopf:latest
 e_mute "Done"
 
 e_step "Start Docker container"
-scp -o StrictHostKeyChecking=no docker-compose.yml root@ham.codes:/data/doppelkopf/docker-compose.yml  
+scp -o StrictHostKeyChecking=no docker-compose.yml root@ham.codes:/data/doppelkopf/docker-compose.yml
 ssh -T root@ham.codes -o StrictHostKeyChecking=no << EOF
     cd /data/doppelkopf
     docker-compose pull
@@ -42,6 +42,7 @@ e_mute "Done"
 
 
 e_step "Smoke tests..."
+sleep 5
 smoke_test https://doppelkopf.ham.codes
 smoke_test https://doppelkopf.ham.codes/api/
 e_mute "Done"
