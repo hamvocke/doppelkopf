@@ -7,6 +7,6 @@ def hello() -> str:
 
 
 @app.route("/game/new", methods=["POST"])
-def new_game() -> str:
+def new_game():
     metrics.send("game")
     return "Registered new game", 201

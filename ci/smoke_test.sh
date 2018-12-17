@@ -14,5 +14,5 @@ function smoke_test {
       exit 1
   fi
 
-  e_success "Done. All good."
+  e_success "Smoke test successful"
 }
