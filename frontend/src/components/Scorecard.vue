@@ -3,16 +3,16 @@
     <h1 class="message">{{ message }}</h1>
     <table>
       <tr>
-        <th class="player number" v-for='player in players' :key='player.id'>
+        <th class="player right-aligned" v-for='player in players' :key='player.id'>
           {{ player.name }}
         </th>
-        <th class="number">Punkte</th>
+        <th class="right-aligned">Punkte</th>
       </tr>
       <tr class="scoreLine" v-for='(scoreLine, index) in scorecard.scoreLines' :key='scoreLine.id' :class='{ bold: isLastLine(index) }'>
-        <td v-for='player in players' :key='player.id' class="number">
+        <td v-for='player in players' :key='player.id' class="right-aligned">
           {{ scoreLine.score[player.id] }}
         </td>
-        <td class="number">
+        <td class="right-aligned">
           {{ scoreLine.points }}
         </td>
       </tr>
@@ -95,7 +95,12 @@ th {
   border-bottom: 1px solid #eee;
 }
 
-.number {
+.player {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.right-aligned {
   text-align: right;
 }
 

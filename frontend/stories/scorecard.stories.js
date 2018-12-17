@@ -10,7 +10,7 @@ import "@/assets/css/app.css";
 const players = [
   new Player("Oswald"),
   new Player("Mercedes"),
-  new Player("Ulf"),
+  new Player("Annegret"),
   new Player("Giovanni")
 ];
 const sc = new ScorecardModel(players);
@@ -22,7 +22,8 @@ sc.addScore([players[2], players[0]], 1);
 
 players[0].points = () => 123;
 players[1].points = () => 117;
-const score = new Score(players);
+const score = new Score();
+score.evaluate(players);
 
 storiesOf("Scorecard", module).add("with player winning", () => ({
   components: { Scorecard },
