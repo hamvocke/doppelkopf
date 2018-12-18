@@ -7,8 +7,9 @@ export const BEAT_RE = "beat_re";
 
 export class Score {
   constructor() {
-    this.reExtras = {};
-    this.kontraExtras = {};
+    this.extras = {};
+    this.extras[re] = [];
+    this.extras[kontra] = [];
   }
 
   evaluate(players) {
@@ -39,9 +40,15 @@ export class Score {
   }
 
   winner() {
-    return this.rePoints > this.kontraPoints
-      ? this.parties[re]
-      : this.parties[kontra];
+    return this.parties[this.winningParty()];
+  }
+
+  winningParty() {
+    return this.rePoints > this.kontraPoints ? re : kontra;
+  }
+
+  losingParty() {
+    return this.rePoints > this.kontraPoints ? kontra : re;
   }
 
   points() {
@@ -49,18 +56,12 @@ export class Score {
   }
 
   addExtra(party, extraKey) {
-    if (party === re) {
-      this.reExtras[extraKey] = 1;
-    } else if (party === kontra) {
-      this.kontraExtras[extraKey] = 1;
-    }
+    const extra = {};
+    extra[extraKey] = 1;
+    this.extras[party].push(extra);
   }
 
   listExtras(party) {
-    if (party === re) {
-      return this.reExtras;
-    } else if (party === kontra) {
-      return this.kontraExtras;
-    }
+    return this.extras[party];
   }
 }

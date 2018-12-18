@@ -92,8 +92,8 @@ describe("evaluate score", () => {
 describe("calculating extras", () => {
   test("should start without extras", () => {
     const score = new Score();
-    expect(score.reExtras).toEqual({});
-    expect(score.kontraExtras).toEqual({});
+    expect(score.listExtras(re)).toEqual([]);
+    expect(score.listExtras(kontra)).toEqual([]);
   });
 
   test("should give 1 point if nothing else happens", () => {
@@ -110,7 +110,7 @@ describe("calculating extras", () => {
     score.addExtra(re, WIN);
 
     const expectedExtras = { win: 1 };
-    expect(score.listExtras(re)).toEqual(expectedExtras);
+    expect(score.listExtras(re)).toEqual([expectedExtras]);
   });
 
   test("should give extra point if kontra wins against re", () => {
@@ -126,11 +126,8 @@ describe("calculating extras", () => {
 
     score.evaluate(playersWithKontraWinning);
 
-    const expectedExtrasForKontra = {
-      win: 1,
-      beat_re: 1
-    };
-    expect(score.listExtras(re)).toEqual({});
+    const expectedExtrasForKontra = [{ win: 1 }, { beat_re: 1 }];
+    expect(score.listExtras(re)).toEqual([]);
     expect(score.listExtras(kontra)).toEqual(expectedExtrasForKontra);
   });
 });
