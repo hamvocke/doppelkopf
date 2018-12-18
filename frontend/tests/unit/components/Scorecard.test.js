@@ -2,13 +2,14 @@ import Scorecard from "@/components/Scorecard";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import { Player } from "@/models/player";
 import { Score } from "@/models/score";
+import { re, kontra } from "@/models/parties";
 import { mount } from "@vue/test-utils";
 
 let players;
-
+let score;
 let scorecard;
 
-function stubScore() {
+function stubScoreHumanPlayerWins() {
   players[0].points = () => 120;
   players[1].points = () => 120;
   const stubbedScore = new Score(players);
@@ -16,15 +17,25 @@ function stubScore() {
   return stubbedScore;
 }
 
+function stubPlayer(name, party, points) {
+  const stubbedPlayer = new Player(name);
+  stubbedPlayer.isRe = () => party === re;
+  stubbedPlayer.isKontra = () => party !== re;
+  stubbedPlayer.points = () => points;
+  return stubbedPlayer;
+}
+
 beforeEach(() => {
   players = [
-    new Player("Player 1", true),
-    new Player("Player 2"),
-    new Player("Player 3"),
-    new Player("Player 4")
+    stubPlayer("Player 1", re, 60),
+    stubPlayer("Player 2", re, 59),
+    stubPlayer("Player 3", kontra, 60),
+    stubPlayer("Player 4", kontra, 61)
   ];
 
   scorecard = new ScorecardModel(players);
+  score = new Score();
+  score.evaluate(players);
 });
 
 describe("Scorecard.vue", () => {
@@ -33,7 +44,7 @@ describe("Scorecard.vue", () => {
       propsData: {
         scorecard: scorecard,
         players: players,
-        currentScore: stubScore()
+        currentScore: score
       }
     });
 
@@ -45,7 +56,7 @@ describe("Scorecard.vue", () => {
       propsData: {
         scorecard: scorecard,
         players: players,
-        currentScore: stubScore()
+        currentScore: score
       }
     });
 
@@ -57,7 +68,7 @@ describe("Scorecard.vue", () => {
       propsData: {
         scorecard: scorecard,
         players: players,
-        currentScore: stubScore()
+        currentScore: score
       }
     });
     wrapper.find("button.next-round").trigger("click");
@@ -70,11 +81,23 @@ describe("Scorecard.vue", () => {
       propsData: {
         scorecard: scorecard,
         players: players,
-        currentScore: stubScore()
+        currentScore: stubScoreHumanPlayerWins()
       }
     });
 
     expect(wrapper.find("h1.message").text()).toContain("Yay, you win!");
+  });
+
+  it("should show 'you lose' message when player lost", () => {
+    const wrapper = mount(Scorecard, {
+      propsData: {
+        scorecard: scorecard,
+        players: players,
+        currentScore: score
+      }
+    });
+
+    expect(wrapper.find("h1.message").text()).toContain("You lose");
   });
 
   it("should make last scoreline bold", () => {
@@ -85,7 +108,7 @@ describe("Scorecard.vue", () => {
       propsData: {
         scorecard: scorecard,
         players: players,
-        currentScore: stubScore()
+        currentScore: score
       }
     });
 
@@ -93,5 +116,20 @@ describe("Scorecard.vue", () => {
     expect(scorelines).toHaveLength(2);
     expect(scorelines.at(0).classes("bold")).toBe(false);
     expect(scorelines.at(1).classes("bold")).toBe(true);
+  });
+
+  it("should show extras list", () => {
+    const wrapper = mount(Scorecard, {
+      propsData: {
+        scorecard: scorecard,
+        players: players,
+        currentScore: score
+      }
+    });
+
+    const kontraExtras = wrapper.find(".extras.kontra");
+    expect(wrapper.find(".extras.re").exists()).toBe(true);
+    expect(kontraExtras.exists()).toBe(true);
+    expect(kontraExtras.findAll("li")).toHaveLength(2);
   });
 });

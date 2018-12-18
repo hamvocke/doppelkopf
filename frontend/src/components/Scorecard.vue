@@ -1,22 +1,57 @@
 <template>
   <div class="scorecard" >
     <h1 class="message">{{ message }}</h1>
-    <table>
-      <tr>
-        <th class="player right-aligned" v-for='player in players' :key='player.id'>
-          {{ player.name }}
-        </th>
-        <th class="right-aligned">Punkte</th>
-      </tr>
-      <tr class="scoreLine" v-for='(scoreLine, index) in scorecard.scoreLines' :key='scoreLine.id' :class='{ bold: isLastLine(index) }'>
-        <td v-for='player in players' :key='player.id' class="right-aligned">
-          {{ scoreLine.score[player.id] }}
-        </td>
-        <td class="right-aligned">
-          {{ scoreLine.points }}
-        </td>
-      </tr>
-    </table>
+
+    <div class="row">
+      <div class="column">
+        <h2>Auswertung</h2>
+        <div class="row">
+          <div class="column">
+            <strong>Re</strong>
+            <div class="extras re">
+              <ul>
+                <li v-for='(value, key) in currentScore.listExtras("Re")'>{{ key }}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="column">
+            <strong>Kontra</strong>
+            <div class="extras kontra">
+              <ul>
+                <li v-for='(value, key) in currentScore.listExtras("Kontra")'>{{ key }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="column sum">
+            Sieger:&nbsp;<strong>Kontra</strong>&nbsp;- 4 Punkte
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <h2>Punkte</h2>
+        <table>
+          <tr>
+            <th class="player right-aligned" v-for='player in players' :key='player.id'>
+              {{ player.name }}
+            </th>
+            <th class="right-aligned">Punkte</th>
+          </tr>
+          <tr class="scoreLine" v-for='(scoreLine, index) in scorecard.scoreLines' :key='scoreLine.id' :class='{ bold: isLastLine(index) }'>
+            <td v-for='player in players' :key='player.id' class="right-aligned">
+              {{ scoreLine.score[player.id] }}
+            </td>
+            <td class="right-aligned">
+              {{ scoreLine.points }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
 
     <div class="button-row">
       <button class="button next-round" @click="triggerNextRound">Next Round</button>
@@ -64,7 +99,7 @@ export default {
 <style scoped>
 .scorecard {
   font-family: sans-serif;
-  text-align: center;
+  text-align: left;
   background: white;
   padding: 12px;
   margin: 6px;
@@ -79,6 +114,10 @@ export default {
   width: 66%;
 }
 
+h1, h2, h3 {
+  text-align: center;
+}
+
 .scorecard table {
   text-align: left;
   width: 100%;
@@ -89,10 +128,6 @@ export default {
 th,
 td {
   line-height: 2em;
-}
-
-th {
-  border-bottom: 1px solid #eee;
 }
 
 .player {
@@ -110,6 +145,22 @@ th {
 
 .button-row {
   text-align: right;
+}
+
+.extras {
+  line-height: 1.5em;
+}
+
+.extras ul {
+  padding-left: 0;
+  list-style: circle inside;
+}
+
+.sum {
+  border-top: 1px solid var(--cyan);
+  padding: 6px 0;
+  text-align: right;
+  width: 100%;
 }
 
 @media screen and (max-width: 680px) {
