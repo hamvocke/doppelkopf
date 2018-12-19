@@ -131,5 +131,6 @@ describe("Scorecard.vue", () => {
     expect(wrapper.find(".extras.re").exists()).toBe(true);
     expect(kontraExtras.exists()).toBe(true);
     expect(kontraExtras.findAll("li")).toHaveLength(2);
+    expect(kontraExtras.text()).toContain("win");
   });
 });

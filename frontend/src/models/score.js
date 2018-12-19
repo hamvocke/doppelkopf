@@ -62,6 +62,6 @@ export class Score {
   }
 
   listExtras(party) {
-    return this.extras[party];
+    return this.extras[party].flatMap(extra => Object.keys(extra));
   }
 }

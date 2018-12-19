@@ -109,8 +109,8 @@ describe("calculating extras", () => {
 
     score.addExtra(re, WIN);
 
-    const expectedExtras = { win: 1 };
-    expect(score.listExtras(re)).toEqual([expectedExtras]);
+    const expectedExtras = [WIN];
+    expect(score.listExtras(re)).toEqual(expectedExtras);
   });
 
   test("should give extra point if kontra wins against re", () => {
@@ -126,7 +126,7 @@ describe("calculating extras", () => {
 
     score.evaluate(playersWithKontraWinning);
 
-    const expectedExtrasForKontra = [{ win: 1 }, { beat_re: 1 }];
+    const expectedExtrasForKontra = [WIN, BEAT_RE];
     expect(score.listExtras(re)).toEqual([]);
     expect(score.listExtras(kontra)).toEqual(expectedExtrasForKontra);
   });

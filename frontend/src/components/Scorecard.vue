@@ -10,7 +10,7 @@
             <strong>Re</strong>
             <div class="extras re">
               <ul>
-                <li v-for='(value, key) in currentScore.listExtras("Re")'>{{ key }}</li>
+                <li v-for='extra in currentScore.listExtras("Re")' :key='extra'>{{ extra }}</li>
               </ul>
             </div>
           </div>
@@ -19,7 +19,7 @@
             <strong>Kontra</strong>
             <div class="extras kontra">
               <ul>
-                <li v-for='(value, key) in currentScore.listExtras("Kontra")'>{{ key }}</li>
+                <li v-for='extra in currentScore.listExtras("Kontra")' :key='extra'>{{ extra }}</li>
               </ul>
             </div>
           </div>
@@ -27,7 +27,7 @@
 
         <div class="row">
           <div class="column sum">
-            Sieger:&nbsp;<strong>Kontra</strong>&nbsp;- 4 Punkte
+            4 Punkte
           </div>
         </div>
       </div>
@@ -114,7 +114,9 @@ export default {
   width: 66%;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   text-align: center;
 }
 
