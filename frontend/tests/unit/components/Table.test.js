@@ -2,6 +2,9 @@ import Table from "@/components/Table";
 import { Game } from "@/models/game";
 import { Score } from "@/models/score";
 import { mount } from "@vue/test-utils";
+import VueTestUtils from "@vue/test-utils";
+
+VueTestUtils.config.mocks["$t"] = () => {};
 
 let game;
 

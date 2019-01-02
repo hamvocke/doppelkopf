@@ -1,4 +1,5 @@
 import { storiesOf } from "@storybook/vue";
+import VueI18n from "vue-i18n";
 
 import Scorecard from "@/components/Scorecard";
 import { Player } from "@/models/player";
@@ -7,6 +8,14 @@ import { re, kontra } from "@/models/parties";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 
 import "@/assets/css/app.css";
+
+let locale = require("../src/locales/de.json");
+let i18nOpts = {
+  locale: "de",
+  messages: {}
+};
+
+i18nOpts["messages"]["de"] = locale;
 
 const players = [
   stubPlayer("Oswald", re, 50),
@@ -43,5 +52,6 @@ storiesOf("Scorecard", module).add("with player winning", () => ({
     };
   },
   template:
-    "<Scorecard :scorecard='scorecard' :players='players' :currentScore='score'/>"
+    "<Scorecard :scorecard='scorecard' :players='players' :currentScore='score'/>",
+  i18n: new VueI18n(i18nOpts)
 }));

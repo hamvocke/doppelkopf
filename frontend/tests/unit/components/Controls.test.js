@@ -1,7 +1,10 @@
 import Controls from "@/components/Controls";
 import { Game } from "@/models/game";
-import { mount } from "@vue/test-utils";
 import { ace, suits } from "@/models/card";
+import { mount } from "@vue/test-utils";
+import VueTestUtils from "@vue/test-utils";
+
+VueTestUtils.config.mocks["$t"] = () => {};
 
 let game;
 let trick;

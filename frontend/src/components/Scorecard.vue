@@ -4,7 +4,7 @@
 
     <div class="row">
       <div class="column">
-        <h2>Auswertung</h2>
+        <h2>{{ $t('results') }}</h2>
         <div class="row">
           <div class="column">
             <strong>Re</strong>
@@ -27,19 +27,19 @@
 
         <div class="row">
           <div class="column sum">
-            4 Punkte
+            4 {{ $t('points') }}
           </div>
         </div>
       </div>
 
       <div class="column">
-        <h2>Punkte</h2>
+        <h2>{{ $t('points') }}</h2>
         <table>
           <tr>
             <th class="player right-aligned" v-for='player in players' :key='player.id'>
               {{ player.name }}
             </th>
-            <th class="right-aligned">Punkte</th>
+            <th class="right-aligned">{{ $t('points') }}</th>
           </tr>
           <tr class="scoreLine" v-for='(scoreLine, index) in scorecard.scoreLines' :key='scoreLine.id' :class='{ bold: isLastLine(index) }'>
             <td v-for='player in players' :key='player.id' class="right-aligned">
@@ -54,7 +54,7 @@
     </div>
 
     <div class="button-row">
-      <button class="button next-round" @click="triggerNextRound">Next Round</button>
+      <button class="button next-round" @click="triggerNextRound">{{ $t('next-round') }}</button>
     </div>
   </div>
 </template>
