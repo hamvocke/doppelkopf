@@ -7,7 +7,7 @@
       <h1>Doppelkopf</h1>
 
       <button class="button start-game" v-on:click='game.start()'>
-        Start Game!
+        {{ $t('start-game') }}
       </button>
     </div>
   </div>

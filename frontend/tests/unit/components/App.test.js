@@ -1,6 +1,9 @@
 import App from "@/App";
 import { Game } from "@/models/game";
 import { mount } from "@vue/test-utils";
+import VueTestUtils from "@vue/test-utils";
+
+VueTestUtils.config.mocks["$t"] = () => {};
 
 describe("App.vue", () => {
   test("should render Welcome Screen for new game", () => {
