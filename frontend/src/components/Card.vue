@@ -53,7 +53,8 @@ export default {
         left: this.position === "left",
         right: this.position === "right",
         top: this.position === "top",
-        bottom: this.position === "bottom"
+        bottom: this.position === "bottom",
+        covered: this.isCovered
       };
     }
   }
@@ -77,6 +78,10 @@ export default {
   transition: top 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
     box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   user-select: none;
+}
+
+.card:not(.covered):hover {
+  cursor: pointer;
 }
 
 .top {

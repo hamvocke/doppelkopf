@@ -13,6 +13,7 @@
 .button:active,
 .button:focus {
   background: color(var(--red) shade(20%));
+  cursor: pointer;
 }
 
 .button.outline {
