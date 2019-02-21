@@ -53,7 +53,7 @@ export class Score {
   }
 
   points() {
-    return this.winner() === this.parties[re] ? 1 : 2;
+    return this.extras[this.winningParty()].length;
   }
 
   addExtra(party, extraKey) {
