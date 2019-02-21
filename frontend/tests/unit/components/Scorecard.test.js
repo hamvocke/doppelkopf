@@ -136,4 +136,18 @@ describe("Scorecard.vue", () => {
     expect(kontraExtras.findAll("li")).toHaveLength(2);
     expect(kontraExtras.text()).toContain("win");
   });
+
+  it("should show sum of scores", () => {
+    const wrapper = mount(Scorecard, {
+      propsData: {
+        scorecard: scorecard,
+        players: players,
+        currentScore: score
+      }
+    });
+
+    const sum = wrapper.find(".sum");
+    expect(sum.exists()).toBe(true);
+    expect(sum.text()).toContain("2");
+  });
 });

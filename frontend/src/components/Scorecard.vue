@@ -27,7 +27,7 @@
 
         <div class="row">
           <div class="column sum">
-            4 {{ $t('points') }}
+            {{ currentScore.points() }} {{ $t('points') }}
           </div>
         </div>
       </div>
