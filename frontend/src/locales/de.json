@@ -1,10 +1,12 @@
 {
   "next-trick": "Nächster Stich",
-  "next-round": "Nächste Runde",
   "finish-round": "Runde beenden",
+  "next-round": "Nächste Runde",
   "results": "Auswertung",
   "points": "Punkte",
   "start-game": "Spiel starten!",
   "win": "Gewonnen",
-  "beat_re": "Gegen die Alten"
+  "beat_re": "Gegen die Alten",
+  "you_lose": "Du hast verloren :(",
+  "you_win": "Yay! Du hast gewonnen!  🏆"
 }

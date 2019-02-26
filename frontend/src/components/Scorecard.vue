@@ -1,6 +1,6 @@
 <template>
   <div class="scorecard" >
-    <h1 class="message">{{ message }}</h1>
+    <h1 class="message">{{ $t(message) }}</h1>
 
     <div class="row">
       <div class="column">
@@ -87,8 +87,8 @@ export default {
   computed: {
     message: function() {
       return includes(this.currentScore.winner(), this.players[0])
-        ? "Yay, you win! 🏆"
-        : "You lose";
+        ? "you_win"
+        : "you_lose";
     }
   },
   methods: {

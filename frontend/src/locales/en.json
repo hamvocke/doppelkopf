@@ -6,5 +6,7 @@
   "points": "points",
   "start-game": "Start Game!",
   "win": "Win",
-  "beat_re": "Beat Re"
+  "beat_re": "Beat Re",
+  "you_lose": "You lose:(",
+  "you_win": "Yay! You won! 🏆"
 }

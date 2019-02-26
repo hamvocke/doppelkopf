@@ -6,7 +6,7 @@ import { re, kontra } from "@/models/parties";
 import { mount } from "@vue/test-utils";
 import VueTestUtils from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = () => "TRANSLATED";
+VueTestUtils.config.mocks["$t"] = key => key;
 
 let players;
 let score;
@@ -88,7 +88,7 @@ describe("Scorecard.vue", () => {
       }
     });
 
-    expect(wrapper.find("h1.message").text()).toContain("Yay, you win!");
+    expect(wrapper.find("h1.message").text()).toContain("you_win");
   });
 
   it("should show 'you lose' message when player lost", () => {
@@ -100,7 +100,7 @@ describe("Scorecard.vue", () => {
       }
     });
 
-    expect(wrapper.find("h1.message").text()).toContain("You lose");
+    expect(wrapper.find("h1.message").text()).toContain("you_lose");
   });
 
   it("should make last scoreline bold", () => {
@@ -135,7 +135,7 @@ describe("Scorecard.vue", () => {
     expect(kontraExtrasList.exists()).toBe(true);
     const kontraExtras = kontraExtrasList.findAll("li");
     expect(kontraExtras).toHaveLength(2);
-    expect(kontraExtras.at(0).text()).toContain("TRANSLATED"); // checks that the mocked i18n module has been called
+    expect(kontraExtras.at(0).text()).toContain("win");
   });
 
   it("should show sum of scores for winning party", () => {
