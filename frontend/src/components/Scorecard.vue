@@ -6,29 +6,35 @@
       <div class="column">
         <h2>{{ $t('results') }}</h2>
         <div class="row">
-          <div class="column">
-            <strong>Re</strong>
-            <div class="extras re">
-              <ul>
-                <li v-for='extra in currentScore.listExtras("Re")' :key='extra'>{{ $t(extra) }}</li>
-              </ul>
-            </div>
-          </div>
+          <table>
+            <tr>
+              <th>Re</th>
+              <th>Kontra</th>
+            </tr>
+            <tr>
+              <td class="extras re">
+                <ul>
+                  <li v-for='extra in currentScore.listExtras("Re")' :key='extra'>{{ $t(extra) }}</li>
+                </ul>
+              </td>
+              <td class="extras kontra">
+                <ul>
+                  <li v-for='extra in currentScore.listExtras("Kontra")' :key='extra'>{{ $t(extra) }}</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="sum re">
+                <span v-if='currentScore.winningParty() === "Re"'>{{ currentScore.points() }} {{ $t('points') }}</span>
+              </td>
+              <td class="sum kontra">
+                <span v-if='currentScore.winningParty() === "Kontra"'>
+                {{ currentScore.points() }} {{ $t('points') }}
+                </span>
+              </td>
 
-          <div class="column">
-            <strong>Kontra</strong>
-            <div class="extras kontra">
-              <ul>
-                <li v-for='extra in currentScore.listExtras("Kontra")' :key='extra'>{{ $t(extra) }}</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="column sum">
-            {{ currentScore.points() }} {{ $t('points') }}
-          </div>
+            </tr>
+          </table>
         </div>
       </div>
 
@@ -123,7 +129,6 @@ h3 {
 .scorecard table {
   text-align: left;
   width: 100%;
-  padding: 6px;
   table-layout: fixed;
 }
 

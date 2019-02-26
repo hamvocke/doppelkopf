@@ -138,7 +138,7 @@ describe("Scorecard.vue", () => {
     expect(kontraExtras.at(0).text()).toContain("TRANSLATED"); // checks that the mocked i18n module has been called
   });
 
-  it("should show sum of scores", () => {
+  it("should show sum of scores for winning party", () => {
     const wrapper = mount(Scorecard, {
       propsData: {
         scorecard: scorecard,
@@ -147,8 +147,9 @@ describe("Scorecard.vue", () => {
       }
     });
 
-    const sum = wrapper.find(".sum");
-    expect(sum.exists()).toBe(true);
-    expect(sum.text()).toContain("2");
+    const sumKontra = wrapper.find(".sum.kontra");
+    expect(sumKontra.exists()).toBe(true);
+    expect(sumKontra.text()).toContain("2");
+    expect(wrapper.find(".sum.re").text()).toBe("");
   });
 });
