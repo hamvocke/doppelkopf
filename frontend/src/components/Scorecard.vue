@@ -130,6 +130,7 @@ h3 {
   text-align: left;
   width: 100%;
   table-layout: fixed;
+  border-collapse: collapse;
 }
 
 th,
