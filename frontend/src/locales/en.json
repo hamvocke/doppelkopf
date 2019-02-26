@@ -4,5 +4,7 @@
   "next-round": "Next Round",
   "results": "Results",
   "points": "points",
-  "start-game": "Start Game!"
+  "start-game": "Start Game!",
+  "win": "Win",
+  "beat_re": "Beat Re"
 }

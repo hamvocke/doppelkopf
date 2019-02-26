@@ -6,7 +6,7 @@ import { re, kontra } from "@/models/parties";
 import { mount } from "@vue/test-utils";
 import VueTestUtils from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = () => {};
+VueTestUtils.config.mocks["$t"] = () => "TRANSLATED";
 
 let players;
 let score;
@@ -130,11 +130,12 @@ describe("Scorecard.vue", () => {
       }
     });
 
-    const kontraExtras = wrapper.find(".extras.kontra");
+    const kontraExtrasList = wrapper.find(".extras.kontra");
     expect(wrapper.find(".extras.re").exists()).toBe(true);
-    expect(kontraExtras.exists()).toBe(true);
-    expect(kontraExtras.findAll("li")).toHaveLength(2);
-    expect(kontraExtras.text()).toContain("win");
+    expect(kontraExtrasList.exists()).toBe(true);
+    const kontraExtras = kontraExtrasList.findAll("li");
+    expect(kontraExtras).toHaveLength(2);
+    expect(kontraExtras.at(0).text()).toContain("TRANSLATED"); // checks that the mocked i18n module has been called
   });
 
   it("should show sum of scores", () => {

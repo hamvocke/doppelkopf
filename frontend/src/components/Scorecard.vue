@@ -10,7 +10,7 @@
             <strong>Re</strong>
             <div class="extras re">
               <ul>
-                <li v-for='extra in currentScore.listExtras("Re")' :key='extra'>{{ extra }}</li>
+                <li v-for='extra in currentScore.listExtras("Re")' :key='extra'>{{ $t(extra) }}</li>
               </ul>
             </div>
           </div>
@@ -19,7 +19,7 @@
             <strong>Kontra</strong>
             <div class="extras kontra">
               <ul>
-                <li v-for='extra in currentScore.listExtras("Kontra")' :key='extra'>{{ extra }}</li>
+                <li v-for='extra in currentScore.listExtras("Kontra")' :key='extra'>{{ $t(extra) }}</li>
               </ul>
             </div>
           </div>
