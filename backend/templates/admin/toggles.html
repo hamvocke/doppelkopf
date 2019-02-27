@@ -1,0 +1,78 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}
+Toggles
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+  <a href="#">Admin</a>
+</li>
+<li class="breadcrumb-item">
+  <a href="#">Toggles</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<h1>Feature Toggles</h1>
+<p>Activate and deactivate features at runtime. Changes will be active for players once they reload the page.</p>
+<form action="#">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Toggle</th>
+        <th>Tags</th>
+        <th>Last change</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>
+        <div class="form-group">
+          <label class="form-switch">
+            <input type="checkbox">
+            <i class="form-icon"></i> Zweite Dulle schlägt die erste
+          </label>
+        </div>
+      </td>
+      <td>
+        <span class="label label-primary">rules</span>
+      </td>
+      <td>
+        gestern
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="form-group">
+          <label class="form-switch">
+            <input type="checkbox">
+            <i class="form-icon"></i> Karlchen am End
+          </label>
+        </div>
+      </td>
+      <td>
+        <span class="label label-primary">rules</span>
+      </td>
+      <td>
+        vor 6 Wochen
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="form-group">
+          <label class="form-switch">
+            <input type="checkbox">
+            <i class="form-icon"></i> Keine 9er
+          </label>
+        </div>
+      </td>
+      <td>
+        <span class="label label-primary">rules</span>
+      </td>
+      <td>
+        vor 3 Tagen
+      </td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

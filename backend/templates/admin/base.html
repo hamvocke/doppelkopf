@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}" />
+  <title>{% block title %}{% endblock %} - Doppelkopf</title>
+</head>
+<body>
+  <header class="navbar">
+    <section class="navbar-section">
+      <a href="#" class="btn btn-link">Toggles</a>
+      <a href="#" class="btn btn-link">Logs</a>
+    </section>
+    <section class="navbar-center">
+      🤖
+    </section>
+    <section class="navbar-section">
+      <a href="#" class="btn btn-link text-success">Pipeline</a>
+      <a href="#" class="btn btn-link">GitHub</a>
+    </section>
+  </header>
+
+  <section id="messages">
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  </section>
+
+  <div class="container grid-lg">
+    <ul class="breadcrumb">
+      {% block breadcrumb %}{% endblock %}
+    </ul>
+
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

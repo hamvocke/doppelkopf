@@ -1,0 +1,28 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}
+Toggles
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+  <a href="#">Admin</a>
+</li>
+<li class="breadcrumb-item">
+  <a href="#">Toggles</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="empty">
+  <div class="empty-icon">
+
+  </div>
+  <p class="empty-title h5">You have no feature toggles</p>
+  <div class="empty-action">
+    <button class="btn btn-primary btn-lg">
+      <i class="icon icon-plus"></i> Add a Toggle
+    </button>
+  </div>
+</div>
+{% endblock %}

@@ -1,4 +1,5 @@
 from backend import app, metrics
+from flask import render_template
 
 
 @app.route("/")
