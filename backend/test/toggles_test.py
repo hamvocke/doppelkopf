@@ -1,14 +1,14 @@
 from backend import toggles
 
 
-sample_toggle = toggles.FeatureToggle("sample toggle", enabled=True)
+sample_toggle = toggles.Feature("sample feature", enabled=True)
 
 
-def test_toggle():
+def test_building_feature():
     assert sample_toggle.enabled is True
 
 
-def test_switch_toggle_state():
+def test_switch_feature_state():
     sample_toggle.toggle()
     assert sample_toggle.enabled is False
 
