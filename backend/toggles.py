@@ -11,6 +11,7 @@ class FeatureToggle(object):
         else:
             print("I'm doing b")
     """
+
     def __init__(self, name, enabled):
         super(FeatureToggle, self).__init__()
         self.name = name
