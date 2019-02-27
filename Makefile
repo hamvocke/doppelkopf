@@ -1,5 +1,5 @@
 format:
-	pipenv run black . --exclude "/(\.git|\.mypy_cache|\.venv||build|dist|node_modules)/"
+	pipenv run black backend/ --exclude "/(\.git|\.mypy_cache|\.venv||build|dist|node_modules)/"
 
 run:
 	export FLASK_ENV=development && \
@@ -17,10 +17,10 @@ unit:
 	pipenv run pytest
 
 mypy:
-	pipenv run mypy .
+	pipenv run mypy backend/
 
 flake8:
-	pipenv run flake8 .
+	pipenv run flake8 backend/
 
 serve-frontend:
 	pushd frontend && yarn serve && popd
