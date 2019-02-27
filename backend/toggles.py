@@ -16,3 +16,6 @@ class FeatureToggle(object):
         super(FeatureToggle, self).__init__()
         self.name = name
         self.enabled = enabled
+
+    def toggle(self):
+        self.enabled = not self.enabled
