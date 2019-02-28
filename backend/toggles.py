@@ -9,6 +9,10 @@ class Features(object):
         self.feature_list = {}
 
     def add(self, feature):
+        if self.find(feature.name):
+            raise RuntimeError(
+                'feature with name "{}" already registered'.format(feature.name)
+            )
         self.feature_list.update({feature.name: feature})
 
     def find(self, name=None):
