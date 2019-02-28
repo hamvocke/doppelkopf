@@ -1,34 +1,40 @@
 from backend import toggles
-import pytest
-
-sample_feature = toggles.Feature("sample feature", enabled=True)
 
 
-def test_building_feature():
-    assert sample_feature.enabled is True
+sample_toggle = toggles.FeatureToggle("sample feature", enabled=True)
+
+
+def test_build_feature():
+    assert sample_toggle.enabled is True
+    assert sample_toggle.name == "sample feature"
 
 
 def test_switch_feature_state():
-    sample_feature.toggle()
-    assert sample_feature.enabled is False
+    sample_toggle.toggle()
+    assert sample_toggle.enabled is False
 
-    sample_feature.toggle()
-    assert sample_feature.enabled is True
+    sample_toggle.toggle()
+    assert sample_toggle.enabled is True
+
+
+def test_add_toggles():
+    toggles.feature_toggles = {}
+
+    toggles.add(sample_toggle)
+
+    assert toggles.feature_toggles == {"sample feature": sample_toggle}
 
 
 def test_find_toggle():
-    toggles.features.add(sample_feature)
+    toggles.feature_toggles = {}
+    toggles.add(sample_toggle)
 
-    received_feature = toggles.features.find(name="sample feature")
+    found_toggle = toggles.find("sample feature")
 
-    assert received_feature == sample_feature
+    assert found_toggle == sample_toggle
 
 
-def test_should_throw_error_if_feature_already_exists():
-    another_feature = toggles.Feature("sample feature", enabled=False)
+def test_return_None_when_toggle_not_found():
+    found_toggle = toggles.find("another toggle")
 
-    with pytest.raises(RuntimeError) as excinfo:
-        toggles.features.add(sample_feature)
-        toggles.features.add(another_feature)
-
-    assert 'feature with name "sample feature" already registered' in str(excinfo.value)
+    assert found_toggle is None

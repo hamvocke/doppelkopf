@@ -1,33 +1,30 @@
 from dataclasses import dataclass
+from enum import Enum
+
+feature_toggles = {}
 
 
-class Features(object):
-    """docstring for Features."""
+def add(feature_toggle):
+    if feature_toggle.name in feature_toggles:
+        raise RuntimeError(
+            'feature with name "{}" already registered'.format(feature_toggle.name)
+        )
+    feature_toggles.update({feature_toggle.name: feature_toggle})
 
-    def __init__(self):
-        super(Features, self).__init__()
-        self.feature_list = {}
 
-    def add(self, feature):
-        if self.find(feature.name):
-            raise RuntimeError(
-                'feature with name "{}" already registered'.format(feature.name)
-            )
-        self.feature_list.update({feature.name: feature})
-
-    def find(self, name=None):
-        return self.feature_list.get(name)
+def find(name=None):
+    return feature_toggles.get(name)
 
 
 @dataclass
-class Feature(object):
-    """A Feature can be used to activate or deactivate functionality at
+class FeatureToggle(object):
+    """A FeatureToggle can be used to activate or deactivate functionality at
     runtime. It's status (enabled/disabled) can be queried to change the
     runtime behaviour of the application.
 
     Example:
 
-        do_a = Feature("do_a", enabled=True)
+        do_a = FeatureToggle("some feature", enabled=True)
         if do_a:
             print("I'm doing a")
         else:
@@ -41,4 +38,4 @@ class Feature(object):
         self.enabled = not self.enabled
 
 
-features = Features()
+# featureManager = FeatureManager()
