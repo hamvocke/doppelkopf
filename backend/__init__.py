@@ -3,6 +3,7 @@ import os
 from flask import Flask  # type: ignore
 from influxdb import InfluxDBClient
 from . import admin
+from . import db
 
 app = Flask(__name__)
 app.config.from_object(
@@ -10,6 +11,8 @@ app.config.from_object(
 )
 
 app.register_blueprint(admin.blueprint)
+
+db.init_app(app)
 
 influx = InfluxDBClient(
     host=app.config["INFLUXDB_HOST"],

@@ -11,6 +11,7 @@ class Config(object):
     INFLUXDB_USER = "user"
     INFLUXDB_PASS = "pass"
     INFLUXDB_DB = "doppelkopf"
+    DATABASE = "backend.sqlite"
 
 
 class ProductionConfig(Config):

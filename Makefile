@@ -4,13 +4,20 @@ format:
 run:
 	export FLASK_ENV=development && \
 	export APP_PROFILE=backend.config.DevelopmentConfig && \
-	export FLASK_APP=backend/__init__.py && \
+	export FLASK_APP=backend && \
 	pipenv run flask run
+
+
+init-db:
+	export FLASK_ENV=development && \
+	export APP_PROFILE=backend.config.DevelopmentConfig && \
+	export FLASK_APP=backend && \
+	pipenv run flask init-db
 
 run_prod:
 	export FLASK_ENV=production && \
 	export APP_PROFILE=backend.config.ProductionConfig && \
-	export FLASK_APP=backend/__init__.py && \
+	export FLASK_APP=backend && \
 	pipenv run gunicorn --workers=2 backend:app -b :5000
 
 unit:
