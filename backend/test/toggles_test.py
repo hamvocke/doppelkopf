@@ -48,3 +48,24 @@ def test_return_None_when_toggle_not_found():
     found_toggle = toggles.find("another toggle")
 
     assert found_toggle is None
+
+
+def test_merge_toggles():
+    toggles_in_db = {
+        "db only": toggles.FeatureToggle("db only", enabled=True),
+        "db and config": toggles.FeatureToggle("db and config", enabled=False),
+    }
+
+    toggles_in_config = {
+        "config only": toggles.FeatureToggle("config only", enabled=True),
+        "db and config": toggles.FeatureToggle("db and config", enabled=True),
+    }
+
+    merged_toggles = toggles.merge(toggles_in_db, toggles_in_config)
+
+    expected_toggles = {
+        "config only": toggles.FeatureToggle("config only", enabled=True),
+        "db and config": toggles.FeatureToggle("db and config", enabled=False),
+    }
+
+    assert merged_toggles == expected_toggles

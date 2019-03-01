@@ -1,7 +1,11 @@
 from dataclasses import dataclass
 from enum import Enum
+from . import db
+import copy
 
-feature_toggles = {}
+
+def load():
+    toggles_from_db = db.get_db().execute("SELECT * FROM toggle;").fetchall()
 
 
 def add(feature_toggle):
@@ -16,6 +20,14 @@ def find(name):
     return feature_toggles.get(name)
 
 
+def merge(persisted_toggles, runtime_toggles):
+    merged_toggles = copy.deepcopy(runtime_toggles)
+    for key in runtime_toggles:
+        if key in persisted_toggles:
+            merged_toggles[key] = persisted_toggles[key]
+    return merged_toggles
+
+
 @dataclass
 class FeatureToggle(object):
     name: str
@@ -23,3 +35,6 @@ class FeatureToggle(object):
 
     def toggle(self):
         self.enabled = not self.enabled
+
+
+feature_toggles = {}

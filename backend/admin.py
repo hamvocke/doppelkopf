@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template
 
-
 blueprint = Blueprint("admin", __name__, url_prefix="/admin")
 
 
@@ -10,5 +9,5 @@ def toggles_empty():
 
 
 @blueprint.route("/toggles", methods=["GET"])
-def toggles():
+def toggles_endpoint():
     return render_template("admin/toggles.html")
