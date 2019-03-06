@@ -1,3 +1,5 @@
+.PHONY: format run init-db run_prod test  mypy flake8 serve-frontend
+
 format:
 	pipenv run black backend/ --exclude "/(\.git|\.mypy_cache|\.venv||build|dist|node_modules)/"
 
@@ -20,7 +22,7 @@ run_prod:
 	export FLASK_APP=backend && \
 	pipenv run gunicorn --workers=2 backend:app -b :5000
 
-unit:
+test:
 	pipenv run pytest
 
 mypy:
