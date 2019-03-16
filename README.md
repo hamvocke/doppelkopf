@@ -37,7 +37,7 @@ To run the frontend tests, use
 
 Backend tests can be run with
 
-    $ make unit
+    $ make test
 
 ### Storybook
 The application uses [storybook.js](https://storybook.js.org/) to showcase all vue.js components in different states. You can use the storybook to take a look at components and use it as a visual test case. It's great for getting fast feedback when designing components.
