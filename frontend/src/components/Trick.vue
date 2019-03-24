@@ -6,7 +6,7 @@
       </transition-group>
     </div>
     <div class="winner" v-if='winner'>
-      Trick goes to: {{ winner.name }}
+      {{ $t('trick_goes_to') }} {{ winner.name }}
     </div>
   </div>
 </template>

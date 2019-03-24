@@ -32,7 +32,6 @@
                 {{ currentScore.points() }} {{ $t('points') }}
                 </span>
               </td>
-
             </tr>
           </table>
         </div>

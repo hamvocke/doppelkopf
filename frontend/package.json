@@ -36,7 +36,7 @@
     "@vue/eslint-config-prettier": "^3.0.4",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "^23.0.1",
+    "babel-jest": "^24.5.0",
     "babel-loader": "^8.0.4",
     "babel-preset-vue": "^2.0.2",
     "node-sass": "^4.9.0",

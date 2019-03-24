@@ -2,6 +2,9 @@ import Trick from "@/components/Trick";
 import { Game } from "@/models/game";
 import { ace, suits } from "@/models/card";
 import { mount } from "@vue/test-utils";
+import VueTestUtils from "@vue/test-utils";
+
+VueTestUtils.config.mocks["$t"] = () => {};
 
 let game;
 let trick;
