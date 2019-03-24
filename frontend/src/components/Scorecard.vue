@@ -167,7 +167,7 @@ td {
 .sum {
   border-top: 1px solid var(--cyan);
   padding: 6px 0;
-  text-align: right;
+  text-align: left;
   width: 100%;
 }
 
