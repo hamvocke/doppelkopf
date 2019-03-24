@@ -8,8 +8,8 @@
         <div class="row">
           <table>
             <tr>
-              <th>Re</th>
-              <th>Kontra</th>
+              <th><strong>Re</strong> <em>({{ currentScore.rePoints }} {{ $t('points') }})</em></th>
+              <th><strong>Kontra</strong> <em>({{ currentScore.kontraPoints }} {{ $t('points') }})</em></th>
             </tr>
             <tr>
               <td class="extras re">
@@ -135,6 +135,10 @@ h3 {
 th,
 td {
   line-height: 2em;
+}
+
+th em {
+  font-weight: lighter;
 }
 
 .player {
