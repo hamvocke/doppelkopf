@@ -48,7 +48,7 @@
           </tr>
           <tr class="scoreLine" v-for='(scoreLine, index) in scorecard.scoreLines' :key='scoreLine.id' :class='{ bold: isLastLine(index) }'>
             <td v-for='player in players' :key='player.id' class="right-aligned">
-              {{ scoreLine.score[player.id] }}
+              {{ scoreLine.totalPoints[player.id] }}
             </td>
             <td class="right-aligned">
               {{ scoreLine.points }}

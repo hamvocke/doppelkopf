@@ -157,10 +157,10 @@ describe("finish round", () => {
 
     const scorecard = round.game.scorecard;
 
-    expect(scorecard.scoreFor(round.players[0])).toBe(-2);
-    expect(scorecard.scoreFor(round.players[1])).toBe(-2);
-    expect(scorecard.scoreFor(round.players[2])).toBe(2);
-    expect(scorecard.scoreFor(round.players[3])).toBe(2);
+    expect(scorecard.totalPointsFor(round.players[0])).toBe(-2);
+    expect(scorecard.totalPointsFor(round.players[1])).toBe(-2);
+    expect(scorecard.totalPointsFor(round.players[2])).toBe(2);
+    expect(scorecard.totalPointsFor(round.players[3])).toBe(2);
   });
 
   test("should mark round as finished", () => {

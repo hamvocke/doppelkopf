@@ -7,30 +7,30 @@ export class Scorecard {
   }
 
   addScore(winningPlayers, points) {
-    const score = {};
+    const newTotalPoints = {};
     this.players.forEach(player => {
-      score[player.id] = includes(winningPlayers, player)
-        ? this.scoreFor(player) + points
-        : this.scoreFor(player) - points;
+      newTotalPoints[player.id] = includes(winningPlayers, player)
+        ? this.totalPointsFor(player) + points
+        : this.totalPointsFor(player) - points;
     });
 
-    const scoreline = new Scoreline(score, winningPlayers, points);
+    const scoreline = new Scoreline(newTotalPoints, winningPlayers, points);
     this.scoreLines.push(scoreline);
   }
 
-  scoreFor(player) {
+  totalPointsFor(player) {
     if (!last(this.scoreLines)) {
       return 0;
     }
-    return last(this.scoreLines).score[player.id];
+    return last(this.scoreLines).totalPoints[player.id];
   }
 }
 
 let lineIndex = 0;
 export class Scoreline {
-  constructor(score, winners, points) {
+  constructor(totalPoints, winners, points) {
     this.id = lineIndex++;
-    this.score = score;
+    this.totalPoints = totalPoints;
     this.winners = winners;
     this.points = points;
   }
