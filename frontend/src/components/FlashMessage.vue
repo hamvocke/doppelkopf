@@ -1,5 +1,5 @@
 <template>
-  <div class="flashMessage">
+  <div class="flashMessage blink">
     <div class="icon" v-if="icon">{{ icon }}</div>
     <div class="message">{{ message }}</div>
   </div>
@@ -43,5 +43,20 @@ export default {
   font-size: 3em;
   text-transform: uppercase;
   font-weight: bolder;
+}
+
+.blink {
+  animation: 2s 0.5s blink;
+}
+
+@keyframes blink {
+  5% { opacity: 0; }
+  10% { opacity: 1; }
+  15% { opacity: 0; }
+  20% { opacity: 1; }
+  25% { opacity: 0; }
+  30% { opacity: 1; }
+  35% { opacity: 0; }
+  40% { opacity: 1; }
 }
 </style>
