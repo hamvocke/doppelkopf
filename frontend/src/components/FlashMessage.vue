@@ -1,7 +1,7 @@
 <template>
   <div class="flashMessage">
     <div class="icon" v-if="icon">{{ icon }}</div>
-    {{ message }}
+    <div class="message">{{ message }}</div>
   </div>
 </template>
 
@@ -29,7 +29,19 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   height: 100%;
   width: 100%;
+}
 
+.icon {
+  font-size: 5em;
+  margin: 12px;
+}
+
+.message {
+  font-size: 3em;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
 </style>
