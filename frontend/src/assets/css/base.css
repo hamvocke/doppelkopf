@@ -1,16 +1,17 @@
 html, body {
-  background: var(--white);
+  background: var(--blue);
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   height: 100%;
+  color: var(--shell);
 }
 
 p {
   text-align: left;
   line-height: 1.4em;
-  color: var(--black);
+  color: var(--shell);
 }
 
 a {

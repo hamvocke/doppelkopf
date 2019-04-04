@@ -102,6 +102,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/css/colors.css";
+
 .scorecard {
   font-family: sans-serif;
   text-align: left;
@@ -117,6 +119,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 66%;
+  color: var(--blue);
 }
 
 h1,
