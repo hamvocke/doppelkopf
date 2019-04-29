@@ -1,9 +1,16 @@
 import os
 
 from flask import Flask  # type: ignore
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
 from influxdb import InfluxDBClient
 from . import admin
 from . import db
+
+sentry_sdk.init(
+    dsn="https://103f1e1585fc47efb1b56a24db8b9dcc@sentry.io/1449084",
+    integrations=[FlaskIntegration()]
+)
 
 app = Flask(__name__)
 app.config.from_object(

@@ -7,6 +7,7 @@ name = "pypi"
 flask = "*"
 gunicorn = "*"
 influxdb = "*"
+sentry-sdk = {extras = ["flask"],version = "==0.7.13"}
 
 [dev-packages]
 black = "*"
