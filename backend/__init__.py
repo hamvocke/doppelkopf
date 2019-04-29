@@ -17,6 +17,11 @@ app.config.from_object(
     os.environ.get("APP_PROFILE", "backend.config.DevelopmentConfig")
 )
 
+print("config dump")
+print(app.config["INFLUXDB_HOST"])
+print(app.config["INFLUXDB_USER"])
+print(app.config["INFLUXDB_PASS"])
+
 app.register_blueprint(admin.blueprint)
 
 db.init_app(app)
