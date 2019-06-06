@@ -1,4 +1,4 @@
-from backend import toggles
+from doppelkopf import toggles
 import pytest
 
 sample_toggle = toggles.FeatureToggle("sample feature", enabled=True)

@@ -6,6 +6,7 @@ source ${BASH_SOURCE%/*}/smoke_test.sh
 set -e
 
 e_header "Deploying backend"
+pushd backend
 
 e_step "Build Docker container"
 docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
@@ -27,6 +28,7 @@ e_mute "Done"
 
 
 e_header "Deploying frontend"
+popd
 
 e_step "Upload static content..."
 rsync -rvz --quiet --delete-after frontend/dist/ root@ham.codes:/tmp/doppelkopf -e "ssh -o StrictHostKeyChecking=no"

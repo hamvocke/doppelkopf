@@ -1,6 +1,5 @@
 import os
 
-
 class Config(object):
     DEBUG = False
     TESTING = False
@@ -11,7 +10,7 @@ class Config(object):
     INFLUXDB_USER = "user"
     INFLUXDB_PASS = "pass"
     INFLUXDB_DB = "doppelkopf"
-    DATABASE = "backend.sqlite"
+    DATABASE = "sqlite:///memory"
 
 
 class ProductionConfig(Config):

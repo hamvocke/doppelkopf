@@ -9,4 +9,4 @@ EXPOSE 5000
 
 ENV APP_PROFILE=backend.config.ProductionConfig
 
-CMD pipenv run gunicorn --workers=2 backend:app -b :5000
+CMD pipenv run gunicorn --workers=2 doppelkopf.wsgi:app -b :5000
