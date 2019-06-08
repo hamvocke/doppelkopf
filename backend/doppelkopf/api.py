@@ -6,7 +6,7 @@ blueprint = Blueprint("api", __name__, url_prefix="/api")
 
 @blueprint.route("/")
 def hello() -> str:
-    return "Hello World!"
+    return "Healthy"
 
 
 @blueprint.route("/game/new", methods=["POST"])

@@ -6,11 +6,6 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 
 
 def create_app(test_config=None):
-    sentry_sdk.init(
-        dsn="https://103f1e1585fc47efb1b56a24db8b9dcc@sentry.io/1449084",
-        integrations=[FlaskIntegration()]
-    )
-
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
 
@@ -20,8 +15,15 @@ def create_app(test_config=None):
             os.environ.get("APP_PROFILE", "doppelkopf.config.DevelopmentConfig")
         )
     else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
+        # load the test config
+        app.config.from_object("doppelkopf.config.TestingConfig")
+        app.config.update(test_config)
+
+    sentry_sdk.init(
+        dsn="https://103f1e1585fc47efb1b56a24db8b9dcc@sentry.io/1449084",
+        environment=app.config["ENV_NAME"],
+        integrations=[FlaskIntegration()],
+    )
 
     from . import admin, api
     app.register_blueprint(admin.blueprint)

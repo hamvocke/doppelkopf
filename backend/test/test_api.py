@@ -4,7 +4,7 @@ from unittest import mock
 def test_index(client):
     response = client.get("/api/")
     assert response.status_code == 200
-    assert b"Hello World" in response.data
+    assert b"Healthy" in response.data
 
 
 @mock.patch("doppelkopf.metrics.send")
