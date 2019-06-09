@@ -26,14 +26,16 @@ def create_app(test_config=None):
     )
 
     from . import admin, api
+
     app.register_blueprint(admin.blueprint)
     app.register_blueprint(api.blueprint)
 
     from . import metrics
+
     metrics.init_app(app)
-    
+
     from . import db
+
     db.init_app(app)
 
     return app
-

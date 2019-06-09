@@ -1,5 +1,6 @@
 import os
 
+
 class Config(object):
     ENV_NAME = "unknown"
     DEBUG = False
@@ -15,7 +16,7 @@ class Config(object):
 
 
 class ProductionConfig(Config):
-    ENV_NAME="prod"
+    ENV_NAME = "prod"
     DEBUG = False
     TESTING = False
     SENTRY_DSN = os.environ.get("SENTRY_DSN", Config.SENTRY_DSN)

@@ -25,10 +25,7 @@ def create_database():
 
 
 def send(name: str):
-    return get_influx().write(
-        data="{} value=1".format(name),
-        protocol="line",
-    )
+    return get_influx().write(data="{} value=1".format(name), protocol="line")
 
 
 def close_influx(e=None):
