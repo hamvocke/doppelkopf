@@ -42,7 +42,7 @@ sc.addScore([players[2], players[0]], 1);
 const score = new Score();
 score.evaluate(players);
 
-storiesOf("Scorecard", module).add("with player winning", () => ({
+storiesOf("Scorecard", module).add("with player losing", () => ({
   components: { Scorecard },
   data() {
     return {
