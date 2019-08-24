@@ -142,6 +142,7 @@ export default {
   border-radius: 4px;
   font-size: 1.2em;
   padding: 12px;
+  margin-top: 12px;
   display: inline-block;
 }
 
