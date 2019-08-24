@@ -13,7 +13,7 @@ trick.add(queen.of(suits.spades), player2);
 
 describe("TrickStack.vue", () => {
   test("should apply hidden class if player has no trick", () => {
-    const emptyTrickStack = new TrickStackModel();
+    const emptyTrickStack = new TrickStackModel(player1);
     const wrapper = mount(TrickStack, {
       propsData: { trickStack: emptyTrickStack }
     });
@@ -21,7 +21,7 @@ describe("TrickStack.vue", () => {
   });
 
   test("should not apply hidden class as soon as player has a trick", () => {
-    const trickStack = new TrickStackModel();
+    const trickStack = new TrickStackModel(player1);
     trickStack.add(trick);
     const wrapper = mount(TrickStack, {
       propsData: { trickStack: trickStack }
@@ -33,7 +33,7 @@ describe("TrickStack.vue", () => {
   });
 
   test("should display number of won tricks", () => {
-    const trickStack = new TrickStackModel();
+    const trickStack = new TrickStackModel(player1);
     trickStack.add(trick);
     trickStack.add(trick);
     const wrapper = mount(TrickStack, {

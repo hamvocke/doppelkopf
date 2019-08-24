@@ -67,4 +67,11 @@ export class Trick {
       0
     );
   }
+
+  // TODO: create enum for extras
+  extras() {
+    if (this.points() >= 40) {
+      return "DOPPELKOPF";
+    }
+  }
 }

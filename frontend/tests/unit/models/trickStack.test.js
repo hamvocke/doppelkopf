@@ -5,9 +5,10 @@ import { ace, ten, king, queen, suits } from "@/models/card";
 
 let trickStack;
 const game = new Game();
+const owner = game.players[2];
 
 beforeEach(() => {
-  trickStack = new TrickStack();
+  trickStack = new TrickStack(owner);
 });
 
 test("should add trick to trick stack", () => {
@@ -22,6 +23,22 @@ test("should add trick to trick stack", () => {
   expect(trickStack.tricks).toHaveLength(1);
   expect(trickStack.tricks[0]).toEqual(trick);
 });
+
+/* test("should throw when adding illegal trick to trick stack", () => {
+  const someTrick = new Trick(4);
+  someTrick.add(ten.of(suits.hearts), game.players[0]);
+  someTrick.add(ace.of(suits.hearts), owner);
+  someTrick.add(king.of(suits.hearts), game.players[1]);
+  someTrick.add(ace.of(suits.hearts), game.players[3]);
+
+  function illegalAdd() {
+    trickStack.add(someTrick);
+  }
+
+  expect(illegalAdd).toThrowError(
+    `${owner.id} is not the winner of this trick. Can't add the trick to the trick stack'`
+  );
+}); */
 
 test("should list all cards in trick stack", () => {
   const someTrick = new Trick(2);
@@ -64,4 +81,30 @@ test("should calculate points of trick", () => {
   trickStack.add(anotherTrick);
 
   expect(trickStack.points()).toBe(64);
+});
+
+test("should evaluate trick stack", () => {
+  const someTrick = new Trick(4);
+  someTrick.add(ace.of(suits.hearts), game.players[0]);
+  someTrick.add(ten.of(suits.hearts), owner);
+  someTrick.add(king.of(suits.hearts), game.players[1]);
+  someTrick.add(ace.of(suits.hearts), game.players[3]);
+  trickStack.add(someTrick);
+
+  expect(trickStack.points()).toBe(36);
+  expect(trickStack.extras()).toEqual([]);
+});
+
+describe("extras", () => {
+  test("should find Doppelkopf", () => {
+    const someTrick = new Trick(4);
+    someTrick.add(ace.of(suits.hearts), game.players[0]);
+    someTrick.add(ten.of(suits.hearts), owner);
+    someTrick.add(ten.of(suits.hearts), game.players[1]);
+    someTrick.add(ace.of(suits.hearts), game.players[3]);
+    trickStack.add(someTrick);
+
+    expect(trickStack.points()).toBe(42);
+    expect(trickStack.extras()).toEqual(["DOPPELKOPF"]);
+  });
 });
