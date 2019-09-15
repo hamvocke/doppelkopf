@@ -72,21 +72,4 @@ export default {
 .name {
   font-weight: bold;
 }
-
-@media screen and (max-width: 680px) {
-  .top {
-    position: relative;
-    top: -50px;
-  }
-
-  .left {
-    position: relative;
-    left: -60px;
-  }
-
-  .right {
-    position: relative;
-    right: -60px;
-  }
-}
 </style>

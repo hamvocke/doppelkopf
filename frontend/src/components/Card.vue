@@ -148,6 +148,11 @@ export default {
     padding: 3px;
   }
 
+  .card.top, .card.left, .card.right {
+    height: 42px;
+    width: 28px;
+  }
+
   .selected {
     top: -6px;
     box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);

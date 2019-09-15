@@ -75,6 +75,9 @@ export default {
 
 .center {
   grid-area: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bottom {
