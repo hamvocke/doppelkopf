@@ -1,5 +1,5 @@
 <template>
-  <div class="language">
+  <div id="language">
     {{ $t("language") }}:&nbsp;
     <select v-model="$i18n.locale">
       <option v-for="(lang, i) in availableLanguages" :key="`Lang${i}`" :value="lang">{{ lang }}</option>
@@ -21,7 +21,10 @@ export default {
 <style scoped>
 @import "../assets/css/app.css";
 
-.language {
+#language {
   margin: 6px;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
 }
 </style>

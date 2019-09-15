@@ -3,7 +3,8 @@ import { Game } from "@/models/game";
 import { mount } from "@vue/test-utils";
 import VueTestUtils from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = () => {};
+VueTestUtils.config.mocks["$t"] = (msg) => msg;
+VueTestUtils.config.mocks["$i18n"] = { locale: "en" };
 
 describe("App.vue", () => {
   test("should render Welcome Screen for new game", () => {

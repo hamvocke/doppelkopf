@@ -10,7 +10,7 @@ VueTestUtils.config.mocks["$i18n"] = { locale: "en" };
 describe("LanguagePicker.vue", () => {
   test("should show select with two language options", () => {
     const wrapper = mount(LanguagePicker);
-    expect(wrapper.find(".language").text()).toContain("en");
-    expect(wrapper.find(".language").text()).toContain("de");
+    expect(wrapper.find("#language").text()).toContain("en");
+    expect(wrapper.find("#language").text()).toContain("de");
   });
 });
