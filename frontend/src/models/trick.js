@@ -1,5 +1,6 @@
 import { find, uniqueId } from "lodash";
 import { PlayedCard, beats } from "@/models/playedCard";
+import { doppelkopf } from "@/models/extras";
 
 export class Trick {
   constructor(expectedNumberOfCards) {
@@ -68,10 +69,9 @@ export class Trick {
     );
   }
 
-  // TODO: create enum for extras
   extras() {
     if (this.points() >= 40) {
-      return "DOPPELKOPF";
+      return doppelkopf;
     }
   }
 }

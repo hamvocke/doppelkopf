@@ -1,7 +1,8 @@
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PlayedCard } from "@/models/playedCard";
-import { queen, jack, king, suits, ten, ace } from "@/models/card";
+import { queen, king, suits, ten, ace } from "@/models/card";
+import { doppelkopf } from "@/models/extras";
 
 const player1 = new Player("Player 1");
 const player2 = new Player("Player 2");
@@ -143,4 +144,17 @@ test("should return points in a trick", () => {
   trick.add(queen.of(suits.clubs), player2);
 
   expect(trick.points()).toEqual(12);
+});
+
+describe("extras", () => {
+  test("should find Doppelkopf", () => {
+    const trick = new Trick(4);
+
+    trick.add(ten.of(suits.spades), player3);
+    trick.add(ten.of(suits.spades), player4);
+    trick.add(ace.of(suits.spades), player1);
+    trick.add(ace.of(suits.spades), player2);
+
+    expect(trick.extras()).toBe(doppelkopf);
+  });
 });
