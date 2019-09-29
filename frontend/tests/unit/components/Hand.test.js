@@ -39,27 +39,6 @@ describe("Hand.vue", () => {
     expect(firstCard.find("div.background").exists()).toBe(true);
   });
 
-  test("should tell if hand is re", () => {
-    const wrapper = mount(Hand, {
-      propsData: { hand: reHand, playableCards: [] }
-    });
-    expect(wrapper.find("div.party").text()).toEqual("Re");
-  });
-
-  test("should tell if hand is kontra", () => {
-    const wrapper = mount(Hand, {
-      propsData: { hand: kontraHand, playableCards: [] }
-    });
-    expect(wrapper.find("div.party").text()).toEqual("Kontra");
-  });
-
-  test("should not show party if cards are covered", () => {
-    const wrapper = mount(Hand, {
-      propsData: { hand: reHand, playableCards: [], isCovered: true }
-    });
-    expect(wrapper.find("div.info").exists()).toBe(false);
-  });
-
   test("should keep track of selected card", () => {
     const wrapper = mount(Hand, {
       propsData: { hand: kontraHand, playableCards: [], isSelectable: true }

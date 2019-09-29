@@ -24,22 +24,6 @@ test("should add trick to trick stack", () => {
   expect(trickStack.tricks[0]).toEqual(trick);
 });
 
-/* test("should throw when adding illegal trick to trick stack", () => {
-  const someTrick = new Trick(4);
-  someTrick.add(ten.of(suits.hearts), game.players[0]);
-  someTrick.add(ace.of(suits.hearts), owner);
-  someTrick.add(king.of(suits.hearts), game.players[1]);
-  someTrick.add(ace.of(suits.hearts), game.players[3]);
-
-  function illegalAdd() {
-    trickStack.add(someTrick);
-  }
-
-  expect(illegalAdd).toThrowError(
-    `${owner.id} is not the winner of this trick. Can't add the trick to the trick stack'`
-  );
-}); */
-
 test("should list all cards in trick stack", () => {
   const someTrick = new Trick(2);
   const anotherTrick = new Trick(2);

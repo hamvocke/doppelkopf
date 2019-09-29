@@ -39,4 +39,31 @@ describe("Player.vue", () => {
 
     expect(wrapper.vm.isHandSelectable).toBe(false);
   });
+
+  test("should tell if hand is re", () => {
+    game.players[0].isHuman = true;
+    game.players[0].hand.isRe = () => true;
+
+    const wrapper = mount(Player, { propsData: { player: game.players[0] } });
+
+    expect(wrapper.find("div.party").text()).toEqual("Re");
+  });
+
+  test("should tell if hand is kontra", () => {
+    game.players[0].isHuman = true;
+    game.players[0].hand.isRe = () => false;
+
+    const wrapper = mount(Player, { propsData: { player: game.players[0] } });
+
+    expect(wrapper.find("div.party").text()).toEqual("Kontra");
+  });
+
+  test("should not show party for non-human player", () => {
+    game.players[0].isHuman = false;
+    game.players[0].hand.isRe = () => false;
+
+    const wrapper = mount(Player, { propsData: { player: game.players[0] } });
+
+    expect(wrapper.find("div.party").exists()).toBe(false);
+  });
 });

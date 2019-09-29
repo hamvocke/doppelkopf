@@ -12,15 +12,15 @@ trick.add(ace.of(suits.hearts), player1);
 trick.add(queen.of(suits.spades), player2);
 
 describe("TrickStack.vue", () => {
-  test("should apply hidden class if player has no trick", () => {
+  test("should show placeholder if player has no trick", () => {
     const emptyTrickStack = new TrickStackModel(player1);
     const wrapper = mount(TrickStack, {
       propsData: { trickStack: emptyTrickStack }
     });
-    expect(wrapper.find("div.trickStack").classes()).toContain("hidden");
+    expect(wrapper.find(".placeholder").exists()).toBe(true);
   });
 
-  test("should not apply hidden class as soon as player has a trick", () => {
+  test("should not show placeholder if player has a trick", () => {
     const trickStack = new TrickStackModel(player1);
     trickStack.add(trick);
     const wrapper = mount(TrickStack, {
@@ -29,7 +29,7 @@ describe("TrickStack.vue", () => {
     expect(trick.playedCards).toHaveLength(2);
     expect(wrapper.find("div.trickStack").exists()).toBe(true);
     expect(wrapper.findAll("div.card")).toHaveLength(1);
-    expect(wrapper.find("div.trickStack").classes()).not.toContain("hidden");
+    expect(wrapper.find(".placeholder").exists()).toBe(false);
   });
 
   test("should display number of won tricks", () => {
