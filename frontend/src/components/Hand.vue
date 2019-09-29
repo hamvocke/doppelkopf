@@ -5,11 +5,6 @@
         <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' :is-highlighted='highlight(card)' :position='position' v-on:click.native='select(card)' />
       </transition-group>
     </div>
-    <div class="info" v-if='!isCovered'>
-      <div class="party">
-        {{ hand.isRe() ? "Re" : "Kontra" }}
-      </div>
-    </div>
   </div>
 </template>
 
@@ -135,15 +130,6 @@ export default {
 .left .card:first-child,
 .right .card:last-child {
   margin-top: 0;
-}
-
-.info > div {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-  font-size: 1.2em;
-  padding: 12px;
-  margin-top: 12px;
-  display: inline-block;
 }
 
 @media screen and (max-width: 680px) {

@@ -1,6 +1,9 @@
 <template>
-  <div class="trickStack" :class="{ hidden: isHidden }">
-    <div class="cards">
+  <div class="trickStack">
+    <div class="placeholder" v-if="isHidden">
+      <Card :is-covered='true' :card='{}' />
+    </div>
+    <div class="cards" v-else>
       <Card :is-covered='true' :card='{}' />
     </div>
     <p class="trickCount">Stiche: {{ this.trickStack.tricks.length }}</p>
@@ -31,12 +34,19 @@ export default {
 <style scoped>
 @import "../assets/css/colors.css";
 
-.hidden {
+.placeholder {
+  background-color: var(--white);
+  opacity: 0.2;
+  border: 1px dashed var(--white);
+  border-radius: 6px;
+}
+
+.placeholder .card {
   visibility: hidden;
 }
 
 .trickStack {
-  margin: 6px;
+  margin-left: 6px;
 }
 
 .trickCount {

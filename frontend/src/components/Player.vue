@@ -2,6 +2,9 @@
   <div class="player">
     <div class="info">
       <div class="name">{{ player.name }}</div>
+      <div class="party" v-if="player.isHuman">
+        {{ player.hand.isRe() ? "Re" : "Kontra" }}
+      </div>
     </div>
     <div class="container">
       <Hand :hand="player.hand" :is-covered="isCovered" :is-selectable='isHandSelectable' :position='player.tablePosition' :playable-cards="playable()" v-on:play="play"/>
@@ -48,6 +51,7 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/css/colors.css";
 .player {
   margin: 6px;
 }
@@ -61,6 +65,16 @@ export default {
 .info {
   margin: 6px;
   text-align: center;
+}
+
+.party {
+  background: color(var(--white) a(20%));
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 1em;
+  padding: 8px;
+  margin: 8px;
+  display: inline-block;
 }
 
 .left .container,
