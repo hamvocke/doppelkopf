@@ -37,16 +37,11 @@ export default {
 .placeholder {
   background-color: var(--white);
   opacity: 0.2;
-  border: 1px dashed var(--white);
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .placeholder .card {
   visibility: hidden;
-}
-
-.trickStack {
-  margin-left: 6px;
 }
 
 .trickCount {

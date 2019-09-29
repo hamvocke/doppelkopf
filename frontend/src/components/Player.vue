@@ -72,8 +72,8 @@ export default {
   color: var(--white);
   border-radius: 4px;
   font-size: 1em;
-  padding: 8px;
-  margin: 8px;
+  padding: 6px;
+  margin: 6px;
   display: inline-block;
 }
 
