@@ -14,7 +14,7 @@ init_db:
 	export FLASK_ENV=development && \
 	export APP_PROFILE=doppelkopf.config.DevelopmentConfig && \
 	export FLASK_APP=doppelkopf && \
-	pipenv run flask init_db
+	pipenv run flask init-db
 
 run_prod:
 	export FLASK_ENV=production && \
