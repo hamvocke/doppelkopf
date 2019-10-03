@@ -11,11 +11,6 @@ export class TrickStack {
       throw new Error("can not add an unfinished trick to the trick stack");
     }
 
-    // TODO: trick validation
-    // if (!trick.winner().id !== this.player.id) {
-    //   throw new Error(`${owner.id} is not the winner of this trick. Can't add the trick to the trick stack'`);
-    // }
-
     this.tricks.push(trick);
   }
 
