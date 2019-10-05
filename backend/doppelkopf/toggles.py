@@ -7,4 +7,4 @@ class Toggle(db.Model):
     enabled = db.Column(db.Boolean)
 
     def __repr__(self):
-        return '<Toggle{},{}>'.format(self.name, self.enabled)
+        return "<Toggle{},{}>".format(self.name, self.enabled)

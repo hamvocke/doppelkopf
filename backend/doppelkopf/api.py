@@ -17,4 +17,3 @@ def new_game():
     db.session.commit()
 
     return "Registered new game", 201
-

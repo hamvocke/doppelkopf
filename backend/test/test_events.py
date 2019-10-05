@@ -10,4 +10,3 @@ def test_save_event(app):
     events = Event.query.all()
 
     assert len(events) == 1
-
