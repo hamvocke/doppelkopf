@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS events;
 CREATE TABLE events (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   event_type INTEGER,
-  creation_date INTEGER,
+  created_at INTEGER,
   FOREIGN KEY(event_type) REFERENCES event_types(id)
 );
 

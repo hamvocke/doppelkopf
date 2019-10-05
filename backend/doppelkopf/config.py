@@ -12,7 +12,8 @@ class Config(object):
     INFLUXDB_USER = "user"
     INFLUXDB_PASS = "pass"
     INFLUXDB_DB = "doppelkopf"
-    DATABASE = ":memory:"
+    SQLALCHEMY_DATABASE_URI = "sqlite://"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class ProductionConfig(Config):
@@ -24,7 +25,7 @@ class ProductionConfig(Config):
     INFLUXDB_HOST = os.environ.get("INFLUXDB_HOST", Config.INFLUXDB_HOST)
     INFLUXDB_USER = os.environ.get("INFLUXDB_USER", Config.INFLUXDB_USER)
     INFLUXDB_PASS = os.environ.get("INFLUXDB_PASS", Config.INFLUXDB_PASS)
-    DATABASE = "database.sqlite"
+    SQLALCHEMY_DATABASE_URI = "database.sqlite"
 
 
 class DevelopmentConfig(Config):

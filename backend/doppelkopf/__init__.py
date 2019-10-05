@@ -25,16 +25,16 @@ def create_app(test_config=None):
         integrations=[FlaskIntegration()],
     )
 
-    from . import admin, api
+    from doppelkopf import admin, api
 
     app.register_blueprint(admin.blueprint)
     app.register_blueprint(api.blueprint)
 
-    from . import metrics
+    from doppelkopf import metrics
 
     metrics.init_app(app)
 
-    from . import db
+    from doppelkopf import db
 
     db.init_app(app)
 

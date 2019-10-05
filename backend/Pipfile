@@ -8,6 +8,8 @@ flask = "*"
 gunicorn = "*"
 influxdb = "*"
 sentry-sdk = {extras = ["flask"],version = "==0.7.13"}
+flask-sqlalchemy = "*"
+flask-migrate = "*"
 
 [dev-packages]
 black = "*"

@@ -24,8 +24,7 @@ def test_init_influx_command(runner, monkeypatch):
     def fake_create_database():
         Recorder.called = True
 
-    monkeypatch.setattr('doppelkopf.metrics.create_database', fake_create_database)
-    result = runner.invoke(args=['init-influx'])
-    assert 'Initialized' in result.output
+    monkeypatch.setattr("doppelkopf.metrics.create_database", fake_create_database)
+    result = runner.invoke(args=["init-influx"])
+    assert "Initialized" in result.output
     assert Recorder.called
-
