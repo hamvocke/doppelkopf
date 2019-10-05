@@ -30,10 +30,6 @@ def create_app(test_config=None):
     app.register_blueprint(admin.blueprint)
     app.register_blueprint(api.blueprint)
 
-    from doppelkopf import metrics
-
-    metrics.init_app(app)
-
     from doppelkopf import db
 
     db.init_app(app)

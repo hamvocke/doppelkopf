@@ -1,4 +1,5 @@
-from doppelkopf import metrics
+from doppelkopf.events import Event, EventTypes
+from doppelkopf.db import db
 from flask import Blueprint
 
 blueprint = Blueprint("api", __name__, url_prefix="/api")
@@ -11,7 +12,9 @@ def hello() -> str:
 
 @blueprint.route("/game/new", methods=["POST"])
 def new_game():
-    if metrics.send("game"):
-        return "Registered new game", 201
-    else:
-        return "Failed to register game", 200
+    event = Event(event_type_id=EventTypes.GAME_START)
+    db.session.add(event)
+    db.session.commit()
+
+    return "Registered new game", 201
+

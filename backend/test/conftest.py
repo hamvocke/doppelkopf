@@ -1,17 +1,20 @@
 import pytest
 
-from doppelkopf import create_app
-from doppelkopf.db import init_db
+from doppelkopf import create_app, db
 
 
 @pytest.fixture
 def app():
     app = create_app()
-
-    with app.app_context():
-        init_db()
+    app_context = app.app_context()
+    app_context.push()
+    db.init_db()
 
     yield app
+
+    db.db.session.remove()
+    db.db.drop_all()
+    app_context.pop()
 
 
 @pytest.fixture
