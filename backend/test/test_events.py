@@ -9,4 +9,4 @@ def test_save_event(app):
 
     events = Event.query.all()
 
-    assert len(events) == 1
+    assert events[0].event_type_id == 1
