@@ -35,4 +35,4 @@ class Event(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
-        return "<Event{}>".format(self.type)
+        return f"<Event: {self.type}>"
