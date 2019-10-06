@@ -7,9 +7,8 @@ run:
 	export FLASK_ENV=development && \
 	export APP_PROFILE=doppelkopf.config.DevelopmentConfig && \
 	export FLASK_APP=doppelkopf && \
-	pipenv run flask db upgrade
+	pipenv run flask db upgrade && \
 	pipenv run flask run
-
 
 init_db:
 	export FLASK_ENV=development && \
@@ -33,7 +32,7 @@ run_prod:
 	export FLASK_ENV=production && \
 	export APP_PROFILE=doppelkopf.config.ProductionConfig && \
 	export FLASK_APP=doppelkopf && \
-	pipenv run flask db upgrade
+	pipenv run flask db upgrade && \
 	pipenv run gunicorn --workers=2 doppelkopf.wsgi:app -b :5000
 
 test:

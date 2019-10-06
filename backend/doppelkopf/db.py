@@ -18,6 +18,7 @@ def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
     doppelkopf.events.EventType.insert_all()
+    doppelkopf.toggles.Toggle.insert_all()
     click.echo("Initialized the database.")
 
 
