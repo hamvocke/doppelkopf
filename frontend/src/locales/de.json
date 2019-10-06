@@ -1,4 +1,5 @@
 {
+  "trick": "kein Stich | 1 Stich | {count} Stiche",
   "next-trick": "Nächster Stich",
   "finish-round": "Runde beenden",
   "next-round": "Nächste Runde",
@@ -10,9 +11,9 @@
   "you_lose": "Du hast verloren! 😩",
   "you_win": "Yay! Du hast gewonnen!  🏆",
   "trick_goes_to": "Der Stich geht an:",
-  "language": "Sprache",
   "cant-play-card": "Die Karte kannst du nicht spielen",
   "not-your-turn": "Du bist nicht dran, mein Freund!",
+  "language": "Sprache",
   "en": "English",
   "de": "Deutsch"
 }

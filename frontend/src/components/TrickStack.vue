@@ -6,7 +6,7 @@
     <div class="cards" v-else>
       <Card :is-covered='true' :card='{}' />
     </div>
-    <p class="trickCount">Stiche: {{ this.trickStack.tricks.length }}</p>
+    <p class="trickCount">{{ $tc("trick", this.trickStack.tricks.length) }}</p>
   </div>
 </template>
 

@@ -1,4 +1,5 @@
 {
+  "trick": "no tricks | 1 trick | {count} tricks",
   "next-trick": "Next Trick",
   "finish-round": "Finish Round",
   "next-round": "Next Round",
