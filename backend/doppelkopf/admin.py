@@ -1,13 +1,10 @@
 from flask import Blueprint, render_template
+from doppelkopf.toggles import Toggle
 
 blueprint = Blueprint("admin", __name__, url_prefix="/admin")
 
 
-@blueprint.route("/toggles/empty", methods=["GET"])
-def toggles_empty():
-    return render_template("admin/toggles-empty.html")
-
-
 @blueprint.route("/toggles", methods=["GET"])
 def toggles_endpoint():
-    return render_template("admin/toggles.html")
+    all_toggles = Toggle.query.all()
+    return render_template("admin/toggles.html", toggles=all_toggles)

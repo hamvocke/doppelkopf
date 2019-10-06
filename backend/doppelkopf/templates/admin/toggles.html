@@ -21,58 +21,28 @@ Toggles
     <thead>
       <tr>
         <th>Toggle</th>
-        <th>Tags</th>
+        <th>Description</th>
         <th>Last change</th>
       </tr>
     </thead>
+    {% for toggle in toggles %}
     <tr>
       <td>
         <div class="form-group">
           <label class="form-switch">
             <input type="checkbox">
-            <i class="form-icon"></i> Zweite Dulle schlägt die erste
+            <i class="form-icon"></i> {{ toggle.name }}
           </label>
         </div>
       </td>
       <td>
-        <span class="label label-primary">rules</span>
+        <span>{{ toggle.description }}</span>
       </td>
       <td>
-        gestern
+        {{ toggle.last_changed_at }}
       </td>
     </tr>
-    <tr>
-      <td>
-        <div class="form-group">
-          <label class="form-switch">
-            <input type="checkbox">
-            <i class="form-icon"></i> Karlchen am End
-          </label>
-        </div>
-      </td>
-      <td>
-        <span class="label label-primary">rules</span>
-      </td>
-      <td>
-        vor 6 Wochen
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div class="form-group">
-          <label class="form-switch">
-            <input type="checkbox">
-            <i class="form-icon"></i> Keine 9er
-          </label>
-        </div>
-      </td>
-      <td>
-        <span class="label label-primary">rules</span>
-      </td>
-      <td>
-        vor 3 Tagen
-      </td>
-    </tr>
+    {% endfor %}
   </table>
 
 

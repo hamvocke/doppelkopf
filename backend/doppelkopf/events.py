@@ -22,7 +22,7 @@ class EventType(db.Model):
         game_finish = EventType(id=EventTypes.GAME_FINISH, name="game.finish")
         game_win = EventType(id=EventTypes.GAME_WIN, name="game.win")
         game_lose = EventType(id=EventTypes.GAME_LOSE, name="game.lose")
-        db.session.add_all(game_start, game_finish, game_win, game_lose)
+        db.session.add_all([game_start, game_finish, game_win, game_lose])
         db.session.commit()
 
 
