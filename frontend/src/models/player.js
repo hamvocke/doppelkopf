@@ -39,7 +39,7 @@ export class Player {
   // TODO: Make this one async to allow updates to be scheduled correctly?
   play(card) {
     if (this.game.currentRound.waitingForPlayer() !== this) {
-      notifier.info(`It's not your turn, buddy!`);
+      notifier.info("not-your-turn");
       return;
     }
 
@@ -47,9 +47,8 @@ export class Player {
     if (!card || !cardToBePlayed) {
       throw new Error("can't play a card that's not on the player's hand");
     }
-
     if (!this.canPlay(card)) {
-      notifier.info(`You can't play that card`);
+      notifier.info("cant-play-card");
       return;
     }
 

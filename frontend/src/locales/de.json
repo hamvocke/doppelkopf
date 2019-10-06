@@ -10,5 +10,7 @@
   "you_lose": "Du hast verloren! 😩",
   "you_win": "Yay! Du hast gewonnen!  🏆",
   "trick_goes_to": "Der Stich geht an:",
-  "language": "Sprache"
+  "language": "Sprache",
+  "cant-play-card": "Die Karte kannst du nicht spielen",
+  "not-your-turn": "Du bist nicht dran, mein Freund!"
 }

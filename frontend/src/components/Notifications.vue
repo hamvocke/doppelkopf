@@ -2,7 +2,7 @@
   <div class="notifications" >
     <transition-group name="message">
       <div v-for='message in messages' :key='message.id' class="message">
-        {{ message.text }}
+        {{ $t(message.text) }}
       </div>
     </transition-group>
   </div>

@@ -10,5 +10,7 @@
   "you_lose": "You lost the game! 😩",
   "you_win": "Yay! You won! 🏆",
   "trick_goes_to": "Trick goes to:",
-  "language": "Language"
+  "language": "Language",
+  "cant-play-card": "You can't play that card",
+  "not-your-turn": "It's not your turn, buddy!"
 }
