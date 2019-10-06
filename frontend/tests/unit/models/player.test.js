@@ -175,7 +175,7 @@ test("should show notification if trying to play a card when its not your turn",
 
   player.play(queenOnHand);
 
-  expect(notifier.messages[0].text).toBe("It's not your turn, buddy!");
+  expect(notifier.messages[0].text).toBe("not-your-turn");
 });
 
 test("should not play card and show notification if trying to play an invalid card", () => {
@@ -188,7 +188,7 @@ test("should not play card and show notification if trying to play an invalid ca
   player.play(queenOnHand);
 
   expect(player.hand.cards).toContain(queenOnHand);
-  expect(notifier.messages[0].text).toBe(`You can't play that card`);
+  expect(notifier.messages[0].text).toBe("cant-play-card");
 });
 
 test("should validate playable cards", () => {

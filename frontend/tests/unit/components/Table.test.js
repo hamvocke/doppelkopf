@@ -4,7 +4,8 @@ import { Score } from "@/models/score";
 import { mount } from "@vue/test-utils";
 import VueTestUtils from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = (msg) => msg;
+VueTestUtils.config.mocks["$t"] = msg => msg;
+VueTestUtils.config.mocks["$tc"] = msg => msg;
 VueTestUtils.config.mocks["$i18n"] = { locale: "en" };
 
 let game;
