@@ -1,9 +1,10 @@
 <template>
-  <div id="language">
+  <div id="languages">
     {{ $t("language") }}:&nbsp;
-    <select v-model="$i18n.locale">
-      <option v-for="(lang, i) in availableLanguages" :key="`Lang${i}`" :value="lang">{{ lang }}</option>
-    </select>
+    <span class="language" v-for="(lang, i) in availableLanguages" :key="i">
+      <input type="radio" v-model="$i18n.locale" :id="lang" :value="lang">
+      <label :for="lang">{{ $t(lang) }}</label>
+    </span>
   </div>
 </template>
 
@@ -21,10 +22,25 @@ export default {
 <style scoped>
 @import "../assets/css/app.css";
 
-#language {
+#languages {
   margin: 6px;
   position: absolute;
   bottom: 12px;
   right: 12px;
+  display: flex;
+}
+
+label {
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked + label {
+  background-color: var(--lightblue);
+}
+
+input {
+  display: none;
 }
 </style>

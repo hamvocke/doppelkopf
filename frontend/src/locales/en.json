@@ -12,5 +12,7 @@
   "trick_goes_to": "Trick goes to:",
   "language": "Language",
   "cant-play-card": "You can't play that card",
-  "not-your-turn": "It's not your turn, buddy!"
+  "not-your-turn": "It's not your turn, buddy!",
+  "en": "English",
+  "de": "Deutsch"
 }

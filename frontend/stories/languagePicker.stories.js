@@ -5,13 +5,15 @@ import LanguagePicker from "@/components/LanguagePicker";
 
 import "@/assets/css/app.css";
 
-let locale = require("../src/locales/de.json");
+let localeDe = require("../src/locales/de.json");
+let localeEn = require("../src/locales/en.json");
 let i18nOpts = {
   locale: "de",
   messages: {}
 };
 
-i18nOpts["messages"]["de"] = locale;
+i18nOpts["messages"]["de"] = localeDe;
+i18nOpts["messages"]["en"] = localeEn;
 
 storiesOf("Language Picker", module).add("with two languages", () => ({
   components: { LanguagePicker },

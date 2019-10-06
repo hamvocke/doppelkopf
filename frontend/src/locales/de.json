@@ -12,5 +12,7 @@
   "trick_goes_to": "Der Stich geht an:",
   "language": "Sprache",
   "cant-play-card": "Die Karte kannst du nicht spielen",
-  "not-your-turn": "Du bist nicht dran, mein Freund!"
+  "not-your-turn": "Du bist nicht dran, mein Freund!",
+  "en": "English",
+  "de": "Deutsch"
 }
