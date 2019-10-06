@@ -1,7 +1,7 @@
 .PHONY: format run init_db run_prod test  mypy flake8 serve-frontend
 
 format:
-	pipenv run black . --exclude "/(\.git|\.mypy_cache|\.venv||build|dist|node_modules)/"
+	pipenv run black . --exclude "/(\.git|\.mypy_cache|\.venv|build|dist|node_modules|migrations)/"
 
 run:
 	export FLASK_ENV=development && \
@@ -43,4 +43,3 @@ mypy:
 
 flake8:
 	pipenv run flake8 .
-

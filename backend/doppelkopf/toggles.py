@@ -38,8 +38,18 @@ class Toggle(db.Model):
 
 
 toggles = [
-    Toggle(name="game.rules.karlchen", description="Aktiviert die 'Karlchen' Spielregel"),
-    Toggle(name="game.rules.fuchs", description="Aktiviert die 'Fuchs gefangen' Spielregel"),
-    Toggle(name="game.rules.scharf", description="Wenn aktiv, werden 9er aus dem Spiel entfernt"),
-    Toggle(name="game.rules.zweite_dulle", description="Aktiviert die 'zweite Dulle schlaegt die erste' Spielregel"),
+    Toggle(
+        name="game.rules.karlchen", description="Aktiviert die 'Karlchen' Spielregel"
+    ),
+    Toggle(
+        name="game.rules.fuchs", description="Aktiviert die 'Fuchs gefangen' Spielregel"
+    ),
+    Toggle(
+        name="game.rules.scharf",
+        description="Wenn aktiv, werden 9er aus dem Spiel entfernt",
+    ),
+    Toggle(
+        name="game.rules.zweite_dulle",
+        description="Aktiviert die 'zweite Dulle schlaegt die erste' Spielregel",
+    ),
 ]
