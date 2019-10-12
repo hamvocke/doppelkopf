@@ -14,7 +14,7 @@ before_script:
   - pushd frontend/ && yarn install && popd
 
 script:
-  - pushd frontend && yarn test:unit && yarn test:e2e && popd
+  - pushd frontend && yarn test:unit && popd
   - pushd frontend && yarn build && popd
 
 before_deploy:
