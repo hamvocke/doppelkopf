@@ -29,7 +29,7 @@ export default {
     Table,
     Notifications,
     WelcomeScreen,
-    LanguagePicker,
+    LanguagePicker
   }
 };
 </script>

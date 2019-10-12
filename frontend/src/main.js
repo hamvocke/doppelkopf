@@ -2,7 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import * as Sentry from "@sentry/browser";
-import * as Integrations from '@sentry/integrations';
+import * as Integrations from "@sentry/integrations";
 
 import "@/assets/css/app.css";
 import i18n from "./i18n";

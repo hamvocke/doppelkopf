@@ -88,7 +88,8 @@ export default {
   flex-direction: column-reverse;
 }
 
-.top .cards, .bottom .cards {
+.top .cards,
+.bottom .cards {
   margin-right: 12px;
 }
 

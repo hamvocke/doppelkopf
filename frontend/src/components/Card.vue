@@ -148,7 +148,9 @@ export default {
     padding: 3px;
   }
 
-  .card.top, .card.left, .card.right {
+  .card.top,
+  .card.left,
+  .card.right {
     height: 42px;
     width: 28px;
   }

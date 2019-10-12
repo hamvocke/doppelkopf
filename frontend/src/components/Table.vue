@@ -34,7 +34,7 @@ export default {
     Player,
     Trick,
     Controls,
-    Scorecard,
+    Scorecard
   },
   methods: {
     nextMove: function() {

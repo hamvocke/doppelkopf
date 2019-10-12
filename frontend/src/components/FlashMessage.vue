@@ -50,13 +50,29 @@ export default {
 }
 
 @keyframes blink {
-  5% { opacity: 0; }
-  10% { opacity: 1; }
-  15% { opacity: 0; }
-  20% { opacity: 1; }
-  25% { opacity: 0; }
-  30% { opacity: 1; }
-  35% { opacity: 0; }
-  40% { opacity: 1; }
+  5% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  15% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
 }
 </style>

@@ -61,9 +61,10 @@ test("should start a new round", () => {
 });
 
 test("should clear trick stacks", () => {
-  const someTrickStack = new TrickStack(
-    game.players[2], [new Trick(4), new Trick(4)]
-  );
+  const someTrickStack = new TrickStack(game.players[2], [
+    new Trick(4),
+    new Trick(4)
+  ]);
   game.players.forEach(player => (player.trickStack = someTrickStack));
 
   game.clearTrickStacks();
