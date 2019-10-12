@@ -12,7 +12,6 @@ node_js:
 
 before_script:
   - pushd frontend/ && yarn install && popd
-  - export DISPLAY=:99.0
 
 script:
   - pushd frontend && yarn test:unit && yarn test:e2e && popd
@@ -29,4 +28,4 @@ deploy:
   skip_cleanup: true
   script: bash ci/deploy.sh
   on:
-branch: master
+    branch: master
