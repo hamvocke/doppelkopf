@@ -119,7 +119,9 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 66%;
+  height: 66%;
   color: var(--blue);
+  overflow-y: scroll;
 }
 
 h1,
