@@ -5,6 +5,7 @@ import { Hand } from "@/models/hand";
 import { Scorecard } from "@/models/scorecard";
 import { RingQueue } from "@/models/ringQueue";
 import { generateNames } from "@/models/nameGenerator";
+import { options } from "@/models/options";
 
 export class Game {
   constructor() {
@@ -27,6 +28,7 @@ export class Game {
     );
     this.scorecard = new Scorecard(this.players);
     this.deal();
+    this.forceComputer();
   }
 
   start() {
@@ -71,5 +73,11 @@ export class Game {
 
   addScore(score) {
     this.scorecard.addScore(score.winner(), score.points());
+  }
+
+  forceComputer() {
+    if (options.autoNextTrick) {
+      this.currentRound.nextMove();
+    }
   }
 }

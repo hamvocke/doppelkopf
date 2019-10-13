@@ -1,3 +1,4 @@
 export const options = {
-  autoplay: true
+  autoplay: true,
+  autoNextTrick: true
 };
