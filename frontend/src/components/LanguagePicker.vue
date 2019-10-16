@@ -1,6 +1,5 @@
 <template>
   <div id="languages">
-    {{ $t("language") }}:&nbsp;
     <span class="language" v-for="(lang, i) in availableLanguages" :key="i">
       <input type="radio" v-model="$i18n.locale" :id="lang" :value="lang">
       <label :for="lang">{{ $t(lang) }}</label>
@@ -24,9 +23,6 @@ export default {
 
 #languages {
   margin: 6px;
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
   display: flex;
 }
 

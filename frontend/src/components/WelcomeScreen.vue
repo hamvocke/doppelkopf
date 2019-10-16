@@ -33,6 +33,7 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
+  text-align: center;
 }
 
 .logo {

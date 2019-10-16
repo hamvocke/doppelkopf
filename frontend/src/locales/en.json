@@ -11,9 +11,10 @@
   "you_lose": "You lost the game! 😩",
   "you_win": "Yay! You won! 🏆",
   "trick_goes_to": "Trick goes to:",
-  "language": "Language",
   "cant-play-card": "You can't play that card",
   "not-your-turn": "It's not your turn, buddy!",
+  "language": "Language",
   "en": "English",
-  "de": "Deutsch"
+  "de": "Deutsch",
+  "options-header": "Einstellungen"
 }

@@ -15,5 +15,6 @@
   "not-your-turn": "Du bist nicht dran, mein Freund!",
   "language": "Sprache",
   "en": "English",
-  "de": "Deutsch"
+  "de": "Deutsch",
+  "options-header": "Einstellungen"
 }

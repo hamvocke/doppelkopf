@@ -99,7 +99,7 @@ export default {
 .selected {
   top: -10px;
   box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
-  z-index: 9999;
+  z-index: 200;
 }
 
 .suitTop {
@@ -158,7 +158,7 @@ export default {
   .selected {
     top: -6px;
     box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
-    z-index: 9999;
+    z-index: 200;
   }
 
   .rank {

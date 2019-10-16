@@ -3,7 +3,7 @@
     <Notifications/>
     <WelcomeScreen v-if='!game.isStarted()' :game='game' />
     <Table :game='game' v-else />
-    <LanguagePicker />
+    <OptionsMenu />
   </div>
 </template>
 
@@ -11,7 +11,7 @@
 import Notifications from "./components/Notifications";
 import WelcomeScreen from "./components/WelcomeScreen";
 import Table from "./components/Table";
-import LanguagePicker from "./components/LanguagePicker";
+import OptionsMenu from "./components/OptionsMenu";
 
 import { Game } from "./models/game";
 
@@ -29,7 +29,7 @@ export default {
     Table,
     Notifications,
     WelcomeScreen,
-    LanguagePicker
+    OptionsMenu
   }
 };
 </script>
