@@ -1,7 +1,7 @@
 <template>
   <div class="options">
     <div class="options-icon" v-on:click='toggleMenu()'>⚙️</div>
-    <div class="options-menu" v-if="visible" v-on:click.self='toggleMenu()'>
+    <div class="options-menu" v-if="isVisible" v-on:click.self='toggleMenu()'>
       <div class="options-menu-content">
         <h2>{{ $t("options-header") }}</h2>
         <div class="option">
@@ -18,14 +18,16 @@ import LanguagePicker from "./LanguagePicker";
 
 export default {
   name: "OptionsMenu",
-  data: function() {
-    return {
-      visible: false
-    };
+  props: {
+    isVisible: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
   },
   methods: {
     toggleMenu: function() {
-      this.visible = !this.visible;
+      this.isVisible = !this.isVisible;
     }
   },
   components: {
