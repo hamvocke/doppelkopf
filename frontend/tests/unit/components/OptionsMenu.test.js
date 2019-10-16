@@ -11,4 +11,19 @@ describe("OptionsMenu.vue", () => {
     const wrapper = mount(OptionsMenu, { propsData: { isVisible: false } });
     expect(wrapper.find(".options-icon").exists()).toBe(true);
   });
+
+  test("should not show options", () => {
+    const wrapper = mount(OptionsMenu, { propsData: { isVisible: false } });
+    expect(wrapper.find(".options-menu").exists()).toBe(false);
+  });
+
+  test("should show options", () => {
+    const wrapper = mount(OptionsMenu, { propsData: { isVisible: true } });
+    expect(wrapper.find(".options-menu").exists()).toBe(true);
+  });
+
+  test("should contain language picker", () => {
+    const wrapper = mount(OptionsMenu, { propsData: { isVisible: true } });
+    expect(wrapper.find(".options-menu #languages").exists()).toBe(true);
+  });
 });
