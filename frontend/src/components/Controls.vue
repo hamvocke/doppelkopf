@@ -34,5 +34,6 @@ export default {
 
 .controls {
   grid-area: controls;
+  text-align: center;
 }
 </style>
