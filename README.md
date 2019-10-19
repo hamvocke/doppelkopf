@@ -6,7 +6,9 @@ An in-browser implementation of the traditional German [Doppelkopf](https://en.w
 ## Live Demo
 The game is still in early stages. Playing it will probably be a frustrating and confusing experience. If you're curious enough to give it a try (and play against a really shitty AI), I encourage you to do so:
 
-### [Try the Live Demo](https://doppelkopf.ham.codes/)
+[![Screenshot](https://i.imgur.com/sZCuRr4.png)](https://doppelkopf.ham.codes/)
+
+<h3 align="center"><a href="https://doppelkopf.ham.codes/">Try the Live Demo</a></h3>
 
 ## Development
 This game is implemented using ES2017. The source code is transpiled using Babel and bundled and loaded with Webpack. The frontend is written in [vue.js](https://vuejs.org/).
