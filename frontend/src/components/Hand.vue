@@ -2,7 +2,16 @@
   <div class="hand">
     <div class="cards" :class="position">
       <transition-group name="card" tag="span">
-        <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' :is-highlighted='highlight(card)' :position='position' v-on:click.native='select(card)' />
+        <Card
+          v-for="card in hand.cards"
+          :key="card.cardId"
+          :card="card"
+          :is-selected="isSelected(card)"
+          :is-covered="isCovered"
+          :is-highlighted="highlight(card)"
+          :position="position"
+          @click.native="select(card)"
+        />
       </transition-group>
     </div>
   </div>
@@ -13,6 +22,9 @@ import Card from "./Card";
 
 export default {
   name: "Hand",
+  components: {
+    Card
+  },
   props: {
     hand: {
       type: Object,
@@ -35,9 +47,6 @@ export default {
       required: false,
       default: false
     }
-  },
-  components: {
-    Card
   },
   data: function() {
     return {

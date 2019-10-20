@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Notifications/>
-    <WelcomeScreen v-if='!game.isStarted()' :game='game' />
-    <Table :game='game' v-else />
+    <Notifications />
+    <WelcomeScreen v-if="!game.isStarted()" :game="game" />
+    <Table v-else :game="game" />
     <OptionsMenu />
   </div>
 </template>
@@ -16,7 +16,13 @@ import OptionsMenu from "./components/OptionsMenu";
 import { Game } from "./models/game";
 
 export default {
-  name: "app",
+  name: "App",
+  components: {
+    Table,
+    Notifications,
+    WelcomeScreen,
+    OptionsMenu
+  },
   props: {
     game: {
       type: Object,
@@ -24,12 +30,6 @@ export default {
         return new Game();
       }
     }
-  },
-  components: {
-    Table,
-    Notifications,
-    WelcomeScreen,
-    OptionsMenu
   }
 };
 </script>

@@ -2,13 +2,20 @@
   <div class="player">
     <div class="info">
       <div class="name">{{ player.name }}</div>
-      <div class="party" v-if="player.isHuman">
+      <div v-if="player.isHuman" class="party">
         {{ player.hand.isRe() ? "Re" : "Kontra" }}
       </div>
     </div>
     <div class="container">
-      <Hand :hand="player.hand" :is-covered="isCovered" :is-selectable='isHandSelectable' :position='player.tablePosition' :playable-cards="playable()" v-on:play="play"/>
-      <TrickStack :trickStack="player.trickStack"/>
+      <Hand
+        :hand="player.hand"
+        :is-covered="isCovered"
+        :is-selectable="isHandSelectable"
+        :position="player.tablePosition"
+        :playable-cards="playable()"
+        @play="play"
+      />
+      <TrickStack :trick-stack="player.trickStack" />
     </div>
   </div>
 </template>
@@ -20,6 +27,10 @@ import { playableCards } from "@/models/playableCardFinder";
 
 export default {
   name: "Player",
+  components: {
+    Hand,
+    TrickStack
+  },
   props: {
     player: {
       type: Object,
@@ -31,10 +42,6 @@ export default {
       isCovered: !this.player.isHuman,
       isHandSelectable: this.player.isHuman
     };
-  },
-  components: {
-    Hand,
-    TrickStack
   },
   methods: {
     play: function(card) {

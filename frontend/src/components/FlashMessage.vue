@@ -1,6 +1,6 @@
 <template>
   <div class="flashMessage blink">
-    <div class="icon" v-if="icon">{{ icon }}</div>
+    <div v-if="icon" class="icon">{{ icon }}</div>
     <div class="message">{{ message }}</div>
   </div>
 </template>

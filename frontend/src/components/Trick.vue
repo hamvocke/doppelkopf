@@ -2,11 +2,15 @@
   <div class="trick">
     <div class="cards">
       <transition-group name="card" tag="span">
-        <Card v-for='playedCard in cards' :card='playedCard.card' :key='playedCard.card.cardId' />
+        <Card
+          v-for="playedCard in cards"
+          :key="playedCard.card.cardId"
+          :card="playedCard.card"
+        />
       </transition-group>
     </div>
-    <div class="winner" v-if='winner'>
-      {{ $t('trick_goes_to') }} {{ winner.name }}
+    <div v-if="winner" class="winner">
+      {{ $t("trick_goes_to") }} {{ winner.name }}
     </div>
   </div>
 </template>
@@ -16,6 +20,9 @@ import Card from "./Card";
 
 export default {
   name: "Trick",
+  components: {
+    Card
+  },
   props: ["currentTrick"],
   computed: {
     cards: function() {
@@ -24,9 +31,6 @@ export default {
     winner: function() {
       return this.currentTrick.winner();
     }
-  },
-  components: {
-    Card
   }
 };
 </script>

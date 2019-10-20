@@ -1,12 +1,12 @@
 <template>
   <div class="card" :class="cardClasses">
-    <template v-if='isCovered'>
+    <template v-if="isCovered">
       <div class="background"></div>
     </template>
     <template v-else>
-      <span class="suitTop" :class='colorClasses'>{{ card.suit }}</span>
+      <span class="suitTop" :class="colorClasses">{{ card.suit }}</span>
       <span class="rank">{{ card.rank }}</span>
-      <span class="suitBottom" :class='colorClasses'>{{ card.suit }}</span>
+      <span class="suitBottom" :class="colorClasses">{{ card.suit }}</span>
     </template>
   </div>
 </template>

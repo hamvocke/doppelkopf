@@ -1,12 +1,12 @@
 <template>
   <div class="options">
-    <div class="options-icon" v-on:click='toggleMenu()'>⚙️</div>
-    <div class="options-menu" v-if="isVisible" v-on:click.self='toggleMenu()'>
+    <div class="options-icon" @click="toggleMenu()">⚙️</div>
+    <div v-if="isVisible" class="options-menu" @click.self="toggleMenu()">
       <div class="options-menu-content">
         <h2>{{ $t("options-header") }}</h2>
         <div class="option">
-            <span class="label">{{ $t("language") }}</span>
-            <LanguagePicker />
+          <span class="label">{{ $t("language") }}</span>
+          <LanguagePicker />
         </div>
       </div>
     </div>
@@ -18,6 +18,9 @@ import LanguagePicker from "./LanguagePicker";
 
 export default {
   name: "OptionsMenu",
+  components: {
+    LanguagePicker
+  },
   props: {
     isVisible: {
       type: Boolean,
@@ -29,9 +32,6 @@ export default {
     toggleMenu: function() {
       this.isVisible = !this.isVisible;
     }
-  },
-  components: {
-    LanguagePicker
   }
 };
 </script>

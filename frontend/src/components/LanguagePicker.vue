@@ -1,7 +1,7 @@
 <template>
   <div id="languages">
-    <span class="language" v-for="(lang, i) in availableLanguages" :key="i">
-      <input type="radio" v-model="$i18n.locale" :id="lang" :value="lang">
+    <span v-for="(lang, i) in availableLanguages" :key="i" class="language">
+      <input :id="lang" v-model="$i18n.locale" type="radio" :value="lang" />
       <label :for="lang">{{ $t(lang) }}</label>
     </span>
   </div>
