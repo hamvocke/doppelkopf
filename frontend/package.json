@@ -35,16 +35,20 @@
     "@vue/cli-plugin-pwa": "^4.0.4",
     "@vue/cli-plugin-unit-jest": "^4.0.4",
     "@vue/cli-service": "^4.0.4",
-    "@vue/eslint-config-prettier": "^3.0.4",
-    "@vue/test-utils": "^1.0.0-beta.20",
+    "@vue/eslint-config-prettier": "^5.0.0",
+    "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
     "babel-jest": "^24.5.0",
     "babel-loader": "^8.0.4",
     "babel-preset-vue": "^2.0.2",
-    "eslint": "^4.19.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.9.0",
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^12.0.0",
+    "prettier": "^1.18.2",
     "sass-loader": "^7.0.1",
     "vue-cli-plugin-i18n": "^0.6.0",
     "vue-template-compiler": "^2.5.17"
@@ -61,7 +65,27 @@
     "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      },
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
   },
   "postcss": {
     "plugins": {
@@ -95,6 +119,7 @@
     "testMatch": [
       "**/tests/unit/**/*.test.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
     ],
-    "testURL": "http://localhost/"
+    "testURL": "http://localhost/",
+    "preset": "@vue/cli-plugin-unit-jest"
   }
 }
