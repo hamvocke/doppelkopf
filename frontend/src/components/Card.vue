@@ -35,7 +35,8 @@ export default {
     },
     position: {
       type: String,
-      required: false
+      required: false,
+      default: "not-set"
     }
   },
   computed: {

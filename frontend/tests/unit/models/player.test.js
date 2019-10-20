@@ -146,7 +146,7 @@ test("should autoplay a card", () => {
   player.game.currentTrick.baseCard = () => queen.of(suits.diamonds);
   player.hand = new Hand([queenOnHand, kingOnHand]);
   player.behavior = {
-    cardToPlay: jest.fn((hand, baseCard) => kingOnHand)
+    cardToPlay: jest.fn(() => kingOnHand)
   };
 
   player.autoplay();

@@ -23,7 +23,12 @@ export default {
   components: {
     Card
   },
-  props: ["currentTrick"],
+  props: {
+    currentTrick: {
+      type: Object,
+      default: null
+    }
+  },
   computed: {
     cards: function() {
       return this.currentTrick.cards();
