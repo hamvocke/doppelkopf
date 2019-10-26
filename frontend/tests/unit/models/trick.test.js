@@ -2,7 +2,7 @@ import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PlayedCard } from "@/models/playedCard";
 import { queen, king, suits, ten, ace } from "@/models/card";
-import { doppelkopf } from "@/models/extras";
+import { DOPPELKOPF } from "@/models/extras";
 
 const player1 = new Player("Player 1");
 const player2 = new Player("Player 2");
@@ -155,6 +155,6 @@ describe("extras", () => {
     trick.add(ace.of(suits.spades), player1);
     trick.add(ace.of(suits.spades), player2);
 
-    expect(trick.extras()).toBe(doppelkopf);
+    expect(trick.extras()).toBe(DOPPELKOPF);
   });
 });

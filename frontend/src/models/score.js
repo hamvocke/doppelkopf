@@ -1,10 +1,9 @@
 import { re, kontra } from "@/models/parties";
 import { flatMap } from "lodash";
+import { WIN, BEAT_RE } from "@/models/extras";
 
 const sumPointsForParty = (acc, player) => acc + player.points();
-
-export const WIN = "win";
-export const BEAT_RE = "beat_re";
+const extrasInTrickStack = (acc, player) => acc + player.trickStack.extras();
 
 export class Score {
   constructor() {
@@ -31,6 +30,9 @@ export class Score {
       this.addExtra(kontra, WIN);
       this.addExtra(kontra, BEAT_RE);
     }
+
+    this.addExtra(re, this.parties[re].reduce(extrasInTrickStack, []));
+    this.addExtra(kontra, this.parties[kontra].reduce(extrasInTrickStack, []));
   }
 
   findParties(players) {
@@ -57,6 +59,9 @@ export class Score {
   }
 
   addExtra(party, extraKey) {
+    if (!extraKey) {
+      return;
+    }
     const extra = {};
     extra[extraKey] = 1;
     this.extras[party].push(extra);

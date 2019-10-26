@@ -1,6 +1,7 @@
-import { Score, WIN, BEAT_RE } from "@/models/score";
+import { Score } from "@/models/score";
 import { Player } from "@/models/player";
 import { re, kontra } from "@/models/parties";
+import { WIN, BEAT_RE, DOPPELKOPF } from "@/models/extras";
 
 const playersWithReWinning = [
   stubPlayer("Player 1", re, 70),
@@ -19,8 +20,8 @@ const playersWithKontraWinning = [
 function stubPlayer(name, party, points) {
   const stubbedPlayer = new Player(name);
   stubbedPlayer.isRe = () => party === re;
-  stubbedPlayer.isKontra = () => party !== re;
   stubbedPlayer.points = () => points;
+  stubbedPlayer.isKontra = () => party !== re;
   return stubbedPlayer;
 }
 
@@ -119,6 +120,18 @@ describe("calculating extras", () => {
     score.evaluate(playersWithKontraWinning);
 
     expect(score.points()).toBe(2);
+  });
+
+  test("should list doppelkopf extra", () => {
+    const score = new Score();
+    playersWithKontraWinning[2].trickStack.extras = () => [DOPPELKOPF];
+
+    score.evaluate(playersWithKontraWinning);
+
+    expect(score.points()).toBe(3);
+    expect(score.listExtras(kontra)).toContain(DOPPELKOPF);
+
+    playersWithKontraWinning[2].trickStack.extras = () => [];
   });
 
   test("should list extra points for both parties", () => {

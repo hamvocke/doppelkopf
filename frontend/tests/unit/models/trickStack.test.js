@@ -2,6 +2,7 @@ import { TrickStack } from "@/models/trickStack";
 import { Trick } from "@/models/trick";
 import { Game } from "@/models/game";
 import { ace, ten, king, queen, suits } from "@/models/card";
+import { DOPPELKOPF } from "@/models/extras";
 
 let trickStack;
 const game = new Game();
@@ -89,6 +90,6 @@ describe("extras", () => {
     trickStack.add(someTrick);
 
     expect(trickStack.points()).toBe(42);
-    expect(trickStack.extras()).toEqual(["DOPPELKOPF"]);
+    expect(trickStack.extras()).toEqual([DOPPELKOPF]);
   });
 });
