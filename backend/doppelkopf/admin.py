@@ -4,6 +4,11 @@ from doppelkopf.toggles import Toggle
 blueprint = Blueprint("admin", __name__, url_prefix="/admin")
 
 
+@blueprint.route("/", methods=["GET"])
+def index():
+    return render_template("admin/index.html")
+
+
 @blueprint.route("/toggles", methods=["GET"])
 def toggles_endpoint():
     all_toggles = Toggle.query.all()
