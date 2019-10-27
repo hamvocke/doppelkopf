@@ -1,8 +1,8 @@
-const path = require("path");
-module.exports = (baseConfig, env, defaultConfig) => {
-  defaultConfig.resolve.alias = {
-    ...defaultConfig.resolve.alias,
+const path = require('path');
+
+module.exports = async ({ config, mode }) => {
+  config.resolve.alias = {
     "@": path.resolve(__dirname, "../src"),
-  };
-  return defaultConfig;
+  }
+  return config;
 };

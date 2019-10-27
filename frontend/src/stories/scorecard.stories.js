@@ -1,4 +1,3 @@
-import { storiesOf } from "@storybook/vue";
 import VueI18n from "vue-i18n";
 
 import Scorecard from "@/components/Scorecard";
@@ -9,7 +8,7 @@ import { Scorecard as ScorecardModel } from "@/models/scorecard";
 
 import "@/assets/css/app.css";
 
-let locale = require("../src/locales/de.json");
+let locale = require("@/locales/de.json");
 let i18nOpts = {
   locale: "de",
   messages: {}
@@ -42,7 +41,11 @@ sc.addScore([players[2], players[0]], 1);
 const score = new Score();
 score.evaluate(players);
 
-storiesOf("Scorecard", module).add("with player losing", () => ({
+export default {
+  title: "Scorecard"
+};
+
+export const closed = () => ({
   components: { Scorecard },
   data() {
     return {
@@ -54,4 +57,4 @@ storiesOf("Scorecard", module).add("with player losing", () => ({
   template:
     "<Scorecard :scorecard='scorecard' :players='players' :currentScore='score'/>",
   i18n: new VueI18n(i18nOpts)
-}));
+});
