@@ -19,6 +19,12 @@ init_db:
 	export FLASK_APP=doppelkopf && \
 	pipenv run flask db init
 
+seed_data:
+	export FLASK_ENV=development && \
+	export APP_PROFILE=doppelkopf.config.DevelopmentConfig && \
+	export FLASK_APP=doppelkopf && \
+	pipenv run flask seed-data
+
 migrate:
 	export FLASK_ENV=development && \
 	export APP_PROFILE=doppelkopf.config.DevelopmentConfig && \
