@@ -19,7 +19,7 @@ Toggles
 <p class="text-sm text-gray-600 mb-6">
   Activate and deactivate features at runtime. Changes will be active for players once they reload the page.
 </p>
-<form action="#">
+<form action="{{ url_for('admin.toggles_submit') }}" method="post">
   <table class="table-auto w-full mb-6">
     <thead>
       <tr>
@@ -32,8 +32,12 @@ Toggles
     <tr>
       <td class="border-t border-b p-4">
           <label class="flex items-center">
-            <input type="checkbox" class="toggle mr-3">
-            <i class="form-icon"></i> {{ toggle.name }}
+            <input type="checkbox"
+                   class="toggle mr-3"
+                   {% if toggle.enabled %}checked{% endif %}
+                   id="{{ toggle.id }}"
+                   name="{{ toggle.id }}">
+            {{ toggle.name }}
           </label>
       </td>
       <td class="border-t border-b p-4">
