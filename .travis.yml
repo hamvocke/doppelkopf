@@ -11,11 +11,15 @@ node_js:
   - '11'
 
 before_script:
+  - sudo apt-get update
+  - sudo apt-get -y install python3 python-pipenv
   - pushd frontend/ && yarn install && popd
+  - pushd backend/ && make install && popd
 
 script:
   - pushd frontend && yarn test:unit && yarn test:e2e && popd
   - pushd frontend && yarn build && popd
+  - pushd backend && make test && popd
 
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d

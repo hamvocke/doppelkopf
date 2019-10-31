@@ -1,4 +1,7 @@
-.PHONY: format run init_db run_prod test  mypy flake8 serve-frontend
+.PHONY: install format run init_db run_prod test  mypy flake8 serve-frontend
+
+install:
+	pipenv install --dev
 
 format:
 	pipenv run black . --exclude "/(\.git|\.mypy_cache|\.venv|build|dist|node_modules|migrations)/"
