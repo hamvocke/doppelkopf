@@ -31,12 +31,10 @@ Toggles
     {% for toggle in toggles %}
     <tr>
       <td class="border-t border-b p-4">
-        <div class="form-group">
-          <label>
-            <input type="checkbox" class="mr-2">
+          <label class="flex items-center">
+            <input type="checkbox" class="toggle mr-3">
             <i class="form-icon"></i> {{ toggle.name }}
           </label>
-        </div>
       </td>
       <td class="border-t border-b p-4">
         <span>{{ toggle.description }}</span>
