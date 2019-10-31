@@ -11401,6 +11401,11 @@ video {
   z-index: auto;
 }
 
+a:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
 .btn-primary {
   background-color: #667eea;
   color: #fff;
@@ -11413,11 +11418,11 @@ video {
   margin-right: 0.5rem;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn-primary:active {
   background-color: #4c51bf;
 }
 
-.btn-primary:focus, .btn-primary:active {
+.btn-primary:focus {
   outline: 0;
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }
@@ -11435,13 +11440,13 @@ video {
   border-radius: 0.25rem
 }
 
-.btn-outline:hover {
+.btn-outline:hover, .btn-outline:active {
   background-color: #f7fafc;
   color: #4c51bf;
   border-color: #4c51bf;
 }
 
-.btn-outline:focus, .btn-outline:active {
+.btn-outline:focus {
   outline: 0;
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }
@@ -11472,7 +11477,7 @@ video {
   width: 18px;
   height: 18px;
   background: #fff;
-  left: 4px;
+  left: 3px;
   top: 3px;
   border-radius: 50%;
   font: 9px/20px sans-serif;

@@ -2,15 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+a:focus {
+  @apply outline-none shadow-outline;
+}
+
 .btn-primary {
   @apply bg-indigo-500 text-white font-bold py-2 px-4 rounded mr-2;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn-primary:active {
   @apply bg-indigo-700;
 }
 
-.btn-primary:focus, .btn-primary:active {
+.btn-primary:focus {
   @apply outline-none shadow-outline;
 }
 
@@ -18,11 +22,11 @@
   @apply bg-transparent text-indigo-500 font-semibold py-2 px-4 border border-indigo-500 rounded
 }
 
-.btn-outline:hover {
+.btn-outline:hover, .btn-outline:active {
   @apply bg-gray-100 text-indigo-700 border-indigo-700;
 }
 
-.btn-outline:focus, .btn-outline:active {
+.btn-outline:focus {
   @apply outline-none shadow-outline;
 }
 
@@ -51,7 +55,7 @@
   width: 18px;
   height: 18px;
   background: #fff;
-  left: 4px;
+  left: 3px;
   top: 3px;
   border-radius: 50%;
   font: 9px/20px sans-serif;
