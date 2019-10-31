@@ -1,7 +1,8 @@
 import copy
 from datetime import datetime
 
-from doppelkopf.db import db
+from .db import db
+from .helpers import pretty_date
 
 
 class Toggle(db.Model):
@@ -35,6 +36,9 @@ class Toggle(db.Model):
     def insert_all():
         db.session.add_all(toggles)
         db.session.commit()
+
+    def last_changed(self) -> str:
+        return pretty_date(self.last_changed_at)
 
 
 toggles = [
