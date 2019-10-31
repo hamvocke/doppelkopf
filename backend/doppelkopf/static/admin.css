@@ -1,14 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.navbar-center {
-  font-size: 3em;
+.btn-primary {
+  @apply bg-indigo-500 text-white font-bold py-2 px-4 rounded mr-2;
 }
 
-
-.breadcrumb {
-  margin: 0 0 2em 0;
+.btn-primary:hover {
+  @apply bg-indigo-700;
 }
 
+.btn-primary:focus, .btn-primary:active {
+  @apply outline-none shadow-outline;
+}
 
-.buttons {
-  margin: 16px 0;
+.btn-outline {
+  @apply bg-transparent text-indigo-500 font-semibold py-2 px-4 border border-indigo-500 rounded
+}
+
+.btn-outline:hover {
+  @apply bg-gray-100 text-indigo-700 border-indigo-700;
+}
+
+.btn-outline:focus, .btn-outline:active {
+  @apply outline-none shadow-outline;
 }

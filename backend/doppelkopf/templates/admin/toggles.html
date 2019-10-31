@@ -5,40 +5,43 @@ Toggles
 {% endblock %}
 
 {% block breadcrumb %}
-<li class="breadcrumb-item">
+<li class="mr-2">
   <a href="/admin">Admin</a>
-</li>
-<li class="breadcrumb-item">
+</li> /
+<li class="mx-2 text-gray-800">
   <a href="/admin/toggles">Toggles</a>
 </li>
 {% endblock %}
 
 {% block content %}
-<h1>Feature Toggles</h1>
-<p>Activate and deactivate features at runtime. Changes will be active for players once they reload the page.</p>
+<h2 class="text-2xl mb-2">Feature Toggles</h2>
+
+<p class="text-sm text-gray-600 mb-6">
+  Activate and deactivate features at runtime. Changes will be active for players once they reload the page.
+</p>
 <form action="#">
-  <table class="table table-hover">
+  <table class="table-auto w-full mb-6">
     <thead>
       <tr>
-        <th>Toggle</th>
-        <th>Description</th>
-        <th>Last change</th>
+        <th class="px-4 py-2 text-left">Toggle</th>
+        <th class="px-4 py-2 text-left">Description</th>
+        <th class="px-4 py-2 text-left">Last change</th>
       </tr>
     </thead>
     {% for toggle in toggles %}
     <tr>
-      <td>
+      <td class="border-t border-b p-4">
         <div class="form-group">
-          <label class="form-switch">
-            <input type="checkbox">
+          <label>
+            <input type="checkbox" class="mr-2">
             <i class="form-icon"></i> {{ toggle.name }}
           </label>
         </div>
       </td>
-      <td>
+      <td class="border-t border-b p-4">
         <span>{{ toggle.description }}</span>
       </td>
-      <td>
+      <td class="border-t border-b p-4">
         {{ toggle.last_changed_at }}
       </td>
     </tr>
@@ -46,16 +49,14 @@ Toggles
   </table>
 
 
-  <div class="columns">
-    <div class="column buttons">
-    <button class="btn btn-primary">
-      <i class="icon icon-check"></i> Save Toggle State
+  <div class="flex w-full justify-end">
+    <button class="btn-primary">
+      Save Toggle State
     </button>
 
-    <button class="btn">
-      <i class="icon icon-refresh"></i> Reset
+    <button class="btn-outline">
+      Reset
     </button>
-    </div>
   </div>
 </form>
 {% endblock %}

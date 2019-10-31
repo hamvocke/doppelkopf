@@ -43,3 +43,6 @@ mypy:
 
 flake8:
 	pipenv run flake8 .
+
+build_css:
+	npx tailwind build doppelkopf/static/admin.css -o doppelkopf/static/style.css
