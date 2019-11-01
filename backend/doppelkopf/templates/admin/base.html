@@ -7,34 +7,29 @@
 </head>
 <body>
   <header>
-    <nav class="flex items-center justify-between bg-gray-100 flex-wrap p-6 mb-4">
-      <div class="flex items-center flex-shrink-0 text-gray-700 mr-6">
-        <span class="font-semibold text-2xl tracking-tight">Doppelkopf</span>
-      </div>
-      <div class="block lg:hidden">
-        <button class="flex items-center px-3 py-2 border rounded text-gray-700 border-gray-300 hover:text-gray-500">
-          <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title>
-            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
-          </svg>
-        </button>
-      </div>
-      <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-        <div class="lg:flex-grow">
-          <a href="/admin/toggles" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-indigo-500 mr-4">
-            Toggles
-          </a>
-          <a href="/logs" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-indigo-500 mr-4">
-            Logs
-          </a>
-          <a href="https://github.com/hamvocke/doppelkopf" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-indigo-500 mr-4">
-            GitHub
-          </a>
-          <a href="https://travis-ci.org/hamvocke/doppelkopf" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-indigo-500 mr-4">
-            Pipeline <img src="https://travis-ci.org/hamvocke/doppelkopf.svg?branch=master" alt="build status" class="inline-block ml-2">
-          </a>
+    <div class="bg-gray-100">
+      <nav class="flex justify-between flex-wrap p-6 mb-4 container mx-auto">
+        <div class="flex-shrink-0 text-gray-700 mr-6">
+          <span class="font-semibold text-2xl tracking-tight">Doppelkopf</span>
         </div>
-      </div>
-    </nav>
+        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+          <div class="lg:flex-grow">
+            <a href="/admin/toggles" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-indigo-500 mr-4">
+              Toggles
+            </a>
+            <a href="/logs" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-indigo-500 mr-4">
+              Logs
+            </a>
+            <a href="https://github.com/hamvocke/doppelkopf" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-indigo-500 mr-4">
+              GitHub
+            </a>
+            <a href="https://travis-ci.org/hamvocke/doppelkopf" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-indigo-500 mr-4">
+              Pipeline <img src="https://travis-ci.org/hamvocke/doppelkopf.svg?branch=master" alt="build status" class="inline-block ml-2">
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
   </header>
 
   <section id="messages">
