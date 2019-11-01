@@ -45,6 +45,9 @@ run_prod:
 	pipenv run gunicorn --workers=2 doppelkopf.wsgi:app -b :5000
 
 test:
+	export FLASK_ENV=development && \
+	export APP_PROFILE=doppelkopf.config.TestingConfig && \
+	export FLASK_APP=doppelkopf && \
 	pipenv run pytest
 
 mypy:
