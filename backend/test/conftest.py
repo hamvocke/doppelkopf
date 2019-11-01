@@ -8,7 +8,7 @@ def app():
     app = create_app()
     app_context = app.app_context()
     app_context.push()
-    db.init_db()
+    db.db.create_all()
 
     yield app
 
