@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .toggles import Toggle
 from .db import db
 
@@ -26,4 +26,5 @@ def toggles_submit():
         db.session.add(toggle)
 
     db.session.commit()
+    flash("Toggle state saved")
     return redirect(url_for('admin.toggles_list'))

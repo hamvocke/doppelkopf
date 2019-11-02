@@ -8,7 +8,7 @@
 <body>
   <header>
     <div class="bg-gray-100">
-      <nav class="flex justify-between flex-wrap p-6 mb-4 container mx-auto">
+      <nav class="flex justify-between flex-wrap p-6 container mx-auto">
         <div class="flex-shrink-0 text-gray-700 mr-6">
           <span class="font-semibold text-2xl tracking-tight">Doppelkopf</span>
         </div>
@@ -33,15 +33,21 @@
   </header>
 
   <section id="messages">
-  {% for message in get_flashed_messages() %}
-    <div class="flex items-center bg-green-500 text-white text-sm font-bold px-4 py-3" role="alert">
-      <p>{{ message }}</p>
-    </div>
-  {% endfor %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {% if category == "error" %}
+        <div class="flex items-center text-white text-sm font-bold px-4 py-3 mb-2 bg-red-500" role="alert">{{ message }}</div>
+      {% else %}
+        <div class="flex items-center text-white text-sm font-bold px-4 py-3 mb-2 bg-green-500" role="alert">{{ message }}</div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
   </section>
 
   <div class="container mx-auto text-gray-800">
-    <ul class="flex text-sm text-gray-600 mb-5">
+    <ul class="flex text-sm text-gray-600 my-5">
       {% block breadcrumb %}{% endblock %}
     </ul>
 
