@@ -22,7 +22,12 @@ def toggles_submit():
 
     for toggle in all_toggles:
         # only enabled toggles end up in the request
-        toggle.enabled = True if request.form.get(str(toggle.id)) else False
+        if request.form.get(str(toggle.id)):
+            if not toggle.enabled:
+                toggle.toggle()
+        else:
+            if toggle.enabled:
+                toggle.toggle()
         db.session.add(toggle)
 
     db.session.commit()

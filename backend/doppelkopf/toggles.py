@@ -40,6 +40,10 @@ class Toggle(db.Model):
     def last_changed(self) -> str:
         return pretty_date(self.last_changed_at)
 
+    def toggle(self):
+        self.enabled = not self.enabled
+        self.last_changed_at = datetime.utcnow()
+
 
 toggles = [
     Toggle(
