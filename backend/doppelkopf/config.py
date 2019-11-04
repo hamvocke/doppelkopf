@@ -27,7 +27,7 @@ class ProductionConfig(Config):
     INFLUXDB_HOST = os.environ.get("INFLUXDB_HOST", Config.INFLUXDB_HOST)
     INFLUXDB_USER = os.environ.get("INFLUXDB_USER", Config.INFLUXDB_USER)
     INFLUXDB_PASS = os.environ.get("INFLUXDB_PASS", Config.INFLUXDB_PASS)
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DB_URI", "sqlite:///app/db.sqlite")  # defined in docker-compose.yml
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DB_URI", "sqlite:////app/db.sqlite")  # defined in docker-compose.yml
 
 
 class DevelopmentConfig(Config):
