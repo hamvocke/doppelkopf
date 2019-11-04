@@ -27,16 +27,12 @@ class ProductionConfig(Config):
     INFLUXDB_HOST = os.environ.get("INFLUXDB_HOST", Config.INFLUXDB_HOST)
     INFLUXDB_USER = os.environ.get("INFLUXDB_USER", Config.INFLUXDB_USER)
     INFLUXDB_PASS = os.environ.get("INFLUXDB_PASS", Config.INFLUXDB_PASS)
-    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(
-        basedir, "database-prod.sqlite"
-    )
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DB_URI", "sqlite:///app/db.sqlite")  # defined in docker-compose.yml
 
 
 class DevelopmentConfig(Config):
     ENV_NAME = "dev"
-    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(
-        basedir, "database-dev.sqlite"
-    )
+    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, "database-dev.sqlite")
     DEBUG = True
 
 
