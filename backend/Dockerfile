@@ -12,4 +12,4 @@ ENV APP_PROFILE=doppelkopf.config.ProductionConfig
 ENV FLASK_APP=doppelkopf
 ENV DB_URI=sqlite:///app/db.sqlite
 
-CMD make upgrade_db_prod && make run_prod
+CMD pipenv run flask db upgrade && pipenv run gunicorn --workers=2 doppelkopf.wsgi:app -b :5000
