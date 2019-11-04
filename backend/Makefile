@@ -13,15 +13,15 @@ run:
 	pipenv run flask db upgrade && \
 	pipenv run flask run
 
-init_db:
-	export FLASK_ENV=development && \
-	export APP_PROFILE=doppelkopf.config.DevelopmentConfig && \
-	export FLASK_APP=doppelkopf && \
-	pipenv run flask db init
-
 seed_data:
 	export FLASK_ENV=development && \
 	export APP_PROFILE=doppelkopf.config.DevelopmentConfig && \
+	export FLASK_APP=doppelkopf && \
+	pipenv run flask seed-data
+
+seed_data_prod:
+	export FLASK_ENV=production && \
+	export APP_PROFILE=doppelkopf.config.ProductionConfig && \
 	export FLASK_APP=doppelkopf && \
 	pipenv run flask seed-data
 
@@ -34,6 +34,12 @@ migrate:
 upgrade_db:
 	export FLASK_ENV=development && \
 	export APP_PROFILE=doppelkopf.config.DevelopmentConfig && \
+	export FLASK_APP=doppelkopf && \
+	pipenv run flask db upgrade
+
+upgrade_db_prod:
+	export FLASK_ENV=production && \
+	export APP_PROFILE=doppelkopf.config.ProductionConfig && \
 	export FLASK_APP=doppelkopf && \
 	pipenv run flask db upgrade
 
