@@ -18,11 +18,26 @@ class EventType(db.Model):
 
     @staticmethod
     def insert_all():
-        game_start = EventType(id=EventTypes.GAME_START, name="game.start")
-        game_finish = EventType(id=EventTypes.GAME_FINISH, name="game.finish")
-        game_win = EventType(id=EventTypes.GAME_WIN, name="game.win")
-        game_lose = EventType(id=EventTypes.GAME_LOSE, name="game.lose")
-        db.session.add_all([game_start, game_finish, game_win, game_lose])
+        if EventType.query.get(EventTypes.GAME_START) is None:
+            print("Creating GAME_START event type")
+            game_start = EventType(id=EventTypes.GAME_START, name="game.start")
+            db.session.add(game_start)
+
+        if EventType.query.get(EventTypes.GAME_FINISH) is None:
+            print("Creating GAME_FINISH event type")
+            game_finish = EventType(id=EventTypes.GAME_FINISH, name="game.finish")
+            db.session.add(game_finish)
+
+        if EventType.query.get(EventTypes.GAME_WIN) is None:
+            print("Creating GAME_WIN event type")
+            game_win = EventType(id=EventTypes.GAME_WIN, name="game.win")
+            db.session.add(game_win)
+
+        if EventType.query.get(EventTypes.GAME_LOSE) is None:
+            print("Creating GAME_LOSE event type")
+            game_lose = EventType(id=EventTypes.GAME_LOSE, name="game.lose")
+            db.session.add(game_lose)
+
         db.session.commit()
 
 

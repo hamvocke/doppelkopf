@@ -34,7 +34,11 @@ class Toggle(db.Model):
 
     @staticmethod
     def insert_all():
-        db.session.add_all(toggles)
+        for toggle in toggles:
+            if Toggle.query.get(toggle.id) is None:
+                print(f"Creating toggle: {toggle.name}")
+                db.session.add(toggle)
+
         db.session.commit()
 
     def last_changed(self) -> str:
@@ -47,16 +51,22 @@ class Toggle(db.Model):
 
 toggles = [
     Toggle(
-        name="game.rules.karlchen", description="Aktiviert die 'Karlchen' Spielregel"
+        id=1,
+        name="game.rules.karlchen",
+        description="Aktiviert die 'Karlchen' Spielregel",
     ),
     Toggle(
-        name="game.rules.fuchs", description="Aktiviert die 'Fuchs gefangen' Spielregel"
+        id=2,
+        name="game.rules.fuchs",
+        description="Aktiviert die 'Fuchs gefangen' Spielregel",
     ),
     Toggle(
+        id=3,
         name="game.rules.scharf",
         description="Wenn aktiv, werden 9er aus dem Spiel entfernt",
     ),
     Toggle(
+        id=4,
         name="game.rules.zweite_dulle",
         description="Aktiviert die 'zweite Dulle schlaegt die erste' Spielregel",
     ),
