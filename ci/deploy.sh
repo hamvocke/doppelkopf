@@ -39,6 +39,7 @@ ssh -T root@ham.codes << EOF
     rm -rf /data/archive/doppelkopf_bak/
     mkdir -p /data/archive && mv /data/doppelkopf/ /data/archive/doppelkopf_bak/
     mv /tmp/doppelkopf/ /data/doppelkopf
+    aws s3 sync /data/doppelkopf/ s3://devbox-bucket.ham.codes/doppelkopf/
 EOF
 e_mute "Done"
 
