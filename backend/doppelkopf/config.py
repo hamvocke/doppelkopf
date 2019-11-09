@@ -9,11 +9,6 @@ class Config(object):
     TESTING = False
     SECRET_KEY = "someSecretKey"
     SENTRY_DSN = "someSentryDsn"
-    INFLUXDB_HOST = "localhost"
-    INFLUXDB_PATH = "/influx"
-    INFLUXDB_USER = "user"
-    INFLUXDB_PASS = "pass"
-    INFLUXDB_DB = "doppelkopf"
     SQLALCHEMY_DATABASE_URI = "sqlite://"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -24,9 +19,6 @@ class ProductionConfig(Config):
     TESTING = False
     SENTRY_DSN = os.environ.get("SENTRY_DSN", Config.SENTRY_DSN)
     SECRET_KEY = os.environ.get("SECRET_KEY", Config.SECRET_KEY)
-    INFLUXDB_HOST = os.environ.get("INFLUXDB_HOST", Config.INFLUXDB_HOST)
-    INFLUXDB_USER = os.environ.get("INFLUXDB_USER", Config.INFLUXDB_USER)
-    INFLUXDB_PASS = os.environ.get("INFLUXDB_PASS", Config.INFLUXDB_PASS)
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DB_URI", "sqlite:////app/db/db.sqlite"
     )  # defined in docker-compose.yml
