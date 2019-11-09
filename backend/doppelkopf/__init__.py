@@ -1,4 +1,6 @@
 import os
+import sys
+import logging
 
 from flask import Flask  # type: ignore
 import sentry_sdk
@@ -18,6 +20,9 @@ def create_app(test_config=None):
         # load the test config
         app.config.from_object("doppelkopf.config.TestingConfig")
         app.config.update(test_config)
+
+    app.logger.addHandler(logging.StreamHandler(sys.stdout))
+    app.logger.setLevel(logging.INFO)
 
     sentry_sdk.init(
         dsn="https://103f1e1585fc47efb1b56a24db8b9dcc@sentry.io/1449084",
