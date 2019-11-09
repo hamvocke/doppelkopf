@@ -32,4 +32,4 @@ def toggles_submit():
 
     db.session.commit()
     flash("Toggle state saved")
-    return redirect(url_for('admin.toggles_list'))
+    return redirect(url_for("admin.toggles_list"))
