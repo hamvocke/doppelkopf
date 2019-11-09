@@ -8,4 +8,4 @@ services:
       - "5000:5000"
     restart: always
     volumes:
-      - /data/doppelkopf_backend/db.sqlite:/app/db.sqlite
+      - /data/doppelkopf_backend/db:/app/db
