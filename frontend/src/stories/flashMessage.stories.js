@@ -18,12 +18,12 @@ export default {
 
 export const icon = () => ({
   components: { FlashMessage },
-  template: '<FlashMessage message="Fuchs gefangen" icon="🦊" />',
+  template: '<FlashMessage :message="Fuchs gefangen" icon="🦊" />',
   i18n: new VueI18n(i18nOpts)
 });
 
 export const no_icon = () => ({
   components: { FlashMessage },
-  template: '<FlashMessage message="Fuchs gefangen" />',
+  template: '<FlashMessage :message="Fuchs gefangen" />',
   i18n: new VueI18n(i18nOpts)
 });

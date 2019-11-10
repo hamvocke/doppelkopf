@@ -1,13 +1,16 @@
 <template>
-  <div class="card" :class="cardClasses">
-    <template v-if="isCovered">
-      <div class="background"></div>
-    </template>
-    <template v-else>
-      <span class="suitTop" :class="colorClasses">{{ card.suit }}</span>
-      <span class="rank">{{ card.rank }}</span>
-      <span class="suitBottom" :class="colorClasses">{{ card.suit }}</span>
-    </template>
+  <div class="card-wrapper">
+    <div class="card" :class="cardClasses">
+      <template v-if="isCovered">
+        <div class="background"></div>
+      </template>
+      <template v-else>
+        <span class="suitTop" :class="colorClasses">{{ card.suit }}</span>
+        <span class="rank">{{ card.rank }}</span>
+        <span class="suitBottom" :class="colorClasses">{{ card.suit }}</span>
+      </template>
+    </div>
+    <div v-if="playerName" class="playerName">{{ playerName }}</div>
   </div>
 </template>
 
@@ -37,6 +40,11 @@ export default {
       type: String,
       required: false,
       default: "not-set"
+    },
+    playerName: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   computed: {
@@ -64,6 +72,12 @@ export default {
 
 <style scoped>
 @import "../assets/css/colors.css";
+
+.card-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .card {
   position: relative;
@@ -139,6 +153,23 @@ export default {
 }
 
 .highlighted {
+}
+
+.playerName {
+  opacity: 0;
+  padding: 6px;
+  margin-top: 8px;
+  background: var(--lightblue);
+  color: var(--white);
+  font-size: 0.9em;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.22);
+  transition: opacity 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card-wrapper:hover .playerName,
+.card-wrapper:active .playerName {
+  opacity: 1;
 }
 
 @media screen and (max-width: 680px) {
