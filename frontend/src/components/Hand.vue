@@ -109,7 +109,7 @@ export default {
 
 .top .card-leave-to {
   opacity: 0;
-  transform: translateY(120px) rotate(180deg);
+  transform: translateY(120px);
 }
 
 .bottom .card-leave-to {
@@ -119,12 +119,12 @@ export default {
 
 .left .card-leave-to {
   opacity: 0;
-  transform: translateX(120px) rotate(90deg);
+  transform: translateX(120px);
 }
 
 .right .card-leave-to {
   opacity: 0;
-  transform: translateX(-120px) rotate(-90deg);
+  transform: translateX(-120px);
 }
 
 .top .card,
