@@ -38,7 +38,7 @@ export default {
   height: 100%;
   width: 80%;
   font-size: 1em;
-  background: var(--black);
+  background: var(--lightblue);
   color: var(--white);
   border-radius: 6px;
   box-shadow: 0 12px 18px rgba(0, 0, 0, 0.12);

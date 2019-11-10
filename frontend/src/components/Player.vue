@@ -75,7 +75,7 @@ export default {
 }
 
 .party {
-  background: color(var(--white) a(20%));
+  background: var(--lightblue);
   color: var(--white);
   border-radius: 4px;
   font-size: 1em;
