@@ -10,11 +10,22 @@
             <tr>
               <th>
                 <strong>Re</strong>
-                <em>({{ currentScore.rePoints }} {{ $t("points") }})</em>
+                <span class="badge">
+                  {{ currentScore.rePoints }} {{ $t("points") }}
+                </span>
+                <div class="members">
+                  {{ partyMembers("Re") }}
+                </div>
               </th>
+
               <th>
                 <strong>Kontra</strong>
-                <em>({{ currentScore.kontraPoints }} {{ $t("points") }})</em>
+                <span class="badge">
+                  {{ currentScore.kontraPoints }} {{ $t("points") }}
+                </span>
+                <div class="members">
+                  {{ partyMembers("Kontra") }}
+                </div>
               </th>
             </tr>
             <tr>
@@ -98,7 +109,7 @@
 </template>
 
 <script>
-import { includes } from "lodash";
+import { includes, join } from "lodash";
 
 export default {
   name: "Scorecard",
@@ -129,6 +140,12 @@ export default {
     },
     isLastLine(index) {
       return index === this.scorecard.scoreLines.length - 1;
+    },
+    partyMembers: function(party) {
+      return join(
+        this.currentScore.parties[party].map(player => player.name),
+        ", "
+      );
     }
   }
 };
@@ -162,6 +179,7 @@ h1,
 h2,
 h3 {
   text-align: center;
+  margin-bottom: 32px;
 }
 
 .scorecard table {
@@ -174,10 +192,6 @@ h3 {
 th,
 td {
   line-height: 2em;
-}
-
-th em {
-  font-weight: lighter;
 }
 
 .player {
@@ -211,6 +225,19 @@ th em {
   padding: 6px 0;
   text-align: left;
   width: 100%;
+}
+
+.members {
+  font-weight: lighter;
+}
+
+.badge {
+  padding: 3px 6px;
+  background-color: var(--lightblue);
+  color: var(--white);
+  border-radius: 4px;
+  font-weight: lighter;
+  font-size: 0.9em;
 }
 
 @media screen and (max-width: 680px) {
