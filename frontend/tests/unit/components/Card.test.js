@@ -44,7 +44,7 @@ describe("Card.vue", () => {
         isCovered: false
       }
     });
-    expect(wrapper.find(".card").classes()).toContain("selected");
+    expect(wrapper.find(".card-inner").classes()).toContain("selected");
   });
 
   it("should apply position class", () => {
@@ -55,7 +55,7 @@ describe("Card.vue", () => {
         position: "left"
       }
     });
-    expect(wrapper.find(".card").classes()).toContain("left");
+    expect(wrapper.find(".card-inner").classes()).toContain("left");
   });
 
   it("covered card should not show rank and suit", () => {
@@ -91,7 +91,7 @@ describe("Card.vue", () => {
       }
     });
 
-    expect(wrapper.find(".card").classes()).toContain("highlighted");
+    expect(wrapper.find(".card-inner").classes()).toContain("highlighted");
   });
 
   it("should show player name if given", () => {

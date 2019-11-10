@@ -1,6 +1,6 @@
 <template>
-  <div class="card-wrapper">
-    <div class="card" :class="cardClasses">
+  <div class="card">
+    <div class="card-inner" :class="cardClasses">
       <template v-if="isCovered">
         <div class="background"></div>
       </template>
@@ -73,13 +73,13 @@ export default {
 <style scoped>
 @import "../assets/css/colors.css";
 
-.card-wrapper {
+.card {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
 }
 
-.card {
+.card-inner {
   position: relative;
   top: 0px; /* necessary for css transition */
   height: 80px;
@@ -156,9 +156,10 @@ export default {
 }
 
 .playerName {
+  position: absolute;
+  margin-top: -20px;
   opacity: 0;
   padding: 6px;
-  margin-top: 8px;
   background: var(--lightblue);
   color: var(--white);
   font-size: 0.9em;
@@ -167,8 +168,8 @@ export default {
   transition: opacity 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.card-wrapper:hover .playerName,
-.card-wrapper:active .playerName {
+.card:hover .playerName,
+.card:active .playerName {
   opacity: 1;
 }
 
