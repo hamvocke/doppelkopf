@@ -21,6 +21,9 @@ class Toggle(db.Model):
 
         return self.name == other.name and self.enabled == other.enabled
 
+    def serialize(self):
+        return {"id": self.id, "name": self.name, "enabled": self.enabled}
+
     @staticmethod
     def merge(persisted_toggles: list, code_toggles: list) -> list:
         persisted_dict = {t.name: t for t in persisted_toggles}

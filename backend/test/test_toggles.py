@@ -32,6 +32,13 @@ def test_merge_toggles():
     assert len(merged) == 2
 
 
+def test_serialize():
+    toggle = Toggle(id=1, name="some", enabled=True, description="some description")
+
+    expected_serialization = {"id": 1, "name": "some", "enabled": True}
+    assert toggle.serialize() == expected_serialization
+
+
 def test_update_toggle_state():
     last_changed = datetime.utcnow() - timedelta(days=2)
     t = Toggle(name="some-toggle", enabled=False, last_changed_at=last_changed)

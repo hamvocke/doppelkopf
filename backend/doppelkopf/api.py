@@ -1,6 +1,8 @@
-from doppelkopf.events import Event, EventTypes
-from doppelkopf.db import db
-from flask import Blueprint
+from flask import Blueprint, jsonify
+
+from .db import db
+from .events import Event, EventTypes
+from .toggles import Toggle
 
 blueprint = Blueprint("api", __name__, url_prefix="/api")
 
@@ -17,3 +19,10 @@ def new_game():
     db.session.commit()
 
     return "Registered new game", 201
+
+
+@blueprint.route("/features", methods=["GET"])
+def features():
+    toggles = [t.serialize() for t in Toggle.query.all()]
+
+    return jsonify({"features": toggles})
