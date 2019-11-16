@@ -1,4 +1,4 @@
-import { Features, Feature } from "@/models/features";
+import { Features, Feature, FeatureManager } from "@/models/features";
 
 test("create new feature", () => {
   const someFeature = new Feature("my feature", false);
@@ -19,4 +19,13 @@ test("should throw error when accessing undefined feature", () => {
   expect(invalid_lookup).toThrowError(
     'Cannot find feature with name "unknown"'
   );
+});
+
+test("should have default API Url", () => {
+  expect(Features.api_url).toEqual("https://doppelkopf.ham.codes/api/features");
+});
+
+test("should use override API Url", () => {
+  let Features = new FeatureManager("https://example.org/some/path");
+  expect(Features.api_url).toEqual("https://example.org/some/path");
 });

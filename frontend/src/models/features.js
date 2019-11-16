@@ -1,3 +1,5 @@
+import { config } from "@/models/config";
+
 export class Feature {
   constructor(name, enabled = false) {
     this.name = name;
@@ -5,12 +7,19 @@ export class Feature {
   }
 }
 
-class FeatureManager {
-  constructor() {
-    this.features = {
-      a: new Feature("a", false),
-      b: new Feature("b", false)
-    };
+const DEFAULT_FEATURES = {
+  a: new Feature("a", false),
+  b: new Feature("b", false)
+};
+
+export class FeatureManager {
+  constructor(feature_api_url = null) {
+    this.features = DEFAULT_FEATURES;
+    this.api_url = config.backend_base_url + config.features_path;
+
+    if (feature_api_url) {
+      this.api_url = feature_api_url;
+    }
   }
 
   find(feature_name) {
