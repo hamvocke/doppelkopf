@@ -7,7 +7,14 @@ test("create new feature", () => {
 });
 
 test("should have dict of features", () => {
-  expect(Features["a"]).toBeDefined();
-  expect(Features["a"].name).toEqual("a");
-  expect(Features["a"].enabled).toBe(false);
+  const f = Features.find("a");
+  expect(f).toBeDefined();
+  expect(f.name).toEqual("a");
+  expect(f.enabled).toBe(false);
+});
+
+test("should throw error when accessing undefined feature", () => {
+  const invalid_lookup = () => Features.find("unknown");
+
+  expect(invalid_lookup).toThrowError('Cannot find feature with name "unknown"');
 });
