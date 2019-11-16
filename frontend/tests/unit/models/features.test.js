@@ -16,5 +16,7 @@ test("should have dict of features", () => {
 test("should throw error when accessing undefined feature", () => {
   const invalid_lookup = () => Features.find("unknown");
 
-  expect(invalid_lookup).toThrowError('Cannot find feature with name "unknown"');
+  expect(invalid_lookup).toThrowError(
+    'Cannot find feature with name "unknown"'
+  );
 });

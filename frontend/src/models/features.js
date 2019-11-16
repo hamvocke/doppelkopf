@@ -9,7 +9,7 @@ class FeatureManager {
   constructor() {
     this.features = {
       a: new Feature("a", false),
-      b: new Feature("b", false),
+      b: new Feature("b", false)
     };
   }
 
