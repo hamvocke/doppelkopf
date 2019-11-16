@@ -14,11 +14,15 @@ let score;
 let scorecard;
 
 function stubScoreHumanPlayerWins() {
-  players[0].points = () => 120;
-  players[1].points = () => 120;
-  const stubbedScore = new Score(players);
-  stubbedScore.winner = () => [players[0], players[2]];
-  return stubbedScore;
+  players = [
+    stubPlayer("Player 1", re, 60),
+    stubPlayer("Player 2", re, 61),
+    stubPlayer("Player 3", kontra, 59),
+    stubPlayer("Player 4", kontra, 60)
+  ];
+  scorecard = new ScorecardModel(players);
+  score = new Score(players);
+  score.evaluate(players);
 }
 
 function stubPlayer(name, party, points) {
@@ -81,11 +85,12 @@ describe("Scorecard.vue", () => {
   });
 
   it("should show 'you won' message when player won", () => {
+    stubScoreHumanPlayerWins();
     const wrapper = mount(Scorecard, {
       propsData: {
         scorecard: scorecard,
         players: players,
-        currentScore: stubScoreHumanPlayerWins()
+        currentScore: score
       }
     });
 
