@@ -11,6 +11,6 @@ describe("HTTP Client", () => {
   test("should perform get request", async () => {
     fetchMock.mock("https://doppelkopf.ham.codes/api", 200);
     const response = await http.get('/api')
-    expect(response).toBeDefined();
+    expect(response.status).toEqual(200);
   });
 });
