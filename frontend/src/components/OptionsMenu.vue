@@ -1,12 +1,22 @@
 <template>
   <div class="options">
     <div class="options-icon" @click="toggleMenu()">⚙️</div>
-    <div v-if="isVisible" class="options-menu" @click.self="toggleMenu()">
+    <div v-if="visible" class="options-menu" @click.self="toggleMenu()">
       <div class="options-menu-content">
         <h2>{{ $t("options-header") }}</h2>
         <div class="option">
           <span class="label">{{ $t("language") }}</span>
           <LanguagePicker />
+        </div>
+
+        <div v-if="isDebug()" class="option">
+          <span class="label">Debug Mode</span>
+          <div>
+            Enabled
+          </div>
+          <div>
+            {{ config }}
+          </div>
         </div>
       </div>
     </div>
@@ -15,6 +25,7 @@
 
 <script>
 import LanguagePicker from "./LanguagePicker";
+import { Config } from "@/models/config";
 
 export default {
   name: "OptionsMenu",
@@ -28,9 +39,18 @@ export default {
       default: false
     }
   },
+  data: function() {
+    return {
+      config: Config,
+      visible: this.isVisible
+    };
+  },
   methods: {
     toggleMenu: function() {
-      this.isVisible = !this.isVisible;
+      this.visible = !this.visible;
+    },
+    isDebug: function() {
+      return Config.debug;
     }
   }
 };
@@ -84,6 +104,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 12px;
 }
 
 .label {
