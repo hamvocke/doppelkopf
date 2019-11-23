@@ -1,4 +1,4 @@
-import { config } from "@/models/config";
+import { http } from "@/helpers/httpClient";
 
 export class Feature {
   constructor(name, enabled = false) {
@@ -12,13 +12,18 @@ const DEFAULT_FEATURES = {
   b: new Feature("b", false)
 };
 
-export class FeatureManager {
-  constructor(feature_api_url = null) {
+class FeatureManager {
+  constructor() {
     this.features = DEFAULT_FEATURES;
-    this.api_url = config.backend_base_url + config.features_path;
+    this.getFromServer();
+  }
 
-    if (feature_api_url) {
-      this.api_url = feature_api_url;
+  async getFromServer() {
+    try {
+      let response = await http.get("/api/features");
+      this.features = await response.json();
+    } catch (error) {
+      // throw new Error("Fetching features failed, using default features");
     }
   }
 

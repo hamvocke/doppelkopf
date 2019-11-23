@@ -1,4 +1,5 @@
-import { Features, Feature, FeatureManager } from "@/models/features";
+import { Features, Feature } from "@/models/features";
+import fetchMock from "fetch-mock";
 
 test("create new feature", () => {
   const someFeature = new Feature("my feature", false);
@@ -21,11 +22,13 @@ test("should throw error when accessing undefined feature", () => {
   );
 });
 
-test("should have default API Url", () => {
-  expect(Features.api_url).toEqual("https://doppelkopf.ham.codes/api/features");
-});
+test("should fetch features from backend", async () => {
+  const stubbedFeatures = {
+    some: new Feature("some", false)
+  };
+  fetchMock.mock("http://localhost:5000/api/features", stubbedFeatures);
 
-test("should use override API Url", () => {
-  let Features = new FeatureManager("https://example.org/some/path");
-  expect(Features.api_url).toEqual("https://example.org/some/path");
+  await Features.getFromServer();
+
+  expect(Features.find("some")).toBeDefined();
 });
