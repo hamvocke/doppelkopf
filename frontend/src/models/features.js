@@ -23,7 +23,7 @@ class FeatureManager {
       let response = await http.get("/api/features");
       this.features = await response.json();
     } catch (error) {
-      // throw new Error("Fetching features failed, using default features");
+      this.features = DEFAULT_FEATURES;
     }
   }
 
