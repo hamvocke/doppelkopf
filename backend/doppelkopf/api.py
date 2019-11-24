@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 
 from .db import db
-from .events import Event, EventTypes
+from .events import Event, EventTypes, Game
 from .toggles import Toggle
 
 blueprint = Blueprint("api", __name__, url_prefix="/api")
@@ -14,7 +14,11 @@ def hello() -> str:
 
 @blueprint.route("/game/new", methods=["POST"])
 def new_game():
-    event = Event(event_type_id=EventTypes.GAME_START)
+    game = Game()
+    db.session.add(game)
+    db.session.commit()
+
+    event = Event(event_type_id=EventTypes.GAME_START, game_id=game.id)
     db.session.add(event)
     db.session.commit()
 

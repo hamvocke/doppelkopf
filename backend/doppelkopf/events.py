@@ -47,7 +47,18 @@ class Event(db.Model):
         db.Integer, db.ForeignKey("event_type.id"), nullable=False
     )
     event_type = db.relationship("EventType", backref=db.backref("events", lazy=True))
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+    game_id = db.Column(db.Integer, db.ForeignKey("game.id"), nullable=False)
 
     def __repr__(self):
         return f"<Event: {self.type}>"
+
+
+class Game(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    started_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+    finished_at = db.Column(db.DateTime, nullable=True)
+    winner = db.Column(db.Integer, nullable=True)
+
+    def __repr__(self):
+        return f"<Game: {self.id, self.started_at, self.finished_at, self.winner}>"
