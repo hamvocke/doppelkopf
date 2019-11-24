@@ -22,3 +22,10 @@ test("should set gameId as undefined if sending new game event fails", async () 
   await Telemetry.newGame();
   expect(Telemetry.gameId).toBeUndefined();
 });
+
+test("should send win event", async () => {
+  Telemetry.gameId = 1234;
+  fetchMock.post("http://localhost:5000/api/game/win", 200);
+  await Telemetry.win();
+  expect(fetchMock.called()).toBe(true);
+});
