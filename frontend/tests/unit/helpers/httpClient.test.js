@@ -3,6 +3,10 @@ import fetchMock from "fetch-mock";
 
 const http = new HttpClient();
 
+beforeEach(() => {
+  fetchMock.reset();
+});
+
 describe("HTTP Client", () => {
   test("should load base url from config", () => {
     expect(http.baseUrl).toEqual("http://localhost:5000");
