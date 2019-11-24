@@ -22,7 +22,7 @@ def new_game():
     db.session.add(event)
     db.session.commit()
 
-    return "Registered new game", 201
+    return jsonify({"game_id": game.id}), 201
 
 
 @blueprint.route("/features", methods=["GET"])

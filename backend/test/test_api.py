@@ -18,7 +18,7 @@ def test_should_save_start_event(client):
 
     events = Event.query.all()
     assert response.status_code == 201
-    assert b"Registered new game" in response.data
+    assert json.loads(response.data)["game_id"] == 1
     assert len(events) == 1
 
 
