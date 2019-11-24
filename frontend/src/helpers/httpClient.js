@@ -8,6 +8,17 @@ export class HttpClient {
   async get(path) {
     return await fetch(this.baseUrl + path);
   }
+
+  async post(path, data) {
+    let fetchOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    };
+    return await fetch(this.baseUrl + path, fetchOptions);
+  }
 }
 
 export const http = new HttpClient();
