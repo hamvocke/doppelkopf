@@ -1,6 +1,10 @@
 import { Features, Feature } from "@/models/features";
 import fetchMock from "fetch-mock";
 
+beforeEach(() => {
+  fetchMock.reset();
+});
+
 test("create new feature", () => {
   const someFeature = new Feature("my feature", false);
   expect(someFeature.name).toEqual("my feature");
@@ -31,4 +35,12 @@ test("should fetch features from backend", async () => {
   await Features.getFromServer();
 
   expect(Features.find("some")).toBeDefined();
+});
+
+test("should use default features if fetching fails", async () => {
+  fetchMock.mock("http://localhost:5000/api/features", 500);
+
+  await Features.getFromServer();
+
+  expect(Features.find("a")).toBeDefined();
 });
