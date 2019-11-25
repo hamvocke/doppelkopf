@@ -48,7 +48,7 @@ class Event(db.Model):
     )
     event_type = db.relationship("EventType", backref=db.backref("events", lazy=True))
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
-    game_id = db.Column(db.Integer, db.ForeignKey("game.id"), nullable=False)
+    game_id = db.Column(db.Integer, db.ForeignKey("game.id"), nullable=False, default=-1)
 
     def __repr__(self):
         return f"<Event: {self.type}>"

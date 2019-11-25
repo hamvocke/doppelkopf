@@ -25,7 +25,7 @@ def upgrade():
     sa.Column('winner', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
-    op.add_column('event', sa.Column('game_id', sa.Integer(), nullable=False))
+    op.add_column('event', sa.Column('game_id', sa.Integer(), nullable=False, default=-1))
     op.create_foreign_key(None, 'event', 'game', ['game_id'], ['id'])
     # ### end Alembic commands ###
 
