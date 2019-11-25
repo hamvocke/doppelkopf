@@ -12,4 +12,5 @@ ENV APP_PROFILE=doppelkopf.config.ProductionConfig
 ENV FLASK_APP=doppelkopf
 ENV DB_URI=sqlite:////app/db/db.sqlite
 
-CMD pipenv run flask db upgrade && pipenv run flask seed-data && pipenv run gunicorn --workers=2 doppelkopf.wsgi:app -b :5000
+RUN chmod u+x ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
