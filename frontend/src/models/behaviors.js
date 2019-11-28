@@ -1,4 +1,4 @@
-import { sample } from "lodash";
+import { sample } from "lodash-es";
 import { playableCards } from "@/models/playableCardFinder";
 
 export class HighestCardBehavior {

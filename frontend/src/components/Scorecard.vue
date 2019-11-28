@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import { includes, join } from "lodash";
+import { includes, join } from "lodash-es";
 
 export default {
   name: "Scorecard",

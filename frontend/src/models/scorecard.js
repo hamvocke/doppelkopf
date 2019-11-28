@@ -1,4 +1,4 @@
-import { includes, last } from "lodash";
+import { includes, last } from "lodash-es";
 
 export class Scorecard {
   constructor(players) {

@@ -1,4 +1,4 @@
-import { find, uniqueId } from "lodash";
+import { find, uniqueId } from "lodash-es";
 import { PlayedCard, beats } from "@/models/playedCard";
 import { DOPPELKOPF } from "@/models/extras";
 

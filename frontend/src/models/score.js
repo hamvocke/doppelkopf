@@ -1,5 +1,5 @@
 import { re, kontra } from "@/models/parties";
-import { flatMap } from "lodash";
+import { flatMap } from "lodash-es";
 import { WIN, BEAT_RE } from "@/models/extras";
 
 const sumPointsForParty = (acc, player) => acc + player.points();

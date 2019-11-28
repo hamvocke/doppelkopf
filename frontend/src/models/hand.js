@@ -1,5 +1,5 @@
 import { suits, ranks, compare } from "@/models/card";
-import { find, without } from "lodash";
+import { find, without } from "lodash-es";
 
 export class Hand {
   constructor(cards = []) {

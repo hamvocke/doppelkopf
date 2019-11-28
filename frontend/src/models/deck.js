@@ -1,5 +1,5 @@
 import { Card, ranks, suits } from "@/models/card";
-import { shuffle, flatten } from "lodash";
+import { shuffle, flatten } from "lodash-es";
 
 export class Deck {
   constructor() {
