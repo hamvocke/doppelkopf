@@ -595,10 +595,6 @@ img {
   margin-right: auto;
 }
 
-.mt-0 {
-  margin-top: 0;
-}
-
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -683,12 +679,12 @@ img {
   color: #2d3748;
 }
 
-.text-indigo-500 {
-  color: #667eea;
-}
-
 .text-indigo-600 {
   color: #5a67d8;
+}
+
+.hover\:text-indigo-500:hover {
+  color: #667eea;
 }
 
 .text-sm {
@@ -701,10 +697,6 @@ img {
 
 .tracking-tight {
   letter-spacing: -0.025em;
-}
-
-.w-auto {
-  width: auto;
 }
 
 .w-full {
@@ -794,7 +786,7 @@ a:focus {
   text-transform: uppercase;
   font-weight: bold;
   text-indent: -20px;
-  word-spacing: 21px;
+  word-spacing: 24px;
   color: #fff;
   text-shadow: -1px -1px rgba(0,0,0,0.15);
   white-space: nowrap;
@@ -813,4 +805,34 @@ a:focus {
 
 .toggle:focus {
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+@media (min-width: 1024px) {
+
+  .lg\:inline-block {
+    display: inline-block;
+  }
+
+  .lg\:flex {
+    display: -webkit-box;
+    display: flex;
+  }
+
+  .lg\:items-center {
+    -webkit-box-align: center;
+            align-items: center;
+  }
+
+  .lg\:flex-grow {
+    -webkit-box-flex: 1;
+            flex-grow: 1;
+  }
+
+  .lg\:mt-0 {
+    margin-top: 0;
+  }
+
+  .lg\:w-auto {
+    width: auto;
+  }
 }

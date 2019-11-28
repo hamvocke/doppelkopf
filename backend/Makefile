@@ -55,4 +55,4 @@ flake8:
 
 build_css:
 	npx tailwind build doppelkopf/static/admin.css -o doppelkopf/static/style.css && \
-	node_modules/purgecss/bin/purgecss --css doppelkopf/static/style.css --content doppelkopf/templates/admin/*.html -o doppelkopf/static
+	node_modules/purgecss/bin/purgecss --config ./purgecss.config.js -o doppelkopf/static
