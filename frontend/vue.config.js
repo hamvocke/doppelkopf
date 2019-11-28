@@ -8,8 +8,5 @@ module.exports = {
       localeDir: "locales",
       enableInSFC: true
     }
-  },
-  configureWebpack: {
-      plugins: [new BundleAnalyzerPlugin()]
   }
 };
