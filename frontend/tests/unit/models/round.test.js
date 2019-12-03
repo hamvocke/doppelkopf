@@ -196,10 +196,10 @@ describe("finish round", () => {
 });
 
 function setupGameKontraWins() {
-  const firstTrickStack = { points: () => 63 };
-  const secondTrickStack = { points: () => 56 };
-  const thirdTrickStack = { points: () => 64 };
-  const fourthTrickStack = { points: () => 57 };
+  const firstTrickStack = { points: () => 63, extras: () => [] };
+  const secondTrickStack = { points: () => 56, extras: () => [] };
+  const thirdTrickStack = { points: () => 64, extras: () => [] };
+  const fourthTrickStack = { points: () => 57, extras: () => [] };
 
   round.players[0].isRe = () => true;
   round.players[1].isRe = () => true;

@@ -5,57 +5,60 @@ Toggles
 {% endblock %}
 
 {% block breadcrumb %}
-<li class="breadcrumb-item">
-  <a href="#">Admin</a>
-</li>
-<li class="breadcrumb-item">
-  <a href="#">Toggles</a>
+<li class="mr-2">
+  <a href="/admin">Admin</a>
+</li> /
+<li class="mx-2 text-indigo-600">
+  <a href="/admin/toggles">Toggles</a>
 </li>
 {% endblock %}
 
 {% block content %}
-<h1>Feature Toggles</h1>
-<p>Activate and deactivate features at runtime. Changes will be active for players once they reload the page.</p>
-<form action="#">
-  <table class="table table-hover">
+<h2 class="text-2xl mb-2">Feature Toggles</h2>
+
+<p class="text-sm text-gray-600 mb-6">
+  Activate and deactivate features at runtime. Changes will be active for players once they reload the page.
+</p>
+<form action="{{ url_for('admin.toggles_submit') }}" method="post">
+  <table class="table-auto w-full mb-6">
     <thead>
       <tr>
-        <th>Toggle</th>
-        <th>Description</th>
-        <th>Last change</th>
+        <th class="px-4 py-2 text-left">Toggle</th>
+        <th class="px-4 py-2 text-left">Description</th>
+        <th class="px-4 py-2 text-left">Last change</th>
       </tr>
     </thead>
     {% for toggle in toggles %}
     <tr>
-      <td>
-        <div class="form-group">
-          <label class="form-switch">
-            <input type="checkbox">
-            <i class="form-icon"></i> {{ toggle.name }}
+      <td class="border-t border-b p-4">
+          <label class="flex items-center">
+            <input type="checkbox"
+                   class="toggle mr-3"
+                   {% if toggle.enabled %}checked{% endif %}
+                   id="{{ toggle.id }}"
+                   name="{{ toggle.id }}">
+            {{ toggle.name }}
           </label>
-        </div>
       </td>
-      <td>
+      <td class="border-t border-b p-4">
         <span>{{ toggle.description }}</span>
       </td>
-      <td>
-        {{ toggle.last_changed_at }}
+      <td class="border-t border-b p-4">
+        {{ toggle.last_changed() }}
       </td>
     </tr>
     {% endfor %}
   </table>
 
 
-  <div class="columns">
-    <div class="column buttons">
-    <button class="btn btn-primary">
-      <i class="icon icon-check"></i> Save Toggle State
+  <div class="flex w-full justify-end">
+    <button class="btn-primary" type="submit">
+      Save Toggle State
     </button>
 
-    <button class="btn">
-      <i class="icon icon-refresh"></i> Reset
+    <button class="btn-outline" type="reset">
+      Reset
     </button>
-    </div>
   </div>
 </form>
 {% endblock %}

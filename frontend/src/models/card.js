@@ -1,4 +1,4 @@
-import { some, findIndex, uniqueId } from "lodash";
+import { some, findIndex, uniqueId } from "lodash-es";
 
 export const suits = {
   clubs: "♣",

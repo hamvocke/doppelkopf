@@ -1,4 +1,4 @@
-import { includes, uniqueId } from "lodash";
+import { includes, uniqueId } from "lodash-es";
 import { Hand } from "@/models/hand";
 import { TrickStack } from "@/models/trickStack";
 import { RandomCardBehavior } from "@/models/behaviors";

@@ -2,7 +2,7 @@ import { Trick } from "@/models/trick";
 import { RingQueue } from "@/models/ringQueue";
 import { Score } from "@/models/score";
 import { options } from "@/models/options";
-import { find } from "lodash";
+import { find } from "lodash-es";
 
 export class Round {
   constructor(players = [], game = {}, openingPlayer) {

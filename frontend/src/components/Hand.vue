@@ -2,7 +2,16 @@
   <div class="hand">
     <div class="cards" :class="position">
       <transition-group name="card" tag="span">
-        <Card v-for='card in hand.cards' :card='card' :key='card.cardId' :is-selected='isSelected(card)' :is-covered='isCovered' :is-highlighted='highlight(card)' :position='position' v-on:click.native='select(card)' />
+        <Card
+          v-for="card in hand.cards"
+          :key="card.cardId"
+          :card="card"
+          :is-selected="isSelected(card)"
+          :is-covered="isCovered"
+          :is-highlighted="highlight(card)"
+          :position="position"
+          @click.native="select(card)"
+        />
       </transition-group>
     </div>
   </div>
@@ -13,6 +22,9 @@ import Card from "./Card";
 
 export default {
   name: "Hand",
+  components: {
+    Card
+  },
   props: {
     hand: {
       type: Object,
@@ -24,7 +36,8 @@ export default {
     },
     position: {
       type: String,
-      required: false
+      required: false,
+      default: "not-set"
     },
     playableCards: {
       type: Array,
@@ -35,9 +48,6 @@ export default {
       required: false,
       default: false
     }
-  },
-  components: {
-    Card
   },
   data: function() {
     return {
@@ -88,7 +98,8 @@ export default {
   flex-direction: column-reverse;
 }
 
-.top .cards, .bottom .cards {
+.top .cards,
+.bottom .cards {
   margin-right: 12px;
 }
 
@@ -98,7 +109,7 @@ export default {
 
 .top .card-leave-to {
   opacity: 0;
-  transform: translateY(120px) rotate(180deg);
+  transform: translateY(120px);
 }
 
 .bottom .card-leave-to {
@@ -108,12 +119,12 @@ export default {
 
 .left .card-leave-to {
   opacity: 0;
-  transform: translateX(120px) rotate(90deg);
+  transform: translateX(120px);
 }
 
 .right .card-leave-to {
   opacity: 0;
-  transform: translateX(-120px) rotate(-90deg);
+  transform: translateX(-120px);
 }
 
 .top .card,

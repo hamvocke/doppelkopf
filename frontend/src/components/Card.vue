@@ -1,13 +1,16 @@
 <template>
-  <div class="card" :class="cardClasses">
-    <template v-if='isCovered'>
-      <div class="background"></div>
-    </template>
-    <template v-else>
-      <span class="suitTop" :class='colorClasses'>{{ card.suit }}</span>
-      <span class="rank">{{ card.rank }}</span>
-      <span class="suitBottom" :class='colorClasses'>{{ card.suit }}</span>
-    </template>
+  <div class="card">
+    <div class="card-inner" :class="cardClasses">
+      <template v-if="isCovered">
+        <div class="background"></div>
+      </template>
+      <template v-else>
+        <span class="suitTop" :class="colorClasses">{{ card.suit }}</span>
+        <span class="rank">{{ card.rank }}</span>
+        <span class="suitBottom" :class="colorClasses">{{ card.suit }}</span>
+      </template>
+    </div>
+    <div v-if="playerName" class="playerName">{{ playerName }}</div>
   </div>
 </template>
 
@@ -35,7 +38,13 @@ export default {
     },
     position: {
       type: String,
-      required: false
+      required: false,
+      default: "not-set"
+    },
+    playerName: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   computed: {
@@ -65,6 +74,12 @@ export default {
 @import "../assets/css/colors.css";
 
 .card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-inner {
   position: relative;
   top: 0px; /* necessary for css transition */
   height: 80px;
@@ -99,7 +114,7 @@ export default {
 .selected {
   top: -10px;
   box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
-  z-index: 9999;
+  z-index: 200;
 }
 
 .suitTop {
@@ -140,6 +155,24 @@ export default {
 .highlighted {
 }
 
+.playerName {
+  position: absolute;
+  margin-top: -20px;
+  opacity: 0;
+  padding: 6px;
+  background: var(--lightblue);
+  color: var(--white);
+  font-size: 0.9em;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.22);
+  transition: opacity 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card:hover .playerName,
+.card:active .playerName {
+  opacity: 1;
+}
+
 @media screen and (max-width: 680px) {
   .card {
     height: 60px;
@@ -148,7 +181,9 @@ export default {
     padding: 3px;
   }
 
-  .card.top, .card.left, .card.right {
+  .card.top,
+  .card.left,
+  .card.right {
     height: 42px;
     width: 28px;
   }
@@ -156,7 +191,7 @@ export default {
   .selected {
     top: -6px;
     box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
-    z-index: 9999;
+    z-index: 200;
   }
 
   .rank {

@@ -1,4 +1,4 @@
-import { uniqueId } from "lodash";
+import { uniqueId } from "lodash-es";
 let instance;
 
 export class Notifier {

@@ -1,7 +1,8 @@
 import copy
 from datetime import datetime
 
-from doppelkopf.db import db
+from .db import db
+from .helpers import pretty_date
 
 
 class Toggle(db.Model):
@@ -20,6 +21,9 @@ class Toggle(db.Model):
 
         return self.name == other.name and self.enabled == other.enabled
 
+    def serialize(self):
+        return {"id": self.id, "name": self.name, "enabled": self.enabled}
+
     @staticmethod
     def merge(persisted_toggles: list, code_toggles: list) -> list:
         persisted_dict = {t.name: t for t in persisted_toggles}
@@ -33,22 +37,39 @@ class Toggle(db.Model):
 
     @staticmethod
     def insert_all():
-        db.session.add_all(toggles)
+        for toggle in toggles:
+            if Toggle.query.get(toggle.id) is None:
+                print(f"Creating toggle: {toggle.name}")
+                db.session.add(toggle)
+
         db.session.commit()
+
+    def last_changed(self) -> str:
+        return pretty_date(self.last_changed_at)
+
+    def toggle(self):
+        self.enabled = not self.enabled
+        self.last_changed_at = datetime.utcnow()
 
 
 toggles = [
     Toggle(
-        name="game.rules.karlchen", description="Aktiviert die 'Karlchen' Spielregel"
+        id=1,
+        name="game.rules.karlchen",
+        description="Aktiviert die 'Karlchen' Spielregel",
     ),
     Toggle(
-        name="game.rules.fuchs", description="Aktiviert die 'Fuchs gefangen' Spielregel"
+        id=2,
+        name="game.rules.fuchs",
+        description="Aktiviert die 'Fuchs gefangen' Spielregel",
     ),
     Toggle(
+        id=3,
         name="game.rules.scharf",
         description="Wenn aktiv, werden 9er aus dem Spiel entfernt",
     ),
     Toggle(
+        id=4,
         name="game.rules.zweite_dulle",
         description="Aktiviert die 'zweite Dulle schlaegt die erste' Spielregel",
     ),

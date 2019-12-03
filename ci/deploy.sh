@@ -18,9 +18,9 @@ docker push hamvocke/doppelkopf:latest
 e_mute "Done"
 
 e_step "Start Docker container"
-scp -o StrictHostKeyChecking=no docker-compose.yml root@ham.codes:/data/doppelkopf/docker-compose.yml
+scp -o StrictHostKeyChecking=no docker-compose.yml root@ham.codes:/data/doppelkopf_backend/docker-compose.yml
 ssh -T root@ham.codes -o StrictHostKeyChecking=no << EOF
-    cd /data/doppelkopf
+    cd /data/doppelkopf_backend
     docker-compose pull
     docker-compose up -d
 EOF
@@ -39,6 +39,7 @@ ssh -T root@ham.codes << EOF
     rm -rf /data/archive/doppelkopf_bak/
     mkdir -p /data/archive && mv /data/doppelkopf/ /data/archive/doppelkopf_bak/
     mv /tmp/doppelkopf/ /data/doppelkopf
+    aws s3 sync /data/doppelkopf/ s3://devbox-bucket.ham.codes/doppelkopf/
 EOF
 e_mute "Done"
 

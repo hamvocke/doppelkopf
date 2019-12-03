@@ -1,7 +1,7 @@
 <template>
-  <div class="notifications" >
+  <div class="notifications">
     <transition-group name="message">
-      <div v-for='message in messages' :key='message.id' class="message">
+      <div v-for="message in messages" :key="message.id" class="message">
         {{ $t(message.text) }}
       </div>
     </transition-group>
@@ -28,7 +28,7 @@ export default {
   width: 100%;
   position: absolute;
   top: 0px;
-  z-index: 9999;
+  z-index: 600;
 }
 
 .message {
@@ -38,7 +38,7 @@ export default {
   height: 100%;
   width: 80%;
   font-size: 1em;
-  background: var(--black);
+  background: var(--lightblue);
   color: var(--white);
   border-radius: 6px;
   box-shadow: 0 12px 18px rgba(0, 0, 0, 0.12);

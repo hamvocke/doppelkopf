@@ -1,6 +1,6 @@
 <template>
   <div class="flashMessage blink">
-    <div class="icon" v-if="icon">{{ icon }}</div>
+    <div v-if="icon" class="icon">{{ icon }}</div>
     <div class="message">{{ message }}</div>
   </div>
 </template>
@@ -15,7 +15,8 @@ export default {
     },
     icon: {
       type: String,
-      required: false
+      required: false,
+      default: null
     }
   }
 };
@@ -50,13 +51,29 @@ export default {
 }
 
 @keyframes blink {
-  5% { opacity: 0; }
-  10% { opacity: 1; }
-  15% { opacity: 0; }
-  20% { opacity: 1; }
-  25% { opacity: 0; }
-  30% { opacity: 1; }
-  35% { opacity: 0; }
-  40% { opacity: 1; }
+  5% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  15% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
 }
 </style>

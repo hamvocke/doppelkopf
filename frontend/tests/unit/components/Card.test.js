@@ -44,7 +44,7 @@ describe("Card.vue", () => {
         isCovered: false
       }
     });
-    expect(wrapper.classes()).toContain("selected");
+    expect(wrapper.find(".card-inner").classes()).toContain("selected");
   });
 
   it("should apply position class", () => {
@@ -55,7 +55,7 @@ describe("Card.vue", () => {
         position: "left"
       }
     });
-    expect(wrapper.classes()).toContain("left");
+    expect(wrapper.find(".card-inner").classes()).toContain("left");
   });
 
   it("covered card should not show rank and suit", () => {
@@ -91,6 +91,27 @@ describe("Card.vue", () => {
       }
     });
 
-    expect(wrapper.classes()).toContain("highlighted");
+    expect(wrapper.find(".card-inner").classes()).toContain("highlighted");
+  });
+
+  it("should show player name if given", () => {
+    const wrapper = mount(Card, {
+      propsData: {
+        card: ace.of(suits.spades),
+        playerName: "some player"
+      }
+    });
+
+    expect(wrapper.find(".playerName").text()).toEqual("some player");
+  });
+
+  it("should not show player name if none given", () => {
+    const wrapper = mount(Card, {
+      propsData: {
+        card: ace.of(suits.spades)
+      }
+    });
+
+    expect(wrapper.find(".playerName").exists()).toBe(false);
   });
 });

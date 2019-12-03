@@ -5,7 +5,7 @@ import { Hand } from "@/models/hand";
 import { Scorecard } from "@/models/scorecard";
 import { RingQueue } from "@/models/ringQueue";
 import { generateNames } from "@/models/nameGenerator";
-import { options } from "@/models/options";
+import { Features } from "@/models/features";
 
 export class Game {
   constructor() {
@@ -28,7 +28,7 @@ export class Game {
     );
     this.scorecard = new Scorecard(this.players);
     this.deal();
-    this.forceComputer();
+    Features.find("a");
   }
 
   start() {

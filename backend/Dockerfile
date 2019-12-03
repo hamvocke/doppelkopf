@@ -1,12 +1,16 @@
-FROM python:3.7-alpine3.7
+FROM python:3.7.5-alpine3.10
 
 COPY . /app
 WORKDIR /app
 
-RUN pip install pipenv && pipenv install --system
+RUN pip install pipenv && pipenv install --deploy --ignore-pipfile
 
 EXPOSE 5000
 
+ENV FLASK_ENV=production
 ENV APP_PROFILE=doppelkopf.config.ProductionConfig
+ENV FLASK_APP=doppelkopf
+ENV DB_URI=sqlite:////app/db/db.sqlite
 
-CMD pipenv run gunicorn --workers=2 doppelkopf.wsgi:app -b :5000
+RUN chmod u+x ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]

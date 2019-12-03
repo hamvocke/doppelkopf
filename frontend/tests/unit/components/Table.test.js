@@ -78,6 +78,7 @@ describe("Table.vue", () => {
     game.players[1].points = () => 120;
     const stubScore = new Score(game.players);
     stubScore.winner = () => [game.players[0], game.players[3]];
+    stubScore.evaluate(game.players);
     mockGame.currentRound.score = stubScore;
     mockGame.currentRound.isFinished = () => true;
 

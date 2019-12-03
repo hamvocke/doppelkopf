@@ -1,4 +1,4 @@
-import { sampleSize } from "lodash";
+import { sampleSize } from "lodash-es";
 
 export function generateNames(numberOfNames) {
   return sampleSize(names, numberOfNames);

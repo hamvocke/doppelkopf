@@ -1,18 +1,29 @@
 <template>
   <div class="table">
-    <Player :player='game.players[1]' class='left' />
-    <Player :player='game.players[2]' class='top' />
+    <Player :player="game.players[1]" class="left" />
+    <Player :player="game.players[2]" class="top" />
 
     <div class="center">
-      <Trick :currentTrick='game.currentTrick'/>
+      <Trick :current-trick="game.currentTrick" />
     </div>
 
-    <Controls :game='game'  v-on:nextTrick="finishTrick" v-on:nextMove="nextMove" v-on:finishRound="finishRound"/>
+    <Controls
+      :game="game"
+      @nextTrick="finishTrick"
+      @nextMove="nextMove"
+      @finishRound="finishRound"
+    />
 
-    <Player :player='game.players[3]' class='right'/>
-    <Player :player='game.players[0]' class='bottom' />
+    <Player :player="game.players[3]" class="right" />
+    <Player :player="game.players[0]" class="bottom" />
 
-    <Scorecard :scorecard='game.scorecard' :players='game.players' :currentScore='game.currentRound.score' v-if='game.currentRound.isFinished()' v-on:nextRound='nextRound' />
+    <Scorecard
+      v-if="game.currentRound.isFinished()"
+      :scorecard="game.scorecard"
+      :players="game.players"
+      :current-score="game.currentRound.score"
+      @nextRound="nextRound"
+    />
   </div>
 </template>
 
@@ -24,17 +35,17 @@ import Scorecard from "./Scorecard";
 
 export default {
   name: "Table",
+  components: {
+    Player,
+    Trick,
+    Controls,
+    Scorecard
+  },
   props: {
     game: {
       type: Object,
       required: true
     }
-  },
-  components: {
-    Player,
-    Trick,
-    Controls,
-    Scorecard,
   },
   methods: {
     nextMove: function() {

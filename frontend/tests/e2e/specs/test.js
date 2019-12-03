@@ -1,18 +1,14 @@
 // For authoring Nightwatch tests, see
-// http://nightwatchjs.org/guide#usage
+// https://nightwatchjs.org/guide
 
 module.exports = {
-  "start game test": client => {
-    client
-      .url(process.env.VUE_DEV_SERVER_URL)
-      .waitForElementVisible("#app", 5000);
-
-    client.expect.element(".welcome").to.be.present;
-
-    client.click("button.start-game");
-
-    client.assert.elementCount(".player", 4);
-
-    client.end();
+  "start game test": browser => {
+    browser
+      .init()
+      .waitForElementVisible("#app")
+      .assert.elementPresent(".welcome")
+      .click("button.start-game")
+      .assert.elementCount(".player", 4)
+      .end();
   }
 };

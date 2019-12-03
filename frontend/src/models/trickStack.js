@@ -1,4 +1,4 @@
-import { flatMap, concat, compact } from "lodash";
+import { flatMap, concat, compact } from "lodash-es";
 
 export class TrickStack {
   constructor(player, tricks = []) {

@@ -6,8 +6,8 @@
       </div>
       <h1>Doppelkopf</h1>
 
-      <button class="button start-game" v-on:click='game.start()'>
-        {{ $t('start-game') }}
+      <button class="button start-game" @click="game.start()">
+        {{ $t("start-game") }}
       </button>
     </div>
   </div>
@@ -33,6 +33,7 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
+  text-align: center;
 }
 
 .logo {

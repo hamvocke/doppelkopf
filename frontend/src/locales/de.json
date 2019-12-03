@@ -8,6 +8,7 @@
   "start-game": "Spiel starten!",
   "win": "Gewonnen",
   "beat_re": "Gegen die Alten",
+  "doppelkopf": "Doppelkopf",
   "you_lose": "Du hast verloren! 😩",
   "you_win": "Yay! Du hast gewonnen!  🏆",
   "trick_goes_to": "Der Stich geht an:",
@@ -15,5 +16,6 @@
   "not-your-turn": "Du bist nicht dran, mein Freund!",
   "language": "Sprache",
   "en": "English",
-  "de": "Deutsch"
+  "de": "Deutsch",
+  "options-header": "Einstellungen"
 }

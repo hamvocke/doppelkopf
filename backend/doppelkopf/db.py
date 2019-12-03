@@ -8,21 +8,15 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 
-def init_db():
-    db.create_all()
-
-
-@click.command("init-db")
+@click.command("seed-data")
 @with_appcontext
-def init_db_command():
-    """Clear the existing data and create new tables."""
-    init_db()
+def seed_data_command():
     doppelkopf.events.EventType.insert_all()
     doppelkopf.toggles.Toggle.insert_all()
-    click.echo("Initialized the database.")
+    click.echo("Initialized seed data.")
 
 
 def init_app(app):
     db.init_app(app)
     migrate.init_app(app, db)
-    app.cli.add_command(init_db_command)
+    app.cli.add_command(seed_data_command)

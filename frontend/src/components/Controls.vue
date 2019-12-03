@@ -1,10 +1,22 @@
 <template>
   <div class="controls">
-    <button class="button next" v-if='game.currentTrick.isFinished() && !game.currentRound.noMoreCardsLeft()' v-on:click='triggerNextTrick()'>
-      {{ $t('next-trick') }}
+    <button
+      v-if="
+        game.currentTrick.isFinished() && !game.currentRound.noMoreCardsLeft()
+      "
+      class="button next"
+      @click="triggerNextTrick()"
+    >
+      {{ $t("next-trick") }}
     </button>
-    <button class="button finish" v-if='game.currentRound.noMoreCardsLeft() && !game.currentRound.isFinished()' v-on:click='triggerFinish()'>
-      {{ $t('finish-round') }}
+    <button
+      v-if="
+        game.currentRound.noMoreCardsLeft() && !game.currentRound.isFinished()
+      "
+      class="button finish"
+      @click="triggerFinish()"
+    >
+      {{ $t("finish-round") }}
     </button>
   </div>
 </template>
@@ -34,5 +46,6 @@ export default {
 
 .controls {
   grid-area: controls;
+  text-align: center;
 }
 </style>

@@ -7,15 +7,17 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "build-storybook": "build-storybook",
-    "storybook": "start-storybook -p 6006",
+    "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+    "lint": "vue-cli-service lint",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@sentry/browser": "^4.3.2",
-    "lodash": "^4.17.11",
+    "@sentry/browser": "^5.7.0",
+    "@sentry/integrations": "^5.7.0",
+    "core-js": "^3.1.2",
+    "lodash-es": "^4.17.15",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.17",
     "vue-i18n": "^8.0.0"
@@ -23,27 +25,34 @@
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@kazupon/vue-i18n-loader": "^0.3.0",
-    "@storybook/addon-actions": "^4.0.2",
-    "@storybook/addon-links": "^4.0.2",
-    "@storybook/addons": "^4.0.2",
-    "@storybook/vue": "^4.0.2",
-    "@vue/cli-plugin-babel": "^3.0.4",
-    "@vue/cli-plugin-e2e-nightwatch": "^3.0.5",
-    "@vue/cli-plugin-eslint": "^3.0.4",
-    "@vue/cli-plugin-pwa": "^3.0.4",
-    "@vue/cli-plugin-unit-jest": "^3.0.4",
-    "@vue/cli-service": "^3.0.4",
-    "@vue/eslint-config-prettier": "^3.0.4",
-    "@vue/test-utils": "^1.0.0-beta.20",
-    "babel-core": "7.0.0-bridge.0",
+    "@storybook/addon-actions": "^5.2.5",
+    "@storybook/addon-links": "^5.2.5",
+    "@storybook/addons": "^5.2.5",
+    "@storybook/vue": "^5.2.5",
+    "@vue/cli-plugin-babel": "^4.0.4",
+    "@vue/cli-plugin-e2e-nightwatch": "^4.0.4",
+    "@vue/cli-plugin-eslint": "^4.0.4",
+    "@vue/cli-plugin-pwa": "^4.0.4",
+    "@vue/cli-plugin-unit-jest": "^4.0.4",
+    "@vue/cli-service": "^4.0.4",
+    "@vue/eslint-config-prettier": "^5.0.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-eslint": "^10.0.1",
     "babel-jest": "^24.5.0",
     "babel-loader": "^8.0.4",
     "babel-preset-vue": "^2.0.2",
+    "chromedriver": "^77.0.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "fetch-mock": "^8.0.0",
+    "geckodriver": "^1.16.2",
     "node-sass": "^4.9.0",
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^12.0.0",
-    "sass-loader": "^7.0.1",
-    "vue-cli-plugin-i18n": "^0.5.1",
+    "prettier": "^1.18.2",
+    "vue-cli-plugin-i18n": "^0.6.0",
+    "vue-loader": "^15.7.1",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
@@ -52,13 +61,33 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
+      "plugin:vue/recommended",
       "@vue/prettier"
     ],
     "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      },
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
   },
   "postcss": {
     "plugins": {
@@ -83,6 +112,9 @@
       ".+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
       "^.+\\.jsx?$": "babel-jest"
     },
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!lodash-es)"
+    ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
     },
@@ -92,6 +124,7 @@
     "testMatch": [
       "**/tests/unit/**/*.test.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
     ],
-    "testURL": "http://localhost/"
+    "testURL": "http://localhost/",
+    "preset": "@vue/cli-plugin-unit-jest"
   }
 }
