@@ -74,10 +74,4 @@ export class Game {
   addScore(score) {
     this.scorecard.addScore(score.winner(), score.points());
   }
-
-  forceComputer() {
-    if (options.autoNextTrick) {
-      this.currentRound.nextMove();
-    }
-  }
 }
