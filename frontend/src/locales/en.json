@@ -1,5 +1,5 @@
 {
-  "trick": "no tricks | 1 trick | {count} tricks",
+  "trick": "No Tricks | 1 Trick | {count} Tricks",
   "next-trick": "Next Trick",
   "finish-round": "Finish Round",
   "next-round": "Next Round",
@@ -17,5 +17,5 @@
   "language": "Language",
   "en": "English",
   "de": "Deutsch",
-  "options-header": "Einstellungen"
+  "options-header": "Settings"
 }
