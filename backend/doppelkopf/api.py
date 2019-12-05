@@ -18,7 +18,7 @@ def new_game():
     db.session.add(game)
     db.session.commit()
 
-    event = Event(event_type_id=EventTypes.GAME_START, game_id=game.id)
+    event = Event(event_type=EventTypes.GAME_START, game_id=game.id)
     db.session.add(event)
     db.session.commit()
 
@@ -37,7 +37,7 @@ def lose_game(game_id: int):
 
 def save_game_event(game_id: int, type: EventTypes):
     game = Game.query.get_or_404(game_id)
-    event = Event(event_type_id=type, game_id=game.id)
+    event = Event(event_type=type, game_id=game.id)
     db.session.add(event)
     db.session.commit()
 

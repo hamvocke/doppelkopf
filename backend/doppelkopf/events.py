@@ -10,44 +10,9 @@ class EventTypes(Enum):
     GAME_LOSE = 4
 
 
-class EventType(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
-
-    def __repr__(self):
-        return "<EventType{}>".format(self.name)
-
-    @staticmethod
-    def insert_all():
-        if EventType.query.get(EventTypes.GAME_START) is None:
-            print("Creating GAME_START event type")
-            game_start = EventType(id=EventTypes.GAME_START, name="game.start")
-            db.session.add(game_start)
-
-        if EventType.query.get(EventTypes.GAME_FINISH) is None:
-            print("Creating GAME_FINISH event type")
-            game_finish = EventType(id=EventTypes.GAME_FINISH, name="game.finish")
-            db.session.add(game_finish)
-
-        if EventType.query.get(EventTypes.GAME_WIN) is None:
-            print("Creating GAME_WIN event type")
-            game_win = EventType(id=EventTypes.GAME_WIN, name="game.win")
-            db.session.add(game_win)
-
-        if EventType.query.get(EventTypes.GAME_LOSE) is None:
-            print("Creating GAME_LOSE event type")
-            game_lose = EventType(id=EventTypes.GAME_LOSE, name="game.lose")
-            db.session.add(game_lose)
-
-        db.session.commit()
-
-
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    event_type_id = db.Column(
-        db.Integer, db.ForeignKey("event_type.id"), nullable=False
-    )
-    event_type = db.relationship("EventType", backref=db.backref("events", lazy=True))
+    event_type = db.Column(db.Enum(EventTypes), nullable=False, server_default="")
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     game_id = db.Column(
         db.Integer, db.ForeignKey("game.id"), nullable=False, default=-1

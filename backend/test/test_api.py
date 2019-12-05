@@ -30,7 +30,7 @@ def test_should_save_win_game_event(client):
     response = client.post(f"/api/game/{game_id}/win")
 
     assert response.status_code == 201
-    win_event = Event.query.filter(Event.event_type_id == EventTypes.GAME_WIN).first()
+    win_event = Event.query.filter(Event.event_type == EventTypes.GAME_WIN).first()
     assert win_event is not None
 
 
@@ -51,7 +51,7 @@ def test_should_save_lose_game_event(client):
     response = client.post(f"/api/game/{game_id}/lose")
 
     assert response.status_code == 201
-    win_event = Event.query.filter(Event.event_type_id == EventTypes.GAME_LOSE).first()
+    win_event = Event.query.filter(Event.event_type == EventTypes.GAME_LOSE).first()
     assert win_event is not None
 
 
