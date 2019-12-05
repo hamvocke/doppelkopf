@@ -11,7 +11,6 @@ migrate = Migrate()
 @click.command("seed-data")
 @with_appcontext
 def seed_data_command():
-    doppelkopf.events.EventType.insert_all()
     doppelkopf.toggles.Toggle.insert_all()
     click.echo("Initialized seed data.")
 
