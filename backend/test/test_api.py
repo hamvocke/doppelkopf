@@ -43,6 +43,27 @@ def test_should_return_404_when_winning_unknown_game(client):
     assert response.status_code == 404
 
 
+def test_should_save_lose_game_event(client):
+    events = Event.query.all()
+    assert len(events) == 0
+
+    game_id = start_game(client)
+    response = client.post(f"/api/game/{game_id}/lose")
+
+    assert response.status_code == 201
+    win_event = Event.query.filter(Event.event_type_id == EventTypes.GAME_LOSE).first()
+    assert win_event is not None
+
+
+def test_should_return_404_when_losing_unknown_game(client):
+    events = Event.query.all()
+    assert len(events) == 0
+
+    response = client.post(f"/api/game/99/lose")
+
+    assert response.status_code == 404
+
+
 def test_should_return_toggles(client):
     save_toggle("some-toggle", enabled=True)
 

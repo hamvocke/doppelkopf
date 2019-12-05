@@ -27,9 +27,17 @@ def new_game():
 
 @blueprint.route("/game/<int:game_id>/win", methods=["POST"])
 def win_game(game_id: int):
-    game = Game.query.get_or_404(game_id)
+    return save_game_event(game_id, EventTypes.GAME_WIN)
 
-    event = Event(event_type_id=EventTypes.GAME_WIN, game_id=game.id)
+
+@blueprint.route("/game/<int:game_id>/lose", methods=["POST"])
+def lose_game(game_id: int):
+    return save_game_event(game_id, EventTypes.GAME_LOSE)
+
+
+def save_game_event(game_id: int, type: EventTypes):
+    game = Game.query.get_or_404(game_id)
+    event = Event(event_type_id=type, game_id=game.id)
     db.session.add(event)
     db.session.commit()
 
