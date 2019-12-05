@@ -1,8 +1,9 @@
 from doppelkopf.db import db
 from datetime import datetime
+from enum import Enum
 
 
-class EventTypes:
+class EventTypes(Enum):
     GAME_START = 1
     GAME_FINISH = 2
     GAME_WIN = 3

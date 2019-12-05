@@ -1,7 +1,7 @@
 import datetime
 
 
-def pretty_date(d: datetime) -> str:
+def pretty_date(d: datetime.datetime) -> str:
     diff = datetime.datetime.utcnow() - d
     seconds = diff.seconds
     if diff.days > 7 or diff.days < 0:
