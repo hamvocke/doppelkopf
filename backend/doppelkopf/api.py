@@ -25,6 +25,17 @@ def new_game():
     return jsonify({"game_id": game.id}), 201
 
 
+@blueprint.route("/game/<int:game_id>/win", methods=["POST"])
+def win_game(game_id: int):
+    game = Game.query.get_or_404(game_id)
+
+    event = Event(event_type_id=EventTypes.GAME_WIN, game_id=game.id)
+    db.session.add(event)
+    db.session.commit()
+
+    return "Created", 201
+
+
 @blueprint.route("/features", methods=["GET"])
 def features():
     toggles = [t.serialize() for t in Toggle.query.all()]

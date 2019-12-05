@@ -1,4 +1,4 @@
-from doppelkopf.events import Event
+from doppelkopf.events import Event, EventTypes
 from doppelkopf.toggles import Toggle
 from doppelkopf.db import db
 from flask import json
@@ -16,10 +16,31 @@ def test_should_save_start_event(client):
 
     response = client.post("/api/game/new")
 
-    events = Event.query.all()
     assert response.status_code == 201
     assert json.loads(response.data)["game_id"] == 1
+    events = Event.query.all()
     assert len(events) == 1
+
+
+def test_should_save_win_game_event(client):
+    events = Event.query.all()
+    assert len(events) == 0
+
+    game_id = start_game(client)
+    response = client.post(f"/api/game/{game_id}/win")
+
+    assert response.status_code == 201
+    win_event = Event.query.filter(Event.event_type_id == EventTypes.GAME_WIN).first()
+    assert win_event is not None
+
+
+def test_should_return_404_when_winning_unknown_game(client):
+    events = Event.query.all()
+    assert len(events) == 0
+
+    response = client.post(f"/api/game/99/win")
+
+    assert response.status_code == 404
 
 
 def test_should_return_toggles(client):
@@ -38,3 +59,8 @@ def save_toggle(name="some-toggle", enabled=True) -> Toggle:
     db.session.add(toggle)
     db.session.commit()
     return toggle
+
+
+def start_game(client) -> int:
+    response = client.post("/api/game/new")
+    return json.loads(response.data)["game_id"]
