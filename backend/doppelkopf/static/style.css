@@ -595,6 +595,10 @@ img {
   margin-right: auto;
 }
 
+.mt-0 {
+  margin-top: 0;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -609,10 +613,6 @@ img {
 
 .mr-3 {
   margin-right: 0.75rem;
-}
-
-.mt-4 {
-  margin-top: 1rem;
 }
 
 .mr-4 {
@@ -631,6 +631,10 @@ img {
   padding: 1rem;
 }
 
+.p-6 {
+  padding: 1.5rem;
+}
+
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -644,11 +648,6 @@ img {
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
-}
-
-.py-6 {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
 }
 
 .static {
@@ -809,10 +808,6 @@ a:focus {
 
 @media (min-width: 1024px) {
 
-  .lg\:inline-block {
-    display: inline-block;
-  }
-
   .lg\:flex {
     display: -webkit-box;
     display: flex;
@@ -826,10 +821,6 @@ a:focus {
   .lg\:flex-grow {
     -webkit-box-flex: 1;
             flex-grow: 1;
-  }
-
-  .lg\:mt-0 {
-    margin-top: 0;
   }
 
   .lg\:w-auto {

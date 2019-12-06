@@ -9,25 +9,26 @@
 <body>
   <header>
     <div class="bg-gray-100">
-      <nav class="flex justify-between flex-wrap py-6 container mx-auto">
+      <nav class="flex justify-between flex-wrap p-6 ">
         <div class="flex-shrink-0 text-gray-700 mr-6">
           <span class="font-semibold text-2xl tracking-tight">Doppelkopf</span>
         </div>
         <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div class="lg:flex-grow">
-            <a href="/admin/toggles" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-indigo-500 mr-4">
+            <a href="/admin/toggles" class="inline-block mt-0 text-gray-700 hover:text-indigo-500 mr-4">
               Toggles
             </a>
-            <a href="/logs" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-indigo-500 mr-4">
+            <a href="/logs" class="inline-block mt-0 text-gray-700 hover:text-indigo-500 mr-4">
               Logs
             </a>
-            <a href="https://github.com/hamvocke/doppelkopf" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-indigo-500 mr-4">
+            <a href="https://github.com/hamvocke/doppelkopf" class="inline-block mt-0 text-gray-700 hover:text-indigo-500 mr-4">
               GitHub
             </a>
-            <a href="https://travis-ci.org/hamvocke/doppelkopf" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-indigo-500 mr-4">
-              Pipeline <img src="https://travis-ci.org/hamvocke/doppelkopf.svg?branch=master" alt="build status" class="inline-block ml-2">
+            <a href="https://travis-ci.org/hamvocke/doppelkopf" class="inline-block mt-0 text-gray-700 hover:text-indigo-500 mr-4">
+              Pipeline
             </a>
           </div>
+          <img src="https://travis-ci.org/hamvocke/doppelkopf.svg?branch=master" alt="build status" class="inline-block ml-2">
         </div>
       </nav>
     </div>
@@ -47,7 +48,7 @@
 {% endwith %}
   </section>
 
-  <div class="container mx-auto text-gray-800">
+  <div class="container mx-auto px-4 text-gray-800">
     <ul class="flex text-sm text-gray-600 my-5">
       {% block breadcrumb %}{% endblock %}
     </ul>
