@@ -15,10 +15,7 @@ class TelemetryManager {
   }
 
   win() {
-    const payload = {
-      gameId: this.gameId
-    };
-    return http.post("/api/game/win", payload);
+    return http.post(`/api/game/${this.gameId}/win`);
   }
 }
 
