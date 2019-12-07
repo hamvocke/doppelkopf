@@ -10,11 +10,11 @@
   <header>
     <div class="bg-gray-100">
       <nav class="flex justify-between flex-wrap p-6 ">
-        <div class="flex-shrink-0 text-gray-700 mr-6">
-          <span class="font-semibold text-2xl tracking-tight">Doppelkopf</span>
+        <div class="flex-shrink-0 text-gray-700 mb-2 sm:mb-0 sm:mr-6">
+          <span class="font-bold text-2xl tracking-tight">Doppelkopf 🤖</span>
         </div>
-        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-          <div class="lg:flex-grow">
+        <div class="w-full block flex-grow sm:flex sm:items-center sm:w-auto">
+          <div class="sm:flex-grow">
             <a href="/admin/toggles" class="inline-block mt-0 text-gray-700 hover:text-indigo-500 mr-4">
               Toggles
             </a>
@@ -48,8 +48,8 @@
 {% endwith %}
   </section>
 
-  <div class="container mx-auto px-4 text-gray-800">
-    <ul class="flex text-sm text-gray-600 my-5">
+  <div class="container mx-auto p-4 text-gray-800 max-w-full">
+    <ul class="flex text-sm text-gray-600 mb-5">
       {% block breadcrumb %}{% endblock %}
     </ul>
 

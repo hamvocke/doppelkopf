@@ -544,6 +544,12 @@ img {
   display: table;
 }
 
+.flex-col {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+}
+
 .flex-wrap {
   flex-wrap: wrap;
 }
@@ -572,10 +578,6 @@ img {
   flex-shrink: 0;
 }
 
-.font-semibold {
-  font-weight: 600;
-}
-
 .font-bold {
   font-weight: 700;
 }
@@ -583,11 +585,6 @@ img {
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-}
-
-.my-5 {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
 }
 
 .mx-auto {
@@ -611,20 +608,24 @@ img {
   margin-left: 0.5rem;
 }
 
-.mr-3 {
-  margin-right: 0.75rem;
-}
-
 .mr-4 {
   margin-right: 1rem;
 }
 
-.mr-6 {
-  margin-right: 1.5rem;
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-5 {
+  margin-bottom: 1.25rem;
 }
 
 .mb-6 {
   margin-bottom: 1.5rem;
+}
+
+.max-w-full {
+  max-width: 100%;
 }
 
 .p-4 {
@@ -640,9 +641,19 @@ img {
   padding-bottom: 0.5rem;
 }
 
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .px-4 {
@@ -684,6 +695,10 @@ img {
 
 .hover\:text-indigo-500:hover {
   color: #667eea;
+}
+
+.text-xs {
+  font-size: 0.75rem;
 }
 
 .text-sm {
@@ -806,24 +821,53 @@ a:focus {
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 640px) {
 
-  .lg\:flex {
+  .sm\:flex {
     display: -webkit-box;
     display: flex;
   }
 
-  .lg\:items-center {
+  .sm\:items-center {
     -webkit-box-align: center;
             align-items: center;
   }
 
-  .lg\:flex-grow {
+  .sm\:flex-grow {
     -webkit-box-flex: 1;
             flex-grow: 1;
   }
 
-  .lg\:w-auto {
+  .sm\:mb-0 {
+    margin-bottom: 0;
+  }
+
+  .sm\:mr-6 {
+    margin-right: 1.5rem;
+  }
+
+  .sm\:w-auto {
     width: auto;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .md\:flex-row {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+            flex-direction: row;
+  }
+
+  .md\:mb-0 {
+    margin-bottom: 0;
+  }
+
+  .md\:mr-2 {
+    margin-right: 0.5rem;
+  }
+
+  .md\:text-base {
+    font-size: 1rem;
   }
 }
