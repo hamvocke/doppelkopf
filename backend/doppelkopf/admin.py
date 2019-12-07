@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .toggles import Toggle
+from .events import Event, EventTypes
 from .db import db
 
 blueprint = Blueprint("admin", __name__, url_prefix="/admin")
@@ -7,7 +8,24 @@ blueprint = Blueprint("admin", __name__, url_prefix="/admin")
 
 @blueprint.route("/", methods=["GET"])
 def index():
-    return render_template("admin/index.html")
+    all_events = Event.query.all()
+    games_started = [
+        event for event in all_events if event.event_type == EventTypes.GAME_START
+    ]
+    games_won = [
+        event for event in all_events if event.event_type == EventTypes.GAME_WIN
+    ]
+    games_lost = [
+        event for event in all_events if event.event_type == EventTypes.GAME_LOSE
+    ]
+
+    stats = {
+        "games_started": len(games_started),
+        "games_won": len(games_won),
+        "games_lost": len(games_lost),
+    }
+
+    return render_template("admin/index.html", stats=stats)
 
 
 @blueprint.route("/toggles", methods=["GET"])

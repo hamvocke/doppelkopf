@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-
 from doppelkopf.toggles import Toggle
 from doppelkopf.db import db
 
@@ -12,6 +11,15 @@ def test_should_have_index_endpoint(client):
 def test_should_have_toggles_endpoint(client):
     response = client.get("/admin/toggles")
     assert response.status_code == 200
+
+
+def test_should_render_stats_on_index(client):
+    response = client.post("/api/game/new")
+
+    response = client.get("/admin/")
+
+    assert response.status_code == 200
+    assert b"Games started" in response.data
 
 
 def test_should_render_toggles_from_db(client):

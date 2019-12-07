@@ -300,7 +300,6 @@ html {
 
 
 h2,
-h5,
 p {
   margin: 0;
 }
@@ -414,8 +413,7 @@ table {
 }
 
 
-h2,
-h5 {
+h2 {
   font-size: inherit;
   font-weight: inherit;
 }
@@ -519,6 +517,18 @@ img {
   background-color: #48bb78;
 }
 
+.border-gray-200 {
+  border-color: #edf2f7;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+
+.border {
+  border-width: 1px;
+}
+
 .border-t {
   border-top-width: 1px;
 }
@@ -542,6 +552,12 @@ img {
 
 .table {
   display: table;
+}
+
+.flex-row {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
 }
 
 .flex-col {
@@ -583,8 +599,16 @@ img {
   flex-shrink: 0;
 }
 
+.font-mono {
+  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
 .font-bold {
   font-weight: 700;
+}
+
+.m-2 {
+  margin: 0.5rem;
 }
 
 .mx-2 {
@@ -631,6 +655,10 @@ img {
 
 .max-w-full {
   max-width: 100%;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .p-4 {
@@ -708,6 +736,10 @@ img {
 
 .text-2xl {
   font-size: 1.5rem;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
 }
 
 .tracking-tight {
