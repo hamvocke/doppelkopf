@@ -1,13 +1,18 @@
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PlayedCard } from "@/models/playedCard";
+import { Notifier } from "@/models/notifier";
 import { queen, king, suits, ten, ace } from "@/models/card";
 import { DOPPELKOPF } from "@/models/extras";
 
-const player1 = new Player("Player 1");
+const player1 = new Player("Player 1", true);
 const player2 = new Player("Player 2");
 const player3 = new Player("Player 3");
 const player4 = new Player("Player 4");
+
+const notifier = new Notifier();
+
+jest.useFakeTimers();
 
 test("new trick is empty", () => {
   expect(new Trick(4).cards).toHaveLength(0);
@@ -51,13 +56,22 @@ test("should prohibit multiple cards from same player", () => {
   const trick = new Trick(4);
 
   function invalidMove() {
-    trick.add(queen.of(suits.spades), player1);
-    trick.add(queen.of(suits.clubs), player1);
+    trick.add(queen.of(suits.spades), player2);
+    trick.add(queen.of(suits.clubs), player2);
   }
 
   expect(invalidMove).toThrowError(
-    "Player " + player1.name + " already played a card"
+    "Player " + player2.name + " already played a card"
   );
+});
+
+test("should show notification if human tries to play two cards", () => {
+  const trick = new Trick(4);
+
+  trick.add(queen.of(suits.spades), player1);
+  trick.add(queen.of(suits.clubs), player1);
+
+  expect(notifier.messages[0].text).toBe("not-your-turn");
 });
 
 test("should find base card of a trick", () => {
