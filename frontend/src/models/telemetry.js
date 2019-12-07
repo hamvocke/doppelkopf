@@ -17,6 +17,10 @@ class TelemetryManager {
   win() {
     return http.post(`/api/game/${this.gameId}/win`);
   }
+
+  lose() {
+    return http.post(`/api/game/${this.gameId}/lose`);
+  }
 }
 
 export const Telemetry = new TelemetryManager();
