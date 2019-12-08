@@ -174,16 +174,16 @@ export default {
 }
 
 @media screen and (max-width: 680px) {
-  .card {
+  .card-inner {
     height: 60px;
     width: 40px;
     border-radius: 8px;
     padding: 3px;
   }
 
-  .card.top,
-  .card.left,
-  .card.right {
+  .card-inner.top,
+  .card-inner.left,
+  .card-inner.right {
     height: 42px;
     width: 28px;
   }
