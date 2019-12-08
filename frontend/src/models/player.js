@@ -52,12 +52,19 @@ export class Player {
       return;
     }
 
-    this.game.currentTrick.add(cardToBePlayed, this);
-    this.hand.remove(cardToBePlayed);
-    this.game.currentRound.nextPlayer();
+    try {
+      this.game.currentTrick.add(cardToBePlayed, this);
+      this.hand.remove(cardToBePlayed);
+      this.game.currentRound.nextPlayer();
 
-    if (options.autoplay === true) {
-      setTimeout(() => this.game.currentRound.nextMove(), 800);
+      if (options.autoplay === true) {
+        setTimeout(() => this.game.currentRound.nextMove(), 800);
+      }
+    } catch (error) {
+      if (this.isHuman) {
+        notifier.info("not-your-turn");
+        return;
+      }
     }
   }
 

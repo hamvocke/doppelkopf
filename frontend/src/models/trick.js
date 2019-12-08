@@ -1,9 +1,6 @@
 import { find, uniqueId } from "lodash-es";
 import { PlayedCard, beats } from "@/models/playedCard";
-import { Notifier } from "@/models/notifier";
 import { DOPPELKOPF } from "@/models/extras";
-
-const notifier = new Notifier();
 
 export class Trick {
   constructor(expectedNumberOfCards) {
@@ -15,10 +12,6 @@ export class Trick {
 
   add(card, player) {
     if (this.cardBy(player)) {
-      if (player.isHuman) {
-        notifier.info("not-your-turn");
-        return;
-      }
       throw Error(`Player ${player.name} already played a card`);
     }
 
