@@ -175,8 +175,8 @@ export default {
 
 @media screen and (max-width: 680px) {
   .card-inner {
-    height: 60px;
-    width: 40px;
+    height: 58px;
+    width: 38px;
     border-radius: 8px;
     padding: 3px;
   }

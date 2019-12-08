@@ -67,8 +67,8 @@ export default {
 <style scoped>
 .table {
   display: grid;
-  grid-template-columns: minmax(120px, auto) auto minmax(120px, auto);
-  grid-template-rows: minmax(120px, auto) 300px 120px minmax(120px, auto);
+  grid-template-columns: minmax(120px, auto) minmax(400px, auto) minmax(120px, auto);
+  grid-template-rows: minmax(120px, auto) 400px 120px minmax(120px, auto);
   grid-template-areas:
     "top top top"
     "left center right"
@@ -97,5 +97,12 @@ export default {
 
 .left {
   grid-area: left;
+}
+
+@media screen and (max-width: 680px) {
+  .table {
+    grid-template-columns: minmax(80px, auto) minmax(200px, auto) minmax(80px, auto);
+    grid-template-rows: minmax(120px, auto) 250px 120px minmax(120px, auto);
+  }
 }
 </style>
