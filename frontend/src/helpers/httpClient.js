@@ -6,10 +6,16 @@ export class HttpClient {
   }
 
   async get(path) {
+    if (Config.testing) {
+      return {ok: false};
+    }
     return await fetch(this.baseUrl + path);
   }
 
   async post(path, data) {
+    if (Config.testing) {
+      return {ok: false};
+    }
     let fetchOptions = {
       method: "POST",
       headers: {

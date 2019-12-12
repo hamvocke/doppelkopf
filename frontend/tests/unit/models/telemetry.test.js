@@ -1,5 +1,9 @@
 import { Telemetry } from "@/models/telemetry";
+import { Config } from "@/models/config";
 import fetchMock from "fetch-mock";
+
+// disable testing mode  so we're hitting fetchMock requests
+Config.testing = false;
 
 beforeEach(() => {
   fetchMock.reset();

@@ -1,5 +1,9 @@
 import { Features, Feature } from "@/models/features";
+import { Config} from "@/models/config";
 import fetchMock from "fetch-mock";
+
+// disable testing mode so we're hitting fetchMock
+Config.testing = false;
 
 beforeEach(() => {
   fetchMock.reset();
