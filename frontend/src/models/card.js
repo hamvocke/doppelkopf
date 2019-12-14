@@ -93,7 +93,7 @@ export const king = new Card(ranks.king, suits.clubs);
 export const queen = new Card(ranks.queen, suits.clubs);
 export const jack = new Card(ranks.jack, suits.clubs);
 
-const trumps = [
+export const trumps = [
   ten.of(suits.hearts),
   queen.of(suits.clubs),
   queen.of(suits.spades),

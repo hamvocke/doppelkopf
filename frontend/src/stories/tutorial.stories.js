@@ -2,6 +2,7 @@ import VueI18n from "vue-i18n";
 
 import Tutorial from "@/components/tutorial/Tutorial";
 import SampleTrick from "@/components/tutorial/SampleTrick";
+import AllTrumps from "@/components/tutorial/AllTrumps";
 
 import "@/assets/css/app.css";
 
@@ -26,5 +27,11 @@ export const tutorial = () => ({
 export const sampleTrick = () => ({
   components: { SampleTrick },
   template: "<SampleTrick />",
+  i18n: new VueI18n(i18nOpts)
+});
+
+export const allTrumps = () => ({
+  components: { AllTrumps },
+  template: "<AllTrumps />",
   i18n: new VueI18n(i18nOpts)
 });
