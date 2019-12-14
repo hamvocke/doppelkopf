@@ -4,6 +4,7 @@ import Tutorial from "@/components/tutorial/Tutorial";
 import SampleTrick from "@/components/tutorial/SampleTrick";
 import AllTrumps from "@/components/tutorial/AllTrumps";
 import AllNonTrumps from "@/components/tutorial/AllNonTrumps";
+import QuizTrumpNonTrump from "@/components/tutorial/QuizTrumpNonTrump";
 
 import "@/assets/css/app.css";
 
@@ -40,5 +41,11 @@ export const allTrumps = () => ({
 export const allNonTrumps = () => ({
   components: { AllNonTrumps },
   template: "<AllNonTrumps />",
+  i18n: new VueI18n(i18nOpts)
+});
+
+export const quizTrumpNonTrump = () => ({
+  components: { QuizTrumpNonTrump },
+  template: "<QuizTrumpNonTrump />",
   i18n: new VueI18n(i18nOpts)
 });
