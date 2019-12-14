@@ -8,21 +8,20 @@
 </template>
 
 <script>
-import Card from "./Card";
+import Card from "@/components/Card";
 import { ten, suits } from "@/models/card";
 
 export default {
   name: "Tutorial",
   components: { Card },
-  data () {
+  data() {
     return {
       dulle: ten.of(suits.hearts)
-    }
+    };
   }
 };
 </script>
 
 <style scoped>
-@import "../assets/css/colors.css";
-
+@import "../../assets/css/colors.css";
 </style>

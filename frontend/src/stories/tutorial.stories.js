@@ -1,7 +1,7 @@
 import VueI18n from "vue-i18n";
 
-import Tutorial from "@/components/Tutorial";
-import { queen, ten, suits } from "@/models/card";
+import Tutorial from "@/components/tutorial/Tutorial";
+import SampleTrick from "@/components/tutorial/SampleTrick";
 
 import "@/assets/css/app.css";
 
@@ -17,13 +17,14 @@ export default {
   title: "Tutorial"
 };
 
-export const simple = () => ({
+export const tutorial = () => ({
   components: { Tutorial },
-  data() {
-    return {
-      dulle: ten.of(suits.hearts)
-    };
-  },
-  template: '<Tutorial />',
+  template: "<Tutorial />",
+  i18n: new VueI18n(i18nOpts)
+});
+
+export const sampleTrick = () => ({
+  components: { SampleTrick },
+  template: "<SampleTrick />",
   i18n: new VueI18n(i18nOpts)
 });
