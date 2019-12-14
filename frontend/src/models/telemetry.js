@@ -8,14 +8,10 @@ class TelemetryManager {
   async newGame() {
     this.gameId = undefined;
 
-    try {
-        const response = await http.post("/api/game/new");
-        if (response.ok) {
-          const json = await response.json();
-          this.gameId = json.id;
-        }
-    } catch(error) {
-        console.error(error);
+    const response = await http.post("/api/game/new");
+    if (response.ok) {
+      const json = await response.json();
+      this.gameId = json.id;
     }
   }
 
