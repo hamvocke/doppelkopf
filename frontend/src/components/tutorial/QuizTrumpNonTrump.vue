@@ -1,14 +1,18 @@
 <template>
   <div class="quiz-trump-non-trump">
-    <Card :card="cards[currentCard].card" />
+    <transition name="card">
+      <Card v-if="showCard" :card="cards[currentCard].card"/>
+    </transition>
     <div>
       Is this card <button class="btn-trump" @click="checkAnswer(true)">trump</button> or
       <button class="btn-non-trump" @click="checkAnswer(false)">non-trump</button>?
     </div>
 
-    <div class="result">
-      {{ lastMessage }}
-    </div>
+    <transition name="message">
+      <div v-if="lastMessage" class="result">
+        {{ lastMessage }}
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -58,21 +62,36 @@ export default {
         }
       ],
       currentCard: 0,
-      lastMessage: ""
+      lastMessage: "",
+      showCard: true
     };
   },
   methods: {
     checkAnswer: function(answeredTrump) {
       let card = this.cards[this.currentCard];
       if (card.isTrump == answeredTrump) {
-        this.lastMessage = "Correct!";
+        // hack: need to hide and show on next tick to make transition work
+        this.showCard = false;
+        this.showMessage("Correct!");
+
         this.nextCard();
+        this.$nextTick(() => {
+          this.showCard = true;
+        });
       } else {
-        this.lastMessage = "Nah, that's not right.";
-        if (card.explanation) {
-          this.lastMessage += ` ${card.explanation}`;
+        let message = "Nah, that's not right.";
+        if(card.explanation) {
+          message += ` ${card.explanation}`
         }
+        this.showMessage(message);
       }
+    },
+    showMessage: function(message) {
+      this.lastMessage = message;
+
+      setTimeout(() => {
+        this.lastMessage = undefined;
+      }, 4000);
     },
     nextCard: function() {
       this.currentCard = (this.currentCard + 1) % this.cards.length;
@@ -88,6 +107,31 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.card-enter-active {
+  transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-enter {
+  opacity: 0;
+  transform: scale(2, 2);
+}
+
+.message-enter-active,
+.message-leave-active {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.message-leave-to,
+.message-leave {
+  opacity: 0;
+  transform: scale(0.5, 0.5);
+}
+
+.message-enter {
+  opacity: 0;
+  transform: scale(2, 2);
 }
 
 div {
