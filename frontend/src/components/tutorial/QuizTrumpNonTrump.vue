@@ -85,7 +85,7 @@ export default {
           this.showCard = true;
         });
       } else {
-        let message = "Nah, that's not right.";
+        let message = "❌ Nah, that's not right.";
         if (card.explanation) {
           message += ` ${card.explanation}`;
         }
@@ -127,7 +127,7 @@ export default {
 
 .message-enter-active,
 .message-leave-active {
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .message-leave-to,
@@ -146,7 +146,6 @@ export default {
 
 .result {
   margin-top: 16px;
-  font-size: 1.4em;
 }
 
 div {
