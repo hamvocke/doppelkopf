@@ -1,11 +1,17 @@
 <template>
   <div class="quiz-trump-non-trump">
+    <h2>Trumpf oder Fehl?</h2>
     <transition name="card">
-      <Card v-if="showCard" :card="cards[currentCard].card"/>
+      <Card v-if="showCard" :card="cards[currentCard].card" />
     </transition>
-    <div>
-      Is this card <button class="btn-trump" @click="checkAnswer(true)">trump</button> or
-      <button class="btn-non-trump" @click="checkAnswer(false)">non-trump</button>?
+    <div class="text">
+      <div class="question">Diese Karte ist&hellip;</div>
+      <button class="button trump" @click="checkAnswer(true)">
+        Trumpf
+      </button>
+      <button class="button non-trump" @click="checkAnswer(false)">
+        Fehl
+      </button>
     </div>
 
     <transition name="message">
@@ -58,7 +64,7 @@ export default {
         {
           card: ten.of(suits.hearts),
           isTrump: true,
-          explanation: "Remember: The ten of hearts is the highest card in the game"
+          explanation: "Remember: The ten of hearts is the highest card in the game and is always trump"
         }
       ],
       currentCard: 0,
@@ -72,7 +78,7 @@ export default {
       if (card.isTrump == answeredTrump) {
         // hack: need to hide and show on next tick to make transition work
         this.showCard = false;
-        this.showMessage("Correct!");
+        this.showMessage("🎉 Correct!");
 
         this.nextCard();
         this.$nextTick(() => {
@@ -80,8 +86,8 @@ export default {
         });
       } else {
         let message = "Nah, that's not right.";
-        if(card.explanation) {
-          message += ` ${card.explanation}`
+        if (card.explanation) {
+          message += ` ${card.explanation}`;
         }
         this.showMessage(message);
       }
@@ -102,6 +108,7 @@ export default {
 
 <style scoped>
 @import "../../assets/css/colors.css";
+@import "../../assets/css/button.css";
 
 .quiz-trump-non-trump {
   display: flex;
@@ -126,12 +133,20 @@ export default {
 .message-leave-to,
 .message-leave {
   opacity: 0;
-  transform: scale(0.5, 0.5);
 }
 
 .message-enter {
   opacity: 0;
-  transform: scale(2, 2);
+  transform: scale(0.5, 0.5);
+}
+
+.text {
+  margin-top: 32px;
+}
+
+.result {
+  margin-top: 16px;
+  font-size: 1.4em;
 }
 
 div {
