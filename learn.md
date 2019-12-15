@@ -198,19 +198,47 @@ The points of all players in a party are combined. _Re_ and _Kontra_ win and los
 
 If both parties should end up with exactly 120 points, _Kontra_ will win - since they start with the disadvantage of not having the two powerful _queens of clubs_.
 
-Once the game is over, both parties count their points and figure out if they won or lost.
+Once the game is over, both parties count their points and figure out if they won or lost. Now it's time to figure out the score for this game.
 
-Winning a game gets you 1 point.
-Winning against the _Re_ party gets you another point.
 
-There are ways to earn extra points within a game. We'll cover that later.
+## Scoring
+Each game of Doppelkopf has a certain score that can be figured out after the tricks won have been counted by each party.
 
-Once you know who has won, you note the score for each player. If Alice and Bob were in the _Kontra_ party and _Kontra_ has won, both Alice and Bob get 2 points to their score (1 for winning, 1 for winning as the _Kontra_ party). The other two players of the _Re_ party get -2 points to their score. 
+Once a game is over, each party calculates and notes down their score. Each player of a party gets the same score for the game.
 
+Each of the following add _1 point_ to the score of your party. Note that both parties can get points and you only note the difference of the two parties' scores.
+
+    * winning the game
+    * winning as the _Kontra_ party ("against the elders")
+    * announcing _Re_ or _Kontra_
+    * the losing team has less than 90 points (_no 90_)
+    * announcing _no 90_
+    * the losing team has less than 60 points (_no 60_)
+    * announcing _no 60_
+    * the losing team has less than 30 points (_no 30_)
+    * announcing _no 30_
+    * the losing team has no points at all (_schwarz_)
+    * announcing _schwarz_
+    * getting an extra (_catching a fox_, _Doppelkopf_ and others) (**TODO: link**)
+
+_Example_: Alice and Bob (_Kontra_) won against Carol and Dave (_Re_). Alice and Bob got 161 points by winning a lot of tricks. That means, Carol and Dave got 79 points. Neither _Re_ or _Kontra_ caught a fox or got any other extra in this game.
+
+The _Kontra_ players will get _+3 points_ for this game:
+
+    1. one for winning
+    2. one for winning against _Re_
+    3. one because the other party didn't get _90 points_ (_no 90_).
+
+The players write down the following points after this game:
+
+    * Alice: +2
+    * Bob: +2
+    * Carol: 0
+    * Dave: 0
 
 ## Extras
 
-As hinted earlier, you can get extra scores during a game, outside of simply winning the game. Most of these are optional rules you _can_ but don't _have to_ apply to your game. Feel free to add or leave them out as you like.
+As hinted earlier, you can get extra scores during a game, outside of simply winning the game. These are optional rules you _can_ but don't _have to_ apply to your game. Feel free to add or leave them out as you like. But be sure to discuss this before your game, so everyone is aware.
 
 
 ### Fuchs (Fox)
