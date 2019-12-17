@@ -2,7 +2,7 @@
   <div class="quiz-trump-non-trump">
     <h2>Trumpf oder Fehl?</h2>
     <transition name="card">
-      <Card v-if="showCard" :card="cards[currentCard].card" />
+      <Card v-if="showCard" :card="cards[currentCard]" />
     </transition>
     <div class="text">
       <div class="question">Diese Karte ist&hellip;</div>
@@ -32,40 +32,16 @@ export default {
   data() {
     return {
       cards: [
-        { card: ace.of(suits.clubs), isTrump: false },
-        {
-          card: ace.of(suits.diamonds),
-          isTrump: true,
-          explanation: "Remember: All diamonds are trump"
-        },
-        {
-          card: jack.of(suits.spades),
-          isTrump: true,
-          explanation: "Remember: All jacks are trump"
-        },
-        {
-          card: jack.of(suits.hearts),
-          isTrump: true,
-          explanation: "Remember: All jacks are trump"
-        },
-        { card: ten.of(suits.clubs), isTrump: false },
-        { card: king.of(suits.hearts), isTrump: false },
-        { card: ace.of(suits.spades), isTrump: false },
-        {
-          card: queen.of(suits.spades),
-          isTrump: true,
-          explanation: "Remember: All queens are trump"
-        },
-        {
-          card: king.of(suits.diamonds),
-          isTrump: true,
-          explanation: "Remember: All diamonds are trump"
-        },
-        {
-          card: ten.of(suits.hearts),
-          isTrump: true,
-          explanation: "Remember: The ten of hearts is the highest card in the game and is always trump"
-        }
+        ace.of(suits.clubs),
+        ace.of(suits.diamonds),
+        jack.of(suits.spades),
+        jack.of(suits.hearts),
+        ten.of(suits.clubs),
+        king.of(suits.hearts),
+        ace.of(suits.spades),
+        queen.of(suits.spades),
+        king.of(suits.diamonds),
+        ten.of(suits.hearts)
       ],
       currentCard: 0,
       lastMessage: "",
@@ -75,7 +51,7 @@ export default {
   methods: {
     checkAnswer: function(answeredTrump) {
       let card = this.cards[this.currentCard];
-      if (card.isTrump == answeredTrump) {
+      if (card.isTrump() == answeredTrump) {
         // hack: need to hide and show on next tick to make transition work
         this.showCard = false;
         this.showMessage("🎉 Correct!");
@@ -86,9 +62,7 @@ export default {
         });
       } else {
         let message = "❌ Nah, that's not right.";
-        if (card.explanation) {
-          message += ` ${card.explanation}`;
-        }
+        message += ` ${card.whyTrump()}`;
         this.showMessage(message);
       }
     },
