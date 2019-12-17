@@ -54,6 +54,30 @@ export class Card {
     return some(trumps, { rank: this.rank, suit: this.suit });
   }
 
+  /**
+   * Explains why this card is a trump card
+   * @return {string} the explanation, if trump, or an empty string otherwise
+   */
+  whyTrump() {
+    if (this.rank === ranks.queen) {
+      return "queens are always trump";
+    }
+
+    if (this.rank === ranks.jack) {
+      return "jacks are always trump";
+    }
+
+    if (this.suit === suits.diamonds) {
+      return "diamonds are always trump";
+    }
+
+    if (this.rank === ranks.ten && this.suit === suits.hearts) {
+      return "the ten of hearts is always trump";
+    }
+
+    return "";
+  }
+
   compareTo(anotherCard) {
     const thisIsTrump = this.isTrump();
     const otherCardIsTrump = anotherCard.isTrump();

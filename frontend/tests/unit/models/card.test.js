@@ -141,3 +141,31 @@ test("first non-trump beats other non-trump of same card", () => {
   const secondNonTrump = ace.of(suits.hearts);
   expect(firstNonTrump.compareTo(secondNonTrump)).toEqual(0);
 });
+
+describe("trump explanation", () => {
+  test("should explain why diamonds are trump", () => {
+    expect(ace.of(suits.diamonds).whyTrump()).toEqual(
+      "diamonds are always trump"
+    );
+  });
+
+  test("should explain why jacks are trump", () => {
+    expect(jack.of(suits.diamonds).whyTrump()).toEqual(
+      "jacks are always trump"
+    );
+  });
+
+  test("should explain why queens are trump", () => {
+    expect(queen.of(suits.clubs).whyTrump()).toEqual("queens are always trump");
+  });
+
+  test("should explain why ten of hearts is trump", () => {
+    expect(ten.of(suits.hearts).whyTrump()).toEqual(
+      "the ten of hearts is always trump"
+    );
+  });
+
+  test("should have no explanation for non-trump", () => {
+    expect(ace.of(suits.spades).whyTrump()).toBe("");
+  });
+});
