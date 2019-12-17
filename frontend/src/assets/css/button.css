@@ -16,6 +16,11 @@
   cursor: pointer;
 }
 
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px color(var(--lightblue) alpha(40%));
+}
+
 .button.outline {
   background: none;
   border: 1px solid var(--red);
