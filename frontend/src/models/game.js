@@ -28,15 +28,7 @@ export class Game {
     );
     this.scorecard = new Scorecard(this.players);
     this.deal();
-  }
-
-  start() {
-    this.started = true;
     Telemetry.newGame();
-  }
-
-  isStarted() {
-    return this.started;
   }
 
   deal() {
