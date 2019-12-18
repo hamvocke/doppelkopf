@@ -6,22 +6,18 @@
       </div>
       <h1>Doppelkopf</h1>
 
-      <button class="button start-game" @click="game.start()">
-        {{ $t("start-game") }}
-      </button>
+      <router-link to="/play">
+        <button class="button start-game">
+          {{ $t("start-game") }}
+        </button>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "WelcomeScreen",
-  props: {
-    game: {
-      type: Object,
-      required: true
-    }
-  }
+  name: "Home"
 };
 </script>
 
