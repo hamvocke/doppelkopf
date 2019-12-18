@@ -5,7 +5,7 @@ module.exports = {
   "start game test": browser => {
     browser
       .init()
-      .waitForElementVisible("#app")
+      .waitForElementVisible("#game")
       .assert.elementPresent(".welcome")
       .click("button.start-game")
       .assert.elementCount(".player", 4)
