@@ -10,7 +10,7 @@
         {{ $t("start-game") }}
       </router-link>
 
-      <router-link to="/learn" class="button button-secondary" tag="button">
+      <router-link v-if="showTutorial()" to="/learn" class="button button-secondary" tag="button">
         {{ $t("how-to-play") }}
       </router-link>
     </div>
@@ -18,8 +18,15 @@
 </template>
 
 <script>
+import { Features } from "@/models/features";
+
 export default {
-  name: "Home"
+  name: "Home",
+  methods: {
+    showTutorial: function() {
+      return Features.find('show_tutorial_link').enabled;
+    }
+  }
 };
 </script>
 

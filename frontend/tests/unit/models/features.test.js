@@ -16,7 +16,10 @@ test("create new feature", () => {
 });
 
 test("should have dict of features", () => {
+  Features.features = { a: new Feature("a", false) }
+
   const f = Features.find("a");
+
   expect(f).toBeDefined();
   expect(f.name).toEqual("a");
   expect(f.enabled).toBe(false);
@@ -46,5 +49,5 @@ test("should use default features if fetching fails", async () => {
 
   await Features.getFromServer();
 
-  expect(Features.find("a")).toBeDefined();
+  expect(Features.find("show_tutorial_link")).toBeDefined();
 });

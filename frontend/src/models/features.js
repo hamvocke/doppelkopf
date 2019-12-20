@@ -1,4 +1,5 @@
 import { http } from "@/helpers/httpClient";
+import { Config } from "@/models/config"
 
 export class Feature {
   constructor(name, enabled = false) {
@@ -8,8 +9,7 @@ export class Feature {
 }
 
 const DEFAULT_FEATURES = {
-  a: new Feature("a", false),
-  b: new Feature("b", false)
+  show_tutorial_link: new Feature("Show link to tutorial", Config.debug)
 };
 
 class FeatureManager {

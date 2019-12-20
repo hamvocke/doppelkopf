@@ -73,4 +73,9 @@ toggles = [
         name="game.rules.zweite_dulle",
         description="Aktiviert die 'zweite Dulle schlaegt die erste' Spielregel",
     ),
+    Toggle(
+        id=5,
+        name="show_tutorial_link",
+        description="Link zur Spielanleitung auf der Startseite anzeigen?",
+    ),
 ]
