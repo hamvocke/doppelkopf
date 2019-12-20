@@ -6,6 +6,7 @@ import Game from "@/views/Game.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  { path: '*', redirect: '/' }, // catch-all route
   {
     path: "/",
     name: "home",
