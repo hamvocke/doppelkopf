@@ -10,6 +10,7 @@
   text-decoration: none !important;
   display: inline-block;
   border-bottom: 5px solid color(var(--red) shade(30%));
+  box-shadow: 0 5px 8px 0 rgba(0,0,0, 0.3);
 }
 
 .button:hover,
