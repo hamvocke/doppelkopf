@@ -6,10 +6,12 @@
       </div>
       <h1>Doppelkopf</h1>
 
-      <router-link to="/play">
-        <button class="button start-game">
-          {{ $t("start-game") }}
-        </button>
+      <router-link to="/play" class="button start-game" tag="button">
+        {{ $t("start-game") }}
+      </router-link>
+
+      <router-link to="/learn" class="button button-secondary" tag="button">
+        {{ $t("how-to-play") }}
       </router-link>
     </div>
   </div>

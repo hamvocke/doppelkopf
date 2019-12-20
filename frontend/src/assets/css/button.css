@@ -1,12 +1,15 @@
 .button {
   padding: 12px 18px;
   margin: 6px;
-  color: var(--white);
+  color: var(--white) !important;
   background: var(--red);
   border-radius: 6px;
   display: inline;
   font-size: 1.1em;
   border: none;
+  text-decoration: none !important;
+  display: inline-block;
+  border-bottom: 5px solid color(var(--red) shade(30%));
 }
 
 .button:hover,
@@ -22,18 +25,18 @@
 }
 
 .button:active {
-  transform: scale(0.9, 0.9);
+  transform: scale(0.95, 0.95);
 }
 
-.button.outline {
-  background: none;
-  border: 1px solid var(--red);
-  color: var(--red);
+.button-secondary {
+  color: var(--black) !important;
+  background: var(--white);
+  border-bottom-color: color(var(--white) shade(15%));
 }
 
-.button.outline:hover,
-.button.outline:active,
-.button.outline:focus {
-  border: 1px solid color(var(--red) shade(20%));
-  color: color(var(--red) shade(20%));
+.button-secondary:hover,
+.button-secondary:active,
+.button-secondary:focus {
+  background: color(var(--white) shade(5%));
+  border-bottom-color: color(var(--white) shade(25%));
 }
