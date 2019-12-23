@@ -7,6 +7,7 @@ Config.testing = false;
 
 beforeEach(() => {
   fetchMock.reset();
+  Features.features = undefined;
 });
 
 test("create new feature", () => {
@@ -15,20 +16,19 @@ test("create new feature", () => {
   expect(someFeature.enabled).toBe(false);
 });
 
-test("should have dict of features", () => {
-  Features.features = { a: new Feature("a", false) }
+test("should have dict of features", async () => {
+  Features.features = { a: new Feature("a", false) };
 
-  const f = Features.find("a");
+  const f = await Features.get("a");
 
   expect(f).toBeDefined();
   expect(f.name).toEqual("a");
   expect(f.enabled).toBe(false);
 });
 
-test("should throw error when accessing undefined feature", () => {
-  const invalid_lookup = () => Features.find("unknown");
-
-  expect(invalid_lookup).toThrowError(
+test("should throw error when accessing undefined feature", async () => {
+  expect.assertions(1);
+  await expect(Features.get("unknown")).rejects.toThrow(
     'Cannot find feature with name "unknown"'
   );
 });
@@ -39,15 +39,15 @@ test("should fetch features from backend", async () => {
   };
   fetchMock.mock("http://localhost:5000/api/features", stubbedFeatures);
 
-  await Features.getFromServer();
+  const feature = await Features.get("some");
 
-  expect(Features.find("some")).toBeDefined();
+  expect(feature).toBeDefined();
 });
 
 test("should use default features if fetching fails", async () => {
   fetchMock.mock("http://localhost:5000/api/features", 500);
 
-  await Features.getFromServer();
+  const feature = await Features.get("show_tutorial_link");
 
-  expect(Features.find("show_tutorial_link")).toBeDefined();
+  expect(feature).toBeDefined();
 });

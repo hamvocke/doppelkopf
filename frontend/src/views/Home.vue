@@ -18,13 +18,14 @@
 </template>
 
 <script>
-import { Features } from "@/models/features";
+// import { Features } from "@/models/features";
 
 export default {
   name: "Home",
   methods: {
     showTutorial: function() {
-      return Features.find('show_tutorial_link').enabled;
+      return false;
+      // return Features.find('show_tutorial_link').enabled;
     }
   }
 };
