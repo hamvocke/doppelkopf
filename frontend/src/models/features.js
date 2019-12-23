@@ -14,8 +14,7 @@ const DEFAULT_FEATURES = {
 
 class FeatureManager {
   constructor() {
-    this.features = DEFAULT_FEATURES;
-    this.fetch();
+    this.features = undefined;
   }
 
   async fetch() {
