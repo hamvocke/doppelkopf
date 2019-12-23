@@ -24,7 +24,7 @@ class FeatureManager {
 
     try {
       let response = await http.get("/api/features");
-      this.features = await response.json();
+      this.features = (await response.json()).features;
       return this.features;
     } catch (error) {
       return DEFAULT_FEATURES;
