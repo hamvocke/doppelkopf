@@ -7,7 +7,7 @@ import Tutorial from "@/views/Tutorial.vue";
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '*', redirect: '/' }, // catch-all route
+  { path: "*", redirect: "/" }, // catch-all route
   {
     path: "/",
     name: "home",
