@@ -71,8 +71,8 @@ def test_should_return_toggles(client):
     data = json.loads(response.get_data(as_text=True))
 
     assert response.status_code == 200
-    assert data["features"][0]["name"] == "some-toggle"
-    assert data["features"][0]["enabled"] is True
+    assert data["features"]["some-toggle"]["name"] == "some-toggle"
+    assert data["features"]["some-toggle"]["enabled"] is True
 
 
 def save_toggle(name="some-toggle", enabled=True) -> Toggle:
