@@ -35,7 +35,13 @@ test("should throw error when accessing undefined feature", async () => {
 
 test("should fetch features from backend", async () => {
   const stubbedFeatures = {
-    features: [{ some: new Feature("some", false) }]
+    features: {
+      some: {
+        enabled: false,
+        id: 5,
+        name: "some"
+      }
+    }
   };
   fetchMock.mock("http://localhost:5000/api/features", stubbedFeatures);
 
