@@ -1,6 +1,6 @@
 import VueI18n from "vue-i18n";
 
-import Tutorial from "@/components/tutorial/Tutorial";
+import Tutorial from "@/views/Tutorial";
 import SampleTrick from "@/components/tutorial/SampleTrick";
 import AllTrumps from "@/components/tutorial/AllTrumps";
 import AllNonTrumps from "@/components/tutorial/AllNonTrumps";
