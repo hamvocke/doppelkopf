@@ -1,7 +1,7 @@
 <template>
   <div class="player">
     <div class="info">
-      <div class="name">{{ player.name }}</div>
+      <div class="name title-font">{{ player.name }}</div>
       <div v-if="player.isHuman" class="party">
         {{ player.hand.isRe() ? "Re" : "Kontra" }}
       </div>
@@ -91,6 +91,6 @@ export default {
 }
 
 .name {
-  font-weight: bold;
+  font-size: 1.2em;
 }
 </style>

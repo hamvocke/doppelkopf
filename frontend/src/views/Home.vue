@@ -57,7 +57,6 @@ export default {
 .welcome h1 {
   font-size: 3em;
   color: var(--shell);
-  text-transform: uppercase;
   display: block;
 }
 </style>
