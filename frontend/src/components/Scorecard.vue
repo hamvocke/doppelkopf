@@ -9,22 +9,26 @@
           <table>
             <tr>
               <th>
-                <strong>Re</strong>
-                <span class="badge">
-                  {{ currentScore.rePoints }} {{ $t("points") }}
-                </span>
-                <div class="members">
-                  {{ partyMembers("Re") }}
+                <div class="summary">
+                  <strong>Re</strong>
+                  <span class="badge">
+                    {{ currentScore.rePoints }} {{ $t("points") }}
+                  </span>
+                  <div class="members">
+                    {{ partyMembers("Re") }}
+                  </div>
                 </div>
               </th>
 
               <th>
-                <strong>Kontra</strong>
-                <span class="badge">
-                  {{ currentScore.kontraPoints }} {{ $t("points") }}
-                </span>
-                <div class="members">
-                  {{ partyMembers("Kontra") }}
+                <div class="summary">
+                  <strong>Kontra</strong>
+                  <span class="badge">
+                    {{ currentScore.kontraPoints }} {{ $t("points") }}
+                  </span>
+                  <div class="members">
+                    {{ partyMembers("Kontra") }}
+                  </div>
                 </div>
               </th>
             </tr>
@@ -194,6 +198,10 @@ td {
   line-height: 2em;
 }
 
+.summary {
+  display: inline-block;
+}
+
 .player {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -229,6 +237,8 @@ td {
 
 .members {
   font-weight: lighter;
+  font-style: italic;
+  font-size: 0.9em;
 }
 
 .badge {
