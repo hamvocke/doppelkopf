@@ -1,8 +1,12 @@
 <template>
   <div class="notifications">
     <transition-group name="message">
-      <div v-for="message in messages" :key="message.id" class="message">
-        {{ $t(message.text) }}
+      <div
+        v-for="notification in notifications"
+        :key="notification.id"
+        class="message"
+      >
+        {{ $t(notification.text) }}
       </div>
     </transition-group>
   </div>
@@ -11,11 +15,13 @@
 <script>
 import { Notifier } from "@/models/notifier";
 
+const notifier = new Notifier();
+
 export default {
   name: "Notifications",
   data: function() {
     return {
-      messages: new Notifier().messages
+      notifications: notifier.notifications
     };
   }
 };

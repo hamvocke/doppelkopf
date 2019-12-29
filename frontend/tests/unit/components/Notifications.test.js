@@ -12,7 +12,7 @@ describe("Notifications.vue", () => {
 
     new Notifier().info("Hello World");
 
-    expect(wrapper.vm.messages).toHaveLength(1);
-    expect(wrapper.vm.messages[0].text).toBe("Hello World");
+    expect(wrapper.vm.notifications).toHaveLength(1);
+    expect(wrapper.vm.notifications[0].text).toBe("Hello World");
   });
 });

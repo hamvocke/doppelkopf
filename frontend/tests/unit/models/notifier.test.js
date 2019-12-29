@@ -16,25 +16,35 @@ test("notifier is always the same instance", () => {
 test("should add notification", () => {
   notifier.info("Hello World");
 
-  expect(notifier.messages).toHaveLength(1);
-  expect(notifier.messages[0].text).toBe("Hello World");
-  expect(notifier.messages[0].type).toBe(0);
+  expect(notifier.flashMessages).toHaveLength(0);
+  expect(notifier.notifications).toHaveLength(1);
+  expect(notifier.notifications[0].text).toBe("Hello World");
 });
 
 test("should add flash message", () => {
   notifier.flash("Fuchs gefangen");
 
-  expect(notifier.messages).toHaveLength(1);
-  expect(notifier.messages[0].text).toBe("Fuchs gefangen");
-  expect(notifier.messages[0].type).toBe(1);
+  expect(notifier.notifications).toHaveLength(0);
+  expect(notifier.flashMessages).toHaveLength(1);
+  expect(notifier.flashMessages[0].text).toBe("Fuchs gefangen");
 });
 
 test("should remove notification after timeout", () => {
   notifier.info("Hello World");
 
-  expect(notifier.messages[0].text).toBe("Hello World");
+  expect(notifier.notifications[0].text).toBe("Hello World");
 
   jest.runAllTimers();
 
-  expect(notifier.messages).toEqual([]);
+  expect(notifier.notifications).toEqual([]);
+});
+
+test("should remove flash message after timeout", () => {
+  notifier.flash("Hello World");
+
+  expect(notifier.flashMessages[0].text).toBe("Hello World");
+
+  jest.runAllTimers();
+
+  expect(notifier.flashMessages).toEqual([]);
 });
