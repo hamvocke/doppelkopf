@@ -44,13 +44,14 @@ export default {
 <style scoped>
 .trick {
   min-height: 180px;
-  min-width: 180px;
+  min-width: 100%;
   justify-content: center;
   align-items: stretch;
 }
 
 .winner {
   padding: 12px;
+  text-align: center;
 }
 
 .cards > span {
