@@ -1,27 +1,39 @@
 <template>
-  <div class="notifications">
-    <transition-group name="message">
-      <div
-        v-for="notification in notifications"
-        :key="notification.id"
-        class="message"
-      >
-        {{ $t(notification.text) }}
-      </div>
-    </transition-group>
+  <div class="notification-container">
+    <div class="notifications">
+      <transition-group name="message">
+        <div
+          v-for="notification in notifications"
+          :key="notification.id"
+          class="message"
+        >
+          {{ $t(notification.text) }}
+        </div>
+      </transition-group>
+    </div>
+    <div class="flashMessages">
+      <FlashMessage
+        v-if="flashMessages[0]"
+        :message="flashMessages[0].text"
+        :icon="flashMessages[0].icon"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import { Notifier } from "@/models/notifier";
+import FlashMessage from "@/components/FlashMessage";
 
 const notifier = new Notifier();
 
 export default {
   name: "Notifications",
+  components: { FlashMessage },
   data: function() {
     return {
-      notifications: notifier.notifications
+      notifications: notifier.notifications,
+      flashMessages: notifier.flashMessages
     };
   }
 };
