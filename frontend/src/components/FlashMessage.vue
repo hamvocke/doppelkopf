@@ -1,7 +1,7 @@
 <template>
   <div class="flashMessage blink">
     <div v-if="icon" class="icon">{{ icon }}</div>
-    <div class="message">{{ message }}</div>
+    <h1 class="message">{{ message }}</h1>
   </div>
 </template>
 
@@ -37,17 +37,15 @@ export default {
 
 .icon {
   font-size: 5em;
-  margin: 12px;
 }
 
 .message {
   font-size: 3em;
-  text-transform: uppercase;
-  font-weight: bolder;
+  font-weight: 900;
 }
 
 .blink {
-  animation: 2s 0.5s blink;
+  animation: 2.5s 0.5s blink;
 }
 
 @keyframes blink {
