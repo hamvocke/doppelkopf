@@ -96,7 +96,7 @@ export default {
   user-select: none;
 }
 
-.card:not(.covered):hover {
+.card-inner:not(.covered):hover {
   cursor: pointer;
 }
 
