@@ -1,7 +1,7 @@
 <template>
-  <div class="flashMessage blink">
-    <div v-if="icon" class="icon">{{ icon }}</div>
-    <h1 class="message">{{ message }}</h1>
+  <div class="flashMessage">
+    <div v-if="icon" class="icon blink">{{ icon }}</div>
+    <h1 class="message blink">{{ message }}</h1>
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/css/colors.css";
+@import "../assets/css/vars.css";
 
 .flashMessage {
   position: absolute;
@@ -33,6 +33,8 @@ export default {
   flex-direction: column;
   height: 100%;
   width: 100%;
+  background: var(--black);
+  z-index: var(--flash-layer);
 }
 
 .icon {

@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/css/colors.css";
+@import "../assets/css/vars.css";
 
 .card {
   display: inline-flex;

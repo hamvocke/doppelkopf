@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style scoped>
-@import "../../assets/css/colors.css";
+@import "../../assets/css/vars.css";
 
 .sample-trick > div {
   margin: 8px;

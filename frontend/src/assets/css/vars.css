@@ -7,4 +7,9 @@
   --shell: #f5fbf5;
   --cyan: #a8dadc;
   --background: #d3cce3;
+
+  --base-layer: 1;
+  --modal-layer: 10;
+  --notification-layer: 20;
+  --flash-layer: 30;
 }

@@ -40,13 +40,13 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/css/colors.css";
+@import "../assets/css/vars.css";
 
 .notifications {
   width: 100%;
   position: absolute;
   top: 0px;
-  z-index: 600;
+  z-index: var(--notification-layer);
 }
 
 .message {
