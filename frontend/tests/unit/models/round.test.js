@@ -1,13 +1,18 @@
 import { Game } from "@/models/game";
 import { Round } from "@/models/round";
+import { Notifier } from "@/models/notifier";
 import { jack, suits } from "@/models/card";
+import { DOPPELKOPF } from "@/models/extras";
 import { options } from "@/models/options";
 
 const game = new Game();
 let round = game.currentRound;
 
+jest.useFakeTimers();
+
 beforeEach(() => {
   options.autoplay = false;
+  jest.runAllTimers();
 });
 
 test("round has 4 players", () => {
@@ -92,6 +97,20 @@ test("should not autoplay if round is finished", () => {
   round.nextMove();
 
   expect(mockedComputerPlayer.autoplay).not.toBeCalled();
+});
+
+test("should show extras as flash message", () => {
+  round.currentTrick.add(jack.of(suits.spades), round.players[2]);
+  round.currentTrick.add(jack.of(suits.hearts), round.players[3]);
+  round.currentTrick.add(jack.of(suits.diamonds), round.players[1]);
+  round.currentTrick.add(jack.of(suits.clubs), round.players[0]);
+
+  round.currentTrick.extras = () => DOPPELKOPF;
+
+  round.finishTrick();
+
+  const notifier = new Notifier();
+  expect(notifier.flashMessages).toHaveLength(1);
 });
 
 describe("player order", () => {

@@ -2,7 +2,11 @@ import { Trick } from "@/models/trick";
 import { RingQueue } from "@/models/ringQueue";
 import { Score } from "@/models/score";
 import { options } from "@/models/options";
+import { Notifier } from "@/models/notifier";
+import { DOPPELKOPF } from "@/models/extras";
 import { find } from "lodash-es";
+
+const notifier = new Notifier();
 
 export class Round {
   constructor(players = [], game = {}, openingPlayer) {
@@ -67,6 +71,18 @@ export class Round {
     const winner = find(this.players, { id: playerId });
     winner.win(this.currentTrick);
     this.playerOrder.prioritize(winner);
+    this.showExtras();
+  }
+
+  showExtras() {
+    const extra = this.currentTrick.extras();
+    if (extra) {
+      switch (extra) {
+        case DOPPELKOPF:
+          notifier.flash("Doppelkopf");
+          break;
+      }
+    }
   }
 
   finishRound() {
