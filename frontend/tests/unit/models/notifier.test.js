@@ -30,21 +30,25 @@ test("should add flash message", () => {
 });
 
 test("should remove notification after timeout", () => {
-  notifier.info("Hello World");
+  const promise = notifier.info("Hello World");
 
   expect(notifier.notifications[0].text).toBe("Hello World");
 
   jest.runAllTimers();
 
-  expect(notifier.notifications).toEqual([]);
+  return promise.then(() => {
+    expect(notifier.notifications).toEqual([]);
+  });
 });
 
 test("should remove flash message after timeout", () => {
-  notifier.flash("Hello World");
+  const promise = notifier.flash("Hello World");
 
   expect(notifier.flashMessages[0].text).toBe("Hello World");
 
   jest.runAllTimers();
 
-  expect(notifier.flashMessages).toEqual([]);
+  return promise.then(() => {
+    expect(notifier.flashMessages).toEqual([]);
+  });
 });

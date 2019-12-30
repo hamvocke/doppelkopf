@@ -56,8 +56,8 @@ export class Round {
     return this.finished;
   }
 
-  finishTrick() {
-    this.evaluateLastTrick();
+  async finishTrick() {
+    await this.evaluateLastTrick();
 
     this.currentTrick = this.nextTrick();
 
@@ -66,31 +66,31 @@ export class Round {
     }
   }
 
-  evaluateLastTrick() {
+  async evaluateLastTrick() {
     const playerId = this.currentTrick.winner().id;
     const winner = find(this.players, { id: playerId });
     winner.win(this.currentTrick);
     this.playerOrder.prioritize(winner);
-    this.showExtras();
+    await this.showExtras();
   }
 
-  showExtras() {
+  async showExtras() {
     const extra = this.currentTrick.extras();
     if (extra) {
       switch (extra) {
         case DOPPELKOPF:
-          notifier.flash("Doppelkopf");
+          await notifier.flash("Doppelkopf");
           break;
       }
     }
   }
 
-  finishRound() {
+  async finishRound() {
     if (!this.noMoreCardsLeft()) {
       throw new Error(`Can't finish a round before all cards have been played`);
     }
 
-    this.evaluateLastTrick();
+    await this.evaluateLastTrick();
 
     this.currentTrick = this.nextTrick();
 

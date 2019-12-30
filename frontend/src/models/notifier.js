@@ -13,25 +13,27 @@ export class Notifier {
     instance = this;
   }
 
-  info(message) {
+  async info(message) {
     this.notifications.push({
       id: uniqueId("message_"),
       text: message
     });
 
-    window.setTimeout(() => {
-      this.notifications.pop();
-    }, 4000);
+    await this.wait(4000);
+    this.notifications.pop();
   }
 
-  flash(message) {
+  async flash(message) {
     this.flashMessages.push({
       id: uniqueId("flash_"),
       text: message
     });
 
-    window.setTimeout(() => {
-      this.flashMessages.pop();
-    }, 4000);
+    await this.wait(4000);
+    this.flashMessages.pop();
+  }
+
+  wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

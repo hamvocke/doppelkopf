@@ -32,17 +32,22 @@ test("should have score", () => {
 });
 
 test("should give current trick to winner", () => {
+  expect.assertions(1);
   round.currentTrick.add(jack.of(suits.spades), round.players[2]);
   round.currentTrick.add(jack.of(suits.hearts), round.players[3]);
   round.currentTrick.add(jack.of(suits.diamonds), round.players[1]);
   round.currentTrick.add(jack.of(suits.clubs), round.players[0]);
 
-  round.finishTrick();
+  const promise = round.finishTrick();
+  jest.runAllTimers();
 
-  expect(round.players[0].trickStack.tricks).toHaveLength(1);
+  promise.then(() => {
+    expect(round.players[0].trickStack.tricks).toHaveLength(1);
+  });
 });
 
 test("should trigger next move when finishing trick", () => {
+  expect.assertions(1);
   options.autoplay = true;
 
   round.players[1].autoplay = jest.fn();
@@ -51,9 +56,12 @@ test("should trigger next move when finishing trick", () => {
   round.currentTrick.add(jack.of(suits.hearts), round.players[3]);
   round.currentTrick.add(jack.of(suits.diamonds), round.players[0]);
 
-  round.finishTrick();
+  const promise = round.finishTrick();
+  jest.runAllTimers();
 
-  expect(round.players[1].autoplay).toBeCalled();
+  promise.then(() => {
+    expect(round.players[1].autoplay).toBeCalled();
+  });
 });
 
 test("should autoplay for computer players", () => {
@@ -100,17 +108,22 @@ test("should not autoplay if round is finished", () => {
 });
 
 test("should show extras as flash message", () => {
+  expect.assertions(1);
+  round.currentTrick.add(jack.of(suits.clubs), round.players[1]);
   round.currentTrick.add(jack.of(suits.spades), round.players[2]);
   round.currentTrick.add(jack.of(suits.hearts), round.players[3]);
-  round.currentTrick.add(jack.of(suits.diamonds), round.players[1]);
-  round.currentTrick.add(jack.of(suits.clubs), round.players[0]);
+  round.currentTrick.add(jack.of(suits.diamonds), round.players[0]);
 
   round.currentTrick.extras = () => DOPPELKOPF;
-
-  round.finishTrick();
-
   const notifier = new Notifier();
-  expect(notifier.flashMessages).toHaveLength(1);
+  notifier.flash = jest.fn();
+
+  const promise = round.finishTrick();
+  jest.runAllTimers();
+
+  promise.then(() => {
+    expect(notifier.flash).toHaveBeenCalled();
+  });
 });
 
 describe("player order", () => {
@@ -124,14 +137,18 @@ describe("player order", () => {
   });
 
   test("should put player on top of player order if player wins a trick", () => {
+    expect.assertions(1);
     round.currentTrick.add(jack.of(suits.spades), round.players[2]);
     round.currentTrick.add(jack.of(suits.clubs), round.players[3]);
     round.currentTrick.add(jack.of(suits.diamonds), round.players[1]);
     round.currentTrick.add(jack.of(suits.clubs), round.players[0]);
 
-    round.finishTrick();
+    const promise = round.finishTrick();
+    jest.runAllTimers();
 
-    expect(round.waitingForPlayer().id).toEqual(round.players[3].id);
+    promise.then(() => {
+      expect(round.waitingForPlayer().id).toEqual(round.players[3].id);
+    });
   });
 
   test("should change active player on next move", () => {
@@ -170,45 +187,54 @@ describe("finish round", () => {
   });
 
   test("should add score to scorecard", () => {
+    expect.assertions(4);
     setupGameKontraWins();
 
-    round.finishRound();
+    const promise = round.finishRound();
+    jest.runAllTimers();
 
-    const scorecard = round.game.scorecard;
+    promise.then(() => {
+      const scorecard = round.game.scorecard;
 
-    expect(scorecard.totalPointsFor(round.players[0])).toBe(-2);
-    expect(scorecard.totalPointsFor(round.players[1])).toBe(-2);
-    expect(scorecard.totalPointsFor(round.players[2])).toBe(2);
-    expect(scorecard.totalPointsFor(round.players[3])).toBe(2);
+      expect(scorecard.totalPointsFor(round.players[0])).toBe(-2);
+      expect(scorecard.totalPointsFor(round.players[1])).toBe(-2);
+      expect(scorecard.totalPointsFor(round.players[2])).toBe(2);
+      expect(scorecard.totalPointsFor(round.players[3])).toBe(2);
+    });
   });
 
   test("should mark round as finished", () => {
+    expect.assertions(2);
     expect(round.isFinished()).toBe(false);
 
     setupGameKontraWins();
 
-    round.finishRound();
-    expect(round.isFinished()).toBe(true);
+    const promise = round.finishRound();
+    jest.runAllTimers();
+
+    promise.then(() => {
+      expect(round.isFinished()).toBe(true);
+    });
   });
 
   test("should finish trick when finishing round", () => {
+    expect.assertions(2);
     setupGameKontraWins();
-
     expect(round.currentTrick.cards()).toHaveLength(4);
 
-    round.finishRound();
+    const promise = round.finishRound();
+    jest.runAllTimers();
 
-    expect(round.currentTrick.cards()).toHaveLength(0);
+    promise.then(() => {
+      expect(round.currentTrick.cards()).toHaveLength(0);
+    });
   });
 
-  test("should throw exception if round is not yet finished", () => {
+  test("should throw exception if round is not yet finished", async () => {
+    expect.assertions(1);
     round.players[0].hand.cards = [jack.of(suits.hearts)];
 
-    function finishUnfinishedRound() {
-      round.finishRound();
-    }
-
-    expect(finishUnfinishedRound).toThrowError(
+    await expect(round.finishRound()).rejects.toThrow(
       `Can't finish a round before all cards have been played`
     );
   });
