@@ -3,9 +3,11 @@
     <div v-if="isHidden" class="placeholder">
       <Card :is-covered="true" :card="{}" />
     </div>
-    <div v-else class="cards">
-      <Card :is-covered="true" :card="{}" />
-    </div>
+    <transition name="stack">
+      <div v-if="!isHidden" class="cards">
+        <Card :is-covered="true" :card="{}" />
+      </div>
+    </transition>
     <p class="trickCount">{{ $tc("trick", trickStack.tricks.length) }}</p>
   </div>
 </template>
@@ -51,6 +53,20 @@ export default {
 .cards {
   display: flex;
   justify-content: center;
+}
+
+.stack-enter-active,
+.stack-leave-active {
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.stack-enter,
+.stack-leave-to {
+  opacity: 0;
+}
+
+.stack-enter {
+  transform: scale(2, 2);
 }
 
 @media screen and (max-width: 680px) {
