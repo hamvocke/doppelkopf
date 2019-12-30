@@ -69,10 +69,13 @@ export default {
   transition-delay: 0.5s;
 }
 
-.card-leave-active,
-.card-leave {
+.card-leave-active {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transition-delay: 0s;
-  transition: none;
+}
+
+.card-leave-to {
+  opacity: 0;
 }
 
 .card-enter {

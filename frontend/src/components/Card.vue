@@ -77,6 +77,8 @@ export default {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-delay: 0s;
 }
 
 .card-inner {
