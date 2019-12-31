@@ -18,5 +18,6 @@
   "language": "Sprache",
   "en": "English",
   "de": "Deutsch",
-  "options-header": "Einstellungen"
+  "options-header": "Einstellungen",
+  "tutorial-link": "https://de.wikipedia.org/wiki/Doppelkopf"
 }

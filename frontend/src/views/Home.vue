@@ -13,11 +13,19 @@
       <router-link
         v-if="showTutorial"
         to="/learn"
-        class="button button-secondary"
+        class="button button-secondary tutorial"
         tag="button"
       >
         {{ $t("how-to-play") }}
       </router-link>
+      <a
+        v-else
+        :href="$t('tutorial-link')"
+        target="_blank"
+        class="button button-secondary tutorial-link"
+      >
+        {{ $t("how-to-play") }}
+      </a>
     </div>
   </div>
 </template>
