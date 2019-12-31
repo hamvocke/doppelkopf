@@ -32,12 +32,13 @@
 .button-secondary {
   color: var(--black) !important;
   background: var(--white);
-  border-bottom-color: color(var(--white) shade(15%));
+  border-bottom-color: color(var(--white) shade(20%));
 }
 
 .button-secondary:hover,
 .button-secondary:active,
 .button-secondary:focus {
-  background: color(var(--white) shade(5%));
-  border-bottom-color: color(var(--white) shade(25%));
+  background: color(var(--white) shade(10%));
+  border-bottom-color: color(var(--white) shade(35%));
+  color: color(var(--black) shade(20%)) !important;
 }
