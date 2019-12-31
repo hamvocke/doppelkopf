@@ -242,12 +242,15 @@ td {
 }
 
 .badge {
-  padding: 3px 6px;
+  padding: 0 6px;
   background-color: var(--lightblue);
   color: var(--white);
   border-radius: 4px;
   font-weight: lighter;
   font-size: 0.9em;
+  display: inline-block;
+  line-height: 1.6em;
+  margin: 0 6px;
 }
 
 @media screen and (max-width: 680px) {
