@@ -1,6 +1,7 @@
 import VueI18n from "vue-i18n";
 
 import Scorecard from "@/components/Scorecard";
+import PointMeter from "@/components/scorecard/PointMeter";
 import { Player } from "@/models/player";
 import { Score } from "@/models/score";
 import { re, kontra } from "@/models/parties";
@@ -86,5 +87,11 @@ export const winning = () => ({
   },
   template:
     "<Scorecard :scorecard='scorecard' :players='players' :currentScore='score'/>",
+  i18n: new VueI18n(i18nOpts)
+});
+
+export const pointMeter = () => ({
+  components: { PointMeter },
+  template: "<PointMeter :rePoints='141' :kontraPoints='99' />",
   i18n: new VueI18n(i18nOpts)
 });
