@@ -231,6 +231,7 @@ td {
 }
 
 .button-row {
+  margin-top: 32px;
   text-align: right;
 }
 
