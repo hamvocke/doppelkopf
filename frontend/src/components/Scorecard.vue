@@ -2,9 +2,30 @@
   <div class="scorecard">
     <h1 class="message">{{ $t(message) }}</h1>
 
+    <div class="parties">
+      <div class="party-bubble">
+        <div class="party re">
+          Re
+        </div>
+        <div class="names">
+          {{ partyMembers("Re") }}
+        </div>
+      </div>
+
+      <div class="party-bubble">
+        <div class="party kontra">
+          Kontra
+        </div>
+        <div class="names">
+          {{ partyMembers("Kontra") }}
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <div class="column">
         <h2>{{ $t("results") }}</h2>
+
         <div class="row">
           <table>
             <tr>
@@ -14,9 +35,6 @@
                   <span class="badge">
                     {{ currentScore.rePoints }} {{ $t("points") }}
                   </span>
-                  <div class="members">
-                    {{ partyMembers("Re") }}
-                  </div>
                 </div>
               </th>
 
@@ -26,9 +44,6 @@
                   <span class="badge">
                     {{ currentScore.kontraPoints }} {{ $t("points") }}
                   </span>
-                  <div class="members">
-                    {{ partyMembers("Kontra") }}
-                  </div>
                 </div>
               </th>
             </tr>
@@ -148,7 +163,7 @@ export default {
     partyMembers: function(party) {
       return join(
         this.currentScore.parties[party].map(player => player.name),
-        ", "
+        " & "
       );
     }
   }
@@ -235,12 +250,6 @@ td {
   width: 100%;
 }
 
-.members {
-  font-weight: lighter;
-  font-style: italic;
-  font-size: 0.9em;
-}
-
 .badge {
   padding: 0 6px;
   background-color: var(--lightblue);
@@ -251,6 +260,42 @@ td {
   display: inline-block;
   line-height: 1.6em;
   margin: 0 6px;
+}
+
+.parties {
+  width: 100%;
+  margin: auto;
+  display: block;
+  text-align: center;
+}
+
+.party-bubble {
+  display: inline-flex;
+  margin: 8px auto;
+}
+
+.party {
+  padding: 4px 18px;
+  border-radius: 18px;
+  z-index: 1;
+  font-weight: bold;
+}
+
+.names {
+  padding: 4px 12px 4px 32px;
+  background-color: var(--lightgray);
+  border-radius: 18px;
+  margin-left: -24px;
+  z-index: 0;
+}
+
+.party.re {
+  background-color: var(--lightblue);
+  color: var(--white);
+}
+
+.party.kontra {
+  background-color: var(--cyan);
 }
 
 @media screen and (max-width: 680px) {
