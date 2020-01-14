@@ -23,6 +23,13 @@
     </div>
 
     <div class="row">
+      <PointMeter
+        :re-points="currentScore.rePoints"
+        :kontra-points="currentScore.kontraPoints"
+      />
+    </div>
+
+    <div class="row">
       <div class="column">
         <h2>{{ $t("results") }}</h2>
 
@@ -32,18 +39,12 @@
               <th>
                 <div class="summary">
                   <strong>Re</strong>
-                  <span class="badge">
-                    {{ currentScore.rePoints }} {{ $t("points") }}
-                  </span>
                 </div>
               </th>
 
               <th>
                 <div class="summary">
                   <strong>Kontra</strong>
-                  <span class="badge">
-                    {{ currentScore.kontraPoints }} {{ $t("points") }}
-                  </span>
                 </div>
               </th>
             </tr>
@@ -129,9 +130,13 @@
 
 <script>
 import { includes, join } from "lodash-es";
+import PointMeter from "./scorecard/PointMeter";
 
 export default {
   name: "Scorecard",
+  components: {
+    PointMeter
+  },
   props: {
     scorecard: {
       type: Object,
@@ -249,18 +254,6 @@ td {
   padding: 6px 0;
   text-align: left;
   width: 100%;
-}
-
-.badge {
-  padding: 0 6px;
-  background-color: var(--lightblue);
-  color: var(--white);
-  border-radius: 4px;
-  font-weight: lighter;
-  font-size: 0.9em;
-  display: inline-block;
-  line-height: 1.6em;
-  margin: 0 6px;
 }
 
 .parties {

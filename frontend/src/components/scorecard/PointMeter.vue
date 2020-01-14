@@ -42,7 +42,7 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin: 4px;
+  margin: 16px 4px;
 }
 
 .bar-wrapper {
@@ -54,17 +54,17 @@ export default {
   padding: 8px;
 }
 
-.re {
+.kontra {
   background-color: var(--cyan);
   border-bottom: 5px solid color(var(--cyan) shade(25%));
-  border-radius: 8px 0 0 8px;
+  border-radius: 0 8px 8px 0;
   color: var(--black);
 }
 
-.kontra {
+.re {
   background-color: var(--lightblue);
   border-bottom: 5px solid color(var(--lightblue) shade(25%));
-  border-radius: 0 8px 8px 0;
+  border-radius: 8px 0 0 8px;
   color: var(--white);
 }
 </style>
