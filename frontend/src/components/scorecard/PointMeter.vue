@@ -36,6 +36,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../../assets/css/vars.css";
+
 #point-meter {
   width: 100%;
   display: flex;
@@ -49,15 +51,20 @@ export default {
 
 .bar {
   margin: 0;
-  padding: 4px;
+  padding: 8px;
 }
 
 .re {
   background-color: var(--cyan);
+  border-bottom: 5px solid color(var(--cyan) shade(25%));
+  border-radius: 8px 0 0 8px;
   color: var(--black);
 }
 
 .kontra {
   background-color: var(--lightblue);
+  border-bottom: 5px solid color(var(--lightblue) shade(25%));
+  border-radius: 0 8px 8px 0;
+  color: var(--white);
 }
 </style>
