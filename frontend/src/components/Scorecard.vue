@@ -272,7 +272,7 @@ td {
 
 .party-bubble {
   display: inline-flex;
-  margin: 8px auto;
+  margin: 8px;
 }
 
 .party {
