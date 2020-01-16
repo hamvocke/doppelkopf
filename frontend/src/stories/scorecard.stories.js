@@ -25,9 +25,9 @@ const playersWithHumanLosing = [
 ];
 
 const playersWithHumanWinning = [
-  stubPlayer("Oswald", re, 70),
+  stubPlayer("Oswald", re, 21),
   stubPlayer("Mercedes", re, 60),
-  stubPlayer("Annegret", kontra, 50),
+  stubPlayer("Annegret", kontra, 99),
   stubPlayer("Giovanni", kontra, 60)
 ];
 
