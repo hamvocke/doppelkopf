@@ -270,9 +270,8 @@ td {
 }
 
 .parties {
-  width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: flex-end;
 }
 
