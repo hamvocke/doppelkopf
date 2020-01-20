@@ -3,21 +3,34 @@
     <h1 class="message">{{ $t(message) }}</h1>
 
     <div class="parties">
-      <div class="party-bubble">
-        <div class="party re">
-          Re
+      <div class="party-wrapper">
+        <div v-if="currentScore.winningParty() === 'Re'" class="winner-balloon">
+          🎈 {{ $t("winner") }}
         </div>
-        <div class="names">
-          {{ partyMembers("Re") }}
+        <div class="party-bubble">
+          <div class="party re">
+            Re
+          </div>
+          <div class="names">
+            {{ partyMembers("Re") }}
+          </div>
         </div>
       </div>
 
-      <div class="party-bubble">
-        <div class="party kontra">
-          Kontra
+      <div class="party-wrapper">
+        <div
+          v-if="currentScore.winningParty() === 'Kontra'"
+          class="winner-balloon"
+        >
+          🎈 {{ $t("winner") }}
         </div>
-        <div class="names">
-          {{ partyMembers("Kontra") }}
+        <div class="party-bubble">
+          <div class="party kontra">
+            Kontra
+          </div>
+          <div class="names">
+            {{ partyMembers("Kontra") }}
+          </div>
         </div>
       </div>
     </div>
@@ -258,25 +271,36 @@ td {
 
 .parties {
   width: 100%;
-  margin: auto;
-  display: block;
-  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.party-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.winner-balloon {
+  padding: 4px 12px;
+  font-weight: bold;
 }
 
 .party-bubble {
   display: inline-flex;
+  align-items: center;
   margin: 8px;
 }
 
 .party {
-  padding: 4px 18px;
+  padding: 6px 18px;
   border-radius: 18px;
   z-index: 1;
   font-weight: bold;
 }
 
 .names {
-  padding: 4px 12px 4px 32px;
+  padding: 6px 12px 6px 32px;
   background-color: var(--lightgray);
   border-radius: 18px;
   margin-left: -24px;
@@ -294,7 +318,7 @@ td {
 
 @media screen and (max-width: 680px) {
   .scorecard {
-    width: 90%;
+    width: 98%;
   }
 }
 </style>
