@@ -36,10 +36,10 @@ export default {
   },
   computed: {
     reStyle() {
-      return `width: ${this.rePoints * 2}px`;
+      return `width: ${(this.rePoints / 240) * 100}%`;
     },
     kontraStyle() {
-      return `width: ${this.kontraPoints * 2}px`;
+      return `width: ${(this.kontraPoints / 240) * 100}%`;
     }
   }
 };
@@ -50,20 +50,19 @@ export default {
 
 #point-meter {
   margin: 16px auto;
+  width: 620px;
 }
 
 .scale {
   position: relative;
-  margin-top: -18px;
-  top: 18px;
+  margin-top: -21px;
+  top: 21px;
   display: flex;
-  height: 18px;
-  width: 100%;
+  height: 21px;
   background: transparent;
 }
 
 .scale > span {
-  position: relative;
   flex-grow: 1;
 }
 
@@ -71,18 +70,16 @@ export default {
   background: var(--black);
   opacity: 0.1;
   mix-blend-mode: color-burn;
-  border-radius: 0 0 0 0;
 }
 
 .scale > span.bright {
   background: var(--white);
   opacity: 0.1;
-  mix-blend-mode: color-burn;
-  border-radius: 8px;
+  mix-blend-mode: color-dodge;
 }
 
 .bar-wrapper {
-  display: inline-flex;
+  display: flex;
 }
 
 .bar {
