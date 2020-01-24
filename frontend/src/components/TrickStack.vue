@@ -55,9 +55,12 @@ export default {
   justify-content: center;
 }
 
-.stack-enter-active,
-.stack-leave-active {
+.stack-enter-active {
   transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.stack-leave-active {
+  transition: none;
 }
 
 .stack-enter,
