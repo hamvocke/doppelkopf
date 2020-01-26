@@ -31,6 +31,10 @@ def create_app(test_config=None):
         integrations=[FlaskIntegration(), SqlalchemyIntegration()],
     )
 
+    from doppelkopf import login
+
+    login.init_app(app)
+
     from doppelkopf import admin, api
 
     app.register_blueprint(admin.blueprint)

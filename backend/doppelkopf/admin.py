@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required
 from .toggles import Toggle
 from .events import Event, EventTypes
 from .db import db
@@ -7,6 +8,7 @@ blueprint = Blueprint("admin", __name__, url_prefix="/admin")
 
 
 @blueprint.route("/", methods=["GET"])
+@login_required
 def index():
     all_events = Event.query.all()
     games_started = [
@@ -29,12 +31,14 @@ def index():
 
 
 @blueprint.route("/toggles", methods=["GET"])
+@login_required
 def toggles_list():
     all_toggles = Toggle.query.all()
     return render_template("admin/toggles.html", toggles=all_toggles)
 
 
 @blueprint.route("/toggles/submit", methods=["POST"])
+@login_required
 def toggles_submit():
     all_toggles = Toggle.query.all()
 
