@@ -8,7 +8,7 @@ Toggles
 <li class="mr-2">
   <a href="/admin">Admin</a>
 </li> /
-<li class="mx-2 text-indigo-600">
+<li class="mx-2 text-indigo-400">
   <a href="/admin/toggles">Toggles</a>
 </li>
 {% endblock %}
@@ -30,7 +30,7 @@ Toggles
     </thead>
     {% for toggle in toggles %}
     <tr>
-      <td class="border-t border-b px-2 py-4">
+      <td class="px-2 py-5">
           <label class="flex items-start flex-col md:flex-row md:items-center">
             <input type="checkbox"
                    class="toggle mb-2 md:mr-2 md:mb-0"
@@ -40,10 +40,10 @@ Toggles
             <span class="text-xs">{{ toggle.name }}</span>
           </label>
       </td>
-      <td class="border-t border-b px-2 py-4">
+      <td class="px-2 py-5">
         <span>{{ toggle.description }}</span>
       </td>
-      <td class="border-t border-b px-2 py-4">
+      <td class="px-2 py-5">
         {{ toggle.last_changed() }}
       </td>
     </tr>

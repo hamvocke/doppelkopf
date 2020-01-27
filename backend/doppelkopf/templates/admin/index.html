@@ -5,24 +5,24 @@ Admin
 {% endblock %}
 
 {% block breadcrumb %}
-<li class="mr-2 text-indigo-600">
+<li class="mr-2 text-indigo-400">
   <a href="/admin">Admin</a>
 </li>
 {% endblock %}
 
 {% block content %}
 <div class="flex flex-row flex-wrap">
-  <div class="flex flex-col items-center m-2 p-2 border border-gray-200 rounded">
+  <div class="flex flex-col items-center m-2 p-2 border border-gray-600 rounded">
     <span class="text-4xl font-mono">{{ stats.games_started }}</span>
     <span class="text-xs font-mono">Games started</span>
   </div>
 
-  <div class="flex flex-col items-center m-2 p-2 border border-gray-200 rounded">
+  <div class="flex flex-col items-center m-2 p-2 border border-gray-600 rounded">
     <span class="text-4xl font-mono">{{ stats.games_won }}</span>
     <span class="text-xs font-mono">Games won</span>
   </div>
 
-  <div class="flex flex-col items-center m-2 p-2 border border-gray-200 rounded">
+  <div class="flex flex-col items-center m-2 p-2 border border-gray-600 rounded">
     <span class="text-4xl font-mono">{{ stats.games_lost }}</span>
     <span class="text-xs font-mono">Games lost</span>
   </div>
