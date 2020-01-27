@@ -1,5 +1,6 @@
 from .users import User, users
 from .admin import blueprint
+from .helpers import is_safe_url
 from flask_login import LoginManager, login_user, logout_user
 
 from flask import request, render_template, redirect, url_for, abort
@@ -51,10 +52,8 @@ def login():
         login_user(user)
 
         next = request.args.get("next")
-        # is_safe_url should check if the url is safe for redirects.
-        # See http://flask.pocoo.org/snippets/62/ for an example.
-        # if not is_safe_url(next):
-        # return abort(400)
+        if not is_safe_url(next):
+            return abort(400)
 
         return redirect(next or url_for("admin.index"))
 

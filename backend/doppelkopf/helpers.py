@@ -1,4 +1,5 @@
 import datetime
+from urllib.parse import urlsplit
 
 
 def pretty_date(d: datetime.datetime) -> str:
@@ -22,3 +23,20 @@ def pretty_date(d: datetime.datetime) -> str:
         return "1 hour ago"
     else:
         return f"{int(seconds/3600)} hours ago"
+
+
+def is_safe_url(url: str) -> bool:
+    if url is None:
+        return True
+
+    u = urlsplit(url, scheme="https")
+
+    print(u)
+
+    if (u.scheme != "http" and u.scheme != "https"):
+        return False
+
+    if u.netloc != "":  # only relative URLs
+        return False
+
+    return True
