@@ -44,7 +44,8 @@ def login():
 
     email = request.form.get("email")
     password = request.form.get("password")
-    if password == users[email]["password"]:
+    user = users.get(email)
+    if user is not None and password == users[email]["password"]:
         user = User()
         user.id = email
         login_user(user)
