@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 import doppelkopf
 
 db = SQLAlchemy()
-migrate = Migrate()
+migrate = Migrate(compare_type=True)
 
 
 @click.command("seed-data")
