@@ -1,39 +1,42 @@
-from .users import User, users
-from .admin import blueprint
-from .helpers import is_safe_url
-from flask_login import LoginManager, login_user, logout_user
+from typing import Optional
 
 from flask import request, render_template, redirect, url_for, abort
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager, login_user, logout_user
+
+from .admin import blueprint
+from .helpers import is_safe_url
+from .users import User
 
 login_manager = LoginManager()
 login_manager.login_view = "admin.login"
 
+crypt = Bcrypt()
+
 
 def init_app(app):
     login_manager.init_app(app)
+    crypt.init_app(app)
 
 
 @login_manager.user_loader
-def load_user(email):
-    if email not in users:
-        return
+def load_user(id: str) -> User:
+    return User.query.get(int(id))
 
-    user = User()
-    user.id = email
-    return user
-    # return User.query.get(email)
+
+def load_user_by_name(name: str) -> User:
+    return User.query.filter(User.username == name).first()
 
 
 @login_manager.request_loader
-def request_loader(request):
-    email = request.form.get("email")
-    if email not in users:
-        return
+def request_loader(request) -> Optional[User]:
+    name = request.form.get("name")
 
-    user = User()
-    user.id = email
+    user = load_user_by_name(name)
 
-    user.is_authenticated = request.form["password"] == users[email]["password"]
+    if user:
+        if not user.is_correct_password(request.form.get("password")):
+            return None
 
     return user
 
@@ -43,12 +46,11 @@ def login():
     if request.method == "GET":
         return render_template("admin/login.html")
 
-    email = request.form.get("email")
+    name = request.form.get("name")
     password = request.form.get("password")
-    user = users.get(email)
-    if user is not None and password == users[email]["password"]:
-        user = User()
-        user.id = email
+    user = load_user_by_name(name)
+
+    if user is not None and user.is_correct_password(password):
         login_user(user)
 
         next = request.args.get("next")

@@ -1,6 +1,10 @@
 import pytest
 
-from doppelkopf import create_app, db
+from doppelkopf import create_app, db, login
+from doppelkopf.users import User
+
+
+_pw_hash = ""
 
 
 @pytest.fixture
@@ -20,6 +24,17 @@ def app():
 @pytest.fixture
 def client(app):
     return app.test_client()
+
+
+@pytest.fixture
+def user(app):
+    global _pw_hash
+    if not _pw_hash:
+        _pw_hash = login.crypt.generate_password_hash("password", 10)
+    user = User(username="test", password_hash=_pw_hash)
+    db.db.session.add(user)
+    db.db.session.commit()
+    return user
 
 
 @pytest.fixture

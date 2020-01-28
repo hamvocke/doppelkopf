@@ -1,9 +1,11 @@
 import datetime
+from typing import Optional
 from urllib.parse import urlsplit
 
 
-def pretty_date(d: datetime.datetime) -> str:
-    diff = datetime.datetime.utcnow() - d
+def pretty_date(d: datetime.datetime, now: Optional[datetime.datetime] = None) -> str:
+    n = now.utcnow() if now is not None else datetime.datetime.utcnow()
+    diff = n - d
     seconds = diff.seconds
     if diff.days > 7 or diff.days < 0:
         return d.strftime("%d %b %y")

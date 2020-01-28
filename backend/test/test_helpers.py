@@ -35,8 +35,8 @@ class TestPrettyDate:
         assert helpers.pretty_date(past_date) == "1 minute ago"
 
     def test_pretty_date_seconds_ago(self):
-        past_date = self.now - timedelta(seconds=59)
-        assert helpers.pretty_date(past_date) == "59 seconds ago"
+        past_date = self.now - timedelta(seconds=29, milliseconds=500)
+        assert helpers.pretty_date(past_date, self.now) == "30 seconds ago"
 
     def test_pretty_date_just_now(self):
         past_date = self.now - timedelta(milliseconds=300)
