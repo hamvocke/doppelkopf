@@ -1,12 +1,16 @@
+from datetime import datetime
 from typing import Optional
 
+import click
 from flask import request, render_template, redirect, url_for, abort
+from flask.cli import with_appcontext
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_user, logout_user
 
 from .admin import blueprint
 from .helpers import is_safe_url
 from .users import User
+from .db import db
 
 login_manager = LoginManager()
 login_manager.login_view = "admin.login"
@@ -17,6 +21,7 @@ crypt = Bcrypt()
 def init_app(app):
     login_manager.init_app(app)
     crypt.init_app(app)
+    app.cli.add_command(create_user_command)
 
 
 @login_manager.user_loader
@@ -68,3 +73,21 @@ def login():
 def logout():
     logout_user()
     return "Logged out"
+
+
+@click.command("create-user")
+@click.option("-u", "--username")
+@click.option("-p", "--password")
+@with_appcontext
+def create_user_command(username, password):
+    if username is None or password is None:
+        click.echo("Error: Must provide username and password")
+        return
+
+    password_hash = crypt.generate_password_hash(password)
+    user = User(
+        username=username, password_hash=password_hash, created_at=datetime.utcnow()
+    )
+    db.session.add(user)
+    db.session.commit()
+    click.echo(f"Created user {username}.")

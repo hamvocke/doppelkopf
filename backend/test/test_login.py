@@ -1,4 +1,5 @@
 import doppelkopf.login
+from doppelkopf.users import User
 
 
 def test_should_return_none_if_user_does_not_exist(app):
@@ -42,3 +43,21 @@ def test_should_logout_user(user, client):
         response = client.get("/admin/logout")
     assert response.status_code == 200
     assert b"Logged out" in response.data
+
+
+def test_should_not_create_user_with_missing_parameters(runner):
+    result = runner.invoke(
+        doppelkopf.login.create_user_command, ["--username", "test-cli"]
+    )
+    assert "Error: Must provide username and password" in result.output
+
+
+def test_create_user(runner):
+    result = runner.invoke(
+        doppelkopf.login.create_user_command,
+        ["--username", "test-cli", "--password", "password"],
+    )
+
+    user = User.query.filter(User.username == "test-cli").first()
+    assert "Created user test-cli" in result.output
+    assert user is not None

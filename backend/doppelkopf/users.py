@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask_login import UserMixin
 
-import doppelkopf
+import doppelkopf.login
 from .db import db
 
 
