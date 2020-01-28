@@ -50,7 +50,7 @@ export default {
 
 #point-meter {
   margin: 16px auto;
-  width: 620px;
+  max-width: 620px;
 }
 
 .scale {

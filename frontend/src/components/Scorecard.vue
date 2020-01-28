@@ -35,12 +35,10 @@
       </div>
     </div>
 
-    <div class="row">
-      <PointMeter
-        :re-points="currentScore.rePoints"
-        :kontra-points="currentScore.kontraPoints"
-      />
-    </div>
+    <PointMeter
+      :re-points="currentScore.rePoints"
+      :kontra-points="currentScore.kontraPoints"
+    />
 
     <div class="row">
       <div class="column">
