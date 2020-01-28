@@ -33,7 +33,7 @@ def is_safe_url(url: str) -> bool:
 
     print(u)
 
-    if (u.scheme != "http" and u.scheme != "https"):
+    if u.scheme != "http" and u.scheme != "https":
         return False
 
     if u.netloc != "":  # only relative URLs

@@ -54,7 +54,12 @@ class TestSafeUrl:
         assert helpers.is_safe_url("file:///usr/lib/foo") is False
 
     def test_reject_data(self):
-        assert helpers.is_safe_url("data:text/html,<script>alert(document.domain)</script>") is False
+        assert (
+            helpers.is_safe_url(
+                "data:text/html,<script>alert(document.domain)</script>"
+            )
+            is False
+        )
 
     def test_allow_path(self):
         assert helpers.is_safe_url("/admin/") is True
