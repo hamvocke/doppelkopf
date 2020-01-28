@@ -3,6 +3,7 @@ FROM python:3.7.5-alpine3.10
 COPY . /app
 WORKDIR /app
 
+RUN apk add python python-dev py2-pip autoconf automake g++ make --no-cache
 RUN pip install pipenv && pipenv install --deploy --ignore-pipfile
 
 EXPOSE 5000
