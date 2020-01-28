@@ -80,7 +80,7 @@ def logout():
 @click.option("-p", "--password")
 @with_appcontext
 def create_user_command(username, password):
-    if username is None or password is None:
+    if username is None or username == "" or password is None or password == "":
         click.echo("Error: Must provide username and password")
         return
 
