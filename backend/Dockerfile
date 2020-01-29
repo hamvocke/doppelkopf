@@ -3,7 +3,7 @@ FROM python:3.7.5-alpine3.10
 COPY . /app
 WORKDIR /app
 
-RUN apk add --no-cache --virtual build-deps gcc python-dev libffi libffi-dev
+RUN apk add --no-cache --virtual build-deps build-base gcc python-dev libffi libffi-dev
 RUN pip install pipenv && pipenv install --deploy --ignore-pipfile
 
 EXPOSE 5000
