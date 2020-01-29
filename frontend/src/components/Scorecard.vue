@@ -67,6 +67,7 @@
                     :key="extra"
                   >
                     {{ $t(extra) }}
+                    <span :title="$t(extra + '_description')">(?)</span>
                   </li>
                 </ul>
               </td>
@@ -77,6 +78,7 @@
                     :key="extra"
                   >
                     {{ $t(extra) }}
+                    <span :title="$t(extra + '_description')">(?)</span>
                   </li>
                 </ul>
               </td>
