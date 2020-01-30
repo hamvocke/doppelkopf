@@ -1,6 +1,6 @@
 import { re, kontra } from "@/models/parties";
 import { flatMap } from "lodash-es";
-import { WIN, BEAT_RE } from "@/models/extras";
+import { WIN, BEAT_RE, NO_90, NO_60, NO_30, NO_POINTS } from "@/models/extras";
 
 const sumPointsForParty = (acc, player) => acc + player.points();
 const extrasInTrickStack = (acc, player) => acc + player.trickStack.extras();
@@ -24,11 +24,45 @@ export class Score {
       );
     }
 
-    if (this.rePoints > this.kontraPoints) {
+    const winnerParty = this.winningParty();
+    if (winnerParty === re) {
       this.addExtra(re, WIN);
     } else {
       this.addExtra(kontra, WIN);
       this.addExtra(kontra, BEAT_RE);
+    }
+
+    if (this.rePoints < 90) {
+      this.addExtra(kontra, NO_90);
+    }
+
+    if (this.rePoints < 60) {
+      this.addExtra(kontra, NO_60);
+    }
+
+    if (this.rePoints < 30) {
+      this.addExtra(kontra, NO_30);
+    }
+
+    if (this.rePoints === 0) {
+      this.addExtra(kontra, NO_POINTS);
+    }
+
+
+    if (this.kontraPoints < 90) {
+      this.addExtra(re, NO_90);
+    }
+
+    if (this.kontraPoints < 60) {
+      this.addExtra(re, NO_60);
+    }
+
+    if (this.kontraPoints < 30) {
+      this.addExtra(re, NO_30);
+    }
+
+    if (this.kontraPoints === 0) {
+      this.addExtra(re, NO_POINTS);
     }
 
     this.addExtra(re, this.parties[re].reduce(extrasInTrickStack, []));

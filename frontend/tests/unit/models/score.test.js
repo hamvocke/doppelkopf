@@ -1,21 +1,19 @@
 import { Score } from "@/models/score";
 import { Player } from "@/models/player";
 import { re, kontra } from "@/models/parties";
-import { WIN, BEAT_RE, DOPPELKOPF } from "@/models/extras";
+import { WIN, BEAT_RE, DOPPELKOPF, NO_90, NO_60, NO_30, NO_POINTS } from "@/models/extras";
 
-const playersWithReWinning = [
-  stubPlayer("Player 1", re, 70),
-  stubPlayer("Player 2", re, 60),
-  stubPlayer("Player 3", kontra, 50),
-  stubPlayer("Player 4", kontra, 60)
-];
+const playersWithReWinning = stubParties(130, 110);
+const playersWithKontraWinning = stubParties(110, 130);
 
-const playersWithKontraWinning = [
-  stubPlayer("Player 1", re, 50),
-  stubPlayer("Player 2", re, 60),
-  stubPlayer("Player 3", kontra, 70),
-  stubPlayer("Player 4", kontra, 60)
-];
+function stubParties(rePoints, kontraPoints) {
+  return [
+    stubPlayer("Player 1", re, rePoints / 2),
+    stubPlayer("Player 2", re, rePoints / 2),
+    stubPlayer("Player 3", kontra, kontraPoints / 2),
+    stubPlayer("Player 4", kontra, kontraPoints / 2)
+  ];
+}
 
 function stubPlayer(name, party, points) {
   const stubbedPlayer = new Player(name);
@@ -120,6 +118,42 @@ describe("calculating extras", () => {
     score.evaluate(playersWithKontraWinning);
 
     expect(score.points()).toBe(2);
+  });
+
+  test("should add no 90 extra", () => {
+    const score = new Score();
+
+    score.evaluate(stubParties(89, 240 - 89));
+
+    expect(score.points()).toBe(3); // won, beat re, no 90
+    expect(score.listExtras(kontra)).toContain(NO_90);
+  });
+
+  test("should add no 60 extra", () => {
+    const score = new Score();
+
+    score.evaluate(stubParties(240 - 59, 59));
+
+    expect(score.points()).toBe(3); // won, no 90, no 60
+    expect(score.listExtras(re)).toContain(NO_60);
+  });
+
+  test("should add no 30 extra", () => {
+    const score = new Score();
+
+    score.evaluate(stubParties(29, 240 - 29));
+
+    expect(score.points()).toBe(5); // won, beat re, no 90, no 60, no 30
+    expect(score.listExtras(kontra)).toContain(NO_30);
+  });
+
+  test("should add no points extra", () => {
+    const score = new Score();
+
+    score.evaluate(stubParties(240, 0));
+
+    expect(score.points()).toBe(5); // won, no 90, no 60, no 30, no points
+    expect(score.listExtras(re)).toContain(NO_30);
   });
 
   test("should list doppelkopf extra", () => {
