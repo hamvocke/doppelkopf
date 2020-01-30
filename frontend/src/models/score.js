@@ -25,10 +25,10 @@ export class Score {
     }
 
     const winnerParty = this.winningParty();
-    if (winnerParty === re) {
-      this.addExtra(re, WIN);
-    } else {
-      this.addExtra(kontra, WIN);
+
+    this.addExtra(winnerParty, WIN);
+
+    if (winnerParty === kontra) {
       this.addExtra(kontra, BEAT_RE);
     }
 
@@ -36,29 +36,28 @@ export class Score {
       this.addExtra(kontra, NO_90);
     }
 
-    if (this.rePoints < 60) {
-      this.addExtra(kontra, NO_60);
-    }
-
-    if (this.rePoints < 30) {
-      this.addExtra(kontra, NO_30);
-    }
-
-    if (this.rePoints === 0) {
-      this.addExtra(kontra, NO_POINTS);
-    }
-
-
     if (this.kontraPoints < 90) {
       this.addExtra(re, NO_90);
+    }
+
+    if (this.rePoints < 60) {
+      this.addExtra(kontra, NO_60);
     }
 
     if (this.kontraPoints < 60) {
       this.addExtra(re, NO_60);
     }
 
+    if (this.rePoints < 30) {
+      this.addExtra(kontra, NO_30);
+    }
+
     if (this.kontraPoints < 30) {
       this.addExtra(re, NO_30);
+    }
+
+    if (this.rePoints === 0) {
+      this.addExtra(kontra, NO_POINTS);
     }
 
     if (this.kontraPoints === 0) {
