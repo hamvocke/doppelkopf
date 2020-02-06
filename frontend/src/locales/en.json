@@ -23,8 +23,8 @@
   "no_points": "No points",
   "no_points_description": "The other party got no points at all",
 
-  "you_lose": "You lost!",
-  "you_win": "You won!",
+  "you_lose": "You lost the game!",
+  "you_win": "You won the game!",
   "trick_goes_to": "Trick goes to:",
   "cant-play-card": "You can't play that card",
   "not-your-turn": "It's not your turn, buddy!",
