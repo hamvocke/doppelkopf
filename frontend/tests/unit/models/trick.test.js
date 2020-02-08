@@ -155,7 +155,7 @@ describe("extras", () => {
     trick.add(ace.of(suits.spades), player1);
     trick.add(ace.of(suits.spades), player2);
 
-    expect(trick.extras()).toBe(DOPPELKOPF);
+    expect(trick.extras()).toEqual([DOPPELKOPF]);
   });
 
   test("should find Fuchs", () => {
@@ -171,6 +171,6 @@ describe("extras", () => {
     trick.add(ace.of(suits.diamonds), player1);
     trick.add(ace.of(suits.spades), player2);
 
-    expect(trick.extras()).toBe(FOX);
+    expect(trick.extras()).toEqual([FOX]);
   });
 });

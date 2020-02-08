@@ -3,7 +3,8 @@ import { flatMap } from "lodash-es";
 import { WIN, BEAT_RE, NO_90, NO_60, NO_30, NO_POINTS } from "@/models/extras";
 
 const sumPointsForParty = (acc, player) => acc + player.points();
-const extrasInTrickStack = (acc, player) => acc + player.trickStack.extras();
+const extrasInTrickStack = (acc, player) =>
+  acc.concat(player.trickStack.extras());
 
 export class Score {
   constructor() {
@@ -64,8 +65,16 @@ export class Score {
       this.addExtra(re, NO_POINTS);
     }
 
-    this.addExtra(re, this.parties[re].reduce(extrasInTrickStack, []));
-    this.addExtra(kontra, this.parties[kontra].reduce(extrasInTrickStack, []));
+    const reExtras = this.parties[re].reduce(extrasInTrickStack, []);
+    const kontraExtras = this.parties[kontra].reduce(extrasInTrickStack, []);
+
+    for (const extra of reExtras) {
+      this.addExtra(re, extra);
+    }
+
+    for (const extra of kontraExtras) {
+      this.addExtra(kontra, extra);
+    }
   }
 
   findParties(players) {

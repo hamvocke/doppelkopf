@@ -1,4 +1,4 @@
-import { flatMap, concat, compact } from "lodash-es";
+import { flatMap } from "lodash-es";
 
 export class TrickStack {
   constructor(player, tricks = []) {
@@ -24,9 +24,8 @@ export class TrickStack {
   }
 
   extras() {
-    return this.tricks.reduce(
-      (acc, trick) => compact(concat(acc, trick.extras())),
-      []
-    );
+    return this.tricks
+      .reduce((acc, trick) => acc.concat(trick.extras()), [])
+      .flat();
   }
 }

@@ -70,8 +70,9 @@ export class Trick {
   }
 
   extras() {
+    let extras = [];
     if (this.points() >= 40) {
-      return DOPPELKOPF;
+      extras.push(DOPPELKOPF);
     }
 
     var fox = this.findFox();
@@ -79,8 +80,10 @@ export class Trick {
       const caughtByOtherParty =
         (fox.player.isRe() && !this.winner().isRe()) ||
         (fox.player.isKontra() && !this.winner().isKontra());
-      if (caughtByOtherParty) return FOX;
+      if (caughtByOtherParty) extras.push(FOX);
     }
+
+    return extras;
   }
 
   findFox() {

@@ -1,7 +1,15 @@
 import { Score } from "@/models/score";
 import { Player } from "@/models/player";
 import { re, kontra } from "@/models/parties";
-import { WIN, BEAT_RE, DOPPELKOPF, NO_90, NO_60, NO_30, NO_POINTS } from "@/models/extras";
+import {
+  WIN,
+  BEAT_RE,
+  DOPPELKOPF,
+  FOX,
+  NO_90,
+  NO_60,
+  NO_30
+} from "@/models/extras";
 
 const playersWithReWinning = stubParties(130, 110);
 const playersWithKontraWinning = stubParties(110, 130);
@@ -174,6 +182,18 @@ describe("calculating extras", () => {
     score.evaluate(playersWithKontraWinning);
 
     const expectedExtrasForKontra = [WIN, BEAT_RE];
+    expect(score.listExtras(re)).toEqual([]);
+    expect(score.listExtras(kontra)).toEqual(expectedExtrasForKontra);
+  });
+
+  test("should list extra from tricks parties", () => {
+    const score = new Score();
+    let playerConstellation = playersWithKontraWinning;
+    playerConstellation[2].trickStack.extras = () => [DOPPELKOPF, FOX];
+
+    score.evaluate(playerConstellation);
+
+    const expectedExtrasForKontra = [WIN, BEAT_RE, DOPPELKOPF, FOX];
     expect(score.listExtras(re)).toEqual([]);
     expect(score.listExtras(kontra)).toEqual(expectedExtrasForKontra);
   });
