@@ -14,6 +14,8 @@
   "beat_re_description": "Kontra won against the Re party",
   "doppelkopf": "Doppelkopf",
   "doppelkopf_description": "This party won a trick worth 40 or more points",
+  "fox": "Caught a fox",
+  "fox_description": "this party caught an ace of diamonds ('Fox') from the other party",
   "no_90": "No 90",
   "no_90_description": "The other party got less than 90 points",
   "no_60": "No 60",

@@ -14,6 +14,8 @@
   "beat_re_description": "Kontra hat gegen die Re-Partei gewonnen",
   "doppelkopf": "Doppelkopf",
   "doppelkopf_description": "Diese Partei hat einen Stich mit 40 Punkten oder mehr geholt",
+  "fox": "Fuchs gefangen",
+  "fox_description": "Diese Partei hat ein Karo Ass (Fuchs) der anderen Partei gefangen",
   "no_90": "Keine 90",
   "no_90_description": "Die andere partei hat keine 90 Punkte erzielt",
   "no_60": "Keine 60",
