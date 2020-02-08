@@ -1,4 +1,5 @@
 export const DOPPELKOPF = "doppelkopf";
+export const FOX = "fox";
 export const WIN = "win";
 export const BEAT_RE = "beat_re";
 export const NO_90 = "no_90";

@@ -2,7 +2,7 @@ import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PlayedCard } from "@/models/playedCard";
 import { queen, king, suits, ten, ace } from "@/models/card";
-import { DOPPELKOPF } from "@/models/extras";
+import { DOPPELKOPF, FOX } from "@/models/extras";
 
 const player1 = new Player("Player 1", true);
 const player2 = new Player("Player 2");
@@ -91,7 +91,7 @@ test("should find winner for a finished trick", () => {
   trick.add(king.of(suits.hearts), player4);
   trick.add(ace.of(suits.hearts), player1);
 
-  expect(trick.winner()).toEqual({ id: player1.id, name: player1.name });
+  expect(trick.winner()).toEqual(player1);
 });
 
 test("should find winner for a finished trick - clubs", () => {
@@ -102,7 +102,7 @@ test("should find winner for a finished trick - clubs", () => {
   trick.add(king.of(suits.clubs), player4);
   trick.add(ace.of(suits.clubs), player1);
 
-  expect(trick.winner()).toEqual({ id: player1.id, name: player1.name });
+  expect(trick.winner()).toEqual(player1);
 });
 
 test("should find winner for a finished trick - trumps", () => {
@@ -113,7 +113,7 @@ test("should find winner for a finished trick - trumps", () => {
   trick.add(king.of(suits.diamonds), player4);
   trick.add(ten.of(suits.clubs), player1);
 
-  expect(trick.winner()).toEqual({ id: player4.id, name: player4.name });
+  expect(trick.winner()).toEqual(player4);
 });
 
 test("should find winner for an unfinished trick - non-trumps", () => {
@@ -122,7 +122,7 @@ test("should find winner for an unfinished trick - non-trumps", () => {
   trick.add(ten.of(suits.spades), player3);
   trick.add(ace.of(suits.hearts), player4);
 
-  expect(trick.winner()).toEqual({ id: player3.id, name: player3.name });
+  expect(trick.winner()).toEqual(player3);
 });
 
 test("should find winner for an unfinished trick", () => {
@@ -132,7 +132,7 @@ test("should find winner for an unfinished trick", () => {
   trick.add(queen.of(suits.diamonds), player4);
   trick.add(queen.of(suits.clubs), player1);
 
-  expect(trick.winner()).toEqual({ id: player1.id, name: player1.name });
+  expect(trick.winner()).toEqual(player1);
 });
 
 test("should return points in a trick", () => {
@@ -156,5 +156,21 @@ describe("extras", () => {
     trick.add(ace.of(suits.spades), player2);
 
     expect(trick.extras()).toBe(DOPPELKOPF);
+  });
+
+  test("should find Fuchs", () => {
+    const trick = new Trick(4);
+
+    player1.isRe = () => true;
+    player2.isRe = () => true;
+    player3.isRe = () => false;
+    player4.isRe = () => false;
+
+    trick.add(ten.of(suits.hearts), player3);
+    trick.add(king.of(suits.spades), player4);
+    trick.add(ace.of(suits.diamonds), player1);
+    trick.add(ace.of(suits.spades), player2);
+
+    expect(trick.extras()).toBe(FOX);
   });
 });

@@ -6,7 +6,7 @@
           v-for="playedCard in cards"
           :key="playedCard.card.cardId"
           :card="playedCard.card"
-          :player-name="playedCard.name"
+          :player-name="playedCard.player.name"
         />
       </transition-group>
     </div>

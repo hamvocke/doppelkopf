@@ -1,6 +1,7 @@
-import { find, uniqueId } from "lodash-es";
+import { uniqueId } from "lodash-es";
 import { PlayedCard, beats } from "@/models/playedCard";
-import { DOPPELKOPF } from "@/models/extras";
+import { ranks, suits } from "@/models/card";
+import { DOPPELKOPF, FOX } from "@/models/extras";
 
 export class Trick {
   constructor(expectedNumberOfCards) {
@@ -29,7 +30,9 @@ export class Trick {
   }
 
   cardBy(player) {
-    return find(this.playedCards, { playerId: player.id });
+    return this.playedCards.filter(
+      playedCard => playedCard.player.id === player.id
+    )[0];
   }
 
   isFinished() {
@@ -56,10 +59,7 @@ export class Trick {
       }
     }
 
-    return {
-      id: highestCard.playerId,
-      name: highestCard.name
-    };
+    return highestCard.player;
   }
 
   points() {
@@ -73,5 +73,21 @@ export class Trick {
     if (this.points() >= 40) {
       return DOPPELKOPF;
     }
+
+    var fox = this.findFox();
+    if (fox) {
+      const caughtByOtherParty =
+        (fox.player.isRe() && !this.winner().isRe()) ||
+        (fox.player.isKontra() && !this.winner().isKontra());
+      if (caughtByOtherParty) return FOX;
+    }
+  }
+
+  findFox() {
+    return this.playedCards.filter(
+      playedCard =>
+        playedCard.card.rank === ranks.ace &&
+        playedCard.card.suit === suits.diamonds
+    )[0];
   }
 }
