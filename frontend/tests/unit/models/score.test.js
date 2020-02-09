@@ -111,6 +111,17 @@ describe("calculating extras", () => {
     expect(score.points()).toBe(1);
   });
 
+  test("should give subtract losing party's points", () => {
+    const score = new Score();
+
+    playersWithReWinning[2].trickStack.extras = () => [DOPPELKOPF];
+    score.evaluate(playersWithReWinning);
+
+    expect(score.points()).toBe(0);
+    expect(score.listExtras(re)).toEqual([WIN]);
+    expect(score.listExtras(kontra)).toEqual([DOPPELKOPF]);
+  });
+
   test("should add extra point", () => {
     const score = new Score();
 

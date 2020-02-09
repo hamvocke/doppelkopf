@@ -97,7 +97,10 @@ export class Score {
   }
 
   points() {
-    return this.extras[this.winningParty()].length;
+    return (
+      this.extras[this.winningParty()].length -
+      this.extras[this.losingParty()].length
+    );
   }
 
   addExtra(party, extraKey) {
