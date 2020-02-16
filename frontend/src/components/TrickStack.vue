@@ -8,7 +8,7 @@
         <Card :is-covered="true" :card="{}" />
       </div>
     </transition>
-    <p class="trickCount">{{ $tc("trick", trickStack.tricks.length) }}</p>
+    <div class="trickCount">{{ $tc("trick", trickStack.tricks.length) }}</div>
   </div>
 </template>
 
@@ -47,7 +47,7 @@ export default {
 }
 
 .trickCount {
-  display: block;
+  margin-top: 12px;
 }
 
 .cards {

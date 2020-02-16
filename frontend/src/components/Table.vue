@@ -67,16 +67,12 @@ export default {
 <style scoped>
 .table {
   display: grid;
-  grid-template-columns: minmax(120px, auto) minmax(400px, auto) minmax(
-      120px,
-      auto
-    );
-  grid-template-rows: minmax(120px, auto) 400px 120px minmax(120px, auto);
+  grid-template-rows: minmax(120px, auto) 400px minmax(120px, auto) 120px;
   grid-template-areas:
     "top top top"
     "left center right"
-    "left controls right"
-    "bottom bottom bottom";
+    "left bottom right"
+    "controls controls controls";
   overflow: hidden;
 }
 .top {
@@ -104,11 +100,20 @@ export default {
 
 @media screen and (max-width: 680px) {
   .table {
-    grid-template-columns: minmax(80px, auto) minmax(200px, auto) minmax(
-        80px,
-        auto
-      );
-    grid-template-rows: minmax(120px, auto) 250px 120px minmax(120px, auto);
+    grid-template-columns:
+      minmax(80px, auto)
+      minmax(200px, auto)
+      minmax(80px, auto);
+    grid-template-rows:
+      minmax(120px, auto)
+      minmax(250px, auto)
+      minmax(120px, auto)
+      120px;
+    grid-template-areas:
+      "top top top"
+      "left center right"
+      "bottom bottom bottom"
+      "controls controls controls";
   }
 }
 </style>
