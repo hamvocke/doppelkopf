@@ -43,6 +43,6 @@ describe("TrickStack.vue", () => {
     const wrapper = mount(TrickStack, {
       propsData: { trickStack: trickStack }
     });
-    expect(wrapper.find("p.trickCount").exists()).toBe(true);
+    expect(wrapper.find(".trickCount").exists()).toBe(true);
   });
 });
