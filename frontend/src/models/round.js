@@ -75,8 +75,7 @@ export class Round {
   }
 
   async showExtras() {
-    const extra = this.currentTrick.extras();
-    if (extra) {
+    for (let extra of this.currentTrick.extras()) {
       switch (extra) {
         case DOPPELKOPF:
           await notifier.flash("Doppelkopf");
