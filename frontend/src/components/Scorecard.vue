@@ -35,10 +35,12 @@
       </div>
     </div>
 
-    <PointMeter
-      :re-points="currentScore.rePoints"
-      :kontra-points="currentScore.kontraPoints"
-    />
+    <div class="meter">
+      <PointMeter
+        :re-points="currentScore.rePoints"
+        :kontra-points="currentScore.kontraPoints"
+      />
+    </div>
 
     <div class="row">
       <div class="column">
@@ -195,7 +197,7 @@ export default {
   font-family: sans-serif;
   text-align: left;
   background: white;
-  padding: 12px;
+  padding: 24px;
   margin: 6px;
   border-radius: 6px;
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
@@ -314,6 +316,10 @@ td {
 
 .party.kontra {
   background-color: var(--cyan);
+}
+
+.meter {
+  padding: 12px 0;
 }
 
 @media screen and (max-width: 680px) {
