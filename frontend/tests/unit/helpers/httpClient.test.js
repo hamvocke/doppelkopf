@@ -1,6 +1,6 @@
 import { HttpClient } from "@/helpers/httpClient";
 import { Config } from "@/models/config";
-import fetchMock from "fetch-mock/esm/client";
+const fetchMock = require("fetch-mock");
 
 const http = new HttpClient();
 Config.testing = false; // make httpClient fire "real" requests so it's hitting fetchMock

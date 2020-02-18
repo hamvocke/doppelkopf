@@ -1,6 +1,6 @@
 import { Telemetry } from "@/models/telemetry";
 import { Config } from "@/models/config";
-import fetchMock from "fetch-mock/esm/client";
+const fetchMock = require("fetch-mock");
 
 // disable testing mode  so we're hitting fetchMock requests
 Config.testing = false;
