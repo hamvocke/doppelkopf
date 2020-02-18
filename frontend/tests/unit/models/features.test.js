@@ -1,6 +1,6 @@
 import { Features, Feature } from "@/models/features";
 import { Config } from "@/models/config";
-import fetchMock from "fetch-mock";
+import fetchMock from "fetch-mock/esm/client";
 
 // disable testing mode so we're hitting fetchMock
 Config.testing = false;
