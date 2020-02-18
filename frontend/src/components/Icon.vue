@@ -49,3 +49,10 @@ export default {
   }
 };
 </script>
+
+<style>
+span {
+  display: inline-flex;
+  vertical-align: text-bottom;
+}
+</style>

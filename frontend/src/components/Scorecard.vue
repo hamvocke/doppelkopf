@@ -68,8 +68,10 @@
                     v-for="extra in currentScore.listExtras('Re')"
                     :key="extra"
                   >
+                    <span :title="$t(extra + '_description')">
+                      <Icon name="info" />
+                    </span>
                     {{ $t(extra) }}
-                    <span :title="$t(extra + '_description')">(?)</span>
                   </li>
                 </ul>
               </td>
@@ -79,8 +81,10 @@
                     v-for="extra in currentScore.listExtras('Kontra')"
                     :key="extra"
                   >
+                    <span :title="$t(extra + '_description')">
+                      <Icon name="info" />
+                    </span>
                     {{ $t(extra) }}
-                    <span :title="$t(extra + '_description')">(?)</span>
                   </li>
                 </ul>
               </td>
@@ -146,11 +150,13 @@
 <script>
 import { includes, join } from "lodash-es";
 import PointMeter from "./scorecard/PointMeter";
+import Icon from "./Icon";
 
 export default {
   name: "Scorecard",
   components: {
-    PointMeter
+    PointMeter,
+    Icon
   },
   props: {
     scorecard: {
@@ -320,6 +326,10 @@ td {
 
 .meter {
   padding: 12px 0;
+}
+
+li {
+  line-height: 2.4em;
 }
 
 @media screen and (max-width: 680px) {
