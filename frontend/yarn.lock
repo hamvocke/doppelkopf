@@ -5599,6 +5599,13 @@ fd-slicer@~1.0.1:
   dependencies:
     pend "~1.2.0"
 
+fetch-mock-jest@^1.1.0-beta.3:
+  version "1.1.0-beta.3"
+  resolved "https://registry.yarnpkg.com/fetch-mock-jest/-/fetch-mock-jest-1.1.0-beta.3.tgz#0137546876d5a547953e9af86be3feebfd58e1d9"
+  integrity sha512-ZG7efRQhmF4GZliiessponPjKXt5HCjawUynxaHcmIXQChNusBYHrE1MBR3OvhAy6FqqC87+FobzSkhjjy7YvA==
+  dependencies:
+    fetch-mock "^8.0.0"
+
 fetch-mock@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/fetch-mock/-/fetch-mock-8.0.0.tgz#b0f5c9d639f9f01d1e312597f60ad34a9866aa71"

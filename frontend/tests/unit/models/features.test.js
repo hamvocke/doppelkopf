@@ -1,6 +1,6 @@
 import { Features, Feature } from "@/models/features";
 import { Config } from "@/models/config";
-const fetchMock = require("fetch-mock");
+const fetchMock = require("fetch-mock-jest");
 
 // disable testing mode so we're hitting fetchMock
 Config.testing = false;
