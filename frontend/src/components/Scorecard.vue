@@ -332,9 +332,9 @@ li {
   line-height: 2.4em;
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 960px) {
   .scorecard {
-    width: 98%;
+    width: 92%;
   }
 }
 </style>

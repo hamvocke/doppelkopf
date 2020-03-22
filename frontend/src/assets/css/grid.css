@@ -8,7 +8,7 @@
   margin: 6px;
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 960px) {
   .row {
     display: block;
   }
