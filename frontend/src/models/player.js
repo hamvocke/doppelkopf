@@ -9,11 +9,18 @@ import { playableCards } from "@/models/playableCardFinder";
 const notifier = new Notifier();
 
 export class Player {
-  constructor(name, isHuman = false, tablePosition = "bottom", game = {}) {
+  constructor(
+    name,
+    isHuman = false,
+    isMe = false,
+    tablePosition = "bottom", // todo: remove 'position', introduce new 'table view' class?
+    game = {}
+  ) {
     this.id = uniqueId("player_");
     this.name = name;
     this.hand = new Hand();
     this.isHuman = isHuman;
+    this.isMe = isMe;
     this.trickStack = new TrickStack(this);
     this.tablePosition = tablePosition;
     this.game = game;
