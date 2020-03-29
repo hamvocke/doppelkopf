@@ -1,4 +1,5 @@
 import { uniqueId } from "lodash-es";
+import { Game } from "@/models/game";
 
 export const states = {
   waiting: "waiting",
@@ -33,5 +34,7 @@ export class WaitingRoom {
     if (this.state !== states.ready) {
       throw new Error("Can't start game until 4 players are there");
     }
+
+    return new Game();
   }
 }

@@ -73,6 +73,13 @@ describe("Waiting Room", () => {
   test.todo("should change state to 'waiting' if a player leaves");
 
   test("should allow starting the game when game is ready", () => {
+    const room = new WaitingRoom(player);
+    room.join(new Player("player 2"));
+    room.join(new Player("player 3"));
+    room.join(new Player("player 4"));
 
+    const game = room.startGame();
+
+    expect(game).toBeDefined();
   });
 });
