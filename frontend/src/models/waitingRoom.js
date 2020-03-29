@@ -1,4 +1,4 @@
-import { uniqueId } from "lodash-es";
+import { generateNameId } from "@/models/random";
 import { Game } from "@/models/game";
 
 export const states = {
@@ -14,7 +14,7 @@ export class WaitingRoom {
     }
 
     this.owner = player;
-    this.gameId = uniqueId("room_");
+    this.gameId = generateNameId();
     this.state = states.waiting;
     this.players = [player];
   }
