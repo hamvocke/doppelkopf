@@ -4,7 +4,7 @@ import { Deck } from "@/models/deck";
 import { Hand } from "@/models/hand";
 import { Scorecard } from "@/models/scorecard";
 import { RingQueue } from "@/models/ringQueue";
-import { generateNames } from "@/models/nameGenerator";
+import { generateNames } from "@/models/random";
 import { Telemetry } from "@/models/telemetry";
 
 export class Game {

@@ -4,6 +4,13 @@ export function generateNames(numberOfNames) {
   return sampleSize(names, numberOfNames);
 }
 
+export function generateNameId() {
+  const verb = sampleSize(verbs, 1);
+  const adjective = sampleSize(adjectives, 1);
+  const noun = sampleSize(nouns, 1);
+  return `${verb}-${adjective}-${noun}`;
+}
+
 const names = [
   "Peter",
   "Wolfgang",
@@ -113,3 +120,64 @@ const names = [
   "Rita",
   "Katharina"
 ];
+
+const adjectives = {
+  en: [
+    "red",
+    "blue",
+    "yellow",
+    "green",
+    "purple",
+    "orange",
+    "black",
+    "white",
+    "brown",
+    "fast",
+    "slow",
+    "clever",
+    "eager",
+    "lazy"
+  ]
+};
+
+const nouns = {
+  en: [
+    "dog",
+    "cat",
+    "cow",
+    "pig",
+    "fish",
+    "shark",
+    "bird",
+    "weasel",
+    "snake",
+    "ball",
+    "rope",
+    "bat",
+    "swing",
+    "slide",
+    "couch",
+    "table",
+    "chair",
+    "desk"
+  ]
+};
+
+const verbs = {
+  en: [
+    "find",
+    "search",
+    "get",
+    "fetch",
+    "smell",
+    "touch",
+    "see",
+    "hear",
+    "taste",
+    "feel",
+    "build",
+    "go",
+    "run",
+    "create"
+  ]
+};
