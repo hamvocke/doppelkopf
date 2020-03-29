@@ -21,6 +21,8 @@ def index():
         event for event in all_events if event.event_type == EventTypes.GAME_LOSE
     ]
 
+    # select date(created_at) date, count(1) from event group by date(created_at)
+
     stats = {
         "games_started": len(games_started),
         "games_won": len(games_won),
