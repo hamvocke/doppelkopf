@@ -11,7 +11,7 @@ VueTestUtils.config.mocks["$i18n"] = { locale: "en" };
 let game;
 
 beforeEach(() => {
-  game = new Game();
+  game = Game.singlePlayer();
 });
 
 describe("Table.vue", () => {
@@ -31,7 +31,7 @@ describe("Table.vue", () => {
   });
 
   test("should handle nextMove", () => {
-    const mockGame = new Game();
+    const mockGame = Game.singlePlayer();
     mockGame.currentRound.nextMove = jest.fn();
 
     const wrapper = mount(Table, { propsData: { game: mockGame } });
@@ -42,7 +42,7 @@ describe("Table.vue", () => {
   });
 
   test("should handle finishRound", () => {
-    const mockGame = new Game();
+    const mockGame = Game.singlePlayer();
     mockGame.currentRound.finishRound = jest.fn();
 
     const wrapper = mount(Table, { propsData: { game: mockGame } });
@@ -53,7 +53,7 @@ describe("Table.vue", () => {
   });
 
   test("should handle finishTrick event", () => {
-    const mockGame = new Game();
+    const mockGame = Game.singlePlayer();
     mockGame.currentRound.finishTrick = jest.fn();
 
     const wrapper = mount(Table, { propsData: { game: mockGame } });
@@ -64,7 +64,7 @@ describe("Table.vue", () => {
   });
 
   test("should hide Scorecard if game is not finished", () => {
-    const mockGame = new Game();
+    const mockGame = Game.singlePlayer();
     mockGame.currentRound.isFinished = () => false;
 
     const wrapper = mount(Table, { propsData: { game: mockGame } });
@@ -73,7 +73,7 @@ describe("Table.vue", () => {
   });
 
   test("should show Scorecard if game is finished", () => {
-    const mockGame = new Game();
+    const mockGame = Game.singlePlayer();
     game.players[0].points = () => 120;
     game.players[1].points = () => 120;
     const stubScore = new Score(game.players);
@@ -88,7 +88,7 @@ describe("Table.vue", () => {
   });
 
   test("should handle nextRound event", () => {
-    const mockGame = new Game();
+    const mockGame = Game.singlePlayer();
     mockGame.nextRound = jest.fn();
 
     const wrapper = mount(Table, { propsData: { game: mockGame } });

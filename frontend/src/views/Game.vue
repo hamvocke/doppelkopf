@@ -24,7 +24,7 @@ export default {
     game: {
       type: Object,
       default: function() {
-        return new Game();
+        return Game.singlePlayer();
       }
     }
   }

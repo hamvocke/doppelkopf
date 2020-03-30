@@ -10,7 +10,7 @@ VueTestUtils.config.mocks["$i18n"] = { locale: "en" };
 describe("Game.vue", () => {
   test("should render Table", () => {
     const wrapper = mount(Game, {
-      propsData: { game: new GameModel() }
+      propsData: { game: GameModel.singlePlayer() }
     });
 
     expect(wrapper.find(".table").exists()).toBe(true);

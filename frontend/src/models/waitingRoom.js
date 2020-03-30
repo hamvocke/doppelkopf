@@ -37,7 +37,7 @@ export class WaitingRoom {
       throw new Error("Can't start game until 4 players are there");
     }
 
-    return new Game();
+    return new Game(this.players);
   }
 
   leave(player) {

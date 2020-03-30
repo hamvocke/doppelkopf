@@ -11,7 +11,7 @@ let game;
 let trick;
 
 beforeEach(() => {
-  game = new Game();
+  game = Game.singlePlayer();
   trick = game.currentTrick;
 });
 

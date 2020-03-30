@@ -5,7 +5,7 @@ import { jack, suits } from "@/models/card";
 import { DOPPELKOPF } from "@/models/extras";
 import { options } from "@/models/options";
 
-const game = new Game();
+const game = Game.singlePlayer();
 let round = game.currentRound;
 
 jest.useFakeTimers();
@@ -128,7 +128,7 @@ test("should show extras as flash message", () => {
 
 describe("player order", () => {
   beforeEach(() => {
-    round = new Game().currentRound;
+    round = Game.singlePlayer().currentRound;
   });
 
   test("should start with given player", () => {
@@ -166,7 +166,7 @@ describe("player order", () => {
 
 describe("finish round", () => {
   beforeEach(() => {
-    round = new Game().currentRound;
+    round = Game.singlePlayer().currentRound;
   });
 
   test("should be able to finish round if players have no more cards on hand", () => {

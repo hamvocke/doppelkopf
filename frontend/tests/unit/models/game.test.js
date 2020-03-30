@@ -8,7 +8,7 @@ const telemetryMock = jest.fn();
 
 beforeEach(() => {
   Telemetry.newGame = telemetryMock;
-  game = new Game();
+  game = Game.singlePlayer();
 });
 
 test("game has 4 players", () => {
@@ -90,6 +90,6 @@ test("should keep track of opening order", () => {
 
 test("should fire new game event", () => {
   telemetryMock.mockClear();
-  new Game();
+  Game.singlePlayer();
   expect(telemetryMock).toHaveBeenCalledTimes(1);
 });

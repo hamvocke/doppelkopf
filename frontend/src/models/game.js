@@ -8,16 +8,9 @@ import { generateNames } from "@/models/random";
 import { Telemetry } from "@/models/telemetry";
 
 export class Game {
-  constructor() {
-    const isHuman = true;
-    const isComputer = false;
-    const randomNames = generateNames(4);
-    this.players = [
-      new Player(randomNames[0], isHuman, true, "bottom", this),
-      new Player(randomNames[1], isComputer, false, "left", this),
-      new Player(randomNames[2], isComputer, false, "top", this),
-      new Player(randomNames[3], isComputer, false, "right", this)
-    ];
+  constructor(players = []) {
+    this.players = players;
+    this.players.map(p => (p.game = this));
     this.playerOpeningOrder = new RingQueue(this.players);
     this.started = false;
     this.deck = new Deck();
@@ -29,6 +22,18 @@ export class Game {
     this.scorecard = new Scorecard(this.players);
     this.deal();
     Telemetry.newGame();
+  }
+
+  static singlePlayer() {
+    const isHuman = true;
+    const isComputer = false;
+    const randomNames = generateNames(4);
+    return new Game([
+      new Player(randomNames[0], isHuman, true, "bottom"),
+      new Player(randomNames[1], isComputer, false, "left"),
+      new Player(randomNames[2], isComputer, false, "top"),
+      new Player(randomNames[3], isComputer, false, "right")
+    ]);
   }
 
   deal() {

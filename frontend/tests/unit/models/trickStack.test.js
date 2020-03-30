@@ -5,7 +5,7 @@ import { ace, ten, king, queen, suits } from "@/models/card";
 import { DOPPELKOPF, FOX } from "@/models/extras";
 
 let trickStack;
-const game = new Game();
+const game = Game.singlePlayer();
 const owner = game.players[2];
 
 beforeEach(() => {

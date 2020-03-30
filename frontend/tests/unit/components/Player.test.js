@@ -7,7 +7,7 @@ import VueTestUtils from "@vue/test-utils";
 VueTestUtils.config.mocks["$t"] = key => key;
 VueTestUtils.config.mocks["$tc"] = msg => msg;
 
-const game = new Game();
+const game = Game.singlePlayer();
 
 describe("Player.vue", () => {
   test("should display player's name", () => {

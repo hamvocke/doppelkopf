@@ -14,7 +14,7 @@ const notifier = new Notifier();
 jest.useFakeTimers();
 
 beforeEach(() => {
-  game = new Game();
+  game = Game.singlePlayer();
   player = game.players[0];
   player.game.currentRound.waitingForPlayer = () => game.players[0];
   options.autoplay = false;
