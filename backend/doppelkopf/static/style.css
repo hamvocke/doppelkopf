@@ -519,6 +519,10 @@ img {
   background-color: #2d3748;
 }
 
+.bg-gray-900 {
+  background-color: #1a202c;
+}
+
 .bg-red-500 {
   background-color: #f56565;
 }
@@ -553,6 +557,10 @@ img {
 
 .rounded {
   border-radius: 0.25rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
 }
 
 .border {
@@ -604,6 +612,10 @@ img {
 .items-center {
   -webkit-box-align: center;
           align-items: center;
+}
+
+.self-center {
+  align-self: center;
 }
 
 .justify-end {
@@ -683,6 +695,10 @@ img {
   margin-top: 0;
 }
 
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -711,6 +727,10 @@ img {
   margin-bottom: 1.5rem;
 }
 
+.ml-8 {
+  margin-left: 2rem;
+}
+
 .max-w-full {
   max-width: 100%;
 }
@@ -729,6 +749,14 @@ img {
 
 .p-4 {
   padding: 1rem;
+}
+
+.p-5 {
+  padding: 1.25rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
 }
 
 .py-1 {
@@ -765,8 +793,16 @@ img {
   position: static;
 }
 
+.shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
 .shadow-md {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .table-auto {
@@ -781,6 +817,10 @@ img {
   color: #fff;
 }
 
+.text-gray-200 {
+  color: #edf2f7;
+}
+
 .text-gray-300 {
   color: #e2e8f0;
 }
@@ -789,8 +829,16 @@ img {
   color: #cbd5e0;
 }
 
+.text-gray-500 {
+  color: #a0aec0;
+}
+
 .text-gray-600 {
   color: #718096;
+}
+
+.text-gray-700 {
+  color: #4a5568;
 }
 
 .text-red-600 {
@@ -831,6 +879,10 @@ img {
 
 .tracking-tight {
   letter-spacing: -0.025em;
+}
+
+.w-48 {
+  width: 12rem;
 }
 
 .w-64 {

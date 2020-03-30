@@ -12,19 +12,40 @@ Admin
 
 {% block content %}
 <div class="flex flex-row flex-wrap">
-  <div class="flex flex-col items-center m-2 p-2 border border-gray-600 rounded">
-    <span class="text-4xl font-mono">{{ stats.games_started }}</span>
-    <span class="text-xs font-mono">Games started</span>
+  <div class="m-2 p-4 flex bg-gray-800 shadow-lg rounded-lg">
+    <div class="flex flex-col">
+      <h2 class="self-center text-4xl font-bold text-gray-200">
+{{ stats.games_started }}
+      </h2>
+      <p class="mt-1 text-gray-500">Games started</p>
+    </div>
+    <div class="ml-8 self-center text-gray-700">
+      <canvas id="chart3" class="w-48"></canvas>
+    </div>
   </div>
 
-  <div class="flex flex-col items-center m-2 p-2 border border-gray-600 rounded">
-    <span class="text-4xl font-mono">{{ stats.games_won }}</span>
-    <span class="text-xs font-mono">Games won</span>
+  <div class="m-2 p-4 flex bg-gray-800 shadow-lg rounded-lg">
+    <div class="flex flex-col">
+      <h2 class="self-center text-4xl font-bold text-gray-200">
+{{ stats.games_won }}
+      </h2>
+      <p class="mt-1 text-gray-500">Games won</p>
+    </div>
+    <div class="ml-8 self-center text-gray-700">
+      <canvas id="chart4" class="w-48"></canvas>
+    </div>
   </div>
 
-  <div class="flex flex-col items-center m-2 p-2 border border-gray-600 rounded">
-    <span class="text-4xl font-mono">{{ stats.games_lost }}</span>
-    <span class="text-xs font-mono">Games lost</span>
+  <div class="m-2 p-4 flex bg-gray-800 shadow-lg rounded-lg">
+    <div class="flex flex-col">
+      <h2 class="self-center text-4xl font-bold text-gray-200">
+{{ stats.games_lost }}
+      </h2>
+      <p class="mt-1 text-gray-500">Games lost</p>
+    </div>
+    <div class="ml-8 self-center text-gray-700">
+      <canvas id="chart4" class="w-48"></canvas>
+    </div>
   </div>
 </div>
 {% endblock %}

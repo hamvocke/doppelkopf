@@ -7,7 +7,7 @@
   <title>{% block title %}{% endblock %} - Doppelkopf</title>
 </head>
 <body class="bg-gray-800 text-gray-300">
-  <header class="bg-gray-800">
+  <header class="bg-gray-800 shadow-lg">
     <nav class="flex justify-between flex-wrap p-4 ">
       <div class="flex-shrink-0 text-gray-400 mb-2 sm:mb-0 sm:mr-6">
         <a href="/admin" class="font-bold text-2xl tracking-tight">Doppelkopf 🤖</a>
@@ -52,7 +52,7 @@
 {% endwith %}
   </section>
 
-  <div class="container mx-auto p-4 text-gray-400 max-w-full">
+  <div class="container mx-auto p-4 text-gray-400 max-w-full bg-gray-900 flex">
     {% block content %}{% endblock %}
   </div>
 </body>
