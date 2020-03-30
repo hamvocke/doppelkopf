@@ -15,8 +15,11 @@ export class WaitingRoom {
 
     this.owner = player;
     this.gameId = generateNameId();
-    this.state = states.waiting;
     this.players = [player];
+  }
+
+  get state() {
+    return this.players.length === 4 ? states.ready : states.waiting;
   }
 
   join(player) {
@@ -27,7 +30,6 @@ export class WaitingRoom {
     }
 
     this.players.push(player);
-    this.state = this.players.length === 4 ? states.ready : states.waiting;
   }
 
   startGame() {
@@ -36,5 +38,12 @@ export class WaitingRoom {
     }
 
     return new Game();
+  }
+
+  leave(player) {
+    if (!this.players.some(p => p.id === player.id))
+      throw new Error(`Player '${player.name}' is not in this room`);
+
+    this.players = this.players.filter(p => p.id !== player.id);
   }
 }

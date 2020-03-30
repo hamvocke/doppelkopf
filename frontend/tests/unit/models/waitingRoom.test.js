@@ -70,8 +70,6 @@ describe("Waiting Room", () => {
     expect(throws).toThrow("Room is full");
   });
 
-  test.todo("should change state to 'waiting' if a player leaves");
-
   test("should allow starting the game when game is ready", () => {
     const room = new WaitingRoom(player);
     room.join(new Player("player 2"));
@@ -81,5 +79,36 @@ describe("Waiting Room", () => {
     const game = room.startGame();
 
     expect(game).toBeDefined();
+  });
+
+  test("should allow leaving room", () => {
+    const room = new WaitingRoom(player);
+    const player2 = new Player("player 2");
+    room.join(player2);
+
+    room.leave(player2);
+
+    expect(room.players).toEqual([player]);
+  });
+
+  test("should error if unknown player tries leaving", () => {
+    const room = new WaitingRoom(player);
+    const player2 = new Player("player 2");
+
+    const throws = () => room.leave(player2);
+
+    expect(throws).toThrow("Player 'player 2' is not in this room");
+  });
+
+  test("should change state to 'waiting' if a player leaves", () => {
+    const room = new WaitingRoom(player);
+    const player2 = new Player("player 2");
+    room.join(player2);
+    room.join(new Player("player 3"));
+    room.join(new Player("player 4"));
+
+    room.leave(player2);
+
+    expect(room.state).toBe(states.waiting);
   });
 });
