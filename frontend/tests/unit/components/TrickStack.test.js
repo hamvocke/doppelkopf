@@ -17,7 +17,7 @@ trick.add(queen.of(suits.spades), player2);
 
 describe("TrickStack.vue", () => {
   test("should show placeholder if player has no trick", () => {
-    const emptyTrickStack = new TrickStackModel(player1);
+    const emptyTrickStack = new TrickStackModel();
     const wrapper = mount(TrickStack, {
       propsData: { trickStack: emptyTrickStack }
     });
@@ -25,7 +25,7 @@ describe("TrickStack.vue", () => {
   });
 
   test("should not show placeholder if player has a trick", () => {
-    const trickStack = new TrickStackModel(player1);
+    const trickStack = new TrickStackModel();
     trickStack.add(trick);
     const wrapper = mount(TrickStack, {
       propsData: { trickStack: trickStack }
@@ -37,7 +37,7 @@ describe("TrickStack.vue", () => {
   });
 
   test("should display number of won tricks", () => {
-    const trickStack = new TrickStackModel(player1);
+    const trickStack = new TrickStackModel();
     trickStack.add(trick);
     trickStack.add(trick);
     const wrapper = mount(TrickStack, {

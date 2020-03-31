@@ -21,7 +21,7 @@ export class Player {
     this.hand = new Hand();
     this.isHuman = isHuman;
     this.isMe = isMe;
-    this.trickStack = new TrickStack(this);
+    this.trickStack = new TrickStack();
     this.tablePosition = tablePosition;
     this.game = game;
     this.behavior = new RandomCardBehavior();
@@ -86,7 +86,7 @@ export class Player {
   }
 
   clearTrickStack() {
-    this.trickStack = new TrickStack(this);
+    this.trickStack = new TrickStack();
   }
 
   points() {

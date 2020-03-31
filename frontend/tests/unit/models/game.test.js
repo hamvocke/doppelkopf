@@ -55,18 +55,15 @@ test("should start a new round", () => {
 });
 
 test("should clear trick stacks", () => {
-  const someTrickStack = new TrickStack(game.players[2], [
-    new Trick(4),
-    new Trick(4)
-  ]);
+  const someTrickStack = new TrickStack([new Trick(4), new Trick(4)]);
   game.players.forEach(player => (player.trickStack = someTrickStack));
 
   game.clearTrickStacks();
 
-  expect(game.players[0].trickStack).toEqual(new TrickStack(game.players[0]));
-  expect(game.players[1].trickStack).toEqual(new TrickStack(game.players[1]));
-  expect(game.players[2].trickStack).toEqual(new TrickStack(game.players[2]));
-  expect(game.players[3].trickStack).toEqual(new TrickStack(game.players[3]));
+  expect(game.players[0].trickStack).toEqual(new TrickStack());
+  expect(game.players[1].trickStack).toEqual(new TrickStack());
+  expect(game.players[2].trickStack).toEqual(new TrickStack());
+  expect(game.players[3].trickStack).toEqual(new TrickStack());
 });
 
 test("should let human player open the game", () => {

@@ -1,23 +1,26 @@
 import { TrickStack } from "@/models/trickStack";
 import { Trick } from "@/models/trick";
-import { Game } from "@/models/game";
+import { Player } from "@/models/player";
 import { ace, ten, king, queen, suits } from "@/models/card";
 import { DOPPELKOPF, FOX } from "@/models/extras";
 
+const player1 = new Player("player 1");
+const player2 = new Player("player 2");
+const player3 = new Player("player 3");
+const player4 = new Player("player 4");
+
 let trickStack;
-const game = Game.singlePlayer();
-const owner = game.players[2];
 
 beforeEach(() => {
-  trickStack = new TrickStack(owner);
+  trickStack = new TrickStack();
 });
 
 test("should add trick to trick stack", () => {
   const trick = new Trick(4);
-  trick.add(ace.of(suits.hearts), game.players[0]);
-  trick.add(ace.of(suits.hearts), game.players[1]);
-  trick.add(ace.of(suits.spades), game.players[2]);
-  trick.add(ace.of(suits.clubs), game.players[3]);
+  trick.add(ace.of(suits.hearts), player1);
+  trick.add(ace.of(suits.hearts), player2);
+  trick.add(ace.of(suits.spades), player3);
+  trick.add(ace.of(suits.clubs), player4);
 
   trickStack.add(trick);
 
@@ -28,10 +31,10 @@ test("should add trick to trick stack", () => {
 test("should list all cards in trick stack", () => {
   const someTrick = new Trick(2);
   const anotherTrick = new Trick(2);
-  someTrick.add(ace.of(suits.hearts), game.players[0]);
-  someTrick.add(ace.of(suits.hearts), game.players[1]);
-  anotherTrick.add(ace.of(suits.spades), game.players[0]);
-  anotherTrick.add(ace.of(suits.clubs), game.players[1]);
+  someTrick.add(ace.of(suits.hearts), player1);
+  someTrick.add(ace.of(suits.hearts), player2);
+  anotherTrick.add(ace.of(suits.spades), player1);
+  anotherTrick.add(ace.of(suits.clubs), player2);
 
   trickStack.add(someTrick);
   trickStack.add(anotherTrick);
@@ -51,16 +54,16 @@ test("should throw error if adding non-finished trick to stack", () => {
 
 test("should calculate points of trick", () => {
   const someTrick = new Trick(4);
-  someTrick.add(ace.of(suits.hearts), game.players[0]);
-  someTrick.add(ten.of(suits.hearts), game.players[1]);
-  someTrick.add(king.of(suits.hearts), game.players[2]);
-  someTrick.add(ace.of(suits.hearts), game.players[3]);
+  someTrick.add(ace.of(suits.hearts), player1);
+  someTrick.add(ten.of(suits.hearts), player2);
+  someTrick.add(king.of(suits.hearts), player3);
+  someTrick.add(ace.of(suits.hearts), player4);
 
   const anotherTrick = new Trick(4);
-  anotherTrick.add(ace.of(suits.spades), game.players[0]);
-  anotherTrick.add(queen.of(suits.clubs), game.players[1]);
-  anotherTrick.add(king.of(suits.spades), game.players[2]);
-  anotherTrick.add(ten.of(suits.clubs), game.players[3]);
+  anotherTrick.add(ace.of(suits.spades), player1);
+  anotherTrick.add(queen.of(suits.clubs), player2);
+  anotherTrick.add(king.of(suits.spades), player3);
+  anotherTrick.add(ten.of(suits.clubs), player4);
 
   trickStack.add(someTrick);
   trickStack.add(anotherTrick);
@@ -70,10 +73,10 @@ test("should calculate points of trick", () => {
 
 test("should evaluate trick stack", () => {
   const someTrick = new Trick(4);
-  someTrick.add(ace.of(suits.hearts), game.players[0]);
-  someTrick.add(ten.of(suits.hearts), owner);
-  someTrick.add(king.of(suits.hearts), game.players[1]);
-  someTrick.add(ace.of(suits.hearts), game.players[3]);
+  someTrick.add(ace.of(suits.hearts), player1);
+  someTrick.add(ten.of(suits.hearts), player3);
+  someTrick.add(king.of(suits.hearts), player2);
+  someTrick.add(ace.of(suits.hearts), player4);
   trickStack.add(someTrick);
 
   expect(trickStack.points()).toBe(36);
@@ -83,10 +86,10 @@ test("should evaluate trick stack", () => {
 describe("extras", () => {
   test("should find Doppelkopf", () => {
     const someTrick = new Trick(4);
-    someTrick.add(ace.of(suits.hearts), game.players[0]);
-    someTrick.add(ten.of(suits.hearts), owner);
-    someTrick.add(ten.of(suits.hearts), game.players[1]);
-    someTrick.add(ace.of(suits.hearts), game.players[3]);
+    someTrick.add(ace.of(suits.hearts), player1);
+    someTrick.add(ten.of(suits.hearts), player3);
+    someTrick.add(ten.of(suits.hearts), player2);
+    someTrick.add(ace.of(suits.hearts), player4);
     trickStack.add(someTrick);
 
     expect(trickStack.points()).toBe(42);
@@ -95,13 +98,13 @@ describe("extras", () => {
 
   test("should find Fox", () => {
     const someTrick = new Trick(4);
-    game.players[0].isRe = () => false;
-    owner.isRe = () => true;
+    player1.isRe = () => false;
+    player3.isRe = () => true;
 
-    someTrick.add(ace.of(suits.diamonds), game.players[0]);
-    someTrick.add(ten.of(suits.hearts), owner);
-    someTrick.add(king.of(suits.hearts), game.players[1]);
-    someTrick.add(ace.of(suits.hearts), game.players[3]);
+    someTrick.add(ace.of(suits.diamonds), player1);
+    someTrick.add(ten.of(suits.hearts), player3);
+    someTrick.add(king.of(suits.hearts), player2);
+    someTrick.add(ace.of(suits.hearts), player4);
     trickStack.add(someTrick);
 
     expect(trickStack.extras()).toEqual([FOX]);
@@ -109,13 +112,13 @@ describe("extras", () => {
 
   test("should find Doppelkopf and Fox", () => {
     const someTrick = new Trick(4);
-    game.players[0].isRe = () => false;
-    owner.isRe = () => true;
+    player1.isRe = () => false;
+    player3.isRe = () => true;
 
-    someTrick.add(ace.of(suits.diamonds), game.players[0]);
-    someTrick.add(ten.of(suits.hearts), owner);
-    someTrick.add(ten.of(suits.hearts), game.players[1]);
-    someTrick.add(ace.of(suits.hearts), game.players[3]);
+    someTrick.add(ace.of(suits.diamonds), player1);
+    someTrick.add(ten.of(suits.hearts), player3);
+    someTrick.add(ten.of(suits.hearts), player2);
+    someTrick.add(ace.of(suits.hearts), player4);
     trickStack.add(someTrick);
 
     expect(trickStack.extras()).toEqual([DOPPELKOPF, FOX]);
