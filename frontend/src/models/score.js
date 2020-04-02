@@ -1,5 +1,4 @@
 import { re, kontra } from "@/models/parties";
-import { flatMap } from "lodash-es";
 import { WIN, BEAT_RE, NO_90, NO_60, NO_30, NO_POINTS } from "@/models/extras";
 
 const sumPointsForParty = (acc, player) => acc + player.points();
@@ -113,6 +112,6 @@ export class Score {
   }
 
   listExtras(party) {
-    return flatMap(this.extras[party], extra => Object.keys(extra));
+    return this.extras[party].flatMap(extra => Object.keys(extra));
   }
 }

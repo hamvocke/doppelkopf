@@ -1,5 +1,3 @@
-import { flatMap } from "lodash-es";
-
 export class TrickStack {
   constructor(tricks = []) {
     this.tricks = tricks;
@@ -14,7 +12,7 @@ export class TrickStack {
   }
 
   cards() {
-    const playedCards = flatMap(this.tricks, trick => trick.playedCards);
+    const playedCards = this.tricks.flatMap(trick => trick.playedCards);
     return playedCards.map(playedCard => playedCard.card);
   }
 
