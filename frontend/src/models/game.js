@@ -14,12 +14,12 @@ export class Game {
     this.playerOpeningOrder = new RingQueue(this.players);
     this.started = false;
     this.deck = new Deck();
+    this.scorecard = new Scorecard(this.players);
     this.currentRound = new Round(
       this.players,
-      this,
+      this.scorecard,
       this.playerOpeningOrder.current()
     );
-    this.scorecard = new Scorecard(this.players);
     this.deal();
     Telemetry.newGame();
   }
@@ -56,7 +56,7 @@ export class Game {
   nextRound() {
     this.currentRound = new Round(
       this.players,
-      this,
+      this.scorecard,
       this.playerOpeningOrder.next()
     );
     this.clearTrickStacks();
@@ -66,9 +66,5 @@ export class Game {
 
   clearTrickStacks() {
     this.players.forEach(player => player.clearTrickStack());
-  }
-
-  addScore(score) {
-    this.scorecard.addScore(score.winner(), score.points());
   }
 }

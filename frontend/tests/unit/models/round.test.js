@@ -19,8 +19,8 @@ test("round has 4 players", () => {
   expect(round.players).toHaveLength(4);
 });
 
-test("should know its game", () => {
-  expect(round.game).toBe(game);
+test("should know the scorecard", () => {
+  expect(round.scorecard).toBe(game.scorecard);
 });
 
 test("game starts with an empty trick", () => {
@@ -132,7 +132,7 @@ describe("player order", () => {
   });
 
   test("should start with given player", () => {
-    round = new Round(game.players, game, game.players[2]);
+    round = new Round(game.players, game.scorecard, game.players[2]);
     expect(round.waitingForPlayer().id).toBe(round.players[2].id);
   });
 
@@ -194,7 +194,7 @@ describe("finish round", () => {
     jest.runAllTimers();
 
     promise.then(() => {
-      const scorecard = round.game.scorecard;
+      const scorecard = round.scorecard;
 
       expect(scorecard.totalPointsFor(round.players[0])).toBe(-2);
       expect(scorecard.totalPointsFor(round.players[1])).toBe(-2);

@@ -9,9 +9,9 @@ import { find } from "lodash-es";
 const notifier = new Notifier();
 
 export class Round {
-  constructor(players = [], game = {}, openingPlayer) {
+  constructor(players = [], scorecard = {}, openingPlayer) {
     this.players = players;
-    this.game = game;
+    this.scorecard = scorecard;
     this.finished = false;
     this.currentTrick = this.nextTrick();
     this.score = new Score();
@@ -94,7 +94,7 @@ export class Round {
     this.currentTrick = this.nextTrick();
 
     this.score.evaluate(this.players);
-    this.game.addScore(this.score);
+    this.scorecard.addScore(this.score.winner(), this.score.points());
     this.finished = true;
   }
 }
