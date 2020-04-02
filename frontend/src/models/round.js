@@ -57,7 +57,7 @@ export class Round {
   }
 
   async finishTrick() {
-    await this.evaluateLastTrick();
+    await this.evaluateLatestTrick();
 
     this.currentTrick = this.nextTrick();
 
@@ -66,7 +66,7 @@ export class Round {
     }
   }
 
-  async evaluateLastTrick() {
+  async evaluateLatestTrick() {
     const playerId = this.currentTrick.winner().id;
     const winner = find(this.players, { id: playerId });
     winner.win(this.currentTrick);
@@ -89,7 +89,7 @@ export class Round {
       throw new Error(`Can't finish a round before all cards have been played`);
     }
 
-    await this.evaluateLastTrick();
+    await this.evaluateLatestTrick();
 
     this.currentTrick = this.nextTrick();
 
