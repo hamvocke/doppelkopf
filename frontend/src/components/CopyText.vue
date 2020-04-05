@@ -1,12 +1,13 @@
 <template>
   <div class="copyText">
-    <input type="text" :value="text" readonly />
+    <input type="text" class="text" :value="text" readonly />
     <button
+      type="button"
       class="button button-secondary button-plain"
-      @click="copyTextToClipboard()"
+      @click="copyTextToClipboard"
     >
       <Icon :name="icon" />
-      <span class="text">{{ buttonText }}</span>
+      <span class="buttonText">{{ buttonText }}</span>
     </button>
   </div>
 </template>
@@ -72,7 +73,7 @@ button {
   align-items: center;
 }
 
-.text {
+.buttonText {
   padding-left: 6px;
 }
 </style>
