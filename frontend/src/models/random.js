@@ -1,13 +1,13 @@
-import { sampleSize } from "lodash-es";
+import { sample, sampleSize } from "lodash-es";
 
 export function generateNames(numberOfNames) {
   return sampleSize(names, numberOfNames);
 }
 
 export function generateNameId() {
-  const verb = sampleSize(verbs, 1);
-  const adjective = sampleSize(adjectives, 1);
-  const noun = sampleSize(nouns, 1);
+  const verb = sample(verbs.en);
+  const adjective = sample(adjectives.en);
+  const noun = sample(nouns.en);
   return `${verb}-${adjective}-${noun}`;
 }
 

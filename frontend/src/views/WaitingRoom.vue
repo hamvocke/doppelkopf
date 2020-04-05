@@ -1,9 +1,19 @@
 <template>
   <div id="waitingRoom">
-    Waiting Room. Current state: {{ waitingRoom.state }}
+    <div class="roomInfo">
+      <p>
+        This is your game id. Send it to your friends so they can join the game:
+      </p>
+      <div class="copyLink">
+        <span class="gameId">{{ waitingRoom.gameId }}</span>
+        <button class="copy button button-secondary">Copy link</button>
+      </div>
+    </div>
 
-    Waiting players:
+    <div class="state">{{ waitingRoom.state }}</div>
+
     <div class="players">
+      Waiting players:
       <div v-for="player in waitingRoom.players" :key="player.id">
         {{ player.name }}
       </div>
@@ -46,6 +56,19 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100vh;
+}
+
+.copyLink {
+  margin: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameId {
+  padding: 12px;
+  font-size: 1.8em;
+  font-family: monospace;
 }
 
 .players {
