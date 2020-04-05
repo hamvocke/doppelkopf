@@ -38,7 +38,18 @@
 .button-secondary:hover,
 .button-secondary:active,
 .button-secondary:focus {
-  background: color(var(--white) shade(10%));
+  background: color(var(--lightgray) shade(5%));
   border-bottom-color: color(var(--white) shade(35%));
   color: color(var(--black) shade(20%)) !important;
+}
+
+.button-plain {
+  box-shadow: none;
+  border-bottom: none;
+  background: var(--lightgray);
+}
+
+.button-plain:hover, .button-plain:active, .button-plaing:focus {
+  box-shadow: none;
+  border-bottom: none;
 }
