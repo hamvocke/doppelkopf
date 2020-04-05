@@ -16,13 +16,7 @@ export default {
   title: "Copy Text"
 };
 
-export const icon = () => ({
-  components: { CopyText },
-  template: '<CopyText text="tunnel-snakes-rule" icon="🦊" />',
-  i18n: new VueI18n(i18nOpts)
-});
-
-export const no_icon = () => ({
+export const standard = () => ({
   components: { CopyText },
   template: '<CopyText text="tunnel-snakes-rule" />',
   i18n: new VueI18n(i18nOpts)

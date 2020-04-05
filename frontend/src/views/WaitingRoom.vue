@@ -2,12 +2,10 @@
   <div id="waitingRoom">
     <div class="roomInfo">
       <p>
-        This is your game id. Send it to your friends so they can join the game:
+        This is your game id:
       </p>
-      <div class="copyLink">
-        <span class="gameId">{{ waitingRoom.gameId }}</span>
-        <button class="copy button button-secondary">Copy link</button>
-      </div>
+      <CopyText :text="waitingRoom.gameId" />
+      <p>Send it to your friends so they can join the game.</p>
     </div>
 
     <div class="state">{{ waitingRoom.state }}</div>
@@ -27,9 +25,11 @@
 
 <script>
 import { WaitingRoom } from "@/models/waitingRoom";
+import CopyText from "@/components/CopyText";
 
 export default {
   name: "WaitingRoom",
+  components: { CopyText },
   data: function() {
     return {
       waitingRoom: new WaitingRoom()

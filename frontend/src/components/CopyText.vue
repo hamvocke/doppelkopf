@@ -3,7 +3,7 @@
     <input type="text" class="text" :value="text" readonly />
     <button
       type="button"
-      class="button button-secondary button-plain"
+      class="button button-secondary"
       @click="copyTextToClipboard"
     >
       <Icon :name="icon" />
@@ -56,19 +56,16 @@ export default {
 }
 
 input {
-  padding: 12px 2px;
-  font-size: 1.4em;
+  padding: 8px;
+  font-size: 1.7em;
   font-family: monospace;
   border: none;
   border-radius: 4px 0 0 4px;
+  background: transparent;
+  color: var(--white);
 }
 
 button {
-  margin-left: -3px;
-  border-radius: 0 4px 4px 0;
-  font-size: 1em;
-  padding: 10px 16px 10px 8px;
-  background-color: var(--lightgray);
   display: flex;
   align-items: center;
 }
