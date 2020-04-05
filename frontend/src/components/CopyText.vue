@@ -1,7 +1,7 @@
 <template>
   <div class="copyText">
     <input type="text" :value="text" readonly />
-    <button class="">
+    <button class="" @click="copyTextToClipboard()">
       <span v-if="icon">{{ icon }}</span>
       Copy
     </button>
@@ -20,6 +20,11 @@ export default {
       type: String,
       required: false,
       default: null
+    }
+  },
+  methods: {
+    copyTextToClipboard: function() {
+      navigator.clipboard.writeText(this.text);
     }
   }
 };
