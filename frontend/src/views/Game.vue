@@ -11,7 +11,7 @@ import Notifications from "@/components/Notifications";
 import Table from "@/components/Table";
 import OptionsMenu from "@/components/OptionsMenu";
 
-import { Game, gameInstance } from "@/models/game";
+import { Game } from "@/models/game";
 
 export default {
   name: "Game",
@@ -24,11 +24,7 @@ export default {
     game: {
       type: Object,
       default: function() {
-        if (gameInstance === {}) {
-          return Game.singlePlayer();
-        }
-
-        return gameInstance;
+        return Game.singlePlayer();
       }
     }
   }

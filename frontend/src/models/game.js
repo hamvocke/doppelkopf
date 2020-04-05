@@ -7,8 +7,6 @@ import { RingQueue } from "@/models/ringQueue";
 import { generateNames } from "@/models/random";
 import { Telemetry } from "@/models/telemetry";
 
-export let gameInstance = {};
-
 export class Game {
   constructor(players = []) {
     this.players = players;
@@ -29,19 +27,16 @@ export class Game {
     const isHuman = true;
     const isComputer = false;
     const randomNames = generateNames(4);
-    gameInstance = new Game([
+    return new Game([
       new Player(randomNames[0], isHuman, true, "bottom"),
       new Player(randomNames[1], isComputer, false, "left"),
       new Player(randomNames[2], isComputer, false, "top"),
       new Player(randomNames[3], isComputer, false, "right")
     ]);
-
-    return gameInstance;
   }
 
   static multiPlayer(players) {
-    gameInstance = new Game(players);
-    return gameInstance;
+    return new Game(players);
   }
 
   deal() {
