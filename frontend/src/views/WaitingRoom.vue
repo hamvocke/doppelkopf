@@ -2,18 +2,16 @@
   <div id="waitingRoom">
     Waiting Room. Current state: {{ waitingRoom.state }}
 
-    <div v-for="player in waitingRoom.players" :key="player.id">
-      {{ player.name }}
+    Waiting players:
+    <div class="players">
+      <div v-for="player in waitingRoom.players" :key="player.id">
+        {{ player.name }}
+      </div>
     </div>
 
-    <router-link
-      to="/play"
-      class="button start-game"
-      tag="button"
-      @click="startGame()"
-    >
+    <button class="button start-game" tag="button" @click="startGame()">
       {{ $t("start-game") }}
-    </router-link>
+    </button>
   </div>
 </template>
 
@@ -33,11 +31,30 @@ export default {
   methods: {
     startGame: function() {
       this.waitingRoom.startGame();
+      this.$router.push("/play");
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
+@import "../assets/css/vars.css";
 
+#waitingRoom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.players {
+  padding: 12px;
+  margin: 24px;
+  background: var(--white);
+  color: var(--black);
+  display: block;
+  min-width: 400px;
+  border-radius: 8px;
+}
 </style>
