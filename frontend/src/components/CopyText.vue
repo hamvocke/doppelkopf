@@ -56,7 +56,7 @@ export default {
 }
 
 input {
-  padding: 8px;
+  padding: 8px 0;
   font-size: 1.7em;
   font-family: monospace;
   border: none;
