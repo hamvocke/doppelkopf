@@ -14,11 +14,7 @@
 
     <div class="players">
       <ol>
-        <li
-          v-for="player in waitingRoom.players"
-          :key="player.id"
-          class="player"
-        >
+        <li v-for="player in waitingPlayers()" :key="player.id" class="player">
           {{ player.name }}
         </li>
       </ol>
@@ -37,6 +33,7 @@
 
 <script>
 import { WaitingRoom, states } from "@/models/waitingRoom";
+import { Player } from "@/models/player";
 import CopyText from "@/components/CopyText";
 
 export default {
@@ -57,6 +54,13 @@ export default {
     },
     isReady: function() {
       return this.waitingRoom.state === states.ready;
+    },
+    waitingPlayers: function() {
+      let computedPlayers = [];
+      for (let i = 0; i < 4; i++) {
+        computedPlayers.push(this.waitingRoom.players[i] || new Player("…"));
+      }
+      return computedPlayers;
     }
   }
 };
