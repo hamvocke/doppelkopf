@@ -1,6 +1,8 @@
 import VueI18n from "vue-i18n";
 
 import WaitingRoom from "@/views/WaitingRoom";
+import { WaitingRoom as WaitingRoomModel } from "@/models/waitingRoom";
+import { Player } from "@/models/player";
 
 import "@/assets/css/app.css";
 
@@ -12,12 +14,21 @@ let i18nOpts = {
 
 i18nOpts["messages"]["de"] = locale;
 
+var model = new WaitingRoomModel();
+var player = new Player("Karl-Heinz", true, true);
+model.join(player);
+
 export default {
   title: "Waiting Room"
 };
 
 export const waitingRoom = () => ({
   components: { WaitingRoom },
-  template: "<WaitingRoom />",
+  data() {
+    return {
+      waitingRoom: model
+    };
+  },
+  template: "<WaitingRoom :waitingRoom='waitingRoom' />",
   i18n: new VueI18n(i18nOpts)
 });

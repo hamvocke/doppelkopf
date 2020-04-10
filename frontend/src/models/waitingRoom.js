@@ -1,11 +1,9 @@
 import { generateNameId } from "@/models/random";
 import { Game } from "@/models/game";
-import { Player } from "@/models/player";
 
 export const states = {
   waiting: "waiting",
-  ready: "ready",
-  started: "started"
+  ready: "ready"
 };
 
 export class WaitingRoom {
@@ -18,14 +16,14 @@ export class WaitingRoom {
     return this.players.length === 4 ? states.ready : states.waiting;
   }
 
-  join(playerName) {
-    if (!playerName) return;
+  join(player) {
+    if (!player) return;
 
     if (this.state === states.ready) {
       throw new Error("Room is full");
     }
 
-    this.players.push(new Player(playerName, true, false));
+    this.players.push(player);
   }
 
   startGame() {
@@ -36,10 +34,10 @@ export class WaitingRoom {
     return Game.multiPlayer(this.players);
   }
 
-  leave(playerName) {
-    if (!this.players.some(p => p.name === playerName))
-      throw new Error(`Player '${playerName}' is not in this room`);
+  leave(player) {
+    if (!this.players.some(p => p.id === player.id))
+      throw new Error(`Player '${player.name}' is not in this room`);
 
-    this.players = this.players.filter(p => p.name !== playerName);
+    this.players = this.players.filter(p => p.id !== player.id);
   }
 }

@@ -15,9 +15,9 @@ describe("Waiting Room", () => {
   test("should put new player in queue", () => {
     const room = new WaitingRoom();
 
-    room.join("player 1");
-    room.join("player 2");
-    room.join("player 3");
+    room.join(new Player("player 1"));
+    room.join(new Player("player 2"));
+    room.join(new Player("player 3"));
 
     expect(room.players.map(p => p.name)).toEqual([
       "player 1",
@@ -37,10 +37,10 @@ describe("Waiting Room", () => {
   test("should change state to 'ready' once four players are there", () => {
     const room = new WaitingRoom();
 
-    room.join("player 1");
-    room.join("player 2");
-    room.join("player 3");
-    room.join("player 4");
+    room.join(new Player("player 1"));
+    room.join(new Player("player 2"));
+    room.join(new Player("player 3"));
+    room.join(new Player("player 4"));
 
     expect(room.state).toBe(states.ready);
   });
@@ -48,10 +48,10 @@ describe("Waiting Room", () => {
   test("should not accept more than four players", () => {
     const room = new WaitingRoom();
 
-    room.join("player 1");
-    room.join("player 2");
-    room.join("player 3");
-    room.join("player 4");
+    room.join(new Player("player 1"));
+    room.join(new Player("player 2"));
+    room.join(new Player("player 3"));
+    room.join(new Player("player 4"));
 
     const throws = () => room.join(new Player("player 5"));
 
@@ -60,10 +60,10 @@ describe("Waiting Room", () => {
 
   test("should allow starting the game when game is ready", () => {
     const room = new WaitingRoom();
-    room.join("player 1");
-    room.join("player 2");
-    room.join("player 3");
-    room.join("player 4");
+    room.join(new Player("player 1"));
+    room.join(new Player("player 2"));
+    room.join(new Player("player 3"));
+    room.join(new Player("player 4"));
 
     const game = room.startGame();
 
@@ -72,29 +72,32 @@ describe("Waiting Room", () => {
 
   test("should allow leaving room", () => {
     const room = new WaitingRoom();
-    room.join("player 1");
-    room.join("player 2");
-    room.leave("player 2");
+    let p1 = new Player("player 1");
+    let p2 = new Player("player 2");
+    room.join(p1);
+    room.join(p2);
+    room.leave(p2);
 
-    expect(room.players.map(p => p.name)).toEqual(["player 1"]);
+    expect(room.players).toEqual([p1]);
   });
 
   test("should error if unknown player tries leaving", () => {
     const room = new WaitingRoom();
 
-    const throws = () => room.leave("player 2");
+    const throws = () => room.leave(new Player("player 2"));
 
     expect(throws).toThrow("Player 'player 2' is not in this room");
   });
 
   test("should change state to 'waiting' if a player leaves", () => {
     const room = new WaitingRoom();
-    room.join("player 1");
-    room.join("player 2");
-    room.join("player 3");
-    room.join("player 4");
+    let p2 = new Player("player 2");
+    room.join(new Player("player 1"));
+    room.join(p2);
+    room.join(new Player("player 3"));
+    room.join(new Player("player 4"));
 
-    room.leave("player 2");
+    room.leave(p2);
 
     expect(room.state).toBe(states.waiting);
   });

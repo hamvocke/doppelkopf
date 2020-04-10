@@ -14,7 +14,12 @@
 
     <div class="players">
       <ol>
-        <li v-for="player in waitingPlayers" :key="player.id" class="player">
+        <li
+          v-for="player in waitingPlayers"
+          :key="player.id"
+          class="player"
+          :class="{ highlight: player.isMe }"
+        >
           {{ player.name }}
         </li>
       </ol>
@@ -39,10 +44,13 @@ import CopyText from "@/components/CopyText";
 export default {
   name: "WaitingRoom",
   components: { CopyText },
-  data: function() {
-    return {
-      waitingRoom: new WaitingRoom()
-    };
+  props: {
+    waitingRoom: {
+      type: Object,
+      default: function() {
+        return new WaitingRoom();
+      }
+    }
   },
   computed: {
     statusMessage: function() {
@@ -63,7 +71,7 @@ export default {
     }
   },
   created() {
-    this.waitingRoom.join("Karl Heinz");
+    // this.waitingRoom.join("Karl Heinz");
   },
   methods: {
     startGame: function() {
@@ -138,5 +146,9 @@ li.player {
 
 li.player:last-of-type {
   border-bottom: none;
+}
+
+.highlight {
+  font-weight: bold;
 }
 </style>
