@@ -8,9 +8,8 @@
         Share your game id with your friends so they can join the game.
       </p>
       <p>You can start the game once 4 players have joined</p>
+      <div class="state">{{ statusMessage }}</div>
     </div>
-
-    <div class="state">{{ statusMessage }}</div>
 
     <div class="players">
       <ol>
@@ -101,7 +100,7 @@ h1 {
 }
 
 .roomInfo {
-  margin-bottom: 64px;
+  margin-bottom: 32px;
   max-width: 400px;
 }
 
@@ -121,6 +120,10 @@ h1 {
   padding: 12px;
   font-size: 1.8em;
   font-family: monospace;
+}
+
+.state {
+  margin-top: 64px;
 }
 
 .players {
