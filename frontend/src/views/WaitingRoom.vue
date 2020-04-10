@@ -10,11 +10,11 @@
       <p>You can start the game once 4 players have joined</p>
     </div>
 
-    <div class="state">{{ waitingRoom.state }}</div>
+    <div class="state">{{ statusMessage }}</div>
 
     <div class="players">
       <ol>
-        <li v-for="player in waitingPlayers()" :key="player.id" class="player">
+        <li v-for="player in waitingPlayers" :key="player.id" class="player">
           {{ player.name }}
         </li>
       </ol>
@@ -44,6 +44,24 @@ export default {
       waitingRoom: new WaitingRoom()
     };
   },
+  computed: {
+    statusMessage: function() {
+      switch (this.waitingRoom.state) {
+        case states.ready:
+          return "Ready to start the game";
+        case states.waiting:
+          return "Waiting for other players to join";
+      }
+      return "Waiting...";
+    },
+    waitingPlayers: function() {
+      let computedPlayers = [];
+      for (let i = 0; i < 4; i++) {
+        computedPlayers.push(this.waitingRoom.players[i] || new Player("…"));
+      }
+      return computedPlayers;
+    }
+  },
   created() {
     this.waitingRoom.join("Karl Heinz");
   },
@@ -54,13 +72,6 @@ export default {
     },
     isReady: function() {
       return this.waitingRoom.state === states.ready;
-    },
-    waitingPlayers: function() {
-      let computedPlayers = [];
-      for (let i = 0; i < 4; i++) {
-        computedPlayers.push(this.waitingRoom.players[i] || new Player("…"));
-      }
-      return computedPlayers;
     }
   }
 };
