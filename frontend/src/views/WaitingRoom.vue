@@ -14,7 +14,7 @@
     <div class="players">
       <ol>
         <li
-          v-for="player in waitingPlayers"
+          v-for="player in waitingRoom.players"
           :key="player.id"
           class="player"
           :class="{ highlight: player.isMe }"
@@ -37,7 +37,6 @@
 
 <script>
 import { WaitingRoom, states } from "@/models/waitingRoom";
-import { Player } from "@/models/player";
 import CopyText from "@/components/CopyText";
 
 export default {
@@ -60,13 +59,6 @@ export default {
           return "Waiting for other players to join";
       }
       return "Waiting...";
-    },
-    waitingPlayers: function() {
-      let computedPlayers = [];
-      for (let i = 0; i < 4; i++) {
-        computedPlayers.push(this.waitingRoom.players[i] || new Player("…"));
-      }
-      return computedPlayers;
     }
   },
   created() {

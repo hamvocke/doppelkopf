@@ -1,7 +1,6 @@
 import Home from "@/views/Home";
 import { shallowMount } from "@vue/test-utils";
 import VueTestUtils from "@vue/test-utils";
-import { Features } from "@/models/features";
 import { RouterLinkStub } from "@vue/test-utils";
 
 VueTestUtils.config.mocks["$t"] = msg => msg;
