@@ -24,21 +24,25 @@ def test_should_calculate_total_stats(app):
 def save_stats():
     events = []
     for i in range(0, 5):
-        events.append(Event(
-            created_at=datetime.utcnow() - timedelta(days=2),
-            event_type=EventTypes.GAME_START
-        ))
+        events.append(
+            Event(
+                created_at=datetime.utcnow() - timedelta(days=2),
+                event_type=EventTypes.GAME_START,
+            )
+        )
 
     for i in range(0, 6):
-        events.append(Event(
-            created_at=datetime.utcnow() - timedelta(days=1),
-            event_type=EventTypes.GAME_START
-        ))
+        events.append(
+            Event(
+                created_at=datetime.utcnow() - timedelta(days=1),
+                event_type=EventTypes.GAME_START,
+            )
+        )
 
     for i in range(0, 9):
-        events.append(Event(
-            created_at=datetime.utcnow(),
-            event_type=EventTypes.GAME_START
-        ))
+        events.append(
+            Event(created_at=datetime.utcnow(), event_type=EventTypes.GAME_START)
+        )
+
     db.session.add_all(events)
     db.session.commit()

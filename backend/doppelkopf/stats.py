@@ -24,13 +24,19 @@ def calculate_weekly():
     return {
         EventTypes.GAME_START: filter_events(events_by_date, EventTypes.GAME_START),
         EventTypes.GAME_WIN: filter_events(events_by_date, EventTypes.GAME_WIN),
-        EventTypes.GAME_LOSE: filter_events(events_by_date, EventTypes.GAME_LOSE)
+        EventTypes.GAME_LOSE: filter_events(events_by_date, EventTypes.GAME_LOSE),
     }
 
 
 def calculate_total():
     return {
-        EventTypes.GAME_START: Event.query.filter(Event.event_type == EventTypes.GAME_START).count(),
-        EventTypes.GAME_WIN: Event.query.filter(Event.event_type == EventTypes.GAME_WIN).count(),
-        EventTypes.GAME_LOSE: Event.query.filter(Event.event_type == EventTypes.GAME_LOSE).count()
+        EventTypes.GAME_START: Event.query.filter(
+            Event.event_type == EventTypes.GAME_START
+        ).count(),
+        EventTypes.GAME_WIN: Event.query.filter(
+            Event.event_type == EventTypes.GAME_WIN
+        ).count(),
+        EventTypes.GAME_LOSE: Event.query.filter(
+            Event.event_type == EventTypes.GAME_LOSE
+        ).count(),
     }
