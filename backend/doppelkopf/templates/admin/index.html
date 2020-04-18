@@ -20,7 +20,7 @@ Admin
       <p class="mt-1 text-gray-500">Games started</p>
     </div>
     <div class="ml-8 self-center text-gray-700">
-      <canvas id="chart3" class="w-48"></canvas>
+      <canvas id="chart1" class="js-chart w-48" data-stats="{{ stats.games_started_weekly }}"></canvas>
     </div>
   </div>
 
@@ -32,7 +32,7 @@ Admin
       <p class="mt-1 text-gray-500">Games won</p>
     </div>
     <div class="ml-8 self-center text-gray-700">
-      <canvas id="chart4" class="w-48"></canvas>
+      <canvas id="chart2" class="js-chart w-48" data-stats="{{ stats.games_won_weekly }}"></canvas>
     </div>
   </div>
 
@@ -44,8 +44,75 @@ Admin
       <p class="mt-1 text-gray-500">Games lost</p>
     </div>
     <div class="ml-8 self-center text-gray-700">
-      <canvas id="chart4" class="w-48"></canvas>
+      <canvas id="chart3" class="js-chart w-48" data-stats="{{ stats.games_lost_weekly }}"></canvas>
     </div>
   </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha256-TQq84xX6vkwR0Qs1qH5ADkP+MvH0W+9E7TdHJsoIQiM=" crossorigin="anonymous"></script>
+
+<script>
+function createChart(id, data, labels) {
+  let chartData = JSON.parse(data);
+  console.log("creating chart", id, chartData, labels);
+
+  var ctx = document.getElementById(id).getContext('2d');
+  var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: 'bar',
+
+      // The data for our dataset
+      data: {
+          labels: labels,
+          datasets: [{
+              label: 'Games started',
+              borderColor: 'rgb(255, 99, 132)',
+              backgroundColor: '#F56565',
+              data: chartData,
+              pointRadius: 1,
+              lineTension: 0
+          }]
+      },
+
+      // Configuration options go here
+      options: {
+        legend: {
+          display: false
+        },
+        title: {
+          display: false
+        },
+        animation: {
+            duration: 0
+        },
+        scales: {
+            xAxes: [{
+              display: false,
+            }],
+            yAxes: [{
+              display: false,
+              ticks: {
+                min: 0
+              }
+            }],
+          }
+      }
+  });
+}
+
+function dates() {
+  let d = [];
+  let date = new Date();
+  for(var i = -7; i <= 0; i++) {
+    let formattedDate = new Intl.DateTimeFormat('de-DE').format(date.setDate(date.getDate() - i));
+    d.push(formattedDate);
+  }
+  return d;
+}
+
+let labels = dates();
+let charts = document
+  .querySelectorAll('.js-chart')
+  .forEach(chart => createChart(chart.id, chart.dataset.stats, labels));
+</script>
 {% endblock %}

@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required
+from sqlalchemy.sql.functions import func
+from datetime import datetime, timedelta
 from .toggles import Toggle
 from .events import Event, EventTypes
 from .db import db
@@ -10,23 +12,31 @@ blueprint = Blueprint("admin", __name__, url_prefix="/admin")
 @blueprint.route("/", methods=["GET"])
 @login_required
 def index():
-    all_events = Event.query.all()
-    games_started = [
-        event for event in all_events if event.event_type == EventTypes.GAME_START
-    ]
-    games_won = [
-        event for event in all_events if event.event_type == EventTypes.GAME_WIN
-    ]
-    games_lost = [
-        event for event in all_events if event.event_type == EventTypes.GAME_LOSE
-    ]
+    now = datetime.utcnow()
+    last_week = datetime.utcnow() - timedelta(days=7)
+    events_by_date = (db.session
+                      .query(Event.created_at, Event.event_type, func.count(Event.event_type))
+                      .group_by(Event.event_type, Event.created_at)
+                      .filter(Event.created_at.between(last_week, now))
+                      .all())
 
-    # select date(created_at) date, count(1) from event group by date(created_at)
+    print(events_by_date)
+
+    games_started = Event.query.filter(Event.event_type == EventTypes.GAME_START).count()
+    games_won = Event.query.filter(Event.event_type == EventTypes.GAME_WIN).count()
+    games_lost = Event.query.filter(Event.event_type == EventTypes.GAME_LOSE).count()
+
+    games_started_weekly = [event[2] for event in events_by_date if event.event_type == EventTypes.GAME_START]
+    games_won_weekly = [event[2] for event in events_by_date if event.event_type == EventTypes.GAME_WIN]
+    games_lost_weekly = [event[2] for event in events_by_date if event.event_type == EventTypes.GAME_LOSE]
 
     stats = {
-        "games_started": len(games_started),
-        "games_won": len(games_won),
-        "games_lost": len(games_lost),
+        "games_started": games_started,
+        "games_won": games_won,
+        "games_lost": games_lost,
+        "games_started_weekly": games_started_weekly,
+        "games_won_weekly": games_won_weekly,
+        "games_lost_weekly": games_lost_weekly
     }
 
     return render_template("admin/index.html", stats=stats)
