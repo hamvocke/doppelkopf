@@ -35,6 +35,15 @@ def lose_game(game_id: int):
     return save_game_event(game_id, EventTypes.GAME_LOSE)
 
 
+@blueprint.route("/cron/db-backup", methods=["POST"])
+def cron_db_backup():
+    event = Event(event_type=EventTypes.CRON_DB_BACKUP)
+    db.session.add(event)
+    db.session.commit()
+
+    return "Ok"
+
+
 def save_game_event(game_id: int, type: EventTypes):
     game = Game.query.get_or_404(game_id)
     event = Event(event_type=type, game_id=game.id)

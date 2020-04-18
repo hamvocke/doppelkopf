@@ -9,6 +9,8 @@ class EventTypes(Enum):
     GAME_WIN = 3
     GAME_LOSE = 4
 
+    CRON_DB_BACKUP = 1000
+
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)

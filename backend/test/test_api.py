@@ -75,6 +75,17 @@ def test_should_return_toggles(client):
     assert data["features"]["some-toggle"]["enabled"] is True
 
 
+def test_should_log_cron_event(client):
+    events = Event.query.all()
+    assert len(events) == 0
+
+    response = client.post(f"/api/cron/db-backup")
+
+    assert response.status_code == 200
+    cron_event = Event.query.filter(Event.event_type == EventTypes.CRON_DB_BACKUP).first()
+    assert cron_event is not None
+
+
 def save_toggle(name="some-toggle", enabled=True) -> Toggle:
     toggle = Toggle(name=name, enabled=enabled)
     db.session.add(toggle)
