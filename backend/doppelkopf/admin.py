@@ -1,10 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required
-from sqlalchemy.sql.functions import func
-from datetime import datetime, timedelta
 from .toggles import Toggle
-from .events import Event, EventTypes
 from .db import db
+from .events import EventTypes
+from . import stats
 
 blueprint = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -12,34 +11,19 @@ blueprint = Blueprint("admin", __name__, url_prefix="/admin")
 @blueprint.route("/", methods=["GET"])
 @login_required
 def index():
-    now = datetime.utcnow()
-    last_week = datetime.utcnow() - timedelta(days=7)
-    events_by_date = (db.session
-                      .query(Event.created_at, Event.event_type, func.count(Event.event_type))
-                      .group_by(Event.event_type, Event.created_at)
-                      .filter(Event.created_at.between(last_week, now))
-                      .all())
+    weekly_stats = stats.calculate_weekly()
+    total_stats = stats.calculate_total()
 
-    print(events_by_date)
-
-    games_started = Event.query.filter(Event.event_type == EventTypes.GAME_START).count()
-    games_won = Event.query.filter(Event.event_type == EventTypes.GAME_WIN).count()
-    games_lost = Event.query.filter(Event.event_type == EventTypes.GAME_LOSE).count()
-
-    games_started_weekly = [event[2] for event in events_by_date if event.event_type == EventTypes.GAME_START]
-    games_won_weekly = [event[2] for event in events_by_date if event.event_type == EventTypes.GAME_WIN]
-    games_lost_weekly = [event[2] for event in events_by_date if event.event_type == EventTypes.GAME_LOSE]
-
-    stats = {
-        "games_started": games_started,
-        "games_won": games_won,
-        "games_lost": games_lost,
-        "games_started_weekly": games_started_weekly,
-        "games_won_weekly": games_won_weekly,
-        "games_lost_weekly": games_lost_weekly
+    all_stats = {
+        "games_started": total_stats[EventTypes.GAME_START],
+        "games_won": total_stats[EventTypes.GAME_WIN],
+        "games_lost": total_stats[EventTypes.GAME_LOSE],
+        "games_started_weekly": weekly_stats[EventTypes.GAME_START],
+        "games_won_weekly": weekly_stats[EventTypes.GAME_WIN],
+        "games_lost_weekly": weekly_stats[EventTypes.GAME_LOSE],
     }
 
-    return render_template("admin/index.html", stats=stats)
+    return render_template("admin/index.html", stats=all_stats)
 
 
 @blueprint.route("/toggles", methods=["GET"])

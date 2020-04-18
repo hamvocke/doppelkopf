@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from doppelkopf.toggles import Toggle
 from doppelkopf.db import db
+from doppelkopf.events import Event, EventTypes
 
 
 def test_admin_should_redirect_to_login(client):
