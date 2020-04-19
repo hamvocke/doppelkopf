@@ -2,7 +2,7 @@ import { MultiplayerHandler } from "@/models/multiplayerHandler";
 import { Config } from "@/models/config";
 const fetchMock = require("fetch-mock-jest");
 
-// disable testing mode  so we're hitting fetchMock requests
+// disable testing mode so we're hitting fetchMock requests
 Config.testing = false;
 
 beforeEach(() => {
@@ -12,17 +12,7 @@ beforeEach(() => {
 describe("Multiplayer Handler", () => {
   const stubbedResponse = {
     gameId: "smell-brown-slide",
-    players: [
-      {
-        name: "Karl Heinz"
-      },
-      {
-        name: "Brigitte"
-      },
-      {
-        name: "Svenja"
-      }
-    ]
+    players: [{ name: "Karl Heinz" }, { name: "Brigitte" }, { name: "Svenja" }]
   };
 
   test("should fetch game state", async () => {
