@@ -7,9 +7,9 @@ export const states = {
 };
 
 export class WaitingRoom {
-  constructor() {
-    this.gameId = generateNameId();
-    this.players = [];
+  constructor(gameId = null, players = []) {
+    this.gameId = gameId || generateNameId();
+    this.players = players;
   }
 
   get state() {

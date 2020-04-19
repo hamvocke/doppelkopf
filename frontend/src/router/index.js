@@ -28,6 +28,11 @@ const routes = [
     path: "/wait",
     name: "waiting-room",
     component: WaitingRoom
+  },
+  {
+    path: "/wait/:game-id",
+    name: "waiting-room",
+    component: WaitingRoom
   }
 ];
 
