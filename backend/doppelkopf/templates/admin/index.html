@@ -111,7 +111,7 @@ function dates() {
   let d = [];
   let date = new Date();
   for(var i = -7; i <= 0; i++) {
-    let formattedDate = new Intl.DateTimeFormat('de-DE').format(date.setDate(date.getDate() - i));
+    let formattedDate = new Intl.DateTimeFormat('de-DE').format(date.setDate(date.getDate() + i));
     d.push(formattedDate);
   }
   return d;
