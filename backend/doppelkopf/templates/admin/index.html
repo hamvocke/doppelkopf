@@ -62,7 +62,6 @@ Admin
 <script>
 function createChart(id, data, labels) {
   let chartData = JSON.parse(data);
-  console.log("creating chart", id, chartData, labels);
 
   var ctx = document.getElementById(id).getContext('2d');
   var chart = new Chart(ctx, {
