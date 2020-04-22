@@ -59,6 +59,7 @@ def test_should_save_player_name_on_new_game(client):
     # TODO
     pass
 
+
 def test_should_return_404_when_losing_unknown_game(client):
     events = Event.query.all()
     assert len(events) == 0
@@ -71,7 +72,7 @@ def test_should_return_404_when_losing_unknown_game(client):
 def test_should_join_game(client):
     game_id = start_game(client)
 
-    response = client.post(f"/api/game/{game_id}/join", json = { "playerName": "April" })
+    response = client.post(f"/api/game/{game_id}/join", json={"playerName": "April"})
 
     assert response.status_code == 200
 
@@ -102,7 +103,9 @@ def test_should_log_cron_event(client):
     response = client.post(f"/api/cron/db-backup")
 
     assert response.status_code == 200
-    cron_event = Event.query.filter(Event.event_type == EventTypes.CRON_DB_BACKUP).first()
+    cron_event = Event.query.filter(
+        Event.event_type == EventTypes.CRON_DB_BACKUP
+    ).first()
     assert cron_event is not None
 
 

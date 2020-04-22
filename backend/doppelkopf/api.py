@@ -24,6 +24,7 @@ def new_game():
 
     return jsonify({"game_id": game.id}), 201
 
+
 @blueprint.route("/game/<int:game_id>/join", methods=["POST"])
 def join_game(game_id: int):
     data = request.json
@@ -37,6 +38,7 @@ def join_game(game_id: int):
         abort(400)
 
     return f"Hello, {player}", 200
+
 
 @blueprint.route("/game/<int:game_id>/win", methods=["POST"])
 def win_game(game_id: int):
