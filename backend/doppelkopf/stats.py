@@ -18,7 +18,9 @@ def calculate_weekly():
     )
 
     def filter_events(events, type):
-        return [event[2] for event in events if event.event_type == type]
+        return [
+            [event.created_at.strftime("%Y-%m-%d"), event[2]] for event in events if event.event_type == type
+        ]
 
     return {
         EventTypes.GAME_START: filter_events(events_by_date, EventTypes.GAME_START),
