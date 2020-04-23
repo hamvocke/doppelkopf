@@ -18,7 +18,6 @@ def calculate_weekly():
     )
 
     def filter_events(events, type):
-        print("filtering")
         return [event[2] for event in events if event.event_type == type]
 
     return {

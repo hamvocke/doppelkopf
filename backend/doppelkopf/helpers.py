@@ -33,8 +33,6 @@ def is_safe_url(url: str) -> bool:
 
     u = urlsplit(url, scheme="https")
 
-    print(u)
-
     if u.scheme != "http" and u.scheme != "https":
         return False
 
