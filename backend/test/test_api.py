@@ -85,6 +85,14 @@ def test_should_return_bad_request_when_joining_game_without_data(client):
     assert response.status_code == 400
 
 
+def test_should_return_not_found_when_joining_unknown_game(client):
+    game_id = 42
+
+    response = client.post(f"/api/game/{game_id}/join", json={"playerName": "April"})
+
+    assert response.status_code == 404
+
+
 def test_should_return_toggles(client):
     save_toggle("some-toggle", enabled=True)
 

@@ -6,6 +6,7 @@ import { generateNames } from "@/models/random";
 class _MultiplayerHandler {
   async joinWaitingRoom(gameName, playerName = null) {
     let gameInfo;
+
     try {
       const response = await http.get(`/api/game/${gameName}`);
       gameInfo = await response.json();

@@ -37,6 +37,9 @@ def join_game(game_id: int):
     if player is None:
         abort(400)
 
+
+    Game.query.get_or_404(game_id)
+
     return f"Hello, {player}", 200
 
 
