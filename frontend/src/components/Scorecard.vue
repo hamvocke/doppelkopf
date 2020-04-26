@@ -358,5 +358,13 @@ li {
     margin: 0;
     border-radius: 0 0 8px 8px;
   }
+
+  th {
+    font-size: 0.9em;
+  }
+
+  .button-row {
+    margin-bottom: 24px;
+  }
 }
 </style>
