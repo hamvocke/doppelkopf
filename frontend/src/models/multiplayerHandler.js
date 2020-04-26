@@ -8,7 +8,7 @@ class _MultiplayerHandler {
     let gameInfo;
 
     try {
-      const response = await http.get(`/api/game/${gameName}`);
+      const response = await http.get(`/api/game/${gameName}/join`);
       gameInfo = await response.json();
     } catch (error) {
       throw new Error(`Failed to fetch game state: ${error}`);

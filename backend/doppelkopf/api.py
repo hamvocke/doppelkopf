@@ -6,6 +6,7 @@ from .toggles import Toggle
 
 blueprint = Blueprint("api", __name__, url_prefix="/api")
 
+poorMansState = {}
 
 @blueprint.route("/")
 def hello() -> str:
@@ -21,6 +22,8 @@ def new_game():
     event = Event(event_type=EventTypes.GAME_START, game_id=game.id)
     db.session.add(event)
     db.session.commit()
+
+    poorMansState[game.id] = {"players": []}
 
     return jsonify({"game_id": game.id}), 201
 
@@ -40,7 +43,12 @@ def join_game(game_id: int):
 
     Game.query.get_or_404(game_id)
 
-    return f"Hello, {player}", 200
+    poorMansState[game_id]["players"].append({"name": player})
+
+    return jsonify({
+        "gameId": game_id,
+        "players": poorMansState[game_id]["players"]
+    })
 
 
 @blueprint.route("/game/<int:game_id>/win", methods=["POST"])

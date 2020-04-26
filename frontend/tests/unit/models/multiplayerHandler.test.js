@@ -17,7 +17,7 @@ describe("Multiplayer Handler", () => {
 
   test("should fetch game state", async () => {
     fetchMock.get(
-      "http://localhost:5000/api/game/smell-brown-slide",
+      "http://localhost:5000/api/game/smell-brown-slide/join",
       stubbedResponse
     );
     await MultiplayerHandler.joinWaitingRoom("smell-brown-slide");
@@ -26,7 +26,7 @@ describe("Multiplayer Handler", () => {
 
   test("should create copy of waiting room", async () => {
     fetchMock.get(
-      "http://localhost:5000/api/game/smell-brown-slide",
+      "http://localhost:5000/api/game/smell-brown-slide/join",
       stubbedResponse
     );
 

@@ -55,10 +55,6 @@ def test_should_save_lose_game_event(client):
     assert win_event is not None
 
 
-def test_should_save_player_name_on_new_game(client):
-    # TODO
-    pass
-
 
 def test_should_return_404_when_losing_unknown_game(client):
     events = Event.query.all()
@@ -73,8 +69,11 @@ def test_should_join_game(client):
     game_id = start_game(client)
 
     response = client.post(f"/api/game/{game_id}/join", json={"playerName": "April"})
+    data = json.loads(response.get_data(as_text=True))
 
     assert response.status_code == 200
+    assert data["gameId"] == game_id
+    assert data["players"] == [{"name": "April"}]
 
 
 def test_should_return_bad_request_when_joining_game_without_data(client):

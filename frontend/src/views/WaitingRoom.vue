@@ -43,6 +43,10 @@ export default {
   name: "WaitingRoom",
   components: { CopyText },
   props: {
+    gameId: {
+      type: Number,
+      default: -1
+    },
     waitingRoom: {
       type: Object,
       default: function() {
