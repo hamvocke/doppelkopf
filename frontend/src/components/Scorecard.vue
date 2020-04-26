@@ -200,6 +200,7 @@ export default {
 @import "../assets/css/vars.css";
 
 .scorecard {
+  box-sizing: border-box;
   font-family: sans-serif;
   text-align: left;
   background: white;
@@ -334,7 +335,28 @@ li {
 
 @media screen and (max-width: 960px) {
   .scorecard {
-    width: 92%;
+    top: 4px;
+    min-width: 98%;
+    min-height: 98%;
+  }
+
+  .party-bubble {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 4px;
+  }
+
+  .party {
+    margin: 0;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .names {
+    padding: 8px 12px;
+    border-radius: 12px;
+    margin: 0;
+    border-radius: 0 0 8px 8px;
   }
 }
 </style>
