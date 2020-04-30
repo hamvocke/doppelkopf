@@ -64,8 +64,9 @@ export default {
 }
 
 input {
+  flex-grow: 1;
   padding: 8px 0;
-  font-size: 1.7em;
+  font-size: 1.3em;
   font-family: monospace;
   border: none;
   border-radius: 4px 0 0 4px;
