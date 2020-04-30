@@ -1,13 +1,15 @@
 <template>
   <div id="waitingRoom">
     <h1>Doppelkopf</h1>
+    <div class="link">
+      <span class="label">Your invite link:</span>
+      <CopyText :text="waitingRoom.gameUrl" />
+    </div>
     <div class="roomInfo">
-      <span class="label">Game id</span>
-      <CopyText :text="waitingRoom.gameId" />
       <p>
-        Share your game id with your friends so they can join the game.
+        <span class="arrow-glyph">↳</span> Share this link with your friends so they can join the game.
       </p>
-      <p>You can start the game once 4 players have joined</p>
+      <p>You can start the game once 4 players have joined.</p>
       <div class="state">{{ statusMessage }}</div>
     </div>
 
@@ -95,27 +97,27 @@ h1 {
   font-size: 3em;
 }
 
-.roomInfo {
+.link {
+  min-width: 500px;
   margin-bottom: 32px;
-  max-width: 400px;
+  border-left: 8px solid var(--red);
+  border-radius: 4px;
+  padding-left: 16px;
+}
+
+.roomInfo {
+  max-width: 450px;
+}
+
+.arrow-glyph {
+  font-size: 3em;
+  padding: 0 6px 12px 0;
+  margin-top: -32px;
 }
 
 .label {
   font-size: 0.9em;
   margin-bottom: -12px;
-}
-
-.copyLink {
-  margin: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.gameId {
-  padding: 12px;
-  font-size: 1.8em;
-  font-family: monospace;
 }
 
 .state {
@@ -128,7 +130,7 @@ h1 {
   background: var(--white);
   color: var(--black);
   display: block;
-  min-width: 400px;
+  min-width: 450px;
   border-radius: 8px;
   box-sizing: border-box;
 }
