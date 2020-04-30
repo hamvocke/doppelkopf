@@ -1,39 +1,41 @@
 <template>
   <div id="waitingRoom">
     <h1>Doppelkopf</h1>
-    <div class="link">
-      <span class="label">Your invite link:</span>
-      <CopyText :text="waitingRoom.gameUrl" />
-    </div>
-    <div class="roomInfo">
-      <p>
-        <span class="arrow-glyph">↳</span> Share this link with your friends so they can join the game.
-      </p>
-      <p>You can start the game once 4 players have joined.</p>
-      <div class="state">{{ statusMessage }}</div>
-    </div>
+    <div class="wrapper">
+      <div class="link">
+        <span class="label">Your invite link:</span>
+        <CopyText :text="waitingRoom.gameUrl" />
+      </div>
+      <div class="roomInfo">
+        <p>
+          Share this link with your friends so they can join the game.
+        </p>
+        <p>You can start the game once 4 players have joined.</p>
+        <div class="state">{{ statusMessage }}</div>
+      </div>
 
-    <div class="players">
-      <ol>
-        <li
-          v-for="player in waitingRoom.players"
-          :key="player.id"
-          class="player"
-          :class="{ highlight: player.isMe }"
-        >
-          {{ player.name }}
-        </li>
-      </ol>
-    </div>
+      <div class="players">
+        <ol>
+          <li
+            v-for="player in waitingRoom.players"
+            :key="player.id"
+            class="player"
+            :class="{ highlight: player.isMe }"
+          >
+            {{ player.name }}
+          </li>
+        </ol>
+      </div>
 
-    <button
-      v-if="isReady()"
-      class="button start-game"
-      tag="button"
-      @click="startGame()"
-    >
-      {{ $t("start-game") }}
-    </button>
+      <button
+        v-if="isReady()"
+        class="button start-game"
+        tag="button"
+        @click="startGame()"
+      >
+        {{ $t("start-game") }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -93,6 +95,13 @@ export default {
   height: 100vh;
 }
 
+.wrapper {
+  background: var(--white);
+  color: var(--black);
+  padding: 32px;
+  border-radius: 12px;
+}
+
 h1 {
   font-size: 3em;
 }
@@ -100,19 +109,14 @@ h1 {
 .link {
   min-width: 500px;
   margin-bottom: 32px;
-  border-left: 8px solid var(--red);
-  border-radius: 4px;
-  padding-left: 16px;
 }
 
 .roomInfo {
   max-width: 450px;
 }
 
-.arrow-glyph {
-  font-size: 3em;
-  padding: 0 6px 12px 0;
-  margin-top: -32px;
+.roomInfo p {
+  color: var(--black);
 }
 
 .label {
@@ -127,8 +131,8 @@ h1 {
 .players {
   padding: 0 24px;
   margin: 24px 0;
-  background: var(--white);
-  color: var(--black);
+  background: var(--lightblue);
+  color: var(--white);
   display: block;
   min-width: 450px;
   border-radius: 8px;
@@ -142,7 +146,7 @@ ol {
 
 li.player {
   padding: 24px 0;
-  border-bottom: 1px solid var(--lightgray);
+  border-bottom: 1px solid var(--black);
 }
 
 li.player:last-of-type {

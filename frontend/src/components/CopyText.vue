@@ -1,11 +1,7 @@
 <template>
   <div class="copyText">
     <input type="text" class="text" :value="text" readonly />
-    <button
-      type="button"
-      class="button button-secondary"
-      @click="copyTextToClipboard"
-    >
+    <button type="button" class="button" @click="copyTextToClipboard">
       <Icon :name="icon" />
       <span class="buttonText">{{ buttonText }}</span>
     </button>
@@ -71,7 +67,6 @@ input {
   border: none;
   border-radius: 4px 0 0 4px;
   background: transparent;
-  color: var(--white);
 }
 
 button {
