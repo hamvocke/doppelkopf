@@ -6,11 +6,12 @@ VueTestUtils.config.mocks["$t"] = () => {};
 VueTestUtils.config.mocks["$tc"] = () => {};
 
 jest.useFakeTimers();
+let mockClipboard;
 
 describe("CopyText.vue", () => {
   beforeEach(() => {
     jest.runAllTimers();
-    const mockClipboard = {
+    mockClipboard = {
       writeText: jest.fn().mockImplementation(() => Promise.resolve())
     };
     global.navigator.clipboard = mockClipboard;
@@ -21,6 +22,18 @@ describe("CopyText.vue", () => {
       propsData: { text: "some text" }
     });
     expect(wrapper.find(".text").element.value).toBe("some text");
+  });
+
+  test("should copy text on copy press", () => {
+    const wrapper = mount(CopyText, {
+      propsData: { text: "some text" }
+    });
+
+    const button = wrapper.find("button");
+
+    button.trigger("click");
+
+    expect(mockClipboard.writeText).toHaveBeenCalledWith("some text");
   });
 
   test("should change button text on button click", async () => {
