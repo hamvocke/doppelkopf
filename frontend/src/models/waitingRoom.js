@@ -1,5 +1,6 @@
 import { generateNameId } from "@/models/random";
 import { Game } from "@/models/game";
+import { Config } from "@/models/config";
 
 export const states = {
   waiting: "waiting",
@@ -14,6 +15,10 @@ export class WaitingRoom {
 
   get state() {
     return this.players.length === 4 ? states.ready : states.waiting;
+  }
+
+  get gameUrl() {
+    return `${Config.baseUrl}/${this.gameId}`;
   }
 
   join(player) {
