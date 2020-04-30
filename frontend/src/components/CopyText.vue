@@ -29,16 +29,23 @@ export default {
   data: function() {
     return {
       buttonText: "Copy",
-      icon: "clipboard"
+      icon: "clipboard",
+      copying: false
     };
   },
   methods: {
     copyTextToClipboard: function() {
+      if (this.copying) {
+        return;
+      }
+
+      this.copying = true;
       navigator.clipboard.writeText(this.text);
       let oldText = this.buttonText;
       this.buttonText = "Copied!";
       this.icon = "check";
       setTimeout(() => {
+        this.copying = false;
         this.buttonText = oldText;
         this.icon = "clipboard";
       }, 1500);
