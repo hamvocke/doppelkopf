@@ -35,5 +35,11 @@
   "de": "Deutsch",
   "options-header": "Settings",
   "tutorial-link": "https://en.wikipedia.org/wiki/Doppelkopf",
-  "winner": "Winner"
+  "winner": "Winner",
+
+  "here-is-your-invite-link": "Here is your invite link. Share this link with your friends so they can join the game.",
+  "you-can-start": "You can start the game once 4 players have joined.",
+  "n-players-are-here": "No players are here. | 1 player is here | {count} players are here",
+  "waiting-status": "Waiting for other players to join.",
+  "ready-status": "Ready to start the game."
 }

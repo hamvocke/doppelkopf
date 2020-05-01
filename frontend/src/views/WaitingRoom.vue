@@ -3,15 +3,21 @@
     <h1>Doppelkopf</h1>
     <div class="wrapper">
       <p>
-        Here is your <strong>invite link</strong>.
-        Share this link with your friends so they can join the game.
+        {{ $t("here-is-your-invite-link") }}
       </p>
       <div class="link">
         <CopyText :text="waitingRoom.gameUrl" />
       </div>
       <div class="roomInfo">
-        <p>You can start the game once 4 players have joined.</p>
-        <p>{{ waitingRoom.players.length }} players are here. {{ statusMessage }}</p>
+        <p>{{ $t("you-can-start") }}</p>
+        <p>
+          {{
+            $tc("n-players-are-here", waitingRoom.players.length, {
+              count: waitingRoom.players.length
+            })
+          }}
+          {{ $t(statusMessage) }}
+        </p>
       </div>
 
       <div class="players">
@@ -62,11 +68,11 @@ export default {
     statusMessage: function() {
       switch (this.waitingRoom.state) {
         case states.ready:
-          return "Ready to start the game";
+          return "ready-status";
         case states.waiting:
-          return "Waiting for other players to join";
+          return "waiting-status";
       }
-      return "Waiting...";
+      return "waiting-status";
     }
   },
   created() {
@@ -116,7 +122,7 @@ h1 {
   background: var(--white);
   border-radius: 6px;
   min-width: 600px;
-  margin: 32px 0;
+  margin: 16px 0;
   padding: 24px 24px;
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
     0 5px 15px 0 rgba(0, 0, 0, 0.08);
@@ -124,6 +130,7 @@ h1 {
 
 p {
   color: var(--black);
+  line-height: 1.6em;
 }
 
 .roomInfo {
