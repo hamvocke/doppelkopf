@@ -2,16 +2,16 @@
   <div id="waitingRoom">
     <h1>Doppelkopf</h1>
     <div class="wrapper">
+      <p>
+        Here is your <strong>invite link</strong>.
+        Share this link with your friends so they can join the game.
+      </p>
       <div class="link">
-        <span class="label">Your invite link:</span>
         <CopyText :text="waitingRoom.gameUrl" />
       </div>
       <div class="roomInfo">
-        <p>
-          Share this link with your friends so they can join the game.
-        </p>
         <p>You can start the game once 4 players have joined.</p>
-        <div class="state">{{ statusMessage }}</div>
+        <p>{{ waitingRoom.players.length }} players are here. {{ statusMessage }}</p>
       </div>
 
       <div class="players">
@@ -99,7 +99,13 @@ export default {
   background: var(--white);
   color: var(--black);
   padding: 32px;
-  border-radius: 12px;
+  border-radius: 6px;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
+    0 5px 15px 0 rgba(0, 0, 0, 0.08);
 }
 
 h1 {
@@ -107,21 +113,21 @@ h1 {
 }
 
 .link {
-  min-width: 500px;
-  margin-bottom: 32px;
+  background: var(--white);
+  border-radius: 6px;
+  min-width: 600px;
+  margin: 32px 0;
+  padding: 24px 24px;
+  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
+    0 5px 15px 0 rgba(0, 0, 0, 0.08);
 }
 
-.roomInfo {
-  max-width: 450px;
-}
-
-.roomInfo p {
+p {
   color: var(--black);
 }
 
-.label {
-  font-size: 0.9em;
-  margin-bottom: -12px;
+.roomInfo {
+  align-self: flex-start;
 }
 
 .state {
@@ -134,8 +140,8 @@ h1 {
   background: var(--lightblue);
   color: var(--white);
   display: block;
-  min-width: 450px;
-  border-radius: 8px;
+  min-width: 500px;
+  border-radius: 12px;
   box-sizing: border-box;
 }
 
@@ -145,7 +151,7 @@ ol {
 }
 
 li.player {
-  padding: 24px 0;
+  padding: 12px 0;
   border-bottom: 1px solid var(--black);
 }
 
