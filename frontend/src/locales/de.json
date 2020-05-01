@@ -37,7 +37,7 @@
   "tutorial-link": "https://de.wikipedia.org/wiki/Doppelkopf",
   "winner": "Gewinner",
 
-  "here-is-your-invite-link": "Hier ist dein Spiel-Link. Schicke diesen Link an deine Freunde damit ihr mit dem Spiel loslegen könnt.",
+  "here-is-your-invite-link": "Hier ist dein Spiel-Link. Schicke diesen Link an deine Freunde damit sie dem Spiel beitreten können.",
   "you-can-start": "Du kannst das Spiel starten, sobald 4 Spieler hier sind.",
   "n-players-are-here": "Kein Spieler ist hier. | 1 Spieler ist hier. | {count} Spieler sind hier",
   "waiting-status": "Warte auf weitere Spieler.",
