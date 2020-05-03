@@ -159,11 +159,6 @@ ol {
 
 li.player {
   padding: 12px 0;
-  border-bottom: 1px solid var(--black);
-}
-
-li.player:last-of-type {
-  border-bottom: none;
 }
 
 .highlight {

@@ -42,7 +42,6 @@ export const waitingWaitingRoom = () => ({
   i18n: new VueI18n(i18nOpts)
 });
 
-
 export const readyWaitingRoom = () => ({
   components: { WaitingRoom },
   data() {
