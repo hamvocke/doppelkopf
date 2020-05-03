@@ -55,7 +55,6 @@ def test_should_save_lose_game_event(client):
     assert win_event is not None
 
 
-
 def test_should_return_404_when_losing_unknown_game(client):
     events = Event.query.all()
     assert len(events) == 0
@@ -68,7 +67,7 @@ def test_should_return_404_when_losing_unknown_game(client):
 def test_should_join_game(client):
     game_id = start_game(client)
 
-    payload = { "player": { "name": "April" } }
+    payload = {"player": {"name": "April"}}
     response = client.post(f"/api/game/{game_id}/join", json=payload)
     data = json.loads(response.get_data(as_text=True))
 
@@ -88,7 +87,7 @@ def test_should_return_bad_request_when_joining_game_without_data(client):
 def test_should_return_not_found_when_joining_unknown_game(client):
     game_id = 42
 
-    payload = { "player": { "name": "April" } }
+    payload = {"player": {"name": "April"}}
     response = client.post(f"/api/game/{game_id}/join", json=payload)
 
     assert response.status_code == 404

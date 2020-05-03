@@ -29,7 +29,9 @@ def test_should_calculate_weekly_stats(app):
 
 
 def test_should_calculate_total_stats(app):
-    save_stats(datetime.utcnow() - timedelta(days=0), datetime.utcnow() - timedelta(days=0))
+    save_stats(
+        datetime.utcnow() - timedelta(days=0), datetime.utcnow() - timedelta(days=0)
+    )
 
     s = stats.calculate_total()
 

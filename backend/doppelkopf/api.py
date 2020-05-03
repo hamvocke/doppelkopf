@@ -1,12 +1,14 @@
 from flask import Blueprint, jsonify, request, abort
 
 from .db import db
-from .events import Event, EventTypes, Game
+from .events import Event, EventTypes
+from .game import Game
 from .toggles import Toggle
 
 blueprint = Blueprint("api", __name__, url_prefix="/api")
 
 poorMansState = {}
+
 
 @blueprint.route("/")
 def hello() -> str:
@@ -40,15 +42,11 @@ def join_game(game_id: int):
     if player is None:
         abort(400)
 
-
-    Game.query.get_or_404(game_id)
+    game = Game.query.get_or_404(game_id)
 
     poorMansState[game_id]["players"].append({"name": player["name"]})
 
-    return jsonify({
-        "gameId": game_id,
-        "players": poorMansState[game_id]["players"]
-    })
+    return jsonify({"gameId": game.id, "players": poorMansState[game_id]["players"]})
 
 
 @blueprint.route("/game/<int:game_id>/win", methods=["POST"])

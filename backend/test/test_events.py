@@ -1,4 +1,5 @@
-from doppelkopf.events import Event, Game, EventTypes
+from doppelkopf.events import Event, EventTypes
+from doppelkopf.game import Game
 from doppelkopf.db import db
 
 
