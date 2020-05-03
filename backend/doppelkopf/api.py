@@ -35,7 +35,7 @@ def join_game(game_id: int):
     if data is None:
         abort(400)
 
-    player = data["playerName"]
+    player = data.get("player")
 
     if player is None:
         abort(400)
@@ -43,7 +43,7 @@ def join_game(game_id: int):
 
     Game.query.get_or_404(game_id)
 
-    poorMansState[game_id]["players"].append({"name": player})
+    poorMansState[game_id]["players"].append({"name": player["name"]})
 
     return jsonify({
         "gameId": game_id,
