@@ -1,10 +1,44 @@
 import { WaitingRoom, states } from "@/models/waitingRoom";
 import { Player } from "@/models/player";
+import { Config } from "@/models/config";
+const fetchMock = require("fetch-mock-jest");
+
+beforeEach(() => {
+  fetchMock.reset();
+  Config.testing = true;
+});
 
 describe("Waiting Room", () => {
   test("should generate game id on creation", () => {
     const room = new WaitingRoom();
     expect(room.gameId).toBeDefined();
+  });
+
+  test("should fetch waiting room from server", async () => {
+    // disable testing mode so we're hitting fetchMock requests
+    Config.testing = false;
+
+    const stubbedResponse = {
+      gameId: "smell-brown-slide",
+      players: [
+        { name: "Karl Heinz" },
+        { name: "Brigitte" },
+        { name: "Svenja" }
+      ]
+    };
+
+    fetchMock.get(
+      "http://localhost:5000/api/game/smell-brown-slide/join",
+      stubbedResponse
+    );
+
+    let room = await WaitingRoom.fetch("smell-brown-slide");
+
+    expect(fetchMock.called()).toBe(true);
+    expect(room.gameId).toEqual("smell-brown-slide");
+    expect(room.players.some(p => p.name === "Karl Heinz")).toBe(true);
+    expect(room.players.some(p => p.name === "Brigitte")).toBe(true);
+    expect(room.players.some(p => p.name === "Svenja")).toBe(true);
   });
 
   test("should be in 'waiting' state on start", () => {
