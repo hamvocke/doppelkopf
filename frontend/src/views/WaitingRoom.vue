@@ -76,7 +76,14 @@ export default {
     }
   },
   created() {
-    // this.waitingRoom.join("Karl Heinz");
+    // TODO:
+    //  1. get game name from vue router
+    //  2. send request to server: game name
+    //  3. create waiting room based on response
+    //  (WaitingRoom -> fetch)
+    //  4. if state === "waiting": ask for name
+    //  5. when name entered -> waitingRoom.join(name)
+    //  6. show waiting room properly
   },
   methods: {
     startGame: function() {
