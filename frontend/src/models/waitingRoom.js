@@ -6,7 +6,7 @@ import { http } from "@/helpers/httpClient";
 
 export const states = {
   waiting: "waiting",
-  // todo: add another state - "joined"
+  joined: "joined",
   ready: "ready"
 };
 
@@ -14,11 +14,16 @@ export class WaitingRoom {
   constructor(gameId = null, players = []) {
     this.gameId = gameId || generateNameId();
     this.players = players;
-    this._state = states.waiting;
   }
 
   get state() {
-    return this.players.length === 4 ? states.ready : states.waiting; // todo: accommodate for new state
+    if (this.players.length === 4) {
+      return states.ready;
+    } else if (this.players.some(p => p.isMe)) {
+      return states.joined;
+    } else {
+      return states.waiting;
+    }
   }
 
   get gameUrl() {
