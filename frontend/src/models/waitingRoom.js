@@ -38,7 +38,7 @@ export class WaitingRoom {
     // [ ] show waiting room with players who are present as long as state === "waiting"
     // [ ] ask player for their name
     // [ ] on name submit: waitingRoom.join(playerName)
-    // [ ] change room state to "joined"
+    // [x] change room state to "joined"
 
     let gameInfo;
 
