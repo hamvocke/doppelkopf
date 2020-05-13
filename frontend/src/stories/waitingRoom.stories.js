@@ -14,14 +14,19 @@ let i18nOpts = {
 
 i18nOpts["messages"]["de"] = locale;
 
-var waitingModel = new WaitingRoomModel();
-var player = new Player("Karl-Heinz", true, true);
-waitingModel.join(player);
-
-var readyModel = new WaitingRoomModel();
-var player2 = new Player("Brigitte", true, false);
+var player = new Player("Karl-Heinz", true, false);
+var player2 = new Player("Brigitte", true, true);
 var player3 = new Player("Johnny", true, false);
 var player4 = new Player("Svenja", true, false);
+
+var waitingModel = new WaitingRoomModel();
+waitingModel.join(player);
+
+var joinedModel = new WaitingRoomModel();
+joinedModel.join(player);
+joinedModel.join(player2);
+
+var readyModel = new WaitingRoomModel();
 readyModel.join(player);
 readyModel.join(player2);
 readyModel.join(player3);
@@ -36,6 +41,17 @@ export const waitingWaitingRoom = () => ({
   data() {
     return {
       waitingRoom: waitingModel
+    };
+  },
+  template: "<WaitingRoom :waitingRoom='waitingRoom' />",
+  i18n: new VueI18n(i18nOpts)
+});
+
+export const joinedWaitingRoom = () => ({
+  components: { WaitingRoom },
+  data() {
+    return {
+      waitingRoom: joinedModel
     };
   },
   template: "<WaitingRoom :waitingRoom='waitingRoom' />",

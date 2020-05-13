@@ -69,6 +69,8 @@ export default {
       switch (this.waitingRoom.state) {
         case states.ready:
           return "ready-status";
+        case states.joined:
+          return "waiting-status";
         case states.waiting:
           return "waiting-status";
       }
