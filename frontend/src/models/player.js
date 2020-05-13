@@ -43,7 +43,6 @@ export class Player {
     this.play(cardToBePlayed);
   }
 
-  // TODO: Make this one async to allow updates to be scheduled correctly?
   play(card) {
     if (this.game.currentRound.waitingForPlayer() !== this) {
       notifier.info("not-your-turn");
@@ -65,6 +64,7 @@ export class Player {
       this.game.currentRound.nextPlayer();
 
       if (options.autoplay === true) {
+        // timeout to accommodate for animation duration when playing a card
         setTimeout(() => this.game.currentRound.nextMove(), 800);
       }
     } catch (error) {
