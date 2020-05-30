@@ -40,12 +40,20 @@ export class Game {
   }
 
   deal() {
-    this.deck = new Deck();
+    let hands = [];
 
-    this.players[0].hand = new Hand(this.deck.cards.slice(0, 10));
-    this.players[1].hand = new Hand(this.deck.cards.slice(10, 20));
-    this.players[2].hand = new Hand(this.deck.cards.slice(20, 30));
-    this.players[3].hand = new Hand(this.deck.cards.slice(30, 40));
+    do {
+      this.deck = new Deck();
+      hands[0] = new Hand(this.deck.cards.slice(0, 10));
+      hands[1] = new Hand(this.deck.cards.slice(10, 20));
+      hands[2] = new Hand(this.deck.cards.slice(20, 30));
+      hands[3] = new Hand(this.deck.cards.slice(30, 40));
+    } while (!hands.every(hand => hand.isPlayable()));
+
+    this.players[0].hand = hands[0];
+    this.players[1].hand = hands[1];
+    this.players[2].hand = hands[2];
+    this.players[3].hand = hands[3];
   }
 
   get playerOpening() {
