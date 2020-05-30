@@ -35,4 +35,8 @@ export class Hand {
   sort() {
     return this.cards.sort(compare).reverse();
   }
+
+  isPlayable() {
+    return this.cards.filter(card => card.rank === ranks.king).length < 5;
+  }
 }

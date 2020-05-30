@@ -141,3 +141,39 @@ test("should sort hand by visual order", () => {
 
   expect(hand.cards).toEqual(sortedDeck);
 });
+
+test("should detect hand with 5 kings as not playable", () => {
+  const cards = [
+    king.of(suits.hearts),
+    ten.of(suits.hearts),
+    queen.of(suits.spades),
+    king.of(suits.diamonds),
+    king.of(suits.clubs),
+    king.of(suits.clubs),
+    ten.of(suits.spades),
+    king.of(suits.diamonds),
+    queen.of(suits.spades),
+    queen.of(suits.hearts)
+  ];
+  const hand = new Hand(cards);
+
+  expect(hand.isPlayable()).toBe(false);
+});
+
+test("should detect playable hand", () => {
+  const cards = [
+    king.of(suits.hearts),
+    ten.of(suits.hearts),
+    queen.of(suits.spades),
+    king.of(suits.diamonds),
+    ace.of(suits.clubs),
+    ten.of(suits.clubs),
+    ten.of(suits.spades),
+    king.of(suits.diamonds),
+    queen.of(suits.spades),
+    queen.of(suits.hearts)
+  ];
+  const hand = new Hand(cards);
+
+  expect(hand.isPlayable()).toBe(true);
+});
