@@ -1,141 +1,143 @@
 <template>
   <div class="scorecard">
-    <h1 class="message">{{ $t(message) }}</h1>
+    <div class="scroll-container">
+      <h1 class="message">{{ $t(message) }}</h1>
 
-    <div class="parties">
-      <div class="party-wrapper">
-        <div v-if="currentScore.winningParty() === 'Re'" class="winner-balloon">
-          🎈 {{ $t("winner") }}
-        </div>
-        <div class="party-bubble">
-          <div class="party re">
-            Re
+      <div class="parties">
+        <div class="party-wrapper">
+          <div v-if="currentScore.winningParty() === 'Re'" class="winner-balloon">
+            🎈 {{ $t("winner") }}
           </div>
-          <div class="names">
-            {{ partyMembers("Re") }}
+          <div class="party-bubble">
+            <div class="party re">
+              Re
+            </div>
+            <div class="names">
+              {{ partyMembers("Re") }}
+            </div>
+          </div>
+        </div>
+
+        <div class="party-wrapper">
+          <div
+            v-if="currentScore.winningParty() === 'Kontra'"
+            class="winner-balloon"
+          >
+            🎈 {{ $t("winner") }}
+          </div>
+          <div class="party-bubble">
+            <div class="party kontra">
+              Kontra
+            </div>
+            <div class="names">
+              {{ partyMembers("Kontra") }}
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="party-wrapper">
-        <div
-          v-if="currentScore.winningParty() === 'Kontra'"
-          class="winner-balloon"
-        >
-          🎈 {{ $t("winner") }}
-        </div>
-        <div class="party-bubble">
-          <div class="party kontra">
-            Kontra
-          </div>
-          <div class="names">
-            {{ partyMembers("Kontra") }}
-          </div>
-        </div>
+      <div class="meter">
+        <PointMeter
+          :re-points="currentScore.rePoints"
+          :kontra-points="currentScore.kontraPoints"
+        />
       </div>
-    </div>
 
-    <div class="meter">
-      <PointMeter
-        :re-points="currentScore.rePoints"
-        :kontra-points="currentScore.kontraPoints"
-      />
-    </div>
+      <div class="row">
+        <div class="column">
+          <h2>{{ $t("results") }}</h2>
 
-    <div class="row">
-      <div class="column">
-        <h2>{{ $t("results") }}</h2>
+          <div class="row">
+            <table>
+              <tr>
+                <th>
+                  <div class="summary">
+                    <strong>Re</strong>
+                  </div>
+                </th>
 
-        <div class="row">
+                <th>
+                  <div class="summary">
+                    <strong>Kontra</strong>
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td class="extras re">
+                  <ul>
+                    <li
+                      v-for="extra in currentScore.listExtras('Re')"
+                      :key="extra"
+                    >
+                      <span :title="$t(extra + '_description')">
+                        <Icon name="info" />
+                      </span>
+                      {{ $t(extra) }}
+                    </li>
+                  </ul>
+                </td>
+                <td class="extras kontra">
+                  <ul>
+                    <li
+                      v-for="extra in currentScore.listExtras('Kontra')"
+                      :key="extra"
+                    >
+                      <span :title="$t(extra + '_description')">
+                        <Icon name="info" />
+                      </span>
+                      {{ $t(extra) }}
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="sum re">
+                  <span v-if="currentScore.winningParty() === 'Re'"
+                    >{{ currentScore.points() }} {{ $t("points") }}</span
+                  >
+                </td>
+                <td class="sum kontra">
+                  <span v-if="currentScore.winningParty() === 'Kontra'">
+                    {{ currentScore.points() }} {{ $t("points") }}
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="column">
+          <h2>{{ $t("points") }}</h2>
           <table>
             <tr>
-              <th>
-                <div class="summary">
-                  <strong>Re</strong>
-                </div>
+              <th
+                v-for="player in players"
+                :key="player.id"
+                class="player right-aligned"
+              >
+                {{ player.name }}
               </th>
-
-              <th>
-                <div class="summary">
-                  <strong>Kontra</strong>
-                </div>
-              </th>
+              <th class="right-aligned">{{ $t("points") }}</th>
             </tr>
-            <tr>
-              <td class="extras re">
-                <ul>
-                  <li
-                    v-for="extra in currentScore.listExtras('Re')"
-                    :key="extra"
-                  >
-                    <span :title="$t(extra + '_description')">
-                      <Icon name="info" />
-                    </span>
-                    {{ $t(extra) }}
-                  </li>
-                </ul>
+            <tr
+              v-for="(scoreLine, index) in scorecard.scoreLines"
+              :key="scoreLine.id"
+              class="scoreLine"
+              :class="{ bold: isLastLine(index) }"
+            >
+              <td
+                v-for="player in players"
+                :key="player.id"
+                class="right-aligned"
+              >
+                {{ scoreLine.totalPoints[player.id] }}
               </td>
-              <td class="extras kontra">
-                <ul>
-                  <li
-                    v-for="extra in currentScore.listExtras('Kontra')"
-                    :key="extra"
-                  >
-                    <span :title="$t(extra + '_description')">
-                      <Icon name="info" />
-                    </span>
-                    {{ $t(extra) }}
-                  </li>
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <td class="sum re">
-                <span v-if="currentScore.winningParty() === 'Re'"
-                  >{{ currentScore.points() }} {{ $t("points") }}</span
-                >
-              </td>
-              <td class="sum kontra">
-                <span v-if="currentScore.winningParty() === 'Kontra'">
-                  {{ currentScore.points() }} {{ $t("points") }}
-                </span>
+              <td class="right-aligned">
+                {{ scoreLine.points }}
               </td>
             </tr>
           </table>
         </div>
-      </div>
-
-      <div class="column">
-        <h2>{{ $t("points") }}</h2>
-        <table>
-          <tr>
-            <th
-              v-for="player in players"
-              :key="player.id"
-              class="player right-aligned"
-            >
-              {{ player.name }}
-            </th>
-            <th class="right-aligned">{{ $t("points") }}</th>
-          </tr>
-          <tr
-            v-for="(scoreLine, index) in scorecard.scoreLines"
-            :key="scoreLine.id"
-            class="scoreLine"
-            :class="{ bold: isLastLine(index) }"
-          >
-            <td
-              v-for="player in players"
-              :key="player.id"
-              class="right-aligned"
-            >
-              {{ scoreLine.totalPoints[player.id] }}
-            </td>
-            <td class="right-aligned">
-              {{ scoreLine.points }}
-            </td>
-          </tr>
-        </table>
       </div>
     </div>
 
@@ -204,7 +206,6 @@ export default {
   font-family: sans-serif;
   text-align: left;
   background: white;
-  padding: 24px;
   margin: 6px;
   border-radius: 6px;
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
@@ -218,7 +219,14 @@ export default {
   width: 66%;
   max-height: 90%;
   color: var(--blue);
+  display: flex;
+  flex-direction: column;
+}
+
+.scroll-container {
   overflow-y: auto;
+  flex-grow: 10;
+  padding: 12px;
 }
 
 h1,
@@ -258,8 +266,9 @@ td {
 }
 
 .button-row {
-  margin-top: 32px;
+  padding: 12px;
   text-align: right;
+  flex-grow: 1;
 }
 
 .extras {
@@ -361,10 +370,6 @@ li {
 
   th {
     font-size: 0.9em;
-  }
-
-  .button-row {
-    margin-bottom: 24px;
   }
 }
 </style>
