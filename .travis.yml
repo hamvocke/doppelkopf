@@ -1,21 +1,15 @@
 dist: bionic
 
-language: python
-
 services:
   - docker
   - xvfb
-
-addons:
-  chrome: stable
-
-node_js:
-  - '12'
 
 matrix:
   include:
     - language: node_js
       node_js: '14'
+      addons:
+        chrome: stable
       before_script:
         - cd frontend/
         - yarn install
@@ -23,6 +17,17 @@ matrix:
         - yarn test:unit
         - yarn test:e2e
         - yarn build
+      before_deploy:
+        - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d
+        - eval "$(ssh-agent -s)"
+        - chmod 600 /tmp/travis\_rsa
+        - ssh-add /tmp/travis\_rsa
+      deploy:
+        provider: script
+        cleanup: false
+        script: bash ci/deploy_frontend.sh
+        on:
+          branch: master
 
     - language: python
       python: "3.8"
@@ -31,16 +36,15 @@ matrix:
         - make install
       script:
         - make test
+      before_deploy:
+        - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d
+        - eval "$(ssh-agent -s)"
+        - chmod 600 /tmp/travis\_rsa
+        - ssh-add /tmp/travis\_rsa
 
-before_deploy:
-  - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d
-  - eval "$(ssh-agent -s)"
-  - chmod 600 /tmp/travis\_rsa
-  - ssh-add /tmp/travis\_rsa
-
-deploy:
-  provider: script
-  cleanup: false
-  script: bash ci/deploy.sh
-  on:
-    branch: master
+      deploy:
+        provider: script
+        cleanup: false
+        script: bash ci/deploy_backend.sh
+        on:
+          branch: master
