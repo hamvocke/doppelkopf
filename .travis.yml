@@ -14,7 +14,7 @@ matrix:
         - pushd frontend/ && yarn install && popd
       script:
         - pushd frontend/ && yarn test:unit && yarn test:e2e && popd
-        - pushd frontent/ && yarn build && popd
+        - pushd frontend/ && yarn build && popd
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d
         - eval "$(ssh-agent -s)"
