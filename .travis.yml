@@ -11,12 +11,10 @@ matrix:
       addons:
         chrome: stable
       before_script:
-        - cd frontend/
-        - yarn install
+        - pushd frontend/ && yarn install && popd
       script:
-        - yarn test:unit
-        - yarn test:e2e
-        - yarn build
+        - pushd frontend/ && yarn test:unit && yarn test:e2e && popd
+        - pushd frontent/ && yarn build && popd
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d
         - eval "$(ssh-agent -s)"
@@ -32,10 +30,9 @@ matrix:
     - language: python
       python: "3.8"
       before_script:
-        - cd backend/
-        - make install
+        - pushd backend/ && make install && popd
       script:
-        - make test
+        - pushd backend/ && make test && popd
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d
         - eval "$(ssh-agent -s)"
