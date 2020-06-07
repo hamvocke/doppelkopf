@@ -22,7 +22,7 @@ matrix:
         - ssh-add /tmp/travis\_rsa
       deploy:
         provider: script
-        cleanup: false
+        skip_cleanup: true
         script: bash ci/deploy_frontend.sh
         on:
           branch: master
@@ -41,7 +41,7 @@ matrix:
 
       deploy:
         provider: script
-        cleanup: false
+        skip_cleanup: true
         script: bash ci/deploy_backend.sh
         on:
           branch: master
