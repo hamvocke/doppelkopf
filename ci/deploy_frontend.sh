@@ -5,8 +5,8 @@ source ${BASH_SOURCE%/*}/smoke_test.sh
 
 set -e
 
+pushd frontend
 e_header "Deploying frontend"
-popd
 
 e_step "Upload static content..."
 rsync -rvz --quiet --delete-after frontend/dist/ root@ham.codes:/tmp/doppelkopf -e "ssh -o StrictHostKeyChecking=no"
@@ -28,3 +28,4 @@ smoke_test https://doppelkopf.ham.codes
 e_mute "Done"
 
 e_success "Done. All good."
+popd
