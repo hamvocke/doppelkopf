@@ -40,7 +40,7 @@
     "babel-jest": "^24.5.0",
     "babel-loader": "^8.0.4",
     "babel-preset-vue": "^2.0.2",
-    "chromedriver": "^81.0.0",
+    "chromedriver": "^83.0.0",
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.0.0",
