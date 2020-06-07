@@ -1,6 +1,6 @@
 dist: bionic
 
-language: node_js
+language: python
 
 services:
   - docker
@@ -12,17 +12,25 @@ addons:
 node_js:
   - '12'
 
-before_script:
-  - sudo apt-get update
-  - sudo apt-get -y install python3.8
-  - python3.8 -m pip install --user pipenv
-  - pushd frontend/ && yarn install && popd
-  - pushd backend/ && make install && popd
+matrix:
+  include:
+    - language: node_js
+      node_js: '14'
+      before_script:
+        - cd frontend/
+        - yarn install
+      script:
+        - yarn test:unit
+        - yarn test:e2e
+        - yarn build
 
-script:
-  - pushd frontend && yarn test:unit && yarn test:e2e && popd
-  - pushd frontend && yarn build && popd
-  - pushd backend && make test && popd
+    - language: python
+      python: "3.8"
+      before_script:
+        - cd backend/
+        - make install
+      script:
+        - make test
 
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d
@@ -32,7 +40,7 @@ before_deploy:
 
 deploy:
   provider: script
-  skip_cleanup: true
+  cleanup: false
   script: bash ci/deploy.sh
   on:
     branch: master
