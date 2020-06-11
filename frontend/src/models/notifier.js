@@ -29,7 +29,7 @@ export class Notifier {
       text: message
     });
 
-    await this.wait(4000);
+    await this.wait(3000);
     this.flashMessages.pop();
   }
 

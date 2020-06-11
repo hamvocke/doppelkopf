@@ -47,7 +47,7 @@ export default {
 }
 
 .blink {
-  animation: 2.5s 0.5s blink;
+  animation: 2s 0.5s blink;
 }
 
 @keyframes blink {
