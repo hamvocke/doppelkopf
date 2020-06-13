@@ -1,16 +1,14 @@
 <template>
   <div class="notification-container">
-    <div class="notifications">
-      <transition-group name="message">
-        <div
-          v-for="notification in notifications"
-          :key="notification.id"
-          class="message"
-        >
-          {{ $t(notification.text) }}
-        </div>
-      </transition-group>
-    </div>
+    <transition-group name="message" class="notifications">
+      <div
+        v-for="notification in notifications"
+        :key="notification.id"
+        class="message"
+      >
+        {{ $t(notification.text) }}
+      </div>
+    </transition-group>
     <div class="flashMessages">
       <FlashMessage
         v-if="flashMessages[0]"
