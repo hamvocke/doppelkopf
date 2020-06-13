@@ -45,6 +45,8 @@ export default {
   position: absolute;
   top: 0px;
   z-index: var(--notification-layer);
+  display: flex;
+  flex-direction: column;
 }
 
 .message {
