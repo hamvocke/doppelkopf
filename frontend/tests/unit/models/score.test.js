@@ -1,15 +1,7 @@
 import { Score } from "@/models/score";
 import { Player } from "@/models/player";
 import { re, kontra } from "@/models/parties";
-import {
-  WIN,
-  BEAT_RE,
-  DOPPELKOPF,
-  FOX,
-  NO_90,
-  NO_60,
-  NO_30
-} from "@/models/extras";
+import { extras } from "@/models/extras";
 
 const playersWithReWinning = stubParties(130, 110);
 const playersWithKontraWinning = stubParties(110, 130);
@@ -114,20 +106,20 @@ describe("calculating extras", () => {
   test("should give subtract losing party's points", () => {
     const score = new Score();
 
-    playersWithReWinning[2].trickStack.extras = () => [DOPPELKOPF];
+    playersWithReWinning[2].trickStack.extras = () => [extras.doppelkopf];
     score.evaluate(playersWithReWinning);
 
     expect(score.points()).toBe(0);
-    expect(score.listExtras(re)).toEqual([WIN]);
-    expect(score.listExtras(kontra)).toEqual([DOPPELKOPF]);
+    expect(score.listExtras(re)).toEqual([extras.win]);
+    expect(score.listExtras(kontra)).toEqual([extras.doppelkopf]);
   });
 
   test("should add extra point", () => {
     const score = new Score();
 
-    score.addExtra(re, WIN);
+    score.addExtra(re, extras.win);
 
-    const expectedExtras = [WIN];
+    const expectedExtras = [extras.win];
     expect(score.listExtras(re)).toEqual(expectedExtras);
   });
 
@@ -145,7 +137,7 @@ describe("calculating extras", () => {
     score.evaluate(stubParties(89, 240 - 89));
 
     expect(score.points()).toBe(3); // won, beat re, no 90
-    expect(score.listExtras(kontra)).toContain(NO_90);
+    expect(score.listExtras(kontra)).toContain(extras.no_90);
   });
 
   test("should add no 60 extra", () => {
@@ -154,7 +146,7 @@ describe("calculating extras", () => {
     score.evaluate(stubParties(240 - 59, 59));
 
     expect(score.points()).toBe(3); // won, no 90, no 60
-    expect(score.listExtras(re)).toContain(NO_60);
+    expect(score.listExtras(re)).toContain(extras.no_60);
   });
 
   test("should add no 30 extra", () => {
@@ -163,7 +155,7 @@ describe("calculating extras", () => {
     score.evaluate(stubParties(29, 240 - 29));
 
     expect(score.points()).toBe(5); // won, beat re, no 90, no 60, no 30
-    expect(score.listExtras(kontra)).toContain(NO_30);
+    expect(score.listExtras(kontra)).toContain(extras.no_30);
   });
 
   test("should add no points extra", () => {
@@ -172,17 +164,17 @@ describe("calculating extras", () => {
     score.evaluate(stubParties(240, 0));
 
     expect(score.points()).toBe(5); // won, no 90, no 60, no 30, no points
-    expect(score.listExtras(re)).toContain(NO_30);
+    expect(score.listExtras(re)).toContain(extras.no_30);
   });
 
   test("should list doppelkopf extra", () => {
     const score = new Score();
-    playersWithKontraWinning[2].trickStack.extras = () => [DOPPELKOPF];
+    playersWithKontraWinning[2].trickStack.extras = () => [extras.doppelkopf];
 
     score.evaluate(playersWithKontraWinning);
 
     expect(score.points()).toBe(3);
-    expect(score.listExtras(kontra)).toContain(DOPPELKOPF);
+    expect(score.listExtras(kontra)).toContain(extras.doppelkopf);
 
     playersWithKontraWinning[2].trickStack.extras = () => [];
   });
@@ -192,7 +184,7 @@ describe("calculating extras", () => {
 
     score.evaluate(playersWithKontraWinning);
 
-    const expectedExtrasForKontra = [WIN, BEAT_RE];
+    const expectedExtrasForKontra = [extras.win, extras.beat_re];
     expect(score.listExtras(re)).toEqual([]);
     expect(score.listExtras(kontra)).toEqual(expectedExtrasForKontra);
   });
@@ -200,11 +192,19 @@ describe("calculating extras", () => {
   test("should list extra from tricks parties", () => {
     const score = new Score();
     let playerConstellation = playersWithKontraWinning;
-    playerConstellation[2].trickStack.extras = () => [DOPPELKOPF, FOX];
+    playerConstellation[2].trickStack.extras = () => [
+      extras.doppelkopf,
+      extras.fox
+    ];
 
     score.evaluate(playerConstellation);
 
-    const expectedExtrasForKontra = [WIN, BEAT_RE, DOPPELKOPF, FOX];
+    const expectedExtrasForKontra = [
+      extras.win,
+      extras.beat_re,
+      extras.doppelkopf,
+      extras.fox
+    ];
     expect(score.listExtras(re)).toEqual([]);
     expect(score.listExtras(kontra)).toEqual(expectedExtrasForKontra);
   });
