@@ -4,6 +4,7 @@ import { TrickStack } from "@/models/trickStack";
 import { RandomCardBehavior } from "@/models/behaviors";
 import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
+import { announcements } from "@/models/announcements";
 import { playableCards } from "@/models/playableCardFinder";
 
 const notifier = new Notifier();
@@ -25,6 +26,7 @@ export class Player {
     this.tablePosition = tablePosition;
     this.game = game;
     this.behavior = new RandomCardBehavior();
+    this.announcements = new Set();
   }
 
   isRe() {
@@ -91,5 +93,20 @@ export class Player {
 
   points() {
     return this.trickStack.points();
+  }
+
+  announce(announement) {
+    this.announcements.add(announement);
+  }
+
+  // todo: make this configurable for playing with 9s
+  possibleAnnouncements() {
+    let a = [];
+
+    if (this.isRe() && this.hand.cards.length === 10) {
+      a.push(announcements.re);
+    }
+
+    return a;
   }
 }

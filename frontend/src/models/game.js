@@ -39,6 +39,7 @@ export class Game {
     return new Game(players);
   }
 
+  // todo: make this configurable for playing with 9s
   deal() {
     let hands = [];
 

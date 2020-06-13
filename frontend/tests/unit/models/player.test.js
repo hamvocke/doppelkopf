@@ -2,10 +2,12 @@ import { Player } from "@/models/player";
 import { Game } from "@/models/game";
 import { Hand } from "@/models/hand";
 import { PlayedCard } from "@/models/playedCard";
-import { king, queen, ten, suits, Card } from "@/models/card";
+import { king, queen, ten, suits, Card, cardOrder } from "@/models/card";
 import { TrickStack } from "@/models/trickStack";
 import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
+import { sample } from "lodash-es";
+import { announcements } from "@/models/announcements";
 
 let game;
 let player;
@@ -212,3 +214,44 @@ test("should validate playable cards if no card has been played yet", () => {
   expect(player.canPlay(queenOnHand)).toBe(true);
   expect(player.canPlay(tenOnHand)).toBe(true);
 });
+
+describe("announcements", () => {
+
+  test("should be able to announce", () => {
+    player.announce(announcements.re);
+
+    expect(player.announcements).toContain(announcements.re);
+  })
+
+  test.todo("should validate announcements");
+
+  test("should be able to announce re when player is re", () => {
+    player.hand = aHandWith(queen.of(suits.clubs));
+
+    let possibleAnnouncements = player.possibleAnnouncements();
+
+    expect(possibleAnnouncements).toContain(announcements.re);
+  });
+
+  test.todo("should be able to announce kontra when player is kontra");
+  test.todo("should be able to announce no 90 with 9 cards");
+  test.todo("should be able to announce no 60 with 8 cards");
+  test.todo("should be able to announce no 30 with 7 cards");
+  test.todo("should be able to announce no points with 6 cards");
+
+  test.todo("should not be able to announce re with 9 cards");
+  test.todo("should not be able to announce no 90 with 8 cards");
+  test.todo("should not be able to announce no 60 with 7 cards");
+  test.todo("should not be able to announce no 30 with 6 cards");
+  test.todo("should not be able to announce no points with 5 cards");
+});
+
+function aHandWith(...cards) {
+  let cardsOnHand = cards;
+
+  for (let i = cards.length; i < 10; i++) {
+    cardsOnHand.push(sample(cardOrder));
+  }
+
+  return new Hand(cardsOnHand);
+}

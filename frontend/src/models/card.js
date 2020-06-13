@@ -132,7 +132,7 @@ export const trumps = [
   king.of(suits.diamonds)
 ];
 
-const cardOrder = [
+export const cardOrder = [
   new Card(ranks.ten, suits.hearts, 0),
   new Card(ranks.ten, suits.hearts, 1),
 
