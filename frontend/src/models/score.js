@@ -1,5 +1,5 @@
 import { re, kontra } from "@/models/parties";
-import { WIN, BEAT_RE, NO_90, NO_60, NO_30, NO_POINTS } from "@/models/extras";
+import { extras } from "@/models/extras";
 
 const sumPointsForParty = (acc, player) => acc + player.points();
 const extrasInTrickStack = (acc, player) =>
@@ -26,42 +26,42 @@ export class Score {
 
     const winnerParty = this.winningParty();
 
-    this.addExtra(winnerParty, WIN);
+    this.addExtra(winnerParty, extras.win);
 
     if (winnerParty === kontra) {
-      this.addExtra(kontra, BEAT_RE);
+      this.addExtra(kontra, extras.beat_re);
     }
 
     if (this.rePoints < 90) {
-      this.addExtra(kontra, NO_90);
+      this.addExtra(kontra, extras.no_90);
     }
 
     if (this.kontraPoints < 90) {
-      this.addExtra(re, NO_90);
+      this.addExtra(re, extras.no_90);
     }
 
     if (this.rePoints < 60) {
-      this.addExtra(kontra, NO_60);
+      this.addExtra(kontra, extras.no_60);
     }
 
     if (this.kontraPoints < 60) {
-      this.addExtra(re, NO_60);
+      this.addExtra(re, extras.no_60);
     }
 
     if (this.rePoints < 30) {
-      this.addExtra(kontra, NO_30);
+      this.addExtra(kontra, extras.no_30);
     }
 
     if (this.kontraPoints < 30) {
-      this.addExtra(re, NO_30);
+      this.addExtra(re, extras.no_30);
     }
 
     if (this.rePoints === 0) {
-      this.addExtra(kontra, NO_POINTS);
+      this.addExtra(kontra, extras.no_points);
     }
 
     if (this.kontraPoints === 0) {
-      this.addExtra(re, NO_POINTS);
+      this.addExtra(re, extras.no_points);
     }
 
     const reExtras = this.parties[re].reduce(extrasInTrickStack, []);
