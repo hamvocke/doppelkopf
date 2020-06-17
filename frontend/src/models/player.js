@@ -104,7 +104,23 @@ export class Player {
     let a = [];
 
     if (this.isRe() && this.hand.cards.length === 10) {
-      a.push(announcements.re);
+      a = [
+        announcements.re,
+        announcements.no_90,
+        announcements.no_60,
+        announcements.no_30,
+        announcements.no_points
+      ];
+    }
+
+    if (this.isKontra() && this.hand.cards.length === 10) {
+      a = [
+        announcements.kontra,
+        announcements.no_90,
+        announcements.no_60,
+        announcements.no_30,
+        announcements.no_points
+      ];
     }
 
     return a;

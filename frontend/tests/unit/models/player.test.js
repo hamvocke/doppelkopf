@@ -6,7 +6,7 @@ import { king, queen, ten, suits, Card, cardOrder } from "@/models/card";
 import { TrickStack } from "@/models/trickStack";
 import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
-import { sample } from "lodash-es";
+import { sampleSize } from "lodash-es";
 import { announcements } from "@/models/announcements";
 
 let game;
@@ -216,24 +216,41 @@ test("should validate playable cards if no card has been played yet", () => {
 });
 
 describe("announcements", () => {
-
-  test("should be able to announce", () => {
+  test("should announce", () => {
     player.announce(announcements.re);
 
     expect(player.announcements).toContain(announcements.re);
-  })
-
-  test.todo("should validate announcements");
+  });
 
   test("should be able to announce re when player is re", () => {
     player.hand = aHandWith(queen.of(suits.clubs));
 
     let possibleAnnouncements = player.possibleAnnouncements();
 
-    expect(possibleAnnouncements).toContain(announcements.re);
+    let expectedAnnouncements = [
+      announcements.re,
+      announcements.no_90,
+      announcements.no_60,
+      announcements.no_30,
+      announcements.no_points
+    ];
+    expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
 
-  test.todo("should be able to announce kontra when player is kontra");
+  test("should be able to announce kontra when player is kontra", () => {
+    player.hand = aHandWithout(queen.of(suits.clubs));
+
+    let possibleAnnouncements = player.possibleAnnouncements();
+
+    let expectedAnnouncements = [
+      announcements.kontra,
+      announcements.no_90,
+      announcements.no_60,
+      announcements.no_30,
+      announcements.no_points
+    ];
+    expect(possibleAnnouncements).toEqual(expectedAnnouncements);
+  });
   test.todo("should be able to announce no 90 with 9 cards");
   test.todo("should be able to announce no 60 with 8 cards");
   test.todo("should be able to announce no 30 with 7 cards");
@@ -249,9 +266,18 @@ describe("announcements", () => {
 function aHandWith(...cards) {
   let cardsOnHand = cards;
 
-  for (let i = cards.length; i < 10; i++) {
-    cardsOnHand.push(sample(cardOrder));
-  }
+  cardsOnHand.push(...sampleSize(cardOrder, 10 - cards.length));
 
   return new Hand(cardsOnHand);
+}
+
+function aHandWithout(excludedCard) {
+  let cards = sampleSize(
+    cardOrder.filter(
+      card =>
+        !(card.suit === excludedCard.suit && card.rank === excludedCard.rank)
+    ),
+    10
+  );
+  return new Hand(cards);
 }
