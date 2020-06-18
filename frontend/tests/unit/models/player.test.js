@@ -217,9 +217,19 @@ test("should validate playable cards if no card has been played yet", () => {
 
 describe("announcements", () => {
   test("should announce", () => {
+    player.hand = aHandWith(10, queen.of(suits.clubs));
+
     player.announce(announcements.re);
 
     expect(player.announcements).toContain(announcements.re);
+  });
+
+  test("should validate announcement", () => {
+    player.hand = aHandWith(7, queen.of(suits.clubs));
+
+    let failingAnnouncement = () => player.announce(announcements.no_90);
+
+    expect(failingAnnouncement).toThrowError("Invalid announcement");
   });
 
   test("should be able to announce re when player is re", () => {

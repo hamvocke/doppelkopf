@@ -95,11 +95,15 @@ export class Player {
     return this.trickStack.points();
   }
 
-  announce(announement) {
-    this.announcements.add(announement);
+  announce(announcement) {
+    if (!this.possibleAnnouncements().includes(announcement)) {
+      throw new Error("Invalid announcement");
+    }
+
+    this.announcements.add(announcement);
   }
 
-  // todo: make this configurable for playing with 9s
+  // todo: make this configurable for playing with 9s (add 2 to each threshold)
   possibleAnnouncements() {
     let a = [];
 
