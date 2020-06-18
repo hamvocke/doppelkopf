@@ -223,7 +223,7 @@ describe("announcements", () => {
   });
 
   test("should be able to announce re when player is re", () => {
-    player.hand = aHandWith(queen.of(suits.clubs));
+    player.hand = aHandWith(10, queen.of(suits.clubs));
 
     let possibleAnnouncements = player.possibleAnnouncements();
 
@@ -238,7 +238,7 @@ describe("announcements", () => {
   });
 
   test("should be able to announce kontra when player is kontra", () => {
-    player.hand = aHandWithout(queen.of(suits.clubs));
+    player.hand = aHandWithout(10, queen.of(suits.clubs));
 
     let possibleAnnouncements = player.possibleAnnouncements();
 
@@ -251,33 +251,77 @@ describe("announcements", () => {
     ];
     expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
-  test.todo("should be able to announce no 90 with 9 cards");
-  test.todo("should be able to announce no 60 with 8 cards");
-  test.todo("should be able to announce no 30 with 7 cards");
-  test.todo("should be able to announce no points with 6 cards");
 
-  test.todo("should not be able to announce re with 9 cards");
-  test.todo("should not be able to announce no 90 with 8 cards");
-  test.todo("should not be able to announce no 60 with 7 cards");
-  test.todo("should not be able to announce no 30 with 6 cards");
-  test.todo("should not be able to announce no points with 5 cards");
+  test("should be not be able to announce re with 9 cards", () => {
+    player.hand = aHandWith(9, queen.of(suits.clubs));
+
+    let possibleAnnouncements = player.possibleAnnouncements();
+
+    let expectedAnnouncements = [
+      announcements.no_90,
+      announcements.no_60,
+      announcements.no_30,
+      announcements.no_points
+    ];
+    expect(possibleAnnouncements).toEqual(expectedAnnouncements);
+  });
+
+  test("should be able to announce no 60 with 8 cards", () => {
+    player.hand = aHandWithout(8, queen.of(suits.clubs));
+
+    let possibleAnnouncements = player.possibleAnnouncements();
+
+    let expectedAnnouncements = [
+      announcements.no_60,
+      announcements.no_30,
+      announcements.no_points
+    ];
+    expect(possibleAnnouncements).toEqual(expectedAnnouncements);
+  });
+
+  test("should be able to announce no 30 with 7 cards", () => {
+    player.hand = aHandWith(7, queen.of(suits.clubs));
+
+    let possibleAnnouncements = player.possibleAnnouncements();
+
+    let expectedAnnouncements = [announcements.no_30, announcements.no_points];
+    expect(possibleAnnouncements).toEqual(expectedAnnouncements);
+  });
+
+  test("should be able to announce no points with 6 cards", () => {
+    player.hand = aHandWithout(6, queen.of(suits.clubs));
+
+    let possibleAnnouncements = player.possibleAnnouncements();
+
+    let expectedAnnouncements = [announcements.no_points];
+    expect(possibleAnnouncements).toEqual(expectedAnnouncements);
+  });
+
+  test("should be able to announce anything with 5 cards", () => {
+    player.hand = aHandWithout(5, queen.of(suits.clubs));
+
+    let possibleAnnouncements = player.possibleAnnouncements();
+
+    let expectedAnnouncements = [];
+    expect(possibleAnnouncements).toEqual(expectedAnnouncements);
+  });
 });
 
-function aHandWith(...cards) {
+function aHandWith(numberOfCards, ...cards) {
   let cardsOnHand = cards;
 
-  cardsOnHand.push(...sampleSize(cardOrder, 10 - cards.length));
+  cardsOnHand.push(...sampleSize(cardOrder, numberOfCards - cards.length));
 
   return new Hand(cardsOnHand);
 }
 
-function aHandWithout(excludedCard) {
+function aHandWithout(numberOfCards, excludedCard) {
   let cards = sampleSize(
     cardOrder.filter(
       card =>
         !(card.suit === excludedCard.suit && card.rank === excludedCard.rank)
     ),
-    10
+    numberOfCards
   );
   return new Hand(cards);
 }

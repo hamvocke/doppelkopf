@@ -103,24 +103,28 @@ export class Player {
   possibleAnnouncements() {
     let a = [];
 
-    if (this.isRe() && this.hand.cards.length === 10) {
-      a = [
-        announcements.re,
-        announcements.no_90,
-        announcements.no_60,
-        announcements.no_30,
-        announcements.no_points
-      ];
+    if (this.isRe() && this.hand.cards.length >= 10) {
+      a = [announcements.re];
     }
 
-    if (this.isKontra() && this.hand.cards.length === 10) {
-      a = [
-        announcements.kontra,
-        announcements.no_90,
-        announcements.no_60,
-        announcements.no_30,
-        announcements.no_points
-      ];
+    if (this.isKontra() && this.hand.cards.length >= 10) {
+      a = [announcements.kontra];
+    }
+
+    if (this.hand.cards.length >= 9) {
+      a.push(announcements.no_90);
+    }
+
+    if (this.hand.cards.length >= 8) {
+      a.push(announcements.no_60);
+    }
+
+    if (this.hand.cards.length >= 7) {
+      a.push(announcements.no_30);
+    }
+
+    if (this.hand.cards.length >= 6) {
+      a.push(announcements.no_points);
     }
 
     return a;
