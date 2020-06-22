@@ -114,7 +114,6 @@ test("should show extras as flash message", async () => {
   round.currentTrick.add(ace.of(suits.hearts), round.players[3]);
   round.currentTrick.add(ace.of(suits.diamonds), round.players[0]);
 
-  // round.currentTrick.extras = () => [extras.doppelkopf];
   const notifier = new Notifier();
   notifier.flash = jest.fn();
 
