@@ -2,7 +2,7 @@ import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PlayedCard } from "@/models/playedCard";
 import { queen, king, suits, ten, ace } from "@/models/card";
-import { DOPPELKOPF, FOX } from "@/models/extras";
+import { extras } from "@/models/extras";
 
 const player1 = new Player("Player 1", true);
 const player2 = new Player("Player 2");
@@ -155,7 +155,7 @@ describe("extras", () => {
     trick.add(ace.of(suits.spades), player1);
     trick.add(ace.of(suits.spades), player2);
 
-    expect(trick.extras()).toEqual([DOPPELKOPF]);
+    expect(trick.extras()).toEqual([extras.doppelkopf]);
   });
 
   test("should find Fuchs", () => {
@@ -171,6 +171,6 @@ describe("extras", () => {
     trick.add(ace.of(suits.diamonds), player1);
     trick.add(ace.of(suits.spades), player2);
 
-    expect(trick.extras()).toEqual([FOX]);
+    expect(trick.extras()).toEqual([extras.fox]);
   });
 });

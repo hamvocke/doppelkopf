@@ -2,7 +2,7 @@ import { TrickStack } from "@/models/trickStack";
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { ace, ten, king, queen, suits } from "@/models/card";
-import { DOPPELKOPF, FOX } from "@/models/extras";
+import { extras } from "@/models/extras";
 
 const player1 = new Player("player 1");
 const player2 = new Player("player 2");
@@ -93,7 +93,7 @@ describe("extras", () => {
     trickStack.add(someTrick);
 
     expect(trickStack.points()).toBe(42);
-    expect(trickStack.extras()).toEqual([DOPPELKOPF]);
+    expect(trickStack.extras()).toEqual([extras.doppelkopf]);
   });
 
   test("should find Fox", () => {
@@ -107,7 +107,7 @@ describe("extras", () => {
     someTrick.add(ace.of(suits.hearts), player4);
     trickStack.add(someTrick);
 
-    expect(trickStack.extras()).toEqual([FOX]);
+    expect(trickStack.extras()).toEqual([extras.fox]);
   });
 
   test("should find Doppelkopf and Fox", () => {
@@ -121,6 +121,6 @@ describe("extras", () => {
     someTrick.add(ace.of(suits.hearts), player4);
     trickStack.add(someTrick);
 
-    expect(trickStack.extras()).toEqual([DOPPELKOPF, FOX]);
+    expect(trickStack.extras()).toEqual([extras.doppelkopf, extras.fox]);
   });
 });

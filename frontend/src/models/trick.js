@@ -1,7 +1,7 @@
 import { uniqueId } from "lodash-es";
 import { PlayedCard, beats } from "@/models/playedCard";
 import { ranks, suits } from "@/models/card";
-import { DOPPELKOPF, FOX } from "@/models/extras";
+import { extras as extrasModel } from "@/models/extras";
 
 export class Trick {
   constructor(expectedNumberOfCards) {
@@ -72,7 +72,7 @@ export class Trick {
   extras() {
     let extras = [];
     if (this.points() >= 40) {
-      extras.push(DOPPELKOPF);
+      extras.push(extrasModel.doppelkopf);
     }
 
     var fox = this.findFox();
@@ -80,7 +80,7 @@ export class Trick {
       const caughtByOtherParty =
         (fox.player.isRe() && !this.winner().isRe()) ||
         (fox.player.isKontra() && !this.winner().isKontra());
-      if (caughtByOtherParty) extras.push(FOX);
+      if (caughtByOtherParty) extras.push(extrasModel.fox);
     }
 
     return extras;

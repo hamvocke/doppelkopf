@@ -1,8 +1,8 @@
 import { Game } from "@/models/game";
 import { Round } from "@/models/round";
 import { Notifier } from "@/models/notifier";
-import { jack, suits } from "@/models/card";
-import { DOPPELKOPF } from "@/models/extras";
+import { jack, suits, ace } from "@/models/card";
+import { extras } from "@/models/extras";
 import { options } from "@/models/options";
 
 const game = Game.singlePlayer();
@@ -107,23 +107,21 @@ test("should not autoplay if round is finished", () => {
   expect(mockedComputerPlayer.autoplay).not.toBeCalled();
 });
 
-test("should show extras as flash message", () => {
+test("should show extras as flash message", async () => {
   expect.assertions(1);
-  round.currentTrick.add(jack.of(suits.clubs), round.players[1]);
-  round.currentTrick.add(jack.of(suits.spades), round.players[2]);
-  round.currentTrick.add(jack.of(suits.hearts), round.players[3]);
-  round.currentTrick.add(jack.of(suits.diamonds), round.players[0]);
+  round.currentTrick.add(ace.of(suits.clubs), round.players[1]);
+  round.currentTrick.add(ace.of(suits.spades), round.players[2]);
+  round.currentTrick.add(ace.of(suits.hearts), round.players[3]);
+  round.currentTrick.add(ace.of(suits.diamonds), round.players[0]);
 
-  round.currentTrick.extras = () => [DOPPELKOPF];
+  // round.currentTrick.extras = () => [extras.doppelkopf];
   const notifier = new Notifier();
   notifier.flash = jest.fn();
 
-  const promise = round.finishTrick();
+  await round.finishTrick();
   jest.runAllTimers();
 
-  promise.then(() => {
-    expect(notifier.flash).toHaveBeenCalled();
-  });
+  expect(notifier.flash).toHaveBeenCalled();
 });
 
 describe("player order", () => {
