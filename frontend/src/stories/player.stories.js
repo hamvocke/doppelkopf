@@ -1,7 +1,7 @@
 import VueI18n from "vue-i18n";
 
-import Player from "@/components/player";
-import { game } from "@/models/game";
+import Player from "@/components/Player";
+import { Game } from "@/models/game";
 
 import "@/assets/css/app.css";
 
@@ -17,6 +17,8 @@ export default {
   title: "Player"
 };
 
+let game = Game.singlePlayer();
+
 export const myself = () => ({
   components: { Player },
   data() {
@@ -24,6 +26,6 @@ export const myself = () => ({
       player: game.players[0]
     };
   },
-  template: '<Player player="player" />',
+  template: '<Player :player="player" />',
   i18n: new VueI18n(i18nOpts)
 });
