@@ -5,7 +5,10 @@
 
       <div class="parties">
         <div class="party-wrapper">
-          <div v-if="currentScore.winningParty() === 'Re'" class="winner-balloon">
+          <div
+            v-if="currentScore.winningParty() === 'Re'"
+            class="winner-balloon"
+          >
             🎈 {{ $t("winner") }}
           </div>
           <div class="party-bubble">
@@ -70,7 +73,7 @@
                       :key="extra"
                     >
                       <span :title="$t(extra + '_description')">
-                        <Icon name="info" />
+                        <info-icon></info-icon>
                       </span>
                       {{ $t(extra) }}
                     </li>
@@ -83,7 +86,7 @@
                       :key="extra"
                     >
                       <span :title="$t(extra + '_description')">
-                        <Icon name="info" />
+                        <info-icon></info-icon>
                       </span>
                       {{ $t(extra) }}
                     </li>
@@ -152,13 +155,13 @@
 <script>
 import { includes, join } from "lodash-es";
 import PointMeter from "./scorecard/PointMeter";
-import Icon from "./Icon";
+import { InfoIcon } from "vue-feather-icons";
 
 export default {
   name: "Scorecard",
   components: {
     PointMeter,
-    Icon
+    InfoIcon
   },
   props: {
     scorecard: {

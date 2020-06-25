@@ -3,18 +3,20 @@
     <input type="text" class="text" :value="text" readonly />
     <button type="button" class="button" @click="copyTextToClipboard">
       <Icon :name="icon" />
+      <component :is="icon"></component>
       <span class="buttonText">{{ buttonText }}</span>
     </button>
   </div>
 </template>
 
 <script>
-import Icon from "@/components/Icon";
+import { CheckIcon, ClipboardIcon } from "vue-feather-icons";
 
 export default {
   name: "CopyText",
   components: {
-    Icon
+    CheckIcon,
+    ClipboardIcon
   },
   props: {
     text: {
@@ -25,7 +27,7 @@ export default {
   data: function() {
     return {
       buttonText: "Copy",
-      icon: "clipboard",
+      icon: ClipboardIcon,
       copying: false
     };
   },
@@ -39,11 +41,11 @@ export default {
       navigator.clipboard.writeText(this.text);
       let oldText = this.buttonText;
       this.buttonText = "Copied!";
-      this.icon = "check";
+      this.icon = CheckIcon;
       setTimeout(() => {
         this.copying = false;
         this.buttonText = oldText;
-        this.icon = "clipboard";
+        this.icon = ClipboardIcon;
       }, 1500);
     }
   }
