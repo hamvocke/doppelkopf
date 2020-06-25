@@ -2,9 +2,8 @@
   <div class="copyText">
     <input type="text" class="text" :value="text" readonly />
     <button type="button" class="button" @click="copyTextToClipboard">
-      <Icon :name="icon" />
       <component :is="icon"></component>
-      <span class="buttonText">{{ buttonText }}</span>
+      <span class="buttonText">{{ $t(buttonText) }}</span>
     </button>
   </div>
 </template>
@@ -26,7 +25,7 @@ export default {
   },
   data: function() {
     return {
-      buttonText: "Copy",
+      buttonText: "copy",
       icon: ClipboardIcon,
       copying: false
     };
@@ -40,7 +39,7 @@ export default {
       this.copying = true;
       navigator.clipboard.writeText(this.text);
       let oldText = this.buttonText;
-      this.buttonText = "Copied!";
+      this.buttonText = "copied";
       this.icon = CheckIcon;
       setTimeout(() => {
         this.copying = false;

@@ -41,5 +41,7 @@
   "you-can-start": "You can start the game once 4 players have joined.",
   "n-players-are-here": "No players are here. | 1 player is here | {count} players are here",
   "waiting-status": "Waiting for other players to join.",
-  "ready-status": "Ready to start the game."
+  "ready-status": "Ready to start the game.",
+  "copy": "Copy",
+  "copied": "Copied!"
 }

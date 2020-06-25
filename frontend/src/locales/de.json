@@ -41,5 +41,7 @@
   "you-can-start": "Du kannst das Spiel starten, sobald 4 Spieler hier sind.",
   "n-players-are-here": "Kein Spieler ist hier. | 1 Spieler ist hier. | {count} Spieler sind hier.",
   "waiting-status": "Warte auf weitere Spieler.",
-  "ready-status": "Kann losgehen!"
+  "ready-status": "Kann losgehen!",
+  "copy": "Kopieren",
+  "copied": "Kopiert!"
 }
