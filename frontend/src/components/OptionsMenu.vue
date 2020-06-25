@@ -1,6 +1,8 @@
 <template>
   <div class="options">
-    <div class="options-icon" @click="toggleMenu()">⚙️</div>
+    <div class="options-icon" @click="toggleMenu()">
+      <settings-icon></settings-icon>
+    </div>
     <div v-if="visible" class="options-menu" @click.self="toggleMenu()">
       <div class="options-menu-content">
         <h2>{{ $t("options-header") }}</h2>
@@ -26,11 +28,13 @@
 <script>
 import LanguagePicker from "./LanguagePicker";
 import { Config } from "@/models/config";
+import { SettingsIcon } from "vue-feather-icons";
 
 export default {
   name: "OptionsMenu",
   components: {
-    LanguagePicker
+    LanguagePicker,
+    SettingsIcon
   },
   props: {
     isVisible: {
@@ -65,13 +69,15 @@ export default {
   right: 12px;
   border-radius: 4px;
   background-color: var(--shell);
-  padding: 6px 8px;
+  padding: 8px;
   color: var(--black);
   cursor: pointer;
-  font-size: 1.5em;
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
     0 5px 15px 0 rgba(0, 0, 0, 0.08);
   z-index: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .options-menu {
