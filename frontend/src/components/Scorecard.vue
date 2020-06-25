@@ -73,7 +73,7 @@
                       :key="extra"
                     >
                       <span :title="$t(extra + '_description')">
-                        <info-icon></info-icon>
+                        <info-icon size="20"></info-icon>
                       </span>
                       {{ $t(extra) }}
                     </li>
@@ -86,7 +86,7 @@
                       :key="extra"
                     >
                       <span :title="$t(extra + '_description')">
-                        <info-icon></info-icon>
+                        <info-icon size="20"></info-icon>
                       </span>
                       {{ $t(extra) }}
                     </li>
@@ -281,6 +281,17 @@ td {
 .extras ul {
   padding-left: 0;
   list-style: circle inside;
+}
+
+.extras svg {
+  vertical-align: text-bottom;
+  color: var(--blue);
+  opacity: 0.3;
+  padding-right: 4px;
+}
+
+.extras svg:hover {
+  opacity: 1;
 }
 
 .sum {
