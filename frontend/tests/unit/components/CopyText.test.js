@@ -46,8 +46,8 @@ describe("CopyText.vue", () => {
     button.trigger("click");
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.icon).toBe("check");
-    expect(wrapper.vm.buttonText).toBe("Copied!");
+    expect(wrapper.vm.icon.name).toBe("CheckIcon");
+    expect(wrapper.vm.buttonText).toBe("copied");
   });
 
   test("should reset button text after timeout", async () => {
@@ -61,7 +61,7 @@ describe("CopyText.vue", () => {
     jest.runAllTimers();
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.buttonText).toBe("Copy");
-    expect(wrapper.vm.icon).toBe("clipboard");
+    expect(wrapper.vm.buttonText).toBe("copy");
+    expect(wrapper.vm.icon.name).toBe("ClipboardIcon");
   });
 });
