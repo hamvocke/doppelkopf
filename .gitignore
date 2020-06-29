@@ -21,4 +21,5 @@ __pycache__/
 .cache/
 .env
 *.sqlite
+*.sqlite.bak
 chromedriver.log
