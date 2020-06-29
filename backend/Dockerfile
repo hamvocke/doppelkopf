@@ -1,8 +1,12 @@
 FROM python:3.8.2-alpine3.10
 
+# TODO: Run css generation
+# TODO: use multi-stage build
+
 COPY . /app
 WORKDIR /app
 
+# todo: install python3-dev instead to avoid grabbing python2 distribution?
 RUN apk add --no-cache --virtual build-deps build-base gcc python-dev libffi libffi-dev
 RUN pip install pipenv && pipenv install --deploy --ignore-pipfile
 
