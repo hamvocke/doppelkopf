@@ -27,7 +27,7 @@ def create_app(test_config=None):
 
     if not app.config["DEBUG"]:
         sentry_sdk.init(
-            dsn="https://103f1e1585fc47efb1b56a24db8b9dcc@sentry.io/1449084",
+            dsn=app.config["SENTRY_DSN"],
             environment=app.config["ENV_NAME"],
             integrations=[FlaskIntegration(), SqlalchemyIntegration()],
         )

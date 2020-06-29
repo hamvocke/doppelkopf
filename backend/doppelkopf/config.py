@@ -8,7 +8,7 @@ class Config(object):
     DEBUG = False
     TESTING = False
     SECRET_KEY = "someSecretKey"
-    SENTRY_DSN = "someSentryDsn"
+    SENTRY_DSN = None
     SQLALCHEMY_DATABASE_URI = "sqlite://"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
