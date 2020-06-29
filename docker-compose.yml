@@ -1,0 +1,21 @@
+version: '2'
+services:
+  backend:
+    build: backend/
+    image: hamvocke/doppelkopf_backend:latest
+    env_file: backend/.env
+    ports:
+      - "5000:5000"
+    restart: always
+    volumes:
+      - ./backend/db:/app/db
+
+  # frontend:
+  #   build: backend/
+  #   image: hamvocke/doppelkopf_backend:latest
+  #   env_file: backend/.env
+  #   ports:
+  #     - "5000:5000"
+  #   restart: always
+  #   volumes:
+  #     - ./backend/db:/app/db
