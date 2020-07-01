@@ -1,0 +1,7 @@
+localhost
+
+root * /var/www
+reverse_proxy /api/* localhost:5000
+reverse_proxy /admin/* localhost:5000
+reverse_proxy /static/* localhost:5000
+file_server
