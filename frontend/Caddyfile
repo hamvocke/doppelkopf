@@ -1,7 +1,8 @@
 localhost
 
 root * /var/www
-reverse_proxy /api/* localhost:5000
-reverse_proxy /admin/* localhost:5000
-reverse_proxy /static/* localhost:5000
+reverse_proxy /api/* http://backend:5000
+reverse_proxy /admin http://backend:5000
+reverse_proxy /admin/* http://backend:5000
+reverse_proxy /static/* http://backend:5000
 file_server
