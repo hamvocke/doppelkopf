@@ -24,3 +24,5 @@ __pycache__/
 *.sqlite.bak
 backend/db/
 chromedriver.log
+caddy_data/
+backend/db/
