@@ -16,7 +16,7 @@ services:
   webserver:
     image: hamvocke/doppelkopf-web:latest
     container_name: doppelkopf-web
-    restart: restart: always
+    restart: always
     ports:
       - "80:80"
       - "443:443"
