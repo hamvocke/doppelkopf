@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  backend:
+    build: backend/
+    env_file: backend/.env
+    ports:
+      - "5000:5000"
+
+  webserver:
+    build: frontend/
+    ports:
+      - "8080:80"
+      - "8443:443"
+    depends_on:
+      - backend
+    volumes:
+      - ./caddy_data:/data

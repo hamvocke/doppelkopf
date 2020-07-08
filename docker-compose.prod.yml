@@ -4,14 +4,22 @@ services:
   backend:
     image: hamvocke/doppelkopf-backend:latest
     container_name: doppelkopf-backend
+    env_file: .env
+    restart: always
+    ports:
+      - "5000:5000"
     volumes:
-      - ./backend/db:/app/db
+      - ./db:/app/db
     networks:
       - app-network
 
   webserver:
     image: hamvocke/doppelkopf-web:latest
     container_name: doppelkopf-web
+    restart: restart: always
+    ports:
+      - "80:80"
+      - "443:443"
     depends_on:
       - backend
     volumes:
