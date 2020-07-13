@@ -8,6 +8,7 @@ set -e
 e_header "Deploying"
 
 e_step "Build Docker containers"
+touch backend/.env # create empty .env file so docker build is happy
 docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 docker-compose build
 e_mute "Done"
