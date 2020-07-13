@@ -10,8 +10,6 @@ addons:
   chrome: stable
 
 before_install:
-  - wget https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh -O ~/.nvm/nvm.sh
-  - source ~/.nvm/nvm.sh
   - nvm install 14
   - node --version
 
