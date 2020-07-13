@@ -1,47 +1,36 @@
 dist: bionic
+language: python
+python: "3.8"
 
 services:
   - docker
   - xvfb
 
-matrix:
-  include:
-    - language: node_js
-      node_js: '14'
-      addons:
-        chrome: stable
-      before_script:
-        - pushd frontend/ && yarn install && popd
-      script:
-        - pushd frontend/ && yarn test:unit && yarn test:e2e && popd
-        - pushd frontend/ && yarn build && popd
-      before_deploy:
-        - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d
-        - eval "$(ssh-agent -s)"
-        - chmod 600 /tmp/travis\_rsa
-        - ssh-add /tmp/travis\_rsa
-      deploy:
-        provider: script
-        skip_cleanup: true
-        script: bash ci/deploy_frontend.sh
-        on:
-          branch: master
+addons:
+  chrome: stable
 
-    - language: python
-      python: "3.8"
-      before_script:
-        - pushd backend/ && make install && popd
-      script:
-        - pushd backend/ && make test && popd
-      before_deploy:
-        - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d
-        - eval "$(ssh-agent -s)"
-        - chmod 600 /tmp/travis\_rsa
-        - ssh-add /tmp/travis\_rsa
+before_install:
+  - wget https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh -O ~/.nvm/nvm.sh
+  - source ~/.nvm/nvm.sh
+  - nvm install 14
+  - node --version
 
-      deploy:
-        provider: script
-        skip_cleanup: true
-        script: bash ci/deploy_backend.sh
-        on:
-          branch: master
+script:
+  - pushd frontend/ && yarn install && popd
+  - pushd frontend/ && yarn test:unit && yarn test:e2e && popd
+  - pushd frontend/ && yarn build && popd
+  - pushd backend/ && make install && popd
+  - pushd backend/ && make test && popd
+
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 /tmp/travis\_rsa
+  - ssh-add /tmp/travis\_rsa
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: bash ci/deploy.sh
+  on:
+    branch: master
