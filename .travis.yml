@@ -14,11 +14,11 @@ before_install:
   - node --version
 
 script:
-  - pushd frontend/ && yarn install && popd
-  - pushd frontend/ && yarn test:unit && yarn test:e2e && popd
-  - pushd frontend/ && yarn build && popd
-  - pushd backend/ && make install && popd
-  - pushd backend/ && make test && popd
+  # - pushd frontend/ && yarn install && popd
+  # - pushd frontend/ && yarn test:unit && yarn test:e2e && popd
+  # - pushd frontend/ && yarn build && popd
+  # - pushd backend/ && make install && popd
+  # - pushd backend/ && make test && popd
 
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_f38549760c77_key -iv $encrypted_f38549760c77_iv -in ci/travis_rsa.enc -out /tmp/travis_rsa -d
