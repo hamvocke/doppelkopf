@@ -26,6 +26,7 @@ before_deploy:
   - eval "$(ssh-agent -s)"
   - chmod 600 /tmp/travis\_rsa
   - ssh-add /tmp/travis\_rsa
+  - ssh-add -L
 
 deploy:
   provider: script
