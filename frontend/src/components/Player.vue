@@ -60,7 +60,7 @@ export default {
 <style scoped>
 @import "../assets/css/vars.css";
 .player {
-  margin: 6px;
+  margin: auto;
 }
 
 .container {

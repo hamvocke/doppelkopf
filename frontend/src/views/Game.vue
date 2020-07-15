@@ -30,3 +30,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+#game {
+    height: 100%;
+}
+</style>

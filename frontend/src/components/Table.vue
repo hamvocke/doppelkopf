@@ -67,13 +67,15 @@ export default {
 <style scoped>
 .table {
   display: grid;
-  grid-template-rows: minmax(120px, auto) 400px minmax(120px, auto) 120px;
   grid-template-areas:
     "top top top"
     "left center right"
     "left bottom right"
     "controls controls controls";
+  grid-template-rows: auto 1fr auto 120px;
+  grid-template-columns: 120px 1fr 120px;
   overflow: hidden;
+  height: 100%;
 }
 .top {
   grid-area: top;
@@ -100,15 +102,6 @@ export default {
 
 @media screen and (max-width: 680px) {
   .table {
-    grid-template-columns:
-      minmax(80px, auto)
-      minmax(200px, auto)
-      minmax(80px, auto);
-    grid-template-rows:
-      minmax(120px, auto)
-      minmax(250px, auto)
-      minmax(120px, auto)
-      120px;
     grid-template-areas:
       "top top top"
       "left center right"
