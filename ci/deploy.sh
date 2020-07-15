@@ -19,7 +19,7 @@ e_mute "Done"
 
 e_step "Start Docker containers"
 scp -o StrictHostKeyChecking=no docker-compose{.prod,}.yml root@staging.ham.codes:/data/doppelkopf/
-ssh -T root@ham.codes -o StrictHostKeyChecking=no << EOF
+ssh -T root@staging.ham.codes -o StrictHostKeyChecking=no << EOF
     cd /data/doppelkopf
     docker-compose pull
     docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
