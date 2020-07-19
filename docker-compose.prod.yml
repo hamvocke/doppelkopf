@@ -4,7 +4,7 @@ services:
   backend:
     image: hamvocke/doppelkopf-backend:latest
     container_name: doppelkopf-backend
-    env_file: .env
+    env_file: backend.env
     restart: always
     ports:
       - "5000:5000"
@@ -16,6 +16,7 @@ services:
   webserver:
     image: hamvocke/doppelkopf-web:latest
     container_name: doppelkopf-web
+    env_file: web.env
     restart: always
     ports:
       - "80:80"

@@ -1,4 +1,4 @@
-doppelkopf.staging.ham.codes
+{env.DOPPELKOPF_DOMAIN}
 
 root * /var/www
 reverse_proxy /api/* http://backend:5000
