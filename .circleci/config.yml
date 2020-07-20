@@ -47,4 +47,18 @@ jobs:
             - backend/node_modules
       - run:
           name: Test backend
-          command: 'pushd backend && make test && popd
+          command: 'pushd backend && make test && popd'
+
+workflows:
+  version: 2
+  build-all:
+    jobs:
+      - frontend
+      - backend
+      # - deploy
+      #     requires:
+      #       - frontend
+      #       - backend
+      #     filters:
+      #       branches:
+      #         only: master
