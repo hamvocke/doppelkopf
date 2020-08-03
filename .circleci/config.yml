@@ -20,7 +20,7 @@ jobs:
             - frontend/node_modules
       - run:
           name: Test frontend
-          command: 'pushd frontend && yarn test:ci popd'
+          command: 'pushd frontend && yarn test:ci && yarn test:e2e && popd'
       - run:
           name: Build frontend
           command: 'pushd frontend && yarn build && popd'
