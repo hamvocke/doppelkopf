@@ -51,7 +51,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/golang:1.13-alpine
+      - image: cimg/base:2020.08
     working_directory: ~/hamvocke/doppelkopf
     steps:
       - attach_workspace:
