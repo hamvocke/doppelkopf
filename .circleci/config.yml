@@ -54,6 +54,7 @@ jobs:
       - image: cimg/base:2020.08
     working_directory: ~/hamvocke/doppelkopf
     steps:
+      - checkout
       - attach_workspace:
           at: ~/hamvocke/doppelkopf
       - restore_cache:
