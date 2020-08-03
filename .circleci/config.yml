@@ -59,9 +59,6 @@ jobs:
       - restore_cache:
           key: v1-frontend-yarn-{{ checksum "frontend/yarn.lock" }}
       - run:
-          name: Install Docker client
-          command: apk add docker-cli
-      - run:
           name: Docker login
           command: 'echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin'
       - run:
