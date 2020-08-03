@@ -87,7 +87,7 @@ workflows:
     jobs:
       - frontend
       - backend
-      - deploy
+      - deploy:
           requires:
             - frontend
             - backend
