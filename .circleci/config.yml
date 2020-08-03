@@ -49,16 +49,48 @@ jobs:
           name: Test backend
           command: 'pushd backend && make test && popd'
 
+    deploy:
+      docker:
+        - image: circleci/golang:1.13-alpine
+      steps:
+        - attach_workspace:
+            at: ~/hamvocke/doppelkopf
+        - restore_cache:
+            key: v1-frontend-yarn-{{ checksum "frontend/yarn.lock" }}
+        - run:
+            name: Docker login
+            command: 'echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin'
+        - run:
+            name: Docker build
+            command: 'docker-compose build'
+        - run:
+            name: Docker push
+            command: 'docker-compose push'
+        - add_ssh_keys:
+          fingerprints:
+            - "4b:46:c1:f8:dd:bf:bc:cf:5c:44:c4:5c:4f:8e:1f:22"
+        - run:
+            name: Copy files
+            command: 'scp -o StrictHostKeyChecking=no docker-compose{.prod,}.yml $SSH_USER@$SSH_HOST:/data/doppelkopf/'
+        - run:
+            name: Start Docker containers
+            command: |
+              ssh -T root@staging.ham.codes -o StrictHostKeyChecking=no << EOF
+                cd /data/doppelkopf
+                docker-compose pull
+                docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+              EOF
+
 workflows:
   version: 2
   build-all:
     jobs:
       - frontend
       - backend
-      # - deploy
-      #     requires:
-      #       - frontend
-      #       - backend
-      #     filters:
-      #       branches:
-      #         only: master
+      - deploy
+          requires:
+            - frontend
+            - backend
+          filters:
+            branches:
+              only: master
