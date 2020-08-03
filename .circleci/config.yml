@@ -64,7 +64,9 @@ jobs:
           command: 'echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin'
       - run:
           name: Docker build
-          command: 'docker-compose build'
+          command: |
+            touch backend/.env
+            docker-compose build
       - run:
           name: Docker push
           command: 'docker-compose push'
