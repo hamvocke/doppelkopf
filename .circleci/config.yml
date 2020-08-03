@@ -50,17 +50,17 @@ jobs:
           command: 'pushd backend && make test && popd'
 
   deploy:
-    docker:
-      - image: cimg/base:2020.08
     working_directory: ~/hamvocke/doppelkopf
+    machine: true
     steps:
       - checkout
       - attach_workspace:
           at: ~/hamvocke/doppelkopf
       - restore_cache:
           key: v1-frontend-yarn-{{ checksum "frontend/yarn.lock" }}
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - run:
+          name: Install Docker client
+          command: apk add docker-cli
       - run:
           name: Docker login
           command: 'echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin'
