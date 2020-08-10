@@ -49,7 +49,7 @@ jobs:
           name: Test backend
           command: 'pushd backend && make test && popd'
 
-  deploy:
+  build_docker:
     working_directory: ~/hamvocke/doppelkopf
     machine: true
     steps:
@@ -69,20 +69,64 @@ jobs:
       - run:
           name: Docker push
           command: 'docker-compose push'
+
+  deploy_staging:
+    docker:
+      - image: cimg/base:2020.08
+    working_directory: ~/hamvocke/doppelkopf
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/hamvocke/doppelkopf
       - add_ssh_keys:
           fingerprints:
             - "4b:46:c1:f8:dd:bf:bc:cf:5c:44:c4:5c:4f:8e:1f:22"
       - run:
           name: Copy files
-          command: 'scp -o StrictHostKeyChecking=no docker-compose{.prod,}.yml $SSH_USER@$SSH_HOST:/data/doppelkopf/'
+          command: 'scp -o StrictHostKeyChecking=no docker-compose{.prod,}.yml $SSH_USER_STAGING@$SSH_HOST_STAGING:/data/doppelkopf/'
       - run:
           name: Start Docker containers
           command: |
-            ssh -T $SSH_USER@$SSH_HOST -o StrictHostKeyChecking=no \<< EOF
+            ssh -T $SSH_USER_STAGING@$SSH_HOST_STAGING -o StrictHostKeyChecking=no \<< EOF
               cd /data/doppelkopf
               docker-compose pull
               docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
             EOF
+      - run:
+          name: Smoke test
+          command: |
+            source ../ci/smoke_test.sh
+            smoke_test https://doppelkopf.staging.ham.codes
+            smoke_test https://doppelkopf.staging.ham.codes/api/
+
+  deploy_prod:
+    docker:
+      - image: cimg/base:2020.08
+    working_directory: ~/hamvocke/doppelkopf
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/hamvocke/doppelkopf
+      - add_ssh_keys:
+          fingerprints:
+            - "4b:46:c1:f8:dd:bf:bc:cf:5c:44:c4:5c:4f:8e:1f:22"
+      - run:
+          name: Copy files
+          command: 'scp -o StrictHostKeyChecking=no docker-compose{.prod,}.yml $SSH_USER_PROD@$SSH_HOST_PROD:/data/doppelkopf/'
+      - run:
+          name: Start Docker containers
+          command: |
+            ssh -T $SSH_USER_PROD@$SSH_HOST_PROD -o StrictHostKeyChecking=no \<< EOF
+              cd /data/doppelkopf
+              docker-compose pull
+              docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+            EOF
+      - run:
+          name: Smoke test
+          command: |
+            source ../ci/smoke_test.sh
+            smoke_test https://doppelkopf.ham.codes
+            smoke_test https://doppelkopf.ham.codes/api/
 
 workflows:
   version: 2
@@ -90,10 +134,22 @@ workflows:
     jobs:
       - frontend
       - backend
-      - deploy:
+      - build_docker:
           requires:
             - frontend
             - backend
+          filters:
+            branches:
+              only: master
+      - deploy_staging:
+          requires:
+            - build_docker
+          filters:
+            branches:
+              only: master
+      - deploy_prod:
+          requires:
+            - deploy_staging
           filters:
             branches:
               only: master
