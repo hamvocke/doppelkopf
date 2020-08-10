@@ -95,7 +95,7 @@ jobs:
       - run:
           name: Smoke test
           command: |
-            source ../ci/smoke_test.sh
+            source ci/smoke_test.sh
             smoke_test https://doppelkopf.staging.ham.codes
             smoke_test https://doppelkopf.staging.ham.codes/api/
 
@@ -124,7 +124,7 @@ jobs:
       - run:
           name: Smoke test
           command: |
-            source ../ci/smoke_test.sh
+            source ci/smoke_test.sh
             smoke_test https://doppelkopf.ham.codes
             smoke_test https://doppelkopf.ham.codes/api/
 
