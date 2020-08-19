@@ -141,12 +141,6 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy_staging:
-          requires:
-            - build_docker
-          filters:
-            branches:
-              only: master
       - deploy_prod:
           requires:
             - deploy_staging
