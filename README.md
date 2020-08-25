@@ -42,6 +42,10 @@ Install backend dependencies:
     cd backend
     pipenv install --dev
 
+If this is the first time you're setting up the backend, you need to create an `admin` user that you can use to log in with. Currently, the backend is hard-wired to look for a user called `admin` so don't change that. For the password you're free to chose whatever you fancy. Something like this:
+
+    make create_user username=admin password=admin
+
 Start the backend development server on [localhost:5000](http://localhost:5000):
 
     make run
