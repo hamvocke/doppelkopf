@@ -1,5 +1,5 @@
 # Doppelkopf
-[![Build Status](https://travis-ci.org/hamvocke/doppelkopf.svg?branch=master)](https://travis-ci.org/hamvocke/doppelkopf)
+[![Build status](https://circleci.com/gh/hamvocke/doppelkopf.svg?style=svg)](https://circleci.com/gh/hamvocke/doppelkopf)
 
 An in-browser implementation of the traditional German [Doppelkopf](https://en.wikipedia.org/wiki/Doppelkopf) card game.
 
@@ -31,14 +31,14 @@ Serve the frontend development server on [localhost:8080](http://localhost:8080)
     yarn serve
 
 Run the tests before and after making changes:
-    
+
     yarn test:unit
     yarn test:e2e
 
 
 ### Backend
 Install backend dependencies:
-    
+
     cd backend
     pipenv install --dev
 
