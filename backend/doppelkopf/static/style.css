@@ -953,7 +953,7 @@ a:focus {
 }
 
 .toggle:before {
-  content: "on off";
+  content: "✔";
   display: block;
   position: absolute;
   z-index: 2;
@@ -963,7 +963,7 @@ a:focus {
   left: 3px;
   top: 3px;
   border-radius: 50%;
-  font: 10px/20px sans-serif;
+  font: 20px/20px sans-serif;
   text-transform: uppercase;
   font-weight: bold;
   text-indent: -20px;
