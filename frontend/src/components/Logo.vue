@@ -59,6 +59,8 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 96px;
+  font-family: "Fira Sans Condensed", sans-serif;
+  font-weight: 900;
   -webkit-text-stroke-width: 8px;
   -webkit-text-stroke-color: var(--blue);
 }
