@@ -6,7 +6,7 @@ An in-browser implementation of the traditional German [Doppelkopf](https://en.w
 ## Live Demo
 The game is still in early stages. Playing it will probably be a frustrating and confusing experience. If you're curious enough to give it a try (and play against a really shitty AI), I encourage you to do so:
 
-[![Screenshot](https://i.imgur.com/c7fI708.png)](https://doppelkopf.ham.codes/)
+[![Screenshot](https://i.imgur.com/qQPyE3I.png)](https://doppelkopf.ham.codes/)
 
 <h3 align="center"><a href="https://doppelkopf.ham.codes/">Try the Live Demo</a></h3>
 
