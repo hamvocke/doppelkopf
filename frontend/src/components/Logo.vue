@@ -22,6 +22,11 @@ export default {
 <style scoped>
 @import "../assets/css/vars.css";
 
+.logo-container {
+  display: flex;
+  justify-content: center;
+}
+
 .logo {
   display: flex;
   justify-content: center;
