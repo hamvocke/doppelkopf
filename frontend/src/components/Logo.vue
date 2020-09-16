@@ -1,12 +1,14 @@
 <template>
-  <div class="logo">
-    <div class="outline right"></div>
-    <div class="outline left"></div>
-    <div class="card right">
-      <div class="suit hearts">♥</div>
-    </div>
-    <div class="card left">
-      <div class="suit clubs">♣</div>
+  <div class="logo-container">
+    <div class="logo">
+      <div class="outline right"></div>
+      <div class="outline left"></div>
+      <div class="card right">
+        <div class="suit hearts">♥</div>
+      </div>
+      <div class="card left">
+        <div class="suit clubs">♣</div>
+      </div>
     </div>
   </div>
 </template>
@@ -21,7 +23,6 @@ export default {
 @import "../assets/css/vars.css";
 
 .logo {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;

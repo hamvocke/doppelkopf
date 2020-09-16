@@ -1,9 +1,7 @@
 <template>
   <div class="welcome">
     <div class="container">
-      <div class="logo">
-        🤖
-      </div>
+      <Logo />
       <h1>Doppelkopf</h1>
 
       <router-link to="/play" class="button start-game" tag="button">
@@ -32,9 +30,12 @@
 
 <script>
 import { Features } from "@/models/features";
+import Logo from "@/components/Logo";
+
 
 export default {
   name: "Home",
+  components: { Logo },
   data: function() {
     return {
       showTutorial: false
