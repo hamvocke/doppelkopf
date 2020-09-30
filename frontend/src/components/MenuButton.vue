@@ -1,17 +1,15 @@
 <template>
   <div class="menu-button">
-    <button class="button">
+    <button class="button" @click="toggleDropdown">
       <span>{{ text }}</span>
       <chevron-up-icon></chevron-up-icon>
-      <div class="dropdown">
-        <ul>
-          <li>Keine 30</li>
-          <li>Keine 60</li>
-          <li>Keine 90</li>
-          <li>Re</li>
-        </ul>
-      </div>
     </button>
+    <div class="dropdown" :class="{ hidden: hidden }">
+      <button class="button">Re</button>
+      <button class="button">Keine 90</button>
+      <button class="button">Keine 60</button>
+      <button class="button">Keine 30</button>
+    </div>
   </div>
 </template>
 
@@ -26,6 +24,16 @@ export default {
       type: String,
       required: true
     }
+  },
+  data: function() {
+    return {
+      hidden: true
+    };
+  },
+  methods: {
+    toggleDropdown: function() {
+      this.hidden = !this.hidden;
+    }
   }
 };
 </script>
@@ -39,20 +47,16 @@ export default {
 
 .dropdown {
   display: flex;
-  background: var(--white);
-  color: var(--black);
-  padding: 12px;
-  margin: 0 6px;
-  border-radius: 4px;
-  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.3);
   position: absolute;
-  top: 64px;
+  bottom: 72px;
   right: 0px;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.dropdown button {
+  white-space: nowrap;
+}
+
+.hidden {
+  display: none;
 }
 </style>
