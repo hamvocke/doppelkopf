@@ -18,6 +18,9 @@ export default {
 
 export const standard = () => ({
   components: { MenuButton },
-  template: '<MenuButton text="Ansagen" />',
+  template: `
+  <div style="display: flex; justify-content: center; align-items: center; height: 500px;">
+    <MenuButton text="Ansagen" />
+  </div>`,
   i18n: new VueI18n(i18nOpts)
 });
