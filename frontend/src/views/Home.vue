@@ -32,7 +32,6 @@
 import { Features } from "@/models/features";
 import Logo from "@/components/Logo";
 
-
 export default {
   name: "Home",
   components: { Logo },

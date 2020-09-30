@@ -71,8 +71,6 @@ input {
 }
 
 button {
-  display: flex;
-  align-items: center;
   margin-right: 0;
 }
 
