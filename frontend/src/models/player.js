@@ -77,6 +77,10 @@ export class Player {
     }
   }
 
+  numberOfCardsLeft() {
+    return this.hand.cards.length;
+  }
+
   canPlay(card) {
     const baseCard = this.game.currentTrick.baseCard();
     const playable = playableCards(this.hand.cards, baseCard);
@@ -106,28 +110,29 @@ export class Player {
   // todo: make this configurable for playing with 9s (add 2 to each threshold)
   possibleAnnouncements() {
     let a = [];
+    const cardsLeft = this.numberOfCardsLeft();
 
-    if (this.isRe() && this.hand.cards.length >= 9) {
+    if (this.isRe() && cardsLeft >= 9) {
       a = [announcements.re];
     }
 
-    if (this.isKontra() && this.hand.cards.length >= 9) {
+    if (this.isKontra() && cardsLeft >= 9) {
       a = [announcements.kontra];
     }
 
-    if (this.hand.cards.length >= 8) {
+    if (cardsLeft >= 8) {
       a.push(announcements.no_90);
     }
 
-    if (this.hand.cards.length >= 7) {
+    if (cardsLeft >= 7) {
       a.push(announcements.no_60);
     }
 
-    if (this.hand.cards.length >= 6) {
+    if (cardsLeft >= 6) {
       a.push(announcements.no_30);
     }
 
-    if (this.hand.cards.length >= 5) {
+    if (cardsLeft >= 5) {
       a.push(announcements.no_points);
     }
 
