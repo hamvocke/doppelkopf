@@ -89,7 +89,7 @@ describe("evaluate score", () => {
 });
 
 describe("calculating extras", () => {
-  test("should start without extras", () => {
+  test("should have no extras by default", () => {
     const score = new Score();
     expect(score.listExtras(re)).toEqual([]);
     expect(score.listExtras(kontra)).toEqual([]);
@@ -103,7 +103,7 @@ describe("calculating extras", () => {
     expect(score.points()).toBe(1);
   });
 
-  test("should give subtract losing party's points", () => {
+  test("should subtract losing party's points", () => {
     const score = new Score();
 
     playersWithReWinning[2].trickStack.extras = () => [extras.doppelkopf];
