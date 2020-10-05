@@ -2,7 +2,7 @@ import Scorecard from "@/components/Scorecard";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import { Player } from "@/models/player";
 import { Score } from "@/models/score";
-import { re, kontra } from "@/models/parties";
+import { re, kontra } from "@/models/party";
 import { mount } from "@vue/test-utils";
 import VueTestUtils from "@vue/test-utils";
 

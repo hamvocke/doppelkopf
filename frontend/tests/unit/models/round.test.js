@@ -2,7 +2,6 @@ import { Game } from "@/models/game";
 import { Round } from "@/models/round";
 import { Notifier } from "@/models/notifier";
 import { jack, suits, ace } from "@/models/card";
-import { extras } from "@/models/extras";
 import { options } from "@/models/options";
 
 const game = Game.singlePlayer();

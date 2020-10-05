@@ -6,7 +6,7 @@
       <div class="parties">
         <div class="party-wrapper">
           <div
-            v-if="currentScore.winningParty() === 'Re'"
+            v-if="currentScore.winningPartyId() === 'Re'"
             class="winner-balloon"
           >
             🎈 {{ $t("winner") }}
@@ -23,7 +23,7 @@
 
         <div class="party-wrapper">
           <div
-            v-if="currentScore.winningParty() === 'Kontra'"
+            v-if="currentScore.winningPartyId() === 'Kontra'"
             class="winner-balloon"
           >
             🎈 {{ $t("winner") }}
@@ -95,12 +95,12 @@
               </tr>
               <tr>
                 <td class="sum re">
-                  <span v-if="currentScore.winningParty() === 'Re'"
+                  <span v-if="currentScore.winningPartyId() === 'Re'"
                     >{{ currentScore.points() }} {{ $t("points") }}</span
                   >
                 </td>
                 <td class="sum kontra">
-                  <span v-if="currentScore.winningParty() === 'Kontra'">
+                  <span v-if="currentScore.winningPartyId() === 'Kontra'">
                     {{ currentScore.points() }} {{ $t("points") }}
                   </span>
                 </td>
@@ -179,7 +179,7 @@ export default {
   },
   computed: {
     message: function() {
-      return includes(this.currentScore.winner(), this.players[0])
+      return includes(this.currentScore.winner().players, this.players[0])
         ? "you_win"
         : "you_lose";
     }
@@ -193,7 +193,7 @@ export default {
     },
     partyMembers: function(party) {
       return join(
-        this.currentScore.parties[party].map(player => player.name),
+        this.currentScore.parties[party].players.map(player => player.name),
         " & "
       );
     }

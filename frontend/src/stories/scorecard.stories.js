@@ -4,7 +4,7 @@ import Scorecard from "@/components/Scorecard";
 import PointMeter from "@/components/scorecard/PointMeter";
 import { Player } from "@/models/player";
 import { Score } from "@/models/score";
-import { re, kontra } from "@/models/parties";
+import { re, kontra } from "@/models/party";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 
 import "@/assets/css/app.css";

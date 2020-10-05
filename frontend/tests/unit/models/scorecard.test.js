@@ -1,5 +1,6 @@
 import { Scorecard } from "@/models/scorecard";
 import { Player } from "@/models/player";
+import { re, kontra, Party } from "@/models/party";
 
 describe("Scorecard", () => {
   const players = [
@@ -26,7 +27,7 @@ describe("Scorecard", () => {
   });
 
   test("should calculate score line", () => {
-    scorecard.addScore([players[0], players[3]], 4);
+    scorecard.addScore(new Party(re, players[0], players[3]), 4);
 
     expect(scorecard.scoreLines[0]).toBeDefined();
     expect(scorecard.scoreLines[0].points).toEqual(4);
@@ -36,8 +37,8 @@ describe("Scorecard", () => {
   });
 
   test("should calculate final scores", () => {
-    scorecard.addScore([players[0], players[3]], 4);
-    scorecard.addScore([players[1], players[3]], 2);
+    scorecard.addScore(new Party(re, players[0], players[3]), 4);
+    scorecard.addScore(new Party(kontra, players[1], players[3]), 2);
 
     expect(scorecard.totalPointsFor(players[0])).toBe(2);
     expect(scorecard.totalPointsFor(players[1])).toBe(-2);

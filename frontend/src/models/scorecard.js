@@ -6,15 +6,19 @@ export class Scorecard {
     this.scoreLines = [];
   }
 
-  addScore(winningPlayers, points) {
+  addScore(winningParty, points) {
     const newTotalPoints = {};
     this.players.forEach(player => {
-      newTotalPoints[player.id] = includes(winningPlayers, player)
+      newTotalPoints[player.id] = includes(winningParty.players, player)
         ? this.totalPointsFor(player) + points
         : this.totalPointsFor(player) - points;
     });
 
-    const scoreline = new Scoreline(newTotalPoints, winningPlayers, points);
+    const scoreline = new Scoreline(
+      newTotalPoints,
+      winningParty.players,
+      points
+    );
     this.scoreLines.push(scoreline);
   }
 

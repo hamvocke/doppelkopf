@@ -1,8 +1,7 @@
-import { re, kontra } from "@/models/parties";
+import { re, kontra, Party } from "@/models/party";
 import { extras } from "@/models/extras";
 import { announcements } from "@/models/announcements";
 
-const sumPointsForParty = (acc, player) => acc + player.points();
 const extrasInTrickStack = (acc, player) =>
   acc.concat(player.trickStack.extras());
 
@@ -15,13 +14,11 @@ export class Score {
 
   evaluate(players) {
     this.parties = this.findParties(players);
-    this.rePoints = this.parties[re].reduce(sumPointsForParty, 0);
-    this.kontraPoints = this.parties[kontra].reduce(sumPointsForParty, 0);
+    this.rePoints = this.parties[re].points();
+    this.kontraPoints = this.parties[kontra].points();
 
-    this.reAnnouncements = this.parties[re].flatMap(p => [...p.announcements]);
-    this.kontraAnnouncements = this.parties[kontra].flatMap(p => [
-      ...p.announcements
-    ]);
+    this.reAnnouncements = this.parties[re].announcements();
+    this.kontraAnnouncements = this.parties[kontra].announcements();
 
     if (this.rePoints + this.kontraPoints !== 240) {
       throw Error(
@@ -30,7 +27,7 @@ export class Score {
       );
     }
 
-    const winnerParty = this.winningParty();
+    const winnerParty = this.winningPartyId();
 
     this.addExtra(winnerParty, extras.win);
 
@@ -81,8 +78,8 @@ export class Score {
       this.addExtra(re, extras.no_points);
     }
 
-    const reExtras = this.parties[re].reduce(extrasInTrickStack, []);
-    const kontraExtras = this.parties[kontra].reduce(extrasInTrickStack, []);
+    const reExtras = this.parties[re].extras();
+    const kontraExtras = this.parties[kontra].extras();
 
     for (const extra of reExtras) {
       this.addExtra(re, extra);
@@ -95,16 +92,19 @@ export class Score {
 
   findParties(players) {
     return {
-      [re]: players.filter(player => player.isRe()),
-      [kontra]: players.filter(player => player.isKontra())
+      [re]: new Party(re, ...players.filter(player => player.isRe())),
+      [kontra]: new Party(
+        kontra,
+        ...players.filter(player => player.isKontra())
+      )
     };
   }
 
   winner() {
-    return this.parties[this.winningParty()];
+    return this.parties[this.winningPartyId()];
   }
 
-  winningParty() {
+  winningPartyId() {
     return this.rePoints > this.kontraPoints ? re : kontra;
   }
 
@@ -114,7 +114,7 @@ export class Score {
 
   points() {
     return (
-      this.extras[this.winningParty()].length -
+      this.extras[this.winningPartyId()].length -
       this.extras[this.losingParty()].length
     );
   }

@@ -1,6 +1,6 @@
 import { Score } from "@/models/score";
 import { Player } from "@/models/player";
-import { re, kontra } from "@/models/parties";
+import { re, kontra, Party } from "@/models/party";
 import { extras } from "@/models/extras";
 import { announcements } from "@/models/announcements";
 
@@ -39,8 +39,12 @@ describe("evaluate score", () => {
     score.evaluate(playersWithReWinning);
 
     const expectedParties = {
-      [re]: [playersWithReWinning[0], playersWithReWinning[1]],
-      [kontra]: [playersWithReWinning[2], playersWithReWinning[3]]
+      [re]: new Party(re, playersWithReWinning[0], playersWithReWinning[1]),
+      [kontra]: new Party(
+        kontra,
+        playersWithReWinning[2],
+        playersWithReWinning[3]
+      )
     };
 
     expect(score.parties).toEqual(expectedParties);
@@ -72,7 +76,8 @@ describe("evaluate score", () => {
     const score = new Score();
     score.evaluate(players);
 
-    expect(score.winner()).toEqual([players[0], players[2]]);
+    var expectedParty = new Party(kontra, players[0], players[2]);
+    expect(score.winner()).toEqual(expectedParty);
   });
 
   test("should declare Re as winner", () => {
@@ -85,7 +90,8 @@ describe("evaluate score", () => {
     const score = new Score();
     score.evaluate(players);
 
-    expect(score.winner()).toEqual([players[1], players[3]]);
+    var expectedParty = new Party(re, players[1], players[3]);
+    expect(score.winner()).toEqual(expectedParty);
   });
 });
 
