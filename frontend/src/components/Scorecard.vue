@@ -6,7 +6,7 @@
       <div class="parties">
         <div class="party-wrapper">
           <div
-            v-if="currentScore.winningPartyId() === 'Re'"
+            v-if="currentScore.winningParty() === 'Re'"
             class="winner-balloon"
           >
             🎈 {{ $t("winner") }}
@@ -23,7 +23,7 @@
 
         <div class="party-wrapper">
           <div
-            v-if="currentScore.winningPartyId() === 'Kontra'"
+            v-if="currentScore.winningParty() === 'Kontra'"
             class="winner-balloon"
           >
             🎈 {{ $t("winner") }}
@@ -95,12 +95,12 @@
               </tr>
               <tr>
                 <td class="sum re">
-                  <span v-if="currentScore.winningPartyId() === 'Re'"
+                  <span v-if="currentScore.winningParty() === 'Re'"
                     >{{ currentScore.points() }} {{ $t("points") }}</span
                   >
                 </td>
                 <td class="sum kontra">
-                  <span v-if="currentScore.winningPartyId() === 'Kontra'">
+                  <span v-if="currentScore.winningParty() === 'Kontra'">
                     {{ currentScore.points() }} {{ $t("points") }}
                   </span>
                 </td>

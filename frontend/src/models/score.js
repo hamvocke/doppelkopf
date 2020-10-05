@@ -2,9 +2,6 @@ import { re, kontra, Party } from "@/models/party";
 import { extras } from "@/models/extras";
 import { announcements } from "@/models/announcements";
 
-const extrasInTrickStack = (acc, player) =>
-  acc.concat(player.trickStack.extras());
-
 export class Score {
   constructor() {
     this.extras = {};
@@ -27,7 +24,7 @@ export class Score {
       );
     }
 
-    const winnerParty = this.winningPartyId();
+    const winnerParty = this.winningParty();
 
     this.addExtra(winnerParty, extras.win);
 
@@ -101,10 +98,10 @@ export class Score {
   }
 
   winner() {
-    return this.parties[this.winningPartyId()];
+    return this.parties[this.winningParty()];
   }
 
-  winningPartyId() {
+  winningParty() {
     return this.rePoints > this.kontraPoints ? re : kontra;
   }
 
@@ -114,7 +111,7 @@ export class Score {
 
   points() {
     return (
-      this.extras[this.winningPartyId()].length -
+      this.extras[this.winningParty()].length -
       this.extras[this.losingParty()].length
     );
   }

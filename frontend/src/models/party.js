@@ -1,5 +1,3 @@
-import { times } from "lodash-es";
-
 export const re = "Re";
 export const kontra = "Kontra";
 
