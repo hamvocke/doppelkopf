@@ -15,3 +15,10 @@ export const extras = {
   announced_no_30: "announced_no_30",
   announced_no_points: "announced_no_points",
 };
+
+export const extraThresholds = {
+  90: extras.no_90,
+  60: extras.no_60,
+  30: extras.no_30,
+  1: extras.no_points
+};

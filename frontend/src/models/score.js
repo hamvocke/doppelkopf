@@ -1,5 +1,5 @@
 import { re, kontra, Party } from "@/models/party";
-import { extras } from "@/models/extras";
+import { extras, extraThresholds } from "@/models/extras";
 import { announcements } from "@/models/announcements";
 
 export class Score {
@@ -25,7 +25,6 @@ export class Score {
     }
 
     const winnerParty = this.winningParty();
-
     this.addExtra(winnerParty, extras.win);
 
     if (winnerParty === re && this.reAnnouncements.includes(announcements.re)) {
@@ -43,36 +42,14 @@ export class Score {
       this.addExtra(kontra, extras.beat_re);
     }
 
-    if (this.rePoints < 90) {
-      this.addExtra(kontra, extras.no_90);
-    }
+    for (let [threshold, extra] of Object.entries(extraThresholds)) {
+      if (this.rePoints < threshold) {
+        this.addExtra(kontra, extra);
+      }
 
-    if (this.kontraPoints < 90) {
-      this.addExtra(re, extras.no_90);
-    }
-
-    if (this.rePoints < 60) {
-      this.addExtra(kontra, extras.no_60);
-    }
-
-    if (this.kontraPoints < 60) {
-      this.addExtra(re, extras.no_60);
-    }
-
-    if (this.rePoints < 30) {
-      this.addExtra(kontra, extras.no_30);
-    }
-
-    if (this.kontraPoints < 30) {
-      this.addExtra(re, extras.no_30);
-    }
-
-    if (this.rePoints === 0) {
-      this.addExtra(kontra, extras.no_points);
-    }
-
-    if (this.kontraPoints === 0) {
-      this.addExtra(re, extras.no_points);
+      if (this.kontraPoints < threshold) {
+        this.addExtra(re, extra);
+      }
     }
 
     const reExtras = this.parties[re].extras();
