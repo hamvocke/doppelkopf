@@ -1,5 +1,6 @@
 import { re, kontra } from "@/models/parties";
 import { extras } from "@/models/extras";
+import { announcements } from "@/models/announcements";
 
 const sumPointsForParty = (acc, player) => acc + player.points();
 const extrasInTrickStack = (acc, player) =>
@@ -17,6 +18,11 @@ export class Score {
     this.rePoints = this.parties[re].reduce(sumPointsForParty, 0);
     this.kontraPoints = this.parties[kontra].reduce(sumPointsForParty, 0);
 
+    this.reAnnouncements = this.parties[re].flatMap(p => [...p.announcements]);
+    this.kontraAnnouncements = this.parties[kontra].flatMap(p => [
+      ...p.announcements
+    ]);
+
     if (this.rePoints + this.kontraPoints !== 240) {
       throw Error(
         `A score must have a total of 240 points. Got
@@ -27,6 +33,17 @@ export class Score {
     const winnerParty = this.winningParty();
 
     this.addExtra(winnerParty, extras.win);
+
+    if (winnerParty === re && this.reAnnouncements.includes(announcements.re)) {
+      this.addExtra(re, extras.announced_re);
+    }
+
+    if (
+      winnerParty === kontra &&
+      this.reAnnouncements.includes(announcements.kontra)
+    ) {
+      this.addExtra(kontra, extras.announced_kontra);
+    }
 
     if (winnerParty === kontra) {
       this.addExtra(kontra, extras.beat_re);
