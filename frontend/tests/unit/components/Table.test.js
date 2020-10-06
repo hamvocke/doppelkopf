@@ -1,6 +1,7 @@
 import Table from "@/components/Table";
 import { Game } from "@/models/game";
 import { Score } from "@/models/score";
+import { Party, re } from "@/models/party";
 import { mount } from "@vue/test-utils";
 import VueTestUtils from "@vue/test-utils";
 
@@ -77,7 +78,7 @@ describe("Table.vue", () => {
     game.players[0].points = () => 120;
     game.players[1].points = () => 120;
     const stubScore = new Score(game.players);
-    stubScore.winner = () => [game.players[0], game.players[3]];
+    stubScore.winner = () => new Party(re, game.players[0], game.players[3]);
     stubScore.evaluate(game.players);
     mockGame.currentRound.score = stubScore;
     mockGame.currentRound.isFinished = () => true;

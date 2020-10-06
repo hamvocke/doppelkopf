@@ -27,17 +27,6 @@ export class Score {
     const winnerParty = this.winningParty();
     this.addExtra(winnerParty, extras.win);
 
-    if (winnerParty === re && this.reAnnouncements.includes(announcements.re)) {
-      this.addExtra(re, extras.announced_re);
-    }
-
-    if (
-      winnerParty === kontra &&
-      this.reAnnouncements.includes(announcements.kontra)
-    ) {
-      this.addExtra(kontra, extras.announced_kontra);
-    }
-
     if (winnerParty === kontra) {
       this.addExtra(kontra, extras.beat_re);
     }
@@ -50,6 +39,17 @@ export class Score {
       if (this.kontraPoints < threshold) {
         this.addExtra(re, extra);
       }
+    }
+
+    if (
+      this.winner()
+        .announcements()
+        .includes(announcements.re) ||
+      this.winner()
+        .announcements()
+        .includes(announcements.kontra)
+    ) {
+      this.addExtra(winnerParty, extras.announced_win);
     }
 
     const reExtras = this.parties[re].extras();

@@ -227,7 +227,9 @@ describe("announcements", () => {
 
     score.evaluate(playerConstellation);
 
-    const expectedExtras = [extras.win, extras.announced_re];
+    const expectedExtras = [extras.win, extras.announced_win];
     expect(score.listExtras(re)).toEqual(expectedExtras);
   });
+
+  test.todo("should lose game if not all annoncements were fulfilled");
 });

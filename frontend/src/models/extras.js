@@ -8,8 +8,7 @@ export const extras = {
   no_30: "no_30",
   no_points: "no_points",
 
-  announced_re: "announced_re",
-  announced_kontra: "announced_kontra",
+  announced_win: "announced_win",
   announced_no_90: "announced_no_90",
   announced_no_60: "announced_no_60",
   announced_no_30: "announced_no_30",
