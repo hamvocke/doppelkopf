@@ -3,7 +3,20 @@ import { kontra, re } from "../../../src/models/party";
 import { extras } from "@/models/extras";
 import { PartyBuilder } from "../../builders/partyBuilder";
 
-describe("Score evaluation", () => {
+describe("Score", () => {
+  test("should throw error when evaluation not exactly 240 points", () => {
+    const reParty = new PartyBuilder(re).withPoints(121).build();
+    const kontraParty = new PartyBuilder(re).withPoints(121).build();
+
+    const illegalScoreCall = () => new NewScore(reParty, kontraParty);
+
+    expect(illegalScoreCall).toThrowError(
+      "A score must have a total of 240 points. Got 121 for Re, 121 for Kontra"
+    );
+  });
+});
+
+describe("Score valuation", () => {
   describe("re party", () => {
     test("should win with more than 120 points", () => {
       const reParty = new PartyBuilder(re).withPoints(121).build();

@@ -7,6 +7,13 @@ export class NewScore {
     this.parties = {};
     this.parties[re] = reParty;
     this.parties[kontra] = kontraParty;
+
+    if (this.parties[re].points() + this.parties[kontra].points() !== 240) {
+      throw Error(
+        // eslint-disable-next-line prettier/prettier
+        `A score must have a total of 240 points. Got ${this.parties[re].points()} for Re, ${this.parties[kontra].points()} for Kontra`
+      );
+    }
   }
 
   winningPartyName() {
