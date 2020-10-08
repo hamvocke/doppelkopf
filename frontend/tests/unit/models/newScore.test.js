@@ -1,7 +1,21 @@
+/* eslint-disable prettier/prettier */
+import { NewScore } from "@/models/newScore";
+import { kontra, re } from "../../../src/models/party";
+import { extras } from "@/models/extras";
+import { PartyBuilder } from "../../builders/partyBuilder";
+
 describe("Score evaluation", () => {
   describe("re party", () => {
     test("should win with more than 120 points", () => {
+      const reParty = new PartyBuilder(re).withPoints(121).build();
+      const kontraParty = new PartyBuilder(re).withPoints(119).build();
 
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(re);
+      expect(score.losingPartyName()).toBe(kontra);
+      expect(score.points()).toBe(1);
+      expect([...score.listExtras(re)]).toEqual([extras.win])
     });
 
     test.todo("should win with 120 points if kontra party announced winning");
