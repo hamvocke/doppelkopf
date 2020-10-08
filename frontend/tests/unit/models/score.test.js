@@ -3,7 +3,6 @@ import { Player } from "@/models/player";
 import { re, kontra, Party } from "@/models/party";
 import { extras } from "@/models/extras";
 import { announcements } from "@/models/announcements";
-import { stubPlayer } from "../../helpers/playerHelper";
 
 const playersWithReWinning = stubParties(130, 110);
 const playersWithKontraWinning = stubParties(110, 130);
@@ -15,6 +14,14 @@ function stubParties(rePoints, kontraPoints) {
     stubPlayer("Player 3", kontra, kontraPoints / 2),
     stubPlayer("Player 4", kontra, kontraPoints / 2)
   ];
+}
+
+function stubPlayer(name, party, points) {
+  const stubbedPlayer = new Player(name);
+  stubbedPlayer.isRe = () => party === re;
+  stubbedPlayer.points = () => points;
+  stubbedPlayer.isKontra = () => party !== re;
+  return stubbedPlayer;
 }
 
 describe("evaluate score", () => {
