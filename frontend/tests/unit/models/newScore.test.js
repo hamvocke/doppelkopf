@@ -2,8 +2,8 @@
 import { NewScore } from "@/models/newScore";
 import { kontra, re } from "../../../src/models/party";
 import { extras } from "@/models/extras";
+import { announcements } from "@/models/announcements";
 import { PartyBuilder } from "../../builders/partyBuilder";
-import { repeat } from "lodash-es";
 
 describe("Score", () => {
   test("should throw error when evaluation not exactly 240 points", () => {
@@ -33,7 +33,8 @@ describe("Score valuation", () => {
     test.todo("should win with 120 points if kontra party announced winning");
     test.todo("should lose with 120 points if both parties announced winning");
 
-    test.todo("should get 2 points for announcing 're'");
+    test.todo("should get 2 points for announcing 're' and winning");
+    test.todo("should get 2 points when kontra announced 'kontra' and lost");
   });
 
   describe("kontra party", () => {
@@ -47,7 +48,6 @@ describe("Score valuation", () => {
       expect(score.losingPartyName()).toBe(re);
     });
 
-    test.todo("should lose with 120 points and announcing 'kontra'");
     test.todo("should win with 121 points or more and announcing 'kontra'");
 
     test("should get 1 point for winning against 're'", () => {
@@ -64,7 +64,8 @@ describe("Score valuation", () => {
       ]);
     });
 
-    test.todo("should get 2 points for announcing 'kontra'");
+    test.todo("should get 2 points for announcing 'kontra' and winning");
+    test.todo("should get 2 points when re announced 're' and lost");
   });
 
   describe("either party", () => {
@@ -83,7 +84,7 @@ describe("Score valuation", () => {
       [151, 89, [extras.win, extras.no_90]],
       [181, 59, [extras.win, extras.no_90, extras.no_60]],
       [211, 29, [extras.win, extras.no_90, extras.no_60, extras.no_30]],
-      [240, 0, [extras.win, extras.no_90, extras.no_60, extras.no_30, extras.no_points]]
+      [240,  0, [extras.win, extras.no_90, extras.no_60, extras.no_30, extras.no_points]]
     ];
 
     test.each(pointThresholds)
