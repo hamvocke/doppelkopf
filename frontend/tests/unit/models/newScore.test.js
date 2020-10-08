@@ -6,7 +6,7 @@ import { PartyBuilder } from "../../builders/partyBuilder";
 describe("Score", () => {
   test("should throw error when evaluation not exactly 240 points", () => {
     const reParty = new PartyBuilder(re).withPoints(121).build();
-    const kontraParty = new PartyBuilder(re).withPoints(121).build();
+    const kontraParty = new PartyBuilder(kontra).withPoints(121).build();
 
     const illegalScoreCall = () => new NewScore(reParty, kontraParty);
 
@@ -20,18 +20,14 @@ describe("Score valuation", () => {
   describe("re party", () => {
     test("should win with more than 120 points", () => {
       const reParty = new PartyBuilder(re).withPoints(121).build();
-      const kontraParty = new PartyBuilder(re).withPoints(119).build();
+      const kontraParty = new PartyBuilder(kontra).withPoints(119).build();
 
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(re);
       expect(score.losingPartyName()).toBe(kontra);
-      expect(score.points()).toBe(1);
-      expect([...score.listExtras(re)]).toEqual([extras.win]);
-      expect([...score.listExtras(kontra)]).toEqual([]);
     });
 
-    test.todo("should lose with 120 points if no announcement was made");
     test.todo("should win with 120 points if kontra party announced winning");
     test.todo("should lose with 120 points if both parties announced winning");
 
@@ -41,7 +37,7 @@ describe("Score valuation", () => {
   describe("kontra party", () => {
     test("should win with 120 points or more", () => {
       const reParty = new PartyBuilder(re).withPoints(120).build();
-      const kontraParty = new PartyBuilder(re).withPoints(120).build();
+      const kontraParty = new PartyBuilder(kontra).withPoints(120).build();
 
       const score = new NewScore(reParty, kontraParty);
 
@@ -54,7 +50,7 @@ describe("Score valuation", () => {
 
     test("should get 1 point for winning against 're'", () => {
       const reParty = new PartyBuilder(re).withPoints(110).build();
-      const kontraParty = new PartyBuilder(re).withPoints(130).build();
+      const kontraParty = new PartyBuilder(kontra).withPoints(130).build();
 
       const score = new NewScore(reParty, kontraParty);
 
@@ -69,8 +65,18 @@ describe("Score valuation", () => {
     test.todo("should get 2 points for announcing 'kontra'");
   });
 
-  describe("both parties", () => {
-    test.todo("should get 1 point for winning");
+  describe("either party", () => {
+    test("should get 1 point for winning", () => {
+      const reParty = new PartyBuilder(re).withPoints(130).build();
+      const kontraParty = new PartyBuilder(kontra).withPoints(110).build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.points()).toBe(1);
+      expect([...score.listExtras(re)]).toEqual([extras.win]);
+      expect([...score.listExtras(kontra)]).toEqual([]);
+    });
+
     test.todo("should get 1 point for getting more than 150 points");
     test.todo("should get 1 point for getting more than 180 points");
     test.todo("should get 1 point for getting more than 210 points");
