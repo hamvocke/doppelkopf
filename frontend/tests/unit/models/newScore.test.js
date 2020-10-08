@@ -1,7 +1,9 @@
+/* eslint-disable prettier/prettier */
 import { NewScore } from "@/models/newScore";
 import { kontra, re } from "../../../src/models/party";
 import { extras } from "@/models/extras";
 import { PartyBuilder } from "../../builders/partyBuilder";
+import { repeat } from "lodash-es";
 
 describe("Score", () => {
   test("should throw error when evaluation not exactly 240 points", () => {
@@ -67,8 +69,8 @@ describe("Score valuation", () => {
 
   describe("either party", () => {
     test("should get 1 point for winning", () => {
-      const reParty = new PartyBuilder(re).withPoints(130).build();
-      const kontraParty = new PartyBuilder(kontra).withPoints(110).build();
+      const reParty = new PartyBuilder(re).withPoints(150).build();
+      const kontraParty = new PartyBuilder(kontra).withPoints(90).build();
 
       const score = new NewScore(reParty, kontraParty);
 
@@ -77,10 +79,24 @@ describe("Score valuation", () => {
       expect([...score.listExtras(kontra)]).toEqual([]);
     });
 
-    test.todo("should get 1 point for getting more than 150 points");
-    test.todo("should get 1 point for getting more than 180 points");
-    test.todo("should get 1 point for getting more than 210 points");
-    test.todo("should get 1 point for getting 240 points");
+    const pointThresholds = [
+      [151, 89, [extras.win, extras.no_90]],
+      [181, 59, [extras.win, extras.no_90, extras.no_60]],
+      [211, 29, [extras.win, extras.no_90, extras.no_60, extras.no_30]],
+      [240, 0, [extras.win, extras.no_90, extras.no_60, extras.no_30, extras.no_points]]
+    ];
+
+    test.each(pointThresholds)
+    ("should get 1 extra point for getting %i points", (rePoints, kontraPoints, expectedExtras) => {
+      const reParty = new PartyBuilder(re).withPoints(rePoints).build();
+      const kontraParty = new PartyBuilder(kontra).withPoints(kontraPoints).build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.points()).toBe(expectedExtras.length);
+      expect([...score.listExtras(re)]).toEqual(expectedExtras);
+      expect([...score.listExtras(kontra)]).toEqual([]);
+    });
 
     test.todo("should get 1 point for announcing 'no 90' and getting more than 150 points");
     test.todo("should get 1 point for announcing 'no 60' and getting more than 180 points");

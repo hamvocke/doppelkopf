@@ -44,6 +44,22 @@ export class NewScore {
       }
     }
 
+    if (this.parties[partyName].points() > 150) {
+      allExtras.add(extras.no_90);
+    }
+
+    if (this.parties[partyName].points() > 180) {
+      allExtras.add(extras.no_60);
+    }
+
+    if (this.parties[partyName].points() > 210) {
+      allExtras.add(extras.no_30);
+    }
+
+    if (this.parties[partyName].points() === 240) {
+      allExtras.add(extras.no_points);
+    }
+
     return allExtras;
   }
 }
