@@ -20,7 +20,10 @@ export class NewScore {
   }
 
   points() {
-    return 1;
+    return (
+      this.listExtras(this.winningPartyName()).size -
+      this.listExtras(this.losingPartyName()).size
+    );
   }
 
   listExtras(partyName) {
@@ -28,6 +31,10 @@ export class NewScore {
 
     if (partyName === this.winningPartyName()) {
       allExtras.add(extras.win);
+
+      if (partyName === kontra) {
+        allExtras.add(extras.beat_re);
+      }
     }
 
     return allExtras;

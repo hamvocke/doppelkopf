@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+
 import { NewScore } from "@/models/newScore";
 import { kontra, re } from "../../../src/models/party";
 import { extras } from "@/models/extras";
@@ -6,6 +6,7 @@ import { PartyBuilder } from "../../builders/partyBuilder";
 
 describe("Score evaluation", () => {
   describe("re party", () => {
+
     test("should win with more than 120 points", () => {
       const reParty = new PartyBuilder(re).withPoints(121).build();
       const kontraParty = new PartyBuilder(re).withPoints(119).build();
@@ -15,17 +16,33 @@ describe("Score evaluation", () => {
       expect(score.winningPartyName()).toBe(re);
       expect(score.losingPartyName()).toBe(kontra);
       expect(score.points()).toBe(1);
-      expect([...score.listExtras(re)]).toEqual([extras.win])
+      expect([...score.listExtras(re)]).toEqual([extras.win]);
+      expect([...score.listExtras(kontra)]).toEqual([]);
     });
 
+    test.todo("should lose with 120 points if no announcement was made");
     test.todo("should win with 120 points if kontra party announced winning");
-    test.todo("should lose with 120 points if kontra party announced winning");
+    test.todo("should lose with 120 points if both parties announced winning");
 
     test.todo("should get 2 points for announcing 're'");
   });
 
   describe("kontra party", () => {
-    test.todo("should win with 120 points or more");
+    test("should win with 120 points or more", () => {
+      const reParty = new PartyBuilder(re).withPoints(120).build();
+      const kontraParty = new PartyBuilder(re).withPoints(120).build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(kontra);
+      expect(score.losingPartyName()).toBe(re);
+      expect(score.points()).toBe(2);
+      expect([...score.listExtras(re)]).toEqual([]);
+      expect([...score.listExtras(kontra)]).toEqual([
+        extras.win,
+        extras.beat_re
+      ]);
+    });
     test.todo("should lose with 120 points and announcing 'kontra'");
     test.todo("should win with 121 points or more and announcing 'kontra'");
 
