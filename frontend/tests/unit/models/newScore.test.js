@@ -1,4 +1,3 @@
-
 import { NewScore } from "@/models/newScore";
 import { kontra, re } from "../../../src/models/party";
 import { extras } from "@/models/extras";
@@ -6,7 +5,6 @@ import { PartyBuilder } from "../../builders/partyBuilder";
 
 describe("Score evaluation", () => {
   describe("re party", () => {
-
     test("should win with more than 120 points", () => {
       const reParty = new PartyBuilder(re).withPoints(121).build();
       const kontraParty = new PartyBuilder(re).withPoints(119).build();
@@ -36,6 +34,17 @@ describe("Score evaluation", () => {
 
       expect(score.winningPartyName()).toBe(kontra);
       expect(score.losingPartyName()).toBe(re);
+    });
+
+    test.todo("should lose with 120 points and announcing 'kontra'");
+    test.todo("should win with 121 points or more and announcing 'kontra'");
+
+    test("should get 1 point for winning against 're'", () => {
+      const reParty = new PartyBuilder(re).withPoints(110).build();
+      const kontraParty = new PartyBuilder(re).withPoints(130).build();
+
+      const score = new NewScore(reParty, kontraParty);
+
       expect(score.points()).toBe(2);
       expect([...score.listExtras(re)]).toEqual([]);
       expect([...score.listExtras(kontra)]).toEqual([
@@ -43,10 +52,6 @@ describe("Score evaluation", () => {
         extras.beat_re
       ]);
     });
-    test.todo("should lose with 120 points and announcing 'kontra'");
-    test.todo("should win with 121 points or more and announcing 'kontra'");
-
-    test.todo("should get 1 point for winning against 're'");
 
     test.todo("should get 2 points for announcing 'kontra'");
   });
