@@ -21,7 +21,11 @@ export class NewScore {
       .announcements()
       .includes(announcements.kontra);
 
-    if (kontraAnnounced) {
+    const reAnnounced = this.parties[re]
+      .announcements()
+      .includes(announcements.re);
+
+    if (kontraAnnounced && !reAnnounced) {
       return this.parties[re].points() >= 120 ? re : kontra;
     }
 
