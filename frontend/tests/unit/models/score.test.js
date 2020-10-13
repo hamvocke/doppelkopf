@@ -2,7 +2,6 @@ import { Score } from "@/models/score";
 import { Player } from "@/models/player";
 import { re, kontra, Party } from "@/models/party";
 import { extras } from "@/models/extras";
-import { announcements } from "@/models/announcements";
 
 const playersWithReWinning = stubParties(130, 110);
 const playersWithKontraWinning = stubParties(110, 130);
@@ -215,21 +214,4 @@ describe("calculating extras", () => {
     expect(score.listExtras(re)).toEqual([]);
     expect(score.listExtras(kontra)).toEqual(expectedExtrasForKontra);
   });
-});
-
-describe("announcements", () => {
-  test("should add 1 point to the winning party's score for a right announcement", () => {
-    const score = new Score();
-
-    let playerConstellation = playersWithReWinning;
-    playerConstellation[1].numberOfCardsLeft = () => 10;
-    playerConstellation[1].announce(announcements.re);
-
-    score.evaluate(playerConstellation);
-
-    const expectedExtras = [extras.win, extras.announced_win];
-    expect(score.listExtras(re)).toEqual(expectedExtras);
-  });
-
-  test.todo("should lose game if not all annoncements were fulfilled");
 });

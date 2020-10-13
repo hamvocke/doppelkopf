@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { NewScore } from "@/models/newScore";
 import { kontra, re } from "../../../src/models/party";
-import { extras } from "@/models/extras";
+import { extrasWithPoints as extras } from "@/models/extras";
 import { announcements } from "@/models/announcements";
 import { PartyBuilder } from "../../builders/partyBuilder";
 
@@ -59,7 +59,22 @@ describe("Score valuation", () => {
       expect(score.losingPartyName()).toBe(re);
     });
 
-    test.todo("should get 2 points for announcing 're'");
+    test("should get 2 extra points for announcing 're'", () => {
+      const reParty = new PartyBuilder(re)
+        .withPoints(130)
+        .withAnnouncement(announcements.re)
+        .build();
+      const kontraParty = new PartyBuilder(kontra)
+        .withPoints(110)
+        .build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(re);
+      expect(score.points()).toEqual(3); // 1 for winning, 2 for announcing
+      expect([...score.listExtras(re)]).toEqual([extras.win, extras.announced_re]);
+    });
+
     test.todo("should get 2 points when kontra announced 'kontra'");
   });
 
@@ -76,7 +91,7 @@ describe("Score valuation", () => {
 
     test.todo("should win with 121 points or more and announcing 'kontra'");
 
-    test("should get 1 point for winning against 're'", () => {
+    test("should get 1 extra point for winning against 're'", () => {
       const reParty = new PartyBuilder(re).withPoints(110).build();
       const kontraParty = new PartyBuilder(kontra).withPoints(130).build();
 

@@ -1,6 +1,5 @@
 import { re, kontra, Party } from "@/models/party";
 import { extras, extraThresholds } from "@/models/extras";
-import { announcements } from "@/models/announcements";
 
 export class Score {
   constructor() {
@@ -39,17 +38,6 @@ export class Score {
       if (this.kontraPoints < threshold) {
         this.addExtra(re, extra);
       }
-    }
-
-    if (
-      this.winner()
-        .announcements()
-        .includes(announcements.re) ||
-      this.winner()
-        .announcements()
-        .includes(announcements.kontra)
-    ) {
-      this.addExtra(winnerParty, extras.announced_win);
     }
 
     const reExtras = this.parties[re].extras();
@@ -93,16 +81,11 @@ export class Score {
     );
   }
 
-  addExtra(party, extraKey) {
-    if (!extraKey) {
-      return;
-    }
-    const extra = {};
-    extra[extraKey] = 1;
+  addExtra(party, extra) {
     this.extras[party].push(extra);
   }
 
   listExtras(party) {
-    return this.extras[party].flatMap(extra => Object.keys(extra));
+    return this.extras[party];
   }
 }

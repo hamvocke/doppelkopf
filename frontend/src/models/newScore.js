@@ -1,5 +1,5 @@
 import { announcements } from "@/models/announcements";
-import { extras } from "@/models/extras";
+import { extrasWithPoints as extras } from "@/models/extras";
 import { re, kontra } from "./party";
 
 export class NewScore {
@@ -37,9 +37,16 @@ export class NewScore {
   }
 
   points() {
+    const sumPoints = (accumulator, extra) => accumulator + extra.points;
     return (
-      this.listExtras(this.winningPartyName()).size -
-      this.listExtras(this.losingPartyName()).size
+      [...this.listExtras(this.winningPartyName())].reduce(sumPoints, 0) -
+      [...this.listExtras(this.losingPartyName())].reduce(sumPoints, 0)
+    );
+  }
+
+  _hasAnyPartyAnnounced(announcement) {
+    return Object.values(this.parties).some(party =>
+      party.announcements().includes(announcement)
     );
   }
 
@@ -51,6 +58,14 @@ export class NewScore {
 
       if (partyName === kontra) {
         allExtras.add(extras.beat_re);
+      }
+
+      if (this._hasAnyPartyAnnounced(announcements.re)) {
+        allExtras.add(extras.announced_re);
+      }
+
+      if (this._hasAnyPartyAnnounced(announcements.kontra)) {
+        allExtras.add(extras.announced_kontra);
       }
     }
 
