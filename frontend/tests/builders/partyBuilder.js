@@ -4,10 +4,11 @@ import { PlayerBuilder } from "./playerBuilder";
 export class PartyBuilder {
   constructor(party) {
     this.party = party;
+    this.announcements = new Set();
   }
 
-  withAnnouncements(announcements) {
-    this.announcements = announcements;
+  withAnnouncement(announcements) {
+    this.announcements.add(announcements);
     return this;
   }
 
@@ -28,7 +29,7 @@ export class PartyBuilder {
       new PlayerBuilder(`another ${this.party} player`).build()
     );
 
-    createdParty.announcements = () => this.announcements;
+    createdParty.announcements = () => [...this.announcements];
     createdParty.extras = () => this.extras;
     createdParty.points = () => this.points;
 

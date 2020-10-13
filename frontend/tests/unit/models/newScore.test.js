@@ -30,7 +30,19 @@ describe("Score valuation", () => {
       expect(score.losingPartyName()).toBe(kontra);
     });
 
-    test.todo("should win with 120 points if kontra party announced winning");
+    test("should win with 120 points if kontra party announced winning", () => {
+      const reParty = new PartyBuilder(re).withPoints(120).build();
+      const kontraParty = new PartyBuilder(kontra)
+        .withPoints(120)
+        .withAnnouncement(announcements.kontra)
+        .build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(re);
+      expect(score.losingPartyName()).toBe(kontra);
+    });
+
     test.todo("should lose with 120 points if both parties announced winning");
 
     test.todo("should get 2 points for announcing 're' and winning");

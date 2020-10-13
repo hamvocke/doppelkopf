@@ -17,9 +17,15 @@ export class NewScore {
   }
 
   winningPartyName() {
-    return this.parties[re].points() > this.parties[kontra].points()
-      ? re
-      : kontra;
+    const kontraAnnounced = this.parties[kontra]
+      .announcements()
+      .includes(announcements.kontra);
+
+    if (kontraAnnounced) {
+      return this.parties[re].points() >= 120 ? re : kontra;
+    }
+
+    return this.parties[re].points() >= 121 ? re : kontra;
   }
 
   losingPartyName() {
