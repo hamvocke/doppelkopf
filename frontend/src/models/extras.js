@@ -1,3 +1,4 @@
+// todo: remove extras, make "extrasWithPoints" the new "extras"
 export const extras = {
   doppelkopf: "doppelkopf",
   fox: "fox",
