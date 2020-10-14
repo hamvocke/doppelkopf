@@ -75,7 +75,21 @@ describe("Score valuation", () => {
       expect([...score.listExtras(re)]).toEqual([extras.win, extras.announced_re]);
     });
 
-    test.todo("should get 2 points when kontra announced 'kontra'");
+    test("should get 2 points when kontra announced 'kontra'", () => {
+      const reParty = new PartyBuilder(re)
+        .withPoints(140)
+        .build();
+      const kontraParty = new PartyBuilder(kontra)
+        .withPoints(100)
+        .withAnnouncement(announcements.kontra)
+        .build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(re);
+      expect(score.points()).toEqual(3); // 1 for winning, 2 for announcing
+      expect([...score.listExtras(re)]).toEqual([extras.win, extras.announced_kontra]);
+    });
   });
 
   describe("kontra party", () => {
@@ -89,7 +103,7 @@ describe("Score valuation", () => {
       expect(score.losingPartyName()).toBe(re);
     });
 
-    test.todo("should win with 121 points or more and announcing 'kontra'");
+    test.todo("should lose with 120 points when announcing 'kontra'");
 
     test("should get 1 extra point for winning against 're'", () => {
       const reParty = new PartyBuilder(re).withPoints(110).build();
@@ -120,7 +134,22 @@ describe("Score valuation", () => {
       expect(score.points()).toEqual(4); // 1 for winning, 1 for beating re, 2 for announcing
       expect([...score.listExtras(kontra)]).toEqual([extras.win, extras.beat_re, extras.announced_kontra]);
     });
-    test.todo("should get 2 points when re announced 're'");
+
+    test("should get 2 points when re announced 're'", () => {
+      const reParty = new PartyBuilder(re)
+        .withPoints(100)
+        .withAnnouncement(announcements.re)
+        .build();
+      const kontraParty = new PartyBuilder(kontra)
+        .withPoints(140)
+        .build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(kontra);
+      expect(score.points()).toEqual(4); // 1 for winning, 1 for beating re, 2 for announcing
+      expect([...score.listExtras(kontra)]).toEqual([extras.win, extras.beat_re, extras.announced_re]);
+    });
   });
 
   describe("either party", () => {
