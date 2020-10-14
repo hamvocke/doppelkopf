@@ -105,7 +105,21 @@ describe("Score valuation", () => {
       ]);
     });
 
-    test.todo("should get 2 points for announcing 'kontra'");
+    test("should get 2 points for announcing 'kontra'", () => {
+      const reParty = new PartyBuilder(re)
+        .withPoints(100)
+        .build();
+      const kontraParty = new PartyBuilder(kontra)
+        .withPoints(140)
+        .withAnnouncement(announcements.kontra)
+        .build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(kontra);
+      expect(score.points()).toEqual(4); // 1 for winning, 1 for beating re, 2 for announcing
+      expect([...score.listExtras(kontra)]).toEqual([extras.win, extras.beat_re, extras.announced_kontra]);
+    });
     test.todo("should get 2 points when re announced 're'");
   });
 
