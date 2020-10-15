@@ -71,10 +71,18 @@ export class NewScore {
 
     if (this.parties[partyName].points() > 150) {
       allExtras.add(extras.no_90);
+
+      if (this.parties[partyName].announcements().includes(announcements.no_90)) {
+        allExtras.add(extras.announced_no_90);
+      }
     }
 
     if (this.parties[partyName].points() > 180) {
       allExtras.add(extras.no_60);
+
+      if (this.parties[partyName].announcements().includes(announcements.no_60)) {
+        allExtras.add(extras.announced_no_60);
+      }
     }
 
     if (this.parties[partyName].points() > 210) {
@@ -83,10 +91,6 @@ export class NewScore {
 
     if (this.parties[partyName].points() === 240) {
       allExtras.add(extras.no_points);
-    }
-
-    if (this.parties[partyName].announcements().includes(announcements.no_90)) {
-      allExtras.add(extras.announced_no_90);
     }
 
     return allExtras;
