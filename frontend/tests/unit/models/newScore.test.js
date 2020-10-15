@@ -229,7 +229,31 @@ describe("Score valuation", () => {
       expect([...score.listExtras(re)]).toEqual([]);
     });
 
-    test.todo("should get 1 point for announcing 'no 30' and getting more than 210 points");
+    test("should get 1 point for announcing 'no 30' and getting more than 210 points", () => {
+      const reParty = new PartyBuilder(re)
+      .withAnnouncement(announcements.re)
+      .withAnnouncement(announcements.no_90)
+      .withAnnouncement(announcements.no_60)
+      .withAnnouncement(announcements.no_30)
+      .withPoints(211)
+      .build();
+      const kontraParty = new PartyBuilder(kontra).withPoints(240 - 211).build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.points()).toBe(9);
+      expect([...score.listExtras(re)]).toEqual([
+        extras.win,
+        extras.announced_re,
+        extras.no_90,
+        extras.announced_no_90,
+        extras.no_60,
+        extras.announced_no_60,
+        extras.no_30,
+        extras.announced_no_30
+      ]);
+      expect([...score.listExtras(kontra)]).toEqual([]);
+    });
     test.todo("should get 1 point for announcing 'no points' and getting 240 points");
 
     test.todo("should lose with less than 151 points when announcing 'no 90'");
