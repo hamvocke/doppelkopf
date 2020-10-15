@@ -85,6 +85,10 @@ export class NewScore {
       allExtras.add(extras.no_points);
     }
 
+    if (this.parties[partyName].announcements().includes(announcements.no_90)) {
+      allExtras.add(extras.announced_no_90);
+    }
+
     return allExtras;
   }
 }
