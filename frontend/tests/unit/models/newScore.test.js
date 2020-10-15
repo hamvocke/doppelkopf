@@ -172,16 +172,16 @@ describe("Score valuation", () => {
     });
 
     const pointThresholds = [
-      [151, 89, [extras.win, extras.no_90]],
-      [181, 59, [extras.win, extras.no_90, extras.no_60]],
-      [211, 29, [extras.win, extras.no_90, extras.no_60, extras.no_30]],
-      [240,  0, [extras.win, extras.no_90, extras.no_60, extras.no_30, extras.no_points]]
+      [151, [extras.win, extras.no_90]],
+      [181, [extras.win, extras.no_90, extras.no_60]],
+      [211, [extras.win, extras.no_90, extras.no_60, extras.no_30]],
+      [240,  [extras.win, extras.no_90, extras.no_60, extras.no_30, extras.no_points]]
     ];
 
     test.each(pointThresholds)
-    ("should get 1 extra point for getting %i points", (rePoints, kontraPoints, expectedExtras) => {
+    ("should get 1 extra point for getting %i points", (rePoints, expectedExtras) => {
       const reParty = new PartyBuilder(re).withPoints(rePoints).build();
-      const kontraParty = new PartyBuilder(kontra).withPoints(kontraPoints).build();
+      const kontraParty = new PartyBuilder(kontra).withPoints(240 - rePoints).build();
 
       const score = new NewScore(reParty, kontraParty);
 
