@@ -284,10 +284,101 @@ describe("Score valuation", () => {
       expect([...score.listExtras(kontra)]).toEqual([]);
     });
 
-    test.todo("should lose with less than 151 points when announcing 'no 90'"); // all points go to winning party
-    test.todo("should lose with less than 181 points when announcing 'no 60'");
-    test.todo("should lose with less than 211 points when announcing 'no 30'");
-    test.todo("should lose with less than 240 points when announcing 'no points'");
+    test("should lose with less than 151 points when announcing 'no 90'", () => {
+      const reParty = new PartyBuilder(re)
+      .withAnnouncement(announcements.re)
+      .withAnnouncement(announcements.no_90)
+      .withPoints(150)
+      .build();
+      const kontraParty = new PartyBuilder(kontra).withPoints(90).build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(kontra);
+      expect(score.points()).toBe(5); // all points go to winning party
+      expect([...score.listExtras(kontra)]).toEqual([
+        extras.win,
+        extras.beat_re,
+        extras.announced_re,
+        extras.announced_no_90,
+      ]);
+      expect([...score.listExtras(re)]).toEqual([]);
+    });
+
+    test("should lose with less than 181 points when announcing 'no 60'", () => {
+      const kontraParty = new PartyBuilder(kontra)
+      .withAnnouncement(announcements.kontra)
+      .withAnnouncement(announcements.no_90)
+      .withAnnouncement(announcements.no_60)
+      .withPoints(180)
+      .build();
+      const reParty = new PartyBuilder(re).withPoints(60).build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(re);
+      expect(score.points()).toBe(5);
+      expect([...score.listExtras(re)]).toEqual([
+        extras.win,
+        extras.announced_kontra,
+        extras.announced_no_90,
+        extras.announced_no_60,
+      ]);
+      expect([...score.listExtras(kontra)]).toEqual([]);
+    });
+
+    test("should lose with less than 211 points when announcing 'no 30'", () => {
+      const reParty = new PartyBuilder(re)
+      .withAnnouncement(announcements.re)
+      .withAnnouncement(announcements.no_90)
+      .withAnnouncement(announcements.no_60)
+      .withAnnouncement(announcements.no_30)
+      .withPoints(210)
+      .build();
+      const kontraParty = new PartyBuilder(kontra).withPoints(30).build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(kontra);
+      expect(score.points()).toBe(7);
+      expect([...score.listExtras(kontra)]).toEqual([
+        extras.win,
+        extras.beat_re,
+        extras.announced_re,
+        extras.announced_no_90,
+        extras.announced_no_60,
+        extras.announced_no_30,
+      ]);
+      expect([...score.listExtras(re)]).toEqual([]);
+    });
+
+    test("should lose with less than 240 points when announcing 'no points'", () => {
+      const reParty = new PartyBuilder(re)
+      .withAnnouncement(announcements.re)
+      .withAnnouncement(announcements.no_90)
+      .withAnnouncement(announcements.no_60)
+      .withAnnouncement(announcements.no_30)
+      .withAnnouncement(announcements.no_points)
+      .withPoints(239)
+      .build();
+      const kontraParty = new PartyBuilder(kontra).withPoints(1).build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(kontra);
+      // expect(score.points()).toBe(8);
+      expect([...score.listExtras(kontra)]).toEqual([
+        extras.win,
+        extras.beat_re,
+        extras.announced_re,
+        extras.announced_no_90,
+        extras.announced_no_60,
+        extras.announced_no_30,
+        extras.announced_no_points,
+      ]);
+      expect([...score.listExtras(re)]).toEqual([]);
+    });
+
 
     test.todo("should get 1 point when getting 120 points against a 'no 90' announcement");
     test.todo("should get 1 point when getting 90 points against a 'no 60' announcement");
