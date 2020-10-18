@@ -366,7 +366,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(kontra);
-      // expect(score.points()).toBe(8);
+      expect(score.points()).toBe(8);
       expect([...score.listExtras(kontra)]).toEqual([
         extras.win,
         extras.beat_re,
