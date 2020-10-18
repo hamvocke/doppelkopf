@@ -95,6 +95,10 @@ export class NewScore {
 
     if (this.parties[partyName].points() === 240) {
       allExtras.add(extras.no_points);
+
+      if (this.parties[partyName].announcements().includes(announcements.no_points)) {
+        allExtras.add(extras.announced_no_points);
+      }
     }
 
     return allExtras;
