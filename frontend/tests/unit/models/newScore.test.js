@@ -380,13 +380,35 @@ describe("Score valuation", () => {
     });
 
 
-    test.todo("should get 1 point when getting 120 points against a 'no 90' announcement");
+    test("should get 1 point when getting 120 points against a 'no 90' announcement", () => {
+      const kontraParty = new PartyBuilder(kontra)
+      .withAnnouncement(announcements.kontra)
+      .withAnnouncement(announcements.no_90)
+      .withPoints(120)
+      .build();
+      const reParty = new PartyBuilder(re).withPoints(120).build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(re);
+      expect(score.points()).toBe(5);
+      expect([...score.listExtras(re)]).toEqual([
+        extras.win,
+        extras.announced_kontra,
+        extras.got_120_against_no_90,
+        extras.announced_no_90,
+      ]);
+      expect([...score.listExtras(kontra)]).toEqual([]);
+    });
+
     test.todo("should get 1 point when getting 90 points against a 'no 60' announcement");
     test.todo("should get 1 point when getting 60 points against a 'no 30' announcement");
     test.todo("should get 1 point when getting 30 points against a 'no points' announcement");
 
+    test.todo("should get 1 point each for own and for losing party's announcements");
+
     // how can this happen?
-    // imaging "re" announces "no 90", and "kontra" announces "no 60"
+    // imagine "re" announces "no 90", and "kontra" announces "no 60"
     // now the game ends 110/130 - neither reached their announced goal
     // as a consequence there's no "winning" point, only trick-based extras
     test.todo("should lose both when neither reached their announced points");

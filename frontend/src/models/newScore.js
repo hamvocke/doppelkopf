@@ -84,6 +84,8 @@ export class NewScore {
 
   listExtras(partyName) {
     const allExtras = new Set();
+    const partyPoints = this.parties[partyName].points();
+    const opponentAnnouncements = this.parties[partyName == re ? kontra : re].announcements();
 
     if (partyName === this.winningPartyName()) {
       allExtras.add(extras.win);
@@ -100,7 +102,12 @@ export class NewScore {
         allExtras.add(extras.announced_kontra);
       }
 
-      if (this.parties[partyName].points() > 150) {
+      if (partyPoints >= 120 &&
+          opponentAnnouncements.includes(announcements.no_90)) {
+        allExtras.add(extras.got_120_against_no_90);
+      }
+
+      if (partyPoints > 150) {
         allExtras.add(extras.no_90);
       }
 
@@ -108,7 +115,7 @@ export class NewScore {
         allExtras.add(extras.announced_no_90);
       }
 
-      if (this.parties[partyName].points() > 180) {
+      if (partyPoints > 180) {
         allExtras.add(extras.no_60);
       }
 
@@ -116,7 +123,7 @@ export class NewScore {
         allExtras.add(extras.announced_no_60);
       }
 
-      if (this.parties[partyName].points() > 210) {
+      if (partyPoints > 210) {
         allExtras.add(extras.no_30);
       }
 
@@ -124,7 +131,7 @@ export class NewScore {
         allExtras.add(extras.announced_no_30);
       }
 
-      if (this.parties[partyName].points() === 240) {
+      if (partyPoints === 240) {
         allExtras.add(extras.no_points);
       }
 
