@@ -102,17 +102,16 @@ export class NewScore {
         allExtras.add(extras.announced_kontra);
       }
 
-      if (partyPoints >= 120 &&
-          opponentAnnouncements.includes(announcements.no_90)) {
-        allExtras.add(extras.got_120_against_no_90);
-      }
-
       if (partyPoints > 150) {
         allExtras.add(extras.no_90);
       }
 
       if (this._hasAnyPartyAnnounced(announcements.no_90)) {
         allExtras.add(extras.announced_no_90);
+      }
+
+      if (partyPoints >= 120 && opponentAnnouncements.includes(announcements.no_90)) {
+        allExtras.add(extras.got_120_against_no_90);
       }
 
       if (partyPoints > 180) {
@@ -123,6 +122,10 @@ export class NewScore {
         allExtras.add(extras.announced_no_60);
       }
 
+      if (partyPoints >= 90 && opponentAnnouncements.includes(announcements.no_60)) {
+        allExtras.add(extras.got_90_against_no_60);
+      }
+
       if (partyPoints > 210) {
         allExtras.add(extras.no_30);
       }
@@ -131,12 +134,20 @@ export class NewScore {
         allExtras.add(extras.announced_no_30);
       }
 
+      if (partyPoints >= 60 && opponentAnnouncements.includes(announcements.no_30)) {
+        allExtras.add(extras.got_60_against_no_30);
+      }
+
       if (partyPoints === 240) {
         allExtras.add(extras.no_points);
       }
 
       if (this._hasAnyPartyAnnounced(announcements.no_points)) {
         allExtras.add(extras.announced_no_points);
+      }
+
+      if (partyPoints >= 30 && opponentAnnouncements.includes(announcements.no_points)) {
+        allExtras.add(extras.got_30_against_no_points);
       }
     }
 
