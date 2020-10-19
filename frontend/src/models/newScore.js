@@ -86,6 +86,7 @@ export class NewScore {
     const allExtras = new Set();
     const partyPoints = this.parties[partyName].points();
     const opponentAnnouncements = this.parties[partyName == re ? kontra : re].announcements();
+    const ownAnnouncements = this.parties[partyName].announcements();
 
     if (partyName === this.winningPartyName()) {
       allExtras.add(extras.win);
@@ -106,8 +107,12 @@ export class NewScore {
         allExtras.add(extras.no_90);
       }
 
-      if (this._hasAnyPartyAnnounced(announcements.no_90)) {
+      if (ownAnnouncements.includes(announcements.no_90)) {
         allExtras.add(extras.announced_no_90);
+      }
+
+      if (opponentAnnouncements.includes(announcements.no_90)) {
+        allExtras.add(extras.opposing_party_announced_no_90);
       }
 
       if (partyPoints >= 120 && opponentAnnouncements.includes(announcements.no_90)) {
@@ -118,8 +123,12 @@ export class NewScore {
         allExtras.add(extras.no_60);
       }
 
-      if (this._hasAnyPartyAnnounced(announcements.no_60)) {
+      if (ownAnnouncements.includes(announcements.no_60)) {
         allExtras.add(extras.announced_no_60);
+      }
+
+      if (opponentAnnouncements.includes(announcements.no_60)) {
+        allExtras.add(extras.opposing_party_announced_no_60);
       }
 
       if (partyPoints >= 90 && opponentAnnouncements.includes(announcements.no_60)) {
@@ -130,8 +139,12 @@ export class NewScore {
         allExtras.add(extras.no_30);
       }
 
-      if (this._hasAnyPartyAnnounced(announcements.no_30)) {
+      if (ownAnnouncements.includes(announcements.no_30)) {
         allExtras.add(extras.announced_no_30);
+      }
+
+      if (opponentAnnouncements.includes(announcements.no_30)) {
+        allExtras.add(extras.opposing_party_announced_no_30);
       }
 
       if (partyPoints >= 60 && opponentAnnouncements.includes(announcements.no_30)) {
@@ -142,8 +155,12 @@ export class NewScore {
         allExtras.add(extras.no_points);
       }
 
-      if (this._hasAnyPartyAnnounced(announcements.no_points)) {
+      if (ownAnnouncements.includes(announcements.no_points)) {
         allExtras.add(extras.announced_no_points);
+      }
+
+      if (opponentAnnouncements.includes(announcements.no_points)) {
+        allExtras.add(extras.opposing_party_announced_no_points);
       }
 
       if (partyPoints >= 30 && opponentAnnouncements.includes(announcements.no_points)) {

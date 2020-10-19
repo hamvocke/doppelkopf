@@ -300,7 +300,7 @@ describe("Score valuation", () => {
         extras.win,
         extras.beat_re,
         extras.announced_re,
-        extras.announced_no_90,
+        extras.opposing_party_announced_no_90,
       ]);
       expect([...score.listExtras(re)]).toEqual([]);
     });
@@ -321,8 +321,8 @@ describe("Score valuation", () => {
       expect([...score.listExtras(re)]).toEqual([
         extras.win,
         extras.announced_kontra,
-        extras.announced_no_90,
-        extras.announced_no_60,
+        extras.opposing_party_announced_no_90,
+        extras.opposing_party_announced_no_60,
       ]);
       expect([...score.listExtras(kontra)]).toEqual([]);
     });
@@ -345,9 +345,9 @@ describe("Score valuation", () => {
         extras.win,
         extras.beat_re,
         extras.announced_re,
-        extras.announced_no_90,
-        extras.announced_no_60,
-        extras.announced_no_30,
+        extras.opposing_party_announced_no_90,
+        extras.opposing_party_announced_no_60,
+        extras.opposing_party_announced_no_30,
       ]);
       expect([...score.listExtras(re)]).toEqual([]);
     });
@@ -371,10 +371,10 @@ describe("Score valuation", () => {
         extras.win,
         extras.beat_re,
         extras.announced_re,
-        extras.announced_no_90,
-        extras.announced_no_60,
-        extras.announced_no_30,
-        extras.announced_no_points,
+        extras.opposing_party_announced_no_90,
+        extras.opposing_party_announced_no_60,
+        extras.opposing_party_announced_no_30,
+        extras.opposing_party_announced_no_points,
       ]);
       expect([...score.listExtras(re)]).toEqual([]);
     });
@@ -395,7 +395,7 @@ describe("Score valuation", () => {
       expect([...score.listExtras(re)]).toEqual([
         extras.win,
         extras.announced_kontra,
-        extras.announced_no_90,
+        extras.opposing_party_announced_no_90,
         extras.got_120_against_no_90,
       ]);
       expect([...score.listExtras(kontra)]).toEqual([]);
@@ -418,8 +418,8 @@ describe("Score valuation", () => {
         extras.win,
         extras.beat_re,
         extras.announced_re,
-        extras.announced_no_90,
-        extras.announced_no_60,
+        extras.opposing_party_announced_no_90,
+        extras.opposing_party_announced_no_60,
         extras.got_90_against_no_60,
       ]);
       expect([...score.listExtras(re)]).toEqual([]);
@@ -442,9 +442,9 @@ describe("Score valuation", () => {
       expect([...score.listExtras(re)]).toEqual([
         extras.win,
         extras.announced_kontra,
-        extras.announced_no_90,
-        extras.announced_no_60,
-        extras.announced_no_30,
+        extras.opposing_party_announced_no_90,
+        extras.opposing_party_announced_no_60,
+        extras.opposing_party_announced_no_30,
         extras.got_60_against_no_30,
       ]);
       expect([...score.listExtras(kontra)]).toEqual([]);
@@ -469,16 +469,50 @@ describe("Score valuation", () => {
         extras.win,
         extras.beat_re,
         extras.announced_re,
-        extras.announced_no_90,
-        extras.announced_no_60,
-        extras.announced_no_30,
-        extras.announced_no_points,
+        extras.opposing_party_announced_no_90,
+        extras.opposing_party_announced_no_60,
+        extras.opposing_party_announced_no_30,
+        extras.opposing_party_announced_no_points,
         extras.got_30_against_no_points,
       ]);
       expect([...score.listExtras(re)]).toEqual([]);
     });
 
-    test.todo("should get 1 point each for own and for losing party's announcements");
+    test("should get 1 point each for own and for losing party's announcements", () => {
+      const reParty = new PartyBuilder(re)
+      .withAnnouncement(announcements.re)
+      .withAnnouncement(announcements.no_90)
+      .withAnnouncement(announcements.no_60)
+      .withPoints(59)
+      .build();
+
+      const kontraParty = new PartyBuilder(kontra)
+      .withAnnouncement(announcements.kontra)
+      .withAnnouncement(announcements.no_90)
+      .withAnnouncement(announcements.no_60)
+      .withPoints(181)
+      .build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(kontra);
+      expect(score.points()).toBe(14);
+      expect([...score.listExtras(kontra)]).toEqual([
+        extras.win,
+        extras.beat_re,
+        extras.announced_re,
+        extras.announced_kontra,
+        extras.no_90,
+        extras.announced_no_90,
+        extras.opposing_party_announced_no_90,
+        extras.got_120_against_no_90,
+        extras.no_60,
+        extras.announced_no_60,
+        extras.opposing_party_announced_no_60,
+        extras.got_90_against_no_60,
+      ]);
+      expect([...score.listExtras(re)]).toEqual([]);
+    });
 
     // how can this happen?
     // imagine "re" announces "no 90", and "kontra" announces "no 60"
