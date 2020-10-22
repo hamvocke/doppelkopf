@@ -69,7 +69,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(re);
-      expect(score.points()).toEqual(3); // 1 for winning, 2 for announcing
+      expect(score.totalPoints()).toEqual(3); // 1 for winning, 2 for announcing
       expect([...score.listExtras(re)]).toEqual([extras.win, extras.announced_re]);
     });
 
@@ -83,7 +83,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(re);
-      expect(score.points()).toEqual(3); // 1 for winning, 2 for announcing
+      expect(score.totalPoints()).toEqual(3); // 1 for winning, 2 for announcing
       expect([...score.listExtras(re)]).toEqual([extras.win, extras.announced_kontra]);
     });
   });
@@ -118,7 +118,7 @@ describe("Score valuation", () => {
 
       const score = new NewScore(reParty, kontraParty);
 
-      expect(score.points()).toBe(2);
+      expect(score.totalPoints()).toBe(2);
       expect([...score.listExtras(re)]).toEqual([]);
       expect([...score.listExtras(kontra)]).toEqual([
         extras.win,
@@ -138,7 +138,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(kontra);
-      expect(score.points()).toEqual(4); // 1 for winning, 1 for beating re, 2 for announcing
+      expect(score.totalPoints()).toEqual(4); // 1 for winning, 1 for beating re, 2 for announcing
       expect([...score.listExtras(kontra)]).toEqual([extras.win, extras.beat_re, extras.announced_kontra]);
     });
 
@@ -154,7 +154,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(kontra);
-      expect(score.points()).toEqual(4); // 1 for winning, 1 for beating re, 2 for announcing
+      expect(score.totalPoints()).toEqual(4); // 1 for winning, 1 for beating re, 2 for announcing
       expect([...score.listExtras(kontra)]).toEqual([extras.win, extras.beat_re, extras.announced_re]);
     });
   });
@@ -166,7 +166,7 @@ describe("Score valuation", () => {
 
       const score = new NewScore(reParty, kontraParty);
 
-      expect(score.points()).toBe(1);
+      expect(score.totalPoints()).toBe(1);
       expect([...score.listExtras(re)]).toEqual([extras.win]);
       expect([...score.listExtras(kontra)]).toEqual([]);
     });
@@ -185,7 +185,7 @@ describe("Score valuation", () => {
 
       const score = new NewScore(reParty, kontraParty);
 
-      expect(score.points()).toBe(expectedExtras.length);
+      expect(score.totalPoints()).toBe(expectedExtras.length);
       expect([...score.listExtras(re)]).toEqual(expectedExtras);
       expect([...score.listExtras(kontra)]).toEqual([]);
     });
@@ -200,7 +200,7 @@ describe("Score valuation", () => {
 
       const score = new NewScore(reParty, kontraParty);
 
-      expect(score.points()).toBe(5);
+      expect(score.totalPoints()).toBe(5);
       expect([...score.listExtras(re)]).toEqual([extras.win, extras.announced_re, extras.no_90, extras.announced_no_90]);
       expect([...score.listExtras(kontra)]).toEqual([]);
     });
@@ -216,7 +216,7 @@ describe("Score valuation", () => {
 
       const score = new NewScore(reParty, kontraParty);
 
-      expect(score.points()).toBe(8);
+      expect(score.totalPoints()).toBe(8);
       expect([...score.listExtras(kontra)]).toEqual([
         extras.win,
         extras.beat_re,
@@ -241,7 +241,7 @@ describe("Score valuation", () => {
 
       const score = new NewScore(reParty, kontraParty);
 
-      expect(score.points()).toBe(9);
+      expect(score.totalPoints()).toBe(9);
       expect([...score.listExtras(re)]).toEqual([
         extras.win,
         extras.announced_re,
@@ -268,7 +268,7 @@ describe("Score valuation", () => {
 
       const score = new NewScore(reParty, kontraParty);
 
-      expect(score.points()).toBe(11);
+      expect(score.totalPoints()).toBe(11);
       expect([...score.listExtras(re)]).toEqual([
         extras.win,
         extras.announced_re,
@@ -295,7 +295,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(kontra);
-      expect(score.points()).toBe(5); // all points go to winning party
+      expect(score.totalPoints()).toBe(5); // all points go to winning party
       expect([...score.listExtras(kontra)]).toEqual([
         extras.win,
         extras.beat_re,
@@ -317,7 +317,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(re);
-      expect(score.points()).toBe(5);
+      expect(score.totalPoints()).toBe(5);
       expect([...score.listExtras(re)]).toEqual([
         extras.win,
         extras.announced_kontra,
@@ -340,7 +340,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(kontra);
-      expect(score.points()).toBe(7);
+      expect(score.totalPoints()).toBe(7);
       expect([...score.listExtras(kontra)]).toEqual([
         extras.win,
         extras.beat_re,
@@ -366,7 +366,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(kontra);
-      expect(score.points()).toBe(8);
+      expect(score.totalPoints()).toBe(8);
       expect([...score.listExtras(kontra)]).toEqual([
         extras.win,
         extras.beat_re,
@@ -391,7 +391,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(re);
-      expect(score.points()).toBe(5);
+      expect(score.totalPoints()).toBe(5);
       expect([...score.listExtras(re)]).toEqual([
         extras.win,
         extras.announced_kontra,
@@ -413,7 +413,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(kontra);
-      expect(score.points()).toBe(7);
+      expect(score.totalPoints()).toBe(7);
       expect([...score.listExtras(kontra)]).toEqual([
         extras.win,
         extras.beat_re,
@@ -438,7 +438,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(re);
-      expect(score.points()).toBe(7);
+      expect(score.totalPoints()).toBe(7);
       expect([...score.listExtras(re)]).toEqual([
         extras.win,
         extras.announced_kontra,
@@ -464,7 +464,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(kontra);
-      expect(score.points()).toBe(9);
+      expect(score.totalPoints()).toBe(9);
       expect([...score.listExtras(kontra)]).toEqual([
         extras.win,
         extras.beat_re,
@@ -496,7 +496,7 @@ describe("Score valuation", () => {
       const score = new NewScore(reParty, kontraParty);
 
       expect(score.winningPartyName()).toBe(kontra);
-      expect(score.points()).toBe(14);
+      expect(score.totalPoints()).toBe(14);
       expect([...score.listExtras(kontra)]).toEqual([
         extras.win,
         extras.beat_re,
@@ -514,11 +514,33 @@ describe("Score valuation", () => {
       expect([...score.listExtras(re)]).toEqual([]);
     });
 
-    // how can this happen?
-    // imagine "re" announces "no 90", and "kontra" announces "no 60"
-    // now the game ends 110/130 - neither reached their announced goal
-    // as a consequence there's no "winning" point, only trick-based extras
-    test.todo("should lose both when neither reached their announced points");
+    test("should lose both when neither reached their announced points", () => {
+      /* how does this happen?
+      * imagine "re" announces "no 90", and "kontra" announces "no 60"
+      * now the game ends 110/130 - neither reached their announced goal
+      * as a consequence there's no "winning" point, only trick-based extras
+      */
+
+      const reParty = new PartyBuilder(re)
+      .withAnnouncement(announcements.re)
+      .withAnnouncement(announcements.no_90)
+      .withPoints(110)
+      .build();
+
+      const kontraParty = new PartyBuilder(kontra)
+      .withAnnouncement(announcements.kontra)
+      .withAnnouncement(announcements.no_90)
+      .withAnnouncement(announcements.no_60)
+      .withPoints(130)
+      .build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(null);
+      expect(score.totalPoints()).toBe(0);
+      expect([...score.listExtras(kontra)]).toEqual([]);
+      expect([...score.listExtras(re)]).toEqual([]);
+    });
 
     test.todo("should get 1 point for winning a 'Doppelkopf'");
     test.todo("should get 1 point for catching a 'Fox'");
