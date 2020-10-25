@@ -222,6 +222,12 @@ export class NewScore {
       }
     }
 
+    // todo: allExtras can't be a set!
+    const extrasFromTricks = this.parties[partyName].extras();
+    if (extrasFromTricks.length > 0) {
+      allExtras.add(...extrasFromTricks);
+    }
+
     return allExtras;
   }
 }

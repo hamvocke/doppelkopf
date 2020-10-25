@@ -542,7 +542,22 @@ describe("Score valuation", () => {
       expect([...score.listExtras(re)]).toEqual([]);
     });
 
-    test.todo("should get 1 point for winning a 'Doppelkopf'");
+    test("should get 1 point for winning a 'Doppelkopf'", () => {
+      const reParty = new PartyBuilder(re)
+      .withPoints(110)
+      .withExtra(extras.doppelkopf)
+      .build();
+
+      const kontraParty = new PartyBuilder(kontra).withPoints(130).build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(kontra);
+      expect([...score.listExtras(re)]).toEqual([extras.doppelkopf]);
+      expect([...score.listExtras(kontra)]).toEqual([extras.win, extras.beat_re]);
+      expect(score.totalPoints()).toBe(1);
+    });
+
     test.todo("should get 1 point for catching a 'Fox'");
     test.todo("should get 1 point for winning the last trick with 'Charly'");
   });

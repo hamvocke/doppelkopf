@@ -5,6 +5,7 @@ export class PartyBuilder {
   constructor(party) {
     this.party = party;
     this.announcements = new Set();
+    this.extras = [];
   }
 
   withAnnouncement(announcements) {
@@ -12,8 +13,8 @@ export class PartyBuilder {
     return this;
   }
 
-  withExtras(extras) {
-    this.extras = extras;
+  withExtra(extra) {
+    this.extras.push(extra);
     return this;
   }
 
