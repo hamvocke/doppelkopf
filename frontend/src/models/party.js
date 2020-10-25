@@ -11,10 +11,6 @@ export class Party {
     return this.players.reduce((acc, player) => acc + player.points(), 0);
   }
 
-  madeAnyAnnouncments() {
-    return this.announcements().length > 0;
-  }
-
   announcements() {
     return this.players.flatMap(p => [...p.announcements]);
   }
