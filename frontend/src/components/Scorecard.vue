@@ -221,7 +221,7 @@ export default {
   margin-right: auto;
   width: 66%;
   max-height: 90%;
-  color: var(--blue);
+  color: var(--black);
   display: flex;
   flex-direction: column;
 }
@@ -285,7 +285,7 @@ td {
 
 .extras svg {
   vertical-align: text-bottom;
-  color: var(--blue);
+  color: var(--black);
   opacity: 0.3;
   padding-right: 4px;
 }

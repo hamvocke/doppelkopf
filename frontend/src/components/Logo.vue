@@ -53,7 +53,7 @@ export default {
 .suit {
   height: 180px;
   width: 120px;
-  border: 8px solid var(--blue);
+  border: 8px solid var(--black);
   border-radius: 12px;
   display: flex;
   justify-content: center;
@@ -62,11 +62,11 @@ export default {
   font-family: "Fira Sans Condensed", sans-serif;
   font-weight: 900;
   -webkit-text-stroke-width: 8px;
-  -webkit-text-stroke-color: var(--blue);
+  -webkit-text-stroke-color: var(--black);
 }
 
 .clubs {
-  color: var(--blue);
+  color: var(--black);
 }
 
 .hearts {
