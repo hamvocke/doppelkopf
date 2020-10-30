@@ -558,7 +558,22 @@ describe("Score valuation", () => {
       expect(score.totalPoints()).toBe(1);
     });
 
-    test.todo("should get 1 point for catching a 'Fox'");
+    test("should get 1 point for catching a 'Fox'", () => {
+      const reParty = new PartyBuilder(re).withPoints(130).build();
+
+      const kontraParty = new PartyBuilder(kontra)
+        .withPoints(110)
+        .withExtra(extras.fox)
+        .build();
+
+      const score = new NewScore(reParty, kontraParty);
+
+      expect(score.winningPartyName()).toBe(re);
+      expect([...score.listExtras(kontra)]).toEqual([extras.fox]);
+      expect([...score.listExtras(re)]).toEqual([extras.win]);
+      expect(score.totalPoints()).toBe(0);
+    });
+
     test.todo("should get 1 point for winning the last trick with 'Charly'");
   });
 });
