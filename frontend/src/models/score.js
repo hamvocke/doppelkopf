@@ -23,7 +23,7 @@ export class Score {
       );
     }
 
-    const winnerParty = this.winningParty();
+    const winnerParty = this.winningPartyName();
     this.addExtra(winnerParty, extras.win);
 
     if (winnerParty === kontra) {
@@ -53,21 +53,21 @@ export class Score {
   }
 
   winner() {
-    return this.parties[this.winningParty()];
+    return this.parties[this.winningPartyName()];
   }
 
-  winningParty() {
+  winningPartyName() {
     return this.rePoints > this.kontraPoints ? re : kontra;
   }
 
-  losingParty() {
+  losingPartyName() {
     return this.rePoints > this.kontraPoints ? kontra : re;
   }
 
   points() {
     return (
-      this.extras[this.winningParty()].length -
-      this.extras[this.losingParty()].length
+      this.extras[this.winningPartyName()].length -
+      this.extras[this.losingPartyName()].length
     );
   }
 
