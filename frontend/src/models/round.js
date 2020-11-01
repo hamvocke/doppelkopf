@@ -95,7 +95,7 @@ export class Round {
     this.currentTrick = this.nextTrick();
 
     this.score.evaluate(this.players);
-    this.scorecard.addScore(this.score.winner(), this.score.points());
+    this.scorecard.addScore(this.score.winner(), this.score.totalPoints());
     this.finished = true;
   }
 }

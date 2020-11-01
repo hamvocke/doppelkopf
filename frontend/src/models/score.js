@@ -64,7 +64,7 @@ export class Score {
     return this.rePoints > this.kontraPoints ? kontra : re;
   }
 
-  points() {
+  totalPoints() {
     return (
       this.extras[this.winningPartyName()].length -
       this.extras[this.losingPartyName()].length
