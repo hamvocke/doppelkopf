@@ -1,9 +1,10 @@
 import { Trick } from "@/models/trick";
 import { RingQueue } from "@/models/ringQueue";
-import { Score } from "@/models/score";
+import { NewScore as Score } from "@/models/newScore";
 import { options } from "@/models/options";
 import { Notifier } from "@/models/notifier";
 import { extras } from "@/models/extras";
+import { re, kontra, findParties } from "@/models/party";
 import { find } from "lodash-es";
 
 const notifier = new Notifier();
@@ -11,10 +12,11 @@ const notifier = new Notifier();
 export class Round {
   constructor(players = [], scorecard = {}, openingPlayer) {
     this.players = players;
+    this.parties = findParties(players);
     this.scorecard = scorecard;
+    this.score = null;
     this.finished = false;
     this.currentTrick = this.nextTrick();
-    this.score = new Score();
 
     this.playerOrder = new RingQueue(this.players);
     if (openingPlayer) {
@@ -94,7 +96,10 @@ export class Round {
 
     this.currentTrick = this.nextTrick();
 
-    this.score.evaluate(this.players);
+    // todo: hack - remove and calculate parties once in the constructor
+    // this is only needed because some tests mess with the parties after the round being set up
+    this.parties = findParties(this.players);
+    this.score = new Score(this.parties[re], this.parties[kontra]);
     this.scorecard.addScore(this.score.winner(), this.score.totalPoints());
     this.finished = true;
   }

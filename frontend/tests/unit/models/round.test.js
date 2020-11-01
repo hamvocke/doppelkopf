@@ -1,6 +1,7 @@
 import { Game } from "@/models/game";
 import { Round } from "@/models/round";
 import { Notifier } from "@/models/notifier";
+import { findParties } from "@/models/party";
 import { jack, suits, ace } from "@/models/card";
 import { options } from "@/models/options";
 
@@ -191,7 +192,6 @@ describe("finish round", () => {
 
     promise.then(() => {
       const scorecard = round.scorecard;
-
       expect(scorecard.totalPointsFor(round.players[0])).toBe(-2);
       expect(scorecard.totalPointsFor(round.players[1])).toBe(-2);
       expect(scorecard.totalPointsFor(round.players[2])).toBe(2);
@@ -237,10 +237,10 @@ describe("finish round", () => {
 });
 
 function setupGameKontraWins() {
-  const firstTrickStack = { points: () => 63, extras: () => [] };
-  const secondTrickStack = { points: () => 56, extras: () => [] };
-  const thirdTrickStack = { points: () => 64, extras: () => [] };
-  const fourthTrickStack = { points: () => 57, extras: () => [] };
+  const firstTrickStack = { points: () => 0, extras: () => [] };
+  const secondTrickStack = { points: () => 110, extras: () => [] };
+  const thirdTrickStack = { points: () => 130, extras: () => [] };
+  const fourthTrickStack = { points: () => 0, extras: () => [] };
 
   round.players[0].isRe = () => true;
   round.players[1].isRe = () => true;

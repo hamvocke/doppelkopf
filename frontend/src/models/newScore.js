@@ -94,6 +94,11 @@ export class NewScore {
     return this.winningPartyName() === re ? kontra : re;
   }
 
+  // todo: remove, just for compatibility with the old score interface
+  winner() {
+    return this.parties[this.winningPartyName()];
+  }
+
   points(partyName) {
     const sumPoints = (accumulator, extra) => accumulator + extra.points;
     return [...this.listExtras(partyName)].reduce(sumPoints, 0);
