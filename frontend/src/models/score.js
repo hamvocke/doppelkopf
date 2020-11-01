@@ -1,4 +1,4 @@
-import { re, kontra, Party } from "@/models/party";
+import { re, kontra, findParties } from "@/models/party";
 import { extras, extraThresholds } from "@/models/extras";
 
 export class Score {
@@ -9,7 +9,7 @@ export class Score {
   }
 
   evaluate(players) {
-    this.parties = this.findParties(players);
+    this.parties = findParties(players);
     this.rePoints = this.parties[re].points();
     this.kontraPoints = this.parties[kontra].points();
 
@@ -50,16 +50,6 @@ export class Score {
     for (const extra of kontraExtras) {
       this.addExtra(kontra, extra);
     }
-  }
-
-  findParties(players) {
-    return {
-      [re]: new Party(re, ...players.filter(player => player.isRe())),
-      [kontra]: new Party(
-        kontra,
-        ...players.filter(player => player.isKontra())
-      )
-    };
   }
 
   winner() {

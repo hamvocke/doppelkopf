@@ -1,6 +1,13 @@
 export const re = "Re";
 export const kontra = "Kontra";
 
+export function findParties(players) {
+  return {
+    [re]: new Party(re, ...players.filter(player => player.isRe())),
+    [kontra]: new Party(kontra, ...players.filter(player => player.isKontra()))
+  };
+}
+
 export class Party {
   constructor(name, ...players) {
     this.name = name;
