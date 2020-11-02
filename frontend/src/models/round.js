@@ -1,6 +1,6 @@
 import { Trick } from "@/models/trick";
 import { RingQueue } from "@/models/ringQueue";
-import { NewScore as Score } from "@/models/newScore";
+import { Score } from "@/models/score";
 import { options } from "@/models/options";
 import { Notifier } from "@/models/notifier";
 import { extras } from "@/models/extras";
@@ -100,7 +100,7 @@ export class Round {
     // this is only needed because some tests mess with the parties after the round being set up
     this.parties = findParties(this.players);
     this.score = new Score(this.parties[re], this.parties[kontra]);
-    this.scorecard.addScore(this.score.winner(), this.score.totalPoints());
+    this.scorecard.addScore(this.score);
     this.finished = true;
   }
 }

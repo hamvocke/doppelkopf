@@ -1,81 +1,231 @@
-import { re, kontra, findParties } from "@/models/party";
-import { extras, extraThresholds } from "@/models/extras";
+import { announcements } from "@/models/announcements";
+import { extras } from "@/models/extras";
+import { re, kontra } from "./party";
 
 export class Score {
-  constructor() {
-    this.extras = {};
-    this.extras[re] = [];
-    this.extras[kontra] = [];
-  }
+  constructor(reParty, kontraParty) {
+    this.parties = {};
+    this.parties[re] = reParty;
+    this.parties[kontra] = kontraParty;
 
-  evaluate(players) {
-    this.parties = findParties(players);
-    this.rePoints = this.parties[re].points();
-    this.kontraPoints = this.parties[kontra].points();
-
-    this.reAnnouncements = this.parties[re].announcements();
-    this.kontraAnnouncements = this.parties[kontra].announcements();
-
-    if (this.rePoints + this.kontraPoints !== 240) {
+    if (this.parties[re].points() + this.parties[kontra].points() !== 240) {
       throw Error(
-        `A score must have a total of 240 points. Got
-        ${this.rePoints} for Re, ${this.kontraPoints} for Kontra`
+        // eslint-disable-next-line prettier/prettier
+        `A score must have a total of 240 points. Got ${this.parties[re].points()} for Re, ${this.parties[kontra].points()} for Kontra`
       );
     }
-
-    const winnerParty = this.winningPartyName();
-    this.addExtra(winnerParty, extras.win);
-
-    if (winnerParty === kontra) {
-      this.addExtra(kontra, extras.beat_re);
-    }
-
-    for (let [threshold, extra] of Object.entries(extraThresholds)) {
-      if (this.rePoints < threshold) {
-        this.addExtra(kontra, extra);
-      }
-
-      if (this.kontraPoints < threshold) {
-        this.addExtra(re, extra);
-      }
-    }
-
-    const reExtras = this.parties[re].extras();
-    const kontraExtras = this.parties[kontra].extras();
-
-    for (const extra of reExtras) {
-      this.addExtra(re, extra);
-    }
-
-    for (const extra of kontraExtras) {
-      this.addExtra(kontra, extra);
-    }
   }
 
+  winningPartyName() {
+    const reAnnouncements = this.parties[re].announcements();
+    const kontraAnnouncements = this.parties[kontra].announcements();
+
+    let reWinningThreshold = 121;
+    let kontraWinningThreshold = 120;
+
+    if (
+      kontraAnnouncements.includes(announcements.kontra) &&
+      !reAnnouncements.includes(announcements.re)
+    ) {
+      reWinningThreshold = 120;
+      kontraWinningThreshold = 121;
+    }
+
+    if (reAnnouncements.includes(announcements.no_90)) {
+      reWinningThreshold = 151;
+      kontraWinningThreshold =
+        kontraAnnouncements.length > 0 ? kontraWinningThreshold : 90;
+    }
+
+    if (reAnnouncements.includes(announcements.no_60)) {
+      reWinningThreshold = 181;
+      kontraWinningThreshold =
+        kontraAnnouncements.length > 0 ? kontraWinningThreshold : 60;
+    }
+
+    if (reAnnouncements.includes(announcements.no_30)) {
+      reWinningThreshold = 211;
+      kontraWinningThreshold =
+        kontraAnnouncements.length > 0 ? kontraWinningThreshold : 30;
+    }
+
+    if (reAnnouncements.includes(announcements.no_points)) {
+      reWinningThreshold = 240;
+      kontraWinningThreshold =
+        kontraAnnouncements.length > 0 ? kontraWinningThreshold : 1;
+    }
+
+    if (kontraAnnouncements.includes(announcements.no_90)) {
+      kontraWinningThreshold = 151;
+      reWinningThreshold = reAnnouncements.length > 0 ? reWinningThreshold : 90;
+    }
+
+    if (kontraAnnouncements.includes(announcements.no_60)) {
+      kontraWinningThreshold = 181;
+      reWinningThreshold = reAnnouncements.length > 0 ? reWinningThreshold : 60;
+    }
+
+    if (kontraAnnouncements.includes(announcements.no_30)) {
+      kontraWinningThreshold = 211;
+      reWinningThreshold = reAnnouncements.length > 0 ? reWinningThreshold : 30;
+    }
+
+    if (kontraAnnouncements.includes(announcements.no_points)) {
+      kontraWinningThreshold = 240;
+      reWinningThreshold = reAnnouncements.length > 0 ? reWinningThreshold : 1;
+    }
+
+    if (this.parties[re].points() >= reWinningThreshold) {
+      return re;
+    }
+
+    if (this.parties[kontra].points() >= kontraWinningThreshold) {
+      return kontra;
+    }
+
+    return null;
+  }
+
+  losingPartyName() {
+    if (this.winningPartyName() === null) {
+      return null;
+    }
+
+    return this.winningPartyName() === re ? kontra : re;
+  }
+
+  // todo: remove, just for compatibility with the old score interface
   winner() {
     return this.parties[this.winningPartyName()];
   }
 
-  winningPartyName() {
-    return this.rePoints > this.kontraPoints ? re : kontra;
+  trickPoints(partyName) {
+    return this.parties[partyName].points();
   }
 
-  losingPartyName() {
-    return this.rePoints > this.kontraPoints ? kontra : re;
+  points(partyName) {
+    const sumPoints = (accumulator, extra) => accumulator + extra.points;
+    return [...this.listExtras(partyName)].reduce(sumPoints, 0);
   }
 
   totalPoints() {
-    return (
-      this.extras[this.winningPartyName()].length -
-      this.extras[this.losingPartyName()].length
+    const winnerParty = this.winningPartyName() || re;
+    const loserParty = this.losingPartyName() || kontra;
+
+    return this.points(winnerParty) - this.points(loserParty);
+  }
+
+  _hasAnyPartyAnnounced(announcement) {
+    return Object.values(this.parties).some(party =>
+      party.announcements().includes(announcement)
     );
   }
 
-  addExtra(party, extra) {
-    this.extras[party].push(extra);
-  }
+  listExtras(partyName) {
+    const allExtras = [];
+    const partyPoints = this.parties[partyName].points();
+    const partyAnnouncements = this.parties[partyName].announcements();
+    const opponentAnnouncements = this.parties[
+      partyName == re ? kontra : re
+    ].announcements();
 
-  listExtras(party) {
-    return this.extras[party];
+    if (partyName === this.winningPartyName()) {
+      allExtras.push(extras.win);
+
+      if (partyName === kontra) {
+        allExtras.push(extras.beat_re);
+      }
+
+      if (this._hasAnyPartyAnnounced(announcements.re)) {
+        allExtras.push(extras.announced_re);
+      }
+
+      if (this._hasAnyPartyAnnounced(announcements.kontra)) {
+        allExtras.push(extras.announced_kontra);
+      }
+
+      if (partyPoints > 150) {
+        allExtras.push(extras.no_90);
+      }
+
+      if (partyAnnouncements.includes(announcements.no_90)) {
+        allExtras.push(extras.announced_no_90);
+      }
+
+      if (opponentAnnouncements.includes(announcements.no_90)) {
+        allExtras.push(extras.opposing_party_announced_no_90);
+      }
+
+      if (
+        partyPoints >= 120 &&
+        opponentAnnouncements.includes(announcements.no_90)
+      ) {
+        allExtras.push(extras.got_120_against_no_90);
+      }
+
+      if (partyPoints > 180) {
+        allExtras.push(extras.no_60);
+      }
+
+      if (partyAnnouncements.includes(announcements.no_60)) {
+        allExtras.push(extras.announced_no_60);
+      }
+
+      if (opponentAnnouncements.includes(announcements.no_60)) {
+        allExtras.push(extras.opposing_party_announced_no_60);
+      }
+
+      if (
+        partyPoints >= 90 &&
+        opponentAnnouncements.includes(announcements.no_60)
+      ) {
+        allExtras.push(extras.got_90_against_no_60);
+      }
+
+      if (partyPoints > 210) {
+        allExtras.push(extras.no_30);
+      }
+
+      if (partyAnnouncements.includes(announcements.no_30)) {
+        allExtras.push(extras.announced_no_30);
+      }
+
+      if (opponentAnnouncements.includes(announcements.no_30)) {
+        allExtras.push(extras.opposing_party_announced_no_30);
+      }
+
+      if (
+        partyPoints >= 60 &&
+        opponentAnnouncements.includes(announcements.no_30)
+      ) {
+        allExtras.push(extras.got_60_against_no_30);
+      }
+
+      if (partyPoints === 240) {
+        allExtras.push(extras.no_points);
+      }
+
+      if (partyAnnouncements.includes(announcements.no_points)) {
+        allExtras.push(extras.announced_no_points);
+      }
+
+      if (opponentAnnouncements.includes(announcements.no_points)) {
+        allExtras.push(extras.opposing_party_announced_no_points);
+      }
+
+      if (
+        partyPoints >= 30 &&
+        opponentAnnouncements.includes(announcements.no_points)
+      ) {
+        allExtras.push(extras.got_30_against_no_points);
+      }
+    }
+
+    const extrasFromTricks = this.parties[partyName].extras();
+    if (extrasFromTricks.length > 0) {
+      allExtras.push(...extrasFromTricks);
+    }
+
+    return allExtras;
   }
 }

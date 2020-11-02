@@ -41,8 +41,8 @@
 
       <div class="meter">
         <PointMeter
-          :re-points="currentScore.rePoints"
-          :kontra-points="currentScore.kontraPoints"
+          :re-points="currentScore.trickPoints('Re')"
+          :kontra-points="currentScore.trickPoints('Kontra')"
         />
       </div>
 
@@ -70,12 +70,12 @@
                   <ul>
                     <li
                       v-for="extra in currentScore.listExtras('Re')"
-                      :key="extra"
+                      :key="extra.i18nKey"
                     >
-                      <span :title="$t(extra + '_description')">
+                      <span :title="$t(extra.i18nKey + '_description')">
                         <info-icon size="20"></info-icon>
                       </span>
-                      {{ $t(extra) }}
+                      {{ $t(extra.i18nKey) }}
                     </li>
                   </ul>
                 </td>
@@ -83,12 +83,12 @@
                   <ul>
                     <li
                       v-for="extra in currentScore.listExtras('Kontra')"
-                      :key="extra"
+                      :key="extra.i18nKey"
                     >
-                      <span :title="$t(extra + '_description')">
+                      <span :title="$t(extra.i18nKey + '_description')">
                         <info-icon size="20"></info-icon>
                       </span>
-                      {{ $t(extra) }}
+                      {{ $t(extra.i18nKey) }}
                     </li>
                   </ul>
                 </td>
