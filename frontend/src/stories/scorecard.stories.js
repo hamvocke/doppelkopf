@@ -3,9 +3,9 @@ import VueI18n from "vue-i18n";
 import Scorecard from "@/components/Scorecard";
 import PointMeter from "@/components/scorecard/PointMeter";
 import { Player } from "@/models/player";
-import { Score } from "@/models/score";
 import { re, kontra } from "@/models/party";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
+import { ScoreBuilder } from "../../tests/builders/scoreBuilder";
 
 import "@/assets/css/app.css";
 
@@ -17,22 +17,23 @@ let i18nOpts = {
 
 i18nOpts["messages"]["de"] = locale;
 
-const playersWithHumanLosing = [
-  stubPlayer("Oswald", re, 50),
-  stubPlayer("Mercedes", re, 60),
-  stubPlayer("Annegret", kontra, 70),
-  stubPlayer("Giovanni", kontra, 60)
-];
-
-const playersWithHumanWinning = [
+const players = [
   stubPlayer("Oswald", re, 21),
   stubPlayer("Mercedes", re, 60),
   stubPlayer("Annegret", kontra, 99),
   stubPlayer("Giovanni", kontra, 60)
 ];
 
-const losingSc = new ScorecardModel(playersWithHumanLosing);
-const winningSc = new ScorecardModel(playersWithHumanWinning);
+function score(winners, losers, points) {
+  return new ScoreBuilder()
+    .withWinners(re, ...winners)
+    .withLosers(kontra, ...losers)
+    .withPoints(points)
+    .build();
+}
+
+const losingSc = new ScorecardModel(players);
+const winningSc = new ScorecardModel(players);
 
 function stubPlayer(name, party, points) {
   const stubbedPlayer = new Player(name);
@@ -42,21 +43,18 @@ function stubPlayer(name, party, points) {
   return stubbedPlayer;
 }
 
-losingSc.addScore([playersWithHumanLosing[0], playersWithHumanLosing[2]], 3);
-losingSc.addScore([playersWithHumanLosing[2], playersWithHumanLosing[3]], 2);
-losingSc.addScore([playersWithHumanLosing[0], playersWithHumanLosing[2]], 4);
-losingSc.addScore([playersWithHumanLosing[2], playersWithHumanLosing[0]], 1);
+losingSc.addScore(score([players[0], players[2]], [players[1], players[3]], 3));
+losingSc.addScore(score([players[2], players[3]], [players[0], players[1]], 2));
+losingSc.addScore(score([players[0], players[2]], [players[1], players[3]], 4));
+losingSc.addScore(score([players[2], players[0]], [players[1], players[3]], 1));
 
-winningSc.addScore([playersWithHumanWinning[2], playersWithHumanWinning[3]], 2);
-winningSc.addScore([playersWithHumanWinning[0], playersWithHumanWinning[2]], 4);
-winningSc.addScore([playersWithHumanWinning[2], playersWithHumanWinning[0]], 1);
-winningSc.addScore([playersWithHumanWinning[0], playersWithHumanWinning[2]], 3);
+winningSc.addScore(score([players[2], players[3]], [players[0], players[1]], 2));
+winningSc.addScore(score([players[0], players[2]], [players[1], players[3]], 4));
+winningSc.addScore(score([players[2], players[0]], [players[1], players[3]], 1));
+winningSc.addScore(score([players[0], players[2]], [players[1], players[3]], 3));
 
-const losingScore = new Score();
-losingScore.evaluate(playersWithHumanLosing);
-
-const winningScore = new Score();
-winningScore.evaluate(playersWithHumanWinning);
+const winningScore = score([players[0], players[2]], [players[1], players[3]], 3);
+const losingScore = score([players[3], players[2]], [players[1], players[0]], 5);
 
 export default {
   title: "Scorecard"
@@ -67,7 +65,7 @@ export const losing = () => ({
   data() {
     return {
       scorecard: losingSc,
-      players: playersWithHumanLosing,
+      players: players,
       score: losingScore
     };
   },
@@ -81,7 +79,7 @@ export const winning = () => ({
   data() {
     return {
       scorecard: winningSc,
-      players: playersWithHumanWinning,
+      players: players,
       score: winningScore
     };
   },
