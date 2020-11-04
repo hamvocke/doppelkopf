@@ -26,6 +26,17 @@ export const myself = () => ({
       player: game.players[0]
     };
   },
-  template: '<Player :player="player" />',
+  template: '<Player :player="player" class="bottom" />',
+  i18n: new VueI18n(i18nOpts)
+});
+
+export const left = () => ({
+  components: { Player },
+  data() {
+    return {
+      player: game.players[1]
+    };
+  },
+  template: '<Player :player="player" class="left" />',
   i18n: new VueI18n(i18nOpts)
 });
