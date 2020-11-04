@@ -1,9 +1,15 @@
 <template>
   <div class="player">
     <div class="info">
-      <div class="name title-font">{{ player.name }}</div>
-      <div v-if="player.isHuman" class="party">
-        {{ player.hand.isRe() ? "Re" : "Kontra" }}
+      <div class="name-info">
+        <!-- <div class="avatar"><img src="../assets/icons/..." alt="avatar"></div> -->
+        <div class="name title-font">{{ player.name }}</div>
+      </div>
+      <div class="stats">
+        <div v-if="player.isHuman" class="party">
+          <UsersIcon size="14" />
+          {{ player.hand.isRe() ? "Re" : "Kontra" }}
+        </div>
       </div>
     </div>
     <div class="container">
@@ -24,12 +30,14 @@
 import Hand from "./Hand";
 import TrickStack from "./TrickStack";
 import { playableCards } from "@/models/playableCardFinder";
+import { UsersIcon } from "vue-feather-icons";
 
 export default {
   name: "Player",
   components: {
     Hand,
-    TrickStack
+    TrickStack,
+    UsersIcon
   },
   props: {
     player: {
@@ -60,18 +68,69 @@ export default {
 <style scoped>
 @import "../assets/css/vars.css";
 .player {
+  display: inline-flex;
+  flex-direction: column;
   margin: auto;
 }
 
 .container {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: start;
+}
+
+.left .container,
+.right .container {
+  flex-direction: column;
+  align-items: center;
+  margin-left: 6px; /* make up for position oddness caused by transform */
 }
 
 .info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 6px;
-  text-align: center;
+}
+
+.bottom .info {
+  flex-direction: column;
+}
+
+.name-info, .stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left .name-info,
+.right .name-info {
+  flex-direction: column;
+}
+
+.name {
+  font-size: 1.4em;
+}
+
+.avatar {
+  background: var(--lightgray);
+  border-radius: 50%;
+  height: 48px;
+  width: 48px;
+  border: 3px solid var(--white);
+  margin-right: 8px;
+}
+
+.left .avatar,
+.right .avatar {
+  margin-right: 0;
+  margin-bottom: 8px;
+}
+
+.avatar img {
+  height: 48px;
+  width: 48px;
+  clip-path: circle();
 }
 
 .party {
@@ -79,18 +138,42 @@ export default {
   color: var(--white);
   border-radius: 4px;
   font-size: 1em;
-  padding: 6px;
+  padding: 4px 8px;
   margin: 6px;
-  display: inline-block;
-}
-
-.left .container,
-.right .container {
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
 }
 
-.name {
-  font-size: 1.2em;
+.party svg {
+  margin-right: 4px;
+}
+
+.bottom .hand,
+.top .hand {
+  margin-right: 12px;
+}
+
+@media screen and (max-width: 680px) {
+  .player {
+    display: flex;
+  }
+
+  .avatar {
+    height: 24px;
+    width: 24px;
+  }
+
+  .avatar img {
+    height: 24px;
+    width: 24px;
+  }
+
+  .name {
+    font-size: 1.1em;
+  }
+
+  .party {
+    font-size: 0.9em;
+  }
 }
 </style>

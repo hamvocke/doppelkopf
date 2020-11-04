@@ -77,6 +77,7 @@ export default {
   overflow: hidden;
   height: 100%;
 }
+
 .top {
   grid-area: top;
 }
