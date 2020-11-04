@@ -42,3 +42,10 @@
   border-bottom-color: color(var(--white) shade(35%));
   color: color(var(--black) shade(20%)) !important;
 }
+
+@media screen and (max-width: 680px) {
+  .button {
+    padding: 10px 12px;
+    font-size: 1em;
+  }
+}
