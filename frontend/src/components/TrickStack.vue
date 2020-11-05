@@ -50,6 +50,7 @@ export default {
 .cards {
   display: flex;
   justify-content: center;
+  margin-bottom: 6px;
 }
 
 .stack-enter-active {
@@ -72,10 +73,6 @@ export default {
 @media screen and (max-width: 680px) {
   .trickStack {
     display: none;
-  }
-
-  .trickCount {
-    font-size: 0.8em;
   }
 }
 </style>

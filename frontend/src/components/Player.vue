@@ -23,6 +23,7 @@
       />
       <TrickStack :trick-stack="player.trickStack" />
     </div>
+    <div class="trickCountSmall">{{ $tc("trick", player.trickStack.tricks.length) }}</div>
   </div>
 </template>
 
@@ -152,6 +153,17 @@ export default {
   margin-right: 12px;
 }
 
+.trickCountSmall {
+  margin-top: 6px;
+  text-align: right;
+  display: none;
+}
+
+.left .trickCountSmall,
+.right .trickCountSmall {
+  text-align: center;
+}
+
 @media screen and (max-width: 680px) {
   .avatar {
     height: 24px;
@@ -169,6 +181,17 @@ export default {
 
   .party {
     font-size: 0.9em;
+  }
+
+  .bottom .hand,
+  .top .hand {
+    margin-right: 0;
+  }
+
+  .trickCountSmall {
+    display: block;
+
+    font-size: 0.8em;
   }
 }
 </style>
