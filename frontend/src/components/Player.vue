@@ -68,7 +68,7 @@ export default {
 <style scoped>
 @import "../assets/css/vars.css";
 .player {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   margin: auto;
 }
@@ -83,7 +83,6 @@ export default {
 .right .container {
   flex-direction: column;
   align-items: center;
-  margin-left: 6px; /* make up for position oddness caused by transform */
 }
 
 .info {
@@ -154,10 +153,6 @@ export default {
 }
 
 @media screen and (max-width: 680px) {
-  .player {
-    display: flex;
-  }
-
   .avatar {
     height: 24px;
     width: 24px;
