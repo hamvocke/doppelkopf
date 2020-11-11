@@ -1,6 +1,7 @@
 {env.DOPPELKOPF_DOMAIN}
 
 root * /var/www
+encode zstd gzip
 reverse_proxy /api/* http://backend:5000
 reverse_proxy /admin http://backend:5000
 reverse_proxy /admin/* http://backend:5000
