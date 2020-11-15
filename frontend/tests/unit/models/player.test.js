@@ -232,7 +232,7 @@ describe("announcements", () => {
     expect(failingAnnouncement).toThrowError("Invalid announcement");
   });
 
-  test("should be able to announce re when player is re", () => {
+  test("should be able to announce 're' when player is re", () => {
     player.hand = aHandWith(10, queen.of(suits.clubs));
 
     let possibleAnnouncements = player.possibleAnnouncements();
@@ -247,7 +247,7 @@ describe("announcements", () => {
     expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
 
-  test("should be able to announce kontra when player is kontra", () => {
+  test("should be able to announce 'kontra' when player is kontra", () => {
     player.hand = aHandWithout(9, queen.of(suits.clubs));
 
     let possibleAnnouncements = player.possibleAnnouncements();
@@ -262,7 +262,7 @@ describe("announcements", () => {
     expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
 
-  test("should be not be able to announce re with 8 cards", () => {
+  test("should be able to announce 're' with 8 cards", () => {
     player.hand = aHandWith(8, queen.of(suits.clubs));
 
     let possibleAnnouncements = player.possibleAnnouncements();
@@ -276,7 +276,7 @@ describe("announcements", () => {
     expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
 
-  test("should be able to announce no 60 with 7 cards", () => {
+  test("should be able to announce 'no 60' with 7 cards", () => {
     player.hand = aHandWithout(7, queen.of(suits.clubs));
 
     let possibleAnnouncements = player.possibleAnnouncements();
@@ -289,7 +289,7 @@ describe("announcements", () => {
     expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
 
-  test("should be able to announce no 30 with 6 cards", () => {
+  test("should be able to announce 'no 30' with 6 cards", () => {
     player.hand = aHandWith(6, queen.of(suits.clubs));
 
     let possibleAnnouncements = player.possibleAnnouncements();
@@ -298,7 +298,7 @@ describe("announcements", () => {
     expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
 
-  test("should be able to announce no points with 5 cards", () => {
+  test("should be able to announce 'no points' with 5 cards", () => {
     player.hand = aHandWithout(5, queen.of(suits.clubs));
 
     let possibleAnnouncements = player.possibleAnnouncements();
