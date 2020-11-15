@@ -1,7 +1,7 @@
 <template>
-  <div class="menu-button">
+  <div class="announcements-button">
     <button class="button" @click="toggleDropdown">
-      <span>{{ text }}</span>
+      <span>{{ $t("announce") }}</span>
       <chevron-up-icon></chevron-up-icon>
     </button>
     <div class="dropdown" :class="{ hidden: hidden }">
@@ -9,6 +9,7 @@
       <button class="button">Keine 90</button>
       <button class="button">Keine 60</button>
       <button class="button">Keine 30</button>
+      <button class="button">Keine Punkte</button>
     </div>
   </div>
 </template>
@@ -17,7 +18,7 @@
 import { ChevronUpIcon } from "vue-feather-icons";
 
 export default {
-  name: "MenuButton",
+  name: "AnnouncementsButton",
   components: { ChevronUpIcon },
   props: {
     text: {
@@ -41,7 +42,7 @@ export default {
 <style scoped>
 @import "../assets/css/vars.css";
 
-.menu-button {
+.announcements-button {
   position: relative;
 }
 
