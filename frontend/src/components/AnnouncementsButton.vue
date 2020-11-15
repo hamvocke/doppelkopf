@@ -5,11 +5,7 @@
       <chevron-up-icon></chevron-up-icon>
     </button>
     <div class="dropdown" :class="{ hidden: hidden }">
-      <button class="button">Re</button>
-      <button class="button">Keine 90</button>
-      <button class="button">Keine 60</button>
-      <button class="button">Keine 30</button>
-      <button class="button">Keine Punkte</button>
+      <button class="button" v-for="a in player.possibleAnnouncements()" :key="a">{{ $t(a) }}</button>
     </div>
   </div>
 </template>
@@ -21,8 +17,8 @@ export default {
   name: "AnnouncementsButton",
   components: { ChevronUpIcon },
   props: {
-    text: {
-      type: String,
+    player: {
+      type: Object,
       required: true
     }
   },

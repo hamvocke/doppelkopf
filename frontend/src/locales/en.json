@@ -25,6 +25,8 @@
   "no_points": "No points",
   "no_points_description": "The other party got no points at all",
   "announce": "announce",
+  "re": "Re",
+  "kontra": "Kontra",
   "announced_re": "announced 'Re'",
   "announced_re_description": "announced 'Re'",
   "announced_kontra": "announced 'Kontra'",
