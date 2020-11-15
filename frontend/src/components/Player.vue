@@ -23,7 +23,9 @@
       />
       <TrickStack :trick-stack="player.trickStack" />
     </div>
-    <div class="trickCountSmall">{{ $tc("trick", player.trickStack.tricks.length) }}</div>
+    <div class="trickCountSmall">
+      {{ $tc("trick", player.trickStack.tricks.length) }}
+    </div>
   </div>
 </template>
 
