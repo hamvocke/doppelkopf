@@ -100,42 +100,84 @@ export class Player {
   }
 
   announce(announcement) {
-    if (!this.possibleAnnouncements().includes(announcement)) {
+    if (![...this.possibleAnnouncements()].includes(announcement)) {
       throw new Error("Invalid announcement");
     }
 
     this.announcements.add(announcement);
   }
 
+  hasAnnounced(...announcements) {
+    return announcements.every(a => [...this.announcements].includes(a));
+  }
+
   // todo: make this configurable for playing with 9s (add 2 to each threshold)
   possibleAnnouncements() {
-    let a = [];
+    let possible = new Set();
     const cardsLeft = this.numberOfCardsLeft();
 
-    if (this.isRe() && cardsLeft >= 9) {
-      a = [announcements.re];
+    const winningAnnouncement = this.isRe()
+      ? announcements.re
+      : announcements.kontra;
+
+    if (cardsLeft >= 9) {
+      [
+        winningAnnouncement,
+        announcements.no_90,
+        announcements.no_60,
+        announcements.no_30,
+        announcements.no_points
+      ].forEach(a => possible.add(a));
     }
 
-    if (this.isKontra() && cardsLeft >= 9) {
-      a = [announcements.kontra];
+    if (cardsLeft >= 8 && this.hasAnnounced(winningAnnouncement)) {
+      [
+        announcements.no_90,
+        announcements.no_60,
+        announcements.no_30,
+        announcements.no_points
+      ].forEach(a => possible.add(a));
     }
 
-    if (cardsLeft >= 8) {
-      a.push(announcements.no_90);
+    if (
+      cardsLeft >= 7 &&
+      this.hasAnnounced(winningAnnouncement, announcements.no_90)
+    ) {
+      [
+        announcements.no_60,
+        announcements.no_30,
+        announcements.no_points
+      ].forEach(a => possible.add(a));
     }
 
-    if (cardsLeft >= 7) {
-      a.push(announcements.no_60);
+    if (
+      cardsLeft >= 6 &&
+      this.hasAnnounced(
+        winningAnnouncement,
+        announcements.no_90,
+        announcements.no_60
+      )
+    ) {
+      [announcements.no_30, announcements.no_points].forEach(a =>
+        possible.add(a)
+      );
     }
 
-    if (cardsLeft >= 6) {
-      a.push(announcements.no_30);
+    if (
+      cardsLeft >= 5 &&
+      this.hasAnnounced(
+        winningAnnouncement,
+        announcements.no_90,
+        announcements.no_60,
+        announcements.no_30
+      )
+    ) {
+      possible.add(announcements.no_points);
     }
 
-    if (cardsLeft >= 5) {
-      a.push(announcements.no_points);
-    }
-
-    return a;
+    // remove announcements that have been made earlier
+    return new Set(
+      [...possible].filter(a => ![...this.announcements].includes(a))
+    );
   }
 }

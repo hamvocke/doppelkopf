@@ -237,13 +237,13 @@ describe("announcements", () => {
 
     let possibleAnnouncements = player.possibleAnnouncements();
 
-    let expectedAnnouncements = [
+    let expectedAnnouncements = new Set([
       announcements.re,
       announcements.no_90,
       announcements.no_60,
       announcements.no_30,
       announcements.no_points
-    ];
+    ]);
     expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
 
@@ -252,68 +252,106 @@ describe("announcements", () => {
 
     let possibleAnnouncements = player.possibleAnnouncements();
 
-    let expectedAnnouncements = [
+    let expectedAnnouncements = new Set([
       announcements.kontra,
       announcements.no_90,
       announcements.no_60,
       announcements.no_30,
       announcements.no_points
-    ];
+    ]);
     expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
 
-  test("should be able to announce 're' with 8 cards", () => {
-    player.hand = aHandWith(8, queen.of(suits.clubs));
+  const announcementThreholds = [
+    {
+      numberOfCards: 8,
+      previousAnnouncements: [announcements.re],
+      expectedAnnouncements: [
+        announcements.no_90,
+        announcements.no_60,
+        announcements.no_30,
+        announcements.no_points
+      ]
+    },
+    {
+      numberOfCards: 8,
+      previousAnnouncements: [],
+      expectedAnnouncements: []
+    },
+    {
+      numberOfCards: 7,
+      previousAnnouncements: [announcements.re, announcements.no_90],
+      expectedAnnouncements: [
+        announcements.no_60,
+        announcements.no_30,
+        announcements.no_points
+      ]
+    },
+    {
+      numberOfCards: 7,
+      previousAnnouncements: [announcements.re],
+      expectedAnnouncements: []
+    },
+    {
+      numberOfCards: 6,
+      previousAnnouncements: [
+        announcements.re,
+        announcements.no_90,
+        announcements.no_60
+      ],
+      expectedAnnouncements: [announcements.no_30, announcements.no_points]
+    },
+    {
+      numberOfCards: 6,
+      previousAnnouncements: [announcements.re, announcements.no_90],
+      expectedAnnouncements: []
+    },
+    {
+      numberOfCards: 5,
+      previousAnnouncements: [
+        announcements.re,
+        announcements.no_90,
+        announcements.no_60,
+        announcements.no_30
+      ],
+      expectedAnnouncements: [announcements.no_points]
+    },
+    {
+      numberOfCards: 5,
+      previousAnnouncements: [
+        announcements.re,
+        announcements.no_90,
+        announcements.no_60
+      ],
+      expectedAnnouncements: []
+    }
+  ];
 
-    let possibleAnnouncements = player.possibleAnnouncements();
+  test.each(announcementThreholds)(
+    "should respect announcement thresholds",
+    ({ numberOfCards, previousAnnouncements, expectedAnnouncements }) => {
+      player.hand = aHandWith(numberOfCards, queen.of(suits.clubs));
+      previousAnnouncements.forEach(a => player.announcements.add(a));
 
-    let expectedAnnouncements = [
+      const possibleAnnouncements = player.possibleAnnouncements();
+
+      expect([...possibleAnnouncements]).toEqual(expectedAnnouncements);
+    }
+  );
+
+  test("should not be able to make same announcement twice", () => {
+    player.hand = aHandWith(9, queen.of(suits.clubs));
+    [
+      announcements.re,
       announcements.no_90,
       announcements.no_60,
       announcements.no_30,
       announcements.no_points
-    ];
-    expect(possibleAnnouncements).toEqual(expectedAnnouncements);
-  });
-
-  test("should be able to announce 'no 60' with 7 cards", () => {
-    player.hand = aHandWithout(7, queen.of(suits.clubs));
+    ].forEach(a => player.announcements.add(a));
 
     let possibleAnnouncements = player.possibleAnnouncements();
 
-    let expectedAnnouncements = [
-      announcements.no_60,
-      announcements.no_30,
-      announcements.no_points
-    ];
-    expect(possibleAnnouncements).toEqual(expectedAnnouncements);
-  });
-
-  test("should be able to announce 'no 30' with 6 cards", () => {
-    player.hand = aHandWith(6, queen.of(suits.clubs));
-
-    let possibleAnnouncements = player.possibleAnnouncements();
-
-    let expectedAnnouncements = [announcements.no_30, announcements.no_points];
-    expect(possibleAnnouncements).toEqual(expectedAnnouncements);
-  });
-
-  test("should be able to announce 'no points' with 5 cards", () => {
-    player.hand = aHandWithout(5, queen.of(suits.clubs));
-
-    let possibleAnnouncements = player.possibleAnnouncements();
-
-    let expectedAnnouncements = [announcements.no_points];
-    expect(possibleAnnouncements).toEqual(expectedAnnouncements);
-  });
-
-  test("should be able to announce anything with 4 cards", () => {
-    player.hand = aHandWithout(4, queen.of(suits.clubs));
-
-    let possibleAnnouncements = player.possibleAnnouncements();
-
-    let expectedAnnouncements = [];
-    expect(possibleAnnouncements).toEqual(expectedAnnouncements);
+    expect(possibleAnnouncements).toEqual(new Set());
   });
 });
 
