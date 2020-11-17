@@ -5,7 +5,13 @@
       <chevron-up-icon></chevron-up-icon>
     </button>
     <div class="dropdown" :class="{ hidden: hidden }">
-      <button class="button" v-for="a in player.possibleAnnouncements()" :key="a">{{ $t(a) }}</button>
+      <button
+        v-for="a in player.possibleAnnouncements()"
+        :key="a"
+        class="button"
+      >
+        {{ $t(a) }}
+      </button>
     </div>
   </div>
 </template>

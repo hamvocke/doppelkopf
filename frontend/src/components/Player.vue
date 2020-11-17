@@ -99,7 +99,8 @@ export default {
   flex-direction: column;
 }
 
-.name-info, .stats {
+.name-info,
+.stats {
   display: flex;
   justify-content: center;
   align-items: center;

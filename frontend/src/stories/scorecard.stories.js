@@ -48,13 +48,29 @@ losingSc.addScore(score([players[2], players[3]], [players[0], players[1]], 2));
 losingSc.addScore(score([players[0], players[2]], [players[1], players[3]], 4));
 losingSc.addScore(score([players[2], players[0]], [players[1], players[3]], 1));
 
-winningSc.addScore(score([players[2], players[3]], [players[0], players[1]], 2));
-winningSc.addScore(score([players[0], players[2]], [players[1], players[3]], 4));
-winningSc.addScore(score([players[2], players[0]], [players[1], players[3]], 1));
-winningSc.addScore(score([players[0], players[2]], [players[1], players[3]], 3));
+winningSc.addScore(
+  score([players[2], players[3]], [players[0], players[1]], 2)
+);
+winningSc.addScore(
+  score([players[0], players[2]], [players[1], players[3]], 4)
+);
+winningSc.addScore(
+  score([players[2], players[0]], [players[1], players[3]], 1)
+);
+winningSc.addScore(
+  score([players[0], players[2]], [players[1], players[3]], 3)
+);
 
-const winningScore = score([players[0], players[2]], [players[1], players[3]], 3);
-const losingScore = score([players[3], players[2]], [players[1], players[0]], 5);
+const winningScore = score(
+  [players[0], players[2]],
+  [players[1], players[3]],
+  3
+);
+const losingScore = score(
+  [players[3], players[2]],
+  [players[1], players[0]],
+  5
+);
 
 export default {
   title: "Scorecard"
