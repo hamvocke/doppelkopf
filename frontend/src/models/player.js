@@ -113,41 +113,44 @@ export class Player {
 
   // todo: make this configurable for playing with 9s (add 2 to each threshold)
   possibleAnnouncements() {
-    let possible = new Set();
     const cardsLeft = this.numberOfCardsLeft();
+
+    if (cardsLeft < 4) {
+      return new Set();
+    }
 
     const winningAnnouncement = this.isRe()
       ? announcements.re
       : announcements.kontra;
 
     if (cardsLeft >= 9) {
-      [
+      return this._removeExisting([
         winningAnnouncement,
         announcements.no_90,
         announcements.no_60,
         announcements.no_30,
         announcements.no_points
-      ].forEach(a => possible.add(a));
+      ]);
     }
 
     if (cardsLeft >= 8 && this.hasAnnounced(winningAnnouncement)) {
-      [
+      return this._removeExisting([
         announcements.no_90,
         announcements.no_60,
         announcements.no_30,
         announcements.no_points
-      ].forEach(a => possible.add(a));
+      ]);
     }
 
     if (
       cardsLeft >= 7 &&
       this.hasAnnounced(winningAnnouncement, announcements.no_90)
     ) {
-      [
+      return this._removeExisting([
         announcements.no_60,
         announcements.no_30,
         announcements.no_points
-      ].forEach(a => possible.add(a));
+      ]);
     }
 
     if (
@@ -158,9 +161,10 @@ export class Player {
         announcements.no_60
       )
     ) {
-      [announcements.no_30, announcements.no_points].forEach(a =>
-        possible.add(a)
-      );
+      return this._removeExisting([
+        announcements.no_30,
+        announcements.no_points
+      ]);
     }
 
     if (
@@ -172,12 +176,15 @@ export class Player {
         announcements.no_30
       )
     ) {
-      possible.add(announcements.no_points);
+      return this._removeExisting([announcements.no_points]);
     }
 
-    // remove announcements that have been made earlier
+    return new Set();
+  }
+
+  _removeExisting(possibleAnnouncements) {
     return new Set(
-      [...possible].filter(a => ![...this.announcements].includes(a))
+      possibleAnnouncements.filter(a => ![...this.announcements].includes(a))
     );
   }
 }
