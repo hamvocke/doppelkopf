@@ -78,4 +78,9 @@ toggles = [
         name="show_tutorial_link",
         description="Link zur Spielanleitung auf der Startseite anzeigen?",
     ),
+    Toggle(
+        id=6,
+        name="game.announcements.enable",
+        description="Aktiviert 'Ansagen'",
+    ),
 ]
