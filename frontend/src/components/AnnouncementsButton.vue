@@ -46,6 +46,7 @@ export default {
 
 .announcements-button {
   position: relative;
+  z-index: var(--popover-layer);
 }
 
 .dropdown {

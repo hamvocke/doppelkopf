@@ -18,12 +18,19 @@
     >
       {{ $t("finish-round") }}
     </button>
+
+    <AnnouncementsButton :player="game.players[0]" />
   </div>
 </template>
 
 <script>
+import AnnouncementsButton from "@/components/AnnouncementsButton";
+
 export default {
   name: "Controls",
+  components: {
+    AnnouncementsButton
+  },
   props: {
     game: {
       type: Object,
