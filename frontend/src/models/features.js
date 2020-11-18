@@ -9,7 +9,8 @@ export class Feature {
 }
 
 const DEFAULT_FEATURES = {
-  show_tutorial_link: new Feature("Show link to tutorial", Config.debug)
+  show_tutorial_link: new Feature("Show link to tutorial", Config.debug),
+  "game.announcements.enable": new Feature("game.announcements.enable", Config.debug)
 };
 
 class FeatureManager {

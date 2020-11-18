@@ -19,12 +19,13 @@
       {{ $t("finish-round") }}
     </button>
 
-    <AnnouncementsButton :player="game.players[0]" />
+    <AnnouncementsButton v-if="enableAnnouncements" :player="game.players[0]" />
   </div>
 </template>
 
 <script>
 import AnnouncementsButton from "@/components/AnnouncementsButton";
+import { Features } from "@/models/features";
 
 export default {
   name: "Controls",
@@ -36,6 +37,14 @@ export default {
       type: Object,
       required: true
     }
+  },
+  data: function() {
+    return {
+      enableAnnouncements: false
+    };
+  },
+  async created() {
+    this.enableAnnouncements = (await Features.get("game.announcements.enable")).enabled;
   },
   methods: {
     triggerNextTrick: function() {
