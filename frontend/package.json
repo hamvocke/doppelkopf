@@ -15,8 +15,9 @@
     "test:ci": "vue-cli-service test:unit --maxWorkers=2"
   },
   "dependencies": {
-    "@sentry/browser": "^5.7.0",
-    "@sentry/integrations": "^5.7.0",
+    "@sentry/browser": "^5.27.4",
+    "@sentry/integrations": "^5.27.4",
+    "@sentry/tracing": "^5.27.4",
     "core-js": "^3.1.2",
     "lodash-es": "^4.17.15",
     "register-service-worker": "^1.0.0",
