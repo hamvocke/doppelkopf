@@ -11,7 +11,8 @@
 
   /* z-index layers */
   --base-layer: 1;
-  --modal-layer: 10;
-  --notification-layer: 20;
-  --flash-layer: 30;
+  --popover-layer: 10;
+  --modal-layer: 20;
+  --notification-layer: 30;
+  --flash-layer: 40;
 }
