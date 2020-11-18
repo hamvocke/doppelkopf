@@ -24,7 +24,7 @@ export const values = {
 };
 
 export class Card {
-  constructor(rank, suit = suits[0], id = uniqueId("card_")) {
+  constructor(rank, suit = suits.clubs, id = uniqueId("card_")) {
     this.rank = rank;
     this.suit = suit;
     this.id = id;
