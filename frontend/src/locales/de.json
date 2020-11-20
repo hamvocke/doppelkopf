@@ -25,6 +25,7 @@
   "no_points": "Schwarz",
   "no_points_description": "Die andere partei hat gar keine Punkte erzielt",
   "announce": "Ansagen",
+  "player-announced": "{name} sagt '{announcement}' an",
   "re": "Re",
   "kontra": "Kontra",
   "announced_re": "'Re' angesagt",
