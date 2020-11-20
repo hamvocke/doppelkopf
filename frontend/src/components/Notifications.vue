@@ -6,7 +6,7 @@
         :key="notification.id"
         class="message"
       >
-        {{ $t(notification.text) }}
+        {{ $t(notification.text, notification.args) }}
       </div>
     </transition-group>
     <div class="flashMessages">
