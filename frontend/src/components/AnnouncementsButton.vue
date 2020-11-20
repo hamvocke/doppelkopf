@@ -9,6 +9,7 @@
         v-for="a in player.possibleAnnouncements()"
         :key="a"
         class="button"
+        @click="announce(a)"
       >
         {{ $t(a) }}
       </button>
@@ -36,6 +37,10 @@ export default {
   methods: {
     toggleDropdown: function() {
       this.hidden = !this.hidden;
+    },
+    announce: function(announcement) {
+      this.player.announce(announcement);
+      this.toggleDropdown();
     }
   }
 };
