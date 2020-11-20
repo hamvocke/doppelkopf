@@ -13,10 +13,11 @@ export class Notifier {
     instance = this;
   }
 
-  async info(message) {
+  async info(message, args = null) {
     this.notifications.push({
       id: uniqueId("message_"),
-      text: message
+      text: message,
+      args: args
     });
 
     await this.wait(4000);
