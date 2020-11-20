@@ -1,10 +1,10 @@
 <template>
   <div class="announcements-button">
-    <button class="button" @click="toggleDropdown">
+    <button class="toggle button" @click="toggleDropdown">
       <span>{{ $t("announce") }}</span>
       <chevron-up-icon></chevron-up-icon>
     </button>
-    <div class="dropdown" :class="{ hidden: hidden }">
+    <div class="dropdown" v-show="!hidden">
       <button
         v-for="a in player.possibleAnnouncements()"
         :key="a"
