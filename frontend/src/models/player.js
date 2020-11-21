@@ -4,7 +4,7 @@ import { TrickStack } from "@/models/trickStack";
 import { RandomCardBehavior } from "@/models/behaviors";
 import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
-import { announcements } from "@/models/announcements";
+import { announcements, requiredAnnouncements } from "@/models/announcements";
 import { playableCards } from "@/models/playableCardFinder";
 
 const notifier = new Notifier();
@@ -104,7 +104,29 @@ export class Player {
       throw new Error("Invalid announcement");
     }
 
-    this.announcements.add(announcement);
+    // always announce re/kontra
+    let allAnnouncements = this.isRe() ? [announcements.re] : [announcements.kontra];
+
+    if (announcement === announcements.no_60) {
+      allAnnouncements.push(announcements.no_90);
+    }
+
+    if (announcement === announcements.no_30) {
+      allAnnouncements.push(announcements.no_90);
+      allAnnouncements.push(announcements.no_60);
+    }
+
+    if (announcement === announcements.no_points) {
+      allAnnouncements.push(announcements.no_90);
+      allAnnouncements.push(announcements.no_60);
+      allAnnouncements.push(announcements.no_30);
+    }
+
+    // finally, add the actual announement
+    allAnnouncements.push(announcement);
+
+    allAnnouncements.forEach(a => this.announcements.add(a));
+    notifier.info("player-announced", { name: this.name, announcement: announcement });
   }
 
   hasAnnounced(...announcements) {

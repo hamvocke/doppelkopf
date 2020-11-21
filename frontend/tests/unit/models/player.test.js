@@ -232,6 +232,22 @@ describe("announcements", () => {
     expect(failingAnnouncement).toThrowError("Invalid announcement");
   });
 
+  test("should automatically announce previous steps", () => {
+    player.hand = aHandWith(10, queen.of(suits.clubs));
+
+    player.announce(announcements.no_points);
+
+    expect(player.announcements).toEqual(new Set(
+      [
+        announcements.re,
+        announcements.no_90,
+        announcements.no_60,
+        announcements.no_30,
+        announcements.no_points
+      ]
+    ));
+  });
+
   test("should be able to announce 're' when player is re", () => {
     player.hand = aHandWith(10, queen.of(suits.clubs));
 

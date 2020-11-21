@@ -16,12 +16,12 @@ test("should aggregate points", () => {
 
 test("should aggregate announcements", () => {
   player1.numberOfCardsLeft = () => 10;
-  player1.announce(announcements.no_90);
   player1.announce(announcements.kontra);
+  player1.announce(announcements.no_90);
   const party = new Party(kontra, player1, player2);
   expect(party.announcements()).toEqual([
-    announcements.no_90,
-    announcements.kontra
+    announcements.kontra,
+    announcements.no_90
   ]);
 });
 
