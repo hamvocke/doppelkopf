@@ -38,4 +38,13 @@ describe("AnnouncementsButton.vue", () => {
 
     expect(wrapper.find("div.dropdown").isVisible()).toBe(false);
   });
+
+  test("should hide entire button if no announcements can be made", () => {
+    let player = game.players[0];
+    player.possibleAnnouncements = () => [];
+
+    const wrapper = mount(AnnouncementsButton, {propsData: { player: player }});
+
+    expect(wrapper.find(".announcements-button").isVisible()).toBe(false);
+  })
 });
