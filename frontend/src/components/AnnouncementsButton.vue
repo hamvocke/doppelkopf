@@ -6,7 +6,7 @@
     </button>
     <div class="dropdown" v-show="isOpen">
       <button
-        v-for="a in announcements"
+        v-for="a in Array.from(player.possibleAnnouncements()).reverse()"
         :key="a"
         class="button"
         @click="announce(a)"
@@ -33,11 +33,6 @@ export default {
     return {
       isOpen: false,
     };
-  },
-  computed: {
-    announcements: function() {
-      return [...this.player.possibleAnnouncements()].reverse();
-    }
   },
   methods: {
     toggleDropdown: function() {
@@ -70,13 +65,22 @@ export default {
 
 .dropdown {
   display: flex;
+  flex-direction: column;
   position: absolute;
-  bottom: 72px;
+  bottom: 64px;
   right: 0px;
 }
 
 .dropdown button {
   white-space: nowrap;
+}
+
+.dropdown button:hover, .dropdown button:focus {
+  background: color(var(--red) shade(15%));
+}
+
+.dropdown button:hover ~ button, .dropdown button:focus ~ button {
+  background: color(var(--red) shade(15%));
 }
 
 .hidden {
