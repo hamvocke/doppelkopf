@@ -1,7 +1,7 @@
 <template>
   <div class="announcements-button" v-show="player.possibleAnnouncements().size > 0">
     <button class="toggle button" :class="{ open: isOpen }" @click="toggleDropdown">
-      <span>{{ $t("announce") }}</span>
+      <span class="button-text">{{ $t("announce") }}</span>
       <chevron-up-icon size="16"></chevron-up-icon>
     </button>
     <div class="dropdown" v-show="isOpen">
@@ -57,6 +57,10 @@ export default {
 .announcements-button {
   position: relative;
   z-index: var(--popover-layer);
+}
+
+.button-text {
+  margin-right: 8px;
 }
 
 .open {
