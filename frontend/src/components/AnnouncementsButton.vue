@@ -2,7 +2,7 @@
   <div class="announcements-button" v-show="player.possibleAnnouncements().size > 0">
     <button class="toggle button" :class="{ open: isOpen }" @click="toggleDropdown">
       <span>{{ $t("announce") }}</span>
-      <chevron-up-icon></chevron-up-icon>
+      <chevron-up-icon size="16"></chevron-up-icon>
     </button>
     <div class="dropdown" v-show="isOpen">
       <button
