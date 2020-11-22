@@ -27,7 +27,7 @@ export const standard = () => ({
     };
   },
   template: `
-  <div style="display: flex; justify-content: center; align-items: center; height: 500px;">
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
     <AnnouncementsButton :player="player" />
   </div>`,
   i18n: new VueI18n(i18nOpts)

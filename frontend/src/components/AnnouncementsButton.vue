@@ -1,10 +1,10 @@
 <template>
   <div class="announcements-button" v-show="player.possibleAnnouncements().size > 0">
-    <button class="toggle button" @click="toggleDropdown">
+    <button class="toggle button" :class="{ open: isOpen }" @click="toggleDropdown">
       <span>{{ $t("announce") }}</span>
       <chevron-up-icon></chevron-up-icon>
     </button>
-    <div class="dropdown" v-show="!hidden">
+    <div class="dropdown" v-show="isOpen">
       <button
         v-for="a in player.possibleAnnouncements()"
         :key="a"
@@ -31,12 +31,12 @@ export default {
   },
   data: function() {
     return {
-      hidden: true
+      isOpen: false,
     };
   },
   methods: {
     toggleDropdown: function() {
-      this.hidden = !this.hidden;
+      this.isOpen = !this.isOpen;
     },
     announce: function(announcement) {
       this.player.announce(announcement);
@@ -52,6 +52,11 @@ export default {
 .announcements-button {
   position: relative;
   z-index: var(--popover-layer);
+}
+
+.open {
+  background: color(var(--red) shade(15%));
+  transform: scale(0.95, 0.95);
 }
 
 .dropdown {
