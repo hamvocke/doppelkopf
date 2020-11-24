@@ -14,16 +14,19 @@ beforeEach(() => {
 
 describe("AnnouncementsButton.vue", () => {
   test("should hide announcements", () => {
-    const wrapper = mount(AnnouncementsButton, { propsData: { player: game.players[0] } });
+    const wrapper = mount(AnnouncementsButton, {
+      propsData: { player: game.players[0] }
+    });
 
     expect(wrapper.find("button.toggle").exists()).toBe(true);
     expect(wrapper.find("div.dropdown").exists()).toBe(true);
     expect(wrapper.find("div.dropdown").isVisible()).toBe(false);
   });
 
-
   test("should show possible announcements if button is clicked", () => {
-    const wrapper = mount(AnnouncementsButton, { propsData: { player: game.players[0] } });
+    const wrapper = mount(AnnouncementsButton, {
+      propsData: { player: game.players[0] }
+    });
 
     wrapper.find("button.toggle").trigger("click");
 
@@ -31,7 +34,9 @@ describe("AnnouncementsButton.vue", () => {
   });
 
   test("should hide possible announcements after announcing", () => {
-    const wrapper = mount(AnnouncementsButton, { propsData: { player: game.players[0] } });
+    const wrapper = mount(AnnouncementsButton, {
+      propsData: { player: game.players[0] }
+    });
 
     wrapper.find("button.toggle").trigger("click");
     wrapper.find("div.dropdown button:first-child").trigger("click");
@@ -43,8 +48,10 @@ describe("AnnouncementsButton.vue", () => {
     let player = game.players[0];
     player.possibleAnnouncements = () => [];
 
-    const wrapper = mount(AnnouncementsButton, {propsData: { player: player }});
+    const wrapper = mount(AnnouncementsButton, {
+      propsData: { player: player }
+    });
 
     expect(wrapper.find(".announcements-button").isVisible()).toBe(false);
-  })
+  });
 });

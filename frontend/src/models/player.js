@@ -105,7 +105,9 @@ export class Player {
     }
 
     // always announce re/kontra
-    let allAnnouncements = this.isRe() ? [announcements.re] : [announcements.kontra];
+    let allAnnouncements = this.isRe()
+      ? [announcements.re]
+      : [announcements.kontra];
 
     if (announcement === announcements.no_60) {
       allAnnouncements.push(announcements.no_90);
@@ -126,7 +128,10 @@ export class Player {
     allAnnouncements.push(announcement);
 
     allAnnouncements.forEach(a => this.announcements.add(a));
-    notifier.info("player-announced", { name: this.name, announcement: announcement });
+    notifier.info("player-announced", {
+      name: this.name,
+      announcement: announcement
+    });
   }
 
   hasAnnounced(...announcements) {

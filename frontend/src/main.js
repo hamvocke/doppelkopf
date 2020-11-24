@@ -27,12 +27,11 @@ if (!Config.testing) {
         logErrors: Config.debug,
         tracing: true,
         tracingOptions: {
-          trackComponents: true,
-        },
+          trackComponents: true
+        }
       })
     ],
     tracesSampleRate: Config.debug ? 1.0 : 0.2,
     environment: process.env.NODE_ENV || process.env.server_env || "not-set"
   });
 }
-

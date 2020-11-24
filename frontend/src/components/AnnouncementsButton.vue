@@ -1,10 +1,18 @@
 <template>
-  <div class="announcements-button" v-show="player.possibleAnnouncements().size > 0" v-on-clickaway="closeDropdown">
-    <button class="toggle button" :class="{ open: isOpen }" @click="toggleDropdown">
+  <div
+    v-show="player.possibleAnnouncements().size > 0"
+    v-on-clickaway="closeDropdown"
+    class="announcements-button"
+  >
+    <button
+      class="toggle button"
+      :class="{ open: isOpen }"
+      @click="toggleDropdown"
+    >
       <span class="button-text">{{ $t("announce") }}</span>
       <chevron-up-icon size="16"></chevron-up-icon>
     </button>
-    <div class="dropdown" v-show="isOpen">
+    <div v-show="isOpen" class="dropdown">
       <button
         v-for="a in Array.from(player.possibleAnnouncements()).reverse()"
         :key="a"
@@ -23,8 +31,8 @@ import { mixin as clickaway } from "vue-clickaway";
 
 export default {
   name: "AnnouncementsButton",
-  mixins: [ clickaway ],
   components: { ChevronUpIcon },
+  mixins: [clickaway],
   props: {
     player: {
       type: Object,
@@ -33,7 +41,7 @@ export default {
   },
   data: function() {
     return {
-      isOpen: false,
+      isOpen: false
     };
   },
   methods: {
@@ -80,11 +88,13 @@ export default {
   white-space: nowrap;
 }
 
-.dropdown button:hover, .dropdown button:focus {
+.dropdown button:hover,
+.dropdown button:focus {
   background: color(var(--red) shade(15%));
 }
 
-.dropdown button:hover ~ button, .dropdown button:focus ~ button {
+.dropdown button:hover ~ button,
+.dropdown button:focus ~ button {
   background: color(var(--red) shade(15%));
 }
 

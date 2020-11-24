@@ -237,15 +237,15 @@ describe("announcements", () => {
 
     player.announce(announcements.no_points);
 
-    expect(player.announcements).toEqual(new Set(
-      [
+    expect(player.announcements).toEqual(
+      new Set([
         announcements.re,
         announcements.no_90,
         announcements.no_60,
         announcements.no_30,
         announcements.no_points
-      ]
-    ));
+      ])
+    );
   });
 
   test("should be able to announce 're' when player is re", () => {
