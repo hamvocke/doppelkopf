@@ -1,5 +1,5 @@
 <template>
-  <div class="announcements-button" v-show="player.possibleAnnouncements().size > 0">
+  <div class="announcements-button" v-show="player.possibleAnnouncements().size > 0" v-on-clickaway="closeDropdown">
     <button class="toggle button" :class="{ open: isOpen }" @click="toggleDropdown">
       <span class="button-text">{{ $t("announce") }}</span>
       <chevron-up-icon size="16"></chevron-up-icon>
@@ -19,9 +19,11 @@
 
 <script>
 import { ChevronUpIcon } from "vue-feather-icons";
+import { mixin as clickaway } from "vue-clickaway";
 
 export default {
   name: "AnnouncementsButton",
+  mixins: [ clickaway ],
   components: { ChevronUpIcon },
   props: {
     player: {
@@ -37,6 +39,9 @@ export default {
   methods: {
     toggleDropdown: function() {
       this.isOpen = !this.isOpen;
+    },
+    closeDropdown: function() {
+      this.isOpen = false;
     },
     announce: function(announcement) {
       this.player.announce(announcement);
