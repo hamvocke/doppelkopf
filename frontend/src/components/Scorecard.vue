@@ -52,54 +52,38 @@
 
           <div class="row">
             <table>
+              <colgroup>
+                <col class="pointsCol" />
+                <col class="extrasCol" />
+                <col class="pointsCol" />
+                <col class="extrasCol" />
+              </colgroup>
               <tr>
-                <th>
+                <th colspan="2">
                   <div class="summary">
                     <strong>Re</strong>
                   </div>
                 </th>
 
-                <th>
+                <th colspan="2">
                   <div class="summary">
                     <strong>Kontra</strong>
                   </div>
                 </th>
               </tr>
-              <tr>
-                <td class="extras re">
-                  <ul>
-                    <li
-                      v-for="extra in currentScore.listExtras('Re')"
-                      :key="extra.i18nKey"
-                    >
-                      <span :title="$t(extra.i18nKey + '_description')">
-                        <info-icon size="20"></info-icon>
-                      </span>
-                      {{ $t(extra.i18nKey) }}
-                    </li>
-                  </ul>
-                </td>
-                <td class="extras kontra">
-                  <ul>
-                    <li
-                      v-for="extra in currentScore.listExtras('Kontra')"
-                      :key="extra.i18nKey"
-                    >
-                      <span :title="$t(extra.i18nKey + '_description')">
-                        <info-icon size="20"></info-icon>
-                      </span>
-                      {{ $t(extra.i18nKey) }}
-                    </li>
-                  </ul>
-                </td>
+              <tr v-for="i in extrasLength" :key="i" class="extras">
+                <td>{{ reExtra(i).points }}</td>
+                <td class="re">{{ $t(reExtra(i).i18nKey) }}</td>
+                <td>{{ kontraExtra(i).points }}</td>
+                <td class="kontra">{{ $t(kontraExtra(i).i18nKey) }}</td>
               </tr>
               <tr>
-                <td class="sum re">
+                <td colspan="2" class="sum re">
                   <span v-if="currentScore.winningPartyName() === 'Re'"
                     >{{ currentScore.totalPoints() }} {{ $t("points") }}</span
                   >
                 </td>
-                <td class="sum kontra">
+                <td colspan="2" class="sum kontra">
                   <span v-if="currentScore.winningPartyName() === 'Kontra'">
                     {{ currentScore.totalPoints() }} {{ $t("points") }}
                   </span>
@@ -155,13 +139,11 @@
 <script>
 import { includes, join } from "lodash-es";
 import PointMeter from "./scorecard/PointMeter";
-import { InfoIcon } from "vue-feather-icons";
 
 export default {
   name: "Scorecard",
   components: {
-    PointMeter,
-    InfoIcon
+    PointMeter
   },
   props: {
     scorecard: {
@@ -177,11 +159,20 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      reExtras: this.currentScore.listExtras("Re"),
+      kontraExtras: this.currentScore.listExtras("Kontra")
+    };
+  },
   computed: {
-    message: function() {
+    message() {
       return includes(this.currentScore.winner().players, this.players[0])
         ? "you_win"
         : "you_lose";
+    },
+    extrasLength() {
+      return Math.max(this.reExtras.length, this.kontraExtras.length);
     }
   },
   methods: {
@@ -190,6 +181,12 @@ export default {
     },
     isLastLine(index) {
       return index === this.scorecard.scoreLines.length - 1;
+    },
+    reExtra(index) {
+      return this.reExtras[Math.min(0, index - 1)] || {};
+    },
+    kontraExtra(index) {
+      return this.kontraExtras[Math.min(0, index - 1)] || {};
     },
     partyMembers: function(party) {
       return join(
@@ -242,8 +239,12 @@ h3 {
 .scorecard table {
   text-align: left;
   width: 100%;
-  table-layout: fixed;
   border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.pointsCol {
+  width: 32px;
 }
 
 th,
@@ -276,11 +277,6 @@ td {
 
 .extras {
   line-height: 1.5em;
-}
-
-.extras ul {
-  padding-left: 0;
-  list-style: circle inside;
 }
 
 .extras svg {

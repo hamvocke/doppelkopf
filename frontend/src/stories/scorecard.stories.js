@@ -3,6 +3,7 @@ import VueI18n from "vue-i18n";
 import Scorecard from "@/components/Scorecard";
 import PointMeter from "@/components/scorecard/PointMeter";
 import { Player } from "@/models/player";
+import { extras } from "@/models/extras";
 import { re, kontra } from "@/models/party";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import { ScoreBuilder } from "../../tests/builders/scoreBuilder";
@@ -28,6 +29,15 @@ function score(winners, losers, points) {
   return new ScoreBuilder()
     .withWinners(re, ...winners)
     .withLosers(kontra, ...losers)
+    .withKontraExtras([extras.doppelkopf, extras.fox])
+    .withReExtras([
+      extras.win,
+      extras.announced_re,
+      extras.no_90,
+      extras.announced_no_90,
+      extras.no_60,
+      extras.announced_no_60
+    ])
     .withPoints(points)
     .build();
 }
@@ -69,7 +79,7 @@ const winningScore = score(
 const losingScore = score(
   [players[3], players[2]],
   [players[1], players[0]],
-  5
+  7
 );
 
 export default {

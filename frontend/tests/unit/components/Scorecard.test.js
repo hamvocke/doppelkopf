@@ -1,7 +1,8 @@
 import Scorecard from "@/components/Scorecard";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import { Player } from "@/models/player";
-import { re, kontra, Party } from "@/models/party";
+import { re, kontra } from "@/models/party";
+import { extras } from "@/models/extras";
 import { ScoreBuilder } from "../../builders/scoreBuilder";
 import { mount } from "@vue/test-utils";
 import VueTestUtils from "@vue/test-utils";
@@ -24,6 +25,8 @@ function stubScoreHumanPlayerWins() {
   score = new ScoreBuilder()
     .withWinners(re, players[0], players[1])
     .withLosers(kontra, players[2], players[3])
+    .withReExtras([extras.win, extras.announced_re, extras.fox])
+    .withKontraExtras([])
     .withPoints(2)
     .build();
 }
@@ -48,6 +51,8 @@ beforeEach(() => {
   score = new ScoreBuilder()
     .withWinners(kontra, players[2], players[3])
     .withLosers(re, players[0], players[1])
+    .withKontraExtras([extras.win, extras.announced_re])
+    .withReExtras([extras.fox])
     .withPoints(2)
     .build();
 });
@@ -202,12 +207,11 @@ describe("Scorecard.vue", () => {
       }
     });
 
-    const kontraExtrasList = wrapper.find(".extras.kontra");
-    expect(wrapper.find(".extras.re").exists()).toBe(true);
+    const kontraExtrasList = wrapper.findAll(".extras .kontra");
+    expect(wrapper.find(".extras").exists()).toBe(true);
     expect(kontraExtrasList.exists()).toBe(true);
-    const kontraExtras = kontraExtrasList.findAll("li");
-    expect(kontraExtras).toHaveLength(2);
-    expect(kontraExtras.at(0).text()).toContain("win");
+    expect(kontraExtrasList).toHaveLength(2);
+    expect(kontraExtrasList.at(0).text()).toContain("win");
   });
 
   it("should show sum of scores for winning party", () => {
