@@ -183,10 +183,10 @@ export default {
       return index === this.scorecard.scoreLines.length - 1;
     },
     reExtra(index) {
-      return this.reExtras[Math.min(0, index - 1)] || {};
+      return this.reExtras[Math.max(index - 1)] || {};
     },
     kontraExtra(index) {
-      return this.kontraExtras[Math.min(0, index - 1)] || {};
+      return this.kontraExtras[Math.max(0, index - 1)] || {};
     },
     partyMembers: function(party) {
       return join(
