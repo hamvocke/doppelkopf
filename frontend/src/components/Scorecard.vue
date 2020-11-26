@@ -79,13 +79,13 @@
               </tr>
               <tr>
                 <td colspan="2" class="sum re">
-                  <span v-if="currentScore.winningPartyName() === 'Re'"
-                    >{{ currentScore.totalPoints() }} {{ $t("points") }}</span
-                  >
+                  <span v-if="currentScore.winningPartyName() === 'Re'">
+                    {{ $tc("points", currentScore.totalPoints()) }}
+                  </span>
                 </td>
                 <td colspan="2" class="sum kontra">
                   <span v-if="currentScore.winningPartyName() === 'Kontra'">
-                    {{ currentScore.totalPoints() }} {{ $t("points") }}
+                    {{ $tc("points", currentScore.totalPoints()) }}
                   </span>
                 </td>
               </tr>

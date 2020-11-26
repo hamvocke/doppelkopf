@@ -4,7 +4,7 @@
   "finish-round": "Runde beenden",
   "next-round": "Nächste Runde",
   "results": "Auswertung",
-  "points": "Punkte",
+  "points": "Keine Punkte | 1 Punkt | {count} Punkte",
   "start-game": "Spiel starten!",
   "how-to-play": "Spielregeln",
 

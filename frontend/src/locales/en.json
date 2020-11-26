@@ -4,7 +4,7 @@
   "finish-round": "Finish round",
   "next-round": "Next round",
   "results": "Results",
-  "points": "Points",
+  "points": "No points| 1 point | {count} points",
   "start-game": "Start Game!",
   "how-to-play": "How to play?",
 
