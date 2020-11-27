@@ -8,7 +8,7 @@ import { mount } from "@vue/test-utils";
 import VueTestUtils from "@vue/test-utils";
 
 VueTestUtils.config.mocks["$t"] = key => key;
-VueTestUtils.config.mocks["$tc"] = msg => msg;
+VueTestUtils.config.mocks["$tc"] = (msg, count) => `${count} ${msg}`;
 
 let players;
 let score;
