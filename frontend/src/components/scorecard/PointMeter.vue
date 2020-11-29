@@ -15,8 +15,8 @@
       <div class="bar kontra" :style="kontraStyle"></div>
     </div>
     <div class="points">
-      <span>{{ rePoints }} {{ $t("points") }}</span>
-      <span>{{ kontraPoints }} {{ $t("points") }}</span>
+      <span>{{ $tc("points", rePoints) }}</span>
+      <span>{{ $tc("points", kontraPoints) }}</span>
     </div>
   </div>
 </template>

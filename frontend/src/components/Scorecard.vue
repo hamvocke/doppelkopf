@@ -94,7 +94,7 @@
         </div>
 
         <div class="column">
-          <h2>{{ $t("points") }}</h2>
+          <h2>{{ $t("points-plain") }}</h2>
           <table>
             <tr>
               <th
@@ -104,7 +104,7 @@
               >
                 {{ player.name }}
               </th>
-              <th class="right-aligned">{{ $t("points") }}</th>
+              <th class="right-aligned">{{ $t("points-plain") }}</th>
             </tr>
             <tr
               v-for="(scoreLine, index) in scorecard.scoreLines"
