@@ -128,10 +128,7 @@ export class Player {
     allAnnouncements.push(announcement);
 
     allAnnouncements.forEach(a => this.announcements.add(a));
-    notifier.info("player-announced", {
-      name: this.name,
-      announcement: announcement
-    });
+    notifier.info("player-announced-" + announcement, { name: this.name });
   }
 
   hasAnnounced(...announcements) {
