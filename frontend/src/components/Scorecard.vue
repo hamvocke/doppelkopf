@@ -247,9 +247,14 @@ h3 {
   width: 32px;
 }
 
+td {
+  padding: 6px 0;
+  vertical-align: top;
+}
+
 th,
 td {
-  line-height: 2em;
+  line-height: 1.4em;
 }
 
 .summary {
@@ -345,10 +350,6 @@ td {
 
 .meter {
   padding: 12px 0;
-}
-
-li {
-  line-height: 2.4em;
 }
 
 @media screen and (max-width: 960px) {
