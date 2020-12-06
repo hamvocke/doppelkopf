@@ -4,7 +4,7 @@ import { TrickStack } from "@/models/trickStack";
 import { RandomCardBehavior } from "@/models/behaviors";
 import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
-import { announcements, requiredAnnouncements } from "@/models/announcements";
+import { announcements } from "@/models/announcements";
 import { playableCards } from "@/models/playableCardFinder";
 
 const notifier = new Notifier();
