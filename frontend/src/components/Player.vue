@@ -7,14 +7,17 @@
       </div>
       <div class="stats">
         <div v-if="player.isHuman" class="party">
-          <UsersIcon size="14" />
+          <UsersIcon size="16" />
           {{ player.hand.isRe() ? "Re" : "Kontra" }}
         </div>
         <div class="announcements">
+          <div v-if="player.announcements.size > 0" class="announcement">
+            <FlagIcon size="16" />
+          </div>
           <div
             v-for="announcement in player.announcements"
             :key="announcement"
-            class="party"
+            class="announcement"
           >
             {{ $t(announcement) }}
           </div>
@@ -42,14 +45,15 @@
 import Hand from "./Hand";
 import TrickStack from "./TrickStack";
 import { playableCards } from "@/models/playableCardFinder";
-import { UsersIcon } from "vue-feather-icons";
+import { UsersIcon, FlagIcon } from "vue-feather-icons";
 
 export default {
   name: "Player",
   components: {
     Hand,
     TrickStack,
-    UsersIcon
+    UsersIcon,
+    FlagIcon
   },
   props: {
     player: {
@@ -98,9 +102,6 @@ export default {
 }
 
 .info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin: 6px;
 }
 
@@ -148,10 +149,26 @@ export default {
 .party {
   background: var(--lightblue);
   color: var(--white);
-  border-radius: 4px;
-  font-size: 1em;
+  border-radius: 6px;
+  border: 2px solid var(--black);
   padding: 4px 8px;
   margin: 6px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.announcements {
+  margin-left: 12px;
+  display: inline-flex;
+}
+
+.announcement {
+  background: var(--red);
+  color: var(--white);
+  border-radius: 6px;
+  border: 2px solid var(--black);
+  padding: 4px 12px 4px 6px;
+  margin-right: -8px;
   display: inline-flex;
   align-items: center;
 }
@@ -191,7 +208,7 @@ export default {
     font-size: 1.1em;
   }
 
-  .party {
+  .party, .announcement {
     font-size: 0.9em;
   }
 
