@@ -10,6 +10,15 @@
           <UsersIcon size="14" />
           {{ player.hand.isRe() ? "Re" : "Kontra" }}
         </div>
+        <div class="announcements">
+          <div
+            v-for="announcement in player.announcements"
+            :key="announcement"
+            class="party"
+          >
+            {{ $t(announcement) }}
+          </div>
+        </div>
       </div>
     </div>
     <div class="container">
