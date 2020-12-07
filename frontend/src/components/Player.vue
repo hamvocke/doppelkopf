@@ -109,6 +109,10 @@ export default {
   flex-direction: column;
 }
 
+.name-info {
+  padding: 6px;
+}
+
 .name-info,
 .stats {
   display: flex;
@@ -152,7 +156,6 @@ export default {
   border-radius: 6px;
   border: 2px solid var(--black);
   padding: 4px 8px;
-  margin: 6px;
   display: inline-flex;
   align-items: center;
 }
@@ -169,6 +172,7 @@ export default {
   border: 2px solid var(--black);
   padding: 4px 12px 4px 6px;
   margin-right: -8px;
+  margin-bottom: -4 px;
   display: inline-flex;
   align-items: center;
 }
