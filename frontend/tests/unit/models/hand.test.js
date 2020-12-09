@@ -1,5 +1,5 @@
 import { Hand } from "@/models/hand";
-import { Card, ranks, suits, ace, ten, king, queen } from "@/models/card";
+import { Card, ranks, suits, ace, ten, king, queen, jack } from "@/models/card";
 import { allCards } from "@/models/deck";
 import { shuffle } from "lodash";
 
@@ -176,4 +176,40 @@ test("should detect playable hand", () => {
   const hand = new Hand(cards);
 
   expect(hand.isPlayable()).toBe(true);
+});
+
+test("should detect hand with more than seven ten point cards", () => {
+  const cards = [
+    ace.of(suits.clubs),
+    ten.of(suits.clubs),
+    ten.of(suits.clubs),
+    ten.of(suits.spades),
+    ten.of(suits.spades),
+    ten.of(suits.hearts),
+    ten.of(suits.hearts),
+    king.of(suits.hearts),
+    queen.of(suits.spades),
+    queen.of(suits.hearts)
+  ];
+  const hand = new Hand(cards);
+
+  expect(hand.isPlayable()).toBe(false);
+});
+
+test("should detect hand with trumps equal or lesser than jack of diamonds", () => {
+  const cards = [
+    king.of(suits.hearts),
+    king.of(suits.hearts),
+    ten.of(suits.clubs),
+    ten.of(suits.clubs),
+    ten.of(suits.spades),
+    ten.of(suits.spades),
+    ten.of(suits.diamonds),
+    ten.of(suits.diamonds),
+    jack.of(suits.diamonds),
+    jack.of(suits.diamonds)
+    ];
+  const hand = new Hand(cards);
+  
+  expect(hand.isPlayable()).toBe(false);
 });
