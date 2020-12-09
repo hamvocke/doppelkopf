@@ -1,5 +1,6 @@
 import { suits, ranks, compare } from "@/models/card";
 import { find, without } from "lodash-es";
+import { Card, jack } from "./card";
 
 export class Hand {
   constructor(cards = []) {
@@ -37,6 +38,8 @@ export class Hand {
   }
 
   isPlayable() {
-    return this.cards.filter(card => card.rank === ranks.king).length < 5;
+    return (this.cards.filter(card => card.rank === ranks.king).length < 5)
+    && (this.cards.filter(card => card.value >= 10).length < 7)
+    && (this.cards[0].compareTo(jack.of(suits.diamonds)) < 0);
   }
 }
