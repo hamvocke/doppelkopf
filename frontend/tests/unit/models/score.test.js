@@ -4,6 +4,7 @@ import { kontra, re } from "../../../src/models/party";
 import { extras } from "@/models/extras";
 import { announcements } from "@/models/announcements";
 import { PartyBuilder } from "../../builders/partyBuilder";
+import { PlayerBuilder } from "../../builders/playerBuilder";
 
 describe("Score", () => {
   test("should throw error when evaluation not exactly 240 points", () => {
@@ -15,6 +16,44 @@ describe("Score", () => {
     expect(illegalScoreCall).toThrowError(
       "A score must have a total of 240 points. Got 121 for Re, 121 for Kontra"
     );
+  });
+
+  test("should distribute points evenly when playing regular game", () => {
+    const reParty = new PartyBuilder(re)
+      .withPlayer(new PlayerBuilder(`some re player`).build())
+      .withPlayer(new PlayerBuilder(`another re player`).build())
+      .withPoints(123)
+      .build();
+
+    const kontraParty = new PartyBuilder(kontra)
+      .withPlayer(new PlayerBuilder(`some kontra player`).build())
+      .withPlayer(new PlayerBuilder(`another kontra player`).build())
+      .withPoints(240 - 123)
+      .build();
+
+    const score = new Score(reParty, kontraParty);
+
+    expect(score.playerPoints(re)).toEqual(1);
+    expect(score.playerPoints(kontra)).toEqual(-1);
+  });
+
+  test("should distribute points evenly when playing solo", () => {
+    const reParty = new PartyBuilder(re)
+      .withPlayer(new PlayerBuilder(`some re player`).build())
+      .withPoints(123)
+      .build();
+
+    const kontraParty = new PartyBuilder(kontra)
+      .withPlayer(new PlayerBuilder(`1 kontra player`).build())
+      .withPlayer(new PlayerBuilder(`2 kontra player`).build())
+      .withPlayer(new PlayerBuilder(`3 kontra player`).build())
+      .withPoints(240 - 123)
+      .build();
+
+    const score = new Score(reParty, kontraParty);
+
+    expect(score.playerPoints(re)).toEqual(3);
+    expect(score.playerPoints(kontra)).toEqual(-1);
   });
 });
 

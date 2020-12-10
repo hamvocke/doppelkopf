@@ -108,6 +108,21 @@ export class Score {
     return [...this.listExtras(partyName)].reduce(sumPoints, 0);
   }
 
+  // todo rename in playerPoints
+  playerPoints(partyName) {
+    const otherPartyName = partyName === re ? kontra : re;
+    const thisParty = this.parties[partyName] || this.parties[re];
+
+    const delta = this.points(partyName) - this.points(otherPartyName);
+
+    if (partyName === this.winningPartyName() && thisParty.isPlayingSolo()) {
+      return delta * 3;
+    }
+
+    return delta;
+  }
+
+  // todo remove
   totalPoints() {
     const winnerParty = this.winningPartyName() || re;
     const loserParty = this.losingPartyName() || kontra;
