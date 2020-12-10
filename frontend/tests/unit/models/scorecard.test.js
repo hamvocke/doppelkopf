@@ -43,6 +43,42 @@ describe("Scorecard", () => {
     expect(scorecard.scoreLines[0].totalPoints[players[2].id]).toEqual(-4);
   });
 
+  test("should calculate winning solo score line", () => {
+    scorecard.addScore(
+      new ScoreBuilder()
+        .withWinners(re, players[0])
+        .withLosers(kontra, players[1], players[2], players[3])
+        .withPoints(4)
+        .build()
+    );
+
+    expect(scorecard.scoreLines[0]).toBeDefined();
+    expect(scorecard.scoreLines[0].points).toEqual(4);
+    expect(scorecard.scoreLines[0].winners).toEqual([players[0]]);
+    expect(scorecard.scoreLines[0].totalPoints[players[1].id]).toEqual(-4);
+    expect(scorecard.scoreLines[0].totalPoints[players[2].id]).toEqual(-4);
+    expect(scorecard.scoreLines[0].totalPoints[players[3].id]).toEqual(-4);
+    expect(scorecard.scoreLines[0].totalPoints[players[0].id]).toEqual(12);
+  });
+
+  test("should calculate loosing solo score line", () => {
+    scorecard.addScore(
+      new ScoreBuilder()
+        .withWinners(re, players[1], players[2], players[3])
+        .withLosers(kontra, players[0])
+        .withPoints(4)
+        .build()
+    );
+
+    expect(scorecard.scoreLines[0]).toBeDefined();
+    expect(scorecard.scoreLines[0].points).toEqual(4);
+    expect(scorecard.scoreLines[0].winners).toEqual([players[1], players[2], players[3]]);
+    expect(scorecard.scoreLines[0].totalPoints[players[0].id]).toEqual(-12);
+    expect(scorecard.scoreLines[0].totalPoints[players[1].id]).toEqual(4);
+    expect(scorecard.scoreLines[0].totalPoints[players[2].id]).toEqual(4);
+    expect(scorecard.scoreLines[0].totalPoints[players[3].id]).toEqual(4);
+  });
+
   test("should calculate final scores", () => {
     scorecard.addScore(
       new ScoreBuilder()
