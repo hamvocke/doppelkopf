@@ -14,6 +14,10 @@ export class Party {
     this.players = players;
   }
 
+  isPlayingSolo() {
+    return this.players.length === 1;
+  }
+
   points() {
     return this.players.reduce((acc, player) => acc + player.points(), 0);
   }

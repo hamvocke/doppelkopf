@@ -94,7 +94,6 @@ export class Score {
     return this.winningPartyName() === re ? kontra : re;
   }
 
-  // todo: remove, just for compatibility with the old score interface
   winner() {
     return this.parties[this.winningPartyName()];
   }
@@ -108,11 +107,17 @@ export class Score {
     return [...this.listExtras(partyName)].reduce(sumPoints, 0);
   }
 
-  totalPoints() {
-    const winnerParty = this.winningPartyName() || re;
-    const loserParty = this.losingPartyName() || kontra;
+  totalPoints(partyName) {
+    const otherPartyName = partyName === re ? kontra : re;
+    const thisParty = this.parties[partyName] || this.parties[re];
 
-    return this.points(winnerParty) - this.points(loserParty);
+    const delta = this.points(partyName) - this.points(otherPartyName);
+
+    if (partyName === this.winningPartyName() && thisParty.isPlayingSolo()) {
+      return delta * 3;
+    }
+
+    return delta;
   }
 
   _hasAnyPartyAnnounced(announcement) {

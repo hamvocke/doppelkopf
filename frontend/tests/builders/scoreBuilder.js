@@ -4,6 +4,7 @@ import { re, kontra, Party } from "@/models/party";
 export class ScoreBuilder {
   constructor() {
     this.extras = { re: [], kontra: [] };
+    this.points = { re: 0, kontra: 0 };
   }
 
   withWinners(partyName, ...players) {
@@ -17,7 +18,18 @@ export class ScoreBuilder {
   }
 
   withPoints(points) {
-    this.points = points;
+    this.points[re] = points;
+    this.points[kontra] = -points;
+    return this;
+  }
+
+  withRePoints(points) {
+    this.points[re] = points;
+    return this;
+  }
+
+  withKontraPoints(points) {
+    this.points[kontra] = points;
     return this;
   }
 
@@ -36,7 +48,7 @@ export class ScoreBuilder {
     this.losingParty.points = () => 110;
     const score = new Score(this.winningParty, this.losingParty);
     score.winningPartyName = () => this.winningParty.name;
-    score.totalPoints = () => this.points;
+    score.totalPoints = (partyName) => this.points[partyName];
     score.listExtras = partyName => this.extras[partyName];
     return score;
   }

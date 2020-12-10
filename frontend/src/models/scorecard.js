@@ -9,14 +9,16 @@ export class Scorecard {
   addScore(score) {
     const newTotalPoints = {};
     const winningPlayers = score.winner().players;
-    const points = score.totalPoints();
+    const winnerPoints = score.totalPoints(score.winningPartyName());
+    const loserPoints = score.totalPoints(score.losingPartyName());
+
     this.players.forEach(p => {
       newTotalPoints[p.id] = includes(winningPlayers, p)
-        ? this.totalPointsFor(p) + points
-        : this.totalPointsFor(p) - points;
+        ? this.totalPointsFor(p) + winnerPoints
+        : this.totalPointsFor(p) + loserPoints;
     });
 
-    const scoreline = new Scoreline(newTotalPoints, winningPlayers, points);
+    const scoreline = new Scoreline(newTotalPoints, winningPlayers, winnerPoints);
     this.scoreLines.push(scoreline);
   }
 
