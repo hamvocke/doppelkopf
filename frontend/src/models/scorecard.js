@@ -12,8 +12,8 @@ export class Scorecard {
     const points = score.totalPoints();
     this.players.forEach(p => {
       newTotalPoints[p.id] = includes(winningPlayers, p)
-        ? this.totalPointsFor(p) + points
-        : this.totalPointsFor(p) - points;
+        ? this.totalPointsFor(p) + points * (winningPlayers.length === 1 ? 3 : 1)
+        : this.totalPointsFor(p) - points * (winningPlayers.length === 3 ? 3 : 1)
     });
 
     const scoreline = new Scoreline(newTotalPoints, winningPlayers, points);
