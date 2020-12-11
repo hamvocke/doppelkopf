@@ -104,4 +104,31 @@ export class Trick {
         playedCard.card.suit === suits.clubs
     )
   }
+
+  caughtCharlie() {
+    let extras = []
+    this.findCharlie().forEach((charlie) => {
+      const caughtCharlie =
+        (charlie.player.isRe() && !this.winner().isRe) ||
+        (charlie.player.isKontra() && !this.winner().isKontra)
+      if (caughtCharlie) extras.push(extrasModel.charlie);
+    });
+  }
+
+  trumpedCharlie() {
+    let extras = []
+    this.findCharlie().forEach((charlie) => {
+      /*
+       we will be checking for charlie to be the highest card
+       (this will always return one card and neglect to care for a second re charlie)
+       therefore its easier to just loop through instead of checking for an empty array
+      */
+      const caughtCharlie =
+        ((charlie.player.isRe() && this.winner().isRe) ||
+        (charlie.player.isKontra() && this.winner().isKontra)) &&
+        // here is the magic
+        this.highestCard === charlie;
+      if (caughtCharlie) extras.push(extrasModel.charlie);
+    });
+  }
 }
