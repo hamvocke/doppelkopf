@@ -93,4 +93,12 @@ export class Trick {
         playedCard.card.suit === suits.diamonds
     )[0];
   }
+
+  findCharlie() {
+    return this.playedCards.filter(
+      playedCard =>
+        playedCard.card.rank === ranks.jack &&
+        playedCard.card.suit === suits.clubs
+    )
+  }
 }
