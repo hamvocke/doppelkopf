@@ -75,13 +75,12 @@ export class Trick {
       extras.push(extrasModel.doppelkopf);
     }
 
-    var fox = this.findFox();
-    if (fox) {
+    this.findFox().forEach((fox) => {
       const caughtByOtherParty =
         (fox.player.isRe() && !this.winner().isRe()) ||
         (fox.player.isKontra() && !this.winner().isKontra());
       if (caughtByOtherParty) extras.push(extrasModel.fox);
-    }
+    });
 
     return extras;
   }
@@ -91,6 +90,6 @@ export class Trick {
       playedCard =>
         playedCard.card.rank === ranks.ace &&
         playedCard.card.suit === suits.diamonds
-    )[0];
+    );
   }
 }
