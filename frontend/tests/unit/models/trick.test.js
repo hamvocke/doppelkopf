@@ -173,4 +173,36 @@ describe("extras", () => {
 
     expect(trick.extras()).toEqual([extras.fox]);
   });
+
+  test("should find two Füchse", () => {
+    const trick = new Trick(4);
+
+    player1.isRe = () => true;
+    player2.isRe = () => true;
+    player3.isRe = () => false;
+    player4.isRe = () => false;
+
+    trick.add(ten.of(suits.hearts), player3);
+    trick.add(king.of(suits.spades), player4);
+    trick.add(ace.of(suits.diamonds), player1);
+    trick.add(ace.of(suits.diamonds), player2);
+
+    expect(trick.extras()).toEqual([extras.fox, extras.fox]);
+  });
+
+  test("should see two Füchse, catching one", () => {
+    const trick = new Trick(4);
+
+    player1.isRe = () => true;
+    player2.isRe = () => true;
+    player3.isRe = () => false;
+    player4.isRe = () => false;
+
+    trick.add(ten.of(suits.hearts), player3);
+    trick.add(ace.of(suits.diamonds), player4);
+    trick.add(ace.of(suits.diamonds), player1);
+    trick.add(king.of(suits.spades), player2);
+
+    expect(trick.extras()).toEqual([extras.fox]);
+  });
 });
