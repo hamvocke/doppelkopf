@@ -47,7 +47,7 @@ export class Trick {
     return this.playedCards[0].card;
   }
 
-  winner() {
+  highestCard() {
     if (!this.playedCards[0]) {
       return undefined;
     }
@@ -58,8 +58,12 @@ export class Trick {
         highestCard = card;
       }
     }
+    return highestCard;
+  }
 
-    return highestCard.player;
+  winner() {
+    let highestCard = this.highestCard();
+    return highestCard ? highestCard.player : undefined;
   }
 
   points() {
