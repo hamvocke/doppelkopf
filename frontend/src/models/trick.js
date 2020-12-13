@@ -1,4 +1,4 @@
-import { uniqueId } from "lodash-es";
+import { uniqueId, flatten } from "lodash-es";
 import { PlayedCard, beats } from "@/models/playedCard";
 import { ranks, suits } from "@/models/card";
 import { extras as extrasModel } from "@/models/extras";
@@ -83,15 +83,10 @@ export class Trick {
     if (this.points() >= 40) {
       extras.push(extrasModel.doppelkopf);
     }
-
-    this.findFox().forEach((fox) => {
-      const caughtByOtherParty =
-        (fox.player.isRe() && !this.winner().isRe()) ||
-        (fox.player.isKontra() && !this.winner().isKontra());
-      if (caughtByOtherParty) extras.push(extrasModel.fox);
-    });
-
-    return extras;
+    extras.push(this.caughtFox());
+    extras.push(this.caughtCharlie());
+    extras.push(this.trumpedCharlie());
+    return flatten(extras);
   }
 
   findFox() {
@@ -100,6 +95,17 @@ export class Trick {
         playedCard.card.rank === ranks.ace &&
         playedCard.card.suit === suits.diamonds
     );
+  }
+
+  caughtFox(){
+    let extras = [];
+    this.findFox().forEach((fox) => {
+      const caughtByOtherParty =
+        (fox.player.isRe() && !this.winner().isRe()) ||
+        (fox.player.isKontra() && !this.winner().isKontra());
+      if (caughtByOtherParty) extras.push(extrasModel.fox);
+    });
+    return extras;
   }
 
   findCharlie() {
