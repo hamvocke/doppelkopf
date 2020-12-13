@@ -9,6 +9,11 @@ export class Trick {
     this.playedCards = [];
     this.finished = false;
     this.id = uniqueId("trick_");
+    this.lastTrickInRound = false;
+  }
+
+  setLastTrickInRound(){
+    this.lastTrickInRound = true;
   }
 
   add(card, player) {
@@ -107,28 +112,34 @@ export class Trick {
 
   caughtCharlie() {
     let extras = []
-    this.findCharlie().forEach((charlie) => {
-      const caughtCharlie =
-        (charlie.player.isRe() && !this.winner().isRe) ||
-        (charlie.player.isKontra() && !this.winner().isKontra)
-      if (caughtCharlie) extras.push(extrasModel.charlie);
-    });
+    if (this.lastTrickInRound) {
+      this.findCharlie().forEach((charlie) => {
+        const caughtCharlie =
+          (charlie.player.isRe() && !this.winner().isRe()) ||
+          (charlie.player.isKontra() && !this.winner().isKontra())
+        if (caughtCharlie) extras.push(extrasModel.charlie_caught);
+      });
+    }
+    return extras;
   }
 
   trumpedCharlie() {
     let extras = []
-    this.findCharlie().forEach((charlie) => {
-      /*
-       we will be checking for charlie to be the highest card
-       (this will always return one card and neglect to care for a second re charlie)
-       therefore its easier to just loop through instead of checking for an empty array
-      */
-      const caughtCharlie =
-        ((charlie.player.isRe() && this.winner().isRe) ||
-        (charlie.player.isKontra() && this.winner().isKontra)) &&
-        // here is the magic
-        this.highestCard === charlie;
-      if (caughtCharlie) extras.push(extrasModel.charlie);
-    });
+    if (this.lastTrickInRound){
+      this.findCharlie().forEach((charlie) => {
+        /*
+        we will be checking for charlie to be the highest card
+        (this will always return one card and neglect to care for a second re charlie)
+        therefore its easier to just loop through instead of checking for an empty array
+        */
+        const trumpedCharlie =
+          ((charlie.player.isRe() && this.winner().isRe()) ||
+          (charlie.player.isKontra() && this.winner().isKontra())) &&
+          // here is the magic
+          this.highestCard() === charlie;
+        if (trumpedCharlie) extras.push(extrasModel.charlie_trumped);
+      });
+    }
+    return extras;
   }
 }
