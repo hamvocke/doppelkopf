@@ -25,7 +25,9 @@ export class Round {
   }
 
   nextTrick() {
-    return new Trick(this.players.length);
+    let trick = new Trick(this.players.length);
+    if (this.cardsLeft() <= 4) trick.setLastTrickInRound();
+    return trick;
   }
 
   nextPlayer() {
@@ -49,9 +51,12 @@ export class Round {
   }
 
   noMoreCardsLeft() {
+    return (this.cardsLeft() === 0);
+  }
+
+  cardsLeft() {
     const sumCardsFn = (acc, player) => acc + player.hand.cards.length;
-    const sumOfCardsLeft = this.players.reduce(sumCardsFn, 0);
-    return sumOfCardsLeft === 0;
+    return this.players.reduce(sumCardsFn, 0);
   }
 
   isFinished() {
