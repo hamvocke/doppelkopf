@@ -2,7 +2,7 @@ export const extras = {
   doppelkopf: { i18nKey: "doppelkopf", points: 1 },
   fox: { i18nKey: "fox", points: 1 },
   charlie_caught: { i18nKey: "charly_caught", points: 1},
-  charlie_tricked: { i18nKey: "charly_saved", points: 1},
+  charlie_trumped: { i18nKey: "charly_trumped", points: 1},
   win: { i18nKey: "win", points: 1 },
   beat_re: { i18nKey: "beat_re", points: 1 },
   no_90: { i18nKey: "no_90", points: 1 },
