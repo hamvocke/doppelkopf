@@ -1,7 +1,7 @@
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PlayedCard } from "@/models/playedCard";
-import { queen, king, suits, ten, ace } from "@/models/card";
+import { queen, jack, king, suits, ten, ace } from "@/models/card";
 import { extras } from "@/models/extras";
 
 const player1 = new Player("Player 1", true);
@@ -204,5 +204,140 @@ describe("extras", () => {
     trick.add(king.of(suits.spades), player2);
 
     expect(trick.extras()).toEqual([extras.fox]);
+  });
+
+  test("should see charlie in random trick", () => {
+    const trick = new Trick(4);
+
+    player1.isRe = () => true;
+    player2.isRe = () => true;
+    player3.isRe = () => false;
+    player4.isRe = () => false;
+
+    trick.add(jack.of(suits.hearts), player3);
+    trick.add(jack.of(suits.clubs), player4);
+    trick.add(ten.of(suits.hearts), player1);
+    trick.add(queen.of(suits.spades), player2);
+
+    expect(trick.extras()).toEqual([]);
+  });
+
+  test("should catch charlie", () => {
+    const trick = new Trick(4);
+    trick.setLastTrickInRound();
+
+    player1.isRe = () => true;
+    player2.isRe = () => true;
+    player3.isRe = () => false;
+    player4.isRe = () => false;
+
+    trick.add(jack.of(suits.hearts), player3);
+    trick.add(jack.of(suits.clubs), player4);
+    trick.add(ten.of(suits.hearts), player1);
+    trick.add(queen.of(suits.spades), player2);
+
+    expect(trick.extras()).toEqual([extras.charlie_caught]);
+  });
+
+  test("should catch two charlies", () => {
+    const trick = new Trick(4);
+    trick.setLastTrickInRound();
+
+    player1.isRe = () => true;
+    player2.isRe = () => true;
+    player3.isRe = () => false;
+    player4.isRe = () => false;
+
+    trick.add(jack.of(suits.clubs), player3);
+    trick.add(jack.of(suits.clubs), player4);
+    trick.add(ten.of(suits.hearts), player1);
+    trick.add(queen.of(suits.spades), player2);
+
+    expect(trick.extras()).toEqual([extras.charlie_caught, extras.charlie_caught]);
+  });
+
+  test("should see charlie, nothing happens", () => {
+    const trick = new Trick(4);
+    trick.setLastTrickInRound();
+
+    player1.isRe = () => true;
+    player2.isRe = () => true;
+    player3.isRe = () => false;
+    player4.isRe = () => false;
+
+    trick.add(jack.of(suits.diamonds), player3);
+    trick.add(jack.of(suits.diamonds), player4);
+    trick.add(ten.of(suits.hearts), player1);
+    trick.add(jack.of(suits.clubs), player2);
+
+    expect(trick.extras()).toEqual([]);
+  });
+
+  test("should see both charlies, one is caught", () => {
+    const trick = new Trick(4);
+    trick.setLastTrickInRound();
+
+    player1.isRe = () => true;
+    player2.isRe = () => true;
+    player3.isRe = () => false;
+    player4.isRe = () => false;
+
+    trick.add(jack.of(suits.diamonds), player3);
+    trick.add(jack.of(suits.clubs), player4);
+    trick.add(ten.of(suits.hearts), player1);
+    trick.add(jack.of(suits.clubs), player2);
+
+    expect(trick.extras()).toEqual([extras.charlie_caught]);
+  });
+
+  test("should see charlie winning the trick", () => {
+    const trick = new Trick(4);
+    trick.setLastTrickInRound();
+
+    player1.isRe = () => true;
+    player2.isRe = () => true;
+    player3.isRe = () => false;
+    player4.isRe = () => false;
+
+    trick.add(jack.of(suits.diamonds), player3);
+    trick.add(jack.of(suits.diamonds), player4);
+    trick.add(ten.of(suits.spades), player1);
+    trick.add(jack.of(suits.clubs), player2);
+
+    expect(trick.extras()).toEqual([extras.charlie_trumped]);
+  });
+
+  test("should see charlie winning the trick, catching a charlie", () => {
+    const trick = new Trick(4);
+    trick.setLastTrickInRound();
+
+    player1.isRe = () => true;
+    player2.isRe = () => true;
+    player3.isRe = () => false;
+    player4.isRe = () => false;
+
+    trick.add(jack.of(suits.diamonds), player3);
+    trick.add(jack.of(suits.clubs), player4);
+    trick.add(ten.of(suits.spades), player1);
+    trick.add(jack.of(suits.clubs), player2);
+
+    expect(trick.extras()).toEqual([extras.charlie_caught, extras.charlie_trumped]);
+  });
+
+  test("should see charlie winning the trick, catching a charlie and a fox", () => {
+    const trick = new Trick(4);
+    trick.setLastTrickInRound();
+
+    player1.isRe = () => true;
+    player2.isRe = () => true;
+    player3.isRe = () => false;
+    player4.isRe = () => false;
+
+    trick.add(jack.of(suits.diamonds), player3);
+    trick.add(jack.of(suits.clubs), player4);
+    trick.add(ace.of(suits.diamonds), player1);
+    trick.add(jack.of(suits.clubs), player2);
+
+    expect(trick.extras()).toEqual([extras.fox, extras.charlie_caught, extras.charlie_trumped]);
   });
 });
