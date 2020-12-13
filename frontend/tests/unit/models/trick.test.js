@@ -304,7 +304,7 @@ describe("extras", () => {
     trick.add(ten.of(suits.spades), player1);
     trick.add(jack.of(suits.clubs), player2);
 
-    expect(trick.extras()).toEqual([extras.charlie_trumped]);
+    expect(trick.extras()).toEqual([extras.charlie]);
   });
 
   test("should see charlie winning the trick, catching a charlie", () => {
@@ -321,7 +321,7 @@ describe("extras", () => {
     trick.add(ten.of(suits.spades), player1);
     trick.add(jack.of(suits.clubs), player2);
 
-    expect(trick.extras()).toEqual([extras.charlie_caught, extras.charlie_trumped]);
+    expect(trick.extras()).toEqual([extras.charlie_caught, extras.charlie]);
   });
 
   test("should see charlie winning the trick, catching a charlie and a fox", () => {
@@ -338,6 +338,6 @@ describe("extras", () => {
     trick.add(ace.of(suits.diamonds), player1);
     trick.add(jack.of(suits.clubs), player2);
 
-    expect(trick.extras()).toEqual([extras.fox, extras.charlie_caught, extras.charlie_trumped]);
+    expect(trick.extras()).toEqual([extras.fox, extras.charlie_caught, extras.charlie]);
   });
 });

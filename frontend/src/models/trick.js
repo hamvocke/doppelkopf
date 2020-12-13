@@ -85,7 +85,7 @@ export class Trick {
     }
     extras.push(this.caughtFox());
     extras.push(this.caughtCharlie());
-    extras.push(this.trumpedCharlie());
+    extras.push(this.charlie());
     return flatten(extras);
   }
 
@@ -129,7 +129,7 @@ export class Trick {
     return extras;
   }
 
-  trumpedCharlie() {
+  charlie() {
     let extras = []
     if (this.lastTrickInRound){
       this.findCharlie().forEach((charlie) => {
@@ -138,12 +138,12 @@ export class Trick {
         (this will always return one card and neglect to care for a second re charlie)
         therefore its easier to just loop through instead of checking for an empty array
         */
-        const trumpedCharlie =
+        const charlie_trump =
           ((charlie.player.isRe() && this.winner().isRe()) ||
           (charlie.player.isKontra() && this.winner().isKontra())) &&
           // here is the magic
           this.highestCard() === charlie;
-        if (trumpedCharlie) extras.push(extrasModel.charlie_trumped);
+        if (charlie_trump) extras.push(extrasModel.charlie);
       });
     }
     return extras;
