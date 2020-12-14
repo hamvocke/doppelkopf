@@ -124,7 +124,7 @@ export default {
 
 .top .card,
 .bottom .card {
-  margin-left: -32px;
+  margin-left: -24px;
 }
 
 .top .card:last-child,
@@ -134,7 +134,7 @@ export default {
 
 .left .card,
 .right .card {
-  margin-top: -60px;
+  margin-top: -64px;
 }
 
 .left .card:first-child,

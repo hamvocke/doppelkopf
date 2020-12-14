@@ -87,12 +87,12 @@ export default {
 .card-inner {
   position: relative;
   top: 0px; /* necessary for css transition */
-  height: 95px;
-  width: 65px;
+  height: 85px;
+  width: 58px;
   color: var(--black);
   background: var(--white);
   padding: 6px;
-  border-radius: 12px;
+  border-radius: 10px;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
