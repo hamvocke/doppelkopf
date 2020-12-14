@@ -9,6 +9,12 @@
   "start-game": "Spiel starten!",
   "how-to-play": "Spielregeln",
 
+  "10": "10",
+  "J": "B",
+  "Q": "D",
+  "K": "K",
+  "A": "A",
+
   "win": "Gewonnen",
   "win_description": "Diese Partei hat das Spiel gewonnen",
   "beat_re": "Gegen die Alten",

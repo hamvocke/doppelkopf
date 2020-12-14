@@ -9,6 +9,12 @@
   "start-game": "Start Game!",
   "how-to-play": "How to play?",
 
+  "10": "10",
+  "J": "J",
+  "Q": "Q",
+  "K": "K",
+  "A": "A",
+
   "win": "Win",
   "win_description": "This party won the game",
   "beat_re": "Against the elders",

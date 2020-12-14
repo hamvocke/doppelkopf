@@ -6,12 +6,12 @@
       </template>
       <template v-else>
         <div class="card-top" :class="colorClasses">
-          <div class="rank">{{ card.rank }}</div>
+          <div class="rank">{{ $t(card.rank) }}</div>
           <div class="suit">{{ card.suit }}</div>
         </div>
         <span class="card-center" :class="colorClasses"> {{ card.suit }} </span>
         <div class="card-bottom" :class="colorClasses">
-          <div class="rank">{{ card.rank }}</div>
+          <div class="rank">{{ $t(card.rank) }}</div>
           <div class="suit">{{ card.suit }}</div>
           </div>
       </template>
