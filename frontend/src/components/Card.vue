@@ -91,8 +91,8 @@ export default {
   width: 65px;
   color: var(--black);
   background: var(--white);
-  padding: 4px;
-  border-radius: 8px;
+  padding: 6px;
+  border-radius: 12px;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -125,8 +125,8 @@ export default {
 .card-top {
   position: absolute;
   font-size: 1.1em;
-  left: 4px;
-  top: 4px;
+  left: 6px;
+  top: 6px;
 }
 
 .suit {
@@ -137,8 +137,8 @@ export default {
 .card-bottom {
   position: absolute;
   font-size: 1.1em;
-  right: 4px;
-  bottom: 4px;
+  right: 6px;
+  bottom: 6px;
   transform: rotate(180deg);
 }
 
