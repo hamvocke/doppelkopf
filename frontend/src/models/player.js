@@ -46,7 +46,8 @@ export class Player {
 
     const announcement = this.behavior.announcementToMake(this.possibleAnnouncements());
     if (announcement !== null) {
-      this.announce(announcement);
+      // TODO: enable once announcements go live - should really check the feature here instead
+      // this.announce(announcement);
     }
   }
 
