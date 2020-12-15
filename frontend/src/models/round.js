@@ -26,7 +26,7 @@ export class Round {
 
   nextTrick() {
     let trick = new Trick(this.players.length);
-    if (this.cardsLeft() <= 4) trick.setLastTrickInRound();
+    if (this.cardsLeft() <= this.players.length) trick.setLastTrickInRound();
     return trick;
   }
 

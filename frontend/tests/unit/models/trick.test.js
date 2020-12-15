@@ -147,6 +147,15 @@ test("should return points in a trick", () => {
 });
 
 describe("extras", () => {
+  beforeEach(() => {
+    player1.isRe = () => true;
+    player2.isRe = () => true;
+    player3.isRe = () => false;
+    player4.isRe = () => false;
+  });
+
+  // tests here
+
   test("should find Doppelkopf", () => {
     const trick = new Trick(4);
 
@@ -158,13 +167,8 @@ describe("extras", () => {
     expect(trick.extras()).toEqual([extras.doppelkopf]);
   });
 
-  test("should find Fuchs", () => {
+  test("should catch Fuchs", () => {
     const trick = new Trick(4);
-
-    player1.isRe = () => true;
-    player2.isRe = () => true;
-    player3.isRe = () => false;
-    player4.isRe = () => false;
 
     trick.add(ten.of(suits.hearts), player3);
     trick.add(king.of(suits.spades), player4);
@@ -174,13 +178,8 @@ describe("extras", () => {
     expect(trick.extras()).toEqual([extras.fox]);
   });
 
-  test("should find two Füchse", () => {
+  test("should catch two Füchse", () => {
     const trick = new Trick(4);
-
-    player1.isRe = () => true;
-    player2.isRe = () => true;
-    player3.isRe = () => false;
-    player4.isRe = () => false;
 
     trick.add(ten.of(suits.hearts), player3);
     trick.add(king.of(suits.spades), player4);
@@ -190,13 +189,8 @@ describe("extras", () => {
     expect(trick.extras()).toEqual([extras.fox, extras.fox]);
   });
 
-  test("should see two Füchse, catching one", () => {
+  test("should see two Füchse in the trick, catching one", () => {
     const trick = new Trick(4);
-
-    player1.isRe = () => true;
-    player2.isRe = () => true;
-    player3.isRe = () => false;
-    player4.isRe = () => false;
 
     trick.add(ten.of(suits.hearts), player3);
     trick.add(ace.of(suits.diamonds), player4);
@@ -206,13 +200,8 @@ describe("extras", () => {
     expect(trick.extras()).toEqual([extras.fox]);
   });
 
-  test("should see charlie in random trick", () => {
+  test("charlie has to be caught in last trick", () => {
     const trick = new Trick(4);
-
-    player1.isRe = () => true;
-    player2.isRe = () => true;
-    player3.isRe = () => false;
-    player4.isRe = () => false;
 
     trick.add(jack.of(suits.hearts), player3);
     trick.add(jack.of(suits.clubs), player4);
@@ -226,11 +215,6 @@ describe("extras", () => {
     const trick = new Trick(4);
     trick.setLastTrickInRound();
 
-    player1.isRe = () => true;
-    player2.isRe = () => true;
-    player3.isRe = () => false;
-    player4.isRe = () => false;
-
     trick.add(jack.of(suits.hearts), player3);
     trick.add(jack.of(suits.clubs), player4);
     trick.add(ten.of(suits.hearts), player1);
@@ -243,11 +227,6 @@ describe("extras", () => {
     const trick = new Trick(4);
     trick.setLastTrickInRound();
 
-    player1.isRe = () => true;
-    player2.isRe = () => true;
-    player3.isRe = () => false;
-    player4.isRe = () => false;
-
     trick.add(jack.of(suits.clubs), player3);
     trick.add(jack.of(suits.clubs), player4);
     trick.add(ten.of(suits.hearts), player1);
@@ -256,14 +235,9 @@ describe("extras", () => {
     expect(trick.extras()).toEqual([extras.charlie_caught, extras.charlie_caught]);
   });
 
-  test("should see charlie, nothing happens", () => {
+  test("charlie has been catched by teammate, nothing happens", () => {
     const trick = new Trick(4);
     trick.setLastTrickInRound();
-
-    player1.isRe = () => true;
-    player2.isRe = () => true;
-    player3.isRe = () => false;
-    player4.isRe = () => false;
 
     trick.add(jack.of(suits.diamonds), player3);
     trick.add(jack.of(suits.diamonds), player4);
@@ -277,11 +251,6 @@ describe("extras", () => {
     const trick = new Trick(4);
     trick.setLastTrickInRound();
 
-    player1.isRe = () => true;
-    player2.isRe = () => true;
-    player3.isRe = () => false;
-    player4.isRe = () => false;
-
     trick.add(jack.of(suits.diamonds), player3);
     trick.add(jack.of(suits.clubs), player4);
     trick.add(ten.of(suits.hearts), player1);
@@ -293,11 +262,6 @@ describe("extras", () => {
   test("should see charlie winning the trick", () => {
     const trick = new Trick(4);
     trick.setLastTrickInRound();
-
-    player1.isRe = () => true;
-    player2.isRe = () => true;
-    player3.isRe = () => false;
-    player4.isRe = () => false;
 
     trick.add(jack.of(suits.diamonds), player3);
     trick.add(jack.of(suits.diamonds), player4);
@@ -311,11 +275,6 @@ describe("extras", () => {
     const trick = new Trick(4);
     trick.setLastTrickInRound();
 
-    player1.isRe = () => true;
-    player2.isRe = () => true;
-    player3.isRe = () => false;
-    player4.isRe = () => false;
-
     trick.add(jack.of(suits.diamonds), player3);
     trick.add(jack.of(suits.clubs), player4);
     trick.add(ten.of(suits.spades), player1);
@@ -327,11 +286,6 @@ describe("extras", () => {
   test("should see charlie winning the trick, catching a charlie and a fox", () => {
     const trick = new Trick(4);
     trick.setLastTrickInRound();
-
-    player1.isRe = () => true;
-    player2.isRe = () => true;
-    player3.isRe = () => false;
-    player4.isRe = () => false;
 
     trick.add(jack.of(suits.diamonds), player3);
     trick.add(jack.of(suits.clubs), player4);
