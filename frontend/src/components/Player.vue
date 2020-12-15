@@ -226,7 +226,7 @@ export default {
 
   .party,
   .announcement {
-    font-size: 0.9em;
+    font-size: 0.8em;
   }
 
   .bottom .hand,
