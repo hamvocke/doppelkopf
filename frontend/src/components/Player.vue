@@ -19,7 +19,7 @@
             :key="announcement"
             class="announcement"
           >
-            {{ $t(announcement) }}
+            {{ $t(`${announcement}_short`) }}
           </div>
         </div>
       </div>
@@ -163,6 +163,14 @@ export default {
 .announcements {
   margin-left: 12px;
   display: inline-flex;
+  justify-content: start;
+  align-items: flex-start;
+}
+
+.left .announcements,
+.right .announcements {
+  margin-left: 0;
+  flex-wrap: wrap;
 }
 
 .announcement {
@@ -172,9 +180,13 @@ export default {
   border: 2px solid var(--black);
   padding: 4px 12px 4px 6px;
   margin-right: -8px;
-  margin-bottom: -4 px;
   display: inline-flex;
   align-items: center;
+}
+
+.announcement:last-child {
+  padding-right: 6px;
+  margin-right: 0;
 }
 
 .party svg {
