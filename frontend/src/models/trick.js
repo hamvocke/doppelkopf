@@ -1,4 +1,4 @@
-import { uniqueId, flatten } from "lodash-es";
+import { uniqueId } from "lodash-es";
 import { PlayedCard, beats } from "@/models/playedCard";
 import { ranks, suits } from "@/models/card";
 import { extras as extrasModel } from "@/models/extras";
@@ -12,7 +12,7 @@ export class Trick {
     this.lastTrickInRound = false;
   }
 
-  setLastTrickInRound(){
+  setLastTrickInRound() {
     this.lastTrickInRound = true;
   }
 
@@ -83,10 +83,12 @@ export class Trick {
     if (this.points() >= 40) {
       extras.push(extrasModel.doppelkopf);
     }
-    extras.push(this.caughtFox());
-    extras.push(this.caughtCharlie());
-    extras.push(this.charlie());
-    return flatten(extras);
+    extras = extras.concat(this.caughtFox());
+    extras = extras.concat(this.caughtCharlie());
+    if (this.charlie()) {
+      extras.push(extrasModel.charlie);
+    }
+    return extras;
   }
 
   findFox() {
@@ -97,9 +99,9 @@ export class Trick {
     );
   }
 
-  caughtFox(){
+  caughtFox() {
     let extras = [];
-    this.findFox().forEach((fox) => {
+    this.findFox().forEach(fox => {
       const caughtByOtherParty =
         (fox.player.isRe() && !this.winner().isRe()) ||
         (fox.player.isKontra() && !this.winner().isKontra());
@@ -113,16 +115,16 @@ export class Trick {
       playedCard =>
         playedCard.card.rank === ranks.jack &&
         playedCard.card.suit === suits.clubs
-    )
+    );
   }
 
   caughtCharlie() {
-    let extras = []
+    let extras = [];
     if (this.lastTrickInRound) {
-      this.findCharlie().forEach((charlie) => {
+      this.findCharlie().forEach(charlie => {
         const caughtCharlie =
           (charlie.player.isRe() && !this.winner().isRe()) ||
-          (charlie.player.isKontra() && !this.winner().isKontra())
+          (charlie.player.isKontra() && !this.winner().isKontra());
         if (caughtCharlie) extras.push(extrasModel.charlie_caught);
       });
     }
@@ -130,22 +132,17 @@ export class Trick {
   }
 
   charlie() {
-    let extras = []
-    if (this.lastTrickInRound){
-      this.findCharlie().forEach((charlie) => {
-        /*
-        we will be checking for charlie to be the highest card
-        (this will always return one card and neglect to care for a second re charlie)
-        therefore its easier to just loop through instead of checking for an empty array
-        */
-        const charlie_trump =
-          ((charlie.player.isRe() && this.winner().isRe()) ||
+    let charlies = this.findCharlie();
+    if (this.lastTrickInRound && charlies.length > 0) {
+      // first charlie has to be highest card in trick
+      let charlie = charlies[0];
+      const charlie_trump =
+        ((charlie.player.isRe() && this.winner().isRe()) ||
           (charlie.player.isKontra() && this.winner().isKontra())) &&
-          // here is the magic
-          this.highestCard() === charlie;
-        if (charlie_trump) extras.push(extrasModel.charlie);
-      });
+        // here is the magic
+        this.highestCard() === charlie;
+      return charlie_trump;
     }
-    return extras;
+    return false;
   }
 }
