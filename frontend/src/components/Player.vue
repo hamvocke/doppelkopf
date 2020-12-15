@@ -7,12 +7,12 @@
       </div>
       <div class="stats">
         <div v-if="player.isHuman" class="party">
-          <UsersIcon size="16" />
+          <UsersIcon size="14" />
           {{ player.hand.isRe() ? "Re" : "Kontra" }}
         </div>
         <div class="announcements">
-          <div v-if="player.announcements.size > 0" class="announcement">
-            <FlagIcon size="16" />
+          <div v-if="player.announcements.size > 0" class="announcement flag-icon">
+            <FlagIcon size="14" />
           </div>
           <div
             v-for="announcement in player.announcements"
@@ -184,6 +184,10 @@ export default {
   align-items: center;
 }
 
+.flag-icon {
+  padding: 6px 12px 6px 4px;
+}
+
 .announcement:last-child {
   padding-right: 6px;
   margin-right: 0;
@@ -227,6 +231,10 @@ export default {
   .party,
   .announcement {
     font-size: 0.8em;
+  }
+
+  .flag-icon {
+    padding: 4px 10px 5px 4px;
   }
 
   .bottom .hand,
