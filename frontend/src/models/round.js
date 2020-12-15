@@ -96,8 +96,6 @@ export class Round {
 
     this.currentTrick = this.nextTrick();
 
-    // todo: hack - remove and calculate parties once in the constructor
-    // this is only needed because some tests mess with the parties after the round being set up
     this.parties = findParties(this.players);
     this.score = new Score(this.parties[re], this.parties[kontra]);
     this.scorecard.addScore(this.score);
