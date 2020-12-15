@@ -11,6 +11,10 @@ export function generateNameId() {
   return `${verb}-${adjective}-${noun}`;
 }
 
+export function chance(percentage) {
+  return Math.random() * 100 <= percentage;
+}
+
 const names = [
   "Peter",
   "Wolfgang",

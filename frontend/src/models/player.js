@@ -43,6 +43,11 @@ export class Player {
       this.game.currentTrick.baseCard()
     );
     this.play(cardToBePlayed);
+
+    const announcement = this.behavior.announcementToMake(this.possibleAnnouncements());
+    if (announcement !== null) {
+      this.announce(announcement);
+    }
   }
 
   play(card) {

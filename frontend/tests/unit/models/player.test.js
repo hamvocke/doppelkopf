@@ -149,7 +149,8 @@ test("should autoplay a card", () => {
   player.game.currentTrick.baseCard = () => queen.of(suits.diamonds);
   player.hand = new Hand([queenOnHand, kingOnHand]);
   player.behavior = {
-    cardToPlay: jest.fn(() => kingOnHand)
+    cardToPlay: jest.fn(() => kingOnHand),
+    announcementToMake: jest.fn(() => null),
   };
 
   player.autoplay();
@@ -158,6 +159,21 @@ test("should autoplay a card", () => {
   expect(player.behavior.cardToPlay).toBeCalledWith(
     player.hand,
     expect.any(Card)
+  );
+});
+
+test("should try to make an announcement", () => {
+  player.hand = aHandWith(10);
+  game.currentRound.waitingForPlayer = () => game.players[0];
+  player.behavior = {
+    cardToPlay: jest.fn(() => player.hand.cards[0]),
+    announcementToMake: jest.fn(() => null)
+  };
+
+  player.autoplay();
+
+  expect(player.behavior.announcementToMake).toBeCalledWith(
+    expect.any(Set)
   );
 });
 
