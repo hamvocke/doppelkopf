@@ -14,6 +14,10 @@ export class RandomCardBehavior {
   }
 
   announcementToMake(possibleAnnouncements) {
+    if (possibleAnnouncements.size === 0) {
+      return null;
+    }
+
     const announcementChance = 10;
     if (chance(announcementChance)) {
       return [...possibleAnnouncements][0];

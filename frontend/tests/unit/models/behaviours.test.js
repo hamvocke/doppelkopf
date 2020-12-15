@@ -43,5 +43,11 @@ describe("Random Card Behavior", () => {
     const announcement = behavior.announcementToMake(possibleAnnouncements);
 
     expect(announcement).toEqual(announcements.re);
-  })
+  });
+
+  test("should return null if no announcement possible", () => {
+    const announcement = behavior.announcementToMake(new Set());
+
+    expect(announcement).toBe(null);
+  });
 });
