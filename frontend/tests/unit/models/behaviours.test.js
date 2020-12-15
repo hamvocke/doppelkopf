@@ -1,6 +1,12 @@
 import { HighestCardBehavior, RandomCardBehavior } from "@/models/behaviors";
 import { Hand } from "@/models/hand";
+import { announcements } from "@/models/announcements";
 import { ace, king, queen, jack, suits, ten, Card } from "@/models/card";
+
+jest.mock('@/models/random', () => ({
+  __esModule: true,
+  chance: () => true
+}));
 
 describe("Highest Card Behavior", () => {
   const behavior = new HighestCardBehavior();
@@ -30,4 +36,12 @@ describe("Random Card Behavior", () => {
     const cardToPlay = behavior.cardToPlay(hand, ten.of(suits.diamonds));
     expect(cardToPlay).toEqual(expect.any(Card));
   });
+
+  test("should make an announcement by chance", () => {
+    const possibleAnnouncements = new Set([announcements.re, announcements.no_90]);
+
+    const announcement = behavior.announcementToMake(possibleAnnouncements);
+
+    expect(announcement).toEqual(announcements.re);
+  })
 });
