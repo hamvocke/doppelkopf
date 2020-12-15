@@ -228,7 +228,15 @@ test("should clear trick stack when resetting player", () => {
   player.reset();
 
   expect(player.trickStack).toEqual(new TrickStack());
-})
+});
+
+test("should clear announcements when resetting player", () => {
+  player.announce(player.isRe() ? announcements.re : announcements.kontra)
+
+  player.reset();
+
+  expect(player.announcements).toEqual(new Set());
+});
 
 describe("announcements", () => {
   test("should announce", () => {

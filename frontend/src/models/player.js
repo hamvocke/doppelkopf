@@ -22,11 +22,11 @@ export class Player {
     this.hand = new Hand();
     this.isHuman = isHuman;
     this.isMe = isMe;
-    this.trickStack = new TrickStack();
     this.tablePosition = tablePosition;
     this.game = game;
     this.behavior = new RandomCardBehavior();
-    this.announcements = new Set();
+
+    this.reset();
   }
 
   isRe() {
@@ -93,6 +93,7 @@ export class Player {
 
   reset() {
     this.trickStack = new TrickStack();
+    this.announcements = new Set();
   }
 
   points() {
