@@ -203,8 +203,8 @@ export default {
   .card-inner.top,
   .card-inner.left,
   .card-inner.right {
-    height: 42px;
-    width: 28px;
+    height: 38px;
+    width: 26px;
   }
 
   .selected {
