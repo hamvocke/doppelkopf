@@ -75,7 +75,7 @@ export class Trick {
       extras.push(extrasModel.doppelkopf);
     }
 
-    this.findFox().forEach((fox) => {
+    this.findFox().forEach(fox => {
       const caughtByOtherParty =
         (fox.player.isRe() && !this.winner().isRe()) ||
         (fox.player.isKontra() && !this.winner().isKontra());

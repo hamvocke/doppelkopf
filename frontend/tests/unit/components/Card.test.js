@@ -3,9 +3,8 @@ import { ace, suits } from "@/models/card";
 import { mount } from "@vue/test-utils";
 import VueTestUtils from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = (key) => key;
-VueTestUtils.config.mocks["$tc"] = (key) => key;
-
+VueTestUtils.config.mocks["$t"] = key => key;
+VueTestUtils.config.mocks["$tc"] = key => key;
 
 describe("Card.vue", () => {
   it("should render correct contents", () => {

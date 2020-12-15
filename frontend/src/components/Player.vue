@@ -212,7 +212,8 @@ export default {
     font-size: 1.1em;
   }
 
-  .party, .announcement {
+  .party,
+  .announcement {
     font-size: 0.9em;
   }
 

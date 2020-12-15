@@ -18,7 +18,11 @@ export class Scorecard {
         : this.totalPointsFor(p) + loserPoints;
     });
 
-    const scoreline = new Scoreline(newTotalPoints, winningPlayers, winnerPoints);
+    const scoreline = new Scoreline(
+      newTotalPoints,
+      winningPlayers,
+      winnerPoints
+    );
     this.scoreLines.push(scoreline);
   }
 

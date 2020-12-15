@@ -208,8 +208,8 @@ test("should detect hand with trumps equal or lesser than jack of diamonds", () 
     ten.of(suits.diamonds),
     jack.of(suits.diamonds),
     jack.of(suits.diamonds)
-    ];
+  ];
   const hand = new Hand(cards);
-  
+
   expect(hand.isPlayable()).toBe(false);
 });

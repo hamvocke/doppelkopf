@@ -231,7 +231,7 @@ test("should clear trick stack when resetting player", () => {
 });
 
 test("should clear announcements when resetting player", () => {
-  player.announce(player.isRe() ? announcements.re : announcements.kontra)
+  player.announce(player.isRe() ? announcements.re : announcements.kontra);
 
   player.reset();
 

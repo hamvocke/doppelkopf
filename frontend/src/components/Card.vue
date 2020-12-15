@@ -13,7 +13,7 @@
         <div class="card-bottom" :class="colorClasses">
           <div class="rank">{{ $t(card.rank) }}</div>
           <div class="suit">{{ card.suit }}</div>
-          </div>
+        </div>
       </template>
     </div>
     <div v-if="playerName" class="playerName">{{ playerName }}</div>
