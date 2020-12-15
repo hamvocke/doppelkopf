@@ -91,7 +91,7 @@ export class Player {
     this.trickStack.add(trick);
   }
 
-  clearTrickStack() {
+  reset() {
     this.trickStack = new TrickStack();
   }
 
