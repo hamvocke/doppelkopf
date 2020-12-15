@@ -27,7 +27,8 @@ function stubScoreHumanPlayerWins() {
     .withLosers(kontra, players[2], players[3])
     .withReExtras([extras.win, extras.announced_re, extras.fox])
     .withKontraExtras([])
-    .withPoints(2)
+    .withRePoints(3)
+    .withKontraPoints(-3)
     .build();
 }
 
@@ -53,7 +54,8 @@ beforeEach(() => {
     .withLosers(re, players[0], players[1])
     .withKontraExtras([extras.win, extras.announced_re])
     .withReExtras([extras.fox])
-    .withPoints(2)
+    .withRePoints(-2)
+    .withKontraPoints(2)
     .build();
 });
 
@@ -108,11 +110,22 @@ describe("Scorecard.vue", () => {
     expect(wrapper.find("h1.message").text()).toContain("you_win");
   });
 
-  it.skip("should show 'you lose' message when player lost", () => {
+  it("should show 'you lose' message when player lost", () => {
+    players = [
+      stubPlayer("Player 1", re, 60),
+      stubPlayer("Player 2", re, 59),
+      stubPlayer("Player 3", kontra, 60),
+      stubPlayer("Player 4", kontra, 61)
+    ];
+
+    scorecard = new ScorecardModel(players);
     score = new ScoreBuilder()
       .withWinners(kontra, players[2], players[3])
       .withLosers(re, players[0], players[1])
-      .withPoints(2)
+      .withReExtras([])
+      .withKontraExtras([extras.win, extras.against_re])
+      .withRePoints(-2)
+      .withKontraPoints(2)
       .build();
 
     const wrapper = mount(Scorecard, {

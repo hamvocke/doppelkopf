@@ -5,9 +5,15 @@
         <div class="background"></div>
       </template>
       <template v-else>
-        <span class="suitTop" :class="colorClasses">{{ card.suit }}</span>
-        <span class="rank">{{ card.rank }}</span>
-        <span class="suitBottom" :class="colorClasses">{{ card.suit }}</span>
+        <div class="card-top" :class="colorClasses">
+          <div class="rank">{{ $t(card.rank) }}</div>
+          <div class="suit">{{ card.suit }}</div>
+        </div>
+        <span class="card-center" :class="colorClasses"> {{ card.suit }} </span>
+        <div class="card-bottom" :class="colorClasses">
+          <div class="rank">{{ $t(card.rank) }}</div>
+          <div class="suit">{{ card.suit }}</div>
+        </div>
       </template>
     </div>
     <div v-if="playerName" class="playerName">{{ playerName }}</div>
@@ -74,9 +80,6 @@ export default {
 @import "../assets/css/vars.css";
 
 .card {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-delay: 0s;
 }
@@ -84,16 +87,17 @@ export default {
 .card-inner {
   position: relative;
   top: 0px; /* necessary for css transition */
-  height: 80px;
-  width: 56px;
+  height: 85px;
+  width: 58px;
   color: var(--black);
   background: var(--white);
   padding: 6px;
-  border-radius: 12px;
+  border-radius: 10px;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   user-select: none;
+  font-weight: 900;
 }
 
 .card-inner:not(.covered):hover {
@@ -118,23 +122,33 @@ export default {
   z-index: 200;
 }
 
-.suitTop {
+.card-top {
   position: absolute;
-  font-size: 1.2em;
-  left: 8px;
-  top: 8px;
+  font-size: 1.1em;
+  left: 6px;
+  top: 6px;
 }
 
-.suitBottom {
-  position: absolute;
-  font-size: 1.2em;
-  right: 8px;
-  bottom: 8px;
+.suit {
+  margin-top: -2px;
+  font-size: 0.9em;
 }
 
-.rank {
+.card-bottom {
+  position: absolute;
+  font-size: 1.1em;
+  right: 6px;
+  bottom: 6px;
+  transform: rotate(180deg);
+}
+
+.card-center {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  height: 100%;
   font-size: 2em;
-  line-height: 80px;
 }
 
 .red {
@@ -175,18 +189,22 @@ export default {
 }
 
 @media screen and (max-width: 680px) {
+  .background {
+    border-radius: 4px;
+  }
+
   .card-inner {
-    height: 58px;
+    height: 55px;
     width: 38px;
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 3px;
   }
 
   .card-inner.top,
   .card-inner.left,
   .card-inner.right {
-    height: 42px;
-    width: 28px;
+    height: 38px;
+    width: 26px;
   }
 
   .selected {
@@ -195,21 +213,26 @@ export default {
     z-index: 200;
   }
 
-  .rank {
-    line-height: 55px;
-    font-size: 1.3em;
+  .card-top {
+    left: 3px;
+    top: 3px;
   }
 
-  .suitTop {
-    font-size: 0.8em;
-    left: 4px;
-    top: 4px;
+  .card-bottom {
+    display: none;
   }
 
-  .suitBottom {
-    font-size: 0.8em;
-    right: 4px;
-    bottom: 4px;
+  .card-top .rank {
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+
+  .suit {
+    display: none;
+  }
+
+  .card-center {
+    font-size: 1.5em;
   }
 }
 </style>
