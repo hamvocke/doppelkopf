@@ -71,12 +71,12 @@ export class Game {
       this.scorecard,
       this.playerOpeningOrder.next()
     );
-    this.clearTrickStacks();
+    this.resetPlayers();
     this.deal();
     this.currentRound.nextMove();
   }
 
-  clearTrickStacks() {
-    this.players.forEach(player => player.clearTrickStack());
+  resetPlayers() {
+    this.players.forEach(player => player.reset());
   }
 }

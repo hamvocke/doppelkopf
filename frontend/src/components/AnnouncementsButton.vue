@@ -9,8 +9,9 @@
       :class="{ open: isOpen }"
       @click="toggleDropdown"
     >
+      <flag-icon size="20"/>
       <span class="button-text">{{ $t("announce") }}</span>
-      <chevron-up-icon size="16"></chevron-up-icon>
+      <chevron-up-icon size="16"/>
     </button>
     <div v-show="isOpen" class="dropdown">
       <button
@@ -26,12 +27,12 @@
 </template>
 
 <script>
-import { ChevronUpIcon } from "vue-feather-icons";
+import { ChevronUpIcon, FlagIcon } from "vue-feather-icons";
 import { mixin as clickaway } from "vue-clickaway";
 
 export default {
   name: "AnnouncementsButton",
-  components: { ChevronUpIcon },
+  components: { ChevronUpIcon, FlagIcon },
   mixins: [clickaway],
   props: {
     player: {
@@ -68,7 +69,7 @@ export default {
 }
 
 .button-text {
-  margin-right: 8px;
+  margin: 0 8px;
 }
 
 .open {

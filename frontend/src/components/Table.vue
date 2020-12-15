@@ -74,7 +74,7 @@ export default {
     "controls controls controls";
   grid-template-rows: auto 1fr auto 80px;
   grid-template-columns: 120px 1fr 120px;
-  overflow: hidden;
+  overflow: auto;
   height: 100%;
 }
 

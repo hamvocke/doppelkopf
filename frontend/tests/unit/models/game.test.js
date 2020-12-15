@@ -54,11 +54,11 @@ test("should start a new round", () => {
   expect(game.players[0].hand.cards).toHaveLength(10);
 });
 
-test("should clear trick stacks", () => {
+test("should reset all players stacks when starting a new round", () => {
   const someTrickStack = new TrickStack([new Trick(4), new Trick(4)]);
   game.players.forEach(player => (player.trickStack = someTrickStack));
 
-  game.clearTrickStacks();
+  game.nextRound();
 
   expect(game.players[0].trickStack).toEqual(new TrickStack());
   expect(game.players[1].trickStack).toEqual(new TrickStack());

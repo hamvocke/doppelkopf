@@ -8,6 +8,7 @@ import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
 import { sampleSize } from "lodash-es";
 import { announcements } from "@/models/announcements";
+import { Trick } from "@/models/trick";
 
 let game;
 let player;
@@ -148,7 +149,8 @@ test("should autoplay a card", () => {
   player.game.currentTrick.baseCard = () => queen.of(suits.diamonds);
   player.hand = new Hand([queenOnHand, kingOnHand]);
   player.behavior = {
-    cardToPlay: jest.fn(() => kingOnHand)
+    cardToPlay: jest.fn(() => kingOnHand),
+    announcementToMake: jest.fn(() => null),
   };
 
   player.autoplay();
@@ -157,6 +159,21 @@ test("should autoplay a card", () => {
   expect(player.behavior.cardToPlay).toBeCalledWith(
     player.hand,
     expect.any(Card)
+  );
+});
+
+test("should try to make an announcement", () => {
+  player.hand = aHandWith(10);
+  game.currentRound.waitingForPlayer = () => game.players[0];
+  player.behavior = {
+    cardToPlay: jest.fn(() => player.hand.cards[0]),
+    announcementToMake: jest.fn(() => null)
+  };
+
+  player.autoplay();
+
+  expect(player.behavior.announcementToMake).toBeCalledWith(
+    expect.any(Set)
   );
 });
 
@@ -213,6 +230,28 @@ test("should validate playable cards if no card has been played yet", () => {
 
   expect(player.canPlay(queenOnHand)).toBe(true);
   expect(player.canPlay(tenOnHand)).toBe(true);
+});
+
+test("should clear trick stack when resetting player", () => {
+  const trick = new Trick(4);
+  trick.add(queen.of(suits.clubs), game.players[0]);
+  trick.add(queen.of(suits.spades), game.players[1]);
+  trick.add(queen.of(suits.hearts), game.players[2]);
+  trick.add(queen.of(suits.diamonds), game.players[3]);
+  player.win(trick);
+
+  expect(player.trickStack).not.toEqual(new TrickStack());
+  player.reset();
+
+  expect(player.trickStack).toEqual(new TrickStack());
+});
+
+test("should clear announcements when resetting player", () => {
+  player.announce(player.isRe() ? announcements.re : announcements.kontra);
+
+  player.reset();
+
+  expect(player.announcements).toEqual(new Set());
 });
 
 describe("announcements", () => {
