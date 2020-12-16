@@ -101,10 +101,6 @@ export default {
   font-weight: 900;
 }
 
-.card-inner:not(.covered):hover {
-  cursor: pointer;
-}
-
 .top {
   transform: rotate(180deg);
 }

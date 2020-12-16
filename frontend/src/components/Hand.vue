@@ -127,6 +127,10 @@ export default {
   margin-left: -24px;
 }
 
+.bottom .card:hover {
+  cursor: pointer;
+}
+
 .top .card:last-child,
 .bottom .card:first-child {
   margin-left: 0;
