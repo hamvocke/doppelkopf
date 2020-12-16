@@ -1,12 +1,11 @@
 import WaitingRoom from "@/views/WaitingRoom";
 import { WaitingRoom as WaitingRoomModel } from "@/models/waitingRoom";
 import { Player } from "@/models/player";
-import { mount } from "@vue/test-utils";
-import VueTestUtils from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = msg => msg;
-VueTestUtils.config.mocks["$tc"] = msg => msg;
-VueTestUtils.config.mocks["$i18n"] = { locale: "en" };
+config.mocks["$t"] = msg => msg;
+config.mocks["$tc"] = msg => msg;
+config.mocks["$i18n"] = { locale: "en" };
 
 describe("WaitingRoom.vue", () => {
   test("should render players", () => {

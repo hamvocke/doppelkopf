@@ -1,11 +1,10 @@
 import Home from "@/views/Home";
-import { shallowMount } from "@vue/test-utils";
-import VueTestUtils from "@vue/test-utils";
+import { shallowMount, config } from "@vue/test-utils";
 import { RouterLinkStub } from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = msg => msg;
-VueTestUtils.config.mocks["$tc"] = msg => msg;
-VueTestUtils.config.mocks["$i18n"] = { locale: "en" };
+config.mocks["$t"] = msg => msg;
+config.mocks["$tc"] = msg => msg;
+config.mocks["$i18n"] = { locale: "en" };
 
 describe("Home.vue", () => {
   test("should show start button", () => {

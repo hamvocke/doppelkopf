@@ -1,10 +1,9 @@
 import Notifications from "@/components/Notifications";
 import { Notifier } from "@/models/notifier";
-import { mount } from "@vue/test-utils";
-import VueTestUtils from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = msg => msg;
-VueTestUtils.config.mocks["$tc"] = msg => msg;
+config.mocks["$t"] = msg => msg;
+config.mocks["$tc"] = msg => msg;
 jest.useFakeTimers();
 
 describe("Notifications.vue", () => {
@@ -39,7 +38,6 @@ describe("Notifications.vue", () => {
     expect(wrapper.vm.stickies[0].text).toBe("An update is available!");
   });
 
-  // TODO: re-enable after upgrading vue-test-utils to v1
   it.skip("should handle sticky messages click", () => {
     const wrapper = mount(Notifications);
     const onClick = jest.fn();

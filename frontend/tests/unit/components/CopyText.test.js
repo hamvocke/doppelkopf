@@ -1,9 +1,8 @@
 import CopyText from "@/components/CopyText";
-import { mount } from "@vue/test-utils";
-import VueTestUtils from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = () => {};
-VueTestUtils.config.mocks["$tc"] = () => {};
+config.mocks["$t"] = () => {};
+config.mocks["$tc"] = () => {};
 
 jest.useFakeTimers();
 let mockClipboard;

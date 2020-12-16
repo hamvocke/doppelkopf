@@ -1,11 +1,10 @@
 import Player from "@/components/Player";
 import { Game } from "@/models/game";
 import { ace, suits } from "@/models/card";
-import { mount } from "@vue/test-utils";
-import VueTestUtils from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = key => key;
-VueTestUtils.config.mocks["$tc"] = msg => msg;
+config.mocks["$t"] = key => key;
+config.mocks["$tc"] = msg => msg;
 
 const game = Game.singlePlayer();
 
