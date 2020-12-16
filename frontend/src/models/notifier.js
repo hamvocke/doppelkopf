@@ -22,9 +22,9 @@ export class Notifier {
     this.notifications.pop();
   }
 
-  sticky(message, args = null, onClick) {
+  sticky(message, args = null, onClick, onDismiss = null) {
     const id = uniqueId("message_");
-    const onDismiss = () => {
+    const onDismissDefault = () => {
       this.stickies = this.stickies.filter(n => n.id !== id);
     };
     const notification = new Notification(
@@ -32,7 +32,7 @@ export class Notifier {
       message,
       args,
       onClick,
-      onDismiss
+      onDismiss ?? onDismissDefault
     );
 
     this.stickies.push(notification);

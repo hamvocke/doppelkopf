@@ -7,6 +7,7 @@ config.mocks["$tc"] = msg => msg;
 jest.useFakeTimers();
 
 describe("Notifications.vue", () => {
+  const notifier = new Notifier();
   afterEach(() => {
     jest.runAllTimers();
   });
@@ -14,7 +15,7 @@ describe("Notifications.vue", () => {
   it("should display message", () => {
     const wrapper = mount(Notifications);
 
-    new Notifier().info("Hello World");
+    notifier.info("Hello World");
 
     expect(wrapper.vm.notifications).toHaveLength(1);
     expect(wrapper.vm.notifications[0].text).toBe("Hello World");
@@ -23,7 +24,7 @@ describe("Notifications.vue", () => {
   it("should display flash message", () => {
     const wrapper = mount(Notifications);
 
-    new Notifier().flash("Doppelkopf");
+    notifier.flash("Doppelkopf");
 
     expect(wrapper.vm.flashMessages).toHaveLength(1);
     expect(wrapper.vm.flashMessages[0].text).toBe("Doppelkopf");
@@ -32,33 +33,34 @@ describe("Notifications.vue", () => {
   it("should display sticky messages", () => {
     const wrapper = mount(Notifications);
 
-    new Notifier().sticky("An update is available!", null, jest.fn());
+    notifier.sticky("An update is available!", null, jest.fn());
 
     expect(wrapper.vm.stickies).toHaveLength(1);
     expect(wrapper.vm.stickies[0].text).toBe("An update is available!");
   });
 
-  it.skip("should handle sticky messages click", () => {
+  it("should handle sticky messages click", async () => {
+    notifier.stickies = [];
     const wrapper = mount(Notifications);
     const onClick = jest.fn();
+    notifier.sticky("An update is available!", null, onClick);
+    await wrapper.setData({ stickies: notifier.stickies }); // for some reason this needs explicit kicking
 
-    new Notifier().sticky("An update is available!", null, onClick);
-
-    const allStickies = wrapper.findAll(".message .clickable");
-    expect(allStickies).toHaveLength(1);
-
-    allStickies.at(1).trigger("click");
+    await wrapper.find(".message.clickable").trigger("click");
 
     expect(onClick).toHaveBeenCalled();
   });
 
-  it.skip("should dismiss sticky message on dismiss click", () => {
+  it("should dismiss sticky message on dismiss click", async () => {
+    notifier.stickies = [];
     const wrapper = mount(Notifications);
+    const onDismiss = jest.fn();
+    notifier.sticky("An update is available!", null, jest.fn(), onDismiss);
+    await wrapper.setData({ stickies: notifier.stickies }); // for some reason this needs explicit kicking
 
-    new Notifier().sticky("An update is available!", null, jest.fn());
+    const stickyCloseButton = wrapper.find(".message.clickable .close-button");
+    await stickyCloseButton.trigger("click");
 
-    const sticky = wrapper.find(".message .clickable");
-    sticky.trigger("click");
-    expect(wrapper.vm.stickies).toHaveLength(0);
+    expect(onDismiss).toHaveBeenCalled();
   });
 });
