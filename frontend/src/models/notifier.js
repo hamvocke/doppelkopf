@@ -51,18 +51,10 @@ export class Notifier {
 }
 
 class Notification {
-  constructor(
-    id,
-    text,
-    args = null,
-    isSticky = false,
-    onClick = null,
-    onDismiss = null
-  ) {
+  constructor(id, text, args = null, onClick = null, onDismiss = null) {
     this.id = id;
     this.text = text;
     this.args = args;
-    this.isSticky = isSticky;
     this.onClick = onClick;
     this.onDismiss = onDismiss;
   }

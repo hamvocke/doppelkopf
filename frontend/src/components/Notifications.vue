@@ -4,10 +4,13 @@
       <div
         v-for="sticky in stickies"
         :key="sticky.id"
-        class="message"
-        :click="sticky.onClick"
+        class="message clickable"
+        @click="sticky.onClick"
       >
         {{ $t(sticky.text, sticky.args) }}
+        <button class="close-button" @click.stop.prevent="sticky.onDismiss">
+          <x-icon size="20" />
+        </button>
       </div>
     </transition-group>
     <transition-group name="message" class="notifications">
@@ -32,12 +35,13 @@
 <script>
 import { Notifier } from "@/models/notifier";
 import FlashMessage from "@/components/FlashMessage";
+import { XIcon } from "vue-feather-icons";
 
 const notifier = new Notifier();
 
 export default {
   name: "Notifications",
-  components: { FlashMessage },
+  components: { FlashMessage, XIcon },
   data: function() {
     return {
       stickies: notifier.stickies,
@@ -61,10 +65,11 @@ export default {
 }
 
 .message {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0px auto 6px;
-  line-height: 42px;
-  height: 100%;
+  padding: 8px;
   width: 80%;
   font-size: 1em;
   background: var(--lightblue);
@@ -82,5 +87,19 @@ export default {
 .message-leave-to {
   opacity: 0;
   transform: translateY(-48px);
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: var(--white);
+  margin: 0;
+  margin-left: 12px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.clickable {
+  cursor: pointer;
 }
 </style>
