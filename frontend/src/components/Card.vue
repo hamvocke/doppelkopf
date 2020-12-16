@@ -82,6 +82,7 @@ export default {
 .card {
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-delay: 0s;
+  display: inline-flex;
 }
 
 .card-inner {
