@@ -159,7 +159,7 @@ export default {
 
   .left .card,
   .right .card {
-    margin-top: -24px;
+    margin-top: -28px;
   }
 
   .left .card:first-child,
