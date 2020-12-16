@@ -2,6 +2,16 @@
   <div class="notification-container">
     <transition-group name="message" class="notifications">
       <div
+        v-for="sticky in stickies"
+        :key="sticky.id"
+        class="message"
+        :click="sticky.onClick"
+      >
+        {{ $t(sticky.text, sticky.args) }}
+      </div>
+    </transition-group>
+    <transition-group name="message" class="notifications">
+      <div
         v-for="notification in notifications"
         :key="notification.id"
         class="message"
@@ -30,6 +40,7 @@ export default {
   components: { FlashMessage },
   data: function() {
     return {
+      stickies: notifier.stickies,
       notifications: notifier.notifications,
       flashMessages: notifier.flashMessages
     };
