@@ -11,7 +11,10 @@
           {{ player.hand.isRe() ? "Re" : "Kontra" }}
         </div>
         <div class="announcements">
-          <div v-if="player.announcements.size > 0" class="announcement flag-icon">
+          <div
+            v-if="player.announcements.size > 0"
+            class="announcement flag-icon"
+          >
             <FlagIcon size="14" />
           </div>
           <div

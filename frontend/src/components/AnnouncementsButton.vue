@@ -9,9 +9,9 @@
       :class="{ open: isOpen }"
       @click="toggleDropdown"
     >
-      <flag-icon size="20"/>
+      <flag-icon size="20" />
       <span class="button-text">{{ $t("announce") }}</span>
-      <chevron-up-icon size="16"/>
+      <chevron-up-icon size="16" />
     </button>
     <div v-show="isOpen" class="dropdown">
       <button

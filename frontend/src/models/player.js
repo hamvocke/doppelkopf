@@ -44,7 +44,9 @@ export class Player {
     );
     this.play(cardToBePlayed);
 
-    const announcement = this.behavior.announcementToMake(this.possibleAnnouncements());
+    const announcement = this.behavior.announcementToMake(
+      this.possibleAnnouncements()
+    );
     if (announcement !== null) {
       // TODO: enable once announcements go live - should really check the feature here instead
       // this.announce(announcement);
