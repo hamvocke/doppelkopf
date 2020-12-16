@@ -90,11 +90,13 @@ export default {
 }
 
 .dropdown button:hover,
+.dropdown button:active,
 .dropdown button:focus {
   background: color(var(--red) shade(15%));
 }
 
 .dropdown button:hover ~ button,
+.dropdown button:active ~ button,
 .dropdown button:focus ~ button {
   background: color(var(--red) shade(15%));
 }
