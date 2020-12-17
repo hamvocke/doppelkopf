@@ -22,18 +22,7 @@ class Toggle(db.Model):
         return self.name == other.name and self.enabled == other.enabled
 
     def serialize(self):
-        return {"id": self.id, "name": self.name, "enabled": self.enabled}
-
-    @staticmethod
-    def merge(persisted_toggles: list, code_toggles: list) -> list:
-        persisted_dict = {t.name: t for t in persisted_toggles}
-        code_dict = {t.name: t for t in code_toggles}
-        merged_toggles = copy.deepcopy(code_dict)
-        for key in code_dict:
-            if key in persisted_dict:
-                merged_toggles[key].enabled = persisted_dict[key].enabled
-
-        return list(merged_toggles.values())
+        return {self.name: self.enabled}
 
     @staticmethod
     def insert_all():
@@ -55,31 +44,11 @@ class Toggle(db.Model):
 toggles = [
     Toggle(
         id=1,
-        name="game.rules.karlchen",
-        description="Aktiviert die 'Karlchen' Spielregel",
+        name="game.tutorial.enable",
+        description="Aktiviert das Tutorial",
     ),
     Toggle(
         id=2,
-        name="game.rules.fuchs",
-        description="Aktiviert die 'Fuchs gefangen' Spielregel",
-    ),
-    Toggle(
-        id=3,
-        name="game.rules.scharf",
-        description="Wenn aktiv, werden 9er aus dem Spiel entfernt",
-    ),
-    Toggle(
-        id=4,
-        name="game.rules.zweite_dulle",
-        description="Aktiviert die 'zweite Dulle schlaegt die erste' Spielregel",
-    ),
-    Toggle(
-        id=5,
-        name="show_tutorial_link",
-        description="Link zur Spielanleitung auf der Startseite anzeigen?",
-    ),
-    Toggle(
-        id=6,
         name="game.announcements.enable",
         description="Aktiviert 'Ansagen'",
     ),

@@ -79,6 +79,11 @@ def save_game_event(game_id: int, type: EventTypes):
 
 @blueprint.route("/features", methods=["GET"])
 def features():
-    toggles = {t.name: t.serialize() for t in Toggle.query.all()}
+    toggles = Toggle.query.all()
 
-    return jsonify({"features": toggles})
+    mergedToggles = {}
+
+    for toggle in toggles:
+        mergedToggles.update(toggle.serialize())
+
+    return jsonify({"features": mergedToggles})
