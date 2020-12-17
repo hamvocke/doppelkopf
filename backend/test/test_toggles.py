@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 def test_serialize():
     toggle = Toggle(id=1, name="some", enabled=True, description="some description")
 
-    expected_serialization = { "some": True}
+    expected_serialization = {"some": True}
     assert toggle.serialize() == expected_serialization
 
 
