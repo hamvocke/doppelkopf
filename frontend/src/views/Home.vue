@@ -40,8 +40,8 @@ export default {
       showTutorial: false
     };
   },
-  async created() {
-    this.showTutorial = (await Features.get("show_tutorial_link")).enabled;
+  created() {
+    this.showTutorial = Features.get("game.tutorial.enable");
   }
 };
 </script>

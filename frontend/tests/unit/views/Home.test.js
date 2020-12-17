@@ -1,4 +1,5 @@
 import Home from "@/views/Home";
+import { Features } from "@/models/features";
 import { shallowMount, config } from "@vue/test-utils";
 import { RouterLinkStub } from "@vue/test-utils";
 
@@ -16,6 +17,8 @@ describe("Home.vue", () => {
   });
 
   test("should show tutorial link when feature is disabled", () => {
+    Features.features = { "game.tutorial.enable": false };
+
     const wrapper = shallowMount(Home, {
       stubs: { "router-link": RouterLinkStub },
       propsData: { showTutorial: false }
