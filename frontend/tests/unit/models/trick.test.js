@@ -200,7 +200,7 @@ describe("extras", () => {
     expect(trick.extras()).toEqual([extras.fox]);
   });
 
-  test("charlie has to be caught in last trick", () => {
+  test("should not detect charlie if it's not the last trick", () => {
     const trick = new Trick(4);
 
     trick.add(jack.of(suits.hearts), player3);
@@ -235,7 +235,7 @@ describe("extras", () => {
     expect(trick.extras()).toEqual([extras.charlie_caught, extras.charlie_caught]);
   });
 
-  test("charlie has been catched by teammate, nothing happens", () => {
+  test("should see charlie being catched by teammate, no extras applied", () => {
     const trick = new Trick(4);
     trick.setLastTrickInRound();
 
