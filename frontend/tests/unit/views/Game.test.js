@@ -1,11 +1,10 @@
 import Game from "@/views/Game";
 import { Game as GameModel } from "@/models/game";
-import { mount } from "@vue/test-utils";
-import VueTestUtils from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = msg => msg;
-VueTestUtils.config.mocks["$tc"] = msg => msg;
-VueTestUtils.config.mocks["$i18n"] = { locale: "en" };
+config.mocks["$t"] = msg => msg;
+config.mocks["$tc"] = msg => msg;
+config.mocks["$i18n"] = { locale: "en" };
 
 describe("Game.vue", () => {
   test("should render Table", () => {

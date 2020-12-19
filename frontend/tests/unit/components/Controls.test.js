@@ -1,11 +1,10 @@
 import Controls from "@/components/Controls";
 import { Game } from "@/models/game";
 import { ace, suits } from "@/models/card";
-import { mount } from "@vue/test-utils";
-import VueTestUtils from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = () => {};
-VueTestUtils.config.mocks["$tc"] = () => {};
+config.mocks["$t"] = () => {};
+config.mocks["$tc"] = () => {};
 
 let game;
 let trick;

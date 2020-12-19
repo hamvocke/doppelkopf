@@ -1,10 +1,10 @@
 import AnnouncementsButton from "@/components/AnnouncementsButton";
+import { announcements } from "@/models/announcements";
 import { Game } from "@/models/game";
-import { mount } from "@vue/test-utils";
-import VueTestUtils from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = () => {};
-VueTestUtils.config.mocks["$tc"] = () => {};
+config.mocks["$t"] = () => {};
+config.mocks["$tc"] = () => {};
 
 let game;
 
@@ -23,22 +23,24 @@ describe("AnnouncementsButton.vue", () => {
     expect(wrapper.find("div.dropdown").isVisible()).toBe(false);
   });
 
-  test("should show possible announcements if button is clicked", () => {
+  test("should show possible announcements if button is clicked", async () => {
     const wrapper = mount(AnnouncementsButton, {
       propsData: { player: game.players[0] }
     });
 
-    wrapper.find("button.toggle").trigger("click");
+    await wrapper.find("button.toggle").trigger("click");
 
     expect(wrapper.find("div.dropdown").isVisible()).toBe(true);
   });
 
-  test("should hide possible announcements after announcing", () => {
+  test("should hide possible announcements after announcing", async () => {
+    let player = game.players[0];
+    player.possibleAnnouncements = () => [announcements.re];
     const wrapper = mount(AnnouncementsButton, {
-      propsData: { player: game.players[0] }
+      propsData: { player: player }
     });
 
-    wrapper.find("button.toggle").trigger("click");
+    await wrapper.find("button.toggle").trigger("click");
     wrapper.find("div.dropdown button:first-child").trigger("click");
 
     expect(wrapper.find("div.dropdown").isVisible()).toBe(false);

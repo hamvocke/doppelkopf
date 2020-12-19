@@ -74,7 +74,11 @@ describe("Scorecard", () => {
 
     expect(scorecard.scoreLines[0]).toBeDefined();
     expect(scorecard.scoreLines[0].points).toEqual(4);
-    expect(scorecard.scoreLines[0].winners).toEqual([players[1], players[2], players[3]]);
+    expect(scorecard.scoreLines[0].winners).toEqual([
+      players[1],
+      players[2],
+      players[3]
+    ]);
     expect(scorecard.scoreLines[0].totalPoints[players[0].id]).toEqual(-12);
     expect(scorecard.scoreLines[0].totalPoints[players[1].id]).toEqual(4);
     expect(scorecard.scoreLines[0].totalPoints[players[2].id]).toEqual(4);

@@ -1,6 +1,9 @@
 import Card from "@/components/Card";
 import { ace, suits } from "@/models/card";
-import { mount } from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
+
+config.mocks["$t"] = key => key;
+config.mocks["$tc"] = key => key;
 
 describe("Card.vue", () => {
   it("should render correct contents", () => {
@@ -10,7 +13,9 @@ describe("Card.vue", () => {
         isCovered: false
       }
     });
-    expect(wrapper.text()).toBe("♥ A ♥");
+    expect(wrapper.find(".card-top").text()).toBe("A ♥");
+    expect(wrapper.find(".card-center").text()).toBe("♥");
+    expect(wrapper.find(".card-bottom").text()).toBe("A ♥");
   });
 
   it("should render hearts suit red", () => {
@@ -20,8 +25,8 @@ describe("Card.vue", () => {
         isCovered: false
       }
     });
-    expect(wrapper.find(".suitTop").classes()).toContain("red");
-    expect(wrapper.find(".suitTop").classes()).not.toContain("black");
+    expect(wrapper.find(".card-top").classes()).toContain("red");
+    expect(wrapper.find(".card-top").classes()).not.toContain("black");
   });
 
   it("should render clubs suit black", () => {
@@ -32,8 +37,8 @@ describe("Card.vue", () => {
         side: false
       }
     });
-    expect(wrapper.find(".suitTop").classes()).toContain("black");
-    expect(wrapper.find(".suitTop").classes()).not.toContain("red");
+    expect(wrapper.find(".card-top").classes()).toContain("black");
+    expect(wrapper.find(".card-top").classes()).not.toContain("red");
   });
 
   it("should render selected card", () => {

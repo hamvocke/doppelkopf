@@ -22,9 +22,7 @@ class PlayerStates(Enum):
 class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
-    state = db.Column(
-        db.Enum(PlayerStates), nullable=False, server_default=""
-    )
+    state = db.Column(db.Enum(PlayerStates), nullable=False, server_default="")
     name = db.Column(db.String(128), nullable=False, default="unknown")
 
     def __repr__(self):

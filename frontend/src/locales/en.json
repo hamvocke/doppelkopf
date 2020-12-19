@@ -9,6 +9,12 @@
   "start-game": "Start Game!",
   "how-to-play": "How to play?",
 
+  "10": "10",
+  "J": "J",
+  "Q": "Q",
+  "K": "K",
+  "A": "A",
+
   "win": "Win",
   "win_description": "This party won the game",
   "beat_re": "Against the elders",
@@ -22,16 +28,22 @@
   "fox": "Caught a fox",
   "fox_description": "This party caught an ace of diamonds ('Fox') from the other party",
   "no_90": "No 90",
+  "no_90_short": "90",
   "no_90_description": "The other party got less than 90 points",
   "no_60": "No 60",
+  "no_60_short": "60",
   "no_60_description": "The other party got less than 60 points",
   "no_30": "No 30",
+  "no_30_short": "30",
   "no_30_description": "The other party got less than 30 points",
   "no_points": "No points",
+  "no_points_short": "0",
   "no_points_description": "The other party got no points at all",
-  "announce": "announce",
+  "announce": "Announce",
   "re": "Re",
+  "re_short": "Re",
   "kontra": "Kontra",
+  "kontra_short": "Kontra",
   "player-announced-re": "{name} announces @:re",
   "player-announced-kontra": "{name} announces @:kontra",
   "player-announced-no_90": "{name} announces @:no_90",
@@ -85,5 +97,8 @@
   "waiting-status": "Waiting for other players to join.",
   "ready-status": "Ready to start the game.",
   "copy": "Copy",
-  "copied": "Copied!"
+  "copied": "Copied!",
+
+  "new_version_available": "The game has been updated. Click here to refresh."
+
 }

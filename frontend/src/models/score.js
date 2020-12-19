@@ -113,7 +113,7 @@ export class Score {
 
     const delta = this.points(partyName) - this.points(otherPartyName);
 
-    if (partyName === this.winningPartyName() && thisParty.isPlayingSolo()) {
+    if (thisParty.isPlayingSolo()) {
       return delta * 3;
     }
 

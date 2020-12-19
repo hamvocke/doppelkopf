@@ -7,19 +7,22 @@
       </div>
       <div class="stats">
         <div v-if="player.isHuman" class="party">
-          <UsersIcon size="16" />
+          <UsersIcon size="14" />
           {{ player.hand.isRe() ? "Re" : "Kontra" }}
         </div>
         <div class="announcements">
-          <div v-if="player.announcements.size > 0" class="announcement">
-            <FlagIcon size="16" />
+          <div
+            v-if="player.announcements.size > 0"
+            class="announcement flag-icon"
+          >
+            <FlagIcon size="14" />
           </div>
           <div
             v-for="announcement in player.announcements"
             :key="announcement"
             class="announcement"
           >
-            {{ $t(announcement) }}
+            {{ $t(`${announcement}_short`) }}
           </div>
         </div>
       </div>
@@ -92,7 +95,7 @@ export default {
 .container {
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .left .container,
@@ -163,6 +166,14 @@ export default {
 .announcements {
   margin-left: 12px;
   display: inline-flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.left .announcements,
+.right .announcements {
+  margin-left: 0;
+  flex-wrap: wrap;
 }
 
 .announcement {
@@ -172,9 +183,17 @@ export default {
   border: 2px solid var(--black);
   padding: 4px 12px 4px 6px;
   margin-right: -8px;
-  margin-bottom: -4 px;
   display: inline-flex;
   align-items: center;
+}
+
+.flag-icon {
+  padding: 6px 12px 6px 4px;
+}
+
+.announcement:last-child {
+  padding-right: 6px;
+  margin-right: 0;
 }
 
 .party svg {
@@ -212,8 +231,13 @@ export default {
     font-size: 1.1em;
   }
 
-  .party, .announcement {
-    font-size: 0.9em;
+  .party,
+  .announcement {
+    font-size: 0.8em;
+  }
+
+  .flag-icon {
+    padding: 4px 10px 5px 4px;
   }
 
   .bottom .hand,

@@ -22,11 +22,11 @@ export class Player {
     this.hand = new Hand();
     this.isHuman = isHuman;
     this.isMe = isMe;
-    this.trickStack = new TrickStack();
     this.tablePosition = tablePosition;
     this.game = game;
     this.behavior = new RandomCardBehavior();
-    this.announcements = new Set();
+
+    this.reset();
   }
 
   isRe() {
@@ -43,6 +43,13 @@ export class Player {
       this.game.currentTrick.baseCard()
     );
     this.play(cardToBePlayed);
+
+    const announcement = this.behavior.announcementToMake(
+      this.possibleAnnouncements()
+    );
+    if (announcement !== null) {
+      this.announce(announcement);
+    }
   }
 
   play(card) {
@@ -91,8 +98,9 @@ export class Player {
     this.trickStack.add(trick);
   }
 
-  clearTrickStack() {
+  reset() {
     this.trickStack = new TrickStack();
+    this.announcements = new Set();
   }
 
   points() {

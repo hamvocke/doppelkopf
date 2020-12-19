@@ -1,19 +1,9 @@
 import { http } from "@/helpers/httpClient";
 import { Config } from "@/models/config";
 
-export class Feature {
-  constructor(name, enabled = false) {
-    this.name = name;
-    this.enabled = enabled;
-  }
-}
-
 const DEFAULT_FEATURES = {
-  show_tutorial_link: new Feature("Show link to tutorial", Config.debug),
-  "game.announcements.enable": new Feature(
-    "game.announcements.enable",
-    Config.debug
-  )
+  "game.tutorial.enable": Config.debug,
+  "game.announcements.enable": Config.debug
 };
 
 class FeatureManager {
@@ -35,10 +25,10 @@ class FeatureManager {
     }
   }
 
-  async get(feature_name) {
-    const features = await this.fetch();
+  get(feature_name) {
+    const features = this.features || DEFAULT_FEATURES;
     const feature = features[feature_name];
-    if (!feature) {
+    if (feature === undefined) {
       throw Error(`Cannot find feature with name "${feature_name}"`);
     }
     return feature;

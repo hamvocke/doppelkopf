@@ -80,12 +80,12 @@
               <tr>
                 <td colspan="2" class="sum re">
                   <span v-if="currentScore.winningPartyName() === 'Re'">
-                    {{ $tc("points", currentScore.totalPoints('Re')) }}
+                    {{ $tc("points", currentScore.totalPoints("Re")) }}
                   </span>
                 </td>
                 <td colspan="2" class="sum kontra">
                   <span v-if="currentScore.winningPartyName() === 'Kontra'">
-                    {{ $tc("points", currentScore.totalPoints('Kontra')) }}
+                    {{ $tc("points", currentScore.totalPoints("Kontra")) }}
                   </span>
                 </td>
               </tr>

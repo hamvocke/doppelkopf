@@ -37,7 +37,7 @@ describe("Score", () => {
     expect(score.totalPoints(kontra)).toEqual(-1);
   });
 
-  test("should distribute points evenly when playing solo", () => {
+  test("should distribute points evenly when winning a solo", () => {
     const reParty = new PartyBuilder(re)
       .withPlayer(new PlayerBuilder(`some re player`).build())
       .withPoints(123)
@@ -47,13 +47,32 @@ describe("Score", () => {
       .withPlayer(new PlayerBuilder(`1 kontra player`).build())
       .withPlayer(new PlayerBuilder(`2 kontra player`).build())
       .withPlayer(new PlayerBuilder(`3 kontra player`).build())
-      .withPoints(240 - 123)
+      .withPoints(117)
       .build();
 
     const score = new Score(reParty, kontraParty);
 
     expect(score.totalPoints(re)).toEqual(3);
     expect(score.totalPoints(kontra)).toEqual(-1);
+  });
+
+  test("should distribute points evenly when losing a solo", () => {
+    const reParty = new PartyBuilder(re)
+      .withPlayer(new PlayerBuilder(`some re player`).build())
+      .withPoints(119)
+      .build();
+
+    const kontraParty = new PartyBuilder(kontra)
+      .withPlayer(new PlayerBuilder(`1 kontra player`).build())
+      .withPlayer(new PlayerBuilder(`2 kontra player`).build())
+      .withPlayer(new PlayerBuilder(`3 kontra player`).build())
+      .withPoints(121)
+      .build();
+
+    const score = new Score(reParty, kontraParty);
+
+    expect(score.totalPoints(re)).toEqual(-6); // (win + against re) * 3
+    expect(score.totalPoints(kontra)).toEqual(2);
   });
 });
 
