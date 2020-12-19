@@ -1,4 +1,4 @@
-import { Features, Feature } from "@/models/features";
+import { Features } from "@/models/features";
 import { Config } from "@/models/config";
 const fetchMock = require("fetch-mock-jest");
 
@@ -10,50 +10,48 @@ beforeEach(() => {
   Features.features = undefined;
 });
 
-test("create new feature", () => {
-  const someFeature = new Feature("my feature", false);
-  expect(someFeature.name).toEqual("my feature");
-  expect(someFeature.enabled).toBe(false);
+test("should find feature", () => {
+  Features.features = {
+    a: false,
+    b: true
+  };
+
+  const f = Features.get("a");
+
+  expect(f).toBe(false);
 });
 
-test("should have dict of features", async () => {
-  Features.features = { a: new Feature("a", false) };
+test("should throw error when accessing undefined feature", () => {
+  Features.features = {
+    a: true,
+    b: false
+  }
 
-  const f = await Features.get("a");
+  function getUnknown() { Features.get("unknown") };
 
-  expect(f).toBeDefined();
-  expect(f.name).toEqual("a");
-  expect(f.enabled).toBe(false);
-});
-
-test("should throw error when accessing undefined feature", async () => {
-  expect.assertions(1);
-  await expect(Features.get("unknown")).rejects.toThrow(
-    'Cannot find feature with name "unknown"'
-  );
+  expect(getUnknown).toThrow('Cannot find feature with name "unknown"');
 });
 
 test("should fetch features from backend", async () => {
   const stubbedFeatures = {
-    features: {
-      some: {
-        enabled: false,
-        id: 5,
-        name: "some"
-      }
+    "features": {
+      "some-toggle": true,
+      "another-toggle": false
     }
   };
   fetchMock.mock("http://localhost:5000/api/features", stubbedFeatures);
 
-  const feature = await Features.get("some");
+  await Features.fetch();
+  const feature = Features.get("some-toggle");
 
-  expect(feature).toBeDefined();
+  expect(feature).toBe(true);
 });
 
 test("should use default features if fetching fails", async () => {
   fetchMock.mock("http://localhost:5000/api/features", 500);
 
-  const feature = await Features.get("show_tutorial_link");
+  await Features.fetch();
+  const feature = Features.get("game.tutorial.enable");
 
-  expect(feature).toBeDefined();
+  expect(feature).toBe(true);
 });

@@ -17,6 +17,7 @@ test("should add notification", () => {
   notifier.info("Hello World");
 
   expect(notifier.flashMessages).toHaveLength(0);
+  expect(notifier.stickies).toHaveLength(0);
   expect(notifier.notifications).toHaveLength(1);
   expect(notifier.notifications[0].text).toBe("Hello World");
 });
@@ -25,8 +26,19 @@ test("should add flash message", () => {
   notifier.flash("Fuchs gefangen");
 
   expect(notifier.notifications).toHaveLength(0);
+  expect(notifier.stickies).toHaveLength(0);
   expect(notifier.flashMessages).toHaveLength(1);
   expect(notifier.flashMessages[0].text).toBe("Fuchs gefangen");
+});
+
+test("should add sticky message", () => {
+  const onClick = jest.fn();
+  notifier.sticky("Update available", null, onClick);
+
+  expect(notifier.notifications).toHaveLength(0);
+  expect(notifier.flashMessages).toHaveLength(0);
+  expect(notifier.stickies).toHaveLength(1);
+  expect(notifier.stickies[0].text).toBe("Update available");
 });
 
 test("should remove notification after timeout", () => {

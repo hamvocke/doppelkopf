@@ -9,9 +9,9 @@
       :class="{ open: isOpen }"
       @click="toggleDropdown"
     >
-      <flag-icon size="20"/>
+      <flag-icon size="20" />
       <span class="button-text">{{ $t("announce") }}</span>
-      <chevron-up-icon size="16"/>
+      <chevron-up-icon size="16" />
     </button>
     <div v-show="isOpen" class="dropdown">
       <button
@@ -90,11 +90,13 @@ export default {
 }
 
 .dropdown button:hover,
+.dropdown button:active,
 .dropdown button:focus {
   background: color(var(--red) shade(15%));
 }
 
 .dropdown button:hover ~ button,
+.dropdown button:active ~ button,
 .dropdown button:focus ~ button {
   background: color(var(--red) shade(15%));
 }

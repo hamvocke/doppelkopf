@@ -95,13 +95,21 @@ def test_should_return_not_found_when_joining_unknown_game(client):
 
 def test_should_return_toggles(client):
     save_toggle("some-toggle", enabled=True)
+    save_toggle("another-toggle", enabled=False)
 
     response = client.get("/api/features")
     data = json.loads(response.get_data(as_text=True))
 
+    expected_data = """
+    {
+        "features": {
+            "some-toggle": true,
+            "another-toggle": false
+        }
+    }"""
+
     assert response.status_code == 200
-    assert data["features"]["some-toggle"]["name"] == "some-toggle"
-    assert data["features"]["some-toggle"]["enabled"] is True
+    assert data == json.loads(expected_data)
 
 
 def test_should_log_cron_event(client):

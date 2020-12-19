@@ -11,7 +11,10 @@
           {{ player.hand.isRe() ? "Re" : "Kontra" }}
         </div>
         <div class="announcements">
-          <div v-if="player.announcements.size > 0" class="announcement flag-icon">
+          <div
+            v-if="player.announcements.size > 0"
+            class="announcement flag-icon"
+          >
             <FlagIcon size="14" />
           </div>
           <div
@@ -92,7 +95,7 @@ export default {
 .container {
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .left .container,
@@ -163,7 +166,7 @@ export default {
 .announcements {
   margin-left: 12px;
   display: inline-flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: flex-start;
 }
 

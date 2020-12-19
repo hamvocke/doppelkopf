@@ -7,6 +7,7 @@ export class Notifier {
       return instance;
     }
 
+    this.stickies = [];
     this.notifications = [];
     this.flashMessages = [];
 
@@ -14,21 +15,31 @@ export class Notifier {
   }
 
   async info(message, args = null) {
-    this.notifications.push({
-      id: uniqueId("message_"),
-      text: message,
-      args: args
-    });
-
+    this.notifications.push(
+      new Notification(uniqueId("message_"), message, args)
+    );
     await this.wait(4000);
     this.notifications.pop();
   }
 
+  sticky(message, args = null, onClick, onDismiss = null) {
+    const id = uniqueId("message_");
+    const onDismissDefault = () => {
+      this.stickies = this.stickies.filter(n => n.id !== id);
+    };
+    const notification = new Notification(
+      id,
+      message,
+      args,
+      onClick,
+      onDismiss ?? onDismissDefault
+    );
+
+    this.stickies.push(notification);
+  }
+
   async flash(message) {
-    this.flashMessages.push({
-      id: uniqueId("flash_"),
-      text: message
-    });
+    this.flashMessages.push(new Notification(uniqueId("message_"), message));
 
     await this.wait(3000);
     this.flashMessages.pop();
@@ -36,5 +47,15 @@ export class Notifier {
 
   wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+}
+
+class Notification {
+  constructor(id, text, args = null, onClick = null, onDismiss = null) {
+    this.id = id;
+    this.text = text;
+    this.args = args;
+    this.onClick = onClick;
+    this.onDismiss = onDismiss;
   }
 }

@@ -1,11 +1,10 @@
 import Hand from "@/components/Hand";
 import { ace, queen, suits } from "@/models/card";
 import { Hand as HandModel } from "@/models/hand";
-import { mount } from "@vue/test-utils";
-import VueTestUtils from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = () => {};
-VueTestUtils.config.mocks["$tc"] = () => {};
+config.mocks["$t"] = () => {};
+config.mocks["$tc"] = () => {};
 
 const reHand = new HandModel([
   queen.of(suits.clubs),

@@ -93,5 +93,7 @@
   "waiting-status": "Warte auf weitere Spieler.",
   "ready-status": "Kann losgehen!",
   "copy": "Kopieren",
-  "copied": "Kopiert!"
+  "copied": "Kopiert!",
+
+  "new_version_available": "Ein Update ist verfügbar. Klicke hier um das Spiel zu aktualisieren."
 }

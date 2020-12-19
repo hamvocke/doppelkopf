@@ -3,11 +3,10 @@ import { TrickStack as TrickStackModel } from "@/models/trickStack";
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { ace, queen, suits } from "@/models/card";
-import { mount } from "@vue/test-utils";
-import VueTestUtils from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = () => {};
-VueTestUtils.config.mocks["$tc"] = () => {};
+config.mocks["$t"] = () => {};
+config.mocks["$tc"] = () => {};
 
 const player1 = new Player("player 1");
 const player2 = new Player("player 2");

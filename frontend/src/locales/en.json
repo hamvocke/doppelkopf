@@ -93,5 +93,8 @@
   "waiting-status": "Waiting for other players to join.",
   "ready-status": "Ready to start the game.",
   "copy": "Copy",
-  "copied": "Copied!"
+  "copied": "Copied!",
+
+  "new_version_available": "The game has been updated. Click here to refresh."
+
 }

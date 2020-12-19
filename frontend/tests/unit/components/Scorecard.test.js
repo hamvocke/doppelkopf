@@ -4,11 +4,10 @@ import { Player } from "@/models/player";
 import { re, kontra } from "@/models/party";
 import { extras } from "@/models/extras";
 import { ScoreBuilder } from "../../builders/scoreBuilder";
-import { mount } from "@vue/test-utils";
-import VueTestUtils from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
 
-VueTestUtils.config.mocks["$t"] = key => key;
-VueTestUtils.config.mocks["$tc"] = (msg, count) => `${count} ${msg}`;
+config.mocks["$t"] = key => key;
+config.mocks["$tc"] = (msg, count) => `${count} ${msg}`;
 
 let players;
 let score;

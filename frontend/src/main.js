@@ -8,6 +8,7 @@ import "@/assets/css/app.css";
 import i18n from "./i18n";
 import router from "./router";
 import { Config } from "@/models/config";
+import { Features } from "@/models/features";
 
 Vue.config.productionTip = Config.debug;
 
@@ -35,3 +36,6 @@ if (!Config.testing) {
     environment: process.env.NODE_ENV || process.env.server_env || "not-set"
   });
 }
+
+// load feature toggles
+Features.fetch();

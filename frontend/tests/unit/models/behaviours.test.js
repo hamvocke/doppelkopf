@@ -3,7 +3,7 @@ import { Hand } from "@/models/hand";
 import { announcements } from "@/models/announcements";
 import { ace, king, queen, jack, suits, ten, Card } from "@/models/card";
 
-jest.mock('@/models/random', () => ({
+jest.mock("@/models/random", () => ({
   __esModule: true,
   chance: () => true
 }));
@@ -38,7 +38,10 @@ describe("Random Card Behavior", () => {
   });
 
   test("should make an announcement by chance", () => {
-    const possibleAnnouncements = new Set([announcements.re, announcements.no_90]);
+    const possibleAnnouncements = new Set([
+      announcements.re,
+      announcements.no_90
+    ]);
 
     const announcement = behavior.announcementToMake(possibleAnnouncements);
 
