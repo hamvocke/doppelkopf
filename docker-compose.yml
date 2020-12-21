@@ -12,10 +12,14 @@ services:
   webserver:
     image: hamvocke/doppelkopf-web:latest
     container_name: doppelkopf-web
+    environment:
+      - APP_ENVIRONMENT # pass current env's APP_ENVIRONMENT variable to container
     depends_on:
       - backend
     volumes:
       - ./caddy_data:/data
+      - ./frontend/Caddyfile.${APP_ENVIRONMENT}:/etc/caddy/Caddyfile
+      - ./caddy_config:/config
     networks:
       - app-network
 

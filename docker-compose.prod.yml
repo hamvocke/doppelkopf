@@ -16,17 +16,7 @@ services:
   webserver:
     image: hamvocke/doppelkopf-web:latest
     container_name: doppelkopf-web
-    env_file: web.env
     restart: always
     ports:
       - "80:80"
       - "443:443"
-    depends_on:
-      - backend
-    volumes:
-      - ./caddy_data:/data
-    networks:
-      - app-network
-
-networks:
-  app-network:

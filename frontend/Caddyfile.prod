@@ -1,4 +1,4 @@
-{env.DOPPELKOPF_DOMAIN}
+doppelkopf.ham.codes
 
 root * /var/www
 encode zstd gzip
