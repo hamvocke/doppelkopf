@@ -18,7 +18,6 @@ services:
       - backend
     volumes:
       - ./caddy_data:/data
-      - ./frontend/Caddyfile.${APP_ENVIRONMENT}:/etc/caddy/Caddyfile
       - ./caddy_config:/config
     networks:
       - app-network
