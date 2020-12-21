@@ -31,22 +31,20 @@ test("should have score", () => {
   expect(round.score).toBeDefined();
 });
 
-test("should give current trick to winner", () => {
+test("should give current trick to winner", async () => {
   expect.assertions(1);
   round.currentTrick.add(jack.of(suits.spades), round.players[2]);
   round.currentTrick.add(jack.of(suits.hearts), round.players[3]);
   round.currentTrick.add(jack.of(suits.diamonds), round.players[1]);
   round.currentTrick.add(jack.of(suits.clubs), round.players[0]);
 
-  const promise = round.finishTrick();
+  const promise = await round.finishTrick();
   jest.runAllTimers();
 
-  promise.then(() => {
-    expect(round.players[0].trickStack.tricks).toHaveLength(1);
-  });
+  expect(round.players[0].trickStack.tricks).toHaveLength(1);
 });
 
-test("should trigger next move when finishing trick", () => {
+test("should trigger next move when finishing trick", async () => {
   expect.assertions(1);
   options.autoplay = true;
 
@@ -56,12 +54,10 @@ test("should trigger next move when finishing trick", () => {
   round.currentTrick.add(jack.of(suits.hearts), round.players[3]);
   round.currentTrick.add(jack.of(suits.diamonds), round.players[0]);
 
-  const promise = round.finishTrick();
+  const promise = await round.finishTrick();
   jest.runAllTimers();
 
-  promise.then(() => {
-    expect(round.players[1].autoplay).toBeCalled();
-  });
+  expect(round.players[1].autoplay).toBeCalled();
 });
 
 test("should autoplay for computer players", () => {
@@ -133,19 +129,17 @@ describe("player order", () => {
     expect(round.waitingForPlayer().id).toBe(round.players[2].id);
   });
 
-  test("should put player on top of player order if player wins a trick", () => {
+  test("should put player on top of player order if player wins a trick", async () => {
     expect.assertions(1);
     round.currentTrick.add(jack.of(suits.spades), round.players[2]);
     round.currentTrick.add(jack.of(suits.clubs), round.players[3]);
     round.currentTrick.add(jack.of(suits.diamonds), round.players[1]);
     round.currentTrick.add(jack.of(suits.clubs), round.players[0]);
 
-    const promise = round.finishTrick();
+    const promise = await round.finishTrick();
     jest.runAllTimers();
 
-    promise.then(() => {
-      expect(round.waitingForPlayer().id).toEqual(round.players[3].id);
-    });
+    expect(round.waitingForPlayer().id).toEqual(round.players[3].id);
   });
 
   test("should change active player on next move", () => {
@@ -184,47 +178,41 @@ describe("finish round", () => {
     expect(round.noMoreCardsLeft()).toBe(false);
   });
 
-  test("should add score to scorecard", () => {
+  test("should add score to scorecard", async () => {
     expect.assertions(4);
     setupGameKontraWins();
 
-    const promise = round.finishRound();
+    const promise = await round.finishRound();
     jest.runAllTimers();
 
-    promise.then(() => {
-      const scorecard = round.scorecard;
-      expect(scorecard.totalPointsFor(round.players[0])).toBe(-2);
-      expect(scorecard.totalPointsFor(round.players[1])).toBe(-2);
-      expect(scorecard.totalPointsFor(round.players[2])).toBe(2);
-      expect(scorecard.totalPointsFor(round.players[3])).toBe(2);
-    });
+    const scorecard = round.scorecard;
+    expect(scorecard.totalPointsFor(round.players[0])).toBe(-2);
+    expect(scorecard.totalPointsFor(round.players[1])).toBe(-2);
+    expect(scorecard.totalPointsFor(round.players[2])).toBe(2);
+    expect(scorecard.totalPointsFor(round.players[3])).toBe(2);
   });
 
-  test("should mark round as finished", () => {
+  test("should mark round as finished", async () => {
     expect.assertions(2);
     expect(round.isFinished()).toBe(false);
 
     setupGameKontraWins();
 
-    const promise = round.finishRound();
+    const promise = await round.finishRound();
     jest.runAllTimers();
 
-    promise.then(() => {
-      expect(round.isFinished()).toBe(true);
-    });
+    expect(round.isFinished()).toBe(true);
   });
 
-  test("should finish trick when finishing round", () => {
+  test("should finish trick when finishing round", async () => {
     expect.assertions(2);
     setupGameKontraWins();
     expect(round.currentTrick.cards()).toHaveLength(4);
 
-    const promise = round.finishRound();
+    const promise = await round.finishRound();
     jest.runAllTimers();
 
-    promise.then(() => {
-      expect(round.currentTrick.cards()).toHaveLength(0);
-    });
+    expect(round.currentTrick.cards()).toHaveLength(0);
   });
 
   test("should throw exception if round is not yet finished", async () => {

@@ -9,6 +9,11 @@ export class Trick {
     this.playedCards = [];
     this.finished = false;
     this.id = uniqueId("trick_");
+    this.lastTrickInRound = false;
+  }
+
+  setLastTrickInRound() {
+    this.lastTrickInRound = true;
   }
 
   add(card, player) {
@@ -47,7 +52,7 @@ export class Trick {
     return this.playedCards[0].card;
   }
 
-  winner() {
+  highestCard() {
     if (!this.playedCards[0]) {
       return undefined;
     }
@@ -58,8 +63,12 @@ export class Trick {
         highestCard = card;
       }
     }
+    return highestCard;
+  }
 
-    return highestCard.player;
+  winner() {
+    let highestCard = this.highestCard();
+    return highestCard ? highestCard.player : undefined;
   }
 
   points() {
@@ -74,14 +83,11 @@ export class Trick {
     if (this.points() >= 40) {
       extras.push(extrasModel.doppelkopf);
     }
-
-    this.findFox().forEach(fox => {
-      const caughtByOtherParty =
-        (fox.player.isRe() && !this.winner().isRe()) ||
-        (fox.player.isKontra() && !this.winner().isKontra());
-      if (caughtByOtherParty) extras.push(extrasModel.fox);
-    });
-
+    extras = extras.concat(this.caughtFox());
+    extras = extras.concat(this.caughtCharlie());
+    if (this.charlie()) {
+      extras.push(extrasModel.charlie);
+    }
     return extras;
   }
 
@@ -91,5 +97,52 @@ export class Trick {
         playedCard.card.rank === ranks.ace &&
         playedCard.card.suit === suits.diamonds
     );
+  }
+
+  caughtFox() {
+    let extras = [];
+    this.findFox().forEach(fox => {
+      const caughtByOtherParty =
+        (fox.player.isRe() && !this.winner().isRe()) ||
+        (fox.player.isKontra() && !this.winner().isKontra());
+      if (caughtByOtherParty) extras.push(extrasModel.fox);
+    });
+    return extras;
+  }
+
+  findCharlie() {
+    return this.playedCards.filter(
+      playedCard =>
+        playedCard.card.rank === ranks.jack &&
+        playedCard.card.suit === suits.clubs
+    );
+  }
+
+  caughtCharlie() {
+    let extras = [];
+    if (this.lastTrickInRound) {
+      this.findCharlie().forEach(charlie => {
+        const caughtCharlie =
+          (charlie.player.isRe() && !this.winner().isRe()) ||
+          (charlie.player.isKontra() && !this.winner().isKontra());
+        if (caughtCharlie) extras.push(extrasModel.charlie_caught);
+      });
+    }
+    return extras;
+  }
+
+  charlie() {
+    let charlies = this.findCharlie();
+    if (this.lastTrickInRound && charlies.length > 0) {
+      // first charlie has to be highest card in trick
+      let charlie = charlies[0];
+      const charlie_trump =
+        ((charlie.player.isRe() && this.winner().isRe()) ||
+          (charlie.player.isKontra() && this.winner().isKontra())) &&
+        // here is the magic
+        this.highestCard() === charlie;
+      return charlie_trump;
+    }
+    return false;
   }
 }
