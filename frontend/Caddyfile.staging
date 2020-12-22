@@ -1,4 +1,4 @@
-doppelkopf.staging.ham.codes
+doppelkopf.staging.ham.codes, staging.doppelkopf.party
 
 root * /var/www
 encode zstd gzip
