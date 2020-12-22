@@ -90,7 +90,7 @@ jobs:
             ssh -T $SSH_USER_STAGING@$SSH_HOST_STAGING -o StrictHostKeyChecking=no \<< EOF
               cd /data/doppelkopf
               docker-compose pull
-              docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+              export APP_ENVIRONMENT="staging" && docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
             EOF
       - run:
           name: Smoke test
@@ -119,7 +119,7 @@ jobs:
             ssh -T $SSH_USER_PROD@$SSH_HOST_PROD -o StrictHostKeyChecking=no \<< EOF
               cd /data/doppelkopf
               docker-compose pull
-              docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+              export APP_ENVIRONMENT="prod" && docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
             EOF
       - run:
           name: Smoke test
