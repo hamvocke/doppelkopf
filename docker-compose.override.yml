@@ -12,7 +12,3 @@ services:
     ports:
       - "8080:80"
       - "8443:443"
-    depends_on:
-      - backend
-    volumes:
-      - ./caddy_data:/data
