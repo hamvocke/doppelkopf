@@ -51,7 +51,7 @@ export class Round {
   }
 
   noMoreCardsLeft() {
-    return (this.cardsLeft() === 0);
+    return this.cardsLeft() === 0;
   }
 
   cardsLeft() {
