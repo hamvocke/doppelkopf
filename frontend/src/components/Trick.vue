@@ -10,9 +10,6 @@
         />
       </transition-group>
     </div>
-    <div v-if="winner" class="winner">
-      {{ $t("trick_goes_to") }} {{ winner.name }}
-    </div>
   </div>
 </template>
 
@@ -33,9 +30,6 @@ export default {
   computed: {
     cards: function() {
       return this.currentTrick.cards();
-    },
-    winner: function() {
-      return this.currentTrick.winner();
     }
   }
 };
@@ -47,11 +41,6 @@ export default {
   min-width: 100%;
   justify-content: center;
   align-items: stretch;
-}
-
-.winner {
-  padding: 12px;
-  text-align: center;
 }
 
 .cards > span {
