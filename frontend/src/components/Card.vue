@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" :class="tablePosition">
     <div class="card-inner" :class="cardClasses">
       <template v-if="isCovered">
         <div class="background"></div>
@@ -71,6 +71,14 @@ export default {
         bottom: this.position === "bottom",
         covered: this.isCovered
       };
+    },
+    tablePosition: function() {
+      return {
+        "position-top": this.position === "top",
+        "position-left": this.position === "left",
+        "position-right": this.position === "right",
+        "position-bottom": this.position === "bottom"
+      };
     }
   }
 };
@@ -83,6 +91,30 @@ export default {
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-delay: 0s;
   display: inline-flex;
+}
+
+.position-top {
+  grid-area: top;
+  justify-content: center;
+  align-items: center;
+}
+
+.position-left {
+  grid-area: left;
+  justify-content: center;
+  align-items: center;
+}
+
+.position-right {
+  grid-area: right;
+  justify-content: center;
+  align-items: center;
+}
+
+.position-bottom {
+  grid-area: bottom;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-inner {

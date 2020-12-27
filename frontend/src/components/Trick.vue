@@ -7,6 +7,7 @@
           :key="playedCard.card.cardId"
           :card="playedCard.card"
           :player-name="playedCard.player.name"
+          :position="playedCard.player.tablePosition"
         />
       </transition-group>
     </div>
@@ -44,10 +45,18 @@ export default {
 }
 
 .cards > span {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-areas:
+    "left top right"
+    "left bottom right";
 }
+/*
+following problems so far:
+card class is only added to the trick when card is there, hence the layout is always in movement, due to flex moving correspondingly
+- card containers have to be static, with min-height and min-width vals, matching the card-size.
+either we create a static grid with empty cells checking 4x4 direction === card or we create "dummy" cards that don't show but still create the correct layout  
+
+*/
 
 .cards .card {
   margin: 6px;
