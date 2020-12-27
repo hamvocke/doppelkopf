@@ -55,7 +55,10 @@ test("should start a new round", () => {
 });
 
 test("should reset all players stacks when starting a new round", () => {
-  const someTrickStack = new TrickStack([new Trick(4), new Trick(4)]);
+  const someTrickStack = new TrickStack([
+    new Trick(game.players),
+    new Trick(game.players)
+  ]);
   game.players.forEach(player => (player.trickStack = someTrickStack));
 
   game.nextRound();

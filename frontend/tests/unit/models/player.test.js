@@ -231,7 +231,7 @@ test("should validate playable cards if no card has been played yet", () => {
 });
 
 test("should clear trick stack when resetting player", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(game.players);
   trick.add(queen.of(suits.clubs), game.players[0]);
   trick.add(queen.of(suits.spades), game.players[1]);
   trick.add(queen.of(suits.hearts), game.players[2]);

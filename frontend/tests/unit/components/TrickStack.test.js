@@ -10,7 +10,7 @@ config.mocks["$tc"] = () => {};
 
 const player1 = new Player("player 1");
 const player2 = new Player("player 2");
-const trick = new Trick(2);
+const trick = new Trick([player1, player2]);
 trick.add(ace.of(suits.hearts), player1);
 trick.add(queen.of(suits.spades), player2);
 

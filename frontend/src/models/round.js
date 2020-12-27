@@ -25,7 +25,7 @@ export class Round {
   }
 
   nextTrick() {
-    let trick = new Trick(this.players.length);
+    let trick = new Trick(this.players);
     if (this.cardsLeft() <= this.players.length) trick.setLastTrickInRound();
     return trick;
   }
