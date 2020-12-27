@@ -1,10 +1,10 @@
 <template>
   <div class="trick">
-    <div class="cards">
+    <div class="cards trick-card">
       <transition-group name="card" tag="span">
         <Card
-          v-for="playedCard in cards"
-          :key="playedCard.card.cardId"
+          v-for="playedCard in playerPlayedCards"
+          :key="playedCard.card"
           :card="playedCard.card"
           :player-name="playedCard.player.name"
           :position="playedCard.player.tablePosition"
@@ -31,6 +31,9 @@ export default {
   computed: {
     cards: function() {
       return this.currentTrick.cards();
+    },
+    playerPlayedCards: function() {
+      return this.currentTrick.playerPlayedCards();
     }
   }
 };
@@ -38,8 +41,8 @@ export default {
 
 <style scoped>
 .trick {
-  min-height: 180px;
-  min-width: 100%;
+  height: 100%;
+  width: 100%;
   justify-content: center;
   align-items: stretch;
 }
@@ -49,6 +52,15 @@ export default {
   grid-template-areas:
     "left top right"
     "left bottom right";
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 1fr 1fr;
+  column-gap: 6px;
+  row-gap: 64px;
+  height: 100%;
+}
+
+.trick-card {
+  height: 100%;
 }
 /*
 following problems so far:

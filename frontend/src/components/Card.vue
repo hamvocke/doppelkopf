@@ -1,21 +1,25 @@
 <template>
   <div class="card" :class="tablePosition">
-    <div class="card-inner" :class="cardClasses">
-      <template v-if="isCovered">
-        <div class="background"></div>
-      </template>
-      <template v-else>
-        <div class="card-top" :class="colorClasses">
-          <div class="rank">{{ $t(card.rank) }}</div>
-          <div class="suit">{{ card.suit }}</div>
-        </div>
-        <span class="card-center" :class="colorClasses"> {{ card.suit }} </span>
-        <div class="card-bottom" :class="colorClasses">
-          <div class="rank">{{ $t(card.rank) }}</div>
-          <div class="suit">{{ card.suit }}</div>
-        </div>
-      </template>
-    </div>
+    <template v-if="card">
+      <div class="card-inner" :class="cardClasses">
+        <template v-if="isCovered">
+          <div class="background"></div>
+        </template>
+        <template v-else>
+          <div class="card-top" :class="colorClasses">
+            <div class="rank">{{ $t(card.rank) }}</div>
+            <div class="suit">{{ card.suit }}</div>
+          </div>
+          <span class="card-center" :class="colorClasses">
+            {{ card.suit }}
+          </span>
+          <div class="card-bottom" :class="colorClasses">
+            <div class="rank">{{ $t(card.rank) }}</div>
+            <div class="suit">{{ card.suit }}</div>
+          </div>
+        </template>
+      </div>
+    </template>
     <div v-if="playerName" class="playerName">{{ playerName }}</div>
   </div>
 </template>
@@ -80,6 +84,11 @@ export default {
         "position-bottom": this.position === "bottom"
       };
     }
+  },
+  methods: {
+    isCard: function() {
+      return this.card ? true : false;
+    }
   }
 };
 </script>
@@ -96,25 +105,27 @@ export default {
 .position-top {
   grid-area: top;
   justify-content: center;
-  align-items: center;
+  align-items: end;
+  min-width: 32px;
 }
 
 .position-left {
   grid-area: left;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
 }
 
 .position-right {
   grid-area: right;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 }
 
 .position-bottom {
   grid-area: bottom;
   justify-content: center;
-  align-items: center;
+  align-items: start;
+  min-width: 32px;
 }
 
 .card-inner {
@@ -229,6 +240,7 @@ export default {
     padding: 3px;
   }
 
+  .trick-card .card-inner.bottom,
   .card-inner.top,
   .card-inner.left,
   .card-inner.right {

@@ -14,6 +14,29 @@ test("new trick is empty", () => {
   expect(new Trick(players).cards).toHaveLength(0);
 });
 
+test("playerPlayedCards always have players length", () => {
+  expect(new Trick(players).playerPlayedCards()).toHaveLength(players.length);
+});
+
+test("playerPlayedCards are undefined if not played", () => {
+  let trick = new Trick(players);
+  const cardToBePlayed = queen.of(suits.spades);
+
+  trick.add(cardToBePlayed, player1);
+
+  const expectedCard = new PlayedCard(cardToBePlayed, player1);
+  const emptyCardByPlayer2 = new PlayedCard(undefined, player2);
+  const emptyCardByPlayer3 = new PlayedCard(undefined, player3);
+  const emptyCardByPlayer4 = new PlayedCard(undefined, player4);
+
+  expect(trick.playerPlayedCards()).toEqual([
+    expectedCard,
+    emptyCardByPlayer2,
+    emptyCardByPlayer3,
+    emptyCardByPlayer4
+  ]);
+});
+
 test("can add card to trick", () => {
   const trick = new Trick(players);
   const cardToBePlayed = queen.of(suits.spades);

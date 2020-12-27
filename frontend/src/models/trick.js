@@ -35,6 +35,19 @@ export class Trick {
     return this.playedCards;
   }
 
+  playerPlayedCards() {
+    let playerPlayedCards = [];
+    this.players.forEach(player => {
+      let playerCard = this.cardBy(player);
+      if (playerCard) {
+        playerPlayedCards.push(playerCard);
+      } else {
+        playerPlayedCards.push(new PlayedCard(false, player));
+      }
+    });
+    return playerPlayedCards;
+  }
+
   cardBy(player) {
     return this.playedCards.filter(
       playedCard => playedCard.player.id === player.id
