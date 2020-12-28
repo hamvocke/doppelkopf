@@ -42,7 +42,7 @@ export class Trick {
       if (playerCard) {
         playerPlayedCards.push(playerCard);
       } else {
-        playerPlayedCards.push(new PlayedCard(false, player));
+        playerPlayedCards.push(new PlayedCard(undefined, player));
       }
     });
     return playerPlayedCards;

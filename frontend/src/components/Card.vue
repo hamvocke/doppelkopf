@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :class="tablePosition">
+  <div class="card" :class="[tablePosition, zIndex]">
     <template v-if="card">
       <div class="card-inner" :class="cardClasses">
         <template v-if="isCovered">
@@ -20,7 +20,7 @@
         </template>
       </div>
     </template>
-    <div v-if="playerName" class="playerName">{{ playerName }}</div>
+    <div v-if="player" class="playerName">{{ player.name }}</div>
   </div>
 </template>
 
@@ -33,6 +33,11 @@ export default {
     card: {
       type: Object,
       required: true
+    },
+    player: {
+      type: Object,
+      required: false,
+      default: undefined
     },
     isSelected: {
       type: Boolean,
@@ -50,11 +55,6 @@ export default {
       type: String,
       required: false,
       default: "not-set"
-    },
-    playerName: {
-      type: String,
-      required: false,
-      default: null
     }
   },
   computed: {
@@ -83,6 +83,21 @@ export default {
         "position-right": this.position === "right",
         "position-bottom": this.position === "bottom"
       };
+    },
+    zIndex: function() {
+      return this.player
+        ? {
+            "first-card":
+              this.player === this.player.game.currentRound.playerOrder.first(),
+            "second-card":
+              this.player ===
+              this.player.game.currentRound.playerOrder.second(),
+            "third-card":
+              this.player === this.player.game.currentRound.playerOrder.third(),
+            "fourth-card":
+              this.player === this.player.game.currentRound.playerOrder.fourth()
+          }
+        : {};
     }
   },
   methods: {
@@ -106,7 +121,6 @@ export default {
   grid-area: top;
   justify-content: center;
   align-items: end;
-  min-width: 32px;
 }
 
 .position-left {
@@ -125,7 +139,12 @@ export default {
   grid-area: bottom;
   justify-content: center;
   align-items: start;
-  min-width: 32px;
+}
+
+.position-top,
+.position-bottom {
+  min-width: 70px;
+  min-height: 97px;
 }
 
 .card-inner {
@@ -160,6 +179,22 @@ export default {
   top: -10px;
   box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
   z-index: 200;
+}
+
+.first-card {
+  z-index: 10;
+}
+
+.second-card {
+  z-index: 20;
+}
+
+.third-card {
+  z-index: 30;
+}
+
+.fourth-card {
+  z-index: 40;
 }
 
 .card-top {
@@ -233,6 +268,11 @@ export default {
     border-radius: 4px;
   }
 
+  .position-top,
+  .position-bottom {
+    min-width: 32px;
+    min-height: 44px;
+  }
   .card-inner {
     height: 55px;
     width: 38px;

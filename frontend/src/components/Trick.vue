@@ -4,9 +4,9 @@
       <transition-group name="card" tag="span">
         <Card
           v-for="playedCard in playerPlayedCards"
-          :key="playedCard.card"
+          :key="playedCard.id"
           :card="playedCard.card"
-          :player-name="playedCard.player.name"
+          :player="playedCard.player"
           :position="playedCard.player.tablePosition"
         />
       </transition-group>
@@ -54,6 +54,7 @@ export default {
     "left bottom right";
   grid-template-columns: 1fr auto 1fr;
   grid-template-rows: 1fr 1fr;
+  /* Remove gaps for overlapping effect */
   column-gap: 6px;
   row-gap: 64px;
   height: 100%;
@@ -71,6 +72,7 @@ either we create a static grid with empty cells checking 4x4 direction === card 
 */
 
 .cards .card {
+  /* Remove to have overlapping effect*/
   margin: 6px;
 }
 
