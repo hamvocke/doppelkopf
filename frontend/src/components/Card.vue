@@ -178,23 +178,23 @@ export default {
 .selected {
   top: -10px;
   box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
-  z-index: 200;
+  z-index: var(--card-selected-layer);
 }
 
 .first-card {
-  z-index: 10;
+  z-index: var(--card-first-layer);
 }
 
 .second-card {
-  z-index: 20;
+  z-index: var(--card-second-layer);
 }
 
 .third-card {
-  z-index: 30;
+  z-index: var(--card-third-layer);
 }
 
 .fourth-card {
-  z-index: 40;
+  z-index: var(--card-fourth-layer);
 }
 
 .card-top {
@@ -258,8 +258,9 @@ export default {
   transition: opacity 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.card:hover .playerName,
-.card:active .playerName {
+/* change to card:hover and card:active to activate */
+.card-inner:hover .playerName,
+.card-inner:active .playerName {
   opacity: 1;
 }
 
@@ -291,7 +292,7 @@ export default {
   .selected {
     top: -6px;
     box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
-    z-index: 200;
+    z-index: var(--card-selected-layer);
   }
 
   .card-top {
