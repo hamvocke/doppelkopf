@@ -5,9 +5,7 @@
         <!-- <div class="avatar"><img src="../assets/icons/..." alt="avatar"></div> -->
         <div class="name title-font">
           {{ player.name }}
-        </div>
-        <div v-if="winner" class="name winner">
-          <AwardIcon size="18" />
+          <AwardIcon v-if="winner" :title="$t('badge_description', {name: player.name})" size="18" />
         </div>
       </div>
       <div class="stats">
@@ -143,15 +141,12 @@ export default {
 }
 
 .name {
+  white-space: nowrap;
   font-size: 1.4em;
 }
 
 .title-font {
   margin-right: 4px;
-}
-
-.winner {
-  text-align: center;
 }
 
 .avatar {

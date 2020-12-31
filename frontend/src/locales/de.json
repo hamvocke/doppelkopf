@@ -90,6 +90,7 @@
   "options-header": "Einstellungen",
   "tutorial-link": "https://de.wikipedia.org/wiki/Doppelkopf",
   "winner": "Gewinner",
+  "badge_description": "{name} hat diesen Stich gewonnen",
 
   "here-is-your-invite-link": "Hier ist dein Spiel-Link. Schicke diesen Link an deine Freunde damit sie dem Spiel beitreten können.",
   "you-can-start": "Du kannst das Spiel starten, sobald 4 Spieler hier sind.",
