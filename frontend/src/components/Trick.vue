@@ -31,9 +31,6 @@ export default {
   computed: {
     cards: function() {
       return this.currentTrick.cards();
-    },
-    playerPlayedCards: function() {
-      return this.currentTrick.playerPlayedCards();
     }
   }
 };

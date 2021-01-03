@@ -5,7 +5,12 @@
         <!-- <div class="avatar"><img src="../assets/icons/..." alt="avatar"></div> -->
         <div class="name title-font">
           {{ player.name }}
-          <AwardIcon v-if="winner" :title="$t('badge_description', {name: player.name})" size="18" />
+          <AwardIcon
+            v-if="winner"
+            class="winner"
+            :title="$t('badge_description', { name: player.name })"
+            size="18"
+          />
         </div>
       </div>
       <div class="stats">

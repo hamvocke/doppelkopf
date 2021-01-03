@@ -20,7 +20,7 @@
         </template>
       </div>
     </template>
-    <div v-if="player" class="playerName">{{ player.name }}</div>
+    <div v-if="playerName" class="playerName">{{ playerName }}</div>
   </div>
 </template>
 
@@ -34,10 +34,10 @@ export default {
       type: Object,
       required: true
     },
-    player: {
-      type: Object,
+    playerName: {
+      type: String,
       required: false,
-      default: undefined
+      default: null
     },
     isSelected: {
       type: Boolean,
@@ -51,7 +51,6 @@ export default {
       type: Boolean,
       required: false
     },
-    // TODO: remove, use player.tablePosition instead
     position: {
       type: String,
       required: false,
@@ -80,21 +79,6 @@ export default {
         top: this.position === "top",
         bottom: this.position === "bottom"
       };
-    },
-    zIndex: function() {
-      return this.player
-        ? {
-            "first-card":
-              this.player === this.player.game.currentRound.playerOrder.first(),
-            "second-card":
-              this.player ===
-              this.player.game.currentRound.playerOrder.second(),
-            "third-card":
-              this.player === this.player.game.currentRound.playerOrder.third(),
-            "fourth-card":
-              this.player === this.player.game.currentRound.playerOrder.fourth()
-          }
-        : {};
     }
   },
   methods: {
@@ -124,6 +108,7 @@ export default {
   text-align: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-property: top, box-shadow;
   user-select: none;
   font-weight: 900;
 }
@@ -269,7 +254,7 @@ export default {
     font-size: 1.5em;
   }
 
-  /* Render all other players' cards a little smaller on small devices */
+  /* Render all other players' cards on hand a little smaller on small devices */
   /* due to scoping issues, these styles can't be part of Hand.vue */
   .hand .top .card-inner,
   .hand .left .card-inner,

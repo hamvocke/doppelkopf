@@ -4,7 +4,7 @@ export class PlayedCard {
   constructor(card, player) {
     this.card = card;
     this.player = player;
-    this.id = uniqueId("playedcard_");
+    this.id = `${this.card.id}-${this.player.id}`;
   }
 }
 

@@ -60,7 +60,7 @@ describe("Card.vue", () => {
         position: "left"
       }
     });
-    expect(wrapper.find(".card-inner").classes()).toContain("left");
+    expect(wrapper.find(".card").classes()).toContain("left");
   });
 
   it("covered card should not show rank and suit", () => {

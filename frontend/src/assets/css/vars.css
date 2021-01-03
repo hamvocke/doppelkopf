@@ -11,10 +11,6 @@
 
   /* z-index layers */
   --base-layer: 1;
-  --card-first-layer: 4;
-  --card-second-layer: 5;
-  --card-third-layer: 6;
-  --card-fourth-layer: 7;
   --popover-layer: 10;
   --modal-layer: 20;
   --notification-layer: 30;

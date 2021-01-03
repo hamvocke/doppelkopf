@@ -93,7 +93,7 @@ describe("Player.vue", () => {
     const wrapper = mount(Player, { propsData: { player: game.players[0] } });
 
     expect(wrapper.vm.winner).toBe(true);
-    expect(wrapper.find("div.winner").exists()).toBe(true);
+    expect(wrapper.find(".winner").exists()).toBe(true);
   });
 
   test("should not render winner if trick isn't finished", () => {
@@ -116,6 +116,6 @@ describe("Player.vue", () => {
     const wrapper = mount(Player, { propsData: { player: game.players[0] } });
 
     expect(wrapper.vm.winner).toBe(false);
-    expect(wrapper.find("div.winner").exists()).toBe(false);
+    expect(wrapper.find(".winner").exists()).toBe(false);
   });
 });
