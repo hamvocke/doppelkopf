@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :class="[tablePosition, zIndex]">
+  <div class="card" :class="[positionClasses, zIndex]">
     <template v-if="card">
       <div class="card-inner" :class="cardClasses">
         <template v-if="isCovered">
@@ -51,6 +51,7 @@ export default {
       type: Boolean,
       required: false
     },
+    // TODO: remove, use player.tablePosition instead
     position: {
       type: String,
       required: false,
@@ -69,19 +70,15 @@ export default {
       return {
         selected: this.isSelected,
         highlighted: this.isHighlighted,
-        left: this.position === "left",
-        right: this.position === "right",
-        top: this.position === "top",
-        bottom: this.position === "bottom",
         covered: this.isCovered
       };
     },
-    tablePosition: function() {
+    positionClasses: function() {
       return {
-        "position-top": this.position === "top",
-        "position-left": this.position === "left",
-        "position-right": this.position === "right",
-        "position-bottom": this.position === "bottom"
+        left: this.position === "left",
+        right: this.position === "right",
+        top: this.position === "top",
+        bottom: this.position === "bottom"
       };
     },
     zIndex: function() {
@@ -112,39 +109,7 @@ export default {
 @import "../assets/css/vars.css";
 
 .card {
-  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-  transition-delay: 0s;
   display: inline-flex;
-}
-
-.position-top {
-  grid-area: top;
-  justify-content: center;
-  align-items: end;
-}
-
-.position-left {
-  grid-area: left;
-  justify-content: end;
-  align-items: center;
-}
-
-.position-right {
-  grid-area: right;
-  justify-content: start;
-  align-items: center;
-}
-
-.position-bottom {
-  grid-area: bottom;
-  justify-content: center;
-  align-items: start;
-}
-
-.position-top,
-.position-bottom {
-  min-width: 70px;
-  min-height: 97px;
 }
 
 .card-inner {
@@ -269,11 +234,6 @@ export default {
     border-radius: 4px;
   }
 
-  .position-top,
-  .position-bottom {
-    min-width: 32px;
-    min-height: 44px;
-  }
   .card-inner {
     height: 55px;
     width: 38px;
@@ -281,10 +241,10 @@ export default {
     padding: 3px;
   }
 
-  .trick-card .card-inner.bottom,
-  .card-inner.top,
-  .card-inner.left,
-  .card-inner.right {
+  /* Render all other players' cards a little smaller on small devices */
+  .top .card-inner,
+  .left .card-inner,
+  .right .card-inner {
     height: 38px;
     width: 26px;
   }
