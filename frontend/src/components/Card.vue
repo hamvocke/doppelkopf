@@ -241,14 +241,6 @@ export default {
     padding: 3px;
   }
 
-  /* Render all other players' cards a little smaller on small devices */
-  .top .card-inner,
-  .left .card-inner,
-  .right .card-inner {
-    height: 38px;
-    width: 26px;
-  }
-
   .selected {
     top: -6px;
     box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
@@ -275,6 +267,15 @@ export default {
 
   .card-center {
     font-size: 1.5em;
+  }
+
+  /* Render all other players' cards a little smaller on small devices */
+  /* due to scoping issues, these styles can't be part of Hand.vue */
+  .hand .top .card-inner,
+  .hand .left .card-inner,
+  .hand .right .card-inner {
+    height: 38px;
+    width: 26px;
   }
 }
 </style>
