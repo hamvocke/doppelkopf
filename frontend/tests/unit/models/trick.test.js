@@ -232,7 +232,10 @@ describe("extras", () => {
     trick.add(ten.of(suits.hearts), player1);
     trick.add(queen.of(suits.spades), player2);
 
-    expect(trick.extras()).toEqual([extras.charlie_caught, extras.charlie_caught]);
+    expect(trick.extras()).toEqual([
+      extras.charlie_caught,
+      extras.charlie_caught
+    ]);
   });
 
   test("should see charlie being catched by teammate, no extras applied", () => {
@@ -292,6 +295,10 @@ describe("extras", () => {
     trick.add(ace.of(suits.diamonds), player1);
     trick.add(jack.of(suits.clubs), player2);
 
-    expect(trick.extras()).toEqual([extras.fox, extras.charlie_caught, extras.charlie]);
+    expect(trick.extras()).toEqual([
+      extras.fox,
+      extras.charlie_caught,
+      extras.charlie
+    ]);
   });
 });

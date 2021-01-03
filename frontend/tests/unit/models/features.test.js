@@ -25,16 +25,18 @@ test("should throw error when accessing undefined feature", () => {
   Features.features = {
     a: true,
     b: false
-  }
+  };
 
-  function getUnknown() { Features.get("unknown") };
+  function getUnknown() {
+    Features.get("unknown");
+  }
 
   expect(getUnknown).toThrow('Cannot find feature with name "unknown"');
 });
 
 test("should fetch features from backend", async () => {
   const stubbedFeatures = {
-    "features": {
+    features: {
       "some-toggle": true,
       "another-toggle": false
     }
