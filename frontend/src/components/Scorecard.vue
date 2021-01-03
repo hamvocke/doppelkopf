@@ -221,6 +221,7 @@ export default {
   color: var(--black);
   display: flex;
   flex-direction: column;
+  z-index: var(--notification-layer);
 }
 
 .scroll-container {
@@ -327,7 +328,7 @@ td {
 .party {
   padding: 6px 18px;
   border-radius: 18px;
-  z-index: 1;
+  z-index: var(--base-layer);
   font-weight: bold;
 }
 

@@ -1,17 +1,15 @@
 <template>
   <div class="trick">
-    <div class="cards">
+    <div class="cards trick-card">
       <transition-group name="card" tag="span">
         <Card
-          v-for="playedCard in cards"
-          :key="playedCard.card.cardId"
+          v-for="playedCard in playerPlayedCards"
+          :key="playedCard.id"
           :card="playedCard.card"
-          :player-name="playedCard.player.name"
+          :player="playedCard.player"
+          :position="playedCard.player.tablePosition"
         />
       </transition-group>
-    </div>
-    <div v-if="winner" class="winner">
-      {{ $t("trick_goes_to") }} {{ winner.name }}
     </div>
   </div>
 </template>
@@ -34,8 +32,8 @@ export default {
     cards: function() {
       return this.currentTrick.cards();
     },
-    winner: function() {
-      return this.currentTrick.winner();
+    playerPlayedCards: function() {
+      return this.currentTrick.playerPlayedCards();
     }
   }
 };
@@ -43,24 +41,38 @@ export default {
 
 <style scoped>
 .trick {
-  min-height: 180px;
-  min-width: 100%;
+  height: 100%;
+  width: 100%;
   justify-content: center;
   align-items: stretch;
 }
 
-.winner {
-  padding: 12px;
-  text-align: center;
+.cards > span {
+  display: grid;
+  grid-template-areas:
+    "left top right"
+    "left bottom right";
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 1fr 1fr;
+  /* Remove gaps for overlapping effect */
+  column-gap: 6px;
+  row-gap: 64px;
+  height: 100%;
 }
 
-.cards > span {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+.trick-card {
+  height: 100%;
 }
+/*
+following problems so far:
+card class is only added to the trick when card is there, hence the layout is always in movement, due to flex moving correspondingly
+- card containers have to be static, with min-height and min-width vals, matching the card-size.
+either we create a static grid with empty cells checking 4x4 direction === card or we create "dummy" cards that don't show but still create the correct layout  
+
+*/
 
 .cards .card {
+  /* Remove to have overlapping effect*/
   margin: 6px;
 }
 

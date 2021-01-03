@@ -26,4 +26,20 @@ export class RingQueue {
 
     this.currentIndex = foundIndex;
   }
+
+  first() {
+    return this.current();
+  }
+
+  second() {
+    return this.elements[(this.currentIndex + 1) % this.elements.length];
+  }
+
+  third() {
+    return this.elements[(this.currentIndex + 2) % this.elements.length];
+  }
+
+  fourth() {
+    return this.elements[(this.currentIndex + 3) % this.elements.length];
+  }
 }

@@ -4,8 +4,9 @@ import { ranks, suits } from "@/models/card";
 import { extras as extrasModel } from "@/models/extras";
 
 export class Trick {
-  constructor(expectedNumberOfCards) {
-    this.expectedNumberOfCards = expectedNumberOfCards;
+  constructor(players) {
+    this.players = players;
+    this.expectedNumberOfCards = players.length;
     this.playedCards = [];
     this.finished = false;
     this.id = uniqueId("trick_");
@@ -32,6 +33,19 @@ export class Trick {
 
   cards() {
     return this.playedCards;
+  }
+
+  playerPlayedCards() {
+    let playerPlayedCards = [];
+    this.players.forEach(player => {
+      let playerCard = this.cardBy(player);
+      if (playerCard) {
+        playerPlayedCards.push(playerCard);
+      } else {
+        playerPlayedCards.push(new PlayedCard(undefined, player));
+      }
+    });
+    return playerPlayedCards;
   }
 
   cardBy(player) {

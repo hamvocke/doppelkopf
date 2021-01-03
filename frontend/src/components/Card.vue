@@ -1,22 +1,26 @@
 <template>
-  <div class="card">
-    <div class="card-inner" :class="cardClasses">
-      <template v-if="isCovered">
-        <div class="background"></div>
-      </template>
-      <template v-else>
-        <div class="card-top" :class="colorClasses">
-          <div class="rank">{{ $t(card.rank) }}</div>
-          <div class="suit">{{ card.suit }}</div>
-        </div>
-        <span class="card-center" :class="colorClasses"> {{ card.suit }} </span>
-        <div class="card-bottom" :class="colorClasses">
-          <div class="rank">{{ $t(card.rank) }}</div>
-          <div class="suit">{{ card.suit }}</div>
-        </div>
-      </template>
-    </div>
-    <div v-if="playerName" class="playerName">{{ playerName }}</div>
+  <div class="card" :class="[tablePosition, zIndex]">
+    <template v-if="card">
+      <div class="card-inner" :class="cardClasses">
+        <template v-if="isCovered">
+          <div class="background"></div>
+        </template>
+        <template v-else>
+          <div class="card-top" :class="colorClasses">
+            <div class="rank">{{ $t(card.rank) }}</div>
+            <div class="suit">{{ card.suit }}</div>
+          </div>
+          <span class="card-center" :class="colorClasses">
+            {{ card.suit }}
+          </span>
+          <div class="card-bottom" :class="colorClasses">
+            <div class="rank">{{ $t(card.rank) }}</div>
+            <div class="suit">{{ card.suit }}</div>
+          </div>
+        </template>
+      </div>
+    </template>
+    <div v-if="player" class="playerName">{{ player.name }}</div>
   </div>
 </template>
 
@@ -29,6 +33,11 @@ export default {
     card: {
       type: Object,
       required: true
+    },
+    player: {
+      type: Object,
+      required: false,
+      default: undefined
     },
     isSelected: {
       type: Boolean,
@@ -46,11 +55,6 @@ export default {
       type: String,
       required: false,
       default: "not-set"
-    },
-    playerName: {
-      type: String,
-      required: false,
-      default: null
     }
   },
   computed: {
@@ -71,6 +75,34 @@ export default {
         bottom: this.position === "bottom",
         covered: this.isCovered
       };
+    },
+    tablePosition: function() {
+      return {
+        "position-top": this.position === "top",
+        "position-left": this.position === "left",
+        "position-right": this.position === "right",
+        "position-bottom": this.position === "bottom"
+      };
+    },
+    zIndex: function() {
+      return this.player
+        ? {
+            "first-card":
+              this.player === this.player.game.currentRound.playerOrder.first(),
+            "second-card":
+              this.player ===
+              this.player.game.currentRound.playerOrder.second(),
+            "third-card":
+              this.player === this.player.game.currentRound.playerOrder.third(),
+            "fourth-card":
+              this.player === this.player.game.currentRound.playerOrder.fourth()
+          }
+        : {};
+    }
+  },
+  methods: {
+    isCard: function() {
+      return this.card ? true : false;
     }
   }
 };
@@ -83,6 +115,36 @@ export default {
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-delay: 0s;
   display: inline-flex;
+}
+
+.position-top {
+  grid-area: top;
+  justify-content: center;
+  align-items: end;
+}
+
+.position-left {
+  grid-area: left;
+  justify-content: end;
+  align-items: center;
+}
+
+.position-right {
+  grid-area: right;
+  justify-content: start;
+  align-items: center;
+}
+
+.position-bottom {
+  grid-area: bottom;
+  justify-content: center;
+  align-items: start;
+}
+
+.position-top,
+.position-bottom {
+  min-width: 70px;
+  min-height: 97px;
 }
 
 .card-inner {
@@ -116,7 +178,23 @@ export default {
 .selected {
   top: -10px;
   box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
-  z-index: 200;
+  z-index: var(--card-selected-layer);
+}
+
+.first-card {
+  z-index: var(--card-first-layer);
+}
+
+.second-card {
+  z-index: var(--card-second-layer);
+}
+
+.third-card {
+  z-index: var(--card-third-layer);
+}
+
+.fourth-card {
+  z-index: var(--card-fourth-layer);
 }
 
 .card-top {
@@ -180,8 +258,9 @@ export default {
   transition: opacity 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.card:hover .playerName,
-.card:active .playerName {
+/* change to card:hover and card:active to activate */
+.card-inner:hover .playerName,
+.card-inner:active .playerName {
   opacity: 1;
 }
 
@@ -190,6 +269,11 @@ export default {
     border-radius: 4px;
   }
 
+  .position-top,
+  .position-bottom {
+    min-width: 32px;
+    min-height: 44px;
+  }
   .card-inner {
     height: 55px;
     width: 38px;
@@ -197,6 +281,7 @@ export default {
     padding: 3px;
   }
 
+  .trick-card .card-inner.bottom,
   .card-inner.top,
   .card-inner.left,
   .card-inner.right {
@@ -207,7 +292,7 @@ export default {
   .selected {
     top: -6px;
     box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
-    z-index: 200;
+    z-index: var(--card-selected-layer);
   }
 
   .card-top {

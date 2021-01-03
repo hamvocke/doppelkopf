@@ -8,13 +8,37 @@ const player1 = new Player("Player 1", true);
 const player2 = new Player("Player 2");
 const player3 = new Player("Player 3");
 const player4 = new Player("Player 4");
+const players = [player1, player2, player3, player4];
 
 test("new trick is empty", () => {
-  expect(new Trick(4).cards).toHaveLength(0);
+  expect(new Trick(players).cards).toHaveLength(0);
+});
+
+test("playerPlayedCards always have players length", () => {
+  expect(new Trick(players).playerPlayedCards()).toHaveLength(players.length);
+});
+
+test("playerPlayedCards are undefined if not played", () => {
+  let trick = new Trick(players);
+  const cardToBePlayed = queen.of(suits.spades);
+
+  trick.add(cardToBePlayed, player1);
+
+  const expectedCard = new PlayedCard(cardToBePlayed, player1);
+  const emptyCardByPlayer2 = new PlayedCard(undefined, player2);
+  const emptyCardByPlayer3 = new PlayedCard(undefined, player3);
+  const emptyCardByPlayer4 = new PlayedCard(undefined, player4);
+
+  expect(trick.playerPlayedCards()).toEqual([
+    expectedCard,
+    emptyCardByPlayer2,
+    emptyCardByPlayer3,
+    emptyCardByPlayer4
+  ]);
 });
 
 test("can add card to trick", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
   const cardToBePlayed = queen.of(suits.spades);
 
   trick.add(cardToBePlayed, player1);
@@ -25,7 +49,7 @@ test("can add card to trick", () => {
 });
 
 test("should finish a trick if four cards have been played", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
 
   trick.add(queen.of(suits.spades), player1);
   trick.add(queen.of(suits.hearts), player2);
@@ -36,7 +60,7 @@ test("should finish a trick if four cards have been played", () => {
 });
 
 test("should find card played by player", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
   const cardToBePlayed = queen.of(suits.spades);
 
   trick.add(cardToBePlayed, player1);
@@ -48,7 +72,7 @@ test("should find card played by player", () => {
 });
 
 test("should prohibit multiple cards from same player", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
 
   function invalidMove() {
     trick.add(queen.of(suits.spades), player2);
@@ -61,7 +85,7 @@ test("should prohibit multiple cards from same player", () => {
 });
 
 test("should find base card of a trick", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
 
   const expectedBaseCard = queen.of(suits.spades);
 
@@ -72,19 +96,19 @@ test("should find base card of a trick", () => {
 });
 
 test("should return undefined base card for empty trick", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
 
   expect(trick.baseCard()).toBeUndefined();
 });
 
 test("winner for an empty trick should be undefined", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
 
   expect(trick.winner()).toBeUndefined();
 });
 
 test("should find winner for a finished trick", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
 
   trick.add(king.of(suits.hearts), player2);
   trick.add(ten.of(suits.clubs), player3);
@@ -95,7 +119,7 @@ test("should find winner for a finished trick", () => {
 });
 
 test("should find winner for a finished trick - clubs", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
 
   trick.add(king.of(suits.clubs), player2);
   trick.add(ten.of(suits.spades), player3);
@@ -106,7 +130,7 @@ test("should find winner for a finished trick - clubs", () => {
 });
 
 test("should find winner for a finished trick - trumps", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
 
   trick.add(king.of(suits.clubs), player2);
   trick.add(ace.of(suits.clubs), player3);
@@ -117,7 +141,7 @@ test("should find winner for a finished trick - trumps", () => {
 });
 
 test("should find winner for an unfinished trick - non-trumps", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
 
   trick.add(ten.of(suits.spades), player3);
   trick.add(ace.of(suits.hearts), player4);
@@ -126,7 +150,7 @@ test("should find winner for an unfinished trick - non-trumps", () => {
 });
 
 test("should find winner for an unfinished trick", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
 
   trick.add(queen.of(suits.spades), player3);
   trick.add(queen.of(suits.diamonds), player4);
@@ -136,7 +160,7 @@ test("should find winner for an unfinished trick", () => {
 });
 
 test("should return points in a trick", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
 
   trick.add(queen.of(suits.spades), player3);
   trick.add(queen.of(suits.diamonds), player4);
@@ -157,7 +181,7 @@ describe("extras", () => {
   // tests here
 
   test("should find Doppelkopf", () => {
-    const trick = new Trick(4);
+    const trick = new Trick(players);
 
     trick.add(ten.of(suits.spades), player3);
     trick.add(ten.of(suits.spades), player4);
@@ -168,7 +192,7 @@ describe("extras", () => {
   });
 
   test("should catch Fuchs", () => {
-    const trick = new Trick(4);
+    const trick = new Trick(players);
 
     trick.add(ten.of(suits.hearts), player3);
     trick.add(king.of(suits.spades), player4);
@@ -179,7 +203,7 @@ describe("extras", () => {
   });
 
   test("should catch two Füchse", () => {
-    const trick = new Trick(4);
+    const trick = new Trick(players);
 
     trick.add(ten.of(suits.hearts), player3);
     trick.add(king.of(suits.spades), player4);
@@ -190,7 +214,7 @@ describe("extras", () => {
   });
 
   test("should see two Füchse in the trick, catching one", () => {
-    const trick = new Trick(4);
+    const trick = new Trick(players);
 
     trick.add(ten.of(suits.hearts), player3);
     trick.add(ace.of(suits.diamonds), player4);
@@ -201,7 +225,7 @@ describe("extras", () => {
   });
 
   test("should not detect charlie if it's not the last trick", () => {
-    const trick = new Trick(4);
+    const trick = new Trick(players);
 
     trick.add(jack.of(suits.hearts), player3);
     trick.add(jack.of(suits.clubs), player4);
@@ -212,7 +236,7 @@ describe("extras", () => {
   });
 
   test("should catch charlie", () => {
-    const trick = new Trick(4);
+    const trick = new Trick(players);
     trick.setLastTrickInRound();
 
     trick.add(jack.of(suits.hearts), player3);
@@ -224,7 +248,7 @@ describe("extras", () => {
   });
 
   test("should catch two charlies", () => {
-    const trick = new Trick(4);
+    const trick = new Trick(players);
     trick.setLastTrickInRound();
 
     trick.add(jack.of(suits.clubs), player3);
@@ -239,7 +263,7 @@ describe("extras", () => {
   });
 
   test("should see charlie being catched by teammate, no extras applied", () => {
-    const trick = new Trick(4);
+    const trick = new Trick(players);
     trick.setLastTrickInRound();
 
     trick.add(jack.of(suits.diamonds), player3);
@@ -251,7 +275,7 @@ describe("extras", () => {
   });
 
   test("should see both charlies, one is caught", () => {
-    const trick = new Trick(4);
+    const trick = new Trick(players);
     trick.setLastTrickInRound();
 
     trick.add(jack.of(suits.diamonds), player3);
@@ -263,7 +287,7 @@ describe("extras", () => {
   });
 
   test("should see charlie winning the trick", () => {
-    const trick = new Trick(4);
+    const trick = new Trick(players);
     trick.setLastTrickInRound();
 
     trick.add(jack.of(suits.diamonds), player3);
@@ -275,7 +299,7 @@ describe("extras", () => {
   });
 
   test("should see charlie winning the trick, catching a charlie", () => {
-    const trick = new Trick(4);
+    const trick = new Trick(players);
     trick.setLastTrickInRound();
 
     trick.add(jack.of(suits.diamonds), player3);
@@ -287,7 +311,7 @@ describe("extras", () => {
   });
 
   test("should see charlie winning the trick, catching a charlie and a fox", () => {
-    const trick = new Trick(4);
+    const trick = new Trick(players);
     trick.setLastTrickInRound();
 
     trick.add(jack.of(suits.diamonds), player3);
