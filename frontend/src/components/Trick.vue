@@ -83,8 +83,8 @@ export default {
 }
 
 .card-enter-active {
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition-delay: 0.5s;
+  transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-delay: 0.5s; /* needs to be in sync with the leave transition duration in Hand.vue */
 }
 
 .card-leave-active {
@@ -98,21 +98,5 @@ export default {
 
 .card-enter {
   opacity: 0;
-  transform: scale(2, 2);
-}
-
-.card-enter .top,
-.card-enter-to .top {
-  transform: rotate(180deg);
-}
-
-.card-enter .left,
-.card-enter-to .left {
-  transform: rotate(90deg);
-}
-
-.card-enter .right,
-.card-enter-to .right {
-  transform: rotate(-90deg);
 }
 </style>
