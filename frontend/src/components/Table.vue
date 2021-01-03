@@ -73,7 +73,7 @@ export default {
     "left bottom right"
     "controls controls controls";
   grid-template-rows: auto 1fr auto 80px;
-  grid-template-columns: 120px 1fr 120px;
+  grid-template-columns: minmax(140px, auto) 1fr minmax(140px, auto);
   overflow: auto;
   height: 100%;
 }
@@ -109,7 +109,7 @@ export default {
       "bottom bottom bottom"
       "controls controls controls";
 
-    grid-template-columns: 100px 1fr 100px;
+    grid-template-columns: minmax(120px, auto) 1fr minmax(120px, auto);
   }
 }
 </style>
