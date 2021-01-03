@@ -109,7 +109,7 @@ export default {
       "bottom bottom bottom"
       "controls controls controls";
 
-    grid-template-columns: 80px 1fr 80px;
+    grid-template-columns: 100px 1fr 100px;
   }
 }
 </style>
