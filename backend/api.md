@@ -107,7 +107,33 @@ This event is triggered right after a socket connection is opened. Upon joining,
 
 ### `joined`
 
-The `joined` event is
+The `joined` event is broadcasted to all players connected to a game room after a new player joined. The event sends information about the newly joined player to all players in the given room.
+
+**Payload:**
+```json
+{
+  "player" : {
+    "name": "Hubert",
+    "guid": "some-unique-guid",
+    "status": "online"
+  }
+}
+```
+
+### `disconnect`
+
+The `disconnect` event is sent automatically whenever a player's connection is closed (e.g. because they closed their browser tab, lost their connection, etc.). It's treated as a signal that a player _left_ the game. However, since this could be a technical issue instead of a deliberate action to stop playing, we're going to keep some state around so we can give players a chance to reconnect. A disconnect event can't send any payload besides the session ID attached to the socket connection.
+
+**Payload:** None. We use the session ID to identify which player's connection was closed
+
+**Backend processing**:
+1. read the `session ID` (`request.sid`) from the closed connection
+2. find the `Player` that's got the `session ID` associated
+3. find the `Game` that the `Player` is currently playing
+4. update the player's `state` to `offline`
+5. broadcast a `left` event to the room associated to the game
+
+---
 
 ## Features
 
@@ -115,6 +141,7 @@ The `joined` event is
 | - | - | - |
 | `HTTP GET` | `/api/features` | Get all feature toggles' state |
 
+---
 
 ## Metrics
 
