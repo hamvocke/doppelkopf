@@ -74,6 +74,7 @@ Multiplayer games are created via HTTP communication. After a game has created, 
 | `Client -> Server` | `join` | Join an existing multiplayer game that's in `waiting` state |
 | `Server -> Client` | `joined` | Broadcast to existing players that a new player joined |
 | `Client -> Server` | `disconnect` | A player closes the Websocket connection (e.g. on browser close, connection loss) |
+| `Server -> Client` | `disconnected` | Broadcast to existing players that a player just left the game |
 | `Client -> Server` | `play-card` | A player plays a card |
 | `Server -> Server` | `played-card` | Broadcast to players that a card has been played |
 
@@ -132,6 +133,22 @@ The `disconnect` event is sent automatically whenever a player's connection is c
 3. find the `Game` that the `Player` is currently playing
 4. update the player's `state` to `offline`
 5. broadcast a `left` event to the room associated to the game
+
+
+### `disconnected`
+
+The `disconnected` event is broadcasted to all players connected to a game room after a player closed their connection. The event sends information about the player who left to all players in the given room.
+
+**Payload:**
+```json
+{
+  "player" : {
+    "name": "Hubert",
+    "guid": "some-unique-guid",
+    "status": "offline"
+  }
+}
+```
 
 ---
 
