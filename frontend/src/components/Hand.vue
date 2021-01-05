@@ -1,7 +1,10 @@
 <template>
   <div class="hand">
     <div class="cards" :class="position">
-      <transition-group name="card" tag="span">
+      <div v-if="isEmpty" class="placeholder">
+        <Card :is-covered="false" :card="{}" />
+      </div>
+      <transition-group v-else name="card" tag="span">
         <Card
           v-for="card in hand.cards"
           :key="card.cardId"
@@ -54,6 +57,11 @@ export default {
       selectedCard: {}
     };
   },
+  computed: {
+    isEmpty: function() {
+      return this.hand.cards.length === 0;
+    }
+  },
   methods: {
     isSelected: function(card) {
       return card === this.selectedCard;
@@ -80,6 +88,12 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+}
+
+.placeholder {
+  background-color: var(--white);
+  opacity: 0.2;
+  border-radius: 8px;
 }
 
 .top > span {
