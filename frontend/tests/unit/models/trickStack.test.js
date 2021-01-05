@@ -8,6 +8,7 @@ const player1 = new Player("player 1");
 const player2 = new Player("player 2");
 const player3 = new Player("player 3");
 const player4 = new Player("player 4");
+const players = [player1, player2, player3, player4];
 
 let trickStack;
 
@@ -16,7 +17,7 @@ beforeEach(() => {
 });
 
 test("should add trick to trick stack", () => {
-  const trick = new Trick(4);
+  const trick = new Trick(players);
   trick.add(ace.of(suits.hearts), player1);
   trick.add(ace.of(suits.hearts), player2);
   trick.add(ace.of(suits.spades), player3);
@@ -29,8 +30,8 @@ test("should add trick to trick stack", () => {
 });
 
 test("should list all cards in trick stack", () => {
-  const someTrick = new Trick(2);
-  const anotherTrick = new Trick(2);
+  const someTrick = new Trick(players.slice(0, 2));
+  const anotherTrick = new Trick(players.slice(0, 2));
   someTrick.add(ace.of(suits.hearts), player1);
   someTrick.add(ace.of(suits.hearts), player2);
   anotherTrick.add(ace.of(suits.spades), player1);
@@ -53,13 +54,13 @@ test("should throw error if adding non-finished trick to stack", () => {
 });
 
 test("should calculate points of trick", () => {
-  const someTrick = new Trick(4);
+  const someTrick = new Trick(players);
   someTrick.add(ace.of(suits.hearts), player1);
   someTrick.add(ten.of(suits.hearts), player2);
   someTrick.add(king.of(suits.hearts), player3);
   someTrick.add(ace.of(suits.hearts), player4);
 
-  const anotherTrick = new Trick(4);
+  const anotherTrick = new Trick(players);
   anotherTrick.add(ace.of(suits.spades), player1);
   anotherTrick.add(queen.of(suits.clubs), player2);
   anotherTrick.add(king.of(suits.spades), player3);
@@ -72,7 +73,7 @@ test("should calculate points of trick", () => {
 });
 
 test("should evaluate trick stack", () => {
-  const someTrick = new Trick(4);
+  const someTrick = new Trick(players);
   someTrick.add(ace.of(suits.hearts), player1);
   someTrick.add(ten.of(suits.hearts), player3);
   someTrick.add(king.of(suits.hearts), player2);
@@ -85,7 +86,7 @@ test("should evaluate trick stack", () => {
 
 describe("extras", () => {
   test("should find Doppelkopf", () => {
-    const someTrick = new Trick(4);
+    const someTrick = new Trick(players);
     someTrick.add(ace.of(suits.hearts), player1);
     someTrick.add(ten.of(suits.hearts), player3);
     someTrick.add(ten.of(suits.hearts), player2);
@@ -97,7 +98,7 @@ describe("extras", () => {
   });
 
   test("should find Fox", () => {
-    const someTrick = new Trick(4);
+    const someTrick = new Trick(players);
     player1.isRe = () => false;
     player3.isRe = () => true;
 
@@ -111,7 +112,7 @@ describe("extras", () => {
   });
 
   test("should find Doppelkopf and Fox", () => {
-    const someTrick = new Trick(4);
+    const someTrick = new Trick(players);
     player1.isRe = () => false;
     player3.isRe = () => true;
 

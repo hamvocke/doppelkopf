@@ -15,4 +15,8 @@
   --modal-layer: 20;
   --notification-layer: 30;
   --flash-layer: 40;
+  --scorecard-layer: 50;
+  --card-selected-layer: 200;
+  --options-menu-layer:400;
+  --options-icon-layer:500;
 }

@@ -4,14 +4,12 @@
       <transition-group name="card" tag="span">
         <Card
           v-for="playedCard in cards"
-          :key="playedCard.card.cardId"
+          :key="playedCard.id"
           :card="playedCard.card"
-          :player-name="playedCard.player.name"
+          :player="playedCard.player"
+          :position="playedCard.player.tablePosition"
         />
       </transition-group>
-    </div>
-    <div v-if="winner" class="winner">
-      {{ $t("trick_goes_to") }} {{ winner.name }}
     </div>
   </div>
 </template>
@@ -33,9 +31,6 @@ export default {
   computed: {
     cards: function() {
       return this.currentTrick.cards();
-    },
-    winner: function() {
-      return this.currentTrick.winner();
     }
   }
 };
@@ -43,30 +38,50 @@ export default {
 
 <style scoped>
 .trick {
-  min-height: 180px;
-  min-width: 100%;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: stretch;
-}
-
-.winner {
-  padding: 12px;
-  text-align: center;
 }
 
 .cards > span {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-areas:
+    "top top top"
+    "left empty right"
+    "bottom bottom bottom";
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
 }
 
-.cards .card {
-  margin: 6px;
+.top {
+  grid-area: top;
+  justify-content: center;
+  align-items: end;
+}
+
+.left {
+  grid-area: left;
+  justify-content: end;
+  align-items: center;
+}
+
+.right {
+  grid-area: right;
+  justify-content: start;
+  align-items: center;
+}
+
+.bottom {
+  grid-area: bottom;
+  justify-content: center;
+  align-items: start;
 }
 
 .card-enter-active {
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition-delay: 0.5s;
+  transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-delay: 0.5s; /* needs to be in sync with the leave transition duration in Hand.vue */
 }
 
 .card-leave-active {
@@ -80,6 +95,5 @@ export default {
 
 .card-enter {
   opacity: 0;
-  transform: scale(2, 2);
 }
 </style>

@@ -3,7 +3,15 @@
     <div class="info">
       <div class="name-info">
         <!-- <div class="avatar"><img src="../assets/icons/..." alt="avatar"></div> -->
-        <div class="name title-font">{{ player.name }}</div>
+        <div class="name title-font">
+          {{ player.name }}
+          <AwardIcon
+            v-if="winner"
+            class="winner"
+            :title="$t('badge_description', { name: player.name })"
+            size="18"
+          />
+        </div>
       </div>
       <div class="stats">
         <div v-if="player.isHuman" class="party">
@@ -48,7 +56,7 @@
 import Hand from "./Hand";
 import TrickStack from "./TrickStack";
 import { playableCards } from "@/models/playableCardFinder";
-import { UsersIcon, FlagIcon } from "vue-feather-icons";
+import { UsersIcon, FlagIcon, AwardIcon } from "vue-feather-icons";
 
 export default {
   name: "Player",
@@ -56,6 +64,7 @@ export default {
     Hand,
     TrickStack,
     UsersIcon,
+    AwardIcon,
     FlagIcon
   },
   props: {
@@ -69,6 +78,14 @@ export default {
       isCovered: !this.player.isHuman,
       isHandSelectable: this.player.isHuman
     };
+  },
+  computed: {
+    winner: function() {
+      return (
+        this.player.game.currentTrick.winner() == this.player &&
+        this.player.game.currentTrick.isFinished()
+      );
+    }
   },
   methods: {
     play: function(card) {
@@ -129,7 +146,12 @@ export default {
 }
 
 .name {
+  white-space: nowrap;
   font-size: 1.4em;
+}
+
+.title-font {
+  margin-right: 4px;
 }
 
 .avatar {
