@@ -1,9 +1,13 @@
 <template>
   <div class="hand">
     <div class="cards" :class="position">
-      <div v-if="isEmpty" class="placeholder">
-        <Card :is-covered="false" :card="{}" />
-      </div>
+      <Card
+        v-if="isEmpty"
+        :is-covered="false"
+        class="placeholder"
+        :card="{}"
+        :position="position"
+      />
       <transition-group v-else name="card" tag="span">
         <Card
           v-for="card in hand.cards"
