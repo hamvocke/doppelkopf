@@ -25,6 +25,10 @@ export class Hand {
     return find(this.cards, card);
   }
 
+  highest() {
+    return this.cards[0];
+  }
+
   remove(card) {
     if (!this.find(card)) {
       throw new Error("can't remove card that isn't on hand");
@@ -41,7 +45,7 @@ export class Hand {
     return (
       this.cards.filter(card => card.rank === ranks.king).length < 5 &&
       this.cards.filter(card => card.value >= 10).length < 7 &&
-      this.cards[0].compareTo(jack.of(suits.diamonds)) < 0
+      this.highest().compareTo(jack.of(suits.diamonds)) < 0
     );
   }
 }
