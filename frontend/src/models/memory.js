@@ -10,7 +10,7 @@ export class PercentageMemory {
   constructor(percent) {
     this.percent = percent;
     this.playedCards = [];
-    this.id = uniqueId("memory_percent");
+    this.id = uniqueId("memory_percent_");
   }
 
   memorize(playedCard) {
@@ -21,7 +21,7 @@ export class PercentageMemory {
 export class PerfectMemory {
   constructor() {
     this.playedCards = [];
-    this.id = uniqueId("memory_perfect");
+    this.id = uniqueId("memory_perfect_");
   }
 
   memorize(playedCard) {
@@ -32,7 +32,7 @@ export class PerfectMemory {
 export class PriorityMemory {
   constructor() {
     this.playedCards = [];
-    this.id = uniqueId("memory_priority");
+    this.id = uniqueId("memory_priority_");
   }
 
   memorize(playedCard) {
@@ -41,8 +41,7 @@ export class PriorityMemory {
     Will memorize all by value
     Queens, Tens, Aces
     */
-    if ([3, 10, 11].includes(playedCard.card.value)) {
+    if ([3, 10, 11].includes(playedCard.card.value))
       this.playedCards.push(playedCard);
-    }
   }
 }
