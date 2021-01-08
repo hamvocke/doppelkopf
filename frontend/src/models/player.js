@@ -6,6 +6,8 @@ import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
 import { announcements } from "@/models/announcements";
 import { playableCards } from "@/models/playableCardFinder";
+import { PerfectMemory } from "./memory";
+import { PlayedCard } from "./playedCard";
 
 const notifier = new Notifier();
 
@@ -25,6 +27,7 @@ export class Player {
     this.tablePosition = tablePosition;
     this.game = game;
     this.behavior = new RandomCardBehavior();
+    this.memory = new PerfectMemory();
 
     this.reset();
   }
@@ -35,6 +38,12 @@ export class Player {
 
   isKontra() {
     return !this.isRe();
+  }
+
+  callMemorizeFunctionForAllPlayers(card) {
+    this.game.players.forEach(player => {
+      player.memory.memorize(new PlayedCard(card, this));
+    });
   }
 
   autoplay() {
@@ -70,6 +79,8 @@ export class Player {
     try {
       this.game.currentTrick.add(cardToBePlayed, this);
       this.hand.remove(cardToBePlayed);
+      this.callMemorizeFunctionForAllPlayers(cardToBePlayed);
+      console.debug(cardToBePlayed.cardId);
       this.game.currentRound.nextPlayer();
 
       if (options.autoplay === true) {
