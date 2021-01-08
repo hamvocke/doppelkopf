@@ -48,4 +48,23 @@ export class Hand {
       this.highest().compareTo(jack.of(suits.diamonds)) < 0
     );
   }
+
+  fehlCardsBySuit(suit) {
+    return this.cards.filter(
+      card => card.suit === suit && card.isTrump() === false
+    );
+  }
+
+  mustServeSuit(suit) {
+    return this.fehlCardsBySuit(suit).length > 0;
+  }
+
+  trumps() {
+    return this.cards.filter(card => card.isTrump() === true);
+  }
+
+  hasBlankAce(suit) {
+    let fehlCards = this.fehlCardsBySuit(suit);
+    return fehlCards.length === 1 && fehlCards[0].value === 11;
+  }
 }
