@@ -213,3 +213,64 @@ test("should detect hand with trumps equal or lesser than jack of diamonds", () 
 
   expect(hand.isPlayable()).toBe(false);
 });
+
+test("should detect suits that can be served", () => {
+  const cards = [
+    king.of(suits.hearts),
+    king.of(suits.hearts),
+    ten.of(suits.clubs),
+    ten.of(suits.clubs),
+    ten.of(suits.hearts),
+    ten.of(suits.hearts),
+    ten.of(suits.diamonds),
+    ten.of(suits.diamonds),
+    jack.of(suits.spades),
+    jack.of(suits.spades)
+  ];
+  const hand = new Hand(cards);
+
+  expect(hand.fehlCardsBySuit(suits.spades).length).toEqual(0);
+  expect(hand.fehlCardsBySuit(suits.hearts).length).toEqual(2);
+  expect(hand.fehlCardsBySuit(suits.clubs).length).toEqual(2);
+  expect(hand.mustServeSuit(suits.spades)).toBe(false);
+  expect(hand.mustServeSuit(suits.hearts)).toBe(true);
+  expect(hand.mustServeSuit(suits.clubs)).toBe(true);
+});
+
+test("should detect correct number of trumps in hand", () => {
+  const cards = [
+    king.of(suits.hearts),
+    king.of(suits.hearts),
+    ten.of(suits.clubs),
+    ten.of(suits.clubs),
+    ten.of(suits.spades),
+    ten.of(suits.spades),
+    ten.of(suits.diamonds),
+    ten.of(suits.diamonds),
+    jack.of(suits.diamonds),
+    jack.of(suits.diamonds)
+  ];
+  const hand = new Hand(cards);
+
+  expect(hand.trumps().length).toEqual(4);
+});
+
+test("should detect multiple single blank aces", () => {
+  const cards = [
+    ace.of(suits.hearts),
+    ace.of(suits.spades),
+    king.of(suits.clubs),
+    ten.of(suits.clubs),
+    ace.of(suits.clubs),
+    ten.of(suits.hearts),
+    ten.of(suits.hearts),
+    queen.of(suits.diamonds),
+    queen.of(suits.diamonds),
+    jack.of(suits.spades)
+  ];
+  const hand = new Hand(cards);
+
+  expect(hand.hasBlankAce(suits.clubs)).toBe(false);
+  expect(hand.hasBlankAce(suits.hearts)).toBe(true);
+  expect(hand.hasBlankAce(suits.spades)).toBe(true);
+});
