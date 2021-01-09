@@ -63,6 +63,10 @@ export class Hand {
     return this.cards.filter(card => card.isTrump() === true);
   }
 
+  hasTrumps() {
+    return this.trumps().length > 0;
+  }
+
   getBlankAce(suit) {
     let fehlCards = this.fehlCardsBySuit(suit);
     return fehlCards.length === 1 && fehlCards[0].value === 11
