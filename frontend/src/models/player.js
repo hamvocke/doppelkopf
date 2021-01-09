@@ -49,7 +49,8 @@ export class Player {
   autoplay() {
     const cardToBePlayed = this.behavior.cardToPlay(
       this.hand,
-      this.game.currentTrick.baseCard()
+      this.game.currentTrick,
+      this.memory
     );
     this.play(cardToBePlayed);
 
