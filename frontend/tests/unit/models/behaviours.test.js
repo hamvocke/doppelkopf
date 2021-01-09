@@ -2,6 +2,8 @@ import { HighestCardBehavior, RandomCardBehavior } from "@/models/behaviors";
 import { Hand } from "@/models/hand";
 import { announcements } from "@/models/announcements";
 import { ace, king, queen, jack, suits, ten, Card } from "@/models/card";
+import { Trick } from "@/models/trick";
+import { Player } from "@/models/player";
 
 jest.mock("@/models/random", () => ({
   __esModule: true,
@@ -16,9 +18,12 @@ describe("Highest Card Behavior", () => {
     queen.of(suits.spades).second(),
     king.of(suits.hearts).first()
   ]);
+  const player = new Player(new Player());
+  const trick = new Trick([player]);
+  trick.add(ten.of(suits.diamonds), player);
 
   test("should play highest possible card", () => {
-    const cardToPlay = behavior.cardToPlay(hand, ten.of(suits.diamonds));
+    const cardToPlay = behavior.cardToPlay(hand, trick);
     expect(cardToPlay).toEqual(queen.of(suits.spades).second());
   });
 });
@@ -31,9 +36,12 @@ describe("Random Card Behavior", () => {
     queen.of(suits.spades).second(),
     king.of(suits.hearts).first()
   ]);
+  const player = new Player(new Player());
+  const trick = new Trick([player]);
+  trick.add(ten.of(suits.diamonds), player);
 
   test("should play a random card", () => {
-    const cardToPlay = behavior.cardToPlay(hand, ten.of(suits.diamonds));
+    const cardToPlay = behavior.cardToPlay(hand, trick);
     expect(cardToPlay).toEqual(expect.any(Card));
   });
 
