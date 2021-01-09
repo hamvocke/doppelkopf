@@ -63,8 +63,24 @@ export class Hand {
     return this.cards.filter(card => card.isTrump() === true);
   }
 
-  hasBlankAce(suit) {
+  getBlankAce(suit) {
     let fehlCards = this.fehlCardsBySuit(suit);
-    return fehlCards.length === 1 && fehlCards[0].value === 11;
+    return fehlCards.length === 1 && fehlCards[0].value === 11
+      ? fehlCards[0]
+      : undefined;
+  }
+
+  hasBlankAce(suit) {
+    return this.getBlankAce(suit) ? true : false;
+  }
+
+  getBlankAces() {
+    let aces = [];
+    [suits.clubs, suits.spades, suits.hearts].forEach(suit => {
+      let ace = this.getBlankAce(suit);
+      if (ace) aces.push(ace);
+    });
+    return aces;
+    //this.cards.filter(card => !card.isTrump() && card.value === 11);
   }
 }

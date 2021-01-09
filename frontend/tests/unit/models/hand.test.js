@@ -257,15 +257,15 @@ test("should detect correct number of trumps in hand", () => {
 
 test("should detect multiple single blank aces", () => {
   const cards = [
-    ace.of(suits.hearts),
-    ace.of(suits.spades),
+    ace.of(suits.hearts).first(),
+    ace.of(suits.spades).first(),
     king.of(suits.clubs),
     ten.of(suits.clubs),
     ace.of(suits.clubs),
     ten.of(suits.hearts),
     ten.of(suits.hearts),
     queen.of(suits.diamonds),
-    queen.of(suits.diamonds),
+    ace.of(suits.diamonds),
     jack.of(suits.spades)
   ];
   const hand = new Hand(cards);
@@ -273,4 +273,8 @@ test("should detect multiple single blank aces", () => {
   expect(hand.hasBlankAce(suits.clubs)).toBe(false);
   expect(hand.hasBlankAce(suits.hearts)).toBe(true);
   expect(hand.hasBlankAce(suits.spades)).toBe(true);
+  expect(hand.getBlankAces()).toEqual([
+    ace.of(suits.spades).first(),
+    ace.of(suits.hearts).first()
+  ]);
 });
