@@ -3,14 +3,14 @@ import { playableCards } from "@/models/playableCardFinder";
 import { chance } from "@/models/random";
 
 export class HighestCardBehavior {
-  cardToPlay(hand, baseCard) {
-    return playableCards(hand.cards, baseCard)[0];
+  cardToPlay(hand, trick, memory) {
+    return playableCards(hand.cards, trick.baseCard())[0];
   }
 }
 
 export class RandomCardBehavior {
-  cardToPlay(hand, baseCard) {
-    return sample(playableCards(hand.cards, baseCard));
+  cardToPlay(hand, trick, memory) {
+    return sample(playableCards(hand.cards, trick.baseCard()));
   }
 
   announcementToMake(possibleAnnouncements) {
