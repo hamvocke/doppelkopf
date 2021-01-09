@@ -42,6 +42,24 @@ describe("Hand.vue", () => {
     expect(firstCard.find("div.background").exists()).toBe(true);
   });
 
+  test("should render placeholder card if hand is empty", () => {
+    const wrapper = mount(Hand, {
+      propsData: { hand: new HandModel([]), playableCards: [], isCovered: true }
+    });
+    expect(wrapper.find("div.placeholder").exists()).toBe(true);
+  });
+
+  test("should not render placeholder card if hand has cards", () => {
+    const wrapper = mount(Hand, {
+      propsData: {
+        hand: new HandModel([ace.of(suits.hearts)]),
+        playableCards: [],
+        isCovered: true
+      }
+    });
+    expect(wrapper.find("div.placeholder").exists()).toBe(false);
+  });
+
   test("should keep track of selected card", () => {
     const wrapper = mount(Hand, {
       propsData: { hand: kontraHand, playableCards: [], isSelectable: true }

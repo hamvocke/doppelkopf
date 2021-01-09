@@ -90,6 +90,7 @@
   "options-header": "Settings",
   "tutorial-link": "https://en.wikipedia.org/wiki/Doppelkopf",
   "winner": "Winner",
+  "badge_description": "{name} has won this trick",
 
   "here-is-your-invite-link": "Here is your invite link. Share this link with your friends so they can join the game.",
   "you-can-start": "You can start the game once 4 players have joined.",

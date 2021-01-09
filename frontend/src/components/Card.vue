@@ -1,21 +1,25 @@
 <template>
-  <div class="card">
-    <div class="card-inner" :class="cardClasses">
-      <template v-if="isCovered">
-        <div class="background"></div>
-      </template>
-      <template v-else>
-        <div class="card-top" :class="colorClasses">
-          <div class="rank">{{ $t(card.rank) }}</div>
-          <div class="suit">{{ card.suit }}</div>
-        </div>
-        <span class="card-center" :class="colorClasses"> {{ card.suit }} </span>
-        <div class="card-bottom" :class="colorClasses">
-          <div class="rank">{{ $t(card.rank) }}</div>
-          <div class="suit">{{ card.suit }}</div>
-        </div>
-      </template>
-    </div>
+  <div class="card" :class="[positionClasses, zIndex]">
+    <template v-if="card">
+      <div class="card-inner" :class="cardClasses">
+        <template v-if="isCovered">
+          <div class="background"></div>
+        </template>
+        <template v-else>
+          <div class="card-top" :class="colorClasses">
+            <div class="rank">{{ $t(card.rank) }}</div>
+            <div class="suit">{{ card.suit }}</div>
+          </div>
+          <span class="card-center" :class="colorClasses">
+            {{ card.suit }}
+          </span>
+          <div class="card-bottom" :class="colorClasses">
+            <div class="rank">{{ $t(card.rank) }}</div>
+            <div class="suit">{{ card.suit }}</div>
+          </div>
+        </template>
+      </div>
+    </template>
     <div v-if="playerName" class="playerName">{{ playerName }}</div>
   </div>
 </template>
@@ -29,6 +33,11 @@ export default {
     card: {
       type: Object,
       required: true
+    },
+    playerName: {
+      type: String,
+      required: false,
+      default: null
     },
     isSelected: {
       type: Boolean,
@@ -46,11 +55,6 @@ export default {
       type: String,
       required: false,
       default: "not-set"
-    },
-    playerName: {
-      type: String,
-      required: false,
-      default: null
     }
   },
   computed: {
@@ -65,12 +69,21 @@ export default {
       return {
         selected: this.isSelected,
         highlighted: this.isHighlighted,
+        covered: this.isCovered
+      };
+    },
+    positionClasses: function() {
+      return {
         left: this.position === "left",
         right: this.position === "right",
         top: this.position === "top",
-        bottom: this.position === "bottom",
-        covered: this.isCovered
+        bottom: this.position === "bottom"
       };
+    }
+  },
+  methods: {
+    isCard: function() {
+      return this.card ? true : false;
     }
   }
 };
@@ -80,8 +93,6 @@ export default {
 @import "../assets/css/vars.css";
 
 .card {
-  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-  transition-delay: 0s;
   display: inline-flex;
 }
 
@@ -117,7 +128,23 @@ export default {
 .selected {
   top: -10px;
   box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
-  z-index: 200;
+  z-index: var(--card-selected-layer);
+}
+
+.first-card {
+  z-index: var(--card-first-layer);
+}
+
+.second-card {
+  z-index: var(--card-second-layer);
+}
+
+.third-card {
+  z-index: var(--card-third-layer);
+}
+
+.fourth-card {
+  z-index: var(--card-fourth-layer);
 }
 
 .card-top {
@@ -181,8 +208,9 @@ export default {
   transition: opacity 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.card:hover .playerName,
-.card:active .playerName {
+/* change to card:hover and card:active to activate */
+.card-inner:hover .playerName,
+.card-inner:active .playerName {
   opacity: 1;
 }
 
@@ -198,17 +226,10 @@ export default {
     padding: 3px;
   }
 
-  .card-inner.top,
-  .card-inner.left,
-  .card-inner.right {
-    height: 38px;
-    width: 26px;
-  }
-
   .selected {
     top: -6px;
     box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
-    z-index: 200;
+    z-index: var(--card-selected-layer);
   }
 
   .card-top {
@@ -231,6 +252,15 @@ export default {
 
   .card-center {
     font-size: 1.5em;
+  }
+
+  /* Render all other players' cards on hand a little smaller on small devices */
+  /* due to scoping issues, these styles can't be part of Hand.vue */
+  .hand .top .card-inner,
+  .hand .left .card-inner,
+  .hand .right .card-inner {
+    height: 38px;
+    width: 26px;
   }
 }
 </style>

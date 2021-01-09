@@ -74,7 +74,7 @@ export default {
   cursor: pointer;
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
     0 5px 15px 0 rgba(0, 0, 0, 0.08);
-  z-index: 500;
+  z-index: var(--options-icon-layer);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,7 +88,7 @@ export default {
   justify-content: center;
   height: 100%;
   width: 100%;
-  z-index: 400;
+  z-index: var(--options-menu-layer);
   color: var(--black);
   background-color: color(var(--black) a(80%));
 }
