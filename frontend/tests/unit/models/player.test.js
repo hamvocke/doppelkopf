@@ -158,7 +158,8 @@ test("should autoplay a card", () => {
   expect(player.hand.cards).not.toContain(kingOnHand);
   expect(player.behavior.cardToPlay).toBeCalledWith(
     player.hand,
-    expect.any(Card)
+    player.game.currentTrick,
+    player.memory
   );
 });
 
