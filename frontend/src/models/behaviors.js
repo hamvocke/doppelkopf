@@ -30,8 +30,9 @@ export class RandomCardBehavior {
 
 export class BasicRuleBasedBehaviour {
   announcementToMake(possibleAnnouncements) {
-    // ToDo
-    /** announce by "goodies". for instance
+    // ToDo announce by "goodies"
+    /**
+     * for instance
      * only one fehlsuit
      * high number of trumps
      * high trumps, such as 2x ten of hearts
@@ -66,7 +67,7 @@ export class BasicRuleBasedBehaviour {
       let highest = fehlCards[0];
       let lowest = fehlCards.reverse()[0];
 
-      if (memory.fehlSuitPlayedBefore()) {
+      if (memory.fehlSuitPlayedBefore(baseCard.suit)) {
         return lowest;
       } else {
         if (
