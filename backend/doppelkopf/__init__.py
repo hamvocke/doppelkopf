@@ -9,7 +9,6 @@ from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
 
 def create_app(test_config=None):
-    # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
 
     if test_config is None:
@@ -31,6 +30,10 @@ def create_app(test_config=None):
             environment=app.config["ENV_NAME"],
             integrations=[FlaskIntegration(), SqlalchemyIntegration()],
         )
+
+    from doppelkopf import sockets
+
+    sockets.init_app(app)
 
     from doppelkopf import login
 
