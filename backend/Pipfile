@@ -12,6 +12,7 @@ flask-migrate = "*"
 flask-login = "*"
 flask-bcrypt = "*"
 flask-socketio = "*"
+eventlet = "*"
 
 [dev-packages]
 black = "*"
