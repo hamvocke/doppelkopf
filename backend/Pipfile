@@ -11,6 +11,7 @@ flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-login = "*"
 flask-bcrypt = "*"
+flask-socketio = "*"
 
 [dev-packages]
 black = "*"
