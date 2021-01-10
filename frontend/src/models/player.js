@@ -1,7 +1,7 @@
 import { includes, uniqueId } from "lodash-es";
 import { Hand } from "@/models/hand";
 import { TrickStack } from "@/models/trickStack";
-import { RandomCardBehavior } from "@/models/behaviors";
+import { BasicRuleBasedBehaviour } from "@/models/behaviors";
 import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
 import { announcements } from "@/models/announcements";
@@ -26,7 +26,7 @@ export class Player {
     this.isMe = isMe;
     this.tablePosition = tablePosition;
     this.game = game;
-    this.behavior = new RandomCardBehavior();
+    this.behavior = new BasicRuleBasedBehaviour();
     this.memory = new PerfectMemory();
 
     this.reset();
