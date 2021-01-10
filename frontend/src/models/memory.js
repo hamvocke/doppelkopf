@@ -13,8 +13,19 @@ export class PercentageMemory {
     this.id = uniqueId("memory_percent_");
   }
 
+  clearMemory() {
+    this.playedCards = [];
+  }
+
   memorize(playedCard) {
     if (Math.random() <= this.percent) this.playedCards.push(playedCard);
+  }
+
+  fehlSuitPlayedBefore(suit) {
+    return (
+      this.playedCards.filter(playedCard => playedCard.card.suit === suit)
+        .length > 0
+    );
   }
 }
 
@@ -24,8 +35,19 @@ export class PerfectMemory {
     this.id = uniqueId("memory_perfect_");
   }
 
+  clearMemory() {
+    this.playedCards = [];
+  }
+
   memorize(playedCard) {
     this.playedCards.push(playedCard);
+  }
+
+  fehlSuitPlayedBefore(suit) {
+    return (
+      this.playedCards.filter(playedCard => playedCard.card.suit === suit)
+        .length > 0
+    );
   }
 }
 
@@ -33,6 +55,10 @@ export class PriorityMemory {
   constructor() {
     this.playedCards = [];
     this.id = uniqueId("memory_priority_");
+  }
+
+  clearMemory() {
+    this.playedCards = [];
   }
 
   memorize(playedCard) {
@@ -43,5 +69,12 @@ export class PriorityMemory {
     */
     if ([3, 10, 11].includes(playedCard.card.value))
       this.playedCards.push(playedCard);
+  }
+
+  fehlSuitPlayedBefore(suit) {
+    return (
+      this.playedCards.filter(playedCard => playedCard.card.suit === suit)
+        .length > 0
+    );
   }
 }
