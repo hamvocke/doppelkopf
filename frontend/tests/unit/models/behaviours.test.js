@@ -1,9 +1,14 @@
-import { HighestCardBehavior, RandomCardBehavior } from "@/models/behaviors";
+import {
+  BasicRuleBasedBehaviour,
+  HighestCardBehavior,
+  RandomCardBehavior
+} from "@/models/behaviors";
 import { Hand } from "@/models/hand";
 import { announcements } from "@/models/announcements";
 import { ace, king, queen, jack, suits, ten, Card } from "@/models/card";
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
+import { PerfectMemory } from "@/models/memory";
 
 jest.mock("@/models/random", () => ({
   __esModule: true,
@@ -18,7 +23,7 @@ describe("Highest Card Behavior", () => {
     queen.of(suits.spades).second(),
     king.of(suits.hearts).first()
   ]);
-  const player = new Player(new Player());
+  const player = new Player();
   const trick = new Trick([player]);
   trick.add(ten.of(suits.diamonds), player);
 
@@ -36,7 +41,7 @@ describe("Random Card Behavior", () => {
     queen.of(suits.spades).second(),
     king.of(suits.hearts).first()
   ]);
-  const player = new Player(new Player());
+  const player = new Player();
   const trick = new Trick([player]);
   trick.add(ten.of(suits.diamonds), player);
 
@@ -61,4 +66,104 @@ describe("Random Card Behavior", () => {
 
     expect(announcement).toBe(null);
   });
+});
+
+const behavior = new BasicRuleBasedBehaviour();
+const no_memory = new PerfectMemory();
+const player1 = new Player();
+const player2 = new Player();
+const player3 = new Player();
+const player4 = new Player();
+const hand = new Hand([
+  ten.of(suits.hearts).first(),
+  jack.of(suits.diamonds).first(),
+  ace.of(suits.diamonds).first(),
+  king.of(suits.diamonds).first(),
+  ace.of(suits.clubs).first(),
+  ten.of(suits.clubs).first(),
+  king.of(suits.clubs).first(),
+  ace.of(suits.spades).first(),
+  ace.of(suits.spades).second(),
+  ten.of(suits.spades).first(),
+  king.of(suits.spades).first()
+]);
+
+describe("Basic Rule Based Card Behavior", () => {
+  test("should play lowest value fehl when not starting", () => {
+    const trick = new Trick([player1, player2, player3, player4]);
+    trick.add(ace.of(suits.clubs).second(), player1);
+    trick.add(ten.of(suits.clubs).second(), player2);
+    trick.add(king.of(suits.clubs).second(), player3);
+    const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
+    expect(cardToPlay).toEqual(king.of(suits.clubs).first());
+  });
+
+  test("should play ace of suit, when first time served and lower card was played", () => {
+    const trick = new Trick([player1, player2, player3, player4]);
+    trick.add(ten.of(suits.clubs).second(), player1);
+    const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
+    expect(cardToPlay).toEqual(ace.of(suits.clubs).first());
+  });
+
+  test("should play lowest of suit, when first time served and not able to go higher", () => {
+    let hand = new Hand([king.of(suits.clubs).first(), ten.of(suits.clubs)]);
+    const trick = new Trick([player1, player2, player3, player4]);
+    trick.add(ten.of(suits.clubs).second(), player1);
+    const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
+    expect(cardToPlay).toEqual(king.of(suits.clubs).first());
+  });
+
+  test("should play ace, when mustn't serve", () => {
+    const trick = new Trick([player1, player2, player3, player4]);
+    trick.add(ace.of(suits.hearts).second(), player1);
+    const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
+    expect(cardToPlay).toEqual(ace.of(suits.diamonds).first());
+  });
+
+  test("should play higher trump when mustn't serve and somebody else is trumping", () => {
+    const trick = new Trick([player1, player2, player3, player4]);
+    trick.add(ace.of(suits.hearts).second(), player1);
+    trick.add(ten.of(suits.diamonds).second(), player2);
+    trick.add(ace.of(suits.diamonds).second(), player3);
+    const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
+    expect(cardToPlay).toEqual(jack.of(suits.diamonds).first());
+  });
+
+  test("should play jack, when mustn't serve and high value card isn't available", () => {
+    let hand = new Hand([
+      king.of(suits.diamonds),
+      jack.of(suits.diamonds).first(),
+      ten.of(suits.hearts)
+    ]);
+    const trick = new Trick([player1, player2, player3, player4]);
+    trick.add(ace.of(suits.hearts).second(), player1);
+    const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
+    expect(cardToPlay).toEqual(jack.of(suits.diamonds).first());
+  });
+
+  test("should play lowest card, when can't win because too many cards of suit in own hand", () => {
+    const trick = new Trick([player1, player2, player3, player4]);
+    trick.add(king.of(suits.spades).second(), player1);
+    const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
+    expect(cardToPlay).toEqual(king.of(suits.spades).first());
+  });
+
+  test("should keep playing a card, if can't serve or trump a suit", () => {
+    let hand = new Hand([king.of(suits.spades), ten.of(suits.spades)]);
+    const trick = new Trick([player1, player2, player3, player4]);
+    trick.add(ace.of(suits.hearts).second(), player1);
+    const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
+    expect(cardToPlay).toEqual(expect.any(Card));
+  });
+
+  test("should keep playing a card, if can't win a trumped suit", () => {
+    let hand = new Hand([jack.of(suits.spades), ten.of(suits.spades)]);
+    const trick = new Trick([player1, player2, player3, player4]);
+    trick.add(ace.of(suits.hearts).second(), player1);
+    trick.add(jack.of(suits.spades).second(), player2);
+    const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
+    expect(cardToPlay).toEqual(expect.any(Card));
+  });
+
+  // ToDo how about it's the suit has been already played (multiple times)?
 });
