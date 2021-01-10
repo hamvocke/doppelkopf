@@ -17,7 +17,9 @@ export class Player {
     isHuman = false,
     isMe = false,
     tablePosition = "bottom", // todo: remove 'position', introduce new 'table view' class?
-    game = {}
+    game = {},
+    behaviour = new BasicRuleBasedBehaviour(),
+    memory = new PerfectMemory()
   ) {
     this.id = uniqueId("player_");
     this.name = name;
@@ -26,8 +28,8 @@ export class Player {
     this.isMe = isMe;
     this.tablePosition = tablePosition;
     this.game = game;
-    this.behavior = new BasicRuleBasedBehaviour();
-    this.memory = new PerfectMemory();
+    this.behavior = behaviour;
+    this.memory = memory;
 
     this.reset();
   }
@@ -38,12 +40,6 @@ export class Player {
 
   isKontra() {
     return !this.isRe();
-  }
-
-  callMemorizeFunctionForAllPlayers(card) {
-    this.game.players.forEach(player => {
-      player.memory.memorize(new PlayedCard(card, this));
-    });
   }
 
   autoplay() {
@@ -80,8 +76,9 @@ export class Player {
     try {
       this.game.currentTrick.add(cardToBePlayed, this);
       this.hand.remove(cardToBePlayed);
-      this.callMemorizeFunctionForAllPlayers(cardToBePlayed);
-      console.debug(cardToBePlayed.cardId);
+      console.debug(
+        "Player " + this.name + " played: " + cardToBePlayed.cardId
+      );
       this.game.currentRound.nextPlayer();
 
       if (options.autoplay === true) {

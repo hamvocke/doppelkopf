@@ -169,31 +169,31 @@ describe("Basic Rule Based Card Behavior", () => {
   });
 
   describe("Fehl has been played already", () => {
+    beforeEach(() => {
+      player1.memory.clearMemory();
+      player2.memory.clearMemory();
+      player3.memory.clearMemory();
+      player4.memory.clearMemory();
+    });
     test("should keep playing a card, if can't play same suit", () => {
       let hand = new Hand([jack.of(suits.spades), ten.of(suits.diamonds)]);
-      let memory = new PerfectMemory();
       const trick = new Trick([player1, player2, player3, player4]);
       const aceOfClubs = ace.of(suits.clubs).second();
       const jackOfDiamonds = jack.of(suits.diamonds).second();
       trick.add(aceOfClubs, player1);
-      memory.memorize(aceOfClubs, player1);
       trick.add(jackOfDiamonds, player2);
-      memory.memorize(jackOfDiamonds, player2);
-      const cardToPlay = behavior.cardToPlay(hand, trick, memory);
+      const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
       expect(cardToPlay).toEqual(expect.any(Card));
     });
 
     test("should play low card, if must serve suit", () => {
       let hand = new Hand([ace.of(suits.clubs), king.of(suits.clubs).first()]);
-      let memory = new PerfectMemory();
       const trick = new Trick([player1, player2, player3, player4]);
       const aceOfClubs = ace.of(suits.clubs).second();
       const jackOfDiamonds = jack.of(suits.diamonds).second();
       trick.add(aceOfClubs, player1);
-      memory.memorize(new PlayedCard(aceOfClubs, player1));
       trick.add(jackOfDiamonds, player2);
-      memory.memorize(new PlayedCard(jackOfDiamonds, player2));
-      const cardToPlay = behavior.cardToPlay(hand, trick, memory);
+      const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
       expect(cardToPlay).toEqual(king.of(suits.clubs).first());
     });
   });
