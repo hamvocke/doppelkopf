@@ -29,6 +29,10 @@ export class Trick {
     if (this.playedCards.length === this.expectedNumberOfCards) {
       this.finished = true;
     }
+
+    this.players.forEach(playerLoop => {
+      playerLoop.memory.memorize(new PlayedCard(card, player));
+    });
   }
 
   cards() {
