@@ -27,6 +27,15 @@ export class PercentageMemory {
         .length > 0
     );
   }
+
+  pointsLeftInSuit(suit) {
+    return (
+      50 -
+      this.playedCards
+        .filter(playedCard => playedCard.card.suit === suit)
+        .reduce((accu, playedCard) => accu + playedCard.card.value, 0)
+    );
+  }
 }
 
 export class PerfectMemory {
@@ -49,6 +58,15 @@ export class PerfectMemory {
         .length > 0
     );
   }
+
+  pointsLeftInSuit(suit) {
+    return (
+      50 -
+      this.playedCards
+        .filter(playedCard => playedCard.card.suit === suit)
+        .reduce((accu, playedCard) => accu + playedCard.card.value, 0)
+    );
+  }
 }
 
 export class PriorityMemory {
@@ -63,7 +81,7 @@ export class PriorityMemory {
 
   memorize(playedCard) {
     /*
-    Superb function to take care of 'important' cards
+    Opinion-biased function to take care of 'important' cards
     Will memorize all by value
     Queens, Tens, Aces
     */
@@ -75,6 +93,15 @@ export class PriorityMemory {
     return (
       this.playedCards.filter(playedCard => playedCard.card.suit === suit)
         .length > 0
+    );
+  }
+
+  pointsLeftInSuit(suit) {
+    return (
+      50 -
+      this.playedCards
+        .filter(playedCard => playedCard.card.suit === suit)
+        .reduce((accu, playedCard) => accu + playedCard.card.value, 0)
     );
   }
 }

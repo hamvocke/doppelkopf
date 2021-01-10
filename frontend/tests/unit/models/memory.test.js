@@ -72,4 +72,13 @@ describe("Testing functionality", () => {
     memory.clearMemory();
     expect(memory.playedCards.length).toBe(0);
   });
+
+  test("Should calculate points left in suit", () => {
+    const memory = new PerfectMemory();
+    memory.memorize(new PlayedCard(ace.of(suits.spades), new Player()));
+    memory.memorize(new PlayedCard(ten.of(suits.spades), new Player()));
+    memory.memorize(new PlayedCard(king.of(suits.spades), new Player()));
+    memory.memorize(new PlayedCard(king.of(suits.spades), new Player()));
+    expect(memory.pointsLeftInSuit(suits.spades)).toBe(21);
+  });
 });
