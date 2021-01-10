@@ -33,15 +33,6 @@ upgrade_db:
 	export FLASK_APP=doppelkopf && \
 	pipenv run flask db upgrade
 
-run_prod:
-	export FLASK_ENV=production && \
-	export APP_PROFILE=doppelkopf.config.ProductionConfig && \
-	export FLASK_APP=doppelkopf && \
-	export DB_URI=sqlite:///tmp/doppelkopf_db.sqlite && \
-	pipenv run flask db upgrade && \
-	pipenv run flask db seed-data && \
-	pipenv run gunicorn --workers=2 doppelkopf.wsgi:app -b :5000
-
 test:
 	export FLASK_ENV=development && \
 	export APP_PROFILE=doppelkopf.config.TestingConfig && \
