@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :class="[positionClasses, zIndex]">
+  <div class="card" :class="[positionClasses]">
     <template v-if="card">
       <div class="card-inner" :class="cardClasses">
         <template v-if="isCovered">
@@ -129,22 +129,6 @@ export default {
   top: -10px;
   box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
   z-index: var(--card-selected-layer);
-}
-
-.first-card {
-  z-index: var(--card-first-layer);
-}
-
-.second-card {
-  z-index: var(--card-second-layer);
-}
-
-.third-card {
-  z-index: var(--card-third-layer);
-}
-
-.fourth-card {
-  z-index: var(--card-fourth-layer);
 }
 
 .card-top {
