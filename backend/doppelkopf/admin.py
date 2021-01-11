@@ -51,3 +51,9 @@ def toggles_submit():
     db.session.commit()
     flash("Toggle state saved")
     return redirect(url_for("admin.toggles_list"))
+
+
+@blueprint.route("/test/websockets", methods=["GET"])
+@login_required
+def test_websockets():
+    return render_template("admin/websockets-test.html")

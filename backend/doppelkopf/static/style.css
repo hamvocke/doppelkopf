@@ -28,10 +28,6 @@ body {
  * Render the `main` element consistently in IE.
  */
 
-main {
-  display: block;
-}
-
 /**
  * Correct the font size and margin on `h1` elements within `section` and
  * `article` contexts in Chrome, Firefox, and Safari.
@@ -69,11 +65,6 @@ a {
 /**
  * Add the correct font weight in Chrome, Edge, and Safari.
  */
-
-
-strong {
-  font-weight: bolder;
-}
 
 /**
  * 1. Correct the inheritance and scaling of font size in all browsers.
@@ -252,6 +243,10 @@ legend {
  * Add the correct display in Edge, IE 10+, and Firefox.
  */
 
+details {
+  display: block;
+}
+
 /*
  * Add the correct display in all browsers.
  */
@@ -278,23 +273,6 @@ legend {
  */
 
 /**
- * 1. Prevent padding and border from affecting element width
- * https://goo.gl/pYtbK7
- * 2. Change the default font family in all browsers (opinionated)
- */
-
-html {
-  box-sizing: border-box; /* 1 */
-  font-family: sans-serif; /* 2 */
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
-/**
  * Removes the default spacing and border for appropriate elements.
  */
 
@@ -305,8 +283,8 @@ p {
 }
 
 button {
-  background: transparent;
-  padding: 0;
+  background-color: transparent;
+  background-image: none;
 }
 
 /**
@@ -331,38 +309,50 @@ ul {
  */
 
 /**
- * 1. Use the system font stack as a sane default.
+ * 1. Use the user's configured `sans` font-family (with Tailwind's default
+ *    sans-serif font stack as a fallback) as a sane default.
  * 2. Use Tailwind's default "normal" line-height so the user isn't forced
- * to override it to ensure consistency even when using the default theme.
+ *    to override it to ensure consistency even when using the default theme.
  */
 
 html {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
   line-height: 1.5; /* 2 */
 }
 
 /**
- * Allow adding a border to an element by just adding a border-width.
+ * 1. Prevent padding and border from affecting element width.
  *
- * By default, the way the browser specifies that an element should have no
- * border is by setting it's border-style to `none` in the user-agent
- * stylesheet.
+ *    We used to set this in the html element and inherit from
+ *    the parent element for everything else. This caused issues
+ *    in shadow-dom-enhanced elements like <details> where the content
+ *    is wrapped by a div with box-sizing set to `content-box`.
  *
- * In order to easily add borders to elements by just setting the `border-width`
- * property, we change the default border-style for all elements to `solid`, and
- * use border-width to hide them instead. This way our `border` utilities only
- * need to set the `border-width` property instead of the entire `border`
- * shorthand, making our border utilities much more straightforward to compose.
+ *    https://github.com/mozdevs/cssremedy/issues/4
  *
- * https://github.com/tailwindcss/tailwindcss/pull/116
+ *
+ * 2. Allow adding a border to an element by just adding a border-width.
+ *
+ *    By default, the way the browser specifies that an element should have no
+ *    border is by setting it's border-style to `none` in the user-agent
+ *    stylesheet.
+ *
+ *    In order to easily add borders to elements by just setting the `border-width`
+ *    property, we change the default border-style for all elements to `solid`, and
+ *    use border-width to hide them instead. This way our `border` utilities only
+ *    need to set the `border-width` property instead of the entire `border`
+ *    shorthand, making our border utilities much more straightforward to compose.
+ *
+ *    https://github.com/tailwindcss/tailwindcss/pull/116
  */
 
 *,
-*::before,
-*::after {
-  border-width: 0;
-  border-style: solid;
-  border-color: #e2e8f0;
+::before,
+::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: #e2e8f0; /* 2 */
 }
 
 /*
@@ -383,19 +373,11 @@ img {
   border-style: solid;
 }
 
-input::-webkit-input-placeholder {
-  color: #a0aec0;
-}
-
 input::-moz-placeholder {
   color: #a0aec0;
 }
 
 input:-ms-input-placeholder {
-  color: #a0aec0;
-}
-
-input::-ms-input-placeholder {
   color: #a0aec0;
 }
 
@@ -512,43 +494,63 @@ img {
 }
 
 .bg-gray-700 {
+  --bg-opacity: 1;
   background-color: #4a5568;
+  background-color: rgba(74, 85, 104, var(--bg-opacity));
 }
 
 .bg-gray-800 {
+  --bg-opacity: 1;
   background-color: #2d3748;
+  background-color: rgba(45, 55, 72, var(--bg-opacity));
 }
 
 .bg-gray-900 {
+  --bg-opacity: 1;
   background-color: #1a202c;
+  background-color: rgba(26, 32, 44, var(--bg-opacity));
 }
 
 .bg-red-500 {
+  --bg-opacity: 1;
   background-color: #f56565;
+  background-color: rgba(245, 101, 101, var(--bg-opacity));
 }
 
 .bg-green-500 {
+  --bg-opacity: 1;
   background-color: #48bb78;
+  background-color: rgba(72, 187, 120, var(--bg-opacity));
 }
 
 .hover\:bg-gray-600:hover {
+  --bg-opacity: 1;
   background-color: #718096;
+  background-color: rgba(113, 128, 150, var(--bg-opacity));
 }
 
 .border-gray-900 {
+  --border-opacity: 1;
   border-color: #1a202c;
+  border-color: rgba(26, 32, 44, var(--border-opacity));
 }
 
 .border-red-600 {
+  --border-opacity: 1;
   border-color: #e53e3e;
+  border-color: rgba(229, 62, 62, var(--border-opacity));
 }
 
 .focus\:border-gray-600:focus {
+  --border-opacity: 1;
   border-color: #718096;
+  border-color: rgba(113, 128, 150, var(--border-opacity));
 }
 
 .focus\:border-red-400:focus {
+  --border-opacity: 1;
   border-color: #fc8181;
+  border-color: rgba(252, 129, 129, var(--border-opacity));
 }
 
 .rounded {
@@ -576,7 +578,6 @@ img {
 }
 
 .flex {
-  display: -webkit-box;
   display: flex;
 }
 
@@ -589,15 +590,11 @@ img {
 }
 
 .flex-row {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
+  flex-direction: row;
 }
 
 .flex-col {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
 }
 
 .flex-wrap {
@@ -605,13 +602,11 @@ img {
 }
 
 .items-start {
-  -webkit-box-align: start;
-          align-items: flex-start;
+  align-items: flex-start;
 }
 
 .items-center {
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
 }
 
 .self-center {
@@ -619,23 +614,19 @@ img {
 }
 
 .justify-end {
-  -webkit-box-pack: end;
-          justify-content: flex-end;
+  justify-content: flex-end;
 }
 
 .justify-center {
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
 
 .justify-between {
-  -webkit-box-pack: justify;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 
 .flex-grow {
-  -webkit-box-flex: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 
 .flex-shrink-0 {
@@ -652,6 +643,26 @@ img {
 
 .h-screen {
   height: 100vh;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
 }
 
 .leading-tight {
@@ -740,11 +751,13 @@ img {
 }
 
 .outline-none {
-  outline: 0;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .focus\:outline-none:focus {
-  outline: 0;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .p-4 {
@@ -802,63 +815,63 @@ img {
 }
 
 .text-white {
+  --text-opacity: 1;
   color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
 }
 
 .text-gray-200 {
+  --text-opacity: 1;
   color: #edf2f7;
+  color: rgba(237, 242, 247, var(--text-opacity));
 }
 
 .text-gray-300 {
+  --text-opacity: 1;
   color: #e2e8f0;
+  color: rgba(226, 232, 240, var(--text-opacity));
 }
 
 .text-gray-400 {
+  --text-opacity: 1;
   color: #cbd5e0;
+  color: rgba(203, 213, 224, var(--text-opacity));
 }
 
 .text-gray-500 {
+  --text-opacity: 1;
   color: #a0aec0;
+  color: rgba(160, 174, 192, var(--text-opacity));
 }
 
 .text-gray-600 {
+  --text-opacity: 1;
   color: #718096;
+  color: rgba(113, 128, 150, var(--text-opacity));
 }
 
 .text-gray-700 {
+  --text-opacity: 1;
   color: #4a5568;
+  color: rgba(74, 85, 104, var(--text-opacity));
 }
 
 .text-red-600 {
+  --text-opacity: 1;
   color: #e53e3e;
+  color: rgba(229, 62, 62, var(--text-opacity));
 }
 
 .text-indigo-400 {
+  --text-opacity: 1;
   color: #7f9cf5;
+  color: rgba(127, 156, 245, var(--text-opacity));
 }
 
 .hover\:text-indigo-500:hover {
+  --text-opacity: 1;
   color: #667eea;
-}
-
-.text-xs {
-  font-size: 0.75rem;
-}
-
-.text-sm {
-  font-size: 0.875rem;
-}
-
-.text-lg {
-  font-size: 1.125rem;
-}
-
-.text-2xl {
-  font-size: 1.5rem;
-}
-
-.text-4xl {
-  font-size: 2.25rem;
+  color: rgba(102, 126, 234, var(--text-opacity));
 }
 
 .italic {
@@ -885,14 +898,58 @@ img {
   width: 100%;
 }
 
+@-webkit-keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    -webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);
+            animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    -webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);
+            animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
 a:focus {
-  outline: 0;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }
 
 .btn-primary {
+  --bg-opacity: 1;
   background-color: #5a67d8;
+  background-color: rgba(90, 103, 216, var(--bg-opacity));
+  --text-opacity: 1;
   color: #ebf4ff;
+  color: rgba(235, 244, 255, var(--text-opacity));
   font-weight: 700;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -903,34 +960,46 @@ a:focus {
 }
 
 .btn-primary:hover, .btn-primary:active {
+  --bg-opacity: 1;
   background-color: #4c51bf;
+  background-color: rgba(76, 81, 191, var(--bg-opacity));
 }
 
 .btn-primary:focus {
-  outline: 0;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }
 
 .btn-outline {
   background-color: transparent;
+  --text-opacity: 1;
   color: #5a67d8;
+  color: rgba(90, 103, 216, var(--text-opacity));
   font-weight: 600;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   border-width: 1px;
+  --border-opacity: 1;
   border-color: #5a67d8;
+  border-color: rgba(90, 103, 216, var(--border-opacity));
   border-radius: 0.25rem
 }
 
 .btn-outline:hover, .btn-outline:active {
+  --text-opacity: 1;
   color: #4c51bf;
+  color: rgba(76, 81, 191, var(--text-opacity));
+  --border-opacity: 1;
   border-color: #4c51bf;
+  border-color: rgba(76, 81, 191, var(--border-opacity));
 }
 
 .btn-outline:focus {
-  outline: 0;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }
 
@@ -947,8 +1016,9 @@ a:focus {
   outline: none;
   border: none;
   cursor: pointer;
+  --bg-opacity: 1;
   background-color: #718096;
-  -webkit-transition: background-color ease 0.3s;
+  background-color: rgba(113, 128, 150, var(--bg-opacity));
   transition: background-color ease 0.3s;
 }
 
@@ -959,7 +1029,9 @@ a:focus {
   z-index: 2;
   width: 18px;
   height: 18px;
+  --bg-opacity: 1;
   background-color: #e2e8f0;
+  background-color: rgba(226, 232, 240, var(--bg-opacity));
   left: 3px;
   top: 3px;
   border-radius: 50%;
@@ -972,12 +1044,13 @@ a:focus {
   text-shadow: -1px -1px rgba(0,0,0,0.15);
   white-space: nowrap;
   box-shadow: 0 1px 2px rgba(0,0,0,0.8);
-  -webkit-transition: all cubic-bezier(0.3, 1.5, 0.7, 1) 0.3s;
   transition: all cubic-bezier(0.3, 1.5, 0.7, 1) 0.3s;
 }
 
 .toggle:checked {
+  --bg-opacity: 1;
   background-color: #5a67d8;
+  background-color: rgba(90, 103, 216, var(--bg-opacity));
 }
 
 .toggle:checked:before {
@@ -991,18 +1064,15 @@ a:focus {
 @media (min-width: 640px) {
 
   .sm\:flex {
-    display: -webkit-box;
     display: flex;
   }
 
   .sm\:items-center {
-    -webkit-box-align: center;
-            align-items: center;
+    align-items: center;
   }
 
   .sm\:flex-grow {
-    -webkit-box-flex: 1;
-            flex-grow: 1;
+    flex-grow: 1;
   }
 
   .sm\:mt-0 {
@@ -1025,14 +1095,15 @@ a:focus {
 @media (min-width: 768px) {
 
   .md\:flex-row {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-            flex-direction: row;
+    flex-direction: row;
   }
 
   .md\:items-center {
-    -webkit-box-align: center;
-            align-items: center;
+    align-items: center;
+  }
+
+  .md\:text-base {
+    font-size: 1rem;
   }
 
   .md\:mb-0 {
@@ -1041,9 +1112,5 @@ a:focus {
 
   .md\:mr-2 {
     margin-right: 0.5rem;
-  }
-
-  .md\:text-base {
-    font-size: 1rem;
   }
 }
