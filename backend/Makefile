@@ -13,7 +13,7 @@ run:
 	export FLASK_APP=doppelkopf && \
 	pipenv run flask db upgrade && \
 	pipenv run flask seed-data && \
-	pipenv run flask run
+	pipenv run python wsgi.py
 
 seed_data:
 	export FLASK_ENV=development && \
