@@ -1,106 +1,185 @@
-/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+/*! modern-normalize v1.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
 
-/* Document
-   ========================================================================== */
+/*
+Document
+========
+*/
 
 /**
- * 1. Correct the line height in all browsers.
- * 2. Prevent adjustments of font size after orientation changes in iOS.
- */
+Use a better box model (opinionated).
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/**
+Use a more readable tab size (opinionated).
+*/
+
+:root {
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+     tab-size: 4;
+}
+
+/**
+1. Correct the line height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+*/
 
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
 
-/* Sections
-   ========================================================================== */
+/*
+Sections
+========
+*/
 
 /**
- * Remove the margin in all browsers.
- */
+Remove the margin in all browsers.
+*/
 
 body {
   margin: 0;
 }
 
 /**
- * Render the `main` element consistently in IE.
- */
+Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
+*/
+
+body {
+  font-family:
+		system-ui,
+		-apple-system, /* Firefox supports this but not yet `system-ui` */
+		'Segoe UI',
+		Roboto,
+		Helvetica,
+		Arial,
+		sans-serif,
+		'Apple Color Emoji',
+		'Segoe UI Emoji';
+}
+
+/*
+Grouping content
+================
+*/
 
 /**
- * Correct the font size and margin on `h1` elements within `section` and
- * `article` contexts in Chrome, Firefox, and Safari.
- */
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+*/
 
-/* Grouping content
-   ========================================================================== */
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+}
 
-/**
- * 1. Add the correct box sizing in Firefox.
- * 2. Show the overflow in Edge and IE.
- */
-
-/**
- * 1. Correct the inheritance and scaling of font size in all browsers.
- * 2. Correct the odd `em` font sizing in all browsers.
- */
-
-/* Text-level semantics
-   ========================================================================== */
+/*
+Text-level semantics
+====================
+*/
 
 /**
- * Remove the gray background on active links in IE 10.
- */
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
 
-a {
-  background-color: transparent;
+abbr[title] {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
 }
 
 /**
- * 1. Remove the bottom border in Chrome 57-
- * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
- */
+Add the correct font weight in Edge and Safari.
+*/
 
-/**
- * Add the correct font weight in Chrome, Edge, and Safari.
- */
-
-/**
- * 1. Correct the inheritance and scaling of font size in all browsers.
- * 2. Correct the odd `em` font sizing in all browsers.
- */
-
-/**
- * Add the correct font size in all browsers.
- */
-
-/**
- * Prevent `sub` and `sup` elements from affecting the line height in
- * all browsers.
- */
-
-/* Embedded content
-   ========================================================================== */
-
-/**
- * Remove the border on images inside links in IE 10.
- */
-
-img {
-  border-style: none;
+b,
+strong {
+  font-weight: bolder;
 }
 
-/* Forms
-   ========================================================================== */
+/**
+1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
+2. Correct the odd 'em' font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-family:
+		ui-monospace,
+		SFMono-Regular,
+		Consolas,
+		'Liberation Mono',
+		Menlo,
+		monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
 
 /**
- * 1. Change the font styles in all browsers.
- * 2. Remove the margin in Firefox and Safari.
- */
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/**
+Prevent 'sub' and 'sup' elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+Tabular data
+============
+*/
+
+/**
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+*/
+
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+}
+
+/*
+Forms
+=====
+*/
+
+/**
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+*/
 
 button,
-input {
+input,
+optgroup,
+select,
+textarea {
   font-family: inherit; /* 1 */
   font-size: 100%; /* 1 */
   line-height: 1.15; /* 1 */
@@ -108,162 +187,84 @@ input {
 }
 
 /**
- * Show the overflow in IE.
- * 1. Show the overflow in Edge.
- */
+Remove the inheritance of text transform in Edge and Firefox.
+1. Remove the inheritance of text transform in Firefox.
+*/
 
 button,
-input { /* 1 */
-  overflow: visible;
-}
-
-/**
- * Remove the inheritance of text transform in Edge, Firefox, and IE.
- * 1. Remove the inheritance of text transform in Firefox.
- */
-
-button { /* 1 */
+select { /* 1 */
   text-transform: none;
 }
 
 /**
- * Correct the inability to style clickable types in iOS and Safari.
- */
+Correct the inability to style clickable types in iOS and Safari.
+*/
 
 button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
+[type='button'],
+[type='reset'],
+[type='submit'] {
   -webkit-appearance: button;
 }
 
 /**
- * Remove the inner border and padding in Firefox.
- */
+Remove the inner border and padding in Firefox.
+*/
 
-button::-moz-focus-inner,
-[type="button"]::-moz-focus-inner,
-[type="reset"]::-moz-focus-inner,
-[type="submit"]::-moz-focus-inner {
-  border-style: none;
+/**
+Restore the focus styles unset by the previous rule.
+*/
+
+/**
+Remove the additional ':invalid' styles in Firefox.
+See: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737
+*/
+
+/**
+Remove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.
+*/
+
+legend {
   padding: 0;
 }
 
 /**
- * Restore the focus styles unset by the previous rule.
- */
+Add the correct vertical alignment in Chrome and Firefox.
+*/
 
-button:-moz-focusring,
-[type="button"]:-moz-focusring,
-[type="reset"]:-moz-focusring,
-[type="submit"]:-moz-focusring {
-  outline: 1px dotted ButtonText;
+progress {
+  vertical-align: baseline;
 }
 
 /**
- * Correct the padding in Firefox.
- */
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
 
 /**
- * 1. Correct the text wrapping in Edge and IE.
- * 2. Correct the color inheritance from `fieldset` elements in IE.
- * 3. Remove the padding so developers are not caught out when they zero out
- *    `fieldset` elements in all browsers.
- */
-
-legend {
-  box-sizing: border-box; /* 1 */
-  color: inherit; /* 2 */
-  display: table; /* 1 */
-  max-width: 100%; /* 1 */
-  padding: 0; /* 3 */
-  white-space: normal; /* 1 */
-}
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
 
 /**
- * Add the correct vertical alignment in Chrome, Firefox, and Opera.
- */
+Remove the inner padding in Chrome and Safari on macOS.
+*/
 
 /**
- * Remove the default vertical scrollbar in IE 10+.
- */
-
-/**
- * 1. Add the correct box sizing in IE 10.
- * 2. Remove the padding in IE 10.
- */
-
-[type="checkbox"],
-[type="radio"] {
-  box-sizing: border-box; /* 1 */
-  padding: 0; /* 2 */
-}
-
-/**
- * Correct the cursor style of increment and decrement buttons in Chrome.
- */
-
-[type="number"]::-webkit-inner-spin-button,
-[type="number"]::-webkit-outer-spin-button {
-  height: auto;
-}
-
-/**
- * 1. Correct the odd appearance in Chrome and Safari.
- * 2. Correct the outline style in Safari.
- */
-
-[type="search"] {
-  -webkit-appearance: textfield; /* 1 */
-  outline-offset: -2px; /* 2 */
-}
-
-/**
- * Remove the inner padding in Chrome and Safari on macOS.
- */
-
-[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-
-/**
- * 1. Correct the inability to style clickable types in iOS and Safari.
- * 2. Change font properties to `inherit` in Safari.
- */
-
-::-webkit-file-upload-button {
-  -webkit-appearance: button; /* 1 */
-  font: inherit; /* 2 */
-}
-
-/* Interactive
-   ========================================================================== */
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to 'inherit' in Safari.
+*/
 
 /*
- * Add the correct display in Edge, IE 10+, and Firefox.
- */
-
-details {
-  display: block;
-}
+Interactive
+===========
+*/
 
 /*
- * Add the correct display in all browsers.
- */
+Add the correct display in Chrome and Safari.
+*/
 
-/* Misc
-   ========================================================================== */
-
-/**
- * Add the correct display in IE 10+.
- */
-
-/**
- * Add the correct display in IE 10.
- */
-
-[hidden] {
-  display: none;
+summary {
+  display: list-item;
 }
 
 /**
@@ -276,9 +277,19 @@ details {
  * Removes the default spacing and border for appropriate elements.
  */
 
-
+blockquote,
+dl,
+dd,
+h1,
 h2,
-p {
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
   margin: 0;
 }
 
@@ -297,7 +308,12 @@ button:focus {
   outline: 5px auto -webkit-focus-ring-color;
 }
 
+fieldset {
+  margin: 0;
+  padding: 0;
+}
 
+ol,
 ul {
   list-style: none;
   margin: 0;
@@ -316,8 +332,18 @@ ul {
  */
 
 html {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
   line-height: 1.5; /* 2 */
+}
+
+/**
+ * Inherit font-family and line-height from `html` so users can set them as
+ * a class directly on the `html` element.
+ */
+
+body {
+  font-family: inherit;
+  line-height: inherit;
 }
 
 /**
@@ -352,12 +378,16 @@ html {
   box-sizing: border-box; /* 1 */
   border-width: 0; /* 2 */
   border-style: solid; /* 2 */
-  border-color: #e2e8f0; /* 2 */
+  border-color: #e5e7eb; /* 2 */
 }
 
 /*
  * Ensure horizontal rules are visible by default
  */
+
+hr {
+  border-top-width: 1px;
+}
 
 /**
  * Undo the `border-style: none` reset that Normalize applies to images so that
@@ -373,16 +403,21 @@ img {
   border-style: solid;
 }
 
-input::-moz-placeholder {
-  color: #a0aec0;
+textarea {
+  resize: vertical;
 }
 
-input:-ms-input-placeholder {
-  color: #a0aec0;
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color: #9ca3af;
 }
 
-input::placeholder {
-  color: #a0aec0;
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color: #9ca3af;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
 }
 
 button,
@@ -394,8 +429,12 @@ table {
   border-collapse: collapse;
 }
 
-
-h2 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-size: inherit;
   font-weight: inherit;
 }
@@ -419,7 +458,10 @@ a {
  */
 
 button,
-input {
+input,
+optgroup,
+select,
+textarea {
   padding: 0;
   line-height: inherit;
   color: inherit;
@@ -432,6 +474,13 @@ input {
  * 'mono' font family.
  */
 
+pre,
+code,
+kbd,
+samp {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
 /**
  * Make replaced elements `display: block` by default as that's
  * the behavior you want almost all of the time. Inspired by
@@ -442,7 +491,12 @@ input {
 
 img,
 svg,
-canvas {
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
   display: block;
   vertical-align: middle;
 }
@@ -454,7 +508,8 @@ canvas {
  * https://github.com/mozdevs/cssremedy/issues/14
  */
 
-img {
+img,
+video {
   max-width: 100%;
   height: auto;
 }
@@ -487,6 +542,12 @@ img {
   }
 }
 
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
 .appearance-none {
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -494,63 +555,58 @@ img {
 }
 
 .bg-gray-700 {
-  --bg-opacity: 1;
-  background-color: #4a5568;
-  background-color: rgba(74, 85, 104, var(--bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
 }
 
 .bg-gray-800 {
-  --bg-opacity: 1;
-  background-color: #2d3748;
-  background-color: rgba(45, 55, 72, var(--bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(31, 41, 55, var(--tw-bg-opacity));
 }
 
-.bg-gray-900 {
-  --bg-opacity: 1;
-  background-color: #1a202c;
-  background-color: rgba(26, 32, 44, var(--bg-opacity));
+.bg-red-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
 }
 
 .bg-red-500 {
-  --bg-opacity: 1;
-  background-color: #f56565;
-  background-color: rgba(245, 101, 101, var(--bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
+}
+
+.bg-green-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(52, 211, 153, var(--tw-bg-opacity));
 }
 
 .bg-green-500 {
-  --bg-opacity: 1;
-  background-color: #48bb78;
-  background-color: rgba(72, 187, 120, var(--bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
 }
 
 .hover\:bg-gray-600:hover {
-  --bg-opacity: 1;
-  background-color: #718096;
-  background-color: rgba(113, 128, 150, var(--bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(75, 85, 99, var(--tw-bg-opacity));
 }
 
 .border-gray-900 {
-  --border-opacity: 1;
-  border-color: #1a202c;
-  border-color: rgba(26, 32, 44, var(--border-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgba(17, 24, 39, var(--tw-border-opacity));
 }
 
 .border-red-600 {
-  --border-opacity: 1;
-  border-color: #e53e3e;
-  border-color: rgba(229, 62, 62, var(--border-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgba(220, 38, 38, var(--tw-border-opacity));
 }
 
 .focus\:border-gray-600:focus {
-  --border-opacity: 1;
-  border-color: #718096;
-  border-color: rgba(113, 128, 150, var(--border-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgba(75, 85, 99, var(--tw-border-opacity));
 }
 
 .focus\:border-red-400:focus {
-  --border-opacity: 1;
-  border-color: #fc8181;
-  border-color: rgba(252, 129, 129, var(--border-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgba(248, 113, 113, var(--tw-border-opacity));
 }
 
 .rounded {
@@ -609,10 +665,6 @@ img {
   align-items: center;
 }
 
-.self-center {
-  align-self: center;
-}
-
 .justify-end {
   justify-content: flex-end;
 }
@@ -647,22 +699,27 @@ img {
 
 .text-xs {
   font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .text-sm {
   font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .text-lg {
   font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .text-2xl {
   font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .text-4xl {
   font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .leading-tight {
@@ -707,7 +764,7 @@ img {
 }
 
 .mt-0 {
-  margin-top: 0;
+  margin-top: 0px;
 }
 
 .mt-1 {
@@ -798,12 +855,27 @@ img {
   position: static;
 }
 
+* {
+  --tw-shadow: 0 0 #0000;
+}
+
 .shadow-md {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .shadow-lg {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+* {
+  --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgba(59, 130, 246, 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
 }
 
 .table-auto {
@@ -815,63 +887,48 @@ img {
 }
 
 .text-white {
-  --text-opacity: 1;
-  color: #fff;
-  color: rgba(255, 255, 255, var(--text-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
+.text-gray-100 {
+  --tw-text-opacity: 1;
+  color: rgba(243, 244, 246, var(--tw-text-opacity));
 }
 
 .text-gray-200 {
-  --text-opacity: 1;
-  color: #edf2f7;
-  color: rgba(237, 242, 247, var(--text-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(229, 231, 235, var(--tw-text-opacity));
 }
 
 .text-gray-300 {
-  --text-opacity: 1;
-  color: #e2e8f0;
-  color: rgba(226, 232, 240, var(--text-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(209, 213, 219, var(--tw-text-opacity));
 }
 
 .text-gray-400 {
-  --text-opacity: 1;
-  color: #cbd5e0;
-  color: rgba(203, 213, 224, var(--text-opacity));
-}
-
-.text-gray-500 {
-  --text-opacity: 1;
-  color: #a0aec0;
-  color: rgba(160, 174, 192, var(--text-opacity));
-}
-
-.text-gray-600 {
-  --text-opacity: 1;
-  color: #718096;
-  color: rgba(113, 128, 150, var(--text-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-text-opacity));
 }
 
 .text-gray-700 {
-  --text-opacity: 1;
-  color: #4a5568;
-  color: rgba(74, 85, 104, var(--text-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(55, 65, 81, var(--tw-text-opacity));
 }
 
 .text-red-600 {
-  --text-opacity: 1;
-  color: #e53e3e;
-  color: rgba(229, 62, 62, var(--text-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(220, 38, 38, var(--tw-text-opacity));
 }
 
-.text-indigo-400 {
-  --text-opacity: 1;
-  color: #7f9cf5;
-  color: rgba(127, 156, 245, var(--text-opacity));
+.text-indigo-300 {
+  --tw-text-opacity: 1;
+  color: rgba(165, 180, 252, var(--tw-text-opacity));
 }
 
-.hover\:text-indigo-500:hover {
-  --text-opacity: 1;
-  color: #667eea;
-  color: rgba(102, 126, 234, var(--text-opacity));
+.hover\:text-indigo-400:hover {
+  --tw-text-opacity: 1;
+  color: rgba(129, 140, 248, var(--tw-text-opacity));
 }
 
 .italic {
@@ -910,6 +967,13 @@ img {
   }
 }
 
+@-webkit-keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
 @keyframes ping {
   75%, 100% {
     transform: scale(2);
@@ -917,9 +981,29 @@ img {
   }
 }
 
+@-webkit-keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
 @keyframes pulse {
   50% {
     opacity: .5;
+  }
+}
+
+@-webkit-keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    -webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);
+            animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    -webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);
+            animation-timing-function: cubic-bezier(0,0,0.2,1);
   }
 }
 
@@ -940,67 +1024,66 @@ img {
 a:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
 .btn-primary {
-  --bg-opacity: 1;
-  background-color: #5a67d8;
-  background-color: rgba(90, 103, 216, var(--bg-opacity));
-  --text-opacity: 1;
-  color: #ebf4ff;
-  color: rgba(235, 244, 255, var(--text-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(99, 102, 241, var(--tw-bg-opacity));
+  border-radius: 0.25rem;
   font-weight: 700;
+  margin-right: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  border-radius: 0.25rem;
-  margin-right: 0.5rem;
+  --tw-text-opacity: 1;
+  color: rgba(224, 231, 255, var(--tw-text-opacity));
 }
 
 .btn-primary:hover, .btn-primary:active {
-  --bg-opacity: 1;
-  background-color: #4c51bf;
-  background-color: rgba(76, 81, 191, var(--bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(79, 70, 229, var(--tw-bg-opacity));
 }
 
 .btn-primary:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
 .btn-outline {
   background-color: transparent;
-  --text-opacity: 1;
-  color: #5a67d8;
-  color: rgba(90, 103, 216, var(--text-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgba(99, 102, 241, var(--tw-border-opacity));
+  border-radius: 0.25rem;
+  border-width: 1px;
   font-weight: 600;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  border-width: 1px;
-  --border-opacity: 1;
-  border-color: #5a67d8;
-  border-color: rgba(90, 103, 216, var(--border-opacity));
-  border-radius: 0.25rem
+  --tw-text-opacity: 1;
+  color: rgba(99, 102, 241, var(--tw-text-opacity))
 }
 
 .btn-outline:hover, .btn-outline:active {
-  --text-opacity: 1;
-  color: #4c51bf;
-  color: rgba(76, 81, 191, var(--text-opacity));
-  --border-opacity: 1;
-  border-color: #4c51bf;
-  border-color: rgba(76, 81, 191, var(--border-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgba(79, 70, 229, var(--tw-border-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(79, 70, 229, var(--tw-text-opacity));
 }
 
 .btn-outline:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
 .toggle {
@@ -1016,9 +1099,8 @@ a:focus {
   outline: none;
   border: none;
   cursor: pointer;
-  --bg-opacity: 1;
-  background-color: #718096;
-  background-color: rgba(113, 128, 150, var(--bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(107, 114, 128, var(--tw-bg-opacity));
   transition: background-color ease 0.3s;
 }
 
@@ -1029,9 +1111,8 @@ a:focus {
   z-index: 2;
   width: 18px;
   height: 18px;
-  --bg-opacity: 1;
-  background-color: #e2e8f0;
-  background-color: rgba(226, 232, 240, var(--bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
   left: 3px;
   top: 3px;
   border-radius: 50%;
@@ -1048,9 +1129,8 @@ a:focus {
 }
 
 .toggle:checked {
-  --bg-opacity: 1;
-  background-color: #5a67d8;
-  background-color: rgba(90, 103, 216, var(--bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(99, 102, 241, var(--tw-bg-opacity));
 }
 
 .toggle:checked:before {
@@ -1058,11 +1138,12 @@ a:focus {
 }
 
 .toggle:focus {
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
 @media (min-width: 640px) {
-
   .sm\:flex {
     display: flex;
   }
@@ -1076,11 +1157,11 @@ a:focus {
   }
 
   .sm\:mt-0 {
-    margin-top: 0;
+    margin-top: 0px;
   }
 
   .sm\:mb-0 {
-    margin-bottom: 0;
+    margin-bottom: 0px;
   }
 
   .sm\:mr-6 {
@@ -1093,7 +1174,6 @@ a:focus {
 }
 
 @media (min-width: 768px) {
-
   .md\:flex-row {
     flex-direction: row;
   }
@@ -1104,13 +1184,23 @@ a:focus {
 
   .md\:text-base {
     font-size: 1rem;
+    line-height: 1.5rem;
   }
 
   .md\:mb-0 {
-    margin-bottom: 0;
+    margin-bottom: 0px;
   }
 
   .md\:mr-2 {
     margin-right: 0.5rem;
   }
+}
+
+@media (min-width: 1024px) {
+}
+
+@media (min-width: 1280px) {
+}
+
+@media (min-width: 1536px) {
 }

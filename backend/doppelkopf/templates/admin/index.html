@@ -5,53 +5,53 @@ Admin
 {% endblock %}
 
 {% block breadcrumb %}
-<li class="mr-2 text-indigo-400">
+<li class="mr-2 text-indigo-300">
   <a href="/admin">Admin</a>
 </li>
 {% endblock %}
 
 {% block content %}
 <div class="flex flex-row flex-wrap">
-  <div class="m-2 p-4 flex bg-gray-800 shadow-lg rounded-lg">
-    <div class="flex flex-col">
-      <h2 class="self-center text-4xl font-bold text-gray-200">
+  <div class="m-2 p-4 flex items-center bg-gray-700 shadow-lg rounded-lg">
+    <div class="flex flex-col items-center">
+      <h2 class="text-4xl font-bold text-gray-100">
 {{ stats.games_started }}
       </h2>
-      <p class="mt-1 text-gray-500">Games started</p>
+      <p class="mt-1 text-gray-400">Games started</p>
     </div>
-    <div class="ml-8 self-center text-gray-700">
+    <div class="ml-8 text-gray-700">
       <canvas id="chart1" class="js-chart w-48" data-stats='{{ stats.games_started_weekly }}'></canvas>
     </div>
   </div>
 
-  <div class="m-2 p-4 flex bg-gray-800 shadow-lg rounded-lg">
-    <div class="flex flex-col">
-      <h2 class="self-center text-4xl font-bold text-gray-200">
+  <div class="m-2 p-4 flex items-center bg-gray-700 shadow-lg rounded-lg">
+    <div class="flex flex-col items-center">
+      <h2 class="text-4xl font-bold text-gray-100">
 {{ stats.games_won }}
       </h2>
-      <p class="mt-1 text-gray-500">Games won</p>
+      <p class="mt-1 text-gray-400">Games won</p>
     </div>
-    <div class="ml-8 self-center text-gray-700">
+    <div class="ml-8 text-gray-700">
       <canvas id="chart2" class="js-chart w-48" data-stats='{{ stats.games_won_weekly }}'></canvas>
     </div>
   </div>
 
-  <div class="m-2 p-4 flex bg-gray-800 shadow-lg rounded-lg">
-    <div class="flex flex-col">
-      <h2 class="self-center text-4xl font-bold text-gray-200">
+  <div class="m-2 p-4 flex items-center bg-gray-700 shadow-lg rounded-lg">
+    <div class="flex flex-col items-center">
+      <h2 class="text-4xl font-bold text-gray-100">
 {{ stats.games_lost }}
       </h2>
-      <p class="mt-1 text-gray-500">Games lost</p>
+      <p class="mt-1 text-gray-400">Games lost</p>
     </div>
-    <div class="ml-8 self-center text-gray-700">
+    <div class="ml-8 text-gray-700">
       <canvas id="chart3" class="js-chart w-48" data-stats='{{ stats.games_lost_weekly }}'></canvas>
     </div>
   </div>
 
-  <div class="m-2 p-4 flex bg-gray-800 shadow-lg rounded-lg">
-    <div class="flex flex-col">
-      <div class="self-center rounded-full bg-green-500 h-5 w-5 m-6"></div>
-      <p class="mt-1 text-gray-500 text-bold">DB Backup (WIP)</p>
+  <div class="m-2 p-4 flex items-center bg-gray-700 shadow-lg rounded-lg">
+    <div class="flex flex-col items-center">
+      <div class="rounded-full bg-green-400 h-5 w-5 m-6"></div>
+      <p class="mt-1 text-gray-400 text-bold">DB Backup (WIP)</p>
 
     </div>
   </div>

@@ -53,5 +53,4 @@ flake8:
 	pipenv run flake8 .
 
 build_css:
-	npx tailwind build doppelkopf/static/admin.css -o doppelkopf/static/style.css && \
-	node_modules/purgecss/bin/purgecss --config ./purgecss.config.js -o doppelkopf/static
+	NODE_ENV=production npx tailwindcss-cli build doppelkopf/static/admin.css -o doppelkopf/static/style.css

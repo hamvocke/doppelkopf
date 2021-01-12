@@ -3,31 +3,31 @@
 @tailwind utilities;
 
 a:focus {
-  @apply outline-none shadow-outline;
+  @apply outline-none ring;
 }
 
 .btn-primary {
-  @apply bg-indigo-600 text-indigo-100 font-bold py-2 px-4 rounded mr-2;
+  @apply bg-indigo-500 text-indigo-100 font-bold py-2 px-4 rounded mr-2;
 }
 
 .btn-primary:hover, .btn-primary:active {
-  @apply bg-indigo-700;
+  @apply bg-indigo-600;
 }
 
 .btn-primary:focus {
-  @apply outline-none shadow-outline;
+  @apply outline-none ring;
 }
 
 .btn-outline {
-  @apply bg-transparent text-indigo-600 font-semibold py-2 px-4 border border-indigo-600 rounded
+  @apply bg-transparent text-indigo-500 font-semibold py-2 px-4 border border-indigo-500 rounded
 }
 
 .btn-outline:hover, .btn-outline:active {
-  @apply text-indigo-700 border-indigo-700;
+  @apply text-indigo-600 border-indigo-600;
 }
 
 .btn-outline:focus {
-  @apply outline-none shadow-outline;
+  @apply outline-none ring;
 }
 
 .toggle {
@@ -43,7 +43,7 @@ a:focus {
   outline: none;
   border: none;
   cursor: pointer;
-  @apply bg-gray-600;
+  @apply bg-gray-500;
   transition: background-color ease 0.3s;
 }
 
@@ -54,7 +54,7 @@ a:focus {
   z-index: 2;
   width: 18px;
   height: 18px;
-  @apply bg-gray-300;
+  @apply bg-gray-200;
   left: 3px;
   top: 3px;
   border-radius: 50%;
@@ -71,7 +71,7 @@ a:focus {
 }
 
 .toggle:checked {
-  @apply bg-indigo-600;
+  @apply bg-indigo-500;
 }
 
 .toggle:checked:before {
@@ -79,5 +79,5 @@ a:focus {
 }
 
 .toggle:focus {
-  @apply shadow-outline;
+  @apply ring;
 }
