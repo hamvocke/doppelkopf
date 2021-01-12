@@ -25,11 +25,14 @@ def create_app(test_config=None):
     app.logger.setLevel(logging.INFO)
 
     if not app.config["DEBUG"]:
-        sentry_sdk.init(
-            dsn=app.config["SENTRY_DSN"],
-            environment=app.config["ENV_NAME"],
-            integrations=[FlaskIntegration(), SqlalchemyIntegration()],
-        )
+        if not app.config["SENTRY_DSN"]:
+            app.logger.warning("No Sentry DSN found, skipping Sentry setup")
+        else:
+            sentry_sdk.init(
+                dsn=app.config["SENTRY_DSN"],
+                environment=app.config["ENV_NAME"],
+                integrations=[FlaskIntegration(), SqlalchemyIntegration()],
+            )
 
     from doppelkopf import sockets
 
