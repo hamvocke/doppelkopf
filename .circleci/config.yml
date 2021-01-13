@@ -30,21 +30,15 @@ jobs:
 
   backend:
     docker:
-      - image: circleci/python:3.8-node-browsers
+      - image: circleci/python:3.8
     working_directory: ~/hamvocke/doppelkopf
     steps:
       - checkout
       - attach_workspace:
           at: ~/hamvocke/doppelkopf
-      - restore_cache:
-          key: v1-backend-yarn-{{ checksum "backend/yarn.lock" }}
       - run:
           name: Install backend dependencies
           command: 'pushd backend && make install && popd'
-      - save_cache:
-          key: v1-backend-yarn-{{ checksum "backend/yarn.lock" }}
-          paths:
-            - backend/node_modules
       - run:
           name: Test backend
           command: 'pushd backend && make test && popd'
