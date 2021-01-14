@@ -52,11 +52,17 @@ export class BasicRuleBasedBehaviour {
       return this.fehlRule(hand, trick, memory);
     }
     // ToDo how to play if not starting or mustn't serve fehl
+    // i'm thinking of something working with expectation value
     return sample(playableCards(hand.cards, baseCard));
   }
 
   startingRule(hand, memory) {
-    // ToDo needs to check if good Fehlcard is available. Currently will only play random card
+    for (const suit of [suits.clubs, suits.spades, suits.hearts]) {
+      if (hand.hasBlankAce(suit) && !memory.fehlSuitPlayedBefore(suit)) {
+        return hand.fehlCardsBySuit(suit)[0];
+      }
+    }
+    // ToDo check if we know with whom we play and if we want to play a strategy
     return sample(playableCards(hand.cards, undefined));
   }
 
