@@ -38,12 +38,12 @@ test:
 	export FLASK_APP=doppelkopf && \
 	pipenv run pytest
 
-# make create_user username=some-name password=some-password
-create_user:
+# make create_admin password=some-password
+create_admin:
 	export FLASK_ENV=development && \
-	export APP_PROFILE=doppelkopf.config.DevelopmentConfig && \
+	export APP_PROFILE=doppelkopf.config.ProductionConfig && \
 	export FLASK_APP=doppelkopf && \
-	pipenv run flask create-user --username=$(username) --password=$(password)
+	pipenv run flask create-user --username=admin --password=$(password)
 
 mypy:
 	pipenv run mypy .
