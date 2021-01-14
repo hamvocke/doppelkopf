@@ -11,6 +11,7 @@ class Config(object):
     SENTRY_DSN = None
     SQLALCHEMY_DATABASE_URI = "sqlite://"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    CORS_ALLOWED_ORIGINS = ["https://localhost"]
 
 
 class ProductionConfig(Config):
@@ -22,6 +23,7 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DB_URI", "sqlite:////app/db/db.sqlite"
     )  # defined in docker-compose.yml
+    CORS_ALLOWED_ORIGINS = ["https://doppelkopf.ham.codes"]
 
 
 class DevelopmentConfig(Config):
