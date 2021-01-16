@@ -23,8 +23,9 @@ export class PercentageMemory {
 
   nonTrumpSuitPlayedBefore(suit) {
     return (
-      this.playedCards.filter(playedCard => playedCard.card.suit === suit)
-        .length > 0
+      this.playedCards.filter(
+        playedCard => playedCard.card.suit === suit && playedCard.card.isTrump()
+      ).length > 0
     );
   }
 
@@ -54,8 +55,9 @@ export class PerfectMemory {
 
   nonTrumpSuitPlayedBefore(suit) {
     return (
-      this.playedCards.filter(playedCard => playedCard.card.suit === suit)
-        .length > 0
+      this.playedCards.filter(
+        playedCard => playedCard.card.suit === suit && playedCard.card.isTrump()
+      ).length > 0
     );
   }
 
@@ -91,8 +93,9 @@ export class PriorityMemory {
 
   nonTrumpSuitPlayedBefore(suit) {
     return (
-      this.playedCards.filter(playedCard => playedCard.card.suit === suit)
-        .length > 0
+      this.playedCards.filter(
+        playedCard => playedCard.card.suit === suit && playedCard.card.isTrump()
+      ).length > 0
     );
   }
 

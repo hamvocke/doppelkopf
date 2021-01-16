@@ -64,6 +64,15 @@ describe("Testing functionality", () => {
     expect(memory.nonTrumpSuitPlayedBefore(suits.clubs)).toEqual(false);
   });
 
+  test("Should detect that suit hasn't been played before", () => {
+    const memory = new PerfectMemory();
+    memory.memorize(new PlayedCard(ten.of(suits.hearts), new Player()));
+    memory.memorize(new PlayedCard(queen.of(suits.spades), new Player()));
+    expect(memory.nonTrumpSuitPlayedBefore(suits.hearts)).toEqual(false);
+    expect(memory.nonTrumpSuitPlayedBefore(suits.spades)).toEqual(false);
+    expect(memory.nonTrumpSuitPlayedBefore(suits.clubs)).toEqual(false);
+  });
+
   test("Should clear all playedCards from memory", () => {
     const memory = new PerfectMemory();
     memory.memorize(new PlayedCard(ace.of(suits.hearts), new Player()));
