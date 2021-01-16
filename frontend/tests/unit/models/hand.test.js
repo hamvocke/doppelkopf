@@ -47,12 +47,28 @@ test("empty hand has a value of 0", () => {
   expect(hand.value()).toBe(0);
 });
 
-test("can find card on hand", () => {
+test("can find specific card on hand", () => {
   const queenOfSpades = queen.of(suits.spades);
   const cards = [queenOfSpades];
   const hand = new Hand(cards);
 
   expect(hand.find(cards[0])).toEqual(queenOfSpades);
+});
+
+test("can find card on hand by rank and suit", () => {
+  const queenOfSpades = queen.of(suits.spades);
+  const cards = [queenOfSpades];
+  const hand = new Hand(cards);
+
+  expect(hand.findAny(suits.spades, ranks.queen)).toEqual(queenOfSpades);
+});
+
+test("should return empty list if card on hand cannot be found by rank and suit", () => {
+  const queenOfSpades = queen.of(suits.spades);
+  const cards = [queenOfSpades];
+  const hand = new Hand(cards);
+
+  expect(hand.findAny(suits.spades, ranks.king)).toBeUndefined;
 });
 
 test("can not find non-existing card on hand", () => {
