@@ -24,7 +24,7 @@ export class PercentageMemory {
   nonTrumpSuitPlayedBefore(suit) {
     return (
       this.playedCards.filter(
-        playedCard => playedCard.card.suit === suit && playedCard.card.isTrump()
+        playedCard => playedCard.card.suit === suit && !playedCard.card.isTrump()
       ).length > 0
     );
   }
@@ -33,7 +33,10 @@ export class PercentageMemory {
     return (
       50 -
       this.playedCards
-        .filter(playedCard => playedCard.card.suit === suit)
+        .filter(
+          playedCard =>
+            playedCard.card.suit === suit && !playedCard.card.isTrump()
+        )
         .reduce((accu, playedCard) => accu + playedCard.card.value, 0)
     );
   }
@@ -56,7 +59,7 @@ export class PerfectMemory {
   nonTrumpSuitPlayedBefore(suit) {
     return (
       this.playedCards.filter(
-        playedCard => playedCard.card.suit === suit && playedCard.card.isTrump()
+        playedCard => playedCard.card.suit === suit && !playedCard.card.isTrump()
       ).length > 0
     );
   }
@@ -65,7 +68,10 @@ export class PerfectMemory {
     return (
       50 -
       this.playedCards
-        .filter(playedCard => playedCard.card.suit === suit)
+        .filter(
+          playedCard =>
+            playedCard.card.suit === suit && !playedCard.card.isTrump()
+        )
         .reduce((accu, playedCard) => accu + playedCard.card.value, 0)
     );
   }
@@ -94,7 +100,7 @@ export class PriorityMemory {
   nonTrumpSuitPlayedBefore(suit) {
     return (
       this.playedCards.filter(
-        playedCard => playedCard.card.suit === suit && playedCard.card.isTrump()
+        playedCard => playedCard.card.suit === suit && !playedCard.card.isTrump()
       ).length > 0
     );
   }
@@ -103,7 +109,10 @@ export class PriorityMemory {
     return (
       50 -
       this.playedCards
-        .filter(playedCard => playedCard.card.suit === suit)
+        .filter(
+          playedCard =>
+            playedCard.card.suit === suit && !playedCard.card.isTrump()
+        )
         .reduce((accu, playedCard) => accu + playedCard.card.value, 0)
     );
   }
