@@ -87,8 +87,8 @@ export class RuleBasedBehaviour {
 
     if (
       trick.highestCard().card.value < highest.value &&
-      highest.value === 11 &&
-      nonTrumpCards.length < 4
+      highest.rank === ranks.ace &&
+      nonTrumpCards.length < trick.expectedNumberOfCards
     ) {
       return highest;
     }
