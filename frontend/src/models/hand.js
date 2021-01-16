@@ -53,9 +53,11 @@ export class Hand {
   }
 
   nonTrumps(suit) {
-    return this.cards.filter(
-      card => card.suit === suit && !card.isTrump()
-    );
+    return this.cards.filter(card => card.suit === suit && !card.isTrump());
+  }
+
+  lowValues() {
+    return this.cards.filter(card => [2, 4].includes(card.value));
   }
 
   hasNonTrumps(suit) {
@@ -88,6 +90,5 @@ export class Hand {
       if (ace) aces.push(ace);
     });
     return aces;
-    //this.cards.filter(card => !card.isTrump() && card.value === 11);
   }
 }

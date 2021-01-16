@@ -294,3 +294,21 @@ test("should detect multiple single blank aces", () => {
     ace.of(suits.hearts).first()
   ]);
 });
+
+test("should detect multiple single blank aces", () => {
+  const cards = [
+    ace.of(suits.hearts).first(),
+    ace.of(suits.spades).first(),
+    king.of(suits.clubs),
+    ten.of(suits.clubs),
+    ace.of(suits.clubs),
+    ten.of(suits.hearts),
+    ten.of(suits.hearts),
+    queen.of(suits.diamonds),
+    ace.of(suits.diamonds),
+    jack.of(suits.spades)
+  ];
+  const hand = new Hand(cards);
+
+  expect(hand.lowValues().length).toBe(2);
+});
