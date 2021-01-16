@@ -71,7 +71,7 @@ export class RuleBasedBehaviour {
     if (hand.hasNonTrumps(baseCard.suit)) {
       let nonTrumpCards = hand.nonTrumps(baseCard.suit);
       let highest = nonTrumpCards[0];
-      let lowest = nonTrumpCards.reverse()[0];
+      let lowest = nonTrumpCards.slice(-1)[0];
 
       if (memory.nonTrumpSuitPlayedBefore(baseCard.suit)) {
         return lowest;
