@@ -1,6 +1,6 @@
 import { suits, ranks, compare } from "@/models/card";
 import { find, without } from "lodash-es";
-import { Card, jack } from "./card";
+import { jack } from "./card";
 
 export class Hand {
   constructor(cards = []) {

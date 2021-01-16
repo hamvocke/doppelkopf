@@ -1,7 +1,8 @@
 import { sample } from "lodash-es";
 import { playableCards } from "@/models/playableCardFinder";
 import { chance } from "@/models/random";
-import { suits } from "./card";
+import { Card, suits, ranks } from "./card";
+import { Hand } from "./hand";
 
 export class HighestCardBehavior {
   cardToPlay(hand, trick, memory) {
@@ -71,9 +72,7 @@ export class RuleBasedBehaviour {
       return this.serveNonTrump(hand, trick, memory);
     } else {
       let usefulTrump = this.getUsefulTrumpForNonTrumpTrick(hand, trick);
-      return usefulTrump
-        ? usefulTrump
-        : sample(playableCards(hand.cards, undefined));
+      return usefulTrump ?? sample(playableCards(hand.cards, null));
     }
   }
 
@@ -95,6 +94,29 @@ export class RuleBasedBehaviour {
     }
 
     return lowest;
+  }
+
+  /**
+   * Find a trump on a given hand that will win the given trick at this point in time.
+   * Will prefer high-value trumps (ace of diamonds, ten of diamonds) if possible.
+   * Otherwise it will fall back to the lowest trump possible.
+   * @param {Hand} hand - The hand to find the trump on
+   * @param {Trick} trick - The trick that should be trumped
+   * @returns {Card} - The most valuable trump card or null if no winning trump can be found
+   */
+  findMostValuableWinningTrump(hand, trick) {
+    const highestCard = trick.highestCard().card;
+
+    const aceOfDiamonds = hand.findAny(suits.diamonds, ranks.ace);
+    const tenOfDiamonds = hand.findAny(suits.diamonds, ranks.ten);
+
+    const trumpPreference = [
+      aceOfDiamonds,
+      tenOfDiamonds,
+      ...hand.trumps().reverse()
+    ];
+
+    return trumpPreference.find(card => card.beats(highestCard)) ?? null;
   }
 
   getUsefulTrumpForNonTrumpTrick(hand, trick) {
