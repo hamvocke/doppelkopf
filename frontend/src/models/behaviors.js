@@ -28,7 +28,7 @@ export class RandomCardBehavior {
   }
 }
 
-export class BasicRuleBasedBehaviour {
+export class RuleBasedBehaviour {
   announcementToMake(possibleAnnouncements) {
     // ToDo announce by "goodies"
     /**
