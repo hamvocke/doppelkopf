@@ -1,5 +1,5 @@
 import {
-  BasicRuleBasedBehaviour,
+  RuleBasedBehaviour,
   HighestCardBehavior,
   RandomCardBehavior
 } from "@/models/behaviors";
@@ -69,7 +69,7 @@ describe("Random Card Behavior", () => {
   });
 });
 
-const behavior = new BasicRuleBasedBehaviour();
+const behavior = new RuleBasedBehaviour();
 const no_memory = new PerfectMemory();
 const player1 = new Player();
 const player2 = new Player();

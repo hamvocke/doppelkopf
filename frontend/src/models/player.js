@@ -1,7 +1,7 @@
 import { includes, uniqueId } from "lodash-es";
 import { Hand } from "@/models/hand";
 import { TrickStack } from "@/models/trickStack";
-import { BasicRuleBasedBehaviour } from "@/models/behaviors";
+import { RuleBasedBehaviour } from "@/models/behaviors";
 import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
 import { announcements } from "@/models/announcements";
@@ -18,7 +18,7 @@ export class Player {
     isMe = false,
     tablePosition = "bottom", // todo: remove 'position', introduce new 'table view' class?
     game = {},
-    behaviour = new BasicRuleBasedBehaviour(),
+    behaviour = new RuleBasedBehaviour(),
     memory = new PerfectMemory()
   ) {
     this.id = uniqueId("player_");
