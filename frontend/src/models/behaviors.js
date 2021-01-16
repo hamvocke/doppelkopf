@@ -68,29 +68,33 @@ export class RuleBasedBehaviour {
   nonTrumpRule(hand, trick, memory) {
     let baseCard = trick.baseCard();
     if (hand.hasNonTrumps(baseCard.suit)) {
-      let nonTrumpCards = hand.nonTrumps(baseCard.suit);
-      let highest = nonTrumpCards[0];
-      let lowest = nonTrumpCards.slice(-1)[0];
-
-      if (memory.nonTrumpSuitPlayedBefore(baseCard.suit)) {
-        return lowest;
-      }
-
-      if (
-        trick.highestCard().card.value < highest.value &&
-        highest.value === 11 &&
-        nonTrumpCards.length < 4
-      ) {
-        return highest;
-      }
-
-      return lowest;
+      return this.serveNonTrump(hand, trick, memory);
     } else {
       let usefulTrump = this.getUsefulTrumpForNonTrumpTrick(hand, trick);
       return usefulTrump
         ? usefulTrump
         : sample(playableCards(hand.cards, undefined));
     }
+  }
+
+  serveNonTrump(hand, trick, memory) {
+    let nonTrumpCards = hand.nonTrumps(trick.baseCard().suit);
+    let highest = nonTrumpCards[0];
+    let lowest = nonTrumpCards.slice(-1)[0];
+
+    if (memory.nonTrumpSuitPlayedBefore(trick.baseCard().suit)) {
+      return lowest;
+    }
+
+    if (
+      trick.highestCard().card.value < highest.value &&
+      highest.value === 11 &&
+      nonTrumpCards.length < 4
+    ) {
+      return highest;
+    }
+
+    return lowest;
   }
 
   getUsefulTrumpForNonTrumpTrick(hand, trick) {
