@@ -78,6 +78,10 @@ export class Card {
     return "";
   }
 
+  beats(anotherCard) {
+    return this.compareTo(anotherCard) < 0;
+  }
+
   compareTo(anotherCard) {
     const thisIsTrump = this.isTrump();
     const otherCardIsTrump = anotherCard.isTrump();

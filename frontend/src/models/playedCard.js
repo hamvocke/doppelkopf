@@ -7,7 +7,3 @@ export class PlayedCard {
     this.id = `${this.card.id}-${this.player.id}`;
   }
 }
-
-export function beats(one, two) {
-  return one.card.compareTo(two.card);
-}
