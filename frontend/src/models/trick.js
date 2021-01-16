@@ -62,13 +62,13 @@ export class Trick {
       return undefined;
     }
 
-    let highestCard = this.playedCards[0];
-    for (let card of this.playedCards) {
-      if (beats(card, highestCard) < 0) {
-        highestCard = card;
+    let highestPlayed = this.playedCards[0];
+    for (let played of this.playedCards) {
+      if (played.card.beats(highestPlayed.card)) {
+        highestPlayed = played;
       }
     }
-    return highestCard;
+    return highestPlayed;
   }
 
   winner() {
