@@ -71,7 +71,7 @@ export class RuleBasedBehaviour {
     if (hand.hasNonTrumps(baseCard.suit)) {
       return this.serveNonTrump(hand, trick, memory);
     } else {
-      let usefulTrump = this.getUsefulTrumpForNonTrumpTrick(hand, trick);
+      let usefulTrump = this.findMostValuableWinningTrump(hand, trick);
       return usefulTrump ?? sample(playableCards(hand.cards, null));
     }
   }
@@ -116,37 +116,6 @@ export class RuleBasedBehaviour {
       ...hand.trumps().reverse()
     ];
 
-    return trumpPreference.find(card => card.beats(highestCard)) ?? null;
-  }
-
-  getUsefulTrumpForNonTrumpTrick(hand, trick) {
-    /**
-     * In case ace or other high card is already lying,
-     * we still want to win the trick if possible
-     */
-    let sortedList = this.getUsefulTrumpListForNonTrumpTrick(hand);
-    for (let index = 0; index < sortedList.length; index++) {
-      if (trick.highestCard().card.compareTo(sortedList[index]) > 0)
-        return sortedList[index];
-    }
-  }
-
-  getUsefulTrumpListForNonTrumpTrick(hand) {
-    /**
-     * We want to build a good good trump order and return the best card
-     * [Fox, ten of diamonds, Jack of diamonds ... ten of hearts]
-     */
-    let trumpOrder = [];
-    trumpOrder = trumpOrder.concat(
-      hand.cards.filter(
-        card => card.suit === suits.diamonds && card.value > 10
-      )
-    );
-    trumpOrder = trumpOrder.concat(
-      hand.cards
-        .filter(card => card.isTrump() && card.value !== 4)
-        .reverse()
-    );
-    return trumpOrder;
+    return trumpPreference.find(card => card && card.beats(highestCard)) ?? null;
   }
 }
