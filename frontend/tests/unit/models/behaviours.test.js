@@ -90,8 +90,8 @@ const hand = new Hand([
 ]);
 
 describe("Basic Rule Based Card Behavior", () => {
-  describe("Fehl has been played for the first time", () => {
-    test("should play lowest value fehl when not starting", () => {
+  describe("Non-trump has been played for the first time", () => {
+    test("should play lowest value nonTrump when not starting", () => {
       const trick = new Trick([player1, player2, player3, player4]);
       trick.add(ace.of(suits.clubs).second(), player1);
       trick.add(ten.of(suits.clubs).second(), player2);
@@ -181,7 +181,7 @@ describe("Basic Rule Based Card Behavior", () => {
     });
   });
 
-  describe("Fehl has been played already", () => {
+  describe("Non-trump has been played already", () => {
     beforeEach(() => {
       player1.memory.clearMemory();
       player2.memory.clearMemory();

@@ -21,7 +21,7 @@ export class PercentageMemory {
     if (Math.random() <= this.percent) this.playedCards.push(playedCard);
   }
 
-  fehlSuitPlayedBefore(suit) {
+  nonTrumpSuitPlayedBefore(suit) {
     return (
       this.playedCards.filter(playedCard => playedCard.card.suit === suit)
         .length > 0
@@ -52,7 +52,7 @@ export class PerfectMemory {
     this.playedCards.push(playedCard);
   }
 
-  fehlSuitPlayedBefore(suit) {
+  nonTrumpSuitPlayedBefore(suit) {
     return (
       this.playedCards.filter(playedCard => playedCard.card.suit === suit)
         .length > 0
@@ -89,7 +89,7 @@ export class PriorityMemory {
       this.playedCards.push(playedCard);
   }
 
-  fehlSuitPlayedBefore(suit) {
+  nonTrumpSuitPlayedBefore(suit) {
     return (
       this.playedCards.filter(playedCard => playedCard.card.suit === suit)
         .length > 0

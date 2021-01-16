@@ -50,18 +50,18 @@ describe("Testing memorize function", () => {
 describe("Testing functionality", () => {
   test("Should detect that suit hasn't been played", () => {
     const memory = new PerfectMemory();
-    expect(memory.fehlSuitPlayedBefore(suits.hearts)).toEqual(false);
-    expect(memory.fehlSuitPlayedBefore(suits.spades)).toEqual(false);
-    expect(memory.fehlSuitPlayedBefore(suits.clubs)).toEqual(false);
+    expect(memory.nonTrumpSuitPlayedBefore(suits.hearts)).toEqual(false);
+    expect(memory.nonTrumpSuitPlayedBefore(suits.spades)).toEqual(false);
+    expect(memory.nonTrumpSuitPlayedBefore(suits.clubs)).toEqual(false);
   });
 
   test("Should detect that suit has been played", () => {
     const memory = new PerfectMemory();
     memory.memorize(new PlayedCard(ace.of(suits.hearts), new Player()));
     memory.memorize(new PlayedCard(ace.of(suits.spades), new Player()));
-    expect(memory.fehlSuitPlayedBefore(suits.hearts)).toEqual(true);
-    expect(memory.fehlSuitPlayedBefore(suits.spades)).toEqual(true);
-    expect(memory.fehlSuitPlayedBefore(suits.clubs)).toEqual(false);
+    expect(memory.nonTrumpSuitPlayedBefore(suits.hearts)).toEqual(true);
+    expect(memory.nonTrumpSuitPlayedBefore(suits.spades)).toEqual(true);
+    expect(memory.nonTrumpSuitPlayedBefore(suits.clubs)).toEqual(false);
   });
 
   test("Should clear all playedCards from memory", () => {
