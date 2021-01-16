@@ -25,6 +25,10 @@ export class Hand {
     return find(this.cards, card);
   }
 
+  findAny(suit, rank) {
+    return find(this.cards, { suit, rank });
+  }
+
   highest() {
     return this.cards[0];
   }
