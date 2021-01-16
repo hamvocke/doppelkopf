@@ -48,7 +48,6 @@ export class RuleBasedBehaviour {
       return this.startingRule(hand, memory);
     }
     if (!baseCard.isTrump()) {
-      /** We need to serve a non-trump card */
       return this.nonTrumpRule(hand, trick, memory);
     }
     // ToDo how to play if not starting or mustn't serve nonTrump
@@ -75,17 +74,17 @@ export class RuleBasedBehaviour {
 
       if (memory.nonTrumpSuitPlayedBefore(baseCard.suit)) {
         return lowest;
-      } else {
-        if (
-          trick.highestCard().card.value < highest.value &&
-          highest.value === 11 &&
-          nonTrumpCards.length < 4
-        ) {
-          return highest;
-        } else {
-          return lowest;
-        }
       }
+
+      if (
+        trick.highestCard().card.value < highest.value &&
+        highest.value === 11 &&
+        nonTrumpCards.length < 4
+      ) {
+        return highest;
+      }
+
+      return lowest;
     } else {
       let hUtils = new HandUtils(hand);
       let usefulTrump = hUtils.getUsefulTrumpFornonTrumpTrick(trick);
