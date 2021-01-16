@@ -89,7 +89,7 @@ const hand = new Hand([
   king.of(suits.spades).first()
 ]);
 
-describe("Basic Rule Based Card Behavior", () => {
+describe("Rule Based Card Behavior", () => {
   describe("Non-trump has been played for the first time", () => {
     test("should play lowest value nonTrump when not starting", () => {
       const trick = new Trick([player1, player2, player3, player4]);
