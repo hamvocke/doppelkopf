@@ -90,4 +90,16 @@ describe("Testing functionality", () => {
     memory.memorize(new PlayedCard(king.of(suits.spades), new Player()));
     expect(memory.pointsLeftInSuit(suits.spades)).toBe(21);
   });
+
+  test("Should calculate points left in suit, ignoring trumps", () => {
+    const memory = new PerfectMemory();
+    memory.memorize(new PlayedCard(ace.of(suits.spades), new Player()));
+    memory.memorize(new PlayedCard(ten.of(suits.spades), new Player()));
+    memory.memorize(new PlayedCard(king.of(suits.spades), new Player()));
+    memory.memorize(new PlayedCard(king.of(suits.spades), new Player()));
+    memory.memorize(new PlayedCard(jack.of(suits.spades), new Player()));
+    memory.memorize(new PlayedCard(jack.of(suits.spades), new Player()));
+    memory.memorize(new PlayedCard(queen.of(suits.spades), new Player()));
+    expect(memory.pointsLeftInSuit(suits.spades)).toBe(21);
+  });
 });
