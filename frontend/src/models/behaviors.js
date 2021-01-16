@@ -59,7 +59,7 @@ export class RuleBasedBehaviour {
   startingRule(hand, memory) {
     for (const suit of [suits.clubs, suits.spades, suits.hearts]) {
       if (hand.hasBlankAce(suit) && !memory.nonTrumpSuitPlayedBefore(suit)) {
-        return hand.nonTrumpCardsBySuit(suit)[0];
+        return hand.nonTrumps(suit)[0];
       }
     }
     // ToDo check if we know with whom we play and if we want to play a strategy
@@ -68,8 +68,8 @@ export class RuleBasedBehaviour {
 
   nonTrumpRule(hand, trick, memory) {
     let baseCard = trick.baseCard();
-    if (hand.mustServeSuit(baseCard.suit)) {
-      let nonTrumpCards = hand.nonTrumpCardsBySuit(baseCard.suit);
+    if (hand.hasNonTrumps(baseCard.suit)) {
+      let nonTrumpCards = hand.nonTrumps(baseCard.suit);
       let highest = nonTrumpCards[0];
       let lowest = nonTrumpCards.reverse()[0];
 
