@@ -49,14 +49,14 @@ export class Hand {
     );
   }
 
-  nonTrumpCardsBySuit(suit) {
+  nonTrumps(suit) {
     return this.cards.filter(
       card => card.suit === suit && card.isTrump() === false
     );
   }
 
-  mustServeSuit(suit) {
-    return this.nonTrumpCardsBySuit(suit).length > 0;
+  hasNonTrumps(suit) {
+    return this.nonTrumps(suit).length > 0;
   }
 
   trumps() {
@@ -68,7 +68,7 @@ export class Hand {
   }
 
   getBlankAce(suit) {
-    let nonTrumpCards = this.nonTrumpCardsBySuit(suit);
+    let nonTrumpCards = this.nonTrumps(suit);
     return nonTrumpCards.length === 1 && nonTrumpCards[0].value === 11
       ? nonTrumpCards[0]
       : undefined;

@@ -229,12 +229,12 @@ test("should detect suits that can be served", () => {
   ];
   const hand = new Hand(cards);
 
-  expect(hand.nonTrumpCardsBySuit(suits.spades).length).toEqual(0);
-  expect(hand.nonTrumpCardsBySuit(suits.hearts).length).toEqual(2);
-  expect(hand.nonTrumpCardsBySuit(suits.clubs).length).toEqual(2);
-  expect(hand.mustServeSuit(suits.spades)).toBe(false);
-  expect(hand.mustServeSuit(suits.hearts)).toBe(true);
-  expect(hand.mustServeSuit(suits.clubs)).toBe(true);
+  expect(hand.nonTrumps(suits.spades).length).toEqual(0);
+  expect(hand.nonTrumps(suits.hearts).length).toEqual(2);
+  expect(hand.nonTrumps(suits.clubs).length).toEqual(2);
+  expect(hand.hasNonTrumps(suits.spades)).toBe(false);
+  expect(hand.hasNonTrumps(suits.hearts)).toBe(true);
+  expect(hand.hasNonTrumps(suits.clubs)).toBe(true);
 });
 
 test("should detect correct number of trumps in hand", () => {
