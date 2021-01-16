@@ -1,6 +1,5 @@
-import { suits, ranks, compare } from "@/models/card";
+import { suits, ranks, compare, jack } from "@/models/card";
 import { find, without } from "lodash-es";
-import { jack } from "./card";
 
 export class Hand {
   constructor(cards = []) {
@@ -55,7 +54,7 @@ export class Hand {
 
   nonTrumps(suit) {
     return this.cards.filter(
-      card => card.suit === suit && card.isTrump() === false
+      card => card.suit === suit && !card.isTrump()
     );
   }
 
@@ -64,7 +63,7 @@ export class Hand {
   }
 
   trumps() {
-    return this.cards.filter(card => card.isTrump() === true);
+    return this.cards.filter(card => card.isTrump());
   }
 
   hasTrumps() {
@@ -73,9 +72,9 @@ export class Hand {
 
   getBlankAce(suit) {
     let nonTrumpCards = this.nonTrumps(suit);
-    return nonTrumpCards.length === 1 && nonTrumpCards[0].value === 11
+    return nonTrumpCards.length === 1 && nonTrumpCards[0].rank === ranks.ace
       ? nonTrumpCards[0]
-      : undefined;
+      : null;
   }
 
   hasBlankAce(suit) {
