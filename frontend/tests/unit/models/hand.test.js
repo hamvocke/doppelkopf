@@ -248,6 +248,7 @@ test("should detect suits that can be served", () => {
   expect(hand.nonTrumps(suits.spades).length).toEqual(0);
   expect(hand.nonTrumps(suits.hearts).length).toEqual(2);
   expect(hand.nonTrumps(suits.clubs).length).toEqual(2);
+  expect(hand.nonTrumps().length).toEqual(4);
   expect(hand.hasNonTrumps(suits.spades)).toBe(false);
   expect(hand.hasNonTrumps(suits.hearts)).toBe(true);
   expect(hand.hasNonTrumps(suits.clubs)).toBe(true);
@@ -269,6 +270,7 @@ test("should detect correct number of trumps in hand", () => {
   const hand = new Hand(cards);
 
   expect(hand.trumps().length).toEqual(4);
+  expect(hand.nonTrumps().length).toEqual(6);
 });
 
 test("should detect multiple single blank aces", () => {
