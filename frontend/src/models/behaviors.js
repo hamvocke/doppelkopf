@@ -63,7 +63,7 @@ export class RuleBasedBehaviour {
       }
     }
     // ToDo check if we know with whom we play and if we want to play a strategy
-    return sample(playableCards(hand.cards, undefined));
+    return sample(playableCards(hand.cards, null));
   }
 
   fehlRule(hand, trick, memory) {
