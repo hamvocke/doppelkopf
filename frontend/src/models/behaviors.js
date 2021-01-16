@@ -33,7 +33,7 @@ export class RuleBasedBehaviour {
     // ToDo announce by "goodies"
     /**
      * for instance
-     * only one fehlsuit
+     * only one nonTrumpsuit
      * high number of trumps
      * high trumps, such as 2x ten of hearts
      * blank ace and starting
@@ -48,38 +48,38 @@ export class RuleBasedBehaviour {
       return this.startingRule(hand, memory);
     }
     if (!baseCard.isTrump()) {
-      /** We need to serve a fehl card */
-      return this.fehlRule(hand, trick, memory);
+      /** We need to serve a non-trump card */
+      return this.nonTrumpRule(hand, trick, memory);
     }
-    // ToDo how to play if not starting or mustn't serve fehl
+    // ToDo how to play if not starting or mustn't serve nonTrump
     // i'm thinking of something working with expectation value
     return sample(playableCards(hand.cards, baseCard));
   }
 
   startingRule(hand, memory) {
     for (const suit of [suits.clubs, suits.spades, suits.hearts]) {
-      if (hand.hasBlankAce(suit) && !memory.fehlSuitPlayedBefore(suit)) {
-        return hand.fehlCardsBySuit(suit)[0];
+      if (hand.hasBlankAce(suit) && !memory.nonTrumpSuitPlayedBefore(suit)) {
+        return hand.nonTrumpCardsBySuit(suit)[0];
       }
     }
     // ToDo check if we know with whom we play and if we want to play a strategy
     return sample(playableCards(hand.cards, null));
   }
 
-  fehlRule(hand, trick, memory) {
+  nonTrumpRule(hand, trick, memory) {
     let baseCard = trick.baseCard();
     if (hand.mustServeSuit(baseCard.suit)) {
-      let fehlCards = hand.fehlCardsBySuit(baseCard.suit);
-      let highest = fehlCards[0];
-      let lowest = fehlCards.reverse()[0];
+      let nonTrumpCards = hand.nonTrumpCardsBySuit(baseCard.suit);
+      let highest = nonTrumpCards[0];
+      let lowest = nonTrumpCards.reverse()[0];
 
-      if (memory.fehlSuitPlayedBefore(baseCard.suit)) {
+      if (memory.nonTrumpSuitPlayedBefore(baseCard.suit)) {
         return lowest;
       } else {
         if (
           trick.highestCard().card.value < highest.value &&
           highest.value === 11 &&
-          fehlCards.length < 4
+          nonTrumpCards.length < 4
         ) {
           return highest;
         } else {
@@ -88,7 +88,7 @@ export class RuleBasedBehaviour {
       }
     } else {
       let hUtils = new HandUtils(hand);
-      let usefulTrump = hUtils.getUsefulTrumpForFehlTrick(trick);
+      let usefulTrump = hUtils.getUsefulTrumpFornonTrumpTrick(trick);
       return usefulTrump
         ? usefulTrump
         : sample(playableCards(hand.cards, undefined));
@@ -104,19 +104,19 @@ export class HandUtils {
     this.hand = hand;
   }
 
-  getUsefulTrumpForFehlTrick(trick) {
+  getUsefulTrumpFornonTrumpTrick(trick) {
     /**
      * In case ace or other high card is already lying,
      * we still want to win the trick if possible
      */
-    let sortedList = this.getUsefulTrumpListForFehlTrick();
+    let sortedList = this.getUsefulTrumpListFornonTrumpTrick();
     for (let index = 0; index < sortedList.length; index++) {
       if (trick.highestCard().card.compareTo(sortedList[index]) > 0)
         return sortedList[index];
     }
   }
 
-  getUsefulTrumpListForFehlTrick() {
+  getUsefulTrumpListFornonTrumpTrick() {
     /**
      * We want to build a good good trump order and return the best card
      * [Fox, ten of diamonds, Jack of diamonds ... ten of hearts]

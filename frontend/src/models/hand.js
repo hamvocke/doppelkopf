@@ -49,14 +49,14 @@ export class Hand {
     );
   }
 
-  fehlCardsBySuit(suit) {
+  nonTrumpCardsBySuit(suit) {
     return this.cards.filter(
       card => card.suit === suit && card.isTrump() === false
     );
   }
 
   mustServeSuit(suit) {
-    return this.fehlCardsBySuit(suit).length > 0;
+    return this.nonTrumpCardsBySuit(suit).length > 0;
   }
 
   trumps() {
@@ -68,9 +68,9 @@ export class Hand {
   }
 
   getBlankAce(suit) {
-    let fehlCards = this.fehlCardsBySuit(suit);
-    return fehlCards.length === 1 && fehlCards[0].value === 11
-      ? fehlCards[0]
+    let nonTrumpCards = this.nonTrumpCardsBySuit(suit);
+    return nonTrumpCards.length === 1 && nonTrumpCards[0].value === 11
+      ? nonTrumpCards[0]
       : undefined;
   }
 

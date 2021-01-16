@@ -229,9 +229,9 @@ test("should detect suits that can be served", () => {
   ];
   const hand = new Hand(cards);
 
-  expect(hand.fehlCardsBySuit(suits.spades).length).toEqual(0);
-  expect(hand.fehlCardsBySuit(suits.hearts).length).toEqual(2);
-  expect(hand.fehlCardsBySuit(suits.clubs).length).toEqual(2);
+  expect(hand.nonTrumpCardsBySuit(suits.spades).length).toEqual(0);
+  expect(hand.nonTrumpCardsBySuit(suits.hearts).length).toEqual(2);
+  expect(hand.nonTrumpCardsBySuit(suits.clubs).length).toEqual(2);
   expect(hand.mustServeSuit(suits.spades)).toBe(false);
   expect(hand.mustServeSuit(suits.hearts)).toBe(true);
   expect(hand.mustServeSuit(suits.clubs)).toBe(true);
