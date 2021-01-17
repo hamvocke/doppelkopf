@@ -76,9 +76,7 @@ export class Player {
     try {
       this.game.currentTrick.add(cardToBePlayed, this);
       this.hand.remove(cardToBePlayed);
-      console.debug(
-        "Player " + this.name + " played: " + cardToBePlayed.cardId
-      );
+      console.debug(`Player ${this.name} played: ${cardToBePlayed.cardId}`);
       this.game.currentRound.nextPlayer();
 
       if (options.autoplay === true) {
