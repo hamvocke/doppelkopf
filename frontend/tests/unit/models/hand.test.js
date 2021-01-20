@@ -297,7 +297,7 @@ test("should detect multiple single blank aces", () => {
   ]);
 });
 
-test("should detect multiple single blank aces", () => {
+test("should detect low value cards in hand", () => {
   const cards = [
     ace.of(suits.hearts).first(),
     ace.of(suits.spades).first(),

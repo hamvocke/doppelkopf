@@ -24,7 +24,8 @@ export class PercentageMemory {
   nonTrumpSuitPlayedBefore(suit) {
     return (
       this.playedCards.filter(
-        playedCard => playedCard.card.suit === suit && !playedCard.card.isTrump()
+        playedCard =>
+          playedCard.card.suit === suit && !playedCard.card.isTrump()
       ).length > 0
     );
   }
@@ -59,7 +60,8 @@ export class PerfectMemory {
   nonTrumpSuitPlayedBefore(suit) {
     return (
       this.playedCards.filter(
-        playedCard => playedCard.card.suit === suit && !playedCard.card.isTrump()
+        playedCard =>
+          playedCard.card.suit === suit && !playedCard.card.isTrump()
       ).length > 0
     );
   }
@@ -97,10 +99,13 @@ export class PriorityMemory {
       this.playedCards.push(playedCard);
   }
 
+  // ToDo Fix big BUG here.
+  // this returns true on second card that lies. actually we want to know if it has been played in a past trick before...
   nonTrumpSuitPlayedBefore(suit) {
     return (
       this.playedCards.filter(
-        playedCard => playedCard.card.suit === suit && !playedCard.card.isTrump()
+        playedCard =>
+          playedCard.card.suit === suit && !playedCard.card.isTrump()
       ).length > 0
     );
   }
