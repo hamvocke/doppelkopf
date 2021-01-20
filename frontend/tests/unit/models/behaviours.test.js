@@ -91,6 +91,12 @@ const hand = new Hand([
 
 describe("Rule Based Card Behavior", () => {
   describe("Non-trump has been played for the first time", () => {
+    beforeEach(() => {
+      player1.memory.clearMemory();
+      player2.memory.clearMemory();
+      player3.memory.clearMemory();
+      player4.memory.clearMemory();
+    });
     test("should play lowest value nonTrump when not starting", () => {
       const trick = new Trick([player1, player2, player3, player4]);
       trick.add(ace.of(suits.clubs).second(), player1);
@@ -206,6 +212,20 @@ describe("Rule Based Card Behavior", () => {
       const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
       expect(cardToPlay).toEqual(king.of(suits.spades).second());
     });
+
+    test("should play ace, as 'best' solution by definition", () => {
+      let hand = new Hand([
+        ace.of(suits.diamonds).first(),
+        ten.of(suits.hearts).second(),
+        ten.of(suits.spades).second(),
+        king.of(suits.spades).second()
+      ]);
+      const trick = new Trick([player1, player2, player3, player4]);
+      trick.add(king.of(suits.clubs).first(), player3);
+      trick.add(ace.of(suits.clubs).first(), player2);
+      const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+      expect(cardToPlay).toEqual(ace.of(suits.diamonds).first());
+    });
   });
 
   describe("Non-trump has been played already", () => {
@@ -214,6 +234,7 @@ describe("Rule Based Card Behavior", () => {
       player2.memory.clearMemory();
       player3.memory.clearMemory();
       player4.memory.clearMemory();
+      // ToDo create trick with memory so that we can simulate something
     });
 
     test("should keep playing a card, if can't play same suit", () => {
