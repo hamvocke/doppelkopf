@@ -71,8 +71,27 @@ export class RuleBasedBehaviour {
     if (hand.hasNonTrumps(baseCard.suit)) {
       return this.serveNonTrump(hand, trick, memory);
     } else {
-      let usefulTrump = this.findMostValuableWinningTrump(hand, trick);
-      return usefulTrump ?? sample(playableCards(hand.cards, null));
+      if (memory.nonTrumpSuitPlayedBefore(baseCard.suit)) {
+        return hand.highest().beats(trick.highestCard().card) &&
+          memory.pointsLeftInSuit(baseCard.suit) + trick.points() >= 10
+          ? hand.trumps()[0]
+          : this.playLowValueCard(hand);
+      } else {
+        let usefulTrump = this.findMostValuableWinningTrump(hand, trick);
+        return usefulTrump ?? this.playLowValueCard(hand);
+      }
+    }
+  }
+
+  playLowValueCard(hand) {
+    if (hand.lowValues().length > 0) {
+      let nonTrumpLows = new Hand(hand.nonTrumps()).lowValues();
+      return nonTrumpLows.length > 0
+        ? sample(playableCards(nonTrumpLows, null))
+        : new Hand(hand.trumps()).lowValues().splice(-1)[0];
+      //  : "brr";
+    } else {
+      return sample(playableCards(hand.cards, null));
     }
   }
 
@@ -116,6 +135,8 @@ export class RuleBasedBehaviour {
       ...hand.trumps().reverse()
     ];
 
-    return trumpPreference.find(card => card && card.beats(highestCard)) ?? null;
+    return (
+      trumpPreference.find(card => card && card.beats(highestCard)) ?? null
+    );
   }
 }
