@@ -9,6 +9,15 @@
       </router-link>
 
       <router-link
+        v-if="enableMultiplayer"
+        to="/multiplayer"
+        class="button start-multiplayer"
+        tag="button"
+      >
+        {{ $t("start-multiplayer-game") }}
+      </router-link>
+
+      <router-link
         v-if="showTutorial"
         to="/learn"
         class="button button-secondary tutorial"
@@ -37,11 +46,13 @@ export default {
   components: { Logo },
   data: function() {
     return {
-      showTutorial: false
+      showTutorial: false,
+      enableMultiplayer: false
     };
   },
   created() {
     this.showTutorial = Features.get("game.tutorial.enable");
+    this.enableMultiplayer = Features.get("game.multiplayer.enable");
   }
 };
 </script>
