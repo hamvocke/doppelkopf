@@ -17,5 +17,5 @@ def seed_data_command():
 
 def init_app(app):
     db.init_app(app)
-    migrate.init_app(app, db)
+    migrate.init_app(app, db, render_as_batch=True)
     app.cli.add_command(seed_data_command)
