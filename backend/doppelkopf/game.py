@@ -1,4 +1,4 @@
-from doppelkopf.db import db
+from .db import db
 from datetime import datetime
 from enum import Enum
 

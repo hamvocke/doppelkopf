@@ -14,7 +14,7 @@ def test_should_save_start_event(client):
     events = Event.query.all()
     assert len(events) == 0
 
-    response = client.post("/api/game/new")
+    response = client.post("/api/game")
 
     assert response.status_code == 201
     assert json.loads(response.data)["game_id"] == 1
