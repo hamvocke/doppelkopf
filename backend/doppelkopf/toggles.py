@@ -51,6 +51,7 @@ toggles = [
         id=2,
         name="game.announcements.enable",
         description="Aktiviert 'Ansagen'",
+        enabled=True,
     ),
     Toggle(
         id=3,
