@@ -43,7 +43,12 @@ def save_stats(*dates):
     n = 1
     for date in dates:
         for i in range(0, n):
-            events.append(Event(created_at=date, event_type=EventTypes.GAME_START,))
+            events.append(
+                Event(
+                    created_at=date,
+                    event_type=EventTypes.GAME_START,
+                )
+            )
         n = n + 1
 
     db.session.add_all(events)
