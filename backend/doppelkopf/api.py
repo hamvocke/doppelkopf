@@ -42,7 +42,7 @@ def join_game(game_id: int):
         abort(400)
 
     game = Game.query.get_or_404(game_id)
-    game.players.append(Player(player["name"]))
+    game.players.append(Player(name=player["name"]))
 
     db.session.add(game)
     db.session.commit()

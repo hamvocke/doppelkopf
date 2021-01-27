@@ -20,9 +20,6 @@ class Player(db.Model):
     name = db.Column(db.String(128), nullable=False, default="unknown")
     game_id = db.Column(db.Integer, db.ForeignKey("game.id"), nullable=False)
 
-    def __init__(self, name):
-        self.name = name
-
     def __repr__(self):
         return f"<Player: {self.id, self.name, self.created_at}>"
 
