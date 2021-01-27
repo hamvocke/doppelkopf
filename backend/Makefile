@@ -20,6 +20,12 @@ seed_data:
 	export FLASK_APP=doppelkopf && \
 	pipenv run flask seed-data
 
+db_init:
+	export FLASK_ENV=development && \
+	export APP_PROFILE=doppelkopf.config.DevelopmentConfig && \
+	export FLASK_APP=doppelkopf && \
+	pipenv run flask db init
+
 migrate:
 	export FLASK_ENV=development && \
 	export APP_PROFILE=doppelkopf.config.DevelopmentConfig && \
