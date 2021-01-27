@@ -2,12 +2,10 @@ from flask import Blueprint, jsonify, request, abort
 
 from .db import db
 from .events import Event, EventTypes
-from .game import Game
+from .game import Game, Player
 from .toggles import Toggle
 
 blueprint = Blueprint("api", __name__, url_prefix="/api")
-
-poorMansState = {}
 
 
 @blueprint.route("/")
@@ -16,7 +14,9 @@ def hello() -> str:
 
 
 @blueprint.route("/game", methods=["POST"])
-@blueprint.route("/game/new", methods=["POST"]) # TODO remove this one, introduce a new endpoint just for metrics
+@blueprint.route(
+    "/game/new", methods=["POST"]
+)  # TODO remove this one, introduce a new endpoint just for metrics
 def new_game():
     game = Game()
     db.session.add(game)
@@ -25,8 +25,6 @@ def new_game():
     event = Event(event_type=EventTypes.GAME_START, game_id=game.id)
     db.session.add(event)
     db.session.commit()
-
-    poorMansState[game.id] = {"players": []}
 
     return jsonify({"game_id": game.id}), 201
 
@@ -44,10 +42,14 @@ def join_game(game_id: int):
         abort(400)
 
     game = Game.query.get_or_404(game_id)
+    game.players.append(Player(player["name"]))
 
-    poorMansState[game_id]["players"].append({"name": player["name"]})
+    db.session.add(game)
+    db.session.commit()
 
-    return jsonify({"gameId": game.id, "players": poorMansState[game_id]["players"]})
+    players = [player.serialize() for player in game.players]
+
+    return jsonify({"gameId": game.id, "players": players})
 
 
 @blueprint.route("/game/<int:game_id>/win", methods=["POST"])
