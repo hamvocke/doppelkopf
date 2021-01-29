@@ -49,11 +49,11 @@ export class WaitingRoom {
       throw new Error(`Failed to fetch game state: ${error}`);
     }
 
-    const waitingPlayers = gameInfo.players.map(
+    const waitingPlayers = gameInfo.game.players.map(
       player => new Player(player.name, true, false)
     );
 
-    const room = new WaitingRoom(gameInfo.gameId, waitingPlayers);
+    const room = new WaitingRoom(gameInfo.game.id, waitingPlayers);
 
     return room;
   }

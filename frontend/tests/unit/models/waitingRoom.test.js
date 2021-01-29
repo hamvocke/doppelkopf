@@ -19,12 +19,14 @@ describe("Waiting Room", () => {
     Config.testing = false;
 
     const stubbedResponse = {
-      gameId: "smell-brown-slide",
-      players: [
-        { name: "Karl Heinz" },
-        { name: "Brigitte" },
-        { name: "Svenja" }
-      ]
+      game: {
+        id: "smell-brown-slide",
+        players: [
+          { name: "Karl Heinz" },
+          { name: "Brigitte" },
+          { name: "Svenja" }
+        ]
+      }
     };
 
     fetchMock.get(
