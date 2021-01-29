@@ -26,7 +26,7 @@ def new_game():
     db.session.add(event)
     db.session.commit()
 
-    return jsonify({"game_id": game.id}), 201
+    return jsonify({"game": game.serialize()}), 201
 
 
 @blueprint.route("/game/<int:game_id>/join", methods=["POST"])
@@ -47,9 +47,7 @@ def join_game(game_id: int):
     db.session.add(game)
     db.session.commit()
 
-    players = [player.serialize() for player in game.players]
-
-    return jsonify({"gameId": game.id, "players": players})
+    return jsonify({ "game": game.serialize() })
 
 
 @blueprint.route("/game/<int:game_id>/win", methods=["POST"])

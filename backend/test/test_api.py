@@ -17,7 +17,7 @@ def test_should_save_start_event(client):
     response = client.post("/api/game")
 
     assert response.status_code == 201
-    assert json.loads(response.data)["game_id"] == 1
+    assert json.loads(response.data)["game"]["id"] == 1
     events = Event.query.all()
     assert len(events) == 1
 
@@ -72,8 +72,8 @@ def test_should_join_game(client):
     data = json.loads(response.get_data(as_text=True))
 
     assert response.status_code == 200
-    assert data["gameId"] == game_id
-    assert data["players"] == [{"name": "April"}]
+    assert data["game"]["id"] == game_id
+    assert data["game"]["players"] == [{"name": "April"}]
 
 
 def test_should_return_bad_request_when_joining_game_without_data(client):
@@ -134,4 +134,4 @@ def save_toggle(name="some-toggle", enabled=True) -> Toggle:
 
 def start_game(client) -> int:
     response = client.post("/api/game/new")
-    return json.loads(response.data)["game_id"]
+    return json.loads(response.data)["game"]["id"]

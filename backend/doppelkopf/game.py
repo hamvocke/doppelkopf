@@ -14,6 +14,12 @@ class Game(db.Model):
         return f"<Game: {self.id, self.started_at, self.finished_at, self.winner}>"
 
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "players": [ player.serialize() for player in self.players]
+            }
+
 class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
