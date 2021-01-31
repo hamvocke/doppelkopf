@@ -10,7 +10,7 @@ beforeEach(() => {
 });
 
 test("should send new game event", async () => {
-  fetchMock.post("http://localhost:5000/api/metrics/game/singleplayer/new", 200);
+  fetchMock.post("http://localhost:5000/api/metrics/game/singleplayer/start", 200);
   await Telemetry.newGame();
   expect(fetchMock.called()).toBe(true);
 });

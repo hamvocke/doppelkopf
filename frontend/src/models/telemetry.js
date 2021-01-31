@@ -5,7 +5,7 @@ class TelemetryManager {
   }
 
   newGame() {
-    return http.post("/api/metrics/game/singleplayer/new");
+    return http.post("/api/metrics/game/singleplayer/start");
   }
 
   win() {
