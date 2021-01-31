@@ -34,10 +34,8 @@ export class WaitingRoom {
     // [x] get room info from server
     // [x] get response
     // [x] create local representation of room (new WaitingRoom(...))
+    // [ ] balance player order - "me" should be at position "bottom"
     // [ ] show waiting room with players who are present as long as state === "waiting"
-    // [ ] ask player for their name
-    // [ ] on name submit: waitingRoom.join(playerName)
-    // [x] change room state to "joined"
 
     let gameInfo;
 

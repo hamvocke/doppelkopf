@@ -47,6 +47,8 @@
 
 <script>
 import { WaitingRoom, states } from "@/models/waitingRoom";
+import { Player } from "@/models/player";
+import { generateNames } from "@/models/random";
 import CopyText from "@/components/CopyText";
 
 export default {
@@ -60,7 +62,8 @@ export default {
     waitingRoom: {
       type: Object,
       default: function() {
-        return new WaitingRoom();
+        const owner = new Player(generateNames(1)[0], true, true, "bottom");
+        return new WaitingRoom(owner);
       }
     }
   },
@@ -76,16 +79,6 @@ export default {
       }
       return "waiting-status";
     }
-  },
-  created() {
-    // TODO:
-    //  1. get game name from vue router
-    //  2. send request to server: game name
-    //  3. create waiting room based on response
-    //  (WaitingRoom -> fetch)
-    //  4. if state === "waiting": ask for name
-    //  5. when name entered -> waitingRoom.join(name)
-    //  6. show waiting room properly
   },
   methods: {
     startGame: function() {
