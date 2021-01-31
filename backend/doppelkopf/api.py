@@ -13,9 +13,6 @@ def hello() -> str:
 
 
 @blueprint.route("/game", methods=["POST"])
-@blueprint.route(
-    "/game/new", methods=["POST"]
-)  # TODO remove this one, introduce a new endpoint just for metrics
 def new_game():
     game = Game()
     db.session.add(game)

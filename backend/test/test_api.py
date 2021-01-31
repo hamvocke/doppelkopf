@@ -1,4 +1,3 @@
-from doppelkopf.events import Event, EventTypes
 from doppelkopf.toggles import Toggle
 from doppelkopf.db import db
 from flask import json
@@ -66,5 +65,5 @@ def save_toggle(name="some-toggle", enabled=True) -> Toggle:
 
 
 def start_game(client) -> int:
-    response = client.post("/api/game/new")
+    response = client.post("/api/game")
     return json.loads(response.data)["game"]["id"]
