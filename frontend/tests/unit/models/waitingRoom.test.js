@@ -9,11 +9,6 @@ beforeEach(() => {
 });
 
 describe("Waiting Room", () => {
-  test("should generate game id on creation", () => {
-    const room = new WaitingRoom();
-    expect(room.gameId).toBeDefined();
-  });
-
   test("should fetch waiting room from server", async () => {
     // disable testing mode so we're hitting fetchMock requests
     Config.testing = false;

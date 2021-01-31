@@ -1,4 +1,3 @@
-import { generateNameId } from "@/models/random";
 import { Game } from "@/models/game";
 import { Player } from "@/models/player";
 import { Config } from "@/models/config";
@@ -12,7 +11,7 @@ export const states = {
 
 export class WaitingRoom {
   constructor(gameId = null, players = []) {
-    this.gameId = gameId || generateNameId();
+    this.gameId = gameId;
     this.players = players;
   }
 
