@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, request, abort
 
 from .db import db
-from .events import Event, EventTypes
 from .game import Game, Player
 from .toggles import Toggle
 
@@ -20,10 +19,6 @@ def hello() -> str:
 def new_game():
     game = Game()
     db.session.add(game)
-    db.session.commit()
-
-    event = Event(event_type=EventTypes.GAME_START, game_id=game.id)
-    db.session.add(event)
     db.session.commit()
 
     return jsonify({"game": game.serialize()}), 201
@@ -47,35 +42,7 @@ def join_game(game_id: int):
     db.session.add(game)
     db.session.commit()
 
-    return jsonify({ "game": game.serialize() })
-
-
-@blueprint.route("/game/<int:game_id>/win", methods=["POST"])
-def win_game(game_id: int):
-    return save_game_event(game_id, EventTypes.GAME_WIN)
-
-
-@blueprint.route("/game/<int:game_id>/lose", methods=["POST"])
-def lose_game(game_id: int):
-    return save_game_event(game_id, EventTypes.GAME_LOSE)
-
-
-@blueprint.route("/cron/db-backup", methods=["POST"])
-def cron_db_backup():
-    event = Event(event_type=EventTypes.CRON_DB_BACKUP)
-    db.session.add(event)
-    db.session.commit()
-
-    return "Ok"
-
-
-def save_game_event(game_id: int, type: EventTypes):
-    game = Game.query.get_or_404(game_id)
-    event = Event(event_type=type, game_id=game.id)
-    db.session.add(event)
-    db.session.commit()
-
-    return "Created", 201
+    return jsonify({"game": game.serialize()})
 
 
 @blueprint.route("/features", methods=["GET"])

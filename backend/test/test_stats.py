@@ -17,7 +17,7 @@ def test_should_calculate_weekly_stats(app):
 
     s = stats.calculate_weekly()
 
-    assert s[EventTypes.GAME_START] == [
+    assert s[EventTypes.GAME_SINGLEPLAYER_START] == [
         [day1.strftime("%Y-%m-%d"), 1],
         [day2.strftime("%Y-%m-%d"), 2],
         [day3.strftime("%Y-%m-%d"), 3],
@@ -35,7 +35,7 @@ def test_should_calculate_total_stats(app):
 
     s = stats.calculate_total()
 
-    assert s[EventTypes.GAME_START] == 3
+    assert s[EventTypes.GAME_SINGLEPLAYER_START] == 3
 
 
 def save_stats(*dates):
@@ -46,7 +46,7 @@ def save_stats(*dates):
             events.append(
                 Event(
                     created_at=date,
-                    event_type=EventTypes.GAME_START,
+                    event_type=EventTypes.GAME_SINGLEPLAYER_START,
                 )
             )
         n = n + 1

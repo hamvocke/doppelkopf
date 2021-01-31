@@ -13,12 +13,12 @@ class Game(db.Model):
     def __repr__(self):
         return f"<Game: {self.id, self.started_at, self.finished_at, self.winner}>"
 
-
     def serialize(self):
         return {
             "id": self.id,
-            "players": [ player.serialize() for player in self.players]
-            }
+            "players": [player.serialize() for player in self.players],
+        }
+
 
 class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)

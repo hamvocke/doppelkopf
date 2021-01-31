@@ -42,10 +42,11 @@ def create_app(test_config=None):
 
     login.init_app(app)
 
-    from doppelkopf import admin, api
+    from doppelkopf import admin, api, metrics
 
     app.register_blueprint(admin.blueprint)
     app.register_blueprint(api.blueprint)
+    app.register_blueprint(metrics.blueprint)
 
     from doppelkopf import db
 
