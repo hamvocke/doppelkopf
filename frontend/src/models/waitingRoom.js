@@ -10,9 +10,9 @@ export const states = {
 };
 
 export class WaitingRoom {
-  constructor(gameId = null, players = []) {
-    this.gameId = gameId;
-    this.players = players;
+  constructor(owner) {
+    this.gameId = null;
+    this.players = [owner];
   }
 
   get state() {
@@ -52,16 +52,11 @@ export class WaitingRoom {
       player => new Player(player.name, true, false)
     );
 
-    const room = new WaitingRoom(gameInfo.game.id, waitingPlayers);
-
+    const room = new WaitingRoom(waitingPlayers[0]);
+    room.players = waitingPlayers;
+    room.gameId = gameInfo.game.id;
     return room;
   }
-
-  // join(playerName) {
-  //   const myPlayerName = playerName || generateNames(1);
-  //   const myPlayer = new Player(myPlayerName, true, true);
-  //   room.join(myPlayer);
-  // }
 
   join(player) {
     if (!player) return;
