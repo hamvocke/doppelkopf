@@ -18,7 +18,7 @@ new Vue({
   render: h => h(App)
 }).$mount("#app");
 
-if (!Config.testing) {
+if (!Config.debug) {
   Sentry.init({
     dsn: "https://69b3af20d4fa454f851a6be71502334c@sentry.io/1235644",
     integrations: [
