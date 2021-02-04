@@ -10,7 +10,7 @@
 
       <router-link
         v-if="enableMultiplayer"
-        to="/multiplayer"
+        to="/wait"
         class="button start-multiplayer"
         tag="button"
       >

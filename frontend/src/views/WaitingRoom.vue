@@ -2,6 +2,9 @@
   <div id="waitingRoom">
     <h1>Doppelkopf</h1>
     <div class="wrapper">
+      <h3>
+        {{ $t("hey-player", { name: waitingRoom.players[0].name }) }}
+      </h3>
       <p>
         {{ $t("here-is-your-invite-link") }}
       </p>
@@ -47,23 +50,16 @@
 
 <script>
 import { WaitingRoom, states } from "@/models/waitingRoom";
-import { Player } from "@/models/player";
-import { generateNames } from "@/models/random";
 import CopyText from "@/components/CopyText";
 
 export default {
   name: "WaitingRoom",
   components: { CopyText },
   props: {
-    gameId: {
-      type: Number,
-      default: -1
-    },
     waitingRoom: {
       type: Object,
       default: function() {
-        const owner = new Player(generateNames(1)[0], true, true, "bottom");
-        return new WaitingRoom(owner);
+        return new WaitingRoom();
       }
     }
   },

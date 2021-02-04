@@ -2,6 +2,8 @@ import { Game } from "@/models/game";
 import { Player } from "@/models/player";
 import { Config } from "@/models/config";
 import { http } from "@/helpers/httpClient";
+import { generateNames } from "@/models/random";
+
 
 export const states = {
   waiting: "waiting",
@@ -10,7 +12,11 @@ export const states = {
 };
 
 export class WaitingRoom {
-  constructor(owner) {
+  constructor(owner = null) {
+    if (owner === null) {
+      owner = new Player(generateNames(1)[0], true, true, "bottom");
+    }
+
     this.gameId = null;
     this.players = [owner];
   }

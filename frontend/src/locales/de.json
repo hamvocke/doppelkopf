@@ -93,6 +93,7 @@
   "winner": "Gewinner",
   "badge_description": "{name} hat diesen Stich gewonnen",
 
+  "hey-player": "Moin {name}!",
   "here-is-your-invite-link": "Hier ist dein Spiel-Link. Schicke diesen Link an deine Freunde damit sie dem Spiel beitreten können.",
   "you-can-start": "Du kannst das Spiel starten, sobald 4 Spieler hier sind.",
   "n-players-are-here": "Kein Spieler ist hier. | 1 Spieler ist hier. | {count} Spieler sind hier.",
