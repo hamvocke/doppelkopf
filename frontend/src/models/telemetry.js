@@ -1,8 +1,7 @@
 import { http } from "@/helpers/httpClient";
 
 class TelemetryManager {
-  constructor() {
-  }
+  constructor() {}
 
   newGame() {
     return http.post("/api/metrics/game/singleplayer/start");

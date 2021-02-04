@@ -116,6 +116,8 @@ export class RuleBasedBehaviour {
       ...hand.trumps().reverse()
     ];
 
-    return trumpPreference.find(card => card && card.beats(highestCard)) ?? null;
+    return (
+      trumpPreference.find(card => card && card.beats(highestCard)) ?? null
+    );
   }
 }

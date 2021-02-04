@@ -4,7 +4,6 @@ import { Config } from "@/models/config";
 import { http } from "@/helpers/httpClient";
 import { generateNames } from "@/models/random";
 
-
 export const states = {
   waiting: "waiting",
   joined: "joined",

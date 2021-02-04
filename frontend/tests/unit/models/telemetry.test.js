@@ -10,19 +10,28 @@ beforeEach(() => {
 });
 
 test("should send new game event", async () => {
-  fetchMock.post("http://localhost:5000/api/metrics/game/singleplayer/start", 200);
+  fetchMock.post(
+    "http://localhost:5000/api/metrics/game/singleplayer/start",
+    200
+  );
   await Telemetry.newGame();
   expect(fetchMock.called()).toBe(true);
 });
 
 test("should send win event", async () => {
-  fetchMock.post("http://localhost:5000/api/metrics/game/singleplayer/win", 200);
+  fetchMock.post(
+    "http://localhost:5000/api/metrics/game/singleplayer/win",
+    200
+  );
   await Telemetry.win();
   expect(fetchMock.called()).toBe(true);
 });
 
 test("should send lose event", async () => {
-  fetchMock.post("http://localhost:5000/api/metrics/game/singleplayer/lose", 200);
+  fetchMock.post(
+    "http://localhost:5000/api/metrics/game/singleplayer/lose",
+    200
+  );
   await Telemetry.lose();
   expect(fetchMock.called()).toBe(true);
 });

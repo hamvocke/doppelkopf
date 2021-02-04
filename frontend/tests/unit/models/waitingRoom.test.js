@@ -14,7 +14,7 @@ describe("Waiting Room", () => {
   test("should create new waiting room", () => {
     const room = new WaitingRoom(owner);
     expect(room.players).toEqual([owner]);
-  })
+  });
 
   test("should fetch waiting room from server", async () => {
     // disable testing mode so we're hitting fetchMock requests
