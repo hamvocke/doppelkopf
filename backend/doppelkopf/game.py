@@ -1,6 +1,5 @@
 from .db import db
 from datetime import datetime
-from enum import Enum
 
 
 class Game(db.Model):
