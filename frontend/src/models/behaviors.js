@@ -71,7 +71,7 @@ export class RuleBasedBehaviour {
     if (hand.hasNonTrumps(baseCard.suit)) {
       return this.serveNonTrump(hand, trick, memory);
     } else {
-      if (memory.nonTrumpSuitPlayedBefore(baseCard.suit)) {
+      if (memory.nonTrumpSuitPlayedBefore(baseCard.suit, trick.id)) {
         return hand.highest().beats(trick.highestCard().card) &&
           memory.pointsLeftInSuit(baseCard.suit) + trick.points() >= 10
           ? hand.trumps()[0]
@@ -100,7 +100,7 @@ export class RuleBasedBehaviour {
     let highest = nonTrumpCards[0];
     let lowest = nonTrumpCards.slice(-1)[0];
 
-    if (memory.nonTrumpSuitPlayedBefore(trick.baseCard().suit)) {
+    if (memory.nonTrumpSuitPlayedBefore(trick.baseCard().suit, trick.id)) {
       return lowest;
     }
 
