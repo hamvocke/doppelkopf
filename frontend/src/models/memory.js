@@ -18,14 +18,16 @@ export class PercentageMemory {
   }
 
   memorize(playedCard) {
-    if (Math.random() <= this.percent) this.playedCards.push(playedCard);
+    if (Math.random() <= this.percent)
+      this.playedCards.push({ playedCard: playedCard, trickId: trickId });
   }
 
   nonTrumpSuitPlayedBefore(suit) {
     return (
       this.playedCards.filter(
-        playedCard =>
-          playedCard.card.suit === suit && !playedCard.card.isTrump()
+        element =>
+          element.playedCard.card.suit === suit &&
+          !element.playedCard.card.isTrump()
       ).length > 0
     );
   }
@@ -35,10 +37,11 @@ export class PercentageMemory {
       50 -
       this.playedCards
         .filter(
-          playedCard =>
-            playedCard.card.suit === suit && !playedCard.card.isTrump()
+          element =>
+            element.playedCard.card.suit === suit &&
+            !element.playedCard.card.isTrump()
         )
-        .reduce((accu, playedCard) => accu + playedCard.card.value, 0)
+        .reduce((accu, element) => accu + element.playedCard.card.value, 0)
     );
   }
 }
@@ -53,15 +56,16 @@ export class PerfectMemory {
     this.playedCards = [];
   }
 
-  memorize(playedCard) {
-    this.playedCards.push(playedCard);
+  memorize(playedCard, trickId = null) {
+    this.playedCards.push({ playedCard: playedCard, trickId: trickId });
   }
 
   nonTrumpSuitPlayedBefore(suit) {
     return (
       this.playedCards.filter(
-        playedCard =>
-          playedCard.card.suit === suit && !playedCard.card.isTrump()
+        element =>
+          element.playedCard.card.suit === suit &&
+          !element.playedCard.card.isTrump()
       ).length > 0
     );
   }
@@ -71,10 +75,11 @@ export class PerfectMemory {
       50 -
       this.playedCards
         .filter(
-          playedCard =>
-            playedCard.card.suit === suit && !playedCard.card.isTrump()
+          element =>
+            element.playedCard.card.suit === suit &&
+            !element.playedCard.card.isTrump()
         )
-        .reduce((accu, playedCard) => accu + playedCard.card.value, 0)
+        .reduce((accu, element) => accu + element.playedCard.card.value, 0)
     );
   }
 }
@@ -96,7 +101,7 @@ export class PriorityMemory {
     Queens, Tens, Aces
     */
     if ([3, 10, 11].includes(playedCard.card.value))
-      this.playedCards.push(playedCard);
+      this.playedCards.push({ playedCard: playedCard, trickId: trickId });
   }
 
   // ToDo Fix big BUG here.
@@ -104,8 +109,9 @@ export class PriorityMemory {
   nonTrumpSuitPlayedBefore(suit) {
     return (
       this.playedCards.filter(
-        playedCard =>
-          playedCard.card.suit === suit && !playedCard.card.isTrump()
+        element =>
+          element.playedCard.card.suit === suit &&
+          !element.playedCard.card.isTrump()
       ).length > 0
     );
   }
@@ -115,10 +121,11 @@ export class PriorityMemory {
       50 -
       this.playedCards
         .filter(
-          playedCard =>
-            playedCard.card.suit === suit && !playedCard.card.isTrump()
+          element =>
+            element.playedCard.card.suit === suit &&
+            !element.playedCard.card.isTrump()
         )
-        .reduce((accu, playedCard) => accu + playedCard.card.value, 0)
+        .reduce((accu, element) => accu + element.playedCard.card.value, 0)
     );
   }
 }
