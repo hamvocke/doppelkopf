@@ -106,8 +106,6 @@ export class PriorityMemory {
       this.playedCards.push({ playedCard, trickId });
   }
 
-  // ToDo Fix big BUG here.
-  // this returns true on second card that lies. actually we want to know if it has been played in a past trick before...
   nonTrumpSuitPlayedBefore(suit, trickId = null) {
     return (
       this.playedCards.filter(
