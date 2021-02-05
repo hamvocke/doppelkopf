@@ -17,7 +17,7 @@ export class PercentageMemory {
     this.playedCards = [];
   }
 
-  memorize(playedCard) {
+  memorize(playedCard, trickId = null) {
     if (Math.random() <= this.percent)
       this.playedCards.push({ playedCard: playedCard, trickId: trickId });
   }
@@ -94,7 +94,7 @@ export class PriorityMemory {
     this.playedCards = [];
   }
 
-  memorize(playedCard) {
+  memorize(playedCard, trickId) {
     /*
     Opinion-biased function to take care of 'important' cards
     Will memorize all by value
