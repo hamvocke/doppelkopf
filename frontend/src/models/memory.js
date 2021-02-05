@@ -19,15 +19,16 @@ export class PercentageMemory {
 
   memorize(playedCard, trickId = null) {
     if (Math.random() <= this.percent)
-      this.playedCards.push({ playedCard: playedCard, trickId: trickId });
+      this.playedCards.push({ playedCard, trickId });
   }
 
-  nonTrumpSuitPlayedBefore(suit) {
+  nonTrumpSuitPlayedBefore(suit, trickId = null) {
     return (
       this.playedCards.filter(
         element =>
           element.playedCard.card.suit === suit &&
-          !element.playedCard.card.isTrump()
+          !element.playedCard.card.isTrump() &&
+          (element.trickId !== trickId || trickId === null)
       ).length > 0
     );
   }
@@ -57,15 +58,16 @@ export class PerfectMemory {
   }
 
   memorize(playedCard, trickId = null) {
-    this.playedCards.push({ playedCard: playedCard, trickId: trickId });
+    this.playedCards.push({ playedCard, trickId });
   }
 
-  nonTrumpSuitPlayedBefore(suit) {
+  nonTrumpSuitPlayedBefore(suit, trickId = null) {
     return (
       this.playedCards.filter(
         element =>
           element.playedCard.card.suit === suit &&
-          !element.playedCard.card.isTrump()
+          !element.playedCard.card.isTrump() &&
+          (element.trickId !== trickId || trickId === null)
       ).length > 0
     );
   }
@@ -101,17 +103,18 @@ export class PriorityMemory {
     Queens, Tens, Aces
     */
     if ([3, 10, 11].includes(playedCard.card.value))
-      this.playedCards.push({ playedCard: playedCard, trickId: trickId });
+      this.playedCards.push({ playedCard, trickId });
   }
 
   // ToDo Fix big BUG here.
   // this returns true on second card that lies. actually we want to know if it has been played in a past trick before...
-  nonTrumpSuitPlayedBefore(suit) {
+  nonTrumpSuitPlayedBefore(suit, trickId = null) {
     return (
       this.playedCards.filter(
         element =>
           element.playedCard.card.suit === suit &&
-          !element.playedCard.card.isTrump()
+          !element.playedCard.card.isTrump() &&
+          (element.trickId !== trickId || trickId === null)
       ).length > 0
     );
   }

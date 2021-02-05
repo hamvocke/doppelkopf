@@ -102,4 +102,28 @@ describe("Testing functionality", () => {
     memory.memorize(new PlayedCard(queen.of(suits.spades), new Player()));
     expect(memory.pointsLeftInSuit(suits.spades)).toBe(21);
   });
+
+  test("Should detect that suit has already been played in different trick", () => {
+    const memory = new PerfectMemory();
+    memory.memorize(
+      new PlayedCard(ace.of(suits.spades), new Player()),
+      "trick1"
+    );
+    expect(memory.nonTrumpSuitPlayedBefore(suits.spades)).toEqual(true);
+    expect(memory.nonTrumpSuitPlayedBefore(suits.spades, "trick2")).toEqual(
+      true
+    );
+  });
+
+  test("Should detect that suit hasn't been played in different trick", () => {
+    const memory = new PerfectMemory();
+    memory.memorize(
+      new PlayedCard(ace.of(suits.spades), new Player()),
+      "trick1"
+    );
+    expect(memory.nonTrumpSuitPlayedBefore(suits.spades)).toEqual(true);
+    expect(memory.nonTrumpSuitPlayedBefore(suits.spades, "trick1")).toEqual(
+      false
+    );
+  });
 });
