@@ -105,8 +105,9 @@ export class RuleBasedBehaviour {
     }
 
     if (
-      trick.highestCard().card.value < highest.value &&
+      highest.beats(trick.highestCard().card) &&
       highest.rank === ranks.ace &&
+      // ToDo trick.expectedNumberOfCards needs to change as soon as 9er game is possible
       nonTrumpCards.length < trick.expectedNumberOfCards
     ) {
       return highest;
