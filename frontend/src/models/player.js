@@ -7,6 +7,7 @@ import { options } from "@/models/options";
 import { announcements } from "@/models/announcements";
 import { playableCards } from "@/models/playableCardFinder";
 import { PerfectMemory } from "./memory";
+import { Affinities } from "./affinities";
 
 const notifier = new Notifier();
 
@@ -29,6 +30,7 @@ export class Player {
     this.game = game;
     this.behavior = behaviour;
     this.memory = memory;
+    this.affinities = new Affinities(this, game.players);
 
     this.reset();
   }
@@ -110,16 +112,27 @@ export class Player {
     this.trickStack = new TrickStack();
     this.announcements = new Set();
     this.memory.clearMemory();
+    this.affinities.reset();
   }
 
   points() {
     return this.trickStack.points();
   }
 
+  handleAffinityAnnouncement() {
+    this.game.players.forEach(player => {
+      if (player.id !== this.id) {
+        player.affinities.announcementMade(this);
+      }
+    });
+  }
+
   announce(announcement) {
     if (![...this.possibleAnnouncements()].includes(announcement)) {
       throw new Error("Invalid announcement");
     }
+
+    this.handleAffinityAnnouncement();
 
     // always announce re/kontra
     let allAnnouncements = this.isRe()
