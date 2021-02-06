@@ -1,8 +1,13 @@
 export class Affinities {
-  constructor(me, players) {
+  constructor(me, players = []) {
     this.me = me;
-    players.array.forEach(player => {
-      if (mePlayer.id !== player.id) {
+    this.setPlayers(players);
+  }
+
+  setPlayers(players) {
+    this.players = [];
+    players.forEach(player => {
+      if (this.me.id !== player.id) {
         this.players.push({ player, affinity: 0 });
       }
     });
