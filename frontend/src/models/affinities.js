@@ -37,6 +37,10 @@ export class Affinities {
     this.players[index].affinity = this._isMyPartyMember(player) ? 1 : -1;
   }
 
+  reset() {
+    this.players.forEach(element => (element.value = 0));
+  }
+
   /* ToDo replace with # in future version for a private function
    * this function would actually solve the affinity problem,
    * hence it shouldn't be able to be called outside the class.
