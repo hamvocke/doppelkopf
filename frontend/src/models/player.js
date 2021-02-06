@@ -7,7 +7,6 @@ import { options } from "@/models/options";
 import { announcements } from "@/models/announcements";
 import { playableCards } from "@/models/playableCardFinder";
 import { PerfectMemory } from "./memory";
-import { PlayedCard } from "./playedCard";
 
 const notifier = new Notifier();
 
