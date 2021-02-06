@@ -110,6 +110,7 @@ export class Player {
   reset() {
     this.trickStack = new TrickStack();
     this.announcements = new Set();
+    this.memory.clearMemory();
   }
 
   points() {
