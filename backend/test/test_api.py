@@ -9,12 +9,21 @@ def test_index(client):
     assert b"Healthy" in response.data
 
 
+def test_should_create_game(client):
+    response = client.post("/api/game")
+    data = response.get_json()
+
+    assert response.status_code == 201
+    assert data["game"]["id"] is not None
+    assert data["game"]["players"] == []
+
+
 def test_should_join_game(client):
     game_id = start_game(client)
 
     payload = {"player": {"name": "April"}}
     response = client.post(f"/api/game/{game_id}/join", json=payload)
-    data = json.loads(response.get_data(as_text=True))
+    data = response.get_json()
 
     assert response.status_code == 200
     assert data["game"]["id"] == game_id
@@ -43,7 +52,7 @@ def test_should_return_toggles(client):
     save_toggle("another-toggle", enabled=False)
 
     response = client.get("/api/features")
-    data = json.loads(response.get_data(as_text=True))
+    data = response.get_json()
 
     expected_data = """
     {
@@ -66,4 +75,4 @@ def save_toggle(name="some-toggle", enabled=True) -> Toggle:
 
 def start_game(client) -> int:
     response = client.post("/api/game")
-    return json.loads(response.data)["game"]["id"]
+    return response.get_json()["game"]["id"]
