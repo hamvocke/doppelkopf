@@ -18,6 +18,11 @@ def test_should_create_game(client):
     assert data["game"]["players"] == []
 
 
+def test_should_add_cors_header_when_creating_game(client):
+    response = client.post("/api/game")
+    assert response.headers["Access-Control-Allow-Origin"] == "*"
+
+
 def test_should_join_game(client):
     game_id = start_game(client)
 
@@ -28,6 +33,15 @@ def test_should_join_game(client):
     assert response.status_code == 200
     assert data["game"]["id"] == game_id
     assert data["game"]["players"] == [{"name": "April"}]
+
+
+def test_should_add_cors_header_when_joining_game(client):
+    game_id = start_game(client)
+
+    payload = {"player": {"name": "April"}}
+    response = client.post(f"/api/game/{game_id}/join", json=payload)
+
+    assert response.headers["Access-Control-Allow-Origin"] == "*"
 
 
 def test_should_return_bad_request_when_joining_game_without_data(client):

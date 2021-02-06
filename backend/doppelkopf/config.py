@@ -11,7 +11,7 @@ class Config(object):
     SENTRY_DSN = None
     SQLALCHEMY_DATABASE_URI = "sqlite://"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    CORS_ALLOWED_ORIGINS = ["https://localhost"]
+    CORS_ALLOWED_ORIGINS = ["*"]
 
 
 class ProductionConfig(Config):

@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, abort
+from flask import Blueprint, jsonify, request, abort, current_app
 
 from .db import db
 from .game import Game, Player
@@ -18,7 +18,9 @@ def new_game():
     db.session.add(game)
     db.session.commit()
 
-    return jsonify({"game": game.serialize()}), 201
+    response = jsonify({"game": game.serialize()})
+    response.headers["Access-Control-Allow-Origin"] = current_app.config["CORS_ALLOWED_ORIGINS"][0]
+    return response, 201
 
 
 @blueprint.route("/game/<int:game_id>/join", methods=["POST"])
@@ -39,7 +41,9 @@ def join_game(game_id: int):
     db.session.add(game)
     db.session.commit()
 
-    return jsonify({"game": game.serialize()})
+    response = jsonify({"game": game.serialize()})
+    response.headers["Access-Control-Allow-Origin"] = current_app.config["CORS_ALLOWED_ORIGINS"][0]
+    return response
 
 
 @blueprint.route("/features", methods=["GET"])
