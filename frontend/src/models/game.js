@@ -1,4 +1,5 @@
 import { Round } from "@/models/round";
+import { affinityEvents } from "@/models/affinities";
 import { Player } from "@/models/player";
 import { Deck } from "@/models/deck";
 import { Hand } from "@/models/hand";
@@ -20,6 +21,7 @@ export class Game {
       this.playerOpeningOrder.current()
     );
     this.deal();
+    this.initializeAffinities();
     Telemetry.newGame();
   }
 
@@ -78,5 +80,30 @@ export class Game {
 
   resetPlayers() {
     this.players.forEach(player => player.reset());
+  }
+
+  initializeAffinities() {
+    this.players.forEach(player => player.affinities.setPlayers(this.players));
+  }
+
+  affinityEvent(event, player) {
+    switch (event) {
+      case affinityEvents.announcement:
+        this.players.forEach(playerLoop => {
+          if (playerLoop.id !== player.id) {
+            playerLoop.affinities.declaresParty(player);
+          }
+        });
+        break;
+      case affinityEvents.queen_of_clubs:
+        this.players.forEach(playerLoop => {
+          if (playerLoop.id !== player.id) {
+            playerLoop.affinities.declaresParty(player);
+          }
+        });
+        break;
+      default:
+        break;
+    }
   }
 }

@@ -1,3 +1,9 @@
+export const affinityEvents = {
+  announcement: "announcement",
+  queen_of_clubs: "queen_of_clubs",
+  played_card: "played_card"
+};
+
 export class Affinities {
   constructor(me, players = []) {
     this.me = me;
@@ -13,7 +19,7 @@ export class Affinities {
     });
   }
 
-  announcementMade(player) {
+  declaresParty(player) {
     if (this._isMyPartyMember(player)) {
       this.players.forEach(element => {
         this.setPlayerAffinityByParty(element.player);
@@ -24,22 +30,27 @@ export class Affinities {
   }
 
   getPlayerAffinityValue(player) {
-    return this.players.find(element => element.player.id === player.id)
-      .affinity;
+    return !this._isMe(player)
+      ? this.players.find(element => element.player.id === player.id).affinity
+      : 0;
   }
 
   setPlayerAffinityToValue(player, value) {
-    let index = this.players.findIndex(
-      element => element.player.id === player.id
-    );
-    this.players[index].affinity = value;
+    if (!this._isMe(player)) {
+      let index = this.players.findIndex(
+        element => element.player.id === player.id
+      );
+      this.players[index].affinity = value;
+    }
   }
 
   setPlayerAffinityByParty(player) {
-    let index = this.players.findIndex(
-      element => element.player.id === player.id
-    );
-    this.players[index].affinity = this._isMyPartyMember(player) ? 1 : -1;
+    if (!this._isMe(player)) {
+      let index = this.players.findIndex(
+        element => element.player.id === player.id
+      );
+      this.players[index].affinity = this._isMyPartyMember(player) ? 1 : -1;
+    }
   }
 
   reset() {
@@ -55,5 +66,9 @@ export class Affinities {
       this.me.isRe() === player.isRe() ||
       this.me.isKontra() === player.isKontra()
     );
+  }
+
+  _isMe(player) {
+    return this.me.id === player.id;
   }
 }

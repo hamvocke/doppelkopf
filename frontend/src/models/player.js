@@ -7,7 +7,8 @@ import { options } from "@/models/options";
 import { announcements } from "@/models/announcements";
 import { playableCards } from "@/models/playableCardFinder";
 import { PerfectMemory } from "./memory";
-import { Affinities } from "./affinities";
+import { Affinities, affinityEvents } from "./affinities";
+import { queen, suits } from "./card";
 
 const notifier = new Notifier();
 
@@ -30,7 +31,7 @@ export class Player {
     this.game = game;
     this.behavior = behaviour;
     this.memory = memory;
-    this.affinities = new Affinities(this, game.players);
+    this.affinities = new Affinities(this, []);
 
     this.reset();
   }
@@ -69,6 +70,7 @@ export class Player {
     if (!card || !cardToBePlayed) {
       throw new Error("can't play a card that's not on the player's hand");
     }
+
     if (!this.canPlay(card)) {
       notifier.info("cant-play-card");
       return;
@@ -77,6 +79,10 @@ export class Player {
     try {
       this.game.currentTrick.add(cardToBePlayed, this);
       this.hand.remove(cardToBePlayed);
+
+      if (card.compareTo(queen.of(suits.clubs)) === 0)
+        this.game.affinityEvent(affinityEvents.queen_of_clubs, this);
+
       console.debug(
         "Player " + this.name + " played: " + cardToBePlayed.cardId
       );
@@ -119,20 +125,15 @@ export class Player {
     return this.trickStack.points();
   }
 
-  handleAffinityAnnouncement() {
-    this.game.players.forEach(player => {
-      if (player.id !== this.id) {
-        player.affinities.announcementMade(this);
-      }
-    });
-  }
-
   announce(announcement) {
     if (![...this.possibleAnnouncements()].includes(announcement)) {
       throw new Error("Invalid announcement");
     }
 
-    this.handleAffinityAnnouncement();
+    // This check is necessary for testing purposes.
+    // As long as game instance isn't set, we can't call affinityEvent
+    if (Object.keys(this.game).length > 0)
+      this.game.affinityEvent(affinityEvents.announcement, this);
 
     // always announce re/kontra
     let allAnnouncements = this.isRe()
