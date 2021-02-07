@@ -18,6 +18,7 @@ export class PlayerBuilder {
 
   withExtra(extra) {
     this.extras.push(extra);
+    return this;
   }
 
   build() {
