@@ -2,7 +2,7 @@ import { Config } from "@/models/config";
 
 export class WebsocketClient {
   constructor() {
-    this.baseUrl = Config.backend_base_url;
+    this.baseUrl = Config.backend_ws_base_url;
   }
 
   connect(payload) {}
