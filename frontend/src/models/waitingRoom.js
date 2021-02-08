@@ -2,6 +2,7 @@ import { Game } from "@/models/game";
 import { Player } from "@/models/player";
 import { Config } from "@/models/config";
 import { http } from "@/helpers/httpClient";
+import { WebsocketClient } from "@/helpers/websocketClient";
 import { generateNames } from "@/models/random";
 
 export const states = {
@@ -18,6 +19,7 @@ export class WaitingRoom {
 
     this.gameId = null;
     this.players = [owner];
+    this.websocket = new WebsocketClient();
   }
 
   get state() {
@@ -39,6 +41,7 @@ export class WaitingRoom {
       const response = await http.post("/api/game");
       let gameInfo = await response.json();
       this.gameId = gameInfo.game.id;
+      this.websocket.connect(this);
     } catch (error) {
       throw new Error(`Failed to create multiplayer game: ${error}`);
     }

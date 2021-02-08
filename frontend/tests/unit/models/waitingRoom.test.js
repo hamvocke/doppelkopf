@@ -1,10 +1,14 @@
 import { WaitingRoom, states } from "@/models/waitingRoom";
 import { Player } from "@/models/player";
 import { Config } from "@/models/config";
+import { WebsocketClient } from "@/helpers/websocketClient";
+jest.mock("@/helpers/websocketClient");
+
 const fetchMock = require("fetch-mock-jest");
 
 beforeEach(() => {
   fetchMock.reset();
+  WebsocketClient.mockClear();
   Config.testing = true;
 });
 
@@ -16,24 +20,38 @@ describe("Waiting Room", () => {
     expect(room.players).toEqual([owner]);
   });
 
-  test("should call backend when registering waiting room", async () => {
+  test("should call backend when registering", async () => {
     // disable testing mode so we're hitting fetchMock requests
     Config.testing = false;
-
-    const stubbedResponse = {
+    const stubbedCreateResponse = {
       game: {
         id: "2",
         players: []
       }
     };
-    fetchMock.post("http://localhost:5000/api/game", stubbedResponse);
+    fetchMock.post("http://localhost:5000/api/game", stubbedCreateResponse);
 
     const room = new WaitingRoom(owner);
-
     await room.register();
 
     expect(fetchMock.called()).toBe(true);
-    expect(room.gameId).toBe("2");
+    expect(room.gameId).toBe(stubbedCreateResponse.game.id);
+  });
+
+  test("should connect via websocket when registering", async () => {
+    Config.testing = false;
+    const stubbedCreateResponse = {
+      game: {
+        id: "2",
+        players: []
+      }
+    };
+    fetchMock.post("http://localhost:5000/api/game", stubbedCreateResponse);
+
+    const room = new WaitingRoom(owner);
+    await room.register();
+
+    expect(WebsocketClient.mock.instances[0].connect).toHaveBeenCalled();
   });
 
   test("should fetch waiting room from server", async () => {
