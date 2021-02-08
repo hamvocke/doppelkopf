@@ -34,6 +34,16 @@ export class WaitingRoom {
     return `${Config.baseUrl}/${this.gameId}`;
   }
 
+  async register() {
+    try {
+      const response = await http.post("/api/game");
+      let gameInfo = await response.json();
+      this.gameId = gameInfo.game.id;
+    } catch (error) {
+      throw new Error(`Failed to create multiplayer game: ${error}`);
+    }
+  }
+
   // TODO: multiplayer join:
   static async fetch(gameName) {
     // [x] get room info from server

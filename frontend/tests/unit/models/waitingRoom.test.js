@@ -11,9 +11,29 @@ beforeEach(() => {
 const owner = new Player("owner");
 
 describe("Waiting Room", () => {
-  test("should create new waiting room", () => {
+  test("should construct new waiting room", () => {
     const room = new WaitingRoom(owner);
     expect(room.players).toEqual([owner]);
+  });
+
+  test("should call backend when registering waiting room", async () => {
+    // disable testing mode so we're hitting fetchMock requests
+    Config.testing = false;
+
+    const stubbedResponse = {
+      game: {
+        id: "2",
+        players: []
+      }
+    };
+    fetchMock.post("http://localhost:5000/api/game", stubbedResponse);
+
+    const room = new WaitingRoom(owner);
+
+    await room.register();
+
+    expect(fetchMock.called()).toBe(true);
+    expect(room.gameId).toBe("2");
   });
 
   test("should fetch waiting room from server", async () => {
@@ -22,7 +42,7 @@ describe("Waiting Room", () => {
 
     const stubbedResponse = {
       game: {
-        id: "smell-brown-slide",
+        id: "1",
         players: [
           { name: "Karl Heinz" },
           { name: "Brigitte" },
@@ -31,15 +51,12 @@ describe("Waiting Room", () => {
       }
     };
 
-    fetchMock.get(
-      "http://localhost:5000/api/game/smell-brown-slide/join",
-      stubbedResponse
-    );
+    fetchMock.get("http://localhost:5000/api/game/1/join", stubbedResponse);
 
-    let room = await WaitingRoom.fetch("smell-brown-slide");
+    let room = await WaitingRoom.fetch("1");
 
     expect(fetchMock.called()).toBe(true);
-    expect(room.gameId).toEqual("smell-brown-slide");
+    expect(room.gameId).toEqual("1");
     expect(room.players.some(p => p.name === "Karl Heinz")).toBe(true);
     expect(room.players.some(p => p.name === "Brigitte")).toBe(true);
     expect(room.players.some(p => p.name === "Svenja")).toBe(true);
