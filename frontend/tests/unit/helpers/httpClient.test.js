@@ -1,8 +1,7 @@
-import { HttpClient } from "@/helpers/httpClient";
+import { http } from "@/helpers/httpClient";
 import { Config } from "@/models/config";
 const fetchMock = require("fetch-mock-jest");
 
-const http = new HttpClient();
 Config.testing = false; // make httpClient fire "real" requests so it's hitting fetchMock
 
 beforeEach(() => {
