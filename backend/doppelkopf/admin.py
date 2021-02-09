@@ -15,12 +15,12 @@ def index():
     total_stats = stats.calculate_total()
 
     all_stats = {
-        "games_started": total_stats[EventTypes.GAME_START],
-        "games_won": total_stats[EventTypes.GAME_WIN],
-        "games_lost": total_stats[EventTypes.GAME_LOSE],
-        "games_started_weekly": weekly_stats[EventTypes.GAME_START],
-        "games_won_weekly": weekly_stats[EventTypes.GAME_WIN],
-        "games_lost_weekly": weekly_stats[EventTypes.GAME_LOSE],
+        "games_started": total_stats[EventTypes.GAME_SINGLEPLAYER_START],
+        "games_won": total_stats[EventTypes.GAME_SINGLEPLAYER_WIN],
+        "games_lost": total_stats[EventTypes.GAME_SINGLEPLAYER_LOSE],
+        "games_started_weekly": weekly_stats[EventTypes.GAME_SINGLEPLAYER_START],
+        "games_won_weekly": weekly_stats[EventTypes.GAME_SINGLEPLAYER_WIN],
+        "games_lost_weekly": weekly_stats[EventTypes.GAME_SINGLEPLAYER_LOSE],
     }
 
     return render_template("admin/index.html", stats=all_stats)
@@ -51,3 +51,9 @@ def toggles_submit():
     db.session.commit()
     flash("Toggle state saved")
     return redirect(url_for("admin.toggles_list"))
+
+
+@blueprint.route("/test/websockets", methods=["GET"])
+@login_required
+def test_websockets():
+    return render_template("admin/websockets-test.html")

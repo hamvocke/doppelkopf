@@ -70,6 +70,23 @@ You can view the storybook by running
 
 from the `frontend/` directory and then pointing your browser to [localhost:6006](http://localhost:6006)
 
+### Testing the `docker-compose` build
+Make sure `docker-compose` and `docker` are properly installed.
+
+Using `docker-compose` you can start the proxy server that serves the frontend application as well as the backend application at once.
+
+**Run the local build**:
+
+1. Make sure that you've got a `.env` file in the `backend/` directory (you can copy the `.env.sample` one and adapt it's values)
+2. run `docker-compose build`
+3. `export APP_ENVIRONMENT=local && docker-compose up`
+
+**Run the production build**:
+
+1. Make sure that you've got a `backend.env` file in the current directory
+2. run `docker-compose build` (or pull via `docker-compose pull`)
+3. `export APP_ENVIRONMENT=prod && docker-compose up -f docker-compose.yml -f docker-compose.prod.yml`
+
 ### More Helpful Commands
 
 Build the frontend application for production, with minification:

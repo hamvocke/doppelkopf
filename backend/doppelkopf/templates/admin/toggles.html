@@ -8,7 +8,7 @@ Toggles
 <li class="mr-2">
   <a href="/admin">Admin</a>
 </li> /
-<li class="mx-2 text-indigo-400">
+<li class="mx-2 text-indigo-300">
   <a href="/admin/toggles">Toggles</a>
 </li>
 {% endblock %}
@@ -17,7 +17,7 @@ Toggles
 <div class="flex flex-col mx-auto">
 <h2 class="text-2xl mb-2">Feature Toggles</h2>
 
-<p class="text-sm text-gray-600 mb-6">
+<p class="text-sm text-gray-400 mb-6">
   Activate and deactivate features at runtime. Changes will be active for players once they reload the page.
 </p>
 <form action="{{ url_for('admin.toggles_submit') }}" method="post">

@@ -9,7 +9,6 @@ from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
 
 def create_app(test_config=None):
-    # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
 
     if test_config is None:
@@ -26,20 +25,28 @@ def create_app(test_config=None):
     app.logger.setLevel(logging.INFO)
 
     if not app.config["DEBUG"]:
-        sentry_sdk.init(
-            dsn=app.config["SENTRY_DSN"],
-            environment=app.config["ENV_NAME"],
-            integrations=[FlaskIntegration(), SqlalchemyIntegration()],
-        )
+        if not app.config["SENTRY_DSN"]:
+            app.logger.warning("No Sentry DSN found, skipping Sentry setup")
+        else:
+            sentry_sdk.init(
+                dsn=app.config["SENTRY_DSN"],
+                environment=app.config["ENV_NAME"],
+                integrations=[FlaskIntegration(), SqlalchemyIntegration()],
+            )
+
+    from doppelkopf import sockets
+
+    sockets.init_app(app)
 
     from doppelkopf import login
 
     login.init_app(app)
 
-    from doppelkopf import admin, api
+    from doppelkopf import admin, api, metrics
 
     app.register_blueprint(admin.blueprint)
     app.register_blueprint(api.blueprint)
+    app.register_blueprint(metrics.blueprint)
 
     from doppelkopf import db
 

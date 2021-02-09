@@ -1,5 +1,12 @@
 import { Config } from "@/models/config";
 
+/**
+ * A simple client to send HTTP requests to the backend service.
+ * All HTTP calls made in the client application should go through this client.
+ * It's mostly a simple wrapper around the browser-native fetch API and offers
+ * the additional benefit that it prevents real HTTP requests from being
+ * fired when running tests.
+ */
 export class HttpClient {
   constructor() {
     this.baseUrl = Config.backend_base_url;

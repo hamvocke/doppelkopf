@@ -98,25 +98,4 @@ describe("Card.vue", () => {
 
     expect(wrapper.find(".card-inner").classes()).toContain("highlighted");
   });
-
-  it("should show player name if given", () => {
-    const wrapper = mount(Card, {
-      propsData: {
-        card: ace.of(suits.spades),
-        playerName: "some player"
-      }
-    });
-
-    expect(wrapper.find(".playerName").text()).toEqual("some player");
-  });
-
-  it("should not show player name if none given", () => {
-    const wrapper = mount(Card, {
-      propsData: {
-        card: ace.of(suits.spades)
-      }
-    });
-
-    expect(wrapper.find(".playerName").exists()).toBe(false);
-  });
 });

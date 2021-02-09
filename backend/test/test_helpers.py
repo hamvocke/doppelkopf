@@ -3,7 +3,8 @@ from datetime import datetime, timedelta
 
 
 class TestPrettyDate:
-    now = datetime.utcnow()
+    def now(self):
+        return datetime.utcnow()
 
     def test_pretty_date_way_past(self):
         d = datetime(2019, 10, 1)
@@ -11,35 +12,36 @@ class TestPrettyDate:
         assert helpers.pretty_date(past_date) == "23 Sep 19"
 
     def test_pretty_date_three_days_ago(self):
-        past_date = self.now - timedelta(days=3)
+        past_date = self.now() - timedelta(days=3)
         assert helpers.pretty_date(past_date) == "3 days ago"
 
     def test_pretty_date_one_day_ago(self):
-        past_date = self.now - timedelta(days=1)
+        past_date = self.now() - timedelta(days=1)
         assert helpers.pretty_date(past_date) == "1 day ago"
 
     def test_pretty_date_10_hours_ago(self):
-        past_date = self.now - timedelta(hours=10)
+        past_date = self.now() - timedelta(hours=10)
         assert helpers.pretty_date(past_date) == "10 hours ago"
 
     def test_pretty_date_1_hour_ago(self):
-        past_date = self.now - timedelta(hours=1)
+        past_date = self.now() - timedelta(hours=1)
         assert helpers.pretty_date(past_date) == "1 hour ago"
 
     def test_pretty_date_minutes_ago(self):
-        past_date = self.now - timedelta(minutes=12)
+        past_date = self.now() - timedelta(minutes=12)
         assert helpers.pretty_date(past_date) == "12 minutes ago"
 
     def test_pretty_date_1_minute_ago(self):
-        past_date = self.now - timedelta(minutes=1)
+        past_date = self.now() - timedelta(minutes=1)
         assert helpers.pretty_date(past_date) == "1 minute ago"
 
     def test_pretty_date_seconds_ago(self):
-        past_date = self.now - timedelta(seconds=29, milliseconds=500)
-        assert helpers.pretty_date(past_date, self.now) == "30 seconds ago"
+        d = self.now()
+        past_date = d - timedelta(seconds=30, milliseconds=100)
+        assert helpers.pretty_date(past_date, d) == "30 seconds ago"
 
     def test_pretty_date_just_now(self):
-        past_date = self.now - timedelta(milliseconds=300)
+        past_date = self.now() - timedelta(milliseconds=300)
         assert helpers.pretty_date(past_date) == "just now"
 
 

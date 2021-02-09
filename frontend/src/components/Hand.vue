@@ -87,6 +87,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/css/vars.css";
+
 .cards > span {
   display: flex;
   flex-wrap: wrap;

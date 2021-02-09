@@ -16,7 +16,7 @@ def test_toggles_should_redirect_to_login(client):
 def test_should_render_stats_on_index(user, client):
     with client:
         login(client, user)
-        client.post("/api/game/new")
+        client.post("/api/metrics/game/singleplayer/start")
         response = client.get("/admin/")
 
     assert response.status_code == 200

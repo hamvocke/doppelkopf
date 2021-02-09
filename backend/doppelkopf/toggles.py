@@ -42,6 +42,20 @@ class Toggle(db.Model):
 
 
 toggles = [
-    Toggle(id=1, name="game.tutorial.enable", description="Aktiviert das Tutorial",),
-    Toggle(id=2, name="game.announcements.enable", description="Aktiviert 'Ansagen'",),
+    Toggle(
+        id=1,
+        name="game.tutorial.enable",
+        description="Aktiviert das Tutorial",
+    ),
+    Toggle(
+        id=2,
+        name="game.announcements.enable",
+        description="Aktiviert 'Ansagen'",
+        enabled=True,
+    ),
+    Toggle(
+        id=3,
+        name="game.multiplayer.enable",
+        description="Aktiviert den Multiplayer-Modus",
+    ),
 ]

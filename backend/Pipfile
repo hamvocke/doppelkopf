@@ -5,12 +5,13 @@ name = "pypi"
 
 [packages]
 flask = "*"
-gunicorn = "*"
 sentry-sdk = {extras = ["flask"],version = "==0.13.3"}
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-login = "*"
 flask-bcrypt = "*"
+flask-socketio = "*"
+eventlet = "*"
 
 [dev-packages]
 black = "*"

@@ -20,7 +20,6 @@
         </template>
       </div>
     </template>
-    <div v-if="playerName" class="playerName">{{ playerName }}</div>
   </div>
 </template>
 
@@ -33,11 +32,6 @@ export default {
     card: {
       type: Object,
       required: true
-    },
-    playerName: {
-      type: String,
-      required: false,
-      default: null
     },
     isSelected: {
       type: Boolean,
@@ -177,25 +171,6 @@ export default {
 }
 
 .highlighted {
-}
-
-.playerName {
-  position: absolute;
-  margin-top: -20px;
-  opacity: 0;
-  padding: 6px;
-  background: var(--lightblue);
-  color: var(--white);
-  font-size: 0.9em;
-  border-radius: 3px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.22);
-  transition: opacity 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-/* change to card:hover and card:active to activate */
-.card-inner:hover .playerName,
-.card-inner:active .playerName {
-  opacity: 1;
 }
 
 @media screen and (max-width: 680px) {

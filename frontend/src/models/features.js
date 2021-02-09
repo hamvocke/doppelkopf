@@ -3,7 +3,8 @@ import { Config } from "@/models/config";
 
 const DEFAULT_FEATURES = {
   "game.tutorial.enable": Config.debug,
-  "game.announcements.enable": Config.debug
+  "game.announcements.enable": true,
+  "game.multiplayer.enable": Config.debug
 };
 
 class FeatureManager {

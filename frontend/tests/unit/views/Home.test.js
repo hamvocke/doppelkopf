@@ -17,12 +17,41 @@ describe("Home.vue", () => {
   });
 
   test("should show tutorial link when feature is disabled", () => {
-    Features.features = { "game.tutorial.enable": false };
+    Features.features = {
+      "game.tutorial.enable": false,
+      "game.multiplayer.enable": false
+    };
 
     const wrapper = shallowMount(Home, {
       stubs: { "router-link": RouterLinkStub },
       propsData: { showTutorial: false }
     });
     expect(wrapper.find(".tutorial-link").exists()).toBe(true);
+  });
+
+  test("should show multiplayer game button if feature is enabled", () => {
+    Features.features = {
+      "game.tutorial.enable": false,
+      "game.multiplayer.enable": true
+    };
+
+    const wrapper = shallowMount(Home, {
+      stubs: { "router-link": RouterLinkStub }
+    });
+
+    expect(wrapper.find(".start-multiplayer").exists()).toBe(true);
+  });
+
+  test("should hide multiplayer game button if feature is disabled", () => {
+    Features.features = {
+      "game.tutorial.enable": false,
+      "game.multiplayer.enable": false
+    };
+
+    const wrapper = shallowMount(Home, {
+      stubs: { "router-link": RouterLinkStub }
+    });
+
+    expect(wrapper.find(".start-multiplayer").exists()).toBe(false);
   });
 });

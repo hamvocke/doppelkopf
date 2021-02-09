@@ -1,0 +1,52 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}
+Websockets Test
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="mr-2 text-indigo-300">
+  <a href="/admin">Admin</a>
+</li>
+{% endblock %}
+
+{% block content %}
+
+<div class="flex flex-col mx-auto">
+  <h2 class="text-2xl mb-2">Testing websockets</h2>
+
+  <p class="text-sm text-gray-400 mb-6">
+    Check your developer console for more details. If everything works fine, you should see a green badge below.
+  </p>
+
+  <div class="mx-auto">
+    <div class="rounded-full bg-red-500 mx-auto h-5 w-5 m-6 js-test-badge"></div>
+    <p class="text-gray-400 text-bold js-test-text">Not connected :(</p>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
+<script>
+  const socket = io();
+  console.log("trying to connect");
+
+  const badgeElement = document.querySelector(".js-test-badge");
+  const textElement = document.querySelector(".js-test-text");
+
+  socket.on("connect", () => {
+    console.log("Connected")
+
+    badgeElement.classList.remove("bg-red-500");
+    badgeElement.classList.add("bg-green-500");
+
+    textElement.innerHTML = "Connected :)";
+  });
+
+  socket.on("disconnect", () => {
+    badgeElement.classList.add("bg-red-500");
+    badgeElement.classList.remove("bg-green-500");
+
+    textElement.innerHTML = "Not connected :(";
+  })
+</script>
+{% endblock %}

@@ -7,10 +7,11 @@ config.mocks["$t"] = msg => msg;
 config.mocks["$tc"] = msg => msg;
 config.mocks["$i18n"] = { locale: "en" };
 
+const owner = new Player("owner");
+
 describe("WaitingRoom.vue", () => {
   test("should render players", () => {
-    const room = new WaitingRoomModel();
-    room.join(new Player("Some Player"));
+    const room = new WaitingRoomModel(owner);
 
     const wrapper = mount(WaitingRoom, {
       propsData: { waitingRoom: room }
@@ -21,7 +22,7 @@ describe("WaitingRoom.vue", () => {
   });
 
   test("should not render start button if room is waiting", () => {
-    const room = new WaitingRoomModel();
+    const room = new WaitingRoomModel(owner);
     room.join(new Player("Some Player"));
 
     const wrapper = mount(WaitingRoom, {
@@ -32,8 +33,7 @@ describe("WaitingRoom.vue", () => {
   });
 
   test("should render start button if room is ready", () => {
-    const room = new WaitingRoomModel();
-    room.join(new Player("Some Player"));
+    const room = new WaitingRoomModel(owner);
     room.join(new Player("Some Player"));
     room.join(new Player("Some Player"));
     room.join(new Player("Some Player"));
@@ -46,7 +46,7 @@ describe("WaitingRoom.vue", () => {
   });
 
   test("should highlight own player", () => {
-    const room = new WaitingRoomModel();
+    const room = new WaitingRoomModel(owner);
     room.join(new Player("Some Player", true, false));
     room.join(new Player("Me", true, true));
 

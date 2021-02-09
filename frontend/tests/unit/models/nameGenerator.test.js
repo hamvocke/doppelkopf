@@ -1,4 +1,4 @@
-import { generateNames, generateNameId } from "@/models/random";
+import { generateNames } from "@/models/random";
 
 describe("Random", () => {
   test("should generate multiple random names", () => {
@@ -8,11 +8,5 @@ describe("Random", () => {
     expect(names[1]).toMatch(/\w.*/);
     expect(names[2]).toMatch(/\w.*/);
     expect(names[3]).toMatch(/\w.*/);
-  });
-
-  test("should generate name id", () => {
-    const id = generateNameId();
-
-    expect(id).toMatch(/\w.*-\w.*-\w.*/);
   });
 });

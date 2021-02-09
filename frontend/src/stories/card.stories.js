@@ -42,17 +42,6 @@ export const black_suite = () => ({
   i18n: new VueI18n(i18nOpts)
 });
 
-export const played_card = () => ({
-  components: { Card },
-  data() {
-    return {
-      card: queenOfSpades
-    };
-  },
-  template: '<Card :card="card" player-name="Hannelore" />',
-  i18n: new VueI18n(i18nOpts)
-});
-
 export const covered = () => ({
   components: { Card },
   data() {

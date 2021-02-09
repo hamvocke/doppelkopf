@@ -83,9 +83,7 @@ export class Player {
       if (card.compareTo(queen.of(suits.clubs)) === 0)
         this.game.affinityEvent(affinityEvents.queen_of_clubs, this);
 
-      console.debug(
-        "Player " + this.name + " played: " + cardToBePlayed.cardId
-      );
+      console.debug(`Player ${this.name} played: ${cardToBePlayed.cardId}`);
       this.game.currentRound.nextPlayer();
 
       if (options.autoplay === true) {

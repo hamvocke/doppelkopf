@@ -2,6 +2,9 @@
   <div id="waitingRoom">
     <h1>Doppelkopf</h1>
     <div class="wrapper">
+      <h3>
+        {{ $t("hey-player", { name: waitingRoom.players[0].name }) }}
+      </h3>
       <p>
         {{ $t("here-is-your-invite-link") }}
       </p>
@@ -53,10 +56,6 @@ export default {
   name: "WaitingRoom",
   components: { CopyText },
   props: {
-    gameId: {
-      type: Number,
-      default: -1
-    },
     waitingRoom: {
       type: Object,
       default: function() {
@@ -76,16 +75,6 @@ export default {
       }
       return "waiting-status";
     }
-  },
-  created() {
-    // TODO:
-    //  1. get game name from vue router
-    //  2. send request to server: game name
-    //  3. create waiting room based on response
-    //  (WaitingRoom -> fetch)
-    //  4. if state === "waiting": ask for name
-    //  5. when name entered -> waitingRoom.join(name)
-    //  6. show waiting room properly
   },
   methods: {
     startGame: function() {

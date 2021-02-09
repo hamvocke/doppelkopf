@@ -1,8 +1,9 @@
-import { generateNameId } from "@/models/random";
 import { Game } from "@/models/game";
 import { Player } from "@/models/player";
 import { Config } from "@/models/config";
 import { http } from "@/helpers/httpClient";
+import { WebsocketClient } from "@/helpers/websocketClient";
+import { generateNames } from "@/models/random";
 
 export const states = {
   waiting: "waiting",
@@ -11,9 +12,14 @@ export const states = {
 };
 
 export class WaitingRoom {
-  constructor(gameId = null, players = []) {
-    this.gameId = gameId || generateNameId();
-    this.players = players;
+  constructor(owner = null) {
+    if (owner === null) {
+      owner = new Player(generateNames(1)[0], true, true, "bottom");
+    }
+
+    this.gameId = null;
+    this.players = [owner];
+    this.websocket = new WebsocketClient();
   }
 
   get state() {
@@ -30,15 +36,24 @@ export class WaitingRoom {
     return `${Config.baseUrl}/${this.gameId}`;
   }
 
+  async register() {
+    try {
+      const response = await http.post("/api/game");
+      let gameInfo = await response.json();
+      this.gameId = gameInfo.game.id;
+      this.websocket.connect(this);
+    } catch (error) {
+      throw new Error(`Failed to create multiplayer game: ${error}`);
+    }
+  }
+
   // TODO: multiplayer join:
   static async fetch(gameName) {
     // [x] get room info from server
     // [x] get response
     // [x] create local representation of room (new WaitingRoom(...))
+    // [ ] balance player order - "me" should be at position "bottom"
     // [ ] show waiting room with players who are present as long as state === "waiting"
-    // [ ] ask player for their name
-    // [ ] on name submit: waitingRoom.join(playerName)
-    // [x] change room state to "joined"
 
     let gameInfo;
 
@@ -49,20 +64,15 @@ export class WaitingRoom {
       throw new Error(`Failed to fetch game state: ${error}`);
     }
 
-    const waitingPlayers = gameInfo.players.map(
+    const waitingPlayers = gameInfo.game.players.map(
       player => new Player(player.name, true, false)
     );
 
-    const room = new WaitingRoom(gameInfo.gameId, waitingPlayers);
-
+    const room = new WaitingRoom(waitingPlayers[0]);
+    room.players = waitingPlayers;
+    room.gameId = gameInfo.game.id;
     return room;
   }
-
-  // join(playerName) {
-  //   const myPlayerName = playerName || generateNames(1);
-  //   const myPlayer = new Player(myPlayerName, true, true);
-  //   room.join(myPlayer);
-  // }
 
   join(player) {
     if (!player) return;

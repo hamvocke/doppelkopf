@@ -1,26 +1,18 @@
 import { http } from "@/helpers/httpClient";
 
 class TelemetryManager {
-  constructor() {
-    this.gameId = undefined;
-  }
+  constructor() {}
 
-  async newGame() {
-    this.gameId = undefined;
-
-    const response = await http.post("/api/game/new");
-    if (response.ok) {
-      const json = await response.json();
-      this.gameId = json.id;
-    }
+  newGame() {
+    return http.post("/api/metrics/game/singleplayer/start");
   }
 
   win() {
-    return http.post(`/api/game/${this.gameId}/win`);
+    return http.post(`/api/metrics/game/singleplayer/win`);
   }
 
   lose() {
-    return http.post(`/api/game/${this.gameId}/lose`);
+    return http.post(`/api/metrics/game/singleplayer/lose`);
   }
 }
 
