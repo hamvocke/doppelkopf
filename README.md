@@ -77,7 +77,7 @@ Using `docker-compose` you can start the proxy server that serves the frontend a
 
 **Run the local build**:
 
-1. Make sure that you've got a `.env` file in the `backend/` directory (you can copy the `.env.sample` one and adapt it's values)
+1. Make sure that you've got a `.env` file in the `backend/` directory (you can copy the `.env.sample` one and adapt its values)
 2. run `docker-compose build`
 3. `export APP_ENVIRONMENT=local && docker-compose up`
 
