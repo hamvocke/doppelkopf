@@ -1,4 +1,5 @@
 import { Config } from "@/models/config";
+import { io } from "socket.io-client";
 
 /**
  * A simple client to manage websocket connections with the backend service.
@@ -9,10 +10,15 @@ import { Config } from "@/models/config";
 export class WebsocketClient {
   constructor() {
     this.baseUrl = Config.backend_ws_base_url;
+    this.socket = null;
   }
 
-  connect(payload) {
-    return;
+  connect() {
+    if (Config.testing) {
+      return;
+    }
+
+    this.socket = io(this.baseUrl);
   }
 
   emit(eventName, payload) {
