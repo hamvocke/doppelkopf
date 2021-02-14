@@ -23,6 +23,7 @@
     "core-js": "^3.8.3",
     "lodash-es": "^4.17.15",
     "register-service-worker": "^1.7.2",
+    "socket.io-client": "^3.1.1",
     "vue": "^2.6.12",
     "vue-clickaway": "^2.2.2",
     "vue-feather-icons": "^5.1.0",
