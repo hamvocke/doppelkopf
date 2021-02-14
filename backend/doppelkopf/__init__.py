@@ -6,6 +6,7 @@ from flask import Flask  # type: ignore
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
+from flask_cors import CORS
 
 
 def create_app(test_config=None):
@@ -33,6 +34,8 @@ def create_app(test_config=None):
                 environment=app.config["ENV_NAME"],
                 integrations=[FlaskIntegration(), SqlalchemyIntegration()],
             )
+
+    CORS(app, origins=app.config["CORS_ALLOWED_ORIGINS"])
 
     from doppelkopf import sockets
 
