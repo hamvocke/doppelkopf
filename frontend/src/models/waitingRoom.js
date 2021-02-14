@@ -39,9 +39,12 @@ export class WaitingRoom {
   async register() {
     try {
       const response = await http.post("/api/game");
+      if (!response.ok) {
+        throw new Error(`HTTP request failed with status ${response.status}`);
+      }
       let gameInfo = await response.json();
       this.gameId = gameInfo.game.id;
-      this.websocket.connect(this);
+      this.websocket.connect(); // TODO: "connect" should always come with an immediate "join" event
     } catch (error) {
       throw new Error(`Failed to create multiplayer game: ${error}`);
     }
@@ -56,10 +59,12 @@ export class WaitingRoom {
     // [ ] show waiting room with players who are present as long as state === "waiting"
 
     let gameInfo;
+    this.websocket = new WebsocketClient();
 
     try {
-      const response = await http.get(`/api/game/${gameName}/join`);
+      const response = await http.get(`/api/game/${gameName}`);
       gameInfo = await response.json();
+      this.websocket.connect();
     } catch (error) {
       throw new Error(`Failed to fetch game state: ${error}`);
     }
