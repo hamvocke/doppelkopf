@@ -1,13 +1,28 @@
 import WaitingRoom from "@/views/WaitingRoom";
 import { WaitingRoom as WaitingRoomModel } from "@/models/waitingRoom";
 import { Player } from "@/models/player";
+import { Config } from "@/models/config";
 import { mount, config } from "@vue/test-utils";
+
+const fetchMock = require("fetch-mock-jest");
 
 config.mocks["$t"] = msg => msg;
 config.mocks["$tc"] = msg => msg;
 config.mocks["$i18n"] = { locale: "en" };
 
 const owner = new Player("owner");
+
+beforeEach(() => {
+  fetchMock.reset();
+  const stubbedCreateResponse = {
+    game: {
+      id: "2",
+      players: []
+    }
+  };
+  fetchMock.post("http://localhost:5000/api/game", stubbedCreateResponse);
+  Config.testing = false; // make sure we hit fetch mock
+});
 
 describe("WaitingRoom.vue", () => {
   test("should render players", () => {
