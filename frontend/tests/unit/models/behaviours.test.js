@@ -302,5 +302,20 @@ describe("Rule Based Card Behavior", () => {
       const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
       expect(cardToPlay).toEqual(jack.of(suits.diamonds).first());
     });
+
+    test("should play the position, winning the trick playing lowest trump", () => {
+      let hand = new Hand([
+        ace.of(suits.diamonds),
+        jack.of(suits.clubs).first(),
+        queen.of(suits.diamonds)
+      ]);
+      const trick = new Trick([player1, player2, player3, player4]);
+      player1.memory.memorize(new PlayedCard(king.of(suits.spades), player2));
+      trick.add(ten.of(suits.spades), player4);
+      trick.add(king.of(suits.spades), player3);
+      trick.add(jack.of(suits.spades), player2);
+      const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+      expect(cardToPlay).toEqual(jack.of(suits.spades).first());
+    });
   });
 });
