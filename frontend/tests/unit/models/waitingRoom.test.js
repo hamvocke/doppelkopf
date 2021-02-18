@@ -69,7 +69,7 @@ describe("Waiting Room", () => {
       }
     };
 
-    fetchMock.get("http://localhost:5000/api/game/1/join", stubbedResponse);
+    fetchMock.get("http://localhost:5000/api/game/1", stubbedResponse);
 
     let room = await WaitingRoom.fetch("1");
 
@@ -78,6 +78,28 @@ describe("Waiting Room", () => {
     expect(room.players.some(p => p.name === "Karl Heinz")).toBe(true);
     expect(room.players.some(p => p.name === "Brigitte")).toBe(true);
     expect(room.players.some(p => p.name === "Svenja")).toBe(true);
+  });
+
+  test("should connect right after fetching waiting room from server", async () => {
+    // disable testing mode so we're hitting fetchMock requests
+    Config.testing = false;
+
+    const stubbedResponse = {
+      game: {
+        id: "1",
+        players: [
+          { name: "Karl Heinz" },
+          { name: "Brigitte" },
+          { name: "Svenja" }
+        ]
+      }
+    };
+
+    fetchMock.get("http://localhost:5000/api/game/1", stubbedResponse);
+
+    await WaitingRoom.fetch("1");
+
+    expect(WebsocketClient.mock.instances[0].connect).toHaveBeenCalled();
   });
 
   test("should be in 'waiting' state on start", () => {

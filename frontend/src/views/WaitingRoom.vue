@@ -76,6 +76,9 @@ export default {
       return "waiting-status";
     }
   },
+  async created() {
+    await this.waitingRoom.register();
+  },
   methods: {
     startGame: function() {
       this.waitingRoom.startGame();
