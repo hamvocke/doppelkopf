@@ -16,11 +16,18 @@ test("should aggregate points", () => {
   expect(party.points()).toEqual(30);
 });
 
+const stubbedGame = {
+  affinityEvent: () => {}
+};
+
 test("should aggregate announcements", () => {
   player1.numberOfCardsLeft = () => 10;
+  player1.game = stubbedGame;
   player1.announce(announcements.kontra);
   player1.announce(announcements.no_90);
+
   const party = new Party(kontra, player1, player2);
+
   expect(party.announcements()).toEqual([
     announcements.kontra,
     announcements.no_90

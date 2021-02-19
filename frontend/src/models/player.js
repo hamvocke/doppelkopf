@@ -128,10 +128,7 @@ export class Player {
       throw new Error("Invalid announcement");
     }
 
-    // This check is necessary for testing purposes.
-    // As long as game instance isn't set, we can't call affinityEvent
-    if (Object.keys(this.game).length > 0)
-      this.game.affinityEvent(affinityEvents.announcement, this);
+    this.game.affinityEvent(affinityEvents.announcement, this);
 
     // always announce re/kontra
     let allAnnouncements = this.isRe()
