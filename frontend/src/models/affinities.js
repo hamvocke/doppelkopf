@@ -26,7 +26,7 @@ export class Affinities {
     }
   }
 
-  getPlayerAffinityValue(player) {
+  for(player) {
     return !this._isMe(player)
       ? this.players.find(element => element.player.id === player.id).affinity
       : 0;

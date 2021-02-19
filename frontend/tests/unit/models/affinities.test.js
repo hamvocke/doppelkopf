@@ -37,33 +37,33 @@ describe("Affinities", () => {
   describe("Affinities through announcement", () => {
     test("Change affinity", () => {
       player1.affinities.setPlayerAffinityByParty(player2);
-      expect(player1.affinities.getPlayerAffinityValue(player2)).toEqual(1);
+      expect(player1.affinities.for(player2)).toEqual(1);
     });
 
     test("Re announces", () => {
       player2.announce(announcements.re);
-      expect(player1.affinities.getPlayerAffinityValue(player2)).toEqual(1);
-      expect(player1.affinities.getPlayerAffinityValue(player3)).toEqual(-1);
-      expect(player1.affinities.getPlayerAffinityValue(player4)).toEqual(-1);
-      expect(player3.affinities.getPlayerAffinityValue(player1)).toEqual(0);
-      expect(player3.affinities.getPlayerAffinityValue(player2)).toEqual(-1);
-      expect(player3.affinities.getPlayerAffinityValue(player4)).toEqual(0);
-      expect(player4.affinities.getPlayerAffinityValue(player1)).toEqual(0);
-      expect(player4.affinities.getPlayerAffinityValue(player2)).toEqual(-1);
-      expect(player4.affinities.getPlayerAffinityValue(player3)).toEqual(0);
+      expect(player1.affinities.for(player2)).toEqual(1);
+      expect(player1.affinities.for(player3)).toEqual(-1);
+      expect(player1.affinities.for(player4)).toEqual(-1);
+      expect(player3.affinities.for(player1)).toEqual(0);
+      expect(player3.affinities.for(player2)).toEqual(-1);
+      expect(player3.affinities.for(player4)).toEqual(0);
+      expect(player4.affinities.for(player1)).toEqual(0);
+      expect(player4.affinities.for(player2)).toEqual(-1);
+      expect(player4.affinities.for(player3)).toEqual(0);
     });
 
     test("Kontra announces", () => {
       player3.announce(announcements.kontra);
-      expect(player1.affinities.getPlayerAffinityValue(player2)).toEqual(0);
-      expect(player1.affinities.getPlayerAffinityValue(player3)).toEqual(-1);
-      expect(player1.affinities.getPlayerAffinityValue(player4)).toEqual(0);
-      expect(player2.affinities.getPlayerAffinityValue(player1)).toEqual(0);
-      expect(player2.affinities.getPlayerAffinityValue(player3)).toEqual(-1);
-      expect(player2.affinities.getPlayerAffinityValue(player4)).toEqual(0);
-      expect(player4.affinities.getPlayerAffinityValue(player1)).toEqual(-1);
-      expect(player4.affinities.getPlayerAffinityValue(player2)).toEqual(-1);
-      expect(player4.affinities.getPlayerAffinityValue(player3)).toEqual(1);
+      expect(player1.affinities.for(player2)).toEqual(0);
+      expect(player1.affinities.for(player3)).toEqual(-1);
+      expect(player1.affinities.for(player4)).toEqual(0);
+      expect(player2.affinities.for(player1)).toEqual(0);
+      expect(player2.affinities.for(player3)).toEqual(-1);
+      expect(player2.affinities.for(player4)).toEqual(0);
+      expect(player4.affinities.for(player1)).toEqual(-1);
+      expect(player4.affinities.for(player2)).toEqual(-1);
+      expect(player4.affinities.for(player3)).toEqual(1);
     });
   });
 
@@ -72,15 +72,15 @@ describe("Affinities", () => {
       game.currentRound.playerOrder.prioritize(player2);
       player2.hand = new Hand([queen.of(suits.clubs).first()]);
       player2.play(player2.hand.highest());
-      expect(player1.affinities.getPlayerAffinityValue(player2)).toEqual(1);
-      expect(player1.affinities.getPlayerAffinityValue(player3)).toEqual(-1);
-      expect(player1.affinities.getPlayerAffinityValue(player4)).toEqual(-1);
-      expect(player3.affinities.getPlayerAffinityValue(player1)).toEqual(0);
-      expect(player3.affinities.getPlayerAffinityValue(player2)).toEqual(-1);
-      expect(player3.affinities.getPlayerAffinityValue(player4)).toEqual(0);
-      expect(player4.affinities.getPlayerAffinityValue(player1)).toEqual(0);
-      expect(player4.affinities.getPlayerAffinityValue(player2)).toEqual(-1);
-      expect(player4.affinities.getPlayerAffinityValue(player3)).toEqual(0);
+      expect(player1.affinities.for(player2)).toEqual(1);
+      expect(player1.affinities.for(player3)).toEqual(-1);
+      expect(player1.affinities.for(player4)).toEqual(-1);
+      expect(player3.affinities.for(player1)).toEqual(0);
+      expect(player3.affinities.for(player2)).toEqual(-1);
+      expect(player3.affinities.for(player4)).toEqual(0);
+      expect(player4.affinities.for(player1)).toEqual(0);
+      expect(player4.affinities.for(player2)).toEqual(-1);
+      expect(player4.affinities.for(player3)).toEqual(0);
     });
   });
 });
