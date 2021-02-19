@@ -6,7 +6,7 @@ import { Vue as VueIntegration } from "@sentry/integrations";
 import { Integrations } from "@sentry/tracing";
 import "@/assets/css/app.css";
 import i18n from "./i18n";
-import router from "./router";
+import router from "./router/index";
 import { Config } from "@/models/config";
 import { Features } from "@/models/features";
 

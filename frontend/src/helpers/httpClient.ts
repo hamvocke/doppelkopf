@@ -1,5 +1,10 @@
 import { Config } from "@/models/config";
 
+class StubResponse extends Response {
+  ok = false;
+  status = 418;
+}
+
 /**
  * A simple client to send HTTP requests to the backend service.
  * All HTTP calls made in the client application should go through this client.
@@ -8,21 +13,21 @@ import { Config } from "@/models/config";
  * fired when running tests.
  */
 export class HttpClient {
-  constructor() {
-    this.baseUrl = Config.backend_base_url;
-  }
+  baseUrl: string = Config.backend_base_url;
 
-  async get(path) {
+  async get(path: string): Promise<Response> {
     if (Config.testing) {
-      return { ok: false, status: 418 };
+      return new StubResponse();
     }
+
     return await fetch(this.baseUrl + path);
   }
 
-  async post(path, data) {
+  async post(path: string, data: object): Promise<Response> {
     if (Config.testing) {
-      return { ok: false, status: 418 };
+      return new StubResponse();
     }
+
     let fetchOptions = {
       method: "POST",
       headers: {

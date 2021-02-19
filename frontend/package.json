@@ -25,23 +25,30 @@
     "register-service-worker": "^1.7.2",
     "socket.io-client": "^3.1.1",
     "vue": "^2.6.12",
+    "vue-class-component": "^7.2.3",
     "vue-clickaway": "^2.2.2",
     "vue-feather-icons": "^5.1.0",
     "vue-i18n": "^8.22.4",
+    "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@kazupon/vue-i18n-loader": "^0.5.0",
     "@storybook/vue": "^6.1.11",
+    "@types/jest": "^24.0.19",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.8",
     "@vue/cli-plugin-e2e-nightwatch": "~4.5.8",
     "@vue/cli-plugin-eslint": "~4.5.8",
     "@vue/cli-plugin-pwa": "~4.5.8",
     "@vue/cli-plugin-router": "~4.5.8",
+    "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "~4.5.8",
     "@vue/cli-service": "~4.5.8",
     "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "1.1.2",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^24.5.0",
@@ -57,6 +64,7 @@
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^12.0.0",
     "prettier": "^1.19.1",
+    "typescript": "~3.9.3",
     "vue-cli-plugin-i18n": "^0.6.0",
     "vue-loader": "^15.7.1",
     "vue-template-compiler": "^2.5.17"
@@ -68,11 +76,12 @@
     },
     "extends": [
       "plugin:vue/recommended",
-      "@vue/prettier"
+      "@vue/prettier",
+      "@vue/typescript"
     ],
     "rules": {},
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "@typescript-eslint/parser"
     },
     "overrides": [
       {
@@ -131,6 +140,6 @@
       "**/tests/unit/**/*.test.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
     ],
     "testURL": "http://localhost/",
-    "preset": "@vue/cli-plugin-unit-jest"
+    "preset": "@vue/cli-plugin-unit-jest/presets/typescript-and-babel"
   }
 }
