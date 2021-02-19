@@ -41,7 +41,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 import { Features } from "@/models/features";
-import Logo from "@/components/Logo";
+import Logo from "@/components/Logo.vue";
 
 @Component({
   components: {
