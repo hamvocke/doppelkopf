@@ -30,7 +30,7 @@ export class PartyBuilder {
   }
 
   build() {
-    if (this.players && this.players.length === 0) {
+    if (this.players.length === 0) {
       this.players = [
         new PlayerBuilder(`a ${this.party} player`)
           .withParty(this.party)
@@ -44,8 +44,8 @@ export class PartyBuilder {
         player.party = this.party;
       });
     }
-    const createdParty = new Party(this.party, ...this.players);
 
+    const createdParty = new Party(this.party, ...this.players);
     createdParty.announcements = () => [...this.announcements];
     createdParty.extras = () => this.extras;
     createdParty.points = () => this.points;

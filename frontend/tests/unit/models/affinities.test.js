@@ -3,7 +3,6 @@ import { queen, suits } from "@/models/card";
 import { Game } from "@/models/game";
 import { Hand } from "@/models/hand";
 import { kontra, re } from "@/models/party";
-import { Trick } from "@/models/trick";
 import { PartyBuilder } from "../../builders/partyBuilder";
 
 describe("Affinities", () => {
@@ -35,11 +34,6 @@ describe("Affinities", () => {
   });
 
   describe("Affinities through announcement", () => {
-    test("Change affinity", () => {
-      player1.affinities.setPlayerAffinityByParty(player2);
-      expect(player1.affinities.for(player2)).toEqual(1);
-    });
-
     test("Re announces", () => {
       player2.announce(announcements.re);
       expect(player1.affinities.for(player2)).toEqual(1);

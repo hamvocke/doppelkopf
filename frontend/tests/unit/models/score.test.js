@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Score } from "@/models/score";
-import { kontra, re } from "../../../src/models/party";
+import { kontra, re } from "@/models/party";
 import { extras } from "@/models/extras";
 import { announcements } from "@/models/announcements";
 import { PartyBuilder } from "../../builders/partyBuilder";

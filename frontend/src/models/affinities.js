@@ -5,6 +5,9 @@ export const affinityEvents = {
 };
 
 /**
+ * Represents the affinities for a single player for all other players\
+ * in the game.
+ *
  * Affinities express the relationship between players. Each player has
  * a certain affinity for each other player. Two players could be partners
  * if they are in the same party, or they could be opponents if they are in
@@ -32,7 +35,7 @@ export const affinityEvents = {
  *
  * P3 opens the game by playing the queen of clubs.
  *
- * The affinities between players will now look like this:
+ * The affinities between all players will now look like this:
  *
  * |    | P1 | P2 | P3 | P4 |
  * | P1 |  * | -1 | +1 | -1 |
@@ -41,48 +44,39 @@ export const affinityEvents = {
  * | P4 |  0 |  0 | -1 |  * |
  *
  * (a * marks "is the same player", effectively this will have a value of 0)
+ * A single "Affinities" instance corresponds to one row in the table above.
+ * i.e. P1's affinities for all other players are shown in the first row.
  */
 export class Affinities {
-  constructor(me, players = []) {
+  constructor(me, otherPlayers = []) {
     this.me = me;
-    this.setPlayers(players);
+    this.setPlayers(otherPlayers);
   }
 
-  setPlayers(players) {
-    this.affinityTable = players
+  setPlayers(otherPlayers) {
+    this.affinityTable = otherPlayers
       .filter(player => player.id !== this.me.id)
       .map(player => ({ player, affinity: 0 }));
   }
 
   declaresParty(player) {
-    if (this._isMyPartyMember(player)) {
+    if (this._isInMyParty(player)) {
       this.affinityTable.forEach(x => {
-        this.setPlayerAffinityByParty(x.player);
+        this.setAffinity(x.player, this._isInMyParty(x.player) ? 1 : -1);
       });
     } else {
-      this.setPlayerAffinityByParty(player);
+      this.setAffinity(player, -1);
     }
   }
 
   for(player) {
-    return !this._isMe(player)
-      ? this.affinityTable.find(x => x.player.id === player.id).affinity
-      : 0;
+    return this.affinityTable.find(x => x.player.id === player.id).affinity;
   }
 
-  setPlayerAffinityToValue(player, value) {
+  setAffinity(player, value) {
     if (!this._isMe(player)) {
       let index = this.affinityTable.findIndex(x => x.player.id === player.id);
       this.affinityTable[index].affinity = value;
-    }
-  }
-
-  setPlayerAffinityByParty(player) {
-    if (!this._isMe(player)) {
-      let index = this.affinityTable.findIndex(x => x.player.id === player.id);
-      this.affinityTable[index].affinity = this._isMyPartyMember(player)
-        ? 1
-        : -1;
     }
   }
 
@@ -94,7 +88,7 @@ export class Affinities {
    * this function would actually solve the affinity problem,
    * hence it shouldn't be able to be called outside the class.
    */
-  _isMyPartyMember(player) {
+  _isInMyParty(player) {
     return (
       this.me.isRe() === player.isRe() ||
       this.me.isKontra() === player.isKontra()
