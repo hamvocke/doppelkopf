@@ -48,13 +48,13 @@ export const affinityEvents = {
  * i.e. P1's affinities for all other players are shown in the first row.
  */
 export class Affinities {
-  constructor(me, otherPlayers = []) {
+  constructor(me) {
     this.me = me;
-    this.setPlayers(otherPlayers);
+    this.setPlayers([]);
   }
 
-  setPlayers(otherPlayers) {
-    this.affinityTable = otherPlayers
+  setPlayers(allPlayers) {
+    this.affinityTable = allPlayers
       .filter(player => player.id !== this.me.id)
       .map(player => ({ player, affinity: 0 }));
   }

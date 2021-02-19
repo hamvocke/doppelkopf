@@ -31,7 +31,7 @@ export class Player {
     this.game = game;
     this.behavior = behaviour;
     this.memory = memory;
-    this.affinities = new Affinities(this, []);
+    this.affinities = new Affinities(this);
 
     this.reset();
   }
