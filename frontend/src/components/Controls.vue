@@ -44,7 +44,7 @@ export default {
     };
   },
   async created() {
-    this.enableAnnouncements = Features.get("game.announcements.enable");
+    this.enableAnnouncements = Features.get().enableAnnouncements;
   },
   methods: {
     triggerNextTrick: function() {

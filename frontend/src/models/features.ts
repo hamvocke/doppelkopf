@@ -13,28 +13,36 @@ interface Features {
   enableMultiplayer: boolean;
 }
 
-export let features: Features;
+class FeatureManager {
+  features: Features | null = null;
 
-export async function fetch(): Promise<Features> {
-  if (features) {
-    return features;
-  }
-
-  try {
-    let response = await http.get("/api/features");
-    if (response.ok) {
-      features = parseFeatures(await response.json());
+  async fetch(): Promise<Features> {
+    if (this.features) {
+      return this.features;
     }
-    return features ?? DEFAULT_FEATURES;
-  } catch (error) {
-    return DEFAULT_FEATURES;
+
+    try {
+      let response = await http.get("/api/features");
+      if (response.ok) {
+        this.features = this.parseFeatures(await response.json());
+      }
+      return this.features ?? DEFAULT_FEATURES;
+    } catch (error) {
+      return DEFAULT_FEATURES;
+    }
+  }
+
+  get() {
+    return this.features || DEFAULT_FEATURES;
+  }
+
+  private parseFeatures(json: any): Features {
+    return {
+      enableAnnouncements: json["game.announcements.enable"] as boolean,
+      enableMultiplayer: json["game.multiplayer.enable"] as boolean,
+      enableTutorial: json["game.tutorial.enable"] as boolean
+    };
   }
 }
 
-function parseFeatures(json: any): Features {
-  return {
-    enableAnnouncements: json["game.announcements.enable"] as boolean,
-    enableMultiplayer: json["game.multiplayer.enable"] as boolean,
-    enableTutorial: json["game.tutorial.enable"] as boolean
-  };
-}
+export const Features = new FeatureManager();
