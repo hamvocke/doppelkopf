@@ -20,7 +20,7 @@ export class RandomCardBehavior {
       return null;
     }
 
-    const announcementChance = 10;
+    const announcementChance = 0.1;
     if (chance(announcementChance)) {
       return [...possibleAnnouncements][0];
     }

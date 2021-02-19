@@ -4,8 +4,13 @@ export function generateNames(numberOfNames) {
   return sampleSize(names, numberOfNames);
 }
 
+/**
+ * Random decision with a success factor of a given percentage
+ * @param {number} percentage as a decimal value - e.g. 0.1 to express 10%
+ * @return {boolean} 'true' if RNGesus decided that this should be a success
+ */
 export function chance(percentage) {
-  return Math.random() * 100 <= percentage;
+  return Math.random() <= percentage;
 }
 
 const names = [

@@ -1,5 +1,5 @@
 import { uniqueId } from "lodash-es";
-
+import { chance } from "@/models/random";
 /**
  * I would love some kind of interface here.
  * Interface.js seems to be a reasonable possibility.
@@ -18,8 +18,7 @@ export class PercentageMemory {
   }
 
   memorize(playedCard, trickId = null) {
-    if (Math.random() <= this.percent)
-      this.playedCards.push({ playedCard, trickId });
+    if (chance(this.percent)) this.playedCards.push({ playedCard, trickId });
   }
 
   nonTrumpSuitPlayedBefore(suit, trickId = null) {
