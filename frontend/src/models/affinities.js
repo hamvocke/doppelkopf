@@ -11,12 +11,9 @@ export class Affinities {
   }
 
   setPlayers(players) {
-    this.players = [];
-    players.forEach(player => {
-      if (this.me.id !== player.id) {
-        this.players.push({ player, affinity: 0 });
-      }
-    });
+    this.players = players
+      .filter(player => player.id !== this.me.id)
+      .map(player => ({ player, affinity: 0 }));
   }
 
   declaresParty(player) {
