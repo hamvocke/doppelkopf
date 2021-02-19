@@ -64,8 +64,10 @@
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^12.0.0",
     "prettier": "^1.19.1",
+    "ts-jest": "^26.5.1",
     "typescript": "~3.9.3",
     "vue-cli-plugin-i18n": "^0.6.0",
+    "vue-jest": "^3.0.7",
     "vue-loader": "^15.7.1",
     "vue-template-compiler": "^2.5.17"
   },
@@ -118,6 +120,7 @@
   "jest": {
     "moduleFileExtensions": [
       "js",
+      "ts",
       "jsx",
       "json",
       "vue"
