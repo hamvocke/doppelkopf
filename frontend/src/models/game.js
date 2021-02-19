@@ -89,18 +89,10 @@ export class Game {
   affinityEvent(event, player) {
     switch (event) {
       case affinityEvents.announcement:
-        this.players.forEach(playerLoop => {
-          if (playerLoop.id !== player.id) {
-            playerLoop.affinities.declaresParty(player);
-          }
-        });
-        break;
       case affinityEvents.queen_of_clubs:
-        this.players.forEach(playerLoop => {
-          if (playerLoop.id !== player.id) {
-            playerLoop.affinities.declaresParty(player);
-          }
-        });
+        this.players
+          .filter(p => p.id !== player.id)
+          .forEach(p => p.affinities.declaresParty(player));
         break;
       default:
         break;
