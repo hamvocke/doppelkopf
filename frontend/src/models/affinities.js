@@ -11,15 +11,15 @@ export class Affinities {
   }
 
   setPlayers(players) {
-    this.players = players
+    this.affinityTable = players
       .filter(player => player.id !== this.me.id)
       .map(player => ({ player, affinity: 0 }));
   }
 
   declaresParty(player) {
     if (this._isMyPartyMember(player)) {
-      this.players.forEach(element => {
-        this.setPlayerAffinityByParty(element.player);
+      this.affinityTable.forEach(x => {
+        this.setPlayerAffinityByParty(x.player);
       });
     } else {
       this.setPlayerAffinityByParty(player);
@@ -28,30 +28,28 @@ export class Affinities {
 
   for(player) {
     return !this._isMe(player)
-      ? this.players.find(element => element.player.id === player.id).affinity
+      ? this.affinityTable.find(x => x.player.id === player.id).affinity
       : 0;
   }
 
   setPlayerAffinityToValue(player, value) {
     if (!this._isMe(player)) {
-      let index = this.players.findIndex(
-        element => element.player.id === player.id
-      );
-      this.players[index].affinity = value;
+      let index = this.affinityTable.findIndex(x => x.player.id === player.id);
+      this.affinityTable[index].affinity = value;
     }
   }
 
   setPlayerAffinityByParty(player) {
     if (!this._isMe(player)) {
-      let index = this.players.findIndex(
-        element => element.player.id === player.id
-      );
-      this.players[index].affinity = this._isMyPartyMember(player) ? 1 : -1;
+      let index = this.affinityTable.findIndex(x => x.player.id === player.id);
+      this.affinityTable[index].affinity = this._isMyPartyMember(player)
+        ? 1
+        : -1;
     }
   }
 
   reset() {
-    this.players.forEach(element => (element.value = 0));
+    this.affinityTable.forEach(x => (x.value = 0));
   }
 
   /* ToDo replace with # in future version for a private function
