@@ -1,20 +1,20 @@
 import { uniqueId } from "lodash-es";
-let instance;
+let instance: Notifier;
 
 export class Notifier {
+  stickies = new Array<Notification>();
+  notifications = new Array<Notification>();
+  flashMessages = new Array<Notification>();
+
   constructor() {
     if (instance) {
       return instance;
     }
 
-    this.stickies = [];
-    this.notifications = [];
-    this.flashMessages = [];
-
     instance = this;
   }
 
-  async info(message, args = null) {
+  async info(message: string, args?: object) {
     this.notifications.push(
       new Notification(uniqueId("message_"), message, args)
     );
@@ -22,7 +22,12 @@ export class Notifier {
     this.notifications.pop();
   }
 
-  sticky(message, args = null, onClick, onDismiss = null) {
+  sticky(
+    message: string,
+    args?: object,
+    onClick?: () => void,
+    onDismiss?: () => void
+  ) {
     const id = uniqueId("message_");
     const onDismissDefault = () => {
       this.stickies = this.stickies.filter(n => n.id !== id);
@@ -38,20 +43,31 @@ export class Notifier {
     this.stickies.push(notification);
   }
 
-  async flash(message) {
+  async flash(message: string) {
     this.flashMessages.push(new Notification(uniqueId("message_"), message));
 
     await this.wait(3000);
     this.flashMessages.pop();
   }
 
-  wait(ms) {
+  wait(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
 
 class Notification {
-  constructor(id, text, args = null, onClick = null, onDismiss = null) {
+  id: string;
+  text: string;
+  args?: object;
+  onClick?: () => void;
+  onDismiss?: () => void;
+  constructor(
+    id: string,
+    text: string,
+    args?: object,
+    onClick?: () => void,
+    onDismiss?: () => void
+  ) {
     this.id = id;
     this.text = text;
     this.args = args;
