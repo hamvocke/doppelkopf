@@ -1,21 +1,30 @@
 import { sample } from "lodash-es";
 import { playableCards } from "@/models/playableCardFinder";
 import { chance } from "@/models/random";
-import { Card, suits, ranks } from "./card";
-import { Hand } from "./hand";
+import { Card, suits, ranks } from "@/models/card";
+import { Hand } from "@/models/hand";
 
-export class HighestCardBehavior {
-  cardToPlay(hand, trick, memory) {
+interface Behavior {
+  cardToPlay(hand: Hand, trick: any, memory: any): Card | undefined;
+  announcementToMake(possibleAnnouncements: Set<string>): string | null;
+}
+
+export class HighestCardBehavior implements Behavior {
+  cardToPlay(hand: Hand, trick: any, memory: any) {
     return playableCards(hand.cards, trick.baseCard())[0];
+  }
+
+  announcementToMake(possibleAnnouncements: Set<string>): string | null {
+    return null;
   }
 }
 
-export class RandomCardBehavior {
-  cardToPlay(hand, trick, memory) {
+export class RandomCardBehavior implements Behavior {
+  cardToPlay(hand: Hand, trick: any, memory: any) {
     return sample(playableCards(hand.cards, trick.baseCard()));
   }
 
-  announcementToMake(possibleAnnouncements) {
+  announcementToMake(possibleAnnouncements: Set<string>) {
     if (possibleAnnouncements.size === 0) {
       return null;
     }
@@ -29,8 +38,8 @@ export class RandomCardBehavior {
   }
 }
 
-export class RuleBasedBehaviour {
-  announcementToMake(possibleAnnouncements) {
+export class RuleBasedBehaviour implements Behavior {
+  announcementToMake(possibleAnnouncements: Set<string>) {
     // ToDo announce by "goodies"
     /**
      * for instance
@@ -42,7 +51,7 @@ export class RuleBasedBehaviour {
     return null;
   }
 
-  cardToPlay(hand, trick, memory) {
+  cardToPlay(hand: Hand, trick: any, memory: any) {
     let baseCard = trick.baseCard();
     if (!baseCard) {
       /** It's our turn. Decide how to deal with cards */
@@ -56,27 +65,27 @@ export class RuleBasedBehaviour {
     return sample(playableCards(hand.cards, baseCard));
   }
 
-  startingRule(hand, memory) {
+  startingRule(hand: Hand, memory: any) {
     for (const suit of [suits.clubs, suits.spades, suits.hearts]) {
       if (hand.hasBlankAce(suit) && !memory.nonTrumpSuitPlayedBefore(suit)) {
         return hand.nonTrumps(suit)[0];
       }
     }
     // ToDo check if we know with whom we play and if we want to play a strategy
-    return sample(playableCards(hand.cards, null));
+    return sample(playableCards(hand.cards));
   }
 
-  nonTrumpRule(hand, trick, memory) {
+  nonTrumpRule(hand: Hand, trick: any, memory: any) {
     let baseCard = trick.baseCard();
     if (hand.hasNonTrumps(baseCard.suit)) {
       return this.serveNonTrump(hand, trick, memory);
     } else {
       let usefulTrump = this.findMostValuableWinningTrump(hand, trick);
-      return usefulTrump ?? sample(playableCards(hand.cards, null));
+      return usefulTrump ?? sample(playableCards(hand.cards));
     }
   }
 
-  serveNonTrump(hand, trick, memory) {
+  serveNonTrump(hand: Hand, trick: any, memory: any) {
     let nonTrumpCards = hand.nonTrumps(trick.baseCard().suit);
     let highest = nonTrumpCards[0];
     let lowest = nonTrumpCards.slice(-1)[0];
@@ -104,7 +113,7 @@ export class RuleBasedBehaviour {
    * @param {Trick} trick - The trick that should be trumped
    * @returns {Card} - The most valuable trump card or null if no winning trump can be found
    */
-  findMostValuableWinningTrump(hand, trick) {
+  findMostValuableWinningTrump(hand: Hand, trick: any): Card | null {
     const highestCard = trick.highestCard().card;
 
     const aceOfDiamonds = hand.findAny(suits.diamonds, ranks.ace);
