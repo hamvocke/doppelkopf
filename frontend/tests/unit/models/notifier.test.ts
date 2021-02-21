@@ -33,7 +33,7 @@ test("should add flash message", () => {
 
 test("should add sticky message", () => {
   const onClick = jest.fn();
-  notifier.sticky("Update available", null, onClick);
+  notifier.sticky("Update available", undefined, onClick);
 
   expect(notifier.notifications).toHaveLength(0);
   expect(notifier.flashMessages).toHaveLength(0);
