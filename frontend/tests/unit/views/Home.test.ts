@@ -1,10 +1,10 @@
-import Home from "@/views/Home";
+import Home from "@/views/Home.vue";
 import { Features } from "@/models/features";
 import { shallowMount, config } from "@vue/test-utils";
 import { RouterLinkStub } from "@vue/test-utils";
 
-config.mocks["$t"] = msg => msg;
-config.mocks["$tc"] = msg => msg;
+config.mocks["$t"] = (msg: string) => msg;
+config.mocks["$tc"] = (msg: string) => msg;
 config.mocks["$i18n"] = { locale: "en" };
 
 describe("Home.vue", () => {
@@ -17,9 +17,12 @@ describe("Home.vue", () => {
   });
 
   test("should show tutorial link when feature is disabled", () => {
-    Features.features = {
-      "game.tutorial.enable": false,
-      "game.multiplayer.enable": false
+    Features.get = () => {
+      return {
+        enableTutorial: false,
+        enableMultiplayer: false,
+        enableAnnouncements: false
+      };
     };
 
     const wrapper = shallowMount(Home, {
@@ -30,9 +33,12 @@ describe("Home.vue", () => {
   });
 
   test("should show multiplayer game button if feature is enabled", () => {
-    Features.features = {
-      "game.tutorial.enable": false,
-      "game.multiplayer.enable": true
+    Features.get = () => {
+      return {
+        enableTutorial: false,
+        enableMultiplayer: true,
+        enableAnnouncements: false
+      };
     };
 
     const wrapper = shallowMount(Home, {
@@ -43,9 +49,12 @@ describe("Home.vue", () => {
   });
 
   test("should hide multiplayer game button if feature is disabled", () => {
-    Features.features = {
-      "game.tutorial.enable": false,
-      "game.multiplayer.enable": false
+    Features.get = () => {
+      return {
+        enableTutorial: false,
+        enableMultiplayer: false,
+        enableAnnouncements: false
+      };
     };
 
     const wrapper = shallowMount(Home, {
