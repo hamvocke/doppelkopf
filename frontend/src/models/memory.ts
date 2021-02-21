@@ -1,14 +1,23 @@
 import { uniqueId } from "lodash-es";
+import { PlayedCard } from "@/models/playedCard";
 
-/**
- * I would love some kind of interface here.
- * Interface.js seems to be a reasonable possibility.
- * Right now we'll stick to this.
- */
+export interface Memory {
+  playedCards: Array<PlayedCard>;
 
-export class PercentageMemory {
-  constructor(percent) {
-    this.percent = percent;
+  clearMemory(): void;
+  memorize(playedCard: PlayedCard): void;
+  nonTrumpSuitPlayedBefore(suit: string): boolean;
+  pointsLeftInSuit(suit: string): number;
+}
+
+// TODO: pretty sure we can get rid of id here
+export class PercentageMemory implements Memory {
+  percentage: number;
+  playedCards: Array<PlayedCard>;
+  id: string;
+
+  constructor(percentage: number) {
+    this.percentage = percentage;
     this.playedCards = [];
     this.id = uniqueId("memory_percent_");
   }
@@ -17,18 +26,18 @@ export class PercentageMemory {
     this.playedCards = [];
   }
 
-  memorize(playedCard) {
-    if (Math.random() <= this.percent) this.playedCards.push(playedCard);
+  memorize(playedCard: PlayedCard) {
+    if (Math.random() <= this.percentage) this.playedCards.push(playedCard);
   }
 
-  nonTrumpSuitPlayedBefore(suit) {
+  nonTrumpSuitPlayedBefore(suit: string) {
     return (
       this.playedCards.filter(playedCard => playedCard.card.suit === suit)
         .length > 0
     );
   }
 
-  pointsLeftInSuit(suit) {
+  pointsLeftInSuit(suit: string) {
     return (
       50 -
       this.playedCards
@@ -38,7 +47,10 @@ export class PercentageMemory {
   }
 }
 
-export class PerfectMemory {
+export class PerfectMemory implements Memory {
+  playedCards: Array<PlayedCard>;
+  id: string;
+
   constructor() {
     this.playedCards = [];
     this.id = uniqueId("memory_perfect_");
@@ -48,18 +60,18 @@ export class PerfectMemory {
     this.playedCards = [];
   }
 
-  memorize(playedCard) {
+  memorize(playedCard: PlayedCard) {
     this.playedCards.push(playedCard);
   }
 
-  nonTrumpSuitPlayedBefore(suit) {
+  nonTrumpSuitPlayedBefore(suit: string) {
     return (
       this.playedCards.filter(playedCard => playedCard.card.suit === suit)
         .length > 0
     );
   }
 
-  pointsLeftInSuit(suit) {
+  pointsLeftInSuit(suit: string) {
     return (
       50 -
       this.playedCards
@@ -70,6 +82,9 @@ export class PerfectMemory {
 }
 
 export class PriorityMemory {
+  playedCards: Array<PlayedCard>;
+  id: string;
+
   constructor() {
     this.playedCards = [];
     this.id = uniqueId("memory_priority_");
@@ -79,7 +94,7 @@ export class PriorityMemory {
     this.playedCards = [];
   }
 
-  memorize(playedCard) {
+  memorize(playedCard: PlayedCard) {
     /*
     Opinion-biased function to take care of 'important' cards
     Will memorize all by value
@@ -89,14 +104,14 @@ export class PriorityMemory {
       this.playedCards.push(playedCard);
   }
 
-  nonTrumpSuitPlayedBefore(suit) {
+  nonTrumpSuitPlayedBefore(suit: string) {
     return (
       this.playedCards.filter(playedCard => playedCard.card.suit === suit)
         .length > 0
     );
   }
 
-  pointsLeftInSuit(suit) {
+  pointsLeftInSuit(suit: string) {
     return (
       50 -
       this.playedCards
