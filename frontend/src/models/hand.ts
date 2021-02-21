@@ -5,7 +5,7 @@ export class Hand {
   cards: Array<Card>;
   private isReParty: boolean;
 
-  constructor(cards = []) {
+  constructor(cards = new Array<Card>()) {
     this.cards = cards;
     this.sort();
     this.isReParty = !!find(this.cards, {
