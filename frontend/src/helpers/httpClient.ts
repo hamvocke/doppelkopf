@@ -24,7 +24,10 @@ export class HttpClient {
     return await fetch(this.baseUrl + path);
   }
 
-  async post(path: string, data: object): Promise<Response | StubResponse> {
+  async post(
+    path: string,
+    data: object | null = null
+  ): Promise<Response | StubResponse> {
     if (Config.testing) {
       return new StubResponse();
     }
@@ -34,7 +37,7 @@ export class HttpClient {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(data)
+      body: data ? JSON.stringify(data) : null
     };
     return await fetch(this.baseUrl + path, fetchOptions);
   }
