@@ -1,4 +1,9 @@
-export const extras = {
+export type Extra = {
+  i18nKey: string;
+  points: number;
+};
+
+export const extras: { [name: string]: Extra } = {
   doppelkopf: { i18nKey: "doppelkopf", points: 1 },
   fox: { i18nKey: "fox", points: 1 },
   charlie_caught: { i18nKey: "charlie_caught", points: 1 },
