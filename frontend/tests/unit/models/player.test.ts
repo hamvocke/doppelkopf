@@ -10,8 +10,8 @@ import { sampleSize } from "lodash-es";
 import { announcements } from "@/models/announcements";
 import { Trick } from "@/models/trick";
 
-let game;
-let player;
+let game: any;
+let player: Player;
 const notifier = new Notifier();
 
 jest.useFakeTimers();
@@ -127,7 +127,7 @@ test("player cannot play undefined card", () => {
   player.hand = new Hand([king.of(suits.diamonds)]);
 
   function invalidMove() {
-    player.play();
+    player.play(king.of(suits.clubs));
   }
 
   expect(invalidMove).toThrowError(
@@ -136,7 +136,8 @@ test("player cannot play undefined card", () => {
 });
 
 test("player can win a trick", () => {
-  const trick = { isFinished: () => true };
+  const trick = new Trick(Array.of(player));
+  trick.add(king.of(suits.diamonds), player);
 
   player.win(trick);
 
@@ -409,7 +410,7 @@ describe("announcements", () => {
   });
 });
 
-function aHandWith(numberOfCards, ...cards) {
+function aHandWith(numberOfCards: number, ...cards: Card[]) {
   let cardsOnHand = cards;
 
   cardsOnHand.push(...sampleSize(cardOrder, numberOfCards - cards.length));
@@ -417,7 +418,7 @@ function aHandWith(numberOfCards, ...cards) {
   return new Hand(cardsOnHand);
 }
 
-function aHandWithout(numberOfCards, excludedCard) {
+function aHandWithout(numberOfCards: number, excludedCard: Card) {
   let cards = sampleSize(
     cardOrder.filter(
       card =>

@@ -1,7 +1,10 @@
+import { Extra } from "./extras";
+import { Player } from "./player";
+
 export const re = "Re";
 export const kontra = "Kontra";
 
-export function findParties(players) {
+export function findParties(players: Player[]) {
   return {
     [re]: new Party(re, ...players.filter(player => player.isRe())),
     [kontra]: new Party(kontra, ...players.filter(player => player.isKontra()))
@@ -9,7 +12,10 @@ export function findParties(players) {
 }
 
 export class Party {
-  constructor(name, ...players) {
+  name: string;
+  players: Player[];
+
+  constructor(name: string, ...players: Player[]) {
     this.name = name;
     this.players = players;
   }
@@ -29,7 +35,7 @@ export class Party {
   extras() {
     return this.players.reduce(
       (acc, player) => acc.concat(player.trickStack.extras()),
-      []
+      new Array<Extra>()
     );
   }
 }
