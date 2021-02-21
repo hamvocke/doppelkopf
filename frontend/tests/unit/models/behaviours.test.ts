@@ -29,7 +29,7 @@ describe("Highest Card Behavior", () => {
   trick.add(ten.of(suits.diamonds), player);
 
   test("should play highest possible card", () => {
-    const cardToPlay = behavior.cardToPlay(hand, trick);
+    const cardToPlay = behavior.cardToPlay(hand, trick, null);
     expect(cardToPlay).toEqual(queen.of(suits.spades).second());
   });
 });
@@ -47,7 +47,7 @@ describe("Random Card Behavior", () => {
   trick.add(ten.of(suits.diamonds), player);
 
   test("should play a random card", () => {
-    const cardToPlay = behavior.cardToPlay(hand, trick);
+    const cardToPlay = behavior.cardToPlay(hand, trick, null);
     expect(cardToPlay).toEqual(expect.any(Card));
   });
 
