@@ -4,7 +4,7 @@ import { chance } from "@/models/random";
 import { Card, suits, ranks } from "@/models/card";
 import { Hand } from "@/models/hand";
 
-interface Behavior {
+export interface Behavior {
   cardToPlay(hand: Hand, trick: any, memory: any): Card | undefined;
   announcementToMake(possibleAnnouncements: Set<string>): string | null;
 }

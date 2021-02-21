@@ -92,7 +92,7 @@ export class Trick {
   }
 
   extras() {
-    let extras = [];
+    let extras = new Array<Extra>();
     if (this.points() >= 40) {
       extras.push(extrasModel.doppelkopf);
     }

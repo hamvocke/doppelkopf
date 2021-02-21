@@ -1,19 +1,32 @@
 import { includes, uniqueId } from "lodash-es";
 import { Hand } from "@/models/hand";
 import { TrickStack } from "@/models/trickStack";
-import { RuleBasedBehaviour } from "@/models/behaviors";
+import { Behavior, RuleBasedBehaviour } from "@/models/behaviors";
 import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
 import { announcements } from "@/models/announcements";
 import { playableCards } from "@/models/playableCardFinder";
-import { PerfectMemory } from "./memory";
-import { PlayedCard } from "./playedCard";
+import { Memory, PerfectMemory } from "./memory";
+import { Card } from "./card";
+import { Trick } from "./trick";
 
 const notifier = new Notifier();
 
 export class Player {
+  id: string;
+  name: string;
+  hand: Hand;
+  trickStack: TrickStack = new TrickStack();
+  announcements: Set<string> = new Set();
+  isHuman: boolean;
+  isMe: boolean;
+  tablePosition: string;
+  game: any;
+  behavior: Behavior;
+  memory: Memory;
+
   constructor(
-    name,
+    name: string,
     isHuman = false,
     isMe = false,
     tablePosition = "bottom", // todo: remove 'position', introduce new 'table view' class?
@@ -48,7 +61,9 @@ export class Player {
       this.game.currentTrick,
       this.memory
     );
-    this.play(cardToBePlayed);
+    if (cardToBePlayed) {
+      this.play(cardToBePlayed);
+    }
 
     const announcement = this.behavior.announcementToMake(
       this.possibleAnnouncements()
@@ -58,7 +73,7 @@ export class Player {
     }
   }
 
-  play(card) {
+  play(card: Card) {
     if (this.game.currentRound.waitingForPlayer() !== this) {
       notifier.info("not-your-turn");
       return;
@@ -95,13 +110,13 @@ export class Player {
     return this.hand.cards.length;
   }
 
-  canPlay(card) {
+  canPlay(card: Card) {
     const baseCard = this.game.currentTrick.baseCard();
     const playable = playableCards(this.hand.cards, baseCard);
     return includes(playable, card);
   }
 
-  win(trick) {
+  win(trick: Trick) {
     this.trickStack.add(trick);
   }
 
@@ -114,7 +129,7 @@ export class Player {
     return this.trickStack.points();
   }
 
-  announce(announcement) {
+  announce(announcement: string) {
     if (![...this.possibleAnnouncements()].includes(announcement)) {
       throw new Error("Invalid announcement");
     }
@@ -147,7 +162,7 @@ export class Player {
     notifier.info("player-announced-" + announcement, { name: this.name });
   }
 
-  hasAnnounced(...announcements) {
+  hasAnnounced(...announcements: string[]) {
     return announcements.every(a => [...this.announcements].includes(a));
   }
 
@@ -156,7 +171,7 @@ export class Player {
     const cardsLeft = this.numberOfCardsLeft();
 
     if (cardsLeft < 4) {
-      return new Set();
+      return new Set<string>();
     }
 
     const winningAnnouncement = this.isRe()
@@ -219,10 +234,10 @@ export class Player {
       return this._removeExisting([announcements.no_points]);
     }
 
-    return new Set();
+    return new Set<string>();
   }
 
-  _removeExisting(possibleAnnouncements) {
+  _removeExisting(possibleAnnouncements: string[]) {
     return new Set(
       possibleAnnouncements.filter(a => ![...this.announcements].includes(a))
     );
