@@ -1,10 +1,10 @@
-import { sample, sampleSize } from "lodash-es";
+import { sampleSize } from "lodash-es";
 
-export function generateNames(numberOfNames) {
+export function generateNames(numberOfNames: number) {
   return sampleSize(names, numberOfNames);
 }
 
-export function chance(percentage) {
+export function chance(percentage: number) {
   return Math.random() * 100 <= percentage;
 }
 
