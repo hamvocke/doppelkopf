@@ -1,4 +1,6 @@
-export function playableCards(cards, baseCard) {
+import { Card } from "@/models/card";
+
+export function playableCards(cards: Array<Card>, baseCard?: Card) {
   if (!baseCard) {
     return cards;
   }
