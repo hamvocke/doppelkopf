@@ -1,15 +1,21 @@
-import { suits, ranks, compare, jack } from "@/models/card";
+import { Card, suits, ranks, compare, jack } from "@/models/card";
 import { find, without } from "lodash-es";
 
 export class Hand {
+  cards: Array<Card>;
+  private isReParty: boolean;
+
   constructor(cards = []) {
     this.cards = cards;
     this.sort();
-    this.isReParty = find(this.cards, { suit: suits.clubs, rank: ranks.queen });
+    this.isReParty = !!find(this.cards, {
+      suit: suits.clubs,
+      rank: ranks.queen
+    });
   }
 
   isRe() {
-    return !!this.isReParty;
+    return this.isReParty;
   }
 
   isKontra() {
@@ -20,11 +26,11 @@ export class Hand {
     return this.cards.reduce((acc, card) => acc + card.value, 0);
   }
 
-  find(card) {
+  find(card: Card) {
     return find(this.cards, card);
   }
 
-  findAny(suit, rank) {
+  findAny(suit: string, rank: string) {
     return find(this.cards, { suit, rank });
   }
 
@@ -32,7 +38,7 @@ export class Hand {
     return this.cards[0];
   }
 
-  remove(card) {
+  remove(card: Card) {
     if (!this.find(card)) {
       throw new Error("can't remove card that isn't on hand");
     }
@@ -52,11 +58,11 @@ export class Hand {
     );
   }
 
-  nonTrumps(suit) {
+  nonTrumps(suit: string) {
     return this.cards.filter(card => card.suit === suit && !card.isTrump());
   }
 
-  hasNonTrumps(suit) {
+  hasNonTrumps(suit: string) {
     return this.nonTrumps(suit).length > 0;
   }
 
@@ -68,19 +74,19 @@ export class Hand {
     return this.trumps().length > 0;
   }
 
-  getBlankAce(suit) {
+  getBlankAce(suit: string) {
     let nonTrumpCards = this.nonTrumps(suit);
     return nonTrumpCards.length === 1 && nonTrumpCards[0].rank === ranks.ace
       ? nonTrumpCards[0]
       : null;
   }
 
-  hasBlankAce(suit) {
+  hasBlankAce(suit: string) {
     return this.getBlankAce(suit) ? true : false;
   }
 
   getBlankAces() {
-    let aces = [];
+    let aces = new Array<Card>();
     [suits.clubs, suits.spades, suits.hearts].forEach(suit => {
       let ace = this.getBlankAce(suit);
       if (ace) aces.push(ace);
