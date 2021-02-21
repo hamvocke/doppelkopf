@@ -1,10 +1,18 @@
 import { uniqueId } from "lodash-es";
-import { PlayedCard, beats } from "@/models/playedCard";
+import { Card } from "@/models/card";
+import { PlayedCard } from "@/models/playedCard";
 import { ranks, suits } from "@/models/card";
-import { extras as extrasModel } from "@/models/extras";
+import { Extra, extras as extrasModel } from "@/models/extras";
 
 export class Trick {
-  constructor(players) {
+  players: Array<any>;
+  playedCards: Array<PlayedCard>;
+  id: string;
+  lastTrickInRound: boolean;
+  private expectedNumberOfCards: number;
+  private finished: boolean;
+
+  constructor(players: Array<any>) {
     this.players = players;
     this.expectedNumberOfCards = players.length;
     this.playedCards = [];
@@ -17,7 +25,7 @@ export class Trick {
     this.lastTrickInRound = true;
   }
 
-  add(card, player) {
+  add(card: Card, player: any) {
     if (this.cardBy(player)) {
       throw Error(`Player ${player.name} already played a card`);
     }
@@ -39,7 +47,7 @@ export class Trick {
     return this.playedCards;
   }
 
-  cardBy(player) {
+  cardBy(player: any) {
     return this.playedCards.filter(
       playedCard => playedCard.player.id === player.id
     )[0];
@@ -105,7 +113,7 @@ export class Trick {
   }
 
   caughtFox() {
-    let extras = [];
+    let extras: Array<Extra> = [];
     this.findFox().forEach(fox => {
       const caughtByOtherParty =
         (fox.player.isRe() && !this.winner().isRe()) ||
@@ -124,7 +132,7 @@ export class Trick {
   }
 
   caughtCharlie() {
-    let extras = [];
+    let extras: Array<Extra> = [];
     if (this.lastTrickInRound) {
       this.findCharlie().forEach(charlie => {
         const caughtCharlie =
