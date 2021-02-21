@@ -1,3 +1,5 @@
+// TODO: convert to enum
+
 export const announcements = {
   re: "re",
   kontra: "kontra",

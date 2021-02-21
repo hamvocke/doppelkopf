@@ -1,3 +1,3 @@
-export interface options {
-  autoplay: true;
-}
+export const options = {
+  autoplay: true
+};
