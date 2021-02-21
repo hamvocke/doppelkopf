@@ -1,7 +1,9 @@
-export class RingQueue {
-  constructor(elements) {
+export class RingQueue<T> {
+  private elements: Array<T>;
+  private currentIndex = 0;
+
+  constructor(elements: Array<T>) {
     this.elements = elements;
-    this.currentIndex = 0;
   }
 
   length() {
@@ -17,7 +19,7 @@ export class RingQueue {
     return this.elements[this.currentIndex];
   }
 
-  prioritize(element) {
+  prioritize(element: T) {
     const foundIndex = this.elements.indexOf(element);
 
     if (foundIndex === -1) {
