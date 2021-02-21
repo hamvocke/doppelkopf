@@ -15,7 +15,7 @@ export const ranks = {
   jack: "J"
 };
 
-export const values = {
+export const values: { [id: string]: number } = {
   A: 11,
   "10": 10,
   K: 4,
@@ -24,7 +24,16 @@ export const values = {
 };
 
 export class Card {
-  constructor(rank, suit = suits.clubs, id = uniqueId("card_")) {
+  id: number | string;
+  rank: string;
+  suit: string;
+
+  // TODO: use enums for rank, suit
+  constructor(
+    rank: string,
+    suit = suits.clubs,
+    id: number | string = uniqueId("card_")
+  ) {
     this.rank = rank;
     this.suit = suit;
     this.id = id;
@@ -38,7 +47,7 @@ export class Card {
     return `${this.rank}-${this.suit}-${this.id}`;
   }
 
-  of(suit) {
+  of(suit: string) {
     return new Card(this.rank, suit);
   }
 
@@ -78,11 +87,11 @@ export class Card {
     return "";
   }
 
-  beats(anotherCard) {
+  beats(anotherCard: Card) {
     return this.compareTo(anotherCard) < 0;
   }
 
-  compareTo(anotherCard) {
+  compareTo(anotherCard: Card) {
     const thisIsTrump = this.isTrump();
     const otherCardIsTrump = anotherCard.isTrump();
 
@@ -111,7 +120,7 @@ export class Card {
   }
 }
 
-export function compare(oneCard, anotherCard) {
+export function compare(oneCard: Card, anotherCard: Card) {
   return findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard);
 }
 
