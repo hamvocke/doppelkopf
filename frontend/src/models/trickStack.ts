@@ -1,9 +1,14 @@
+import { Extra } from "./extras";
+import { Trick } from "./trick";
+
 export class TrickStack {
+  tricks: Array<Trick>;
+
   constructor(tricks = []) {
     this.tricks = tricks;
   }
 
-  add(trick) {
+  add(trick: Trick) {
     if (!trick.isFinished()) {
       throw new Error("can not add an unfinished trick to the trick stack");
     }
@@ -22,7 +27,7 @@ export class TrickStack {
 
   extras() {
     return this.tricks
-      .reduce((acc, trick) => acc.concat(trick.extras()), [])
+      .reduce((acc, trick) => acc.concat(trick.extras()), new Array<Extra>())
       .flat();
   }
 }

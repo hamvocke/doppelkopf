@@ -10,7 +10,7 @@ const player3 = new Player("player 3");
 const player4 = new Player("player 4");
 const players = [player1, player2, player3, player4];
 
-let trickStack;
+let trickStack: TrickStack;
 
 beforeEach(() => {
   trickStack = new TrickStack();
@@ -45,7 +45,9 @@ test("should list all cards in trick stack", () => {
 
 test("should throw error if adding non-finished trick to stack", () => {
   function invalidMove() {
-    trickStack.add(new Trick(ace.of(suits.hearts)));
+    let trick = new Trick(players);
+    trick.add(ace.of(suits.hearts), players[0]);
+    trickStack.add(trick);
   }
 
   expect(invalidMove).toThrowError(
