@@ -1,9 +1,11 @@
 import { announcements } from "@/models/announcements";
-import { extras } from "@/models/extras";
-import { re, kontra } from "./party";
+import { Extra, extras } from "@/models/extras";
+import { re, kontra, Party } from "./party";
 
 export class Score {
-  constructor(reParty, kontraParty) {
+  parties: { [name: string]: Party };
+
+  constructor(reParty: Party, kontraParty: Party) {
     this.parties = {};
     this.parties[re] = reParty;
     this.parties[kontra] = kontraParty;
@@ -95,19 +97,24 @@ export class Score {
   }
 
   winner() {
-    return this.parties[this.winningPartyName()];
+    let winningParty = this.winningPartyName();
+    if (winningParty) {
+      return this.parties[winningParty];
+    }
+
+    return undefined;
   }
 
-  trickPoints(partyName) {
+  trickPoints(partyName: string) {
     return this.parties[partyName].points();
   }
 
-  points(partyName) {
-    const sumPoints = (accumulator, extra) => accumulator + extra.points;
+  points(partyName: string) {
+    const sumPoints = (accumulator: number, extra: Extra) => accumulator + extra.points;
     return [...this.listExtras(partyName)].reduce(sumPoints, 0);
   }
 
-  totalPoints(partyName) {
+  totalPoints(partyName: string) {
     const otherPartyName = partyName === re ? kontra : re;
     const thisParty = this.parties[partyName] || this.parties[re];
 
@@ -120,13 +127,13 @@ export class Score {
     return delta;
   }
 
-  _hasAnyPartyAnnounced(announcement) {
+  _hasAnyPartyAnnounced(announcement: string) {
     return Object.values(this.parties).some(party =>
       party.announcements().includes(announcement)
     );
   }
 
-  listExtras(partyName) {
+  listExtras(partyName: string) {
     const allExtras = [];
     const partyPoints = this.parties[partyName].points();
     const partyAnnouncements = this.parties[partyName].announcements();

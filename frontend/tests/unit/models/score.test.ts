@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Score } from "@/models/score";
 import { kontra, re } from "../../../src/models/party";
-import { extras } from "@/models/extras";
+import { Extra, extras } from "@/models/extras";
 import { announcements } from "@/models/announcements";
 import { PartyBuilder } from "../../builders/partyBuilder";
 import { PlayerBuilder } from "../../builders/playerBuilder";
@@ -229,7 +229,7 @@ describe("Score valuation", () => {
       expect([...score.listExtras(kontra)]).toEqual([]);
     });
 
-    const pointThresholds = [
+    const pointThresholds: Array<[number, Extra[]]> = [
       [151, [extras.win, extras.no_90]],
       [181, [extras.win, extras.no_90, extras.no_60]],
       [211, [extras.win, extras.no_90, extras.no_60, extras.no_30]],
@@ -237,7 +237,7 @@ describe("Score valuation", () => {
     ];
 
     test.each(pointThresholds)
-    ("should get 1 extra point for getting %i points", (rePoints, expectedExtras) => {
+    ("should get 1 extra point for getting %i points", (rePoints: number, expectedExtras: Extra[])  => {
       const reParty = new PartyBuilder(re).withPoints(rePoints).build();
       const kontraParty = new PartyBuilder(kontra).withPoints(240 - rePoints).build();
 
