@@ -1,6 +1,7 @@
 import { Extra } from "./extras";
 import { Player } from "./player";
 
+// TODO: enum
 export const re = "Re";
 export const kontra = "Kontra";
 

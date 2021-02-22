@@ -4,13 +4,26 @@ import { Score } from "@/models/score";
 import { options } from "@/models/options";
 import { Notifier } from "@/models/notifier";
 import { extras } from "@/models/extras";
-import { re, kontra, findParties } from "@/models/party";
+import { re, kontra, findParties, Party } from "@/models/party";
 import { find } from "lodash-es";
+import { Player } from "./player";
 
 const notifier = new Notifier();
 
 export class Round {
-  constructor(players = [], scorecard = {}, openingPlayer) {
+  players: Player[];
+  parties: { [name: string]: Party };
+  scorecard: any;
+  score: any;
+  finished: boolean;
+  currentTrick: Trick;
+  playerOrder: RingQueue<Player>;
+
+  constructor(
+    players: Player[] = [],
+    scorecard: any = {},
+    openingPlayer: Player
+  ) {
     this.players = players;
     this.parties = findParties(players);
     this.scorecard = scorecard;
@@ -55,7 +68,8 @@ export class Round {
   }
 
   cardsLeft() {
-    const sumCardsFn = (acc, player) => acc + player.hand.cards.length;
+    const sumCardsFn = (acc: number, player: Player) =>
+      acc + player.hand.cards.length;
     return this.players.reduce(sumCardsFn, 0);
   }
 
@@ -76,8 +90,8 @@ export class Round {
   async evaluateLatestTrick() {
     const playerId = this.currentTrick.winner().id;
     const winner = find(this.players, { id: playerId });
-    winner.win(this.currentTrick);
-    this.playerOrder.prioritize(winner);
+    winner?.win(this.currentTrick);
+    this.playerOrder.prioritize(winner!);
     await this.showExtras();
   }
 
