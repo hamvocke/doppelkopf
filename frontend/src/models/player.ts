@@ -9,9 +9,11 @@ import { playableCards } from "@/models/playableCardFinder";
 import { Memory, PerfectMemory } from "./memory";
 import { Card } from "./card";
 import { Trick } from "./trick";
+import { Game } from "./game";
 
 const notifier = new Notifier();
 
+// TODO: break circular dependency between player & game, make game non-null
 export class Player {
   id: string;
   name: string;
@@ -21,7 +23,7 @@ export class Player {
   isHuman: boolean;
   isMe: boolean;
   tablePosition: string;
-  game: any;
+  game?: Game;
   behavior: Behavior;
   memory: Memory;
 
@@ -29,8 +31,8 @@ export class Player {
     name: string,
     isHuman = false,
     isMe = false,
-    tablePosition = "bottom", // todo: remove 'position', introduce new 'table view' class?
-    game = {},
+    tablePosition = "bottom", // TODO: remove 'position', introduce new 'table view' class?
+    game?: Game,
     behaviour = new RuleBasedBehaviour(),
     memory = new PerfectMemory()
   ) {
@@ -58,7 +60,7 @@ export class Player {
   autoplay() {
     const cardToBePlayed = this.behavior.cardToPlay(
       this.hand,
-      this.game.currentTrick,
+      this.game?.currentTrick,
       this.memory
     );
     if (cardToBePlayed) {
@@ -74,7 +76,7 @@ export class Player {
   }
 
   play(card: Card) {
-    if (this.game.currentRound.waitingForPlayer() !== this) {
+    if (this.game?.currentRound.waitingForPlayer() !== this) {
       notifier.info("not-your-turn");
       return;
     }
@@ -96,7 +98,7 @@ export class Player {
 
       if (options.autoplay === true) {
         // timeout to accommodate for animation duration when playing a card
-        setTimeout(() => this.game.currentRound.nextMove(), 800);
+        setTimeout(() => this.game?.currentRound.nextMove(), 800);
       }
     } catch (error) {
       if (this.isHuman) {
@@ -111,7 +113,7 @@ export class Player {
   }
 
   canPlay(card: Card) {
-    const baseCard = this.game.currentTrick.baseCard();
+    const baseCard = this.game?.currentTrick.baseCard();
     const playable = playableCards(this.hand.cards, baseCard);
     return includes(playable, card);
   }

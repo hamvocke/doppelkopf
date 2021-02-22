@@ -4,7 +4,7 @@ import { Trick } from "./trick";
 export class TrickStack {
   tricks: Array<Trick>;
 
-  constructor(tricks = []) {
+  constructor(tricks: Trick[] = []) {
     this.tricks = tricks;
   }
 

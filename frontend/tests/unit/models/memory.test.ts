@@ -10,7 +10,7 @@ import {
 describe("Testing memorize function", () => {
   test("perfect memory memorizes everything", () => {
     const memory = new PerfectMemory();
-    const player = new Player();
+    const player = new Player("some-player");
     memory.memorize(new PlayedCard(jack.of(suits.diamonds), player));
     memory.memorize(new PlayedCard(jack.of(suits.diamonds), player));
     memory.memorize(new PlayedCard(jack.of(suits.hearts), player));
@@ -24,7 +24,7 @@ describe("Testing memorize function", () => {
 
   test("percentage memory memorizes a percentage of things", () => {
     const memory = new PercentageMemory(0.9);
-    const player = new Player();
+    const player = new Player("some player");
     for (let index = 0; index < 10000; index++) {
       memory.memorize(new PlayedCard(jack.of(suits.diamonds), player));
     }
@@ -34,7 +34,7 @@ describe("Testing memorize function", () => {
 
   test("priority memory memorizes only specific cards", () => {
     const memory = new PriorityMemory();
-    const player = new Player();
+    const player = new Player("some player");
     memory.memorize(new PlayedCard(king.of(suits.diamonds), player));
     memory.memorize(new PlayedCard(jack.of(suits.diamonds), player));
     memory.memorize(new PlayedCard(ten.of(suits.hearts), player));
@@ -57,8 +57,8 @@ describe("Testing functionality", () => {
 
   test("Should detect that suit has been played", () => {
     const memory = new PerfectMemory();
-    memory.memorize(new PlayedCard(ace.of(suits.hearts), new Player()));
-    memory.memorize(new PlayedCard(ace.of(suits.spades), new Player()));
+    memory.memorize(new PlayedCard(ace.of(suits.hearts), new Player("A")));
+    memory.memorize(new PlayedCard(ace.of(suits.spades), new Player("B")));
     expect(memory.nonTrumpSuitPlayedBefore(suits.hearts)).toEqual(true);
     expect(memory.nonTrumpSuitPlayedBefore(suits.spades)).toEqual(true);
     expect(memory.nonTrumpSuitPlayedBefore(suits.clubs)).toEqual(false);
@@ -66,8 +66,8 @@ describe("Testing functionality", () => {
 
   test("Should clear all playedCards from memory", () => {
     const memory = new PerfectMemory();
-    memory.memorize(new PlayedCard(ace.of(suits.hearts), new Player()));
-    memory.memorize(new PlayedCard(ace.of(suits.spades), new Player()));
+    memory.memorize(new PlayedCard(ace.of(suits.hearts), new Player("A")));
+    memory.memorize(new PlayedCard(ace.of(suits.spades), new Player("B")));
     expect(memory.playedCards.length).toBe(2);
     memory.clearMemory();
     expect(memory.playedCards.length).toBe(0);
@@ -75,10 +75,10 @@ describe("Testing functionality", () => {
 
   test("Should calculate points left in suit", () => {
     const memory = new PerfectMemory();
-    memory.memorize(new PlayedCard(ace.of(suits.spades), new Player()));
-    memory.memorize(new PlayedCard(ten.of(suits.spades), new Player()));
-    memory.memorize(new PlayedCard(king.of(suits.spades), new Player()));
-    memory.memorize(new PlayedCard(king.of(suits.spades), new Player()));
+    memory.memorize(new PlayedCard(ace.of(suits.spades), new Player("A")));
+    memory.memorize(new PlayedCard(ten.of(suits.spades), new Player("B")));
+    memory.memorize(new PlayedCard(king.of(suits.spades), new Player("C")));
+    memory.memorize(new PlayedCard(king.of(suits.spades), new Player("D")));
     expect(memory.pointsLeftInSuit(suits.spades)).toBe(21);
   });
 });
