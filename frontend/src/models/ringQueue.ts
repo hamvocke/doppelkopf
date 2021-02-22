@@ -1,8 +1,8 @@
 export class RingQueue<T> {
-  private elements: Array<T>;
+  private elements: T[];
   private currentIndex = 0;
 
-  constructor(elements: Array<T>) {
+  constructor(elements: T[]) {
     this.elements = elements;
   }
 

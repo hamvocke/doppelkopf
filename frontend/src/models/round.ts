@@ -7,14 +7,15 @@ import { extras } from "@/models/extras";
 import { re, kontra, findParties, Party } from "@/models/party";
 import { find } from "lodash-es";
 import { Player } from "./player";
+import { Scorecard } from "./scorecard";
 
 const notifier = new Notifier();
 
 export class Round {
   players: Player[];
   parties: { [name: string]: Party };
-  scorecard: any;
-  score: any;
+  scorecard: Scorecard;
+  score?: Score;
   finished: boolean;
   currentTrick: Trick;
   playerOrder: RingQueue<Player>;
@@ -27,7 +28,7 @@ export class Round {
     this.players = players;
     this.parties = findParties(players);
     this.scorecard = scorecard;
-    this.score = null;
+    this.score = undefined;
     this.finished = false;
     this.currentTrick = this.nextTrick();
 
@@ -88,7 +89,7 @@ export class Round {
   }
 
   async evaluateLatestTrick() {
-    const playerId = this.currentTrick.winner().id;
+    const playerId = this.currentTrick.winner()?.id;
     const winner = find(this.players, { id: playerId });
     winner?.win(this.currentTrick);
     this.playerOrder.prioritize(winner!);

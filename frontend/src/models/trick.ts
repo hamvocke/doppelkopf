@@ -3,10 +3,11 @@ import { Card } from "@/models/card";
 import { PlayedCard } from "@/models/playedCard";
 import { ranks, suits } from "@/models/card";
 import { Extra, extras as extrasModel } from "@/models/extras";
+import { Player } from "./player";
 
 export class Trick {
-  players: Array<any>;
-  playedCards: Array<PlayedCard>;
+  players: Player[];
+  playedCards: PlayedCard[];
   id: string;
   lastTrickInRound: boolean;
   private expectedNumberOfCards: number;
@@ -116,8 +117,8 @@ export class Trick {
     let extras: Array<Extra> = [];
     this.findFox().forEach(fox => {
       const caughtByOtherParty =
-        (fox.player.isRe() && !this.winner().isRe()) ||
-        (fox.player.isKontra() && !this.winner().isKontra());
+        (fox.player.isRe() && !this.winner()?.isRe()) ||
+        (fox.player.isKontra() && !this.winner()?.isKontra());
       if (caughtByOtherParty) extras.push(extrasModel.fox);
     });
     return extras;
@@ -136,8 +137,8 @@ export class Trick {
     if (this.lastTrickInRound) {
       this.findCharlie().forEach(charlie => {
         const caughtCharlie =
-          (charlie.player.isRe() && !this.winner().isRe()) ||
-          (charlie.player.isKontra() && !this.winner().isKontra());
+          (charlie.player.isRe() && !this.winner()?.isRe()) ||
+          (charlie.player.isKontra() && !this.winner()?.isKontra());
         if (caughtCharlie) extras.push(extrasModel.charlie_caught);
       });
     }
@@ -150,8 +151,8 @@ export class Trick {
       // first charlie has to be highest card in trick
       let charlie = charlies[0];
       const charlie_trump =
-        ((charlie.player.isRe() && this.winner().isRe()) ||
-          (charlie.player.isKontra() && this.winner().isKontra())) &&
+        ((charlie.player.isRe() && this.winner()?.isRe()) ||
+          (charlie.player.isKontra() && this.winner()?.isKontra())) &&
         // here is the magic
         this.highestCard() === charlie;
       return charlie_trump;

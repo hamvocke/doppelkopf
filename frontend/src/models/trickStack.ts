@@ -2,7 +2,7 @@ import { Extra } from "./extras";
 import { Trick } from "./trick";
 
 export class TrickStack {
-  tricks: Array<Trick>;
+  tricks: Trick[];
 
   constructor(tricks: Trick[] = []) {
     this.tricks = tricks;
