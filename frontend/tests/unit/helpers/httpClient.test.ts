@@ -1,6 +1,6 @@
 import { http } from "@/helpers/httpClient";
 import { Config } from "@/models/config";
-const fetchMock = require("fetch-mock-jest");
+import fetchMock from "fetch-mock-jest";
 
 Config.testing = false; // make httpClient fire "real" requests so it's hitting fetchMock
 
