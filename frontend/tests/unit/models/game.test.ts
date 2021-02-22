@@ -3,7 +3,7 @@ import { TrickStack } from "@/models/trickStack";
 import { Trick } from "@/models/trick";
 import { Telemetry } from "@/models/telemetry";
 
-let game;
+let game: Game;
 const telemetryMock = jest.fn();
 
 beforeEach(() => {

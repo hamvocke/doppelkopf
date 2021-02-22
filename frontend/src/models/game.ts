@@ -8,7 +8,13 @@ import { generateNames } from "@/models/random";
 import { Telemetry } from "@/models/telemetry";
 
 export class Game {
-  constructor(players = []) {
+  players: Player[];
+  private playerOpeningOrder: RingQueue<Player>;
+  deck: Deck;
+  scorecard: any;
+  currentRound: any;
+
+  constructor(players: Player[] = []) {
     this.players = players;
     this.players.map(p => (p.game = this));
     this.playerOpeningOrder = new RingQueue(this.players);
@@ -35,7 +41,7 @@ export class Game {
     ]);
   }
 
-  static multiPlayer(players) {
+  static multiPlayer(players: Player[]) {
     return new Game(players);
   }
 
