@@ -1,10 +1,11 @@
 import { uniqueId } from "lodash-es";
 import { Card } from "@/models/card";
+import { Player } from "./player";
 
 // TODO: replace with type declaration, drop ID?
 export class PlayedCard {
   card: Card;
-  player: any;
+  player: Player;
   id: string;
 
   constructor(card: Card, player: any) {

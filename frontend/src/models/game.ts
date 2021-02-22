@@ -6,13 +6,12 @@ import { Scorecard } from "@/models/scorecard";
 import { RingQueue } from "@/models/ringQueue";
 import { generateNames } from "@/models/random";
 import { Telemetry } from "@/models/telemetry";
-import { Round } from "./round";
 
 export class Game {
   players: Player[];
   private playerOpeningOrder: RingQueue<Player>;
   deck: Deck;
-  scorecard: any;
+  scorecard: Scorecard;
   currentRound: Round;
 
   constructor(players: Player[] = []) {

@@ -2,7 +2,7 @@ import { Card, ranks, suits } from "@/models/card";
 import { shuffle, flatten } from "lodash-es";
 
 export class Deck {
-  cards: Array<Card>;
+  cards: Card[];
 
   constructor() {
     this.cards = shuffle(new Array<Card>().concat(...allCards));

@@ -2,7 +2,7 @@ import { uniqueId } from "lodash-es";
 import { PlayedCard } from "@/models/playedCard";
 
 export interface Memory {
-  playedCards: Array<PlayedCard>;
+  playedCards: PlayedCard[];
 
   clearMemory(): void;
   memorize(playedCard: PlayedCard): void;
@@ -13,7 +13,7 @@ export interface Memory {
 // TODO: pretty sure we can get rid of id here
 export class PercentageMemory implements Memory {
   percentage: number;
-  playedCards: Array<PlayedCard>;
+  playedCards: PlayedCard[];
   id: string;
 
   constructor(percentage: number) {
@@ -48,7 +48,7 @@ export class PercentageMemory implements Memory {
 }
 
 export class PerfectMemory implements Memory {
-  playedCards: Array<PlayedCard>;
+  playedCards: PlayedCard[];
   id: string;
 
   constructor() {
@@ -82,7 +82,7 @@ export class PerfectMemory implements Memory {
 }
 
 export class PriorityMemory {
-  playedCards: Array<PlayedCard>;
+  playedCards: PlayedCard[];
   id: string;
 
   constructor() {

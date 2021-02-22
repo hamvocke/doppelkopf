@@ -18,7 +18,6 @@ export class HighestCardBehavior implements Behavior {
     return null;
   }
 }
-
 export class RandomCardBehavior implements Behavior {
   cardToPlay(hand: Hand, trick: any, memory: any) {
     return sample(playableCards(hand.cards, trick.baseCard()));

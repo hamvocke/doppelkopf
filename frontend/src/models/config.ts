@@ -1,3 +1,4 @@
+// TODO: check interface naming conventions
 interface IConfig {
   test: IConfigValues;
   development: IConfigValues;
