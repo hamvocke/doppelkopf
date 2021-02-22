@@ -10,7 +10,7 @@ describe("Scorecard", () => {
     new Player("three"),
     new Player("four")
   ];
-  let scorecard;
+  let scorecard: Scorecard;
 
   beforeEach(() => {
     scorecard = new Scorecard(players);
