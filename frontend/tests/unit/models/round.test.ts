@@ -1,9 +1,9 @@
 import { Game } from "@/models/game";
 import { Round } from "@/models/round";
 import { Notifier } from "@/models/notifier";
-import { findParties } from "@/models/party";
 import { jack, suits, ace } from "@/models/card";
 import { options } from "@/models/options";
+import { Hand } from "@/models/hand";
 
 const game = Game.singlePlayer();
 let round = game.currentRound;
@@ -144,7 +144,7 @@ describe("player order", () => {
 
   test("should change active player on next move", () => {
     const playFirstCardBehavior = {
-      cardToPlay: hand => hand.cards[0],
+      cardToPlay: (hand: Hand) => hand.cards[0],
       announcementToMake: () => null
     };
     round.playerOrder.prioritize(round.players[3]);
