@@ -2,7 +2,7 @@ import TrickStack from "@/components/TrickStack";
 import { TrickStack as TrickStackModel } from "@/models/trickStack";
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
-import { ace, queen, suits } from "@/models/card";
+import { ace, queen, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
 
 config.mocks["$t"] = () => {};
@@ -11,8 +11,8 @@ config.mocks["$tc"] = () => {};
 const player1 = new Player("player 1");
 const player2 = new Player("player 2");
 const trick = new Trick([player1, player2]);
-trick.add(ace.of(suits.hearts), player1);
-trick.add(queen.of(suits.spades), player2);
+trick.add(ace.of(Suit.Hearts), player1);
+trick.add(queen.of(Suit.Spades), player2);
 
 describe("TrickStack.vue", () => {
   test("should show placeholder if player has no trick", () => {

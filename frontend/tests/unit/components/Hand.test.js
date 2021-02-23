@@ -1,5 +1,5 @@
 import Hand from "@/components/Hand";
-import { ace, queen, suits } from "@/models/card";
+import { ace, queen, Suit } from "@/models/card";
 import { Hand as HandModel } from "@/models/hand";
 import { mount, config } from "@vue/test-utils";
 
@@ -7,16 +7,16 @@ config.mocks["$t"] = () => {};
 config.mocks["$tc"] = () => {};
 
 const reHand = new HandModel([
-  queen.of(suits.clubs),
-  ace.of(suits.hearts),
-  ace.of(suits.hearts),
-  ace.of(suits.clubs)
+  queen.of(Suit.Clubs),
+  ace.of(Suit.Hearts),
+  ace.of(Suit.Hearts),
+  ace.of(Suit.Clubs)
 ]);
 
 const kontraHand = new HandModel([
-  ace.of(suits.hearts),
-  ace.of(suits.hearts),
-  ace.of(suits.clubs)
+  ace.of(Suit.Hearts),
+  ace.of(Suit.Hearts),
+  ace.of(Suit.Clubs)
 ]);
 
 describe("Hand.vue", () => {
@@ -52,7 +52,7 @@ describe("Hand.vue", () => {
   test("should not render placeholder card if hand has cards", () => {
     const wrapper = mount(Hand, {
       propsData: {
-        hand: new HandModel([ace.of(suits.hearts)]),
+        hand: new HandModel([ace.of(Suit.Hearts)]),
         playableCards: [],
         isCovered: true
       }

@@ -1,7 +1,7 @@
 import { sample } from "lodash-es";
 import { playableCards } from "@/models/playableCardFinder";
 import { chance } from "@/models/random";
-import { Card, suits, ranks } from "@/models/card";
+import { Card, Suit, Rank } from "@/models/card";
 import { Hand } from "@/models/hand";
 import { Announcement } from "./announcements";
 
@@ -68,7 +68,7 @@ export class RuleBasedBehaviour implements Behavior {
   }
 
   startingRule(hand: Hand, memory: any) {
-    for (const suit of [suits.clubs, suits.spades, suits.hearts]) {
+    for (const suit of [Suit.Clubs, Suit.Spades, Suit.Hearts]) {
       if (hand.hasBlankAce(suit) && !memory.nonTrumpSuitPlayedBefore(suit)) {
         return hand.nonTrumps(suit)[0];
       }
@@ -98,7 +98,7 @@ export class RuleBasedBehaviour implements Behavior {
 
     if (
       trick.highestCard().card.value < highest.value &&
-      highest.rank === ranks.ace &&
+      highest.rank === Rank.Ace &&
       nonTrumpCards.length < trick.expectedNumberOfCards
     ) {
       return highest;
@@ -118,8 +118,8 @@ export class RuleBasedBehaviour implements Behavior {
   findMostValuableWinningTrump(hand: Hand, trick: any): Card | null {
     const highestCard = trick.highestCard().card;
 
-    const aceOfDiamonds = hand.findAny(suits.diamonds, ranks.ace);
-    const tenOfDiamonds = hand.findAny(suits.diamonds, ranks.ten);
+    const aceOfDiamonds = hand.findAny(Suit.Diamonds, Rank.Ace);
+    const tenOfDiamonds = hand.findAny(Suit.Diamonds, Rank.Ten);
 
     const trumpPreference = [
       aceOfDiamonds,

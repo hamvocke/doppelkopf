@@ -1,19 +1,19 @@
 import { some, findIndex, uniqueId } from "lodash-es";
 
-export const suits = {
-  clubs: "♣",
-  diamonds: "♦",
-  hearts: "♥",
-  spades: "♠"
-};
+export enum Suit {
+  Clubs = "♣",
+  Diamonds = "♦",
+  Hearts = "♥",
+  Spades = "♠"
+}
 
-export const ranks = {
-  ace: "A",
-  ten: "10",
-  king: "K",
-  queen: "Q",
-  jack: "J"
-};
+export enum Rank {
+  Ace = "A",
+  Ten = "10",
+  King = "K",
+  Queen = "Q",
+  Jack = "J"
+}
 
 export const values: { [id: string]: number } = {
   A: 11,
@@ -25,13 +25,12 @@ export const values: { [id: string]: number } = {
 
 export class Card {
   id: number | string;
-  rank: string;
-  suit: string;
+  rank: Rank;
+  suit: Suit;
 
-  // TODO: use enums for rank, suit
   constructor(
-    rank: string,
-    suit = suits.clubs,
+    rank: Rank,
+    suit = Suit.Clubs,
     id: number | string = uniqueId("card_")
   ) {
     this.rank = rank;
@@ -47,7 +46,7 @@ export class Card {
     return `${this.rank}-${this.suit}-${this.id}`;
   }
 
-  of(suit: string) {
+  of(suit: Suit) {
     return new Card(this.rank, suit);
   }
 
@@ -67,20 +66,20 @@ export class Card {
    * Explains why this card is a trump card
    * @return {string} the explanation, if trump, or an empty string otherwise
    */
-  whyTrump() {
-    if (this.rank === ranks.queen) {
+  whyTrump(): string {
+    if (this.rank === Rank.Queen) {
       return "queens are always trump";
     }
 
-    if (this.rank === ranks.jack) {
+    if (this.rank === Rank.Jack) {
       return "jacks are always trump";
     }
 
-    if (this.suit === suits.diamonds) {
+    if (this.suit === Suit.Diamonds) {
       return "diamonds are always trump";
     }
 
-    if (this.rank === ranks.ten && this.suit === suits.hearts) {
+    if (this.rank === Rank.Ten && this.suit === Suit.Hearts) {
       return "the ten of hearts is always trump";
     }
 
@@ -124,72 +123,72 @@ export function compare(oneCard: Card, anotherCard: Card) {
   return findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard);
 }
 
-export const ace = new Card(ranks.ace, suits.clubs);
-export const ten = new Card(ranks.ten, suits.clubs);
-export const king = new Card(ranks.king, suits.clubs);
-export const queen = new Card(ranks.queen, suits.clubs);
-export const jack = new Card(ranks.jack, suits.clubs);
+export const ace = new Card(Rank.Ace, Suit.Clubs);
+export const ten = new Card(Rank.Ten, Suit.Clubs);
+export const king = new Card(Rank.King, Suit.Clubs);
+export const queen = new Card(Rank.Queen, Suit.Clubs);
+export const jack = new Card(Rank.Jack, Suit.Clubs);
 
 export const trumps = [
-  ten.of(suits.hearts),
-  queen.of(suits.clubs),
-  queen.of(suits.spades),
-  queen.of(suits.hearts),
-  queen.of(suits.diamonds),
-  jack.of(suits.clubs),
-  jack.of(suits.spades),
-  jack.of(suits.hearts),
-  jack.of(suits.diamonds),
-  ace.of(suits.diamonds),
-  ten.of(suits.diamonds),
-  king.of(suits.diamonds)
+  ten.of(Suit.Hearts),
+  queen.of(Suit.Clubs),
+  queen.of(Suit.Spades),
+  queen.of(Suit.Hearts),
+  queen.of(Suit.Diamonds),
+  jack.of(Suit.Clubs),
+  jack.of(Suit.Spades),
+  jack.of(Suit.Hearts),
+  jack.of(Suit.Diamonds),
+  ace.of(Suit.Diamonds),
+  ten.of(Suit.Diamonds),
+  king.of(Suit.Diamonds)
 ];
 
 export const cardOrder = [
-  new Card(ranks.ten, suits.hearts, 0),
-  new Card(ranks.ten, suits.hearts, 1),
+  new Card(Rank.Ten, Suit.Hearts, 0),
+  new Card(Rank.Ten, Suit.Hearts, 1),
 
-  new Card(ranks.queen, suits.clubs, 0),
-  new Card(ranks.queen, suits.clubs, 1),
-  new Card(ranks.queen, suits.spades, 0),
-  new Card(ranks.queen, suits.spades, 1),
-  new Card(ranks.queen, suits.hearts, 0),
-  new Card(ranks.queen, suits.hearts, 1),
-  new Card(ranks.queen, suits.diamonds, 0),
-  new Card(ranks.queen, suits.diamonds, 1),
+  new Card(Rank.Queen, Suit.Clubs, 0),
+  new Card(Rank.Queen, Suit.Clubs, 1),
+  new Card(Rank.Queen, Suit.Spades, 0),
+  new Card(Rank.Queen, Suit.Spades, 1),
+  new Card(Rank.Queen, Suit.Hearts, 0),
+  new Card(Rank.Queen, Suit.Hearts, 1),
+  new Card(Rank.Queen, Suit.Diamonds, 0),
+  new Card(Rank.Queen, Suit.Diamonds, 1),
 
-  new Card(ranks.jack, suits.clubs, 0),
-  new Card(ranks.jack, suits.clubs, 1),
-  new Card(ranks.jack, suits.spades, 0),
-  new Card(ranks.jack, suits.spades, 1),
-  new Card(ranks.jack, suits.hearts, 0),
-  new Card(ranks.jack, suits.hearts, 1),
-  new Card(ranks.jack, suits.diamonds, 0),
-  new Card(ranks.jack, suits.diamonds, 1),
+  new Card(Rank.Jack, Suit.Clubs, 0),
+  new Card(Rank.Jack, Suit.Clubs, 1),
+  new Card(Rank.Jack, Suit.Spades, 0),
+  new Card(Rank.Jack, Suit.Spades, 1),
+  new Card(Rank.Jack, Suit.Hearts, 0),
+  new Card(Rank.Jack, Suit.Hearts, 1),
+  new Card(Rank.Jack, Suit.Diamonds, 0),
+  new Card(Rank.Jack, Suit.Diamonds, 1),
 
-  new Card(ranks.ace, suits.diamonds, 0),
-  new Card(ranks.ace, suits.diamonds, 1),
-  new Card(ranks.ten, suits.diamonds, 0),
-  new Card(ranks.ten, suits.diamonds, 1),
-  new Card(ranks.king, suits.diamonds, 0),
-  new Card(ranks.king, suits.diamonds, 1),
+  new Card(Rank.Ace, Suit.Diamonds, 0),
+  new Card(Rank.Ace, Suit.Diamonds, 1),
+  new Card(Rank.Ten, Suit.Diamonds, 0),
+  new Card(Rank.Ten, Suit.Diamonds, 1),
+  new Card(Rank.King, Suit.Diamonds, 0),
+  new Card(Rank.King, Suit.Diamonds, 1),
 
-  new Card(ranks.ace, suits.clubs, 0),
-  new Card(ranks.ace, suits.clubs, 1),
-  new Card(ranks.ten, suits.clubs, 0),
-  new Card(ranks.ten, suits.clubs, 1),
-  new Card(ranks.king, suits.clubs, 0),
-  new Card(ranks.king, suits.clubs, 1),
+  new Card(Rank.Ace, Suit.Clubs, 0),
+  new Card(Rank.Ace, Suit.Clubs, 1),
+  new Card(Rank.Ten, Suit.Clubs, 0),
+  new Card(Rank.Ten, Suit.Clubs, 1),
+  new Card(Rank.King, Suit.Clubs, 0),
+  new Card(Rank.King, Suit.Clubs, 1),
 
-  new Card(ranks.ace, suits.spades, 0),
-  new Card(ranks.ace, suits.spades, 1),
-  new Card(ranks.ten, suits.spades, 0),
-  new Card(ranks.ten, suits.spades, 1),
-  new Card(ranks.king, suits.spades, 0),
-  new Card(ranks.king, suits.spades, 1),
+  new Card(Rank.Ace, Suit.Spades, 0),
+  new Card(Rank.Ace, Suit.Spades, 1),
+  new Card(Rank.Ten, Suit.Spades, 0),
+  new Card(Rank.Ten, Suit.Spades, 1),
+  new Card(Rank.King, Suit.Spades, 0),
+  new Card(Rank.King, Suit.Spades, 1),
 
-  new Card(ranks.ace, suits.hearts, 0),
-  new Card(ranks.ace, suits.hearts, 1),
-  new Card(ranks.king, suits.hearts, 0),
-  new Card(ranks.king, suits.hearts, 1)
+  new Card(Rank.Ace, Suit.Hearts, 0),
+  new Card(Rank.Ace, Suit.Hearts, 1),
+  new Card(Rank.King, Suit.Hearts, 0),
+  new Card(Rank.King, Suit.Hearts, 1)
 ];

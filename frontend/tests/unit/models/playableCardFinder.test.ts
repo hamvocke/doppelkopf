@@ -1,14 +1,14 @@
 import { playableCards } from "@/models/playableCardFinder";
-import { ace, queen, suits, ten } from "@/models/card";
+import { ace, queen, Suit, ten } from "@/models/card";
 
 describe("Playable Card Finder", () => {
   test("should highlight matching non-trumps only when player needs to serve", () => {
-    const baseCard = ace.of(suits.spades);
-    const matchingNonTrump = ten.of(suits.spades);
+    const baseCard = ace.of(Suit.Spades);
+    const matchingNonTrump = ten.of(Suit.Spades);
     const cards = [
-      queen.of(suits.spades),
-      ten.of(suits.diamonds),
-      queen.of(suits.diamonds),
+      queen.of(Suit.Spades),
+      ten.of(Suit.Diamonds),
+      queen.of(Suit.Diamonds),
       matchingNonTrump
     ];
 
@@ -18,13 +18,13 @@ describe("Playable Card Finder", () => {
   });
 
   test("should highlight trumps only when player needs to serve trump", () => {
-    const baseCard = ace.of(suits.diamonds);
+    const baseCard = ace.of(Suit.Diamonds);
     const trumps = [
-      ten.of(suits.hearts),
-      queen.of(suits.clubs),
-      ten.of(suits.diamonds)
+      ten.of(Suit.Hearts),
+      queen.of(Suit.Clubs),
+      ten.of(Suit.Diamonds)
     ];
-    const cards = [...trumps, ace.of(suits.clubs), ten.of(suits.spades)];
+    const cards = [...trumps, ace.of(Suit.Clubs), ten.of(Suit.Spades)];
 
     const foundCards = playableCards(cards, baseCard);
 
@@ -34,9 +34,9 @@ describe("Playable Card Finder", () => {
   test("should highlight all cards when no base card is defined", () => {
     const baseCard = undefined;
     const cards = [
-      ace.of(suits.clubs),
-      ten.of(suits.spades),
-      queen.of(suits.diamonds)
+      ace.of(Suit.Clubs),
+      ten.of(Suit.Spades),
+      queen.of(Suit.Diamonds)
     ];
 
     const foundCards = playableCards(cards, baseCard);
@@ -45,11 +45,11 @@ describe("Playable Card Finder", () => {
   });
 
   test("should highlight all cards when player cannot serve non-trump", () => {
-    const baseCard = ten.of(suits.spades);
+    const baseCard = ten.of(Suit.Spades);
     const cards = [
-      queen.of(suits.diamonds),
-      ace.of(suits.diamonds),
-      ace.of(suits.clubs)
+      queen.of(Suit.Diamonds),
+      ace.of(Suit.Diamonds),
+      ace.of(Suit.Clubs)
     ];
 
     const foundCards = playableCards(cards, baseCard);
@@ -58,8 +58,8 @@ describe("Playable Card Finder", () => {
   });
 
   test("should highlight all cards when player cannot serve trump", () => {
-    const baseCard = ten.of(suits.hearts);
-    const cards = [ace.of(suits.spades), ace.of(suits.clubs)];
+    const baseCard = ten.of(Suit.Hearts);
+    const cards = [ace.of(Suit.Spades), ace.of(Suit.Clubs)];
 
     const foundCards = playableCards(cards, baseCard);
 

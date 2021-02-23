@@ -1,4 +1,4 @@
-import { Card, suits, ranks, compare, jack } from "@/models/card";
+import { Card, Suit, Rank, compare, jack } from "@/models/card";
 import { find, without } from "lodash-es";
 
 export class Hand {
@@ -9,8 +9,8 @@ export class Hand {
     this.cards = cards;
     this.sort();
     this.isReParty = !!find(this.cards, {
-      suit: suits.clubs,
-      rank: ranks.queen
+      suit: Suit.Clubs,
+      rank: Rank.Queen
     });
   }
 
@@ -30,7 +30,7 @@ export class Hand {
     return find(this.cards, card);
   }
 
-  findAny(suit: string, rank: string) {
+  findAny(suit: Suit, rank: Rank) {
     return find(this.cards, { suit, rank });
   }
 
@@ -52,17 +52,17 @@ export class Hand {
 
   isPlayable() {
     return (
-      this.cards.filter(card => card.rank === ranks.king).length < 5 &&
+      this.cards.filter(card => card.rank === Rank.King).length < 5 &&
       this.cards.filter(card => card.value >= 10).length < 7 &&
-      this.highest().compareTo(jack.of(suits.diamonds)) < 0
+      this.highest().compareTo(jack.of(Suit.Diamonds)) < 0
     );
   }
 
-  nonTrumps(suit: string) {
+  nonTrumps(suit: Suit) {
     return this.cards.filter(card => card.suit === suit && !card.isTrump());
   }
 
-  hasNonTrumps(suit: string) {
+  hasNonTrumps(suit: Suit) {
     return this.nonTrumps(suit).length > 0;
   }
 
@@ -74,20 +74,20 @@ export class Hand {
     return this.trumps().length > 0;
   }
 
-  getBlankAce(suit: string) {
+  getBlankAce(suit: Suit) {
     let nonTrumpCards = this.nonTrumps(suit);
-    return nonTrumpCards.length === 1 && nonTrumpCards[0].rank === ranks.ace
+    return nonTrumpCards.length === 1 && nonTrumpCards[0].rank === Rank.Ace
       ? nonTrumpCards[0]
       : null;
   }
 
-  hasBlankAce(suit: string) {
+  hasBlankAce(suit: Suit) {
     return this.getBlankAce(suit) ? true : false;
   }
 
   getBlankAces() {
     let aces = new Array<Card>();
-    [suits.clubs, suits.spades, suits.hearts].forEach(suit => {
+    [Suit.Clubs, Suit.Spades, Suit.Hearts].forEach(suit => {
       let ace = this.getBlankAce(suit);
       if (ace) aces.push(ace);
     });

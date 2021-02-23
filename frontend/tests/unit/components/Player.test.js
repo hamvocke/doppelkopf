@@ -1,8 +1,7 @@
 import Player from "@/components/Player";
 import { Game } from "@/models/game";
-import { ace, ten, suits } from "@/models/card";
+import { ace, ten, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
-import { Trick } from "@/models/trick";
 
 config.mocks["$t"] = key => key;
 config.mocks["$tc"] = msg => msg;
@@ -17,7 +16,7 @@ describe("Player.vue", () => {
   });
 
   test("should play card", () => {
-    const cards = [ace.of(suits.spades)];
+    const cards = [ace.of(Suit.Spades)];
     game.players[0].hand.cards = cards;
     const wrapper = mount(Player, { propsData: { player: game.players[0] } });
 
@@ -30,7 +29,7 @@ describe("Player.vue", () => {
 
   test("should hide cards for computer player", () => {
     game.players[0].isHuman = false;
-    game.players[0].hand.cards = [ace.of(suits.spades)];
+    game.players[0].hand.cards = [ace.of(Suit.Spades)];
     const wrapper = mount(Player, { propsData: { player: game.players[0] } });
 
     expect(wrapper.vm.isCovered).toBe(true);
@@ -75,10 +74,10 @@ describe("Player.vue", () => {
     /*  Define new instance of the game within this scope. */
     let game = Game.singlePlayer();
     const cards = [
-      ten.of(suits.hearts),
-      ace.of(suits.diamonds),
-      ace.of(suits.diamonds),
-      ten.of(suits.diamonds)
+      ten.of(Suit.Hearts),
+      ace.of(Suit.Diamonds),
+      ace.of(Suit.Diamonds),
+      ten.of(Suit.Diamonds)
     ];
 
     game.players[0].hand.cards = [cards[0]];
@@ -100,10 +99,10 @@ describe("Player.vue", () => {
     /*  Define new instance of the game within this scope. */
     let game = Game.singlePlayer();
     const cards = [
-      ten.of(suits.hearts),
-      ace.of(suits.diamonds),
-      ace.of(suits.diamonds),
-      ten.of(suits.diamonds)
+      ten.of(Suit.Hearts),
+      ace.of(Suit.Diamonds),
+      ace.of(Suit.Diamonds),
+      ten.of(Suit.Diamonds)
     ];
 
     game.players[0].hand.cards = [cards[0]];

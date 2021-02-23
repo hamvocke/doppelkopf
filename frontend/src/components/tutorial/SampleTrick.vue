@@ -7,7 +7,7 @@
 
 <script>
 import Card from "@/components/Card";
-import { ten, jack, ace, king, suits } from "@/models/card";
+import { ten, jack, ace, king, Suit } from "@/models/card";
 
 export default {
   name: "SampleTrick",
@@ -15,10 +15,10 @@ export default {
   data() {
     return {
       cards: [
-        jack.of(suits.spades),
-        ten.of(suits.hearts),
-        ace.of(suits.diamonds),
-        king.of(suits.diamonds)
+        jack.of(Suit.Spades),
+        ten.of(Suit.Hearts),
+        ace.of(Suit.Diamonds),
+        king.of(Suit.Diamonds)
       ]
     };
   }

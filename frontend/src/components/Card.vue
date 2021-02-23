@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { suits } from "@/models/card";
+import { Suit } from "@/models/card";
 
 export default {
   name: "Card",
@@ -54,9 +54,8 @@ export default {
   computed: {
     colorClasses: function() {
       return {
-        red:
-          this.card.suit === suits.hearts || this.card.suit === suits.diamonds,
-        black: this.card.suit === suits.clubs || this.card.suit === suits.spades
+        red: this.card.suit === Suit.Hearts || this.card.suit === Suit.Diamonds,
+        black: this.card.suit === Suit.Clubs || this.card.suit === Suit.Spades
       };
     },
     cardClasses: function() {

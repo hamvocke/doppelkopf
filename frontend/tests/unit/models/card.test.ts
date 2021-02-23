@@ -1,65 +1,65 @@
-import { ace, ten, king, queen, jack, suits } from "@/models/card";
+import { ace, ten, king, queen, jack, Suit } from "@/models/card";
 
 test("ace has a value of 11", () => {
-  const aceOfClubs = ace.of(suits.clubs);
+  const aceOfClubs = ace.of(Suit.Clubs);
   expect(aceOfClubs.value).toBe(11);
 });
 
 test("ten has a value of 10", () => {
-  const tenOfDiamonds = ten.of(suits.diamonds);
+  const tenOfDiamonds = ten.of(Suit.Diamonds);
   expect(tenOfDiamonds.value).toBe(10);
 });
 
 test("king has a value of 4", () => {
-  const kingOfHearts = king.of(suits.hearts);
+  const kingOfHearts = king.of(Suit.Hearts);
   expect(kingOfHearts.value).toBe(4);
 });
 
 test("queen has a value of 3", () => {
-  const queenOfClubs = queen.of(suits.clubs);
+  const queenOfClubs = queen.of(Suit.Clubs);
   expect(queenOfClubs.value).toBe(3);
 });
 
 test("jack has a value of 2", () => {
-  const jackOfClubs = jack.of(suits.clubs);
+  const jackOfClubs = jack.of(Suit.Clubs);
   expect(jackOfClubs.value).toBe(2);
 });
 
 test("jack has a value of 2", () => {
-  const jackOfClubs = jack.of(suits.clubs);
+  const jackOfClubs = jack.of(Suit.Clubs);
   expect(jackOfClubs.value).toBe(2);
 });
 
 test("compare two cards", () => {
-  expect(jack.of(suits.clubs).first()).toEqual(jack.of(suits.clubs).first());
+  expect(jack.of(Suit.Clubs).first()).toEqual(jack.of(Suit.Clubs).first());
 });
 
 test("compare identity two cards", () => {
-  expect(jack.of(suits.clubs).first()).not.toBe(jack.of(suits.clubs).first());
+  expect(jack.of(Suit.Clubs).first()).not.toBe(jack.of(Suit.Clubs).first());
 });
 
 test("compare two cards with same face", () => {
-  expect(jack.of(suits.clubs).first()).not.toBe(jack.of(suits.clubs).second());
+  expect(jack.of(Suit.Clubs).first()).not.toBe(jack.of(Suit.Clubs).second());
 });
 
 test("should get unique id of a card", () => {
-  expect(jack.of(suits.clubs).first().cardId).toBe("J-♣-0");
+  expect(jack.of(Suit.Clubs).first().cardId).toBe("J-♣-0");
 });
 
 test("finds all trumps", () => {
   const trumps = [
-    ten.of(suits.hearts),
-    queen.of(suits.clubs),
-    queen.of(suits.spades),
-    queen.of(suits.hearts),
-    queen.of(suits.diamonds),
-    jack.of(suits.clubs),
-    jack.of(suits.spades),
-    jack.of(suits.hearts),
-    jack.of(suits.diamonds),
-    ace.of(suits.diamonds),
-    ten.of(suits.diamonds),
-    king.of(suits.diamonds)
+    ten.of(Suit.Hearts),
+    queen.of(Suit.Clubs),
+    queen.of(Suit.Spades),
+    queen.of(Suit.Hearts),
+    queen.of(Suit.Diamonds),
+    jack.of(Suit.Clubs),
+    jack.of(Suit.Spades),
+    jack.of(Suit.Hearts),
+    jack.of(Suit.Diamonds),
+    ace.of(Suit.Diamonds),
+    ten.of(Suit.Diamonds),
+    king.of(Suit.Diamonds)
   ];
 
   trumps.forEach(card => {
@@ -69,14 +69,14 @@ test("finds all trumps", () => {
 
 test("finds all non-trumps", () => {
   const nonTrumps = [
-    ace.of(suits.clubs),
-    ten.of(suits.clubs),
-    king.of(suits.clubs),
-    ace.of(suits.spades),
-    ten.of(suits.spades),
-    king.of(suits.spades),
-    ace.of(suits.hearts),
-    king.of(suits.hearts)
+    ace.of(Suit.Clubs),
+    ten.of(Suit.Clubs),
+    king.of(Suit.Clubs),
+    ace.of(Suit.Spades),
+    ten.of(Suit.Spades),
+    king.of(Suit.Spades),
+    ace.of(Suit.Hearts),
+    king.of(Suit.Hearts)
   ];
 
   nonTrumps.forEach(card => {
@@ -85,87 +85,85 @@ test("finds all non-trumps", () => {
 });
 
 test("queen of clubs beats queen of spades", () => {
-  const higher = queen.of(suits.clubs);
-  const lower = queen.of(suits.spades);
+  const higher = queen.of(Suit.Clubs);
+  const lower = queen.of(Suit.Spades);
   expect(higher.compareTo(lower)).toBeLessThan(0);
 });
 
 test("jack of diamonds is beaten by jack of hearts", () => {
-  const lower = jack.of(suits.diamonds);
-  const higher = jack.of(suits.hearts);
+  const lower = jack.of(Suit.Diamonds);
+  const higher = jack.of(Suit.Hearts);
   expect(lower.compareTo(higher)).toBeGreaterThan(0);
 });
 
 test("king of diamonds is beaten by jack of hearts", () => {
-  const lower = king.of(suits.diamonds);
-  const higher = jack.of(suits.hearts);
+  const lower = king.of(Suit.Diamonds);
+  const higher = jack.of(Suit.Hearts);
   expect(lower.compareTo(higher)).toBeGreaterThan(0);
 });
 
 test("first card of two equal cards beats second card", () => {
-  const first = ace.of(suits.diamonds);
-  const second = ace.of(suits.diamonds);
+  const first = ace.of(Suit.Diamonds);
+  const second = ace.of(Suit.Diamonds);
   expect(first.compareTo(second)).toEqual(0);
 });
 
 test("trump beats non-trump", () => {
-  const trump = king.of(suits.diamonds);
-  const nonTrump = king.of(suits.spades);
+  const trump = king.of(Suit.Diamonds);
+  const nonTrump = king.of(Suit.Spades);
   expect(trump.compareTo(nonTrump)).toBeLessThan(0);
 });
 
 test("non-trump is beaten by trump", () => {
-  const nonTrump = ten.of(suits.clubs);
-  const trump = king.of(suits.diamonds);
+  const nonTrump = ten.of(Suit.Clubs);
+  const trump = king.of(Suit.Diamonds);
   expect(nonTrump.compareTo(trump)).toBeGreaterThan(0);
 });
 
 test("non-trump does not beat other non-trump if they belong to different suits", () => {
-  expect(ten.of(suits.clubs).compareTo(king.of(suits.spades))).toEqual(0);
+  expect(ten.of(Suit.Clubs).compareTo(king.of(Suit.Spades))).toEqual(0);
 });
 
 test("ace of spades beats ten of spades", () => {
-  const higherNonTrump = ace.of(suits.spades);
-  const lowerNonTrump = ten.of(suits.spades);
+  const higherNonTrump = ace.of(Suit.Spades);
+  const lowerNonTrump = ten.of(Suit.Spades);
   expect(higherNonTrump.compareTo(lowerNonTrump)).toBeLessThan(0);
 });
 
 test("king of spades is beaten by ten of spades", () => {
-  const lowerNonTrump = king.of(suits.spades);
-  const higherNonTrump = ten.of(suits.spades);
+  const lowerNonTrump = king.of(Suit.Spades);
+  const higherNonTrump = ten.of(Suit.Spades);
   expect(lowerNonTrump.compareTo(higherNonTrump)).toBeGreaterThan(0);
 });
 
 test("first non-trump beats other non-trump of same card", () => {
-  const firstNonTrump = ace.of(suits.hearts);
-  const secondNonTrump = ace.of(suits.hearts);
+  const firstNonTrump = ace.of(Suit.Hearts);
+  const secondNonTrump = ace.of(Suit.Hearts);
   expect(firstNonTrump.compareTo(secondNonTrump)).toEqual(0);
 });
 
 describe("trump explanation", () => {
   test("should explain why diamonds are trump", () => {
-    expect(ace.of(suits.diamonds).whyTrump()).toEqual(
+    expect(ace.of(Suit.Diamonds).whyTrump()).toEqual(
       "diamonds are always trump"
     );
   });
 
   test("should explain why jacks are trump", () => {
-    expect(jack.of(suits.diamonds).whyTrump()).toEqual(
-      "jacks are always trump"
-    );
+    expect(jack.of(Suit.Diamonds).whyTrump()).toEqual("jacks are always trump");
   });
 
   test("should explain why queens are trump", () => {
-    expect(queen.of(suits.clubs).whyTrump()).toEqual("queens are always trump");
+    expect(queen.of(Suit.Clubs).whyTrump()).toEqual("queens are always trump");
   });
 
   test("should explain why ten of hearts is trump", () => {
-    expect(ten.of(suits.hearts).whyTrump()).toEqual(
+    expect(ten.of(Suit.Hearts).whyTrump()).toEqual(
       "the ten of hearts is always trump"
     );
   });
 
   test("should have no explanation for non-trump", () => {
-    expect(ace.of(suits.spades).whyTrump()).toBe("");
+    expect(ace.of(Suit.Spades).whyTrump()).toBe("");
   });
 });

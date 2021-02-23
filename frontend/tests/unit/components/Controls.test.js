@@ -1,6 +1,6 @@
 import Controls from "@/components/Controls";
 import { Game } from "@/models/game";
-import { ace, suits } from "@/models/card";
+import { ace, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
 
 config.mocks["$t"] = () => {};
@@ -16,10 +16,10 @@ beforeEach(() => {
 
 describe("Controls.vue", () => {
   test("should render next trick button if trick is finished", () => {
-    trick.add(ace.of(suits.hearts), game.players[0]);
-    trick.add(ace.of(suits.hearts), game.players[1]);
-    trick.add(ace.of(suits.hearts), game.players[2]);
-    trick.add(ace.of(suits.hearts), game.players[3]);
+    trick.add(ace.of(Suit.Hearts), game.players[0]);
+    trick.add(ace.of(Suit.Hearts), game.players[1]);
+    trick.add(ace.of(Suit.Hearts), game.players[2]);
+    trick.add(ace.of(Suit.Hearts), game.players[3]);
 
     game.currentRound.noMoreCardsLeft = () => false;
 
@@ -43,10 +43,10 @@ describe("Controls.vue", () => {
   });
 
   test("should emit next trick event if next button is clicked", () => {
-    trick.add(ace.of(suits.hearts), game.players[0]);
-    trick.add(ace.of(suits.hearts), game.players[1]);
-    trick.add(ace.of(suits.hearts), game.players[2]);
-    trick.add(ace.of(suits.hearts), game.players[3]);
+    trick.add(ace.of(Suit.Hearts), game.players[0]);
+    trick.add(ace.of(Suit.Hearts), game.players[1]);
+    trick.add(ace.of(Suit.Hearts), game.players[2]);
+    trick.add(ace.of(Suit.Hearts), game.players[3]);
     const wrapper = mount(Controls, { propsData: { game: game } });
 
     wrapper.find("button.next").trigger("click");

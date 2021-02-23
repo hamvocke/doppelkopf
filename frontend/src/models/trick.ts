@@ -1,7 +1,7 @@
 import { uniqueId } from "lodash-es";
 import { Card } from "@/models/card";
 import { PlayedCard } from "@/models/playedCard";
-import { ranks, suits } from "@/models/card";
+import { Rank, Suit } from "@/models/card";
 import { Extra, extras as extrasModel } from "@/models/extras";
 import { Player } from "./player";
 
@@ -108,8 +108,8 @@ export class Trick {
   findFox() {
     return this.playedCards.filter(
       playedCard =>
-        playedCard.card.rank === ranks.ace &&
-        playedCard.card.suit === suits.diamonds
+        playedCard.card.rank === Rank.Ace &&
+        playedCard.card.suit === Suit.Diamonds
     );
   }
 
@@ -127,8 +127,8 @@ export class Trick {
   findCharlie() {
     return this.playedCards.filter(
       playedCard =>
-        playedCard.card.rank === ranks.jack &&
-        playedCard.card.suit === suits.clubs
+        playedCard.card.rank === Rank.Jack &&
+        playedCard.card.suit === Suit.Clubs
     );
   }
 

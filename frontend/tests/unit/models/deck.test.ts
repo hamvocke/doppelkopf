@@ -1,5 +1,5 @@
 import { Deck } from "@/models/deck";
-import { Card, ranks, suits } from "@/models/card";
+import { Card, Rank, Suit } from "@/models/card";
 import isEqual from "lodash/isEqual";
 
 test("deck has 40 cards", () => {
@@ -10,8 +10,8 @@ test("deck has 40 cards", () => {
 test("deck has two aces of diamonds", () => {
   const deck = new Deck();
 
-  const firstAce = new Card(ranks.ace, suits.diamonds, 0);
-  const secondAce = new Card(ranks.ace, suits.diamonds, 1);
+  const firstAce = new Card(Rank.Ace, Suit.Diamonds, 0);
+  const secondAce = new Card(Rank.Ace, Suit.Diamonds, 1);
   expect(deck.cards.filter(card => isEqual(card, firstAce))).toHaveLength(1);
   expect(deck.cards.filter(card => isEqual(card, secondAce))).toHaveLength(1);
 });
