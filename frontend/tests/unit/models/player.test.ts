@@ -19,7 +19,7 @@ jest.useFakeTimers();
 beforeEach(() => {
   game = Game.singlePlayer();
   player = game.players[0];
-  player.game.currentRound.waitingForPlayer = () => game.players[0];
+  player.game!.currentRound.waitingForPlayer = () => game.players[0];
   options.autoplay = false;
   jest.runAllTimers();
 });
@@ -67,37 +67,37 @@ test("player can play card from hand", () => {
 });
 
 test("should move to next player after playing a card", () => {
-  player.game.currentRound.nextPlayer = jest.fn();
+  player.game!.currentRound.nextPlayer = jest.fn();
   const kingOnHand = king.of(suits.diamonds);
   player.hand = new Hand([kingOnHand]);
 
   player.play(kingOnHand);
 
-  expect(player.game.currentRound.nextPlayer).toBeCalled();
+  expect(player.game!.currentRound.nextPlayer).toBeCalled();
 });
 
 test("should trigger next move if autoplay option is enabled", () => {
   options.autoplay = true;
-  player.game.currentRound.nextMove = jest.fn();
+  player.game!.currentRound.nextMove = jest.fn();
   const kingOnHand = king.of(suits.diamonds);
   player.hand = new Hand([kingOnHand]);
 
   player.play(kingOnHand);
   jest.runAllTimers();
 
-  expect(player.game.currentRound.nextMove).toBeCalled();
+  expect(player.game!.currentRound.nextMove).toBeCalled();
 });
 
 test("should not trigger next move if autoplay option is disabled", () => {
   options.autoplay = false;
-  player.game.currentRound.nextMove = jest.fn();
+  player.game!.currentRound.nextMove = jest.fn();
   const kingOnHand = king.of(suits.diamonds);
   player.hand = new Hand([kingOnHand]);
 
   player.play(kingOnHand);
   jest.runAllTimers();
 
-  expect(player.game.currentRound.nextMove).not.toBeCalled();
+  expect(player.game!.currentRound.nextMove).not.toBeCalled();
 });
 
 test("playing a card adds it to the current trick", () => {
@@ -147,7 +147,7 @@ test("player can win a trick", () => {
 test("should autoplay a card", () => {
   const queenOnHand = queen.of(suits.spades);
   const kingOnHand = king.of(suits.diamonds);
-  player.game.currentTrick.baseCard = () => queen.of(suits.diamonds);
+  player.game!.currentTrick.baseCard = () => queen.of(suits.diamonds);
   player.hand = new Hand([queenOnHand, kingOnHand]);
   player.behavior = {
     cardToPlay: jest.fn(() => kingOnHand),
@@ -159,7 +159,7 @@ test("should autoplay a card", () => {
   expect(player.hand.cards).not.toContain(kingOnHand);
   expect(player.behavior.cardToPlay).toBeCalledWith(
     player.hand,
-    player.game.currentTrick,
+    player.game!.currentTrick,
     player.memory
   );
 });

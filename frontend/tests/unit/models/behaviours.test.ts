@@ -42,7 +42,7 @@ describe("Random Card Behavior", () => {
     queen.of(suits.spades).second(),
     king.of(suits.hearts).first()
   ]);
-  const player = new Player();
+  const player = new Player("some player");
   const trick = new Trick([player]);
   trick.add(ten.of(suits.diamonds), player);
 
@@ -69,27 +69,27 @@ describe("Random Card Behavior", () => {
   });
 });
 
-const behavior = new RuleBasedBehaviour();
-const no_memory = new PerfectMemory();
-const player1 = new Player();
-const player2 = new Player();
-const player3 = new Player();
-const player4 = new Player();
-const hand = new Hand([
-  ten.of(suits.hearts).first(),
-  jack.of(suits.diamonds).first(),
-  ace.of(suits.diamonds).first(),
-  king.of(suits.diamonds).first(),
-  ace.of(suits.clubs).first(),
-  ten.of(suits.clubs).first(),
-  king.of(suits.clubs).first(),
-  ace.of(suits.spades).first(),
-  ace.of(suits.spades).second(),
-  ten.of(suits.spades).first(),
-  king.of(suits.spades).first()
-]);
-
 describe("Rule Based Card Behavior", () => {
+  const behavior = new RuleBasedBehaviour();
+  const no_memory = new PerfectMemory();
+  const player1 = new Player("p1");
+  const player2 = new Player("p2");
+  const player3 = new Player("p3");
+  const player4 = new Player("p4");
+  const hand = new Hand([
+    ten.of(suits.hearts).first(),
+    jack.of(suits.diamonds).first(),
+    ace.of(suits.diamonds).first(),
+    king.of(suits.diamonds).first(),
+    ace.of(suits.clubs).first(),
+    ten.of(suits.clubs).first(),
+    king.of(suits.clubs).first(),
+    ace.of(suits.spades).first(),
+    ace.of(suits.spades).second(),
+    ten.of(suits.spades).first(),
+    king.of(suits.spades).first()
+  ]);
+
   describe("Non-trump has been played for the first time", () => {
     test("should play lowest value nonTrump when not starting", () => {
       const trick = new Trick([player1, player2, player3, player4]);
