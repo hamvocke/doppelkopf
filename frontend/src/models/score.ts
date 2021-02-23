@@ -18,7 +18,7 @@ export class Score {
     }
   }
 
-  winningPartyName() {
+  winningPartyName(): string | null {
     const reAnnouncements = this.parties[re].announcements();
     const kontraAnnouncements = this.parties[kontra].announcements();
 
@@ -110,7 +110,8 @@ export class Score {
   }
 
   points(partyName: string) {
-    const sumPoints = (accumulator: number, extra: Extra) => accumulator + extra.points;
+    const sumPoints = (accumulator: number, extra: Extra) =>
+      accumulator + extra.points;
     return [...this.listExtras(partyName)].reduce(sumPoints, 0);
   }
 

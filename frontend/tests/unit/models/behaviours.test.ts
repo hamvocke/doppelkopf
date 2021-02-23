@@ -24,7 +24,7 @@ describe("Highest Card Behavior", () => {
     queen.of(suits.spades).second(),
     king.of(suits.hearts).first()
   ]);
-  const player = new Player();
+  const player = new Player("some player");
   const trick = new Trick([player]);
   trick.add(ten.of(suits.diamonds), player);
 
