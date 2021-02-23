@@ -1,4 +1,4 @@
-import { announcements } from "@/models/announcements";
+import { Announcement } from "@/models/announcements";
 import { Extra, extras } from "@/models/extras";
 import { re, kontra, Party } from "./party";
 
@@ -26,53 +26,53 @@ export class Score {
     let kontraWinningThreshold = 120;
 
     if (
-      kontraAnnouncements.includes(announcements.kontra) &&
-      !reAnnouncements.includes(announcements.re)
+      kontraAnnouncements.includes(Announcement.Kontra) &&
+      !reAnnouncements.includes(Announcement.Re)
     ) {
       reWinningThreshold = 120;
       kontraWinningThreshold = 121;
     }
 
-    if (reAnnouncements.includes(announcements.no_90)) {
+    if (reAnnouncements.includes(Announcement.No90)) {
       reWinningThreshold = 151;
       kontraWinningThreshold =
         kontraAnnouncements.length > 0 ? kontraWinningThreshold : 90;
     }
 
-    if (reAnnouncements.includes(announcements.no_60)) {
+    if (reAnnouncements.includes(Announcement.No60)) {
       reWinningThreshold = 181;
       kontraWinningThreshold =
         kontraAnnouncements.length > 0 ? kontraWinningThreshold : 60;
     }
 
-    if (reAnnouncements.includes(announcements.no_30)) {
+    if (reAnnouncements.includes(Announcement.No30)) {
       reWinningThreshold = 211;
       kontraWinningThreshold =
         kontraAnnouncements.length > 0 ? kontraWinningThreshold : 30;
     }
 
-    if (reAnnouncements.includes(announcements.no_points)) {
+    if (reAnnouncements.includes(Announcement.NoPoints)) {
       reWinningThreshold = 240;
       kontraWinningThreshold =
         kontraAnnouncements.length > 0 ? kontraWinningThreshold : 1;
     }
 
-    if (kontraAnnouncements.includes(announcements.no_90)) {
+    if (kontraAnnouncements.includes(Announcement.No90)) {
       kontraWinningThreshold = 151;
       reWinningThreshold = reAnnouncements.length > 0 ? reWinningThreshold : 90;
     }
 
-    if (kontraAnnouncements.includes(announcements.no_60)) {
+    if (kontraAnnouncements.includes(Announcement.No60)) {
       kontraWinningThreshold = 181;
       reWinningThreshold = reAnnouncements.length > 0 ? reWinningThreshold : 60;
     }
 
-    if (kontraAnnouncements.includes(announcements.no_30)) {
+    if (kontraAnnouncements.includes(Announcement.No30)) {
       kontraWinningThreshold = 211;
       reWinningThreshold = reAnnouncements.length > 0 ? reWinningThreshold : 30;
     }
 
-    if (kontraAnnouncements.includes(announcements.no_points)) {
+    if (kontraAnnouncements.includes(Announcement.NoPoints)) {
       kontraWinningThreshold = 240;
       reWinningThreshold = reAnnouncements.length > 0 ? reWinningThreshold : 1;
     }
@@ -128,7 +128,7 @@ export class Score {
     return delta;
   }
 
-  _hasAnyPartyAnnounced(announcement: string) {
+  _hasAnyPartyAnnounced(announcement: Announcement) {
     return Object.values(this.parties).some(party =>
       party.announcements().includes(announcement)
     );
@@ -149,11 +149,11 @@ export class Score {
         allExtras.push(extras.beat_re);
       }
 
-      if (this._hasAnyPartyAnnounced(announcements.re)) {
+      if (this._hasAnyPartyAnnounced(Announcement.Re)) {
         allExtras.push(extras.announced_re);
       }
 
-      if (this._hasAnyPartyAnnounced(announcements.kontra)) {
+      if (this._hasAnyPartyAnnounced(Announcement.Kontra)) {
         allExtras.push(extras.announced_kontra);
       }
 
@@ -161,17 +161,17 @@ export class Score {
         allExtras.push(extras.no_90);
       }
 
-      if (partyAnnouncements.includes(announcements.no_90)) {
+      if (partyAnnouncements.includes(Announcement.No90)) {
         allExtras.push(extras.announced_no_90);
       }
 
-      if (opponentAnnouncements.includes(announcements.no_90)) {
+      if (opponentAnnouncements.includes(Announcement.No90)) {
         allExtras.push(extras.opposing_party_announced_no_90);
       }
 
       if (
         partyPoints >= 120 &&
-        opponentAnnouncements.includes(announcements.no_90)
+        opponentAnnouncements.includes(Announcement.No90)
       ) {
         allExtras.push(extras.got_120_against_no_90);
       }
@@ -180,17 +180,17 @@ export class Score {
         allExtras.push(extras.no_60);
       }
 
-      if (partyAnnouncements.includes(announcements.no_60)) {
+      if (partyAnnouncements.includes(Announcement.No60)) {
         allExtras.push(extras.announced_no_60);
       }
 
-      if (opponentAnnouncements.includes(announcements.no_60)) {
+      if (opponentAnnouncements.includes(Announcement.No60)) {
         allExtras.push(extras.opposing_party_announced_no_60);
       }
 
       if (
         partyPoints >= 90 &&
-        opponentAnnouncements.includes(announcements.no_60)
+        opponentAnnouncements.includes(Announcement.No60)
       ) {
         allExtras.push(extras.got_90_against_no_60);
       }
@@ -199,17 +199,17 @@ export class Score {
         allExtras.push(extras.no_30);
       }
 
-      if (partyAnnouncements.includes(announcements.no_30)) {
+      if (partyAnnouncements.includes(Announcement.No30)) {
         allExtras.push(extras.announced_no_30);
       }
 
-      if (opponentAnnouncements.includes(announcements.no_30)) {
+      if (opponentAnnouncements.includes(Announcement.No30)) {
         allExtras.push(extras.opposing_party_announced_no_30);
       }
 
       if (
         partyPoints >= 60 &&
-        opponentAnnouncements.includes(announcements.no_30)
+        opponentAnnouncements.includes(Announcement.No30)
       ) {
         allExtras.push(extras.got_60_against_no_30);
       }
@@ -218,17 +218,17 @@ export class Score {
         allExtras.push(extras.no_points);
       }
 
-      if (partyAnnouncements.includes(announcements.no_points)) {
+      if (partyAnnouncements.includes(Announcement.NoPoints)) {
         allExtras.push(extras.announced_no_points);
       }
 
-      if (opponentAnnouncements.includes(announcements.no_points)) {
+      if (opponentAnnouncements.includes(Announcement.NoPoints)) {
         allExtras.push(extras.opposing_party_announced_no_points);
       }
 
       if (
         partyPoints >= 30 &&
-        opponentAnnouncements.includes(announcements.no_points)
+        opponentAnnouncements.includes(Announcement.NoPoints)
       ) {
         allExtras.push(extras.got_30_against_no_points);
       }

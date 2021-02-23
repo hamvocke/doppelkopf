@@ -3,10 +3,13 @@ import { playableCards } from "@/models/playableCardFinder";
 import { chance } from "@/models/random";
 import { Card, suits, ranks } from "@/models/card";
 import { Hand } from "@/models/hand";
+import { Announcement } from "./announcements";
 
 export interface Behavior {
   cardToPlay(hand: Hand, trick: any, memory: any): Card | undefined;
-  announcementToMake(possibleAnnouncements: Set<string>): string | null;
+  announcementToMake(
+    possibleAnnouncements: Set<Announcement>
+  ): Announcement | null;
 }
 
 export class HighestCardBehavior implements Behavior {
@@ -14,7 +17,7 @@ export class HighestCardBehavior implements Behavior {
     return playableCards(hand.cards, trick.baseCard())[0];
   }
 
-  announcementToMake(possibleAnnouncements: Set<string>): string | null {
+  announcementToMake(possibleAnnouncements: Set<Announcement>) {
     return null;
   }
 }
@@ -23,7 +26,7 @@ export class RandomCardBehavior implements Behavior {
     return sample(playableCards(hand.cards, trick.baseCard()));
   }
 
-  announcementToMake(possibleAnnouncements: Set<string>) {
+  announcementToMake(possibleAnnouncements: Set<Announcement>) {
     if (possibleAnnouncements.size === 0) {
       return null;
     }
@@ -38,7 +41,7 @@ export class RandomCardBehavior implements Behavior {
 }
 
 export class RuleBasedBehaviour implements Behavior {
-  announcementToMake(possibleAnnouncements: Set<string>) {
+  announcementToMake(possibleAnnouncements: Set<Announcement>) {
     // ToDo announce by "goodies"
     /**
      * for instance

@@ -4,7 +4,7 @@ import { TrickStack } from "@/models/trickStack";
 import { Behavior, RuleBasedBehaviour } from "@/models/behaviors";
 import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
-import { announcements } from "@/models/announcements";
+import { Announcement } from "@/models/announcements";
 import { playableCards } from "@/models/playableCardFinder";
 import { Memory, PerfectMemory } from "./memory";
 import { Card } from "./card";
@@ -19,7 +19,7 @@ export class Player {
   name: string;
   hand: Hand;
   trickStack: TrickStack = new TrickStack();
-  announcements: Set<string> = new Set();
+  announcements: Set<Announcement> = new Set();
   isHuman: boolean;
   isMe: boolean;
   tablePosition: string;
@@ -131,29 +131,29 @@ export class Player {
     return this.trickStack.points();
   }
 
-  announce(announcement: string) {
+  announce(announcement: Announcement) {
     if (![...this.possibleAnnouncements()].includes(announcement)) {
       throw new Error("Invalid announcement");
     }
 
     // always announce re/kontra
     let allAnnouncements = this.isRe()
-      ? [announcements.re]
-      : [announcements.kontra];
+      ? [Announcement.Re]
+      : [Announcement.Kontra];
 
-    if (announcement === announcements.no_60) {
-      allAnnouncements.push(announcements.no_90);
+    if (announcement === Announcement.No60) {
+      allAnnouncements.push(Announcement.No90);
     }
 
-    if (announcement === announcements.no_30) {
-      allAnnouncements.push(announcements.no_90);
-      allAnnouncements.push(announcements.no_60);
+    if (announcement === Announcement.No30) {
+      allAnnouncements.push(Announcement.No90);
+      allAnnouncements.push(Announcement.No60);
     }
 
-    if (announcement === announcements.no_points) {
-      allAnnouncements.push(announcements.no_90);
-      allAnnouncements.push(announcements.no_60);
-      allAnnouncements.push(announcements.no_30);
+    if (announcement === Announcement.NoPoints) {
+      allAnnouncements.push(Announcement.No90);
+      allAnnouncements.push(Announcement.No60);
+      allAnnouncements.push(Announcement.No30);
     }
 
     // finally, add the actual announement
@@ -164,49 +164,49 @@ export class Player {
     notifier.info("player-announced-" + announcement, { name: this.name });
   }
 
-  hasAnnounced(...announcements: string[]) {
+  hasAnnounced(...announcements: Announcement[]) {
     return announcements.every(a => [...this.announcements].includes(a));
   }
 
   // todo: make this configurable for playing with 9s (add 2 to each threshold)
-  possibleAnnouncements() {
+  possibleAnnouncements(): Set<Announcement> {
     const cardsLeft = this.numberOfCardsLeft();
 
     if (cardsLeft < 4) {
-      return new Set<string>();
+      return new Set<Announcement>();
     }
 
     const winningAnnouncement = this.isRe()
-      ? announcements.re
-      : announcements.kontra;
+      ? Announcement.Re
+      : Announcement.Kontra;
 
     if (cardsLeft >= 9) {
       return this._removeExisting([
         winningAnnouncement,
-        announcements.no_90,
-        announcements.no_60,
-        announcements.no_30,
-        announcements.no_points
+        Announcement.No90,
+        Announcement.No60,
+        Announcement.No30,
+        Announcement.NoPoints
       ]);
     }
 
     if (cardsLeft >= 8 && this.hasAnnounced(winningAnnouncement)) {
       return this._removeExisting([
-        announcements.no_90,
-        announcements.no_60,
-        announcements.no_30,
-        announcements.no_points
+        Announcement.No90,
+        Announcement.No60,
+        Announcement.No30,
+        Announcement.NoPoints
       ]);
     }
 
     if (
       cardsLeft >= 7 &&
-      this.hasAnnounced(winningAnnouncement, announcements.no_90)
+      this.hasAnnounced(winningAnnouncement, Announcement.No90)
     ) {
       return this._removeExisting([
-        announcements.no_60,
-        announcements.no_30,
-        announcements.no_points
+        Announcement.No60,
+        Announcement.No30,
+        Announcement.NoPoints
       ]);
     }
 
@@ -214,32 +214,29 @@ export class Player {
       cardsLeft >= 6 &&
       this.hasAnnounced(
         winningAnnouncement,
-        announcements.no_90,
-        announcements.no_60
+        Announcement.No90,
+        Announcement.No60
       )
     ) {
-      return this._removeExisting([
-        announcements.no_30,
-        announcements.no_points
-      ]);
+      return this._removeExisting([Announcement.No30, Announcement.NoPoints]);
     }
 
     if (
       cardsLeft >= 5 &&
       this.hasAnnounced(
         winningAnnouncement,
-        announcements.no_90,
-        announcements.no_60,
-        announcements.no_30
+        Announcement.No90,
+        Announcement.No60,
+        Announcement.No30
       )
     ) {
-      return this._removeExisting([announcements.no_points]);
+      return this._removeExisting([Announcement.NoPoints]);
     }
 
-    return new Set<string>();
+    return new Set<Announcement>();
   }
 
-  _removeExisting(possibleAnnouncements: string[]) {
+  _removeExisting(possibleAnnouncements: Announcement[]) {
     return new Set(
       possibleAnnouncements.filter(a => ![...this.announcements].includes(a))
     );

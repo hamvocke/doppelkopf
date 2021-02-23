@@ -1,10 +1,8 @@
-// TODO: convert to enum
-
-export const announcements = {
-  re: "re",
-  kontra: "kontra",
-  no_90: "no_90",
-  no_60: "no_60",
-  no_30: "no_30",
-  no_points: "no_points"
-};
+export enum Announcement {
+  Re = "Re",
+  Kontra = "Kontra",
+  No90 = "No 90",
+  No60 = "No 60",
+  No30 = "No 30",
+  NoPoints = "No points"
+}

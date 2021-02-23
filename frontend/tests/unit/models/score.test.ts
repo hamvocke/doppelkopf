@@ -2,7 +2,7 @@
 import { Score } from "@/models/score";
 import { kontra, re } from "../../../src/models/party";
 import { Extra, extras } from "@/models/extras";
-import { announcements } from "@/models/announcements";
+import { Announcement } from "@/models/announcements";
 import { PartyBuilder } from "../../builders/partyBuilder";
 import { PlayerBuilder } from "../../builders/playerBuilder";
 
@@ -92,7 +92,7 @@ describe("Score valuation", () => {
       const reParty = new PartyBuilder(re).withPoints(120).build();
       const kontraParty = new PartyBuilder(kontra)
         .withPoints(120)
-        .withAnnouncement(announcements.kontra)
+        .withAnnouncement(Announcement.Kontra)
         .build();
 
       const score = new Score(reParty, kontraParty);
@@ -104,11 +104,11 @@ describe("Score valuation", () => {
     test("should lose with 120 points if both parties announced winning", () => {
       const reParty = new PartyBuilder(re)
         .withPoints(120)
-        .withAnnouncement(announcements.re)
+        .withAnnouncement(Announcement.Re)
         .build();
       const kontraParty = new PartyBuilder(kontra)
         .withPoints(120)
-        .withAnnouncement(announcements.kontra)
+        .withAnnouncement(Announcement.Kontra)
         .build();
 
       const score = new Score(reParty, kontraParty);
@@ -120,7 +120,7 @@ describe("Score valuation", () => {
     test("should get 2 extra points for announcing 're'", () => {
       const reParty = new PartyBuilder(re)
         .withPoints(130)
-        .withAnnouncement(announcements.re)
+        .withAnnouncement(Announcement.Re)
         .build();
       const kontraParty = new PartyBuilder(kontra).withPoints(110).build();
 
@@ -135,7 +135,7 @@ describe("Score valuation", () => {
       const reParty = new PartyBuilder(re).withPoints(140).build();
       const kontraParty = new PartyBuilder(kontra)
         .withPoints(100)
-        .withAnnouncement(announcements.kontra)
+        .withAnnouncement(Announcement.Kontra)
         .build();
 
       const score = new Score(reParty, kontraParty);
@@ -161,7 +161,7 @@ describe("Score valuation", () => {
       const reParty = new PartyBuilder(re).withPoints(120).build();
       const kontraParty = new PartyBuilder(kontra)
         .withPoints(120)
-        .withAnnouncement(announcements.kontra)
+        .withAnnouncement(Announcement.Kontra)
         .build();
 
       const score = new Score(reParty, kontraParty);
@@ -190,7 +190,7 @@ describe("Score valuation", () => {
         .build();
       const kontraParty = new PartyBuilder(kontra)
         .withPoints(140)
-        .withAnnouncement(announcements.kontra)
+        .withAnnouncement(Announcement.Kontra)
         .build();
 
       const score = new Score(reParty, kontraParty);
@@ -203,7 +203,7 @@ describe("Score valuation", () => {
     test("should get 2 points when re announced 're'", () => {
       const reParty = new PartyBuilder(re)
         .withPoints(100)
-        .withAnnouncement(announcements.re)
+        .withAnnouncement(Announcement.Re)
         .build();
       const kontraParty = new PartyBuilder(kontra)
         .withPoints(140)
@@ -250,8 +250,8 @@ describe("Score valuation", () => {
 
     test("should get 1 point for announcing 'no 90' and getting more than 150 points", () => {
       const reParty = new PartyBuilder(re)
-        .withAnnouncement(announcements.re)
-        .withAnnouncement(announcements.no_90)
+        .withAnnouncement(Announcement.Re)
+        .withAnnouncement(Announcement.No90)
         .withPoints(151)
         .build();
       const kontraParty = new PartyBuilder(kontra).withPoints(240 - 151).build();
@@ -266,9 +266,9 @@ describe("Score valuation", () => {
     test("should get 1 point for announcing 'no 60' and getting more than 180 points", () => {
       const reParty = new PartyBuilder(re).withPoints(240 - 181).build();
       const kontraParty = new PartyBuilder(kontra)
-        .withAnnouncement(announcements.kontra)
-        .withAnnouncement(announcements.no_90)
-        .withAnnouncement(announcements.no_60)
+        .withAnnouncement(Announcement.Kontra)
+        .withAnnouncement(Announcement.No90)
+        .withAnnouncement(Announcement.No60)
         .withPoints(181)
         .build();
 
@@ -289,10 +289,10 @@ describe("Score valuation", () => {
 
     test("should get 1 point for announcing 'no 30' and getting more than 210 points", () => {
       const reParty = new PartyBuilder(re)
-      .withAnnouncement(announcements.re)
-      .withAnnouncement(announcements.no_90)
-      .withAnnouncement(announcements.no_60)
-      .withAnnouncement(announcements.no_30)
+      .withAnnouncement(Announcement.Re)
+      .withAnnouncement(Announcement.No90)
+      .withAnnouncement(Announcement.No60)
+      .withAnnouncement(Announcement.No30)
       .withPoints(211)
       .build();
       const kontraParty = new PartyBuilder(kontra).withPoints(240 - 211).build();
@@ -315,11 +315,11 @@ describe("Score valuation", () => {
 
     test("should get 1 point for announcing 'no points' and getting 240 points", () => {
       const reParty = new PartyBuilder(re)
-      .withAnnouncement(announcements.re)
-      .withAnnouncement(announcements.no_90)
-      .withAnnouncement(announcements.no_60)
-      .withAnnouncement(announcements.no_30)
-      .withAnnouncement(announcements.no_points)
+      .withAnnouncement(Announcement.Re)
+      .withAnnouncement(Announcement.No90)
+      .withAnnouncement(Announcement.No60)
+      .withAnnouncement(Announcement.No30)
+      .withAnnouncement(Announcement.NoPoints)
       .withPoints(240)
       .build();
       const kontraParty = new PartyBuilder(kontra).withPoints(0).build();
@@ -344,8 +344,8 @@ describe("Score valuation", () => {
 
     test("should lose with less than 151 points when announcing 'no 90'", () => {
       const reParty = new PartyBuilder(re)
-      .withAnnouncement(announcements.re)
-      .withAnnouncement(announcements.no_90)
+      .withAnnouncement(Announcement.Re)
+      .withAnnouncement(Announcement.No90)
       .withPoints(150)
       .build();
       const kontraParty = new PartyBuilder(kontra).withPoints(90).build();
@@ -365,9 +365,9 @@ describe("Score valuation", () => {
 
     test("should lose with less than 181 points when announcing 'no 60'", () => {
       const kontraParty = new PartyBuilder(kontra)
-      .withAnnouncement(announcements.kontra)
-      .withAnnouncement(announcements.no_90)
-      .withAnnouncement(announcements.no_60)
+      .withAnnouncement(Announcement.Kontra)
+      .withAnnouncement(Announcement.No90)
+      .withAnnouncement(Announcement.No60)
       .withPoints(180)
       .build();
       const reParty = new PartyBuilder(re).withPoints(60).build();
@@ -387,10 +387,10 @@ describe("Score valuation", () => {
 
     test("should lose with less than 211 points when announcing 'no 30'", () => {
       const reParty = new PartyBuilder(re)
-      .withAnnouncement(announcements.re)
-      .withAnnouncement(announcements.no_90)
-      .withAnnouncement(announcements.no_60)
-      .withAnnouncement(announcements.no_30)
+      .withAnnouncement(Announcement.Re)
+      .withAnnouncement(Announcement.No90)
+      .withAnnouncement(Announcement.No60)
+      .withAnnouncement(Announcement.No30)
       .withPoints(210)
       .build();
       const kontraParty = new PartyBuilder(kontra).withPoints(30).build();
@@ -412,11 +412,11 @@ describe("Score valuation", () => {
 
     test("should lose with less than 240 points when announcing 'no points'", () => {
       const reParty = new PartyBuilder(re)
-      .withAnnouncement(announcements.re)
-      .withAnnouncement(announcements.no_90)
-      .withAnnouncement(announcements.no_60)
-      .withAnnouncement(announcements.no_30)
-      .withAnnouncement(announcements.no_points)
+      .withAnnouncement(Announcement.Re)
+      .withAnnouncement(Announcement.No90)
+      .withAnnouncement(Announcement.No60)
+      .withAnnouncement(Announcement.No30)
+      .withAnnouncement(Announcement.NoPoints)
       .withPoints(239)
       .build();
       const kontraParty = new PartyBuilder(kontra).withPoints(1).build();
@@ -440,8 +440,8 @@ describe("Score valuation", () => {
 
     test("should get 1 point when getting 120 points against a 'no 90' announcement", () => {
       const kontraParty = new PartyBuilder(kontra)
-      .withAnnouncement(announcements.kontra)
-      .withAnnouncement(announcements.no_90)
+      .withAnnouncement(Announcement.Kontra)
+      .withAnnouncement(Announcement.No90)
       .withPoints(120)
       .build();
       const reParty = new PartyBuilder(re).withPoints(120).build();
@@ -461,9 +461,9 @@ describe("Score valuation", () => {
 
     test("should get 1 point when getting 90 points against a 'no 60' announcement", () => {
       const reParty = new PartyBuilder(re)
-      .withAnnouncement(announcements.re)
-      .withAnnouncement(announcements.no_90)
-      .withAnnouncement(announcements.no_60)
+      .withAnnouncement(Announcement.Re)
+      .withAnnouncement(Announcement.No90)
+      .withAnnouncement(Announcement.No60)
       .withPoints(150)
       .build();
       const kontraParty = new PartyBuilder(kontra).withPoints(90).build();
@@ -485,10 +485,10 @@ describe("Score valuation", () => {
 
     test("should get 1 point when getting 60 points against a 'no 30' announcement", () => {
       const kontraParty = new PartyBuilder(kontra)
-      .withAnnouncement(announcements.kontra)
-      .withAnnouncement(announcements.no_90)
-      .withAnnouncement(announcements.no_60)
-      .withAnnouncement(announcements.no_30)
+      .withAnnouncement(Announcement.Kontra)
+      .withAnnouncement(Announcement.No90)
+      .withAnnouncement(Announcement.No60)
+      .withAnnouncement(Announcement.No30)
       .withPoints(180)
       .build();
       const reParty = new PartyBuilder(re).withPoints(60).build();
@@ -510,11 +510,11 @@ describe("Score valuation", () => {
 
     test("should get 1 point when getting 30 points against a 'no points' announcement", () => {
       const reParty = new PartyBuilder(re)
-      .withAnnouncement(announcements.re)
-      .withAnnouncement(announcements.no_90)
-      .withAnnouncement(announcements.no_60)
-      .withAnnouncement(announcements.no_30)
-      .withAnnouncement(announcements.no_points)
+      .withAnnouncement(Announcement.Re)
+      .withAnnouncement(Announcement.No90)
+      .withAnnouncement(Announcement.No60)
+      .withAnnouncement(Announcement.No30)
+      .withAnnouncement(Announcement.NoPoints)
       .withPoints(210)
       .build();
       const kontraParty = new PartyBuilder(kontra).withPoints(30).build();
@@ -538,16 +538,16 @@ describe("Score valuation", () => {
 
     test("should get 1 point each for own and for losing party's announcements", () => {
       const reParty = new PartyBuilder(re)
-      .withAnnouncement(announcements.re)
-      .withAnnouncement(announcements.no_90)
-      .withAnnouncement(announcements.no_60)
+      .withAnnouncement(Announcement.Re)
+      .withAnnouncement(Announcement.No90)
+      .withAnnouncement(Announcement.No60)
       .withPoints(59)
       .build();
 
       const kontraParty = new PartyBuilder(kontra)
-      .withAnnouncement(announcements.kontra)
-      .withAnnouncement(announcements.no_90)
-      .withAnnouncement(announcements.no_60)
+      .withAnnouncement(Announcement.Kontra)
+      .withAnnouncement(Announcement.No90)
+      .withAnnouncement(Announcement.No60)
       .withPoints(181)
       .build();
 
@@ -580,15 +580,15 @@ describe("Score valuation", () => {
       */
 
       const reParty = new PartyBuilder(re)
-      .withAnnouncement(announcements.re)
-      .withAnnouncement(announcements.no_90)
+      .withAnnouncement(Announcement.Re)
+      .withAnnouncement(Announcement.No90)
       .withPoints(110)
       .build();
 
       const kontraParty = new PartyBuilder(kontra)
-      .withAnnouncement(announcements.kontra)
-      .withAnnouncement(announcements.no_90)
-      .withAnnouncement(announcements.no_60)
+      .withAnnouncement(Announcement.Kontra)
+      .withAnnouncement(Announcement.No90)
+      .withAnnouncement(Announcement.No60)
       .withPoints(130)
       .build();
 

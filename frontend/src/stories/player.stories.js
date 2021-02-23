@@ -2,7 +2,7 @@ import VueI18n from "vue-i18n";
 
 import Player from "@/components/Player";
 import { Game } from "@/models/game";
-import { announcements } from "@/models/announcements";
+import { Announcement } from "@/models/announcements";
 
 import "@/assets/css/app.css";
 
@@ -24,12 +24,12 @@ let leftPlayer = game.players[1];
 
 function fakeAnnouncements(player) {
   if (player.isRe()) {
-    player.announce(announcements.re);
+    player.announce(Announcement.Re);
   } else {
-    player.announce(announcements.kontra);
+    player.announce(Announcement.Kontra);
   }
-  player.announce(announcements.no_90);
-  player.announce(announcements.no_60);
+  player.announce(Announcement.No90);
+  player.announce(Announcement.No60);
 }
 
 fakeAnnouncements(bottomPlayer);

@@ -2,7 +2,7 @@ import { Player } from "@/models/player";
 import { Trick } from "@/models/trick";
 import { re, kontra, Party } from "@/models/party";
 import { extras } from "@/models/extras";
-import { announcements } from "@/models/announcements";
+import { Announcement } from "@/models/announcements";
 
 const player1 = new Player("Player 1", true);
 const player2 = new Player("Player 2");
@@ -18,12 +18,12 @@ test("should aggregate points", () => {
 
 test("should aggregate announcements", () => {
   player1.numberOfCardsLeft = () => 10;
-  player1.announce(announcements.kontra);
-  player1.announce(announcements.no_90);
+  player1.announce(Announcement.Kontra);
+  player1.announce(Announcement.No90);
   const party = new Party(kontra, player1, player2);
   expect(party.announcements()).toEqual([
-    announcements.kontra,
-    announcements.no_90
+    Announcement.Kontra,
+    Announcement.No90
   ]);
 });
 
