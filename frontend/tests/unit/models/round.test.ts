@@ -4,6 +4,9 @@ import { Notifier } from "@/models/notifier";
 import { jack, suits, ace } from "@/models/card";
 import { options } from "@/models/options";
 import { Hand } from "@/models/hand";
+import { TrickStack } from "@/models/trickStack";
+import { Trick } from "@/models/trick";
+import { Extra } from "@/models/extras";
 
 const game = Game.singlePlayer();
 let round = game.currentRound;
@@ -25,10 +28,6 @@ test("should know the scorecard", () => {
 
 test("game starts with an empty trick", () => {
   expect(round.currentTrick).toBeDefined();
-});
-
-test("should have score", () => {
-  expect(round.score).toBeDefined();
 });
 
 test("should give current trick to winner", async () => {
@@ -226,11 +225,6 @@ describe("finish round", () => {
 });
 
 function setupGameKontraWins() {
-  const firstTrickStack = { points: () => 0, extras: () => [] };
-  const secondTrickStack = { points: () => 110, extras: () => [] };
-  const thirdTrickStack = { points: () => 130, extras: () => [] };
-  const fourthTrickStack = { points: () => 0, extras: () => [] };
-
   round.players[0].isRe = () => true;
   round.players[1].isRe = () => true;
   round.players[2].isRe = () => false;
@@ -245,10 +239,20 @@ function setupGameKontraWins() {
 
   setupNoCardsLeft();
 
-  round.players[0].trickStack = firstTrickStack;
-  round.players[1].trickStack = secondTrickStack;
-  round.players[2].trickStack = thirdTrickStack;
-  round.players[3].trickStack = fourthTrickStack;
+  round.players[0].trickStack = trickStack(0, []);
+  round.players[1].trickStack = trickStack(110, []);
+  round.players[2].trickStack = trickStack(130, []);
+  round.players[3].trickStack = trickStack(0, []);
+}
+
+function trickStack(points: number, extras: Array<Extra>): TrickStack {
+  return {
+    points: () => points,
+    extras: () => extras,
+    tricks: new Array<Trick>(),
+    add: () => {},
+    cards: () => []
+  };
 }
 
 function setupNoCardsLeft() {

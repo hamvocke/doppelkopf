@@ -10,8 +10,8 @@ export class Trick {
   playedCards: PlayedCard[];
   id: string;
   lastTrickInRound: boolean;
+  finished: boolean;
   private expectedNumberOfCards: number;
-  private finished: boolean;
 
   constructor(players: Array<any>) {
     this.players = players;
