@@ -1,22 +1,28 @@
 import { Player } from "@/models/player";
 import { re } from "@/models/party";
+import { Extra } from "@/models/extras";
 
 export class PlayerBuilder {
-  constructor(name) {
+  name: string;
+  points: number = 0;
+  extras: Extra[] = [];
+  party: string = "re";
+
+  constructor(name: string) {
     this.name = name;
   }
 
-  withPoints(points) {
+  withPoints(points: number) {
     this.points = points;
     return this;
   }
 
-  withParty(party) {
+  withParty(party: string) {
     this.party = party;
     return this;
   }
 
-  withExtra(extra) {
+  withExtra(extra: Extra) {
     this.extras.push(extra);
   }
 

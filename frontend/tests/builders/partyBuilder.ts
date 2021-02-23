@@ -1,30 +1,39 @@
+import { Extra } from "@/models/extras";
+import { Player } from "@/models/player";
 import { Party } from "../../src/models/party";
 import { PlayerBuilder } from "./playerBuilder";
 
 export class PartyBuilder {
-  constructor(party) {
+  party: string;
+  players: Player[];
+  announcements: Set<string>;
+  extras: Extra[];
+  points: number;
+
+  constructor(party: string) {
     this.party = party;
     this.players = [];
     this.announcements = new Set();
     this.extras = [];
+    this.points = 0;
   }
 
-  withPlayer(player) {
+  withPlayer(player: Player) {
     this.players.push(player);
     return this;
   }
 
-  withAnnouncement(announcements) {
+  withAnnouncement(announcements: string) {
     this.announcements.add(announcements);
     return this;
   }
 
-  withExtra(extra) {
+  withExtra(extra: Extra) {
     this.extras.push(extra);
     return this;
   }
 
-  withPoints(points) {
+  withPoints(points: number) {
     this.points = points;
     return this;
   }
