@@ -1,5 +1,5 @@
 import AnnouncementsButton from "@/components/AnnouncementsButton";
-import { announcements } from "@/models/announcements";
+import { Announcement } from "@/models/announcements";
 import { Game } from "@/models/game";
 import { mount, config } from "@vue/test-utils";
 
@@ -35,7 +35,7 @@ describe("AnnouncementsButton.vue", () => {
 
   test("should hide possible announcements after announcing", async () => {
     let player = game.players[0];
-    player.possibleAnnouncements = () => [announcements.re];
+    player.possibleAnnouncements = () => [Announcement.Re];
     const wrapper = mount(AnnouncementsButton, {
       propsData: { player: player }
     });

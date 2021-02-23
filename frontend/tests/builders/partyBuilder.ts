@@ -1,3 +1,4 @@
+import { Announcement } from "@/models/announcements";
 import { Extra } from "@/models/extras";
 import { Player } from "@/models/player";
 import { Party } from "../../src/models/party";
@@ -6,7 +7,7 @@ import { PlayerBuilder } from "./playerBuilder";
 export class PartyBuilder {
   party: string;
   players: Player[];
-  announcements: Set<string>;
+  announcements: Set<Announcement>;
   extras: Extra[];
   points: number;
 
@@ -23,7 +24,7 @@ export class PartyBuilder {
     return this;
   }
 
-  withAnnouncement(announcements: string) {
+  withAnnouncement(announcements: Announcement) {
     this.announcements.add(announcements);
     return this;
   }

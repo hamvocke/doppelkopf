@@ -7,7 +7,7 @@ import { TrickStack } from "@/models/trickStack";
 import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
 import { sampleSize } from "lodash-es";
-import { announcements } from "@/models/announcements";
+import { Announcement } from "@/models/announcements";
 import { Trick } from "@/models/trick";
 
 let game: any;
@@ -247,7 +247,7 @@ test("should clear trick stack when resetting player", () => {
 });
 
 test("should clear announcements when resetting player", () => {
-  player.announce(player.isRe() ? announcements.re : announcements.kontra);
+  player.announce(player.isRe() ? Announcement.Re : Announcement.Kontra);
 
   player.reset();
 
@@ -258,15 +258,15 @@ describe("announcements", () => {
   test("should announce", () => {
     player.hand = aHandWith(10, queen.of(suits.clubs));
 
-    player.announce(announcements.re);
+    player.announce(Announcement.Re);
 
-    expect(player.announcements).toContain(announcements.re);
+    expect(player.announcements).toContain(Announcement.Re);
   });
 
   test("should validate announcement", () => {
     player.hand = aHandWith(7, queen.of(suits.clubs));
 
-    let failingAnnouncement = () => player.announce(announcements.no_90);
+    let failingAnnouncement = () => player.announce(Announcement.No90);
 
     expect(failingAnnouncement).toThrowError("Invalid announcement");
   });
@@ -274,15 +274,15 @@ describe("announcements", () => {
   test("should automatically announce previous steps", () => {
     player.hand = aHandWith(10, queen.of(suits.clubs));
 
-    player.announce(announcements.no_points);
+    player.announce(Announcement.NoPoints);
 
     expect(player.announcements).toEqual(
       new Set([
-        announcements.re,
-        announcements.no_90,
-        announcements.no_60,
-        announcements.no_30,
-        announcements.no_points
+        Announcement.Re,
+        Announcement.No90,
+        Announcement.No60,
+        Announcement.No30,
+        Announcement.NoPoints
       ])
     );
   });
@@ -293,11 +293,11 @@ describe("announcements", () => {
     let possibleAnnouncements = player.possibleAnnouncements();
 
     let expectedAnnouncements = new Set([
-      announcements.re,
-      announcements.no_90,
-      announcements.no_60,
-      announcements.no_30,
-      announcements.no_points
+      Announcement.Re,
+      Announcement.No90,
+      Announcement.No60,
+      Announcement.No30,
+      Announcement.NoPoints
     ]);
     expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
@@ -308,11 +308,11 @@ describe("announcements", () => {
     let possibleAnnouncements = player.possibleAnnouncements();
 
     let expectedAnnouncements = new Set([
-      announcements.kontra,
-      announcements.no_90,
-      announcements.no_60,
-      announcements.no_30,
-      announcements.no_points
+      Announcement.Kontra,
+      Announcement.No90,
+      Announcement.No60,
+      Announcement.No30,
+      Announcement.NoPoints
     ]);
     expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
@@ -320,12 +320,12 @@ describe("announcements", () => {
   const announcementThreholds = [
     {
       numberOfCards: 8,
-      previousAnnouncements: [announcements.re],
+      previousAnnouncements: [Announcement.Re],
       expectedAnnouncements: [
-        announcements.no_90,
-        announcements.no_60,
-        announcements.no_30,
-        announcements.no_points
+        Announcement.No90,
+        Announcement.No60,
+        Announcement.No30,
+        Announcement.NoPoints
       ]
     },
     {
@@ -335,48 +335,48 @@ describe("announcements", () => {
     },
     {
       numberOfCards: 7,
-      previousAnnouncements: [announcements.re, announcements.no_90],
+      previousAnnouncements: [Announcement.Re, Announcement.No90],
       expectedAnnouncements: [
-        announcements.no_60,
-        announcements.no_30,
-        announcements.no_points
+        Announcement.No60,
+        Announcement.No30,
+        Announcement.NoPoints
       ]
     },
     {
       numberOfCards: 7,
-      previousAnnouncements: [announcements.re],
+      previousAnnouncements: [Announcement.Re],
       expectedAnnouncements: []
     },
     {
       numberOfCards: 6,
       previousAnnouncements: [
-        announcements.re,
-        announcements.no_90,
-        announcements.no_60
+        Announcement.Re,
+        Announcement.No90,
+        Announcement.No60
       ],
-      expectedAnnouncements: [announcements.no_30, announcements.no_points]
+      expectedAnnouncements: [Announcement.No30, Announcement.NoPoints]
     },
     {
       numberOfCards: 6,
-      previousAnnouncements: [announcements.re, announcements.no_90],
+      previousAnnouncements: [Announcement.Re, Announcement.No90],
       expectedAnnouncements: []
     },
     {
       numberOfCards: 5,
       previousAnnouncements: [
-        announcements.re,
-        announcements.no_90,
-        announcements.no_60,
-        announcements.no_30
+        Announcement.Re,
+        Announcement.No90,
+        Announcement.No60,
+        Announcement.No30
       ],
-      expectedAnnouncements: [announcements.no_points]
+      expectedAnnouncements: [Announcement.NoPoints]
     },
     {
       numberOfCards: 5,
       previousAnnouncements: [
-        announcements.re,
-        announcements.no_90,
-        announcements.no_60
+        Announcement.Re,
+        Announcement.No90,
+        Announcement.No60
       ],
       expectedAnnouncements: []
     }
@@ -397,11 +397,11 @@ describe("announcements", () => {
   test("should not be able to make same announcement twice", () => {
     player.hand = aHandWith(9, queen.of(suits.clubs));
     [
-      announcements.re,
-      announcements.no_90,
-      announcements.no_60,
-      announcements.no_30,
-      announcements.no_points
+      Announcement.Re,
+      Announcement.No90,
+      Announcement.No60,
+      Announcement.No30,
+      Announcement.NoPoints
     ].forEach(a => player.announcements.add(a));
 
     let possibleAnnouncements = player.possibleAnnouncements();

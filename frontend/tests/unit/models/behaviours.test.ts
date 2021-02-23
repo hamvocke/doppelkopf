@@ -4,7 +4,7 @@ import {
   RandomCardBehavior
 } from "@/models/behaviors";
 import { Hand } from "@/models/hand";
-import { announcements } from "@/models/announcements";
+import { Announcement } from "@/models/announcements";
 import { ace, king, queen, jack, suits, ten, Card } from "@/models/card";
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
@@ -52,14 +52,11 @@ describe("Random Card Behavior", () => {
   });
 
   test("should make an announcement by chance", () => {
-    const possibleAnnouncements = new Set([
-      announcements.re,
-      announcements.no_90
-    ]);
+    const possibleAnnouncements = new Set([Announcement.Re, Announcement.No90]);
 
     const announcement = behavior.announcementToMake(possibleAnnouncements);
 
-    expect(announcement).toEqual(announcements.re);
+    expect(announcement).toEqual(Announcement.Re);
   });
 
   test("should return null if no announcement possible", () => {
