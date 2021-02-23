@@ -1,10 +1,10 @@
 import { Hand } from "@/models/hand";
-import { Card, ranks, suits, ace, ten, king, queen, jack } from "@/models/card";
+import { Card, Rank, Suit, ace, ten, king, queen, jack } from "@/models/card";
 import { allCards } from "@/models/deck";
 import { shuffle } from "lodash";
 
 test("a hand with queen of clubs is re", () => {
-  const cards = [queen.of(suits.clubs)];
+  const cards = [queen.of(Suit.Clubs)];
   const hand = new Hand(cards);
 
   expect(hand.isRe()).toBeTruthy();
@@ -12,8 +12,8 @@ test("a hand with queen of clubs is re", () => {
 });
 
 test("a re hand that played the queen of clubs is still re", () => {
-  const queenOfClubs = queen.of(suits.clubs);
-  const tenOfHearts = ten.of(suits.hearts);
+  const queenOfClubs = queen.of(Suit.Clubs);
+  const tenOfHearts = ten.of(Suit.Hearts);
   const hand = new Hand([queenOfClubs, tenOfHearts]);
 
   hand.remove(queenOfClubs);
@@ -23,7 +23,7 @@ test("a re hand that played the queen of clubs is still re", () => {
 });
 
 test("a hand without queen of clubs is kontra", () => {
-  const cards = [queen.of(suits.spades)];
+  const cards = [queen.of(Suit.Spades)];
   const hand = new Hand(cards);
 
   expect(hand.isKontra()).toBeTruthy();
@@ -32,9 +32,9 @@ test("a hand without queen of clubs is kontra", () => {
 
 test("hand has a value", () => {
   const cards = [
-    queen.of(suits.spades),
-    ten.of(suits.hearts),
-    ace.of(suits.diamonds)
+    queen.of(Suit.Spades),
+    ten.of(Suit.Hearts),
+    ace.of(Suit.Diamonds)
   ];
   const hand = new Hand(cards);
 
@@ -48,7 +48,7 @@ test("empty hand has a value of 0", () => {
 });
 
 test("can find specific card on hand", () => {
-  const queenOfSpades = queen.of(suits.spades);
+  const queenOfSpades = queen.of(Suit.Spades);
   const cards = [queenOfSpades];
   const hand = new Hand(cards);
 
@@ -56,31 +56,31 @@ test("can find specific card on hand", () => {
 });
 
 test("can find card on hand by rank and suit", () => {
-  const queenOfSpades = queen.of(suits.spades);
+  const queenOfSpades = queen.of(Suit.Spades);
   const cards = [queenOfSpades];
   const hand = new Hand(cards);
 
-  expect(hand.findAny(suits.spades, ranks.queen)).toEqual(queenOfSpades);
+  expect(hand.findAny(Suit.Spades, Rank.Queen)).toEqual(queenOfSpades);
 });
 
 test("should return empty list if card on hand cannot be found by rank and suit", () => {
-  const queenOfSpades = queen.of(suits.spades);
+  const queenOfSpades = queen.of(Suit.Spades);
   const cards = [queenOfSpades];
   const hand = new Hand(cards);
 
-  expect(hand.findAny(suits.spades, ranks.king)).toBeUndefined;
+  expect(hand.findAny(Suit.Spades, Rank.King)).toBeUndefined;
 });
 
 test("can not find non-existing card on hand", () => {
-  const queenOfSpades = queen.of(suits.spades);
+  const queenOfSpades = queen.of(Suit.Spades);
   const cards = [queenOfSpades];
   const hand = new Hand(cards);
 
-  expect(hand.find(king.of(suits.spades))).toBeUndefined();
+  expect(hand.find(king.of(Suit.Spades))).toBeUndefined();
 });
 
 test("can remove card from hand", () => {
-  const cards = [queen.of(suits.spades)];
+  const cards = [queen.of(Suit.Spades)];
   const hand = new Hand(cards);
   expect(hand.find(cards[0])).toBeDefined();
 
@@ -90,12 +90,12 @@ test("can remove card from hand", () => {
 });
 
 test("cannot remove non-existing card from hand", () => {
-  const cards = [queen.of(suits.spades)];
+  const cards = [queen.of(Suit.Spades)];
   const hand = new Hand(cards);
   expect(hand.find(cards[0])).toBeDefined();
 
   function invalidRemove() {
-    hand.remove(king.of(suits.diamonds));
+    hand.remove(king.of(Suit.Diamonds));
   }
 
   expect(invalidRemove).toThrowError("can't remove card that isn't on hand");
@@ -107,52 +107,52 @@ test("should sort hand by visual order", () => {
   const hand = new Hand(shuffle(cards));
 
   const sortedDeck = [
-    new Card(ranks.ten, suits.hearts, 0),
-    new Card(ranks.ten, suits.hearts, 1),
+    new Card(Rank.Ten, Suit.Hearts, 0),
+    new Card(Rank.Ten, Suit.Hearts, 1),
 
-    new Card(ranks.queen, suits.clubs, 0),
-    new Card(ranks.queen, suits.clubs, 1),
-    new Card(ranks.queen, suits.spades, 0),
-    new Card(ranks.queen, suits.spades, 1),
-    new Card(ranks.queen, suits.hearts, 0),
-    new Card(ranks.queen, suits.hearts, 1),
-    new Card(ranks.queen, suits.diamonds, 0),
-    new Card(ranks.queen, suits.diamonds, 1),
+    new Card(Rank.Queen, Suit.Clubs, 0),
+    new Card(Rank.Queen, Suit.Clubs, 1),
+    new Card(Rank.Queen, Suit.Spades, 0),
+    new Card(Rank.Queen, Suit.Spades, 1),
+    new Card(Rank.Queen, Suit.Hearts, 0),
+    new Card(Rank.Queen, Suit.Hearts, 1),
+    new Card(Rank.Queen, Suit.Diamonds, 0),
+    new Card(Rank.Queen, Suit.Diamonds, 1),
 
-    new Card(ranks.jack, suits.clubs, 0),
-    new Card(ranks.jack, suits.clubs, 1),
-    new Card(ranks.jack, suits.spades, 0),
-    new Card(ranks.jack, suits.spades, 1),
-    new Card(ranks.jack, suits.hearts, 0),
-    new Card(ranks.jack, suits.hearts, 1),
-    new Card(ranks.jack, suits.diamonds, 0),
-    new Card(ranks.jack, suits.diamonds, 1),
+    new Card(Rank.Jack, Suit.Clubs, 0),
+    new Card(Rank.Jack, Suit.Clubs, 1),
+    new Card(Rank.Jack, Suit.Spades, 0),
+    new Card(Rank.Jack, Suit.Spades, 1),
+    new Card(Rank.Jack, Suit.Hearts, 0),
+    new Card(Rank.Jack, Suit.Hearts, 1),
+    new Card(Rank.Jack, Suit.Diamonds, 0),
+    new Card(Rank.Jack, Suit.Diamonds, 1),
 
-    new Card(ranks.ace, suits.diamonds, 0),
-    new Card(ranks.ace, suits.diamonds, 1),
-    new Card(ranks.ten, suits.diamonds, 0),
-    new Card(ranks.ten, suits.diamonds, 1),
-    new Card(ranks.king, suits.diamonds, 0),
-    new Card(ranks.king, suits.diamonds, 1),
+    new Card(Rank.Ace, Suit.Diamonds, 0),
+    new Card(Rank.Ace, Suit.Diamonds, 1),
+    new Card(Rank.Ten, Suit.Diamonds, 0),
+    new Card(Rank.Ten, Suit.Diamonds, 1),
+    new Card(Rank.King, Suit.Diamonds, 0),
+    new Card(Rank.King, Suit.Diamonds, 1),
 
-    new Card(ranks.ace, suits.clubs, 0),
-    new Card(ranks.ace, suits.clubs, 1),
-    new Card(ranks.ten, suits.clubs, 0),
-    new Card(ranks.ten, suits.clubs, 1),
-    new Card(ranks.king, suits.clubs, 0),
-    new Card(ranks.king, suits.clubs, 1),
+    new Card(Rank.Ace, Suit.Clubs, 0),
+    new Card(Rank.Ace, Suit.Clubs, 1),
+    new Card(Rank.Ten, Suit.Clubs, 0),
+    new Card(Rank.Ten, Suit.Clubs, 1),
+    new Card(Rank.King, Suit.Clubs, 0),
+    new Card(Rank.King, Suit.Clubs, 1),
 
-    new Card(ranks.ace, suits.spades, 0),
-    new Card(ranks.ace, suits.spades, 1),
-    new Card(ranks.ten, suits.spades, 0),
-    new Card(ranks.ten, suits.spades, 1),
-    new Card(ranks.king, suits.spades, 0),
-    new Card(ranks.king, suits.spades, 1),
+    new Card(Rank.Ace, Suit.Spades, 0),
+    new Card(Rank.Ace, Suit.Spades, 1),
+    new Card(Rank.Ten, Suit.Spades, 0),
+    new Card(Rank.Ten, Suit.Spades, 1),
+    new Card(Rank.King, Suit.Spades, 0),
+    new Card(Rank.King, Suit.Spades, 1),
 
-    new Card(ranks.ace, suits.hearts, 0),
-    new Card(ranks.ace, suits.hearts, 1),
-    new Card(ranks.king, suits.hearts, 0),
-    new Card(ranks.king, suits.hearts, 1)
+    new Card(Rank.Ace, Suit.Hearts, 0),
+    new Card(Rank.Ace, Suit.Hearts, 1),
+    new Card(Rank.King, Suit.Hearts, 0),
+    new Card(Rank.King, Suit.Hearts, 1)
   ];
 
   expect(hand.cards).toEqual(sortedDeck);
@@ -160,16 +160,16 @@ test("should sort hand by visual order", () => {
 
 test("should detect hand with 5 kings as not playable", () => {
   const cards = [
-    king.of(suits.hearts),
-    ten.of(suits.hearts),
-    queen.of(suits.spades),
-    king.of(suits.diamonds),
-    king.of(suits.clubs),
-    king.of(suits.clubs),
-    ten.of(suits.spades),
-    king.of(suits.diamonds),
-    queen.of(suits.spades),
-    queen.of(suits.hearts)
+    king.of(Suit.Hearts),
+    ten.of(Suit.Hearts),
+    queen.of(Suit.Spades),
+    king.of(Suit.Diamonds),
+    king.of(Suit.Clubs),
+    king.of(Suit.Clubs),
+    ten.of(Suit.Spades),
+    king.of(Suit.Diamonds),
+    queen.of(Suit.Spades),
+    queen.of(Suit.Hearts)
   ];
   const hand = new Hand(cards);
 
@@ -178,16 +178,16 @@ test("should detect hand with 5 kings as not playable", () => {
 
 test("should detect playable hand", () => {
   const cards = [
-    king.of(suits.hearts),
-    ten.of(suits.hearts),
-    queen.of(suits.spades),
-    king.of(suits.diamonds),
-    ace.of(suits.clubs),
-    ten.of(suits.clubs),
-    ten.of(suits.spades),
-    king.of(suits.diamonds),
-    queen.of(suits.spades),
-    queen.of(suits.hearts)
+    king.of(Suit.Hearts),
+    ten.of(Suit.Hearts),
+    queen.of(Suit.Spades),
+    king.of(Suit.Diamonds),
+    ace.of(Suit.Clubs),
+    ten.of(Suit.Clubs),
+    ten.of(Suit.Spades),
+    king.of(Suit.Diamonds),
+    queen.of(Suit.Spades),
+    queen.of(Suit.Hearts)
   ];
   const hand = new Hand(cards);
 
@@ -196,16 +196,16 @@ test("should detect playable hand", () => {
 
 test("should detect hand with more than seven ten point cards", () => {
   const cards = [
-    ace.of(suits.clubs),
-    ten.of(suits.clubs),
-    ten.of(suits.clubs),
-    ten.of(suits.spades),
-    ten.of(suits.spades),
-    ten.of(suits.hearts),
-    ten.of(suits.hearts),
-    king.of(suits.hearts),
-    queen.of(suits.spades),
-    queen.of(suits.hearts)
+    ace.of(Suit.Clubs),
+    ten.of(Suit.Clubs),
+    ten.of(Suit.Clubs),
+    ten.of(Suit.Spades),
+    ten.of(Suit.Spades),
+    ten.of(Suit.Hearts),
+    ten.of(Suit.Hearts),
+    king.of(Suit.Hearts),
+    queen.of(Suit.Spades),
+    queen.of(Suit.Hearts)
   ];
   const hand = new Hand(cards);
 
@@ -214,16 +214,16 @@ test("should detect hand with more than seven ten point cards", () => {
 
 test("should detect hand with trumps equal or lesser than jack of diamonds", () => {
   const cards = [
-    king.of(suits.hearts),
-    king.of(suits.hearts),
-    ten.of(suits.clubs),
-    ten.of(suits.clubs),
-    ten.of(suits.spades),
-    ten.of(suits.spades),
-    ten.of(suits.diamonds),
-    ten.of(suits.diamonds),
-    jack.of(suits.diamonds),
-    jack.of(suits.diamonds)
+    king.of(Suit.Hearts),
+    king.of(Suit.Hearts),
+    ten.of(Suit.Clubs),
+    ten.of(Suit.Clubs),
+    ten.of(Suit.Spades),
+    ten.of(Suit.Spades),
+    ten.of(Suit.Diamonds),
+    ten.of(Suit.Diamonds),
+    jack.of(Suit.Diamonds),
+    jack.of(Suit.Diamonds)
   ];
   const hand = new Hand(cards);
 
@@ -232,39 +232,39 @@ test("should detect hand with trumps equal or lesser than jack of diamonds", () 
 
 test("should detect suits that can be served", () => {
   const cards = [
-    king.of(suits.hearts),
-    king.of(suits.hearts),
-    ten.of(suits.clubs),
-    ten.of(suits.clubs),
-    ten.of(suits.hearts),
-    ten.of(suits.hearts),
-    ten.of(suits.diamonds),
-    ten.of(suits.diamonds),
-    jack.of(suits.spades),
-    jack.of(suits.spades)
+    king.of(Suit.Hearts),
+    king.of(Suit.Hearts),
+    ten.of(Suit.Clubs),
+    ten.of(Suit.Clubs),
+    ten.of(Suit.Hearts),
+    ten.of(Suit.Hearts),
+    ten.of(Suit.Diamonds),
+    ten.of(Suit.Diamonds),
+    jack.of(Suit.Spades),
+    jack.of(Suit.Spades)
   ];
   const hand = new Hand(cards);
 
-  expect(hand.nonTrumps(suits.spades).length).toEqual(0);
-  expect(hand.nonTrumps(suits.hearts).length).toEqual(2);
-  expect(hand.nonTrumps(suits.clubs).length).toEqual(2);
-  expect(hand.hasNonTrumps(suits.spades)).toBe(false);
-  expect(hand.hasNonTrumps(suits.hearts)).toBe(true);
-  expect(hand.hasNonTrumps(suits.clubs)).toBe(true);
+  expect(hand.nonTrumps(Suit.Spades).length).toEqual(0);
+  expect(hand.nonTrumps(Suit.Hearts).length).toEqual(2);
+  expect(hand.nonTrumps(Suit.Clubs).length).toEqual(2);
+  expect(hand.hasNonTrumps(Suit.Spades)).toBe(false);
+  expect(hand.hasNonTrumps(Suit.Hearts)).toBe(true);
+  expect(hand.hasNonTrumps(Suit.Clubs)).toBe(true);
 });
 
 test("should detect correct number of trumps in hand", () => {
   const cards = [
-    king.of(suits.hearts),
-    king.of(suits.hearts),
-    ten.of(suits.clubs),
-    ten.of(suits.clubs),
-    ten.of(suits.spades),
-    ten.of(suits.spades),
-    ten.of(suits.diamonds),
-    ten.of(suits.diamonds),
-    jack.of(suits.diamonds),
-    jack.of(suits.diamonds)
+    king.of(Suit.Hearts),
+    king.of(Suit.Hearts),
+    ten.of(Suit.Clubs),
+    ten.of(Suit.Clubs),
+    ten.of(Suit.Spades),
+    ten.of(Suit.Spades),
+    ten.of(Suit.Diamonds),
+    ten.of(Suit.Diamonds),
+    jack.of(Suit.Diamonds),
+    jack.of(Suit.Diamonds)
   ];
   const hand = new Hand(cards);
 
@@ -273,24 +273,24 @@ test("should detect correct number of trumps in hand", () => {
 
 test("should detect multiple single blank aces", () => {
   const cards = [
-    ace.of(suits.hearts).first(),
-    ace.of(suits.spades).first(),
-    king.of(suits.clubs),
-    ten.of(suits.clubs),
-    ace.of(suits.clubs),
-    ten.of(suits.hearts),
-    ten.of(suits.hearts),
-    queen.of(suits.diamonds),
-    ace.of(suits.diamonds),
-    jack.of(suits.spades)
+    ace.of(Suit.Hearts).first(),
+    ace.of(Suit.Spades).first(),
+    king.of(Suit.Clubs),
+    ten.of(Suit.Clubs),
+    ace.of(Suit.Clubs),
+    ten.of(Suit.Hearts),
+    ten.of(Suit.Hearts),
+    queen.of(Suit.Diamonds),
+    ace.of(Suit.Diamonds),
+    jack.of(Suit.Spades)
   ];
   const hand = new Hand(cards);
 
-  expect(hand.hasBlankAce(suits.clubs)).toBe(false);
-  expect(hand.hasBlankAce(suits.hearts)).toBe(true);
-  expect(hand.hasBlankAce(suits.spades)).toBe(true);
+  expect(hand.hasBlankAce(Suit.Clubs)).toBe(false);
+  expect(hand.hasBlankAce(Suit.Hearts)).toBe(true);
+  expect(hand.hasBlankAce(Suit.Spades)).toBe(true);
   expect(hand.getBlankAces()).toEqual([
-    ace.of(suits.spades).first(),
-    ace.of(suits.hearts).first()
+    ace.of(Suit.Spades).first(),
+    ace.of(Suit.Hearts).first()
   ]);
 });

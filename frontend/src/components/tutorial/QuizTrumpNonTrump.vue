@@ -24,7 +24,7 @@
 
 <script>
 import Card from "@/components/Card";
-import { ace, jack, queen, king, ten, suits } from "@/models/card";
+import { ace, jack, queen, king, ten, Suit } from "@/models/card";
 
 export default {
   name: "QuizTrumpNonTrump",
@@ -32,16 +32,16 @@ export default {
   data() {
     return {
       cards: [
-        ace.of(suits.clubs),
-        ace.of(suits.diamonds),
-        jack.of(suits.spades),
-        jack.of(suits.hearts),
-        ten.of(suits.clubs),
-        king.of(suits.hearts),
-        ace.of(suits.spades),
-        queen.of(suits.spades),
-        king.of(suits.diamonds),
-        ten.of(suits.hearts)
+        ace.of(Suit.Clubs),
+        ace.of(Suit.Diamonds),
+        jack.of(Suit.Spades),
+        jack.of(Suit.Hearts),
+        ten.of(Suit.Clubs),
+        king.of(Suit.Hearts),
+        ace.of(Suit.Spades),
+        queen.of(Suit.Spades),
+        king.of(Suit.Diamonds),
+        ten.of(Suit.Hearts)
       ],
       currentCard: 0,
       lastMessage: "",

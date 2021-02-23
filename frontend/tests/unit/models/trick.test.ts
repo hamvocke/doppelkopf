@@ -1,7 +1,7 @@
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PlayedCard } from "@/models/playedCard";
-import { queen, jack, king, suits, ten, ace } from "@/models/card";
+import { queen, jack, king, Suit, ten, ace } from "@/models/card";
 import { extras } from "@/models/extras";
 
 const player1 = new Player("Player 1", true);
@@ -16,7 +16,7 @@ test("new trick is empty", () => {
 
 test("can add card to trick", () => {
   const trick = new Trick(players);
-  const cardToBePlayed = queen.of(suits.spades);
+  const cardToBePlayed = queen.of(Suit.Spades);
 
   trick.add(cardToBePlayed, player1);
 
@@ -28,17 +28,17 @@ test("can add card to trick", () => {
 test("should finish a trick if four cards have been played", () => {
   const trick = new Trick(players);
 
-  trick.add(queen.of(suits.spades), player1);
-  trick.add(queen.of(suits.hearts), player2);
-  trick.add(queen.of(suits.clubs), player3);
-  trick.add(queen.of(suits.diamonds), player4);
+  trick.add(queen.of(Suit.Spades), player1);
+  trick.add(queen.of(Suit.Hearts), player2);
+  trick.add(queen.of(Suit.Clubs), player3);
+  trick.add(queen.of(Suit.Diamonds), player4);
 
   expect(trick.isFinished()).toBeTruthy();
 });
 
 test("should find card played by player", () => {
   const trick = new Trick(players);
-  const cardToBePlayed = queen.of(suits.spades);
+  const cardToBePlayed = queen.of(Suit.Spades);
 
   trick.add(cardToBePlayed, player1);
 
@@ -52,8 +52,8 @@ test("should prohibit multiple cards from same player", () => {
   const trick = new Trick(players);
 
   function invalidMove() {
-    trick.add(queen.of(suits.spades), player2);
-    trick.add(queen.of(suits.clubs), player2);
+    trick.add(queen.of(Suit.Spades), player2);
+    trick.add(queen.of(Suit.Clubs), player2);
   }
 
   expect(invalidMove).toThrowError(
@@ -64,10 +64,10 @@ test("should prohibit multiple cards from same player", () => {
 test("should find base card of a trick", () => {
   const trick = new Trick(players);
 
-  const expectedBaseCard = queen.of(suits.spades);
+  const expectedBaseCard = queen.of(Suit.Spades);
 
   trick.add(expectedBaseCard, player1);
-  trick.add(queen.of(suits.clubs), player2);
+  trick.add(queen.of(Suit.Clubs), player2);
 
   expect(trick.baseCard()).toEqual(expectedBaseCard);
 });
@@ -87,10 +87,10 @@ test("winner for an empty trick should be undefined", () => {
 test("should find winner for a finished trick", () => {
   const trick = new Trick(players);
 
-  trick.add(king.of(suits.hearts), player2);
-  trick.add(ten.of(suits.clubs), player3);
-  trick.add(king.of(suits.hearts), player4);
-  trick.add(ace.of(suits.hearts), player1);
+  trick.add(king.of(Suit.Hearts), player2);
+  trick.add(ten.of(Suit.Clubs), player3);
+  trick.add(king.of(Suit.Hearts), player4);
+  trick.add(ace.of(Suit.Hearts), player1);
 
   expect(trick.winner()).toEqual(player1);
 });
@@ -98,10 +98,10 @@ test("should find winner for a finished trick", () => {
 test("should find winner for a finished trick - clubs", () => {
   const trick = new Trick(players);
 
-  trick.add(king.of(suits.clubs), player2);
-  trick.add(ten.of(suits.spades), player3);
-  trick.add(king.of(suits.clubs), player4);
-  trick.add(ace.of(suits.clubs), player1);
+  trick.add(king.of(Suit.Clubs), player2);
+  trick.add(ten.of(Suit.Spades), player3);
+  trick.add(king.of(Suit.Clubs), player4);
+  trick.add(ace.of(Suit.Clubs), player1);
 
   expect(trick.winner()).toEqual(player1);
 });
@@ -109,10 +109,10 @@ test("should find winner for a finished trick - clubs", () => {
 test("should find winner for a finished trick - trumps", () => {
   const trick = new Trick(players);
 
-  trick.add(king.of(suits.clubs), player2);
-  trick.add(ace.of(suits.clubs), player3);
-  trick.add(king.of(suits.diamonds), player4);
-  trick.add(ten.of(suits.clubs), player1);
+  trick.add(king.of(Suit.Clubs), player2);
+  trick.add(ace.of(Suit.Clubs), player3);
+  trick.add(king.of(Suit.Diamonds), player4);
+  trick.add(ten.of(Suit.Clubs), player1);
 
   expect(trick.winner()).toEqual(player4);
 });
@@ -120,8 +120,8 @@ test("should find winner for a finished trick - trumps", () => {
 test("should find winner for an unfinished trick - non-trumps", () => {
   const trick = new Trick(players);
 
-  trick.add(ten.of(suits.spades), player3);
-  trick.add(ace.of(suits.hearts), player4);
+  trick.add(ten.of(Suit.Spades), player3);
+  trick.add(ace.of(Suit.Hearts), player4);
 
   expect(trick.winner()).toEqual(player3);
 });
@@ -129,9 +129,9 @@ test("should find winner for an unfinished trick - non-trumps", () => {
 test("should find winner for an unfinished trick", () => {
   const trick = new Trick(players);
 
-  trick.add(queen.of(suits.spades), player3);
-  trick.add(queen.of(suits.diamonds), player4);
-  trick.add(queen.of(suits.clubs), player1);
+  trick.add(queen.of(Suit.Spades), player3);
+  trick.add(queen.of(Suit.Diamonds), player4);
+  trick.add(queen.of(Suit.Clubs), player1);
 
   expect(trick.winner()).toEqual(player1);
 });
@@ -139,10 +139,10 @@ test("should find winner for an unfinished trick", () => {
 test("should return points in a trick", () => {
   const trick = new Trick(players);
 
-  trick.add(queen.of(suits.spades), player3);
-  trick.add(queen.of(suits.diamonds), player4);
-  trick.add(queen.of(suits.clubs), player1);
-  trick.add(queen.of(suits.clubs), player2);
+  trick.add(queen.of(Suit.Spades), player3);
+  trick.add(queen.of(Suit.Diamonds), player4);
+  trick.add(queen.of(Suit.Clubs), player1);
+  trick.add(queen.of(Suit.Clubs), player2);
 
   expect(trick.points()).toEqual(12);
 });
@@ -160,10 +160,10 @@ describe("extras", () => {
   test("should find Doppelkopf", () => {
     const trick = new Trick(players);
 
-    trick.add(ten.of(suits.spades), player3);
-    trick.add(ten.of(suits.spades), player4);
-    trick.add(ace.of(suits.spades), player1);
-    trick.add(ace.of(suits.spades), player2);
+    trick.add(ten.of(Suit.Spades), player3);
+    trick.add(ten.of(Suit.Spades), player4);
+    trick.add(ace.of(Suit.Spades), player1);
+    trick.add(ace.of(Suit.Spades), player2);
 
     expect(trick.extras()).toEqual([extras.doppelkopf]);
   });
@@ -171,10 +171,10 @@ describe("extras", () => {
   test("should catch Fuchs", () => {
     const trick = new Trick(players);
 
-    trick.add(ten.of(suits.hearts), player3);
-    trick.add(king.of(suits.spades), player4);
-    trick.add(ace.of(suits.diamonds), player1);
-    trick.add(ace.of(suits.spades), player2);
+    trick.add(ten.of(Suit.Hearts), player3);
+    trick.add(king.of(Suit.Spades), player4);
+    trick.add(ace.of(Suit.Diamonds), player1);
+    trick.add(ace.of(Suit.Spades), player2);
 
     expect(trick.extras()).toEqual([extras.fox]);
   });
@@ -182,10 +182,10 @@ describe("extras", () => {
   test("should catch two Füchse", () => {
     const trick = new Trick(players);
 
-    trick.add(ten.of(suits.hearts), player3);
-    trick.add(king.of(suits.spades), player4);
-    trick.add(ace.of(suits.diamonds), player1);
-    trick.add(ace.of(suits.diamonds), player2);
+    trick.add(ten.of(Suit.Hearts), player3);
+    trick.add(king.of(Suit.Spades), player4);
+    trick.add(ace.of(Suit.Diamonds), player1);
+    trick.add(ace.of(Suit.Diamonds), player2);
 
     expect(trick.extras()).toEqual([extras.fox, extras.fox]);
   });
@@ -193,10 +193,10 @@ describe("extras", () => {
   test("should see two Füchse in the trick, catching one", () => {
     const trick = new Trick(players);
 
-    trick.add(ten.of(suits.hearts), player3);
-    trick.add(ace.of(suits.diamonds), player4);
-    trick.add(ace.of(suits.diamonds), player1);
-    trick.add(king.of(suits.spades), player2);
+    trick.add(ten.of(Suit.Hearts), player3);
+    trick.add(ace.of(Suit.Diamonds), player4);
+    trick.add(ace.of(Suit.Diamonds), player1);
+    trick.add(king.of(Suit.Spades), player2);
 
     expect(trick.extras()).toEqual([extras.fox]);
   });
@@ -204,10 +204,10 @@ describe("extras", () => {
   test("should not detect charlie if it's not the last trick", () => {
     const trick = new Trick(players);
 
-    trick.add(jack.of(suits.hearts), player3);
-    trick.add(jack.of(suits.clubs), player4);
-    trick.add(ten.of(suits.hearts), player1);
-    trick.add(queen.of(suits.spades), player2);
+    trick.add(jack.of(Suit.Hearts), player3);
+    trick.add(jack.of(Suit.Clubs), player4);
+    trick.add(ten.of(Suit.Hearts), player1);
+    trick.add(queen.of(Suit.Spades), player2);
 
     expect(trick.extras()).toEqual([]);
   });
@@ -216,10 +216,10 @@ describe("extras", () => {
     const trick = new Trick(players);
     trick.setLastTrickInRound();
 
-    trick.add(jack.of(suits.hearts), player3);
-    trick.add(jack.of(suits.clubs), player4);
-    trick.add(ten.of(suits.hearts), player1);
-    trick.add(queen.of(suits.spades), player2);
+    trick.add(jack.of(Suit.Hearts), player3);
+    trick.add(jack.of(Suit.Clubs), player4);
+    trick.add(ten.of(Suit.Hearts), player1);
+    trick.add(queen.of(Suit.Spades), player2);
 
     expect(trick.extras()).toEqual([extras.charlie_caught]);
   });
@@ -228,10 +228,10 @@ describe("extras", () => {
     const trick = new Trick(players);
     trick.setLastTrickInRound();
 
-    trick.add(jack.of(suits.clubs), player3);
-    trick.add(jack.of(suits.clubs), player4);
-    trick.add(ten.of(suits.hearts), player1);
-    trick.add(queen.of(suits.spades), player2);
+    trick.add(jack.of(Suit.Clubs), player3);
+    trick.add(jack.of(Suit.Clubs), player4);
+    trick.add(ten.of(Suit.Hearts), player1);
+    trick.add(queen.of(Suit.Spades), player2);
 
     expect(trick.extras()).toEqual([
       extras.charlie_caught,
@@ -243,10 +243,10 @@ describe("extras", () => {
     const trick = new Trick(players);
     trick.setLastTrickInRound();
 
-    trick.add(jack.of(suits.diamonds), player3);
-    trick.add(jack.of(suits.diamonds), player4);
-    trick.add(ten.of(suits.hearts), player1);
-    trick.add(jack.of(suits.clubs), player2);
+    trick.add(jack.of(Suit.Diamonds), player3);
+    trick.add(jack.of(Suit.Diamonds), player4);
+    trick.add(ten.of(Suit.Hearts), player1);
+    trick.add(jack.of(Suit.Clubs), player2);
 
     expect(trick.extras()).toEqual([]);
   });
@@ -255,10 +255,10 @@ describe("extras", () => {
     const trick = new Trick(players);
     trick.setLastTrickInRound();
 
-    trick.add(jack.of(suits.diamonds), player3);
-    trick.add(jack.of(suits.clubs), player4);
-    trick.add(ten.of(suits.hearts), player1);
-    trick.add(jack.of(suits.clubs), player2);
+    trick.add(jack.of(Suit.Diamonds), player3);
+    trick.add(jack.of(Suit.Clubs), player4);
+    trick.add(ten.of(Suit.Hearts), player1);
+    trick.add(jack.of(Suit.Clubs), player2);
 
     expect(trick.extras()).toEqual([extras.charlie_caught]);
   });
@@ -267,10 +267,10 @@ describe("extras", () => {
     const trick = new Trick(players);
     trick.setLastTrickInRound();
 
-    trick.add(jack.of(suits.diamonds), player3);
-    trick.add(jack.of(suits.diamonds), player4);
-    trick.add(ten.of(suits.spades), player1);
-    trick.add(jack.of(suits.clubs), player2);
+    trick.add(jack.of(Suit.Diamonds), player3);
+    trick.add(jack.of(Suit.Diamonds), player4);
+    trick.add(ten.of(Suit.Spades), player1);
+    trick.add(jack.of(Suit.Clubs), player2);
 
     expect(trick.extras()).toEqual([extras.charlie]);
   });
@@ -279,10 +279,10 @@ describe("extras", () => {
     const trick = new Trick(players);
     trick.setLastTrickInRound();
 
-    trick.add(jack.of(suits.diamonds), player3);
-    trick.add(jack.of(suits.clubs), player4);
-    trick.add(ten.of(suits.spades), player1);
-    trick.add(jack.of(suits.clubs), player2);
+    trick.add(jack.of(Suit.Diamonds), player3);
+    trick.add(jack.of(Suit.Clubs), player4);
+    trick.add(ten.of(Suit.Spades), player1);
+    trick.add(jack.of(Suit.Clubs), player2);
 
     expect(trick.extras()).toEqual([extras.charlie_caught, extras.charlie]);
   });
@@ -291,10 +291,10 @@ describe("extras", () => {
     const trick = new Trick(players);
     trick.setLastTrickInRound();
 
-    trick.add(jack.of(suits.diamonds), player3);
-    trick.add(jack.of(suits.clubs), player4);
-    trick.add(ace.of(suits.diamonds), player1);
-    trick.add(jack.of(suits.clubs), player2);
+    trick.add(jack.of(Suit.Diamonds), player3);
+    trick.add(jack.of(Suit.Clubs), player4);
+    trick.add(ace.of(Suit.Diamonds), player1);
+    trick.add(jack.of(Suit.Clubs), player2);
 
     expect(trick.extras()).toEqual([
       extras.fox,

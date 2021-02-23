@@ -7,7 +7,7 @@
 
 <script>
 import Card from "@/components/Card";
-import { ace, king, ten, suits } from "@/models/card";
+import { ace, king, ten, Suit } from "@/models/card";
 
 export default {
   name: "AllNonTrumps",
@@ -15,14 +15,14 @@ export default {
   data() {
     return {
       cards: [
-        ace.of(suits.clubs),
-        ten.of(suits.clubs),
-        king.of(suits.clubs),
-        ace.of(suits.spades),
-        ten.of(suits.spades),
-        king.of(suits.spades),
-        ace.of(suits.hearts),
-        king.of(suits.hearts)
+        ace.of(Suit.Clubs),
+        ten.of(Suit.Clubs),
+        king.of(Suit.Clubs),
+        ace.of(Suit.Spades),
+        ten.of(Suit.Spades),
+        king.of(Suit.Spades),
+        ace.of(Suit.Hearts),
+        king.of(Suit.Hearts)
       ]
     };
   }

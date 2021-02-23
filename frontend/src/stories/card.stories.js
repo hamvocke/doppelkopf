@@ -13,8 +13,8 @@ let i18nOpts = {
 
 i18nOpts["messages"]["de"] = locale;
 
-let queenOfSpades = queen.of(suits.spades);
-let tenOfHearts = ten.of(suits.hearts);
+let queenOfSpades = queen.of(Suit.Spades);
+let tenOfHearts = ten.of(Suit.Hearts);
 
 export default {
   title: "Card"

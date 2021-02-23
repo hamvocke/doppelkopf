@@ -1,6 +1,6 @@
 import Trick from "@/components/Trick";
 import { Game } from "@/models/game";
-import { ace, suits } from "@/models/card";
+import { ace, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
 
 config.mocks["$t"] = () => {};
@@ -21,7 +21,7 @@ describe("Trick.vue", () => {
   });
 
   test("should render cards in current trick", () => {
-    trick.add(ace.of(suits.hearts), game.players[0]);
+    trick.add(ace.of(Suit.Hearts), game.players[0]);
 
     const wrapper = mount(Trick, { propsData: { currentTrick: trick } });
 

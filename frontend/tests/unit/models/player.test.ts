@@ -2,7 +2,7 @@ import { Player } from "@/models/player";
 import { Game } from "@/models/game";
 import { Hand } from "@/models/hand";
 import { PlayedCard } from "@/models/playedCard";
-import { king, queen, ten, suits, Card, cardOrder } from "@/models/card";
+import { king, queen, ten, Suit, Card, cardOrder } from "@/models/card";
 import { TrickStack } from "@/models/trickStack";
 import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
@@ -42,22 +42,22 @@ test("player has a trick stack", () => {
 });
 
 test("should belong to re party", () => {
-  player.hand = new Hand([queen.of(suits.clubs)]);
+  player.hand = new Hand([queen.of(Suit.Clubs)]);
 
   expect(player.isRe()).toBe(true);
   expect(player.isKontra()).toBe(false);
 });
 
 test("should belong to kontra party", () => {
-  player.hand = new Hand([queen.of(suits.spades)]);
+  player.hand = new Hand([queen.of(Suit.Spades)]);
 
   expect(player.isRe()).toBe(false);
   expect(player.isKontra()).toBe(true);
 });
 
 test("player can play card from hand", () => {
-  const kingOnHand = king.of(suits.diamonds);
-  const queenOnHand = queen.of(suits.spades);
+  const kingOnHand = king.of(Suit.Diamonds);
+  const queenOnHand = queen.of(Suit.Spades);
   player.hand = new Hand([kingOnHand, queenOnHand]);
 
   player.play(kingOnHand);
@@ -68,7 +68,7 @@ test("player can play card from hand", () => {
 
 test("should move to next player after playing a card", () => {
   player.game!.currentRound.nextPlayer = jest.fn();
-  const kingOnHand = king.of(suits.diamonds);
+  const kingOnHand = king.of(Suit.Diamonds);
   player.hand = new Hand([kingOnHand]);
 
   player.play(kingOnHand);
@@ -79,7 +79,7 @@ test("should move to next player after playing a card", () => {
 test("should trigger next move if autoplay option is enabled", () => {
   options.autoplay = true;
   player.game!.currentRound.nextMove = jest.fn();
-  const kingOnHand = king.of(suits.diamonds);
+  const kingOnHand = king.of(Suit.Diamonds);
   player.hand = new Hand([kingOnHand]);
 
   player.play(kingOnHand);
@@ -91,7 +91,7 @@ test("should trigger next move if autoplay option is enabled", () => {
 test("should not trigger next move if autoplay option is disabled", () => {
   options.autoplay = false;
   player.game!.currentRound.nextMove = jest.fn();
-  const kingOnHand = king.of(suits.diamonds);
+  const kingOnHand = king.of(Suit.Diamonds);
   player.hand = new Hand([kingOnHand]);
 
   player.play(kingOnHand);
@@ -101,7 +101,7 @@ test("should not trigger next move if autoplay option is disabled", () => {
 });
 
 test("playing a card adds it to the current trick", () => {
-  const queenOnHand = queen.of(suits.spades);
+  const queenOnHand = queen.of(Suit.Spades);
   player.hand = new Hand([queenOnHand]);
 
   player.play(queenOnHand);
@@ -112,10 +112,10 @@ test("playing a card adds it to the current trick", () => {
 });
 
 test("player cannot play card that is not on their hand", () => {
-  player.hand = new Hand([king.of(suits.diamonds)]);
+  player.hand = new Hand([king.of(Suit.Diamonds)]);
 
   function invalidMove() {
-    player.play(queen.of(suits.diamonds));
+    player.play(queen.of(Suit.Diamonds));
   }
 
   expect(invalidMove).toThrowError(
@@ -124,10 +124,10 @@ test("player cannot play card that is not on their hand", () => {
 });
 
 test("player cannot play undefined card", () => {
-  player.hand = new Hand([king.of(suits.diamonds)]);
+  player.hand = new Hand([king.of(Suit.Diamonds)]);
 
   function invalidMove() {
-    player.play(king.of(suits.clubs));
+    player.play(king.of(Suit.Clubs));
   }
 
   expect(invalidMove).toThrowError(
@@ -137,7 +137,7 @@ test("player cannot play undefined card", () => {
 
 test("player can win a trick", () => {
   const trick = new Trick(Array.of(player));
-  trick.add(king.of(suits.diamonds), player);
+  trick.add(king.of(Suit.Diamonds), player);
 
   player.win(trick);
 
@@ -145,9 +145,9 @@ test("player can win a trick", () => {
 });
 
 test("should autoplay a card", () => {
-  const queenOnHand = queen.of(suits.spades);
-  const kingOnHand = king.of(suits.diamonds);
-  player.game!.currentTrick.baseCard = () => queen.of(suits.diamonds);
+  const queenOnHand = queen.of(Suit.Spades);
+  const kingOnHand = king.of(Suit.Diamonds);
+  player.game!.currentTrick.baseCard = () => queen.of(Suit.Diamonds);
   player.hand = new Hand([queenOnHand, kingOnHand]);
   player.behavior = {
     cardToPlay: jest.fn(() => kingOnHand),
@@ -178,7 +178,7 @@ test("should try to make an announcement", () => {
 });
 
 test("should not play a card if its not the players turn", () => {
-  const queenOnHand = queen.of(suits.spades);
+  const queenOnHand = queen.of(Suit.Spades);
   player.hand = new Hand([queenOnHand]);
   game.currentRound.waitingForPlayer = () => game.players[1];
 
@@ -188,7 +188,7 @@ test("should not play a card if its not the players turn", () => {
 });
 
 test("should show notification if trying to play a card when its not your turn", () => {
-  const queenOnHand = queen.of(suits.spades);
+  const queenOnHand = queen.of(Suit.Spades);
   player.hand = new Hand([queenOnHand]);
   game.currentRound.waitingForPlayer = () => game.players[1];
 
@@ -198,11 +198,11 @@ test("should show notification if trying to play a card when its not your turn",
 });
 
 test("should not play card and show notification if trying to play an invalid card", () => {
-  const queenOnHand = queen.of(suits.spades);
-  const tenOnHand = ten.of(suits.spades);
+  const queenOnHand = queen.of(Suit.Spades);
+  const tenOnHand = ten.of(Suit.Spades);
   player.hand = new Hand([queenOnHand, tenOnHand]);
   game.currentRound.waitingForPlayer = () => player;
-  game.currentTrick.baseCard = () => ten.of(suits.spades);
+  game.currentTrick.baseCard = () => ten.of(Suit.Spades);
 
   player.play(queenOnHand);
 
@@ -211,19 +211,19 @@ test("should not play card and show notification if trying to play an invalid ca
 });
 
 test("should validate playable cards", () => {
-  const queenOnHand = queen.of(suits.spades);
-  const tenOnHand = ten.of(suits.spades);
+  const queenOnHand = queen.of(Suit.Spades);
+  const tenOnHand = ten.of(Suit.Spades);
   player.hand = new Hand([queenOnHand, tenOnHand]);
 
-  game.currentTrick.baseCard = () => ten.of(suits.spades);
+  game.currentTrick.baseCard = () => ten.of(Suit.Spades);
 
   expect(player.canPlay(queenOnHand)).toBe(false);
   expect(player.canPlay(tenOnHand)).toBe(true);
 });
 
 test("should validate playable cards if no card has been played yet", () => {
-  const queenOnHand = queen.of(suits.spades);
-  const tenOnHand = ten.of(suits.spades);
+  const queenOnHand = queen.of(Suit.Spades);
+  const tenOnHand = ten.of(Suit.Spades);
   player.hand = new Hand([queenOnHand, tenOnHand]);
 
   game.currentTrick.baseCard = () => undefined;
@@ -234,10 +234,10 @@ test("should validate playable cards if no card has been played yet", () => {
 
 test("should clear trick stack when resetting player", () => {
   const trick = new Trick(game.players);
-  trick.add(queen.of(suits.clubs), game.players[0]);
-  trick.add(queen.of(suits.spades), game.players[1]);
-  trick.add(queen.of(suits.hearts), game.players[2]);
-  trick.add(queen.of(suits.diamonds), game.players[3]);
+  trick.add(queen.of(Suit.Clubs), game.players[0]);
+  trick.add(queen.of(Suit.Spades), game.players[1]);
+  trick.add(queen.of(Suit.Hearts), game.players[2]);
+  trick.add(queen.of(Suit.Diamonds), game.players[3]);
   player.win(trick);
 
   expect(player.trickStack).not.toEqual(new TrickStack());
@@ -256,7 +256,7 @@ test("should clear announcements when resetting player", () => {
 
 describe("announcements", () => {
   test("should announce", () => {
-    player.hand = aHandWith(10, queen.of(suits.clubs));
+    player.hand = aHandWith(10, queen.of(Suit.Clubs));
 
     player.announce(Announcement.Re);
 
@@ -264,7 +264,7 @@ describe("announcements", () => {
   });
 
   test("should validate announcement", () => {
-    player.hand = aHandWith(7, queen.of(suits.clubs));
+    player.hand = aHandWith(7, queen.of(Suit.Clubs));
 
     let failingAnnouncement = () => player.announce(Announcement.No90);
 
@@ -272,7 +272,7 @@ describe("announcements", () => {
   });
 
   test("should automatically announce previous steps", () => {
-    player.hand = aHandWith(10, queen.of(suits.clubs));
+    player.hand = aHandWith(10, queen.of(Suit.Clubs));
 
     player.announce(Announcement.NoPoints);
 
@@ -288,7 +288,7 @@ describe("announcements", () => {
   });
 
   test("should be able to announce 're' when player is re", () => {
-    player.hand = aHandWith(10, queen.of(suits.clubs));
+    player.hand = aHandWith(10, queen.of(Suit.Clubs));
 
     let possibleAnnouncements = player.possibleAnnouncements();
 
@@ -303,7 +303,7 @@ describe("announcements", () => {
   });
 
   test("should be able to announce 'kontra' when player is kontra", () => {
-    player.hand = aHandWithout(9, queen.of(suits.clubs));
+    player.hand = aHandWithout(9, queen.of(Suit.Clubs));
 
     let possibleAnnouncements = player.possibleAnnouncements();
 
@@ -385,7 +385,7 @@ describe("announcements", () => {
   test.each(announcementThreholds)(
     "should respect announcement thresholds",
     ({ numberOfCards, previousAnnouncements, expectedAnnouncements }) => {
-      player.hand = aHandWith(numberOfCards, queen.of(suits.clubs));
+      player.hand = aHandWith(numberOfCards, queen.of(Suit.Clubs));
       previousAnnouncements.forEach(a => player.announcements.add(a));
 
       const possibleAnnouncements = player.possibleAnnouncements();
@@ -395,7 +395,7 @@ describe("announcements", () => {
   );
 
   test("should not be able to make same announcement twice", () => {
-    player.hand = aHandWith(9, queen.of(suits.clubs));
+    player.hand = aHandWith(9, queen.of(Suit.Clubs));
     [
       Announcement.Re,
       Announcement.No90,

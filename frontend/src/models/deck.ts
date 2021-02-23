@@ -1,4 +1,4 @@
-import { Card, ranks, suits } from "@/models/card";
+import { Card, Rank, Suit } from "@/models/card";
 import { shuffle, flatten } from "lodash-es";
 
 export class Deck {
@@ -10,16 +10,16 @@ export class Deck {
 }
 
 export const allCards = flatten(
-  Object.values(ranks).map(rank => {
+  Object.values(Rank).map(rank => {
     return [
-      new Card(rank, suits.clubs, 0),
-      new Card(rank, suits.spades, 0),
-      new Card(rank, suits.hearts, 0),
-      new Card(rank, suits.diamonds, 0),
-      new Card(rank, suits.clubs, 1),
-      new Card(rank, suits.spades, 1),
-      new Card(rank, suits.hearts, 1),
-      new Card(rank, suits.diamonds, 1)
+      new Card(rank, Suit.Clubs, 0),
+      new Card(rank, Suit.Spades, 0),
+      new Card(rank, Suit.Hearts, 0),
+      new Card(rank, Suit.Diamonds, 0),
+      new Card(rank, Suit.Clubs, 1),
+      new Card(rank, Suit.Spades, 1),
+      new Card(rank, Suit.Hearts, 1),
+      new Card(rank, Suit.Diamonds, 1)
     ];
   })
 );

@@ -1,7 +1,7 @@
 import { Game } from "@/models/game";
 import { Round } from "@/models/round";
 import { Notifier } from "@/models/notifier";
-import { jack, suits, ace } from "@/models/card";
+import { jack, Suit, ace } from "@/models/card";
 import { options } from "@/models/options";
 import { Hand } from "@/models/hand";
 import { TrickStack } from "@/models/trickStack";
@@ -32,10 +32,10 @@ test("game starts with an empty trick", () => {
 
 test("should give current trick to winner", async () => {
   expect.assertions(1);
-  round.currentTrick.add(jack.of(suits.spades), round.players[2]);
-  round.currentTrick.add(jack.of(suits.hearts), round.players[3]);
-  round.currentTrick.add(jack.of(suits.diamonds), round.players[1]);
-  round.currentTrick.add(jack.of(suits.clubs), round.players[0]);
+  round.currentTrick.add(jack.of(Suit.Spades), round.players[2]);
+  round.currentTrick.add(jack.of(Suit.Hearts), round.players[3]);
+  round.currentTrick.add(jack.of(Suit.Diamonds), round.players[1]);
+  round.currentTrick.add(jack.of(Suit.Clubs), round.players[0]);
 
   const promise = await round.finishTrick();
   jest.runAllTimers();
@@ -48,10 +48,10 @@ test("should trigger next move when finishing trick", async () => {
   options.autoplay = true;
 
   round.players[1].autoplay = jest.fn();
-  round.currentTrick.add(jack.of(suits.clubs), round.players[1]);
-  round.currentTrick.add(jack.of(suits.spades), round.players[2]);
-  round.currentTrick.add(jack.of(suits.hearts), round.players[3]);
-  round.currentTrick.add(jack.of(suits.diamonds), round.players[0]);
+  round.currentTrick.add(jack.of(Suit.Clubs), round.players[1]);
+  round.currentTrick.add(jack.of(Suit.Spades), round.players[2]);
+  round.currentTrick.add(jack.of(Suit.Hearts), round.players[3]);
+  round.currentTrick.add(jack.of(Suit.Diamonds), round.players[0]);
 
   const promise = await round.finishTrick();
   jest.runAllTimers();
@@ -104,10 +104,10 @@ test("should not autoplay if round is finished", () => {
 
 test("should show extras as flash message", async () => {
   expect.assertions(1);
-  round.currentTrick.add(ace.of(suits.clubs), round.players[1]);
-  round.currentTrick.add(ace.of(suits.spades), round.players[2]);
-  round.currentTrick.add(ace.of(suits.hearts), round.players[3]);
-  round.currentTrick.add(ace.of(suits.diamonds), round.players[0]);
+  round.currentTrick.add(ace.of(Suit.Clubs), round.players[1]);
+  round.currentTrick.add(ace.of(Suit.Spades), round.players[2]);
+  round.currentTrick.add(ace.of(Suit.Hearts), round.players[3]);
+  round.currentTrick.add(ace.of(Suit.Diamonds), round.players[0]);
 
   const notifier = new Notifier();
   notifier.flash = jest.fn();
@@ -130,10 +130,10 @@ describe("player order", () => {
 
   test("should put player on top of player order if player wins a trick", async () => {
     expect.assertions(1);
-    round.currentTrick.add(jack.of(suits.spades), round.players[2]);
-    round.currentTrick.add(jack.of(suits.clubs), round.players[3]);
-    round.currentTrick.add(jack.of(suits.diamonds), round.players[1]);
-    round.currentTrick.add(jack.of(suits.clubs), round.players[0]);
+    round.currentTrick.add(jack.of(Suit.Spades), round.players[2]);
+    round.currentTrick.add(jack.of(Suit.Clubs), round.players[3]);
+    round.currentTrick.add(jack.of(Suit.Diamonds), round.players[1]);
+    round.currentTrick.add(jack.of(Suit.Clubs), round.players[0]);
 
     const promise = await round.finishTrick();
     jest.runAllTimers();
@@ -172,7 +172,7 @@ describe("finish round", () => {
     round.players[0].hand.cards = [];
     round.players[1].hand.cards = [];
     round.players[2].hand.cards = [];
-    round.players[3].hand.cards = [jack.of(suits.hearts)];
+    round.players[3].hand.cards = [jack.of(Suit.Hearts)];
 
     expect(round.noMoreCardsLeft()).toBe(false);
   });
@@ -216,7 +216,7 @@ describe("finish round", () => {
 
   test("should throw exception if round is not yet finished", async () => {
     expect.assertions(1);
-    round.players[0].hand.cards = [jack.of(suits.hearts)];
+    round.players[0].hand.cards = [jack.of(Suit.Hearts)];
 
     await expect(round.finishRound()).rejects.toThrow(
       `Can't finish a round before all cards have been played`
@@ -232,10 +232,10 @@ function setupGameKontraWins() {
 
   round.players[3].win = jest.fn();
 
-  round.currentTrick.add(jack.of(suits.hearts), round.players[0]);
-  round.currentTrick.add(jack.of(suits.spades), round.players[1]);
-  round.currentTrick.add(jack.of(suits.hearts), round.players[2]);
-  round.currentTrick.add(jack.of(suits.clubs), round.players[3]);
+  round.currentTrick.add(jack.of(Suit.Hearts), round.players[0]);
+  round.currentTrick.add(jack.of(Suit.Spades), round.players[1]);
+  round.currentTrick.add(jack.of(Suit.Hearts), round.players[2]);
+  round.currentTrick.add(jack.of(Suit.Clubs), round.players[3]);
 
   setupNoCardsLeft();
 
