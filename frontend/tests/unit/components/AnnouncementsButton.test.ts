@@ -1,4 +1,4 @@
-import AnnouncementsButton from "@/components/AnnouncementsButton";
+import AnnouncementsButton from "@/components/AnnouncementsButton.vue";
 import { Announcement } from "@/models/announcements";
 import { Game } from "@/models/game";
 import { mount, config } from "@vue/test-utils";
@@ -6,7 +6,7 @@ import { mount, config } from "@vue/test-utils";
 config.mocks["$t"] = () => {};
 config.mocks["$tc"] = () => {};
 
-let game;
+let game: Game;
 
 beforeEach(() => {
   game = Game.singlePlayer();
@@ -35,20 +35,19 @@ describe("AnnouncementsButton.vue", () => {
 
   test("should hide possible announcements after announcing", async () => {
     let player = game.players[0];
-    player.possibleAnnouncements = () => [Announcement.Re];
     const wrapper = mount(AnnouncementsButton, {
       propsData: { player: player }
     });
 
     await wrapper.find("button.toggle").trigger("click");
-    wrapper.find("div.dropdown button:first-child").trigger("click");
+    await wrapper.find("div.dropdown button:first-child").trigger("click");
 
     expect(wrapper.find("div.dropdown").isVisible()).toBe(false);
   });
 
   test("should hide entire button if no announcements can be made", () => {
     let player = game.players[0];
-    player.possibleAnnouncements = () => [];
+    player.possibleAnnouncements = () => new Set<Announcement>();
 
     const wrapper = mount(AnnouncementsButton, {
       propsData: { player: player }
