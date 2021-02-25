@@ -38,6 +38,8 @@
     "@storybook/vue": "^6.1.11",
     "@types/jest": "^24.0.19",
     "@types/lodash-es": "^4.17.4",
+    "@types/vue-clickaway": "^2.2.0",
+    "@types/vue-feather-icons": "^5.0.1",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.8",
