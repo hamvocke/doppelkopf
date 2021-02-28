@@ -5,21 +5,17 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "FlashMessage",
-  props: {
-    message: {
-      type: String,
-      required: true
-    },
-    icon: {
-      type: String,
-      required: false,
-      default: null
-    }
-  }
-};
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+
+@Component
+export default class FlashMessage extends Vue {
+  @Prop({ required: true })
+  message!: string;
+
+  @Prop({ default: undefined })
+  icon?: string;
+}
 </script>
 
 <style scoped>
