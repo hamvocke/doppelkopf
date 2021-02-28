@@ -52,53 +52,43 @@
   </div>
 </template>
 
-<script>
-import Hand from "./Hand";
-import TrickStack from "./TrickStack";
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import Hand from "./Hand.vue";
+import TrickStack from "./TrickStack.vue";
+import { Player as PlayerModel } from "@/models/player";
 import { playableCards } from "@/models/playableCardFinder";
 import { UsersIcon, FlagIcon, AwardIcon } from "vue-feather-icons";
+import { Card } from "@/models/card";
 
-export default {
-  name: "Player",
-  components: {
-    Hand,
-    TrickStack,
-    UsersIcon,
-    AwardIcon,
-    FlagIcon
-  },
-  props: {
-    player: {
-      type: Object,
-      required: true
-    }
-  },
-  data: function() {
-    return {
-      isCovered: !this.player.isHuman,
-      isHandSelectable: this.player.isHuman
-    };
-  },
-  computed: {
-    winner: function() {
-      return (
-        this.player.game.currentTrick.winner() == this.player &&
-        this.player.game.currentTrick.isFinished()
-      );
-    }
-  },
-  methods: {
-    play: function(card) {
-      this.player.play(card);
-    },
-    playable: function() {
-      return playableCards(
-        this.player.hand.cards,
-        this.player.game.currentTrick.baseCard()
-      );
-    }
+@Component({
+  components: { Hand, TrickStack, UsersIcon, AwardIcon, FlagIcon }
+})
+export default class Player extends Vue {
+  @Prop({ required: true })
+  player!: PlayerModel;
+
+  isCovered = !this.player.isHuman;
+  isHandSelectable = this.player.isHuman;
+
+  get winner() {
+    return (
+      this.player.game?.currentTrick.winner() == this.player &&
+      this.player.game?.currentTrick.isFinished()
+    );
   }
-};
+
+  play(card: Card) {
+    this.player.play(card);
+  }
+
+  playable() {
+    return playableCards(
+      this.player.hand.cards,
+      this.player.game?.currentTrick.baseCard()
+    );
+  }
+}
 </script>
 
 <style scoped>
