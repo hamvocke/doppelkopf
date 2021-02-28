@@ -32,24 +32,22 @@
   </div>
 </template>
 
-<script>
-import { Notifier } from "@/models/notifier";
-import FlashMessage from "@/components/FlashMessage";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { Notifier, Notification } from "@/models/notifier";
+import FlashMessage from "@/components/FlashMessage.vue";
 import { XIcon } from "vue-feather-icons";
 
 const notifier = new Notifier();
 
-export default {
-  name: "Notifications",
-  components: { FlashMessage, XIcon },
-  data: function() {
-    return {
-      stickies: notifier.stickies,
-      notifications: notifier.notifications,
-      flashMessages: notifier.flashMessages
-    };
-  }
-};
+@Component({
+  components: { FlashMessage, XIcon }
+})
+export default class Notifications extends Vue {
+  stickies: Notification[] = notifier.stickies;
+  notifications: Notification[] = notifier.notifications;
+  flashMessages: Notification[] = notifier.flashMessages;
+}
 </script>
 
 <style scoped>

@@ -55,7 +55,7 @@ export class Notifier {
   }
 }
 
-class Notification {
+export class Notification {
   id: string;
   text: string;
   args?: object;
