@@ -1,13 +1,14 @@
-import Controls from "@/components/Controls";
+import Controls from "@/components/Controls.vue";
 import { Game } from "@/models/game";
 import { ace, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
+import { Trick } from "@/models/trick";
 
 config.mocks["$t"] = () => {};
 config.mocks["$tc"] = () => {};
 
-let game;
-let trick;
+let game: Game;
+let trick: Trick;
 
 beforeEach(() => {
   game = Game.singlePlayer();
@@ -51,7 +52,7 @@ describe("Controls.vue", () => {
 
     wrapper.find("button.next").trigger("click");
 
-    expect(wrapper.emitted().nextTrick.length).toBe(1);
+    expect(wrapper.emitted().nextTrick?.length).toBe(1);
   });
 
   test("should not render finish button if there are still cards left on hands", () => {
@@ -85,6 +86,6 @@ describe("Controls.vue", () => {
 
     wrapper.find("button.finish").trigger("click");
 
-    expect(wrapper.emitted().finishRound.length).toBe(1);
+    expect(wrapper.emitted().finishRound?.length).toBe(1);
   });
 });
