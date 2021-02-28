@@ -1,8 +1,8 @@
-import LanguagePicker from "@/components/LanguagePicker";
+import LanguagePicker from "@/components/LanguagePicker.vue";
 import { mount, config } from "@vue/test-utils";
 
-config.mocks["$t"] = msg => msg;
-config.mocks["$tc"] = msg => msg;
+config.mocks["$t"] = (msg: string) => msg;
+config.mocks["$tc"] = (msg: string) => msg;
 config.mocks["$i18n"] = { locale: "en" };
 
 describe("LanguagePicker.vue", () => {
