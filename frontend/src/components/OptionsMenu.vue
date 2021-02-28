@@ -11,7 +11,7 @@
           <LanguagePicker />
         </div>
 
-        <div v-if="isDebug()" class="option">
+        <div v-if="config.Debug" class="option">
           <span class="label">Debug Mode</span>
           <div>
             Enabled
@@ -25,39 +25,23 @@
   </div>
 </template>
 
-<script>
-import LanguagePicker from "./LanguagePicker";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import LanguagePicker from "./LanguagePicker.vue";
 import { Config } from "@/models/config";
 import { SettingsIcon } from "vue-feather-icons";
 
-export default {
-  name: "OptionsMenu",
-  components: {
-    LanguagePicker,
-    SettingsIcon
-  },
-  props: {
-    isVisible: {
-      type: Boolean,
-      required: false,
-      default: false
-    }
-  },
-  data: function() {
-    return {
-      config: Config,
-      visible: this.isVisible
-    };
-  },
-  methods: {
-    toggleMenu: function() {
-      this.visible = !this.visible;
-    },
-    isDebug: function() {
-      return Config.debug;
-    }
+@Component({
+  components: { LanguagePicker, SettingsIcon }
+})
+export default class OptionsMenu extends Vue {
+  config = Config;
+  visible: boolean = false;
+
+  toggleMenu() {
+    this.visible = !this.visible;
   }
-};
+}
 </script>
 
 <style scoped>
