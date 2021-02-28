@@ -1,9 +1,9 @@
-import Card from "@/components/Card";
+import Card from "@/components/Card.vue";
 import { ace, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
 
-config.mocks["$t"] = key => key;
-config.mocks["$tc"] = key => key;
+config.mocks["$t"] = (key: string) => key;
+config.mocks["$tc"] = (key: string) => key;
 
 describe("Card.vue", () => {
   it("should render correct contents", () => {
