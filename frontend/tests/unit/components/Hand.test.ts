@@ -60,7 +60,7 @@ describe("Hand.vue", () => {
     expect(wrapper.find("div.placeholder").exists()).toBe(false);
   });
 
-  test.only("clicking on card should select card", async () => {
+  test("clicking on card should select card", async () => {
     const wrapper = mount(Hand, {
       propsData: { hand: kontraHand, playableCards: [], isSelectable: true }
     });
@@ -85,6 +85,6 @@ describe("Hand.vue", () => {
       .at(0)
       .trigger("click");
 
-    expect(wrapper.vm.$data.selectedCard).toBeUndefined();
+    expect(wrapper.vm.$data.selectedCard).toBe(null);
   });
 });
