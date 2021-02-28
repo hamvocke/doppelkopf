@@ -1,4 +1,4 @@
-import FlashMessage from "@/components/FlashMessage";
+import FlashMessage from "@/components/FlashMessage.vue";
 import { mount, config } from "@vue/test-utils";
 
 config.mocks["$t"] = () => {};
