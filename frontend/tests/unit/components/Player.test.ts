@@ -1,28 +1,30 @@
-import Player from "@/components/Player";
+import Player from "@/components/Player.vue";
 import { Game } from "@/models/game";
 import { ace, ten, Suit } from "@/models/card";
-import { mount, config } from "@vue/test-utils";
+import { shallowMount, config } from "@vue/test-utils";
 
-config.mocks["$t"] = key => key;
-config.mocks["$tc"] = msg => msg;
+config.mocks["$t"] = (key: string) => key;
+config.mocks["$tc"] = (msg: string) => msg;
 
 const game = Game.singlePlayer();
 
 describe("Player.vue", () => {
   test("should display player's name", () => {
     game.players[0].name = "some player";
-    const wrapper = mount(Player, { propsData: { player: game.players[0] } });
+    const wrapper = shallowMount(Player, {
+      propsData: { player: game.players[0] }
+    });
     expect(wrapper.find(".name").text()).toEqual("some player");
   });
 
   test("should play card", () => {
     const cards = [ace.of(Suit.Spades)];
     game.players[0].hand.cards = cards;
-    const wrapper = mount(Player, { propsData: { player: game.players[0] } });
+    shallowMount(Player, { propsData: { player: game.players[0] } });
 
     expect(game.players[0].hand.cards).toHaveLength(1);
 
-    wrapper.vm.play(cards[0]);
+    game.players[0].play(cards[0]);
 
     expect(game.players[0].hand.cards).toHaveLength(0);
   });
@@ -30,24 +32,30 @@ describe("Player.vue", () => {
   test("should hide cards for computer player", () => {
     game.players[0].isHuman = false;
     game.players[0].hand.cards = [ace.of(Suit.Spades)];
-    const wrapper = mount(Player, { propsData: { player: game.players[0] } });
+    const wrapper = shallowMount(Player, {
+      propsData: { player: game.players[0] }
+    });
 
-    expect(wrapper.vm.isCovered).toBe(true);
+    expect(wrapper.vm.$data.isCovered).toBe(true);
   });
 
   test("should make hand of computer player non-selectable", () => {
     game.players[0].isHuman = false;
 
-    const wrapper = mount(Player, { propsData: { player: game.players[0] } });
+    const wrapper = shallowMount(Player, {
+      propsData: { player: game.players[0] }
+    });
 
-    expect(wrapper.vm.isHandSelectable).toBe(false);
+    expect(wrapper.vm.$data.isHandSelectable).toBe(false);
   });
 
   test("should tell if hand is re", () => {
     game.players[0].isHuman = true;
     game.players[0].hand.isRe = () => true;
 
-    const wrapper = mount(Player, { propsData: { player: game.players[0] } });
+    const wrapper = shallowMount(Player, {
+      propsData: { player: game.players[0] }
+    });
 
     expect(wrapper.find("div.party").text()).toEqual("Re");
   });
@@ -56,7 +64,9 @@ describe("Player.vue", () => {
     game.players[0].isHuman = true;
     game.players[0].hand.isRe = () => false;
 
-    const wrapper = mount(Player, { propsData: { player: game.players[0] } });
+    const wrapper = shallowMount(Player, {
+      propsData: { player: game.players[0] }
+    });
 
     expect(wrapper.find("div.party").text()).toEqual("Kontra");
   });
@@ -65,38 +75,32 @@ describe("Player.vue", () => {
     game.players[0].isHuman = false;
     game.players[0].hand.isRe = () => false;
 
-    const wrapper = mount(Player, { propsData: { player: game.players[0] } });
+    const wrapper = shallowMount(Player, {
+      propsData: { player: game.players[0] }
+    });
 
     expect(wrapper.find("div.party").exists()).toBe(false);
   });
 
   test("should render winner", () => {
-    /*  Define new instance of the game within this scope. */
     let game = Game.singlePlayer();
-    const cards = [
-      ten.of(Suit.Hearts),
-      ace.of(Suit.Diamonds),
-      ace.of(Suit.Diamonds),
-      ten.of(Suit.Diamonds)
-    ];
-
-    game.players[0].hand.cards = [cards[0]];
-    game.players[1].hand.cards = [cards[1]];
-    game.players[2].hand.cards = [cards[2]];
-    game.players[3].hand.cards = [cards[3]];
+    game.players[0].hand.cards = [ten.of(Suit.Hearts)];
+    game.players[1].hand.cards = [ace.of(Suit.Diamonds)];
+    game.players[2].hand.cards = [ace.of(Suit.Diamonds)];
+    game.players[3].hand.cards = [ten.of(Suit.Diamonds)];
 
     game.players[0].play(game.players[0].hand.cards[0]);
     game.players[1].play(game.players[1].hand.cards[0]);
     game.players[2].play(game.players[2].hand.cards[0]);
     game.players[3].play(game.players[3].hand.cards[0]);
-    const wrapper = mount(Player, { propsData: { player: game.players[0] } });
+    const wrapper = shallowMount(Player, {
+      propsData: { player: game.players[0] }
+    });
 
-    expect(wrapper.vm.winner).toBe(true);
     expect(wrapper.find(".winner").exists()).toBe(true);
   });
 
   test("should not render winner if trick isn't finished", () => {
-    /*  Define new instance of the game within this scope. */
     let game = Game.singlePlayer();
     const cards = [
       ten.of(Suit.Hearts),
@@ -112,9 +116,10 @@ describe("Player.vue", () => {
 
     game.players[0].play(game.players[0].hand.cards[0]);
     game.players[1].play(game.players[1].hand.cards[0]);
-    const wrapper = mount(Player, { propsData: { player: game.players[0] } });
+    const wrapper = shallowMount(Player, {
+      propsData: { player: game.players[0] }
+    });
 
-    expect(wrapper.vm.winner).toBe(false);
     expect(wrapper.find(".winner").exists()).toBe(false);
   });
 });
