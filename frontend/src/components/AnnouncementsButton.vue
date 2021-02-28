@@ -48,13 +48,11 @@ export default class AnnouncementsButton extends Vue {
   }
 
   closeDropdown() {
-    console.log("imma close")
     this.isOpen = false;
   }
 
   announce(announcement: Announcement) {
     this.player.announce(announcement);
-    console.log("I announced");
     this.closeDropdown();
   }
 }
