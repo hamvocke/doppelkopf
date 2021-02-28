@@ -1,11 +1,11 @@
-import CopyText from "@/components/CopyText";
+import CopyText from "@/components/CopyText.vue";
 import { mount, config } from "@vue/test-utils";
 
 config.mocks["$t"] = () => {};
 config.mocks["$tc"] = () => {};
 
 jest.useFakeTimers();
-let mockClipboard;
+let mockClipboard: any;
 
 describe("CopyText.vue", () => {
   beforeEach(() => {
@@ -13,24 +13,28 @@ describe("CopyText.vue", () => {
     mockClipboard = {
       writeText: jest.fn().mockImplementation(() => Promise.resolve())
     };
-    global.navigator.clipboard = mockClipboard;
+    Object.assign(navigator, {
+      clipboard: mockClipboard
+    });
   });
 
   test("should show text", () => {
     const wrapper = mount(CopyText, {
       propsData: { text: "some text" }
     });
-    expect(wrapper.find(".text").element.value).toBe("some text");
+    expect((wrapper.find(".text").element as HTMLInputElement).value).toBe(
+      "some text"
+    );
   });
 
-  test("should copy text on copy press", () => {
+  test("should copy text on copy press", async () => {
     const wrapper = mount(CopyText, {
       propsData: { text: "some text" }
     });
 
     const button = wrapper.find("button");
 
-    button.trigger("click");
+    await button.trigger("click");
 
     expect(mockClipboard.writeText).toHaveBeenCalledWith("some text");
   });
@@ -42,11 +46,11 @@ describe("CopyText.vue", () => {
 
     const button = wrapper.find("button");
 
-    button.trigger("click");
+    await button.trigger("click");
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.icon.name).toBe("CheckIcon");
-    expect(wrapper.vm.buttonText).toBe("copied");
+    expect(wrapper.vm.$data.icon.name).toBe("CheckIcon");
+    expect(wrapper.vm.$data.buttonText).toBe("copied");
   });
 
   test("should reset button text after timeout", async () => {
@@ -56,11 +60,11 @@ describe("CopyText.vue", () => {
 
     const button = wrapper.find("button");
 
-    button.trigger("click");
+    await button.trigger("click");
     jest.runAllTimers();
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.buttonText).toBe("copy");
-    expect(wrapper.vm.icon.name).toBe("ClipboardIcon");
+    expect(wrapper.vm.$data.buttonText).toBe("copy");
+    expect(wrapper.vm.$data.icon.name).toBe("ClipboardIcon");
   });
 });
