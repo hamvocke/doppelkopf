@@ -13,7 +13,7 @@
           v-for="card in hand.cards"
           :key="card.cardId"
           :card="card"
-          :is-selected="isSelected(card)"
+          :is-selected="card === selectedCard"
           :is-covered="isCovered"
           :is-highlighted="highlight(card)"
           :position="position"
@@ -24,66 +24,50 @@
   </div>
 </template>
 
-<script>
-import Card from "./Card";
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import Card from "./Card.vue";
+import { Hand as HandModel } from "@/models/hand";
 
-export default {
-  name: "Hand",
-  components: {
-    Card
-  },
-  props: {
-    hand: {
-      type: Object,
-      required: true
-    },
-    isCovered: {
-      type: Boolean,
-      required: false
-    },
-    position: {
-      type: String,
-      required: false,
-      default: "not-set"
-    },
-    playableCards: {
-      type: Array,
-      required: true
-    },
-    isSelectable: {
-      type: Boolean,
-      required: false,
-      default: false
-    }
-  },
-  data: function() {
-    return {
-      selectedCard: {}
-    };
-  },
-  computed: {
-    isEmpty: function() {
-      return this.hand.cards.length === 0;
-    }
-  },
-  methods: {
-    isSelected: function(card) {
-      return card === this.selectedCard;
-    },
-    select: function(card) {
-      if (!this.isSelectable) return;
+@Component({
+  components: { Card }
+})
+export default class Hand extends Vue {
+  @Prop({ required: true })
+  hand!: HandModel;
 
-      if (this.selectedCard === card) {
-        this.$emit("play", card);
-      } else {
-        this.selectedCard = card;
-      }
-    },
-    highlight: function(card) {
-      return this.playableCards.includes(card);
+  @Prop()
+  isCovered!: boolean;
+
+  @Prop()
+  position!: string;
+
+  @Prop({ required: true })
+  playableCards!: Card[];
+
+  @Prop()
+  isSelectable!: boolean;
+
+  selectedCard: Card | null = null;
+
+  get isEmpty() {
+    return this.hand.cards.length === 0;
+  }
+
+  select(card: Card) {
+    if (!this.isSelectable) return;
+
+    if (this.selectedCard === card) {
+      this.$emit("play", card);
+    } else {
+      this.selectedCard = card;
     }
   }
-};
+
+  highlight(card: Card) {
+    return this.playableCards.includes(card);
+  }
+}
 </script>
 
 <style scoped>

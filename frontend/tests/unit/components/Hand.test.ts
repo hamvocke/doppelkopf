@@ -1,4 +1,4 @@
-import Hand from "@/components/Hand";
+import Hand from "@/components/Hand.vue";
 import { ace, queen, Suit } from "@/models/card";
 import { Hand as HandModel } from "@/models/hand";
 import { mount, config } from "@vue/test-utils";
@@ -60,46 +60,31 @@ describe("Hand.vue", () => {
     expect(wrapper.find("div.placeholder").exists()).toBe(false);
   });
 
-  test("should keep track of selected card", () => {
+  test.only("clicking on card should select card", async () => {
     const wrapper = mount(Hand, {
       propsData: { hand: kontraHand, playableCards: [], isSelectable: true }
     });
-    const cardToBeSelected = kontraHand.cards[0];
-    wrapper.vm.select(cardToBeSelected);
-    expect(wrapper.vm.selectedCard).toEqual(cardToBeSelected);
-  });
 
-  test("clicking on card should select card", () => {
-    const wrapper = mount(Hand, {
-      propsData: { hand: kontraHand, playableCards: [], isSelectable: true }
-    });
-    wrapper
+    await wrapper
       .findAll("div.card")
       .at(0)
       .trigger("click");
-    expect(wrapper.vm.selectedCard).toEqual(kontraHand.cards[0]);
+
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.vm.$data.selectedCard).toEqual(kontraHand.cards[0]);
   });
 
-  test("trigger play event when clicking on already selected card", () => {
+  test("should not select cards if hand is marked as not selectable", async () => {
     const wrapper = mount(Hand, {
-      propsData: { hand: kontraHand, playableCards: [], isSelectable: true }
+      propsData: { hand: kontraHand, playableCards: [], isSelectable: false }
     });
-    const card = kontraHand.cards[1];
 
-    wrapper.vm.select(card);
-    wrapper.vm.select(card);
-
-    expect(wrapper.emitted().play.length).toBe(1);
-  });
-
-  test("should not select cards if hand is marked as not selectable", () => {
-    const wrapper = mount(Hand, {
-      propsData: { hand: kontraHand, playableCards: [], selectable: false }
-    });
-    wrapper
+    await wrapper
       .findAll("div.card")
       .at(0)
       .trigger("click");
-    expect(wrapper.vm.selectedCard).toEqual({});
+
+    expect(wrapper.vm.$data.selectedCard).toBeUndefined();
   });
 });
