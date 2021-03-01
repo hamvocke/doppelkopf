@@ -134,6 +134,7 @@ export class Score {
     );
   }
 
+  // TODO: use enum for 'partyName' everywhere
   listExtras(partyName: string) {
     const allExtras = [];
     const partyPoints = this.parties[partyName].points();

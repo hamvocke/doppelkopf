@@ -1,17 +1,18 @@
-import Scorecard from "@/components/Scorecard";
+import Scorecard from "@/components/Scorecard.vue";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import { Player } from "@/models/player";
 import { re, kontra } from "@/models/party";
 import { extras } from "@/models/extras";
 import { ScoreBuilder } from "../../builders/scoreBuilder";
 import { mount, config } from "@vue/test-utils";
+import { Score } from "@/models/score";
 
-config.mocks["$t"] = key => key;
-config.mocks["$tc"] = (msg, count) => `${count} ${msg}`;
+config.mocks["$t"] = (key: string) => key;
+config.mocks["$tc"] = (msg: string, count: number) => `${count} ${msg}`;
 
-let players;
-let score;
-let scorecard;
+let players: Player[];
+let score: Score;
+let scorecard: ScorecardModel;
 
 function stubScoreHumanPlayerWins() {
   players = [
@@ -31,7 +32,7 @@ function stubScoreHumanPlayerWins() {
     .build();
 }
 
-function stubPlayer(name, party, points) {
+function stubPlayer(name: string, party: string, points: number) {
   const stubbedPlayer = new Player(name);
   stubbedPlayer.isRe = () => party === re;
   stubbedPlayer.isKontra = () => party !== re;
