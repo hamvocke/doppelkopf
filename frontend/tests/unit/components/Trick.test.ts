@@ -1,13 +1,14 @@
-import Trick from "@/components/Trick";
+import Trick from "@/components/Trick.vue";
 import { Game } from "@/models/game";
+import { Trick as TrickModel } from "@/models/trick";
 import { ace, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
 
 config.mocks["$t"] = () => {};
 config.mocks["$tc"] = () => {};
 
-let game;
-let trick;
+let game: Game;
+let trick: TrickModel;
 
 beforeEach(() => {
   game = Game.singlePlayer();
