@@ -27,41 +27,37 @@
   </div>
 </template>
 
-<script>
-import Player from "./Player";
-import Trick from "./Trick";
-import Controls from "./Controls";
-import Scorecard from "./Scorecard";
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import Player from "./Player.vue";
+import Trick from "./Trick.vue";
+import Controls from "./Controls.vue";
+import Scorecard from "./Scorecard.vue";
+import { Game } from "@/models/game";
 
-export default {
-  name: "Table",
-  components: {
-    Player,
-    Trick,
-    Controls,
-    Scorecard
-  },
-  props: {
-    game: {
-      type: Object,
-      required: true
-    }
-  },
-  methods: {
-    nextMove: function() {
-      this.game.currentRound.nextMove();
-    },
-    finishTrick: function() {
-      this.game.currentRound.finishTrick();
-    },
-    finishRound: function() {
-      this.game.currentRound.finishRound();
-    },
-    nextRound: function() {
-      this.game.nextRound();
-    }
+@Component({
+  components: { Player, Trick, Controls, Scorecard }
+})
+export default class Table extends Vue {
+  @Prop({ required: true })
+  game!: Game;
+
+  nextMove() {
+    this.game.currentRound.nextMove();
   }
-};
+
+  finishTrick() {
+    this.game.currentRound.finishTrick();
+  }
+
+  finishRound() {
+    this.game.currentRound.finishRound();
+  }
+
+  nextRound() {
+    this.game.nextRound();
+  }
+}
 </script>
 
 <style scoped>
