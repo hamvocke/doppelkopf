@@ -22,62 +22,59 @@
   </div>
 </template>
 
-<script>
-import Card from "@/components/Card";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import Card from "@/components/Card.vue";
 import { ace, jack, queen, king, ten, Suit } from "@/models/card";
 
-export default {
-  name: "QuizTrumpNonTrump",
-  components: { Card },
-  data() {
-    return {
-      cards: [
-        ace.of(Suit.Clubs),
-        ace.of(Suit.Diamonds),
-        jack.of(Suit.Spades),
-        jack.of(Suit.Hearts),
-        ten.of(Suit.Clubs),
-        king.of(Suit.Hearts),
-        ace.of(Suit.Spades),
-        queen.of(Suit.Spades),
-        king.of(Suit.Diamonds),
-        ten.of(Suit.Hearts)
-      ],
-      currentCard: 0,
-      lastMessage: "",
-      showCard: true
-    };
-  },
-  methods: {
-    checkAnswer: function(answeredTrump) {
-      let card = this.cards[this.currentCard];
-      if (card.isTrump() == answeredTrump) {
-        // hack: need to hide and show on next tick to make transition work
-        this.showCard = false;
-        this.showMessage("🎉 Correct!");
+@Component({ components: { Card } })
+export default class QuizTrumpNonTrump extends Vue {
+  cards = [
+    ace.of(Suit.Clubs),
+    ace.of(Suit.Diamonds),
+    jack.of(Suit.Spades),
+    jack.of(Suit.Hearts),
+    ten.of(Suit.Clubs),
+    king.of(Suit.Hearts),
+    ace.of(Suit.Spades),
+    queen.of(Suit.Spades),
+    king.of(Suit.Diamonds),
+    ten.of(Suit.Hearts)
+  ];
+  currentCard = 0;
+  lastMessage = "";
+  showCard = true;
 
-        this.nextCard();
-        this.$nextTick(() => {
-          this.showCard = true;
-        });
-      } else {
-        let message = "❌ Nah, that's not right.";
-        message += ` ${card.whyTrump()}`;
-        this.showMessage(message);
-      }
-    },
-    showMessage: function(message) {
-      this.lastMessage = message;
+  checkAnswer(answeredTrump: boolean) {
+    let card = this.cards[this.currentCard];
+    if (card.isTrump() == answeredTrump) {
+      // hack: need to hide and show on next tick to make transition work
+      this.showCard = false;
+      this.showMessage("🎉 Correct!");
 
-      setTimeout(() => {
-        this.lastMessage = undefined;
-      }, 4000);
-    },
-    nextCard: function() {
-      this.currentCard = (this.currentCard + 1) % this.cards.length;
+      this.nextCard();
+      this.$nextTick(() => {
+        this.showCard = true;
+      });
+    } else {
+      let message = "❌ Nah, that's not right.";
+      message += ` ${card.whyTrump()}`;
+      this.showMessage(message);
     }
   }
-};
+
+  showMessage(message: string) {
+    this.lastMessage = message;
+
+    setTimeout(() => {
+      this.lastMessage = "";
+    }, 4000);
+  }
+
+  nextCard() {
+    this.currentCard = (this.currentCard + 1) % this.cards.length;
+  }
+}
 </script>
 
 <style scoped>

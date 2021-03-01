@@ -5,28 +5,25 @@
   </div>
 </template>
 
-<script>
-import Card from "@/components/Card";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+
+import Card from "@/components/Card.vue";
 import { ace, king, ten, Suit } from "@/models/card";
 
-export default {
-  name: "AllNonTrumps",
-  components: { Card },
-  data() {
-    return {
-      cards: [
-        ace.of(Suit.Clubs),
-        ten.of(Suit.Clubs),
-        king.of(Suit.Clubs),
-        ace.of(Suit.Spades),
-        ten.of(Suit.Spades),
-        king.of(Suit.Spades),
-        ace.of(Suit.Hearts),
-        king.of(Suit.Hearts)
-      ]
-    };
-  }
-};
+@Component({ components: { Card } })
+export default class AllNonTrumps extends Vue {
+  cards = [
+    ace.of(Suit.Clubs),
+    ten.of(Suit.Clubs),
+    king.of(Suit.Clubs),
+    ace.of(Suit.Spades),
+    ten.of(Suit.Spades),
+    king.of(Suit.Spades),
+    ace.of(Suit.Hearts),
+    king.of(Suit.Hearts)
+  ];
+}
 </script>
 
 <style scoped>

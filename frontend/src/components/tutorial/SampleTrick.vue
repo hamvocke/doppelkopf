@@ -5,24 +5,20 @@
   </div>
 </template>
 
-<script>
-import Card from "@/components/Card";
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import Card from "@/components/Card.vue";
 import { ten, jack, ace, king, Suit } from "@/models/card";
 
-export default {
-  name: "SampleTrick",
-  components: { Card },
-  data() {
-    return {
-      cards: [
-        jack.of(Suit.Spades),
-        ten.of(Suit.Hearts),
-        ace.of(Suit.Diamonds),
-        king.of(Suit.Diamonds)
-      ]
-    };
-  }
-};
+@Component({ components: { Card } })
+export default class SampleTrick extends Vue {
+  cards = [
+    jack.of(Suit.Spades),
+    ten.of(Suit.Hearts),
+    ace.of(Suit.Diamonds),
+    king.of(Suit.Diamonds)
+  ];
+}
 </script>
 
 <style scoped>
