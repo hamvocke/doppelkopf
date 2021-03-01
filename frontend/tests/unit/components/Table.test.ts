@@ -1,14 +1,15 @@
-import Table from "@/components/Table";
+import Table from "@/components/Table.vue";
 import { Game } from "@/models/game";
 import { Score } from "@/models/score";
 import { Party, re, kontra } from "@/models/party";
 import { mount, config } from "@vue/test-utils";
+import { Game as GameModel } from "@/models/game";
 
-config.mocks["$t"] = msg => msg;
-config.mocks["$tc"] = msg => msg;
+config.mocks["$t"] = (msg: string) => msg;
+config.mocks["$tc"] = (msg: string) => msg;
 config.mocks["$i18n"] = { locale: "en" };
 
-let game;
+let game: GameModel;
 
 beforeEach(() => {
   game = Game.singlePlayer();
@@ -28,39 +29,6 @@ describe("Table.vue", () => {
   test("should render controls", () => {
     const wrapper = mount(Table, { propsData: { game: game } });
     expect(wrapper.find("div.controls").exists()).toBe(true);
-  });
-
-  test("should handle nextMove", () => {
-    const mockGame = Game.singlePlayer();
-    mockGame.currentRound.nextMove = jest.fn();
-
-    const wrapper = mount(Table, { propsData: { game: mockGame } });
-
-    wrapper.vm.nextMove();
-
-    expect(mockGame.currentRound.nextMove).toBeCalled();
-  });
-
-  test("should handle finishRound", () => {
-    const mockGame = Game.singlePlayer();
-    mockGame.currentRound.finishRound = jest.fn();
-
-    const wrapper = mount(Table, { propsData: { game: mockGame } });
-
-    wrapper.vm.finishRound();
-
-    expect(mockGame.currentRound.finishRound).toBeCalled();
-  });
-
-  test("should handle finishTrick event", () => {
-    const mockGame = Game.singlePlayer();
-    mockGame.currentRound.finishTrick = jest.fn();
-
-    const wrapper = mount(Table, { propsData: { game: mockGame } });
-
-    wrapper.vm.finishTrick();
-
-    expect(mockGame.currentRound.finishTrick).toBeCalled();
   });
 
   test("should hide Scorecard if game is not finished", () => {
@@ -86,16 +54,5 @@ describe("Table.vue", () => {
     const wrapper = mount(Table, { propsData: { game: mockGame } });
 
     expect(wrapper.find("div.scorecard").exists()).toBe(true);
-  });
-
-  test("should handle nextRound event", () => {
-    const mockGame = Game.singlePlayer();
-    mockGame.nextRound = jest.fn();
-
-    const wrapper = mount(Table, { propsData: { game: mockGame } });
-
-    wrapper.vm.nextRound();
-
-    expect(mockGame.nextRound).toBeCalled();
   });
 });
