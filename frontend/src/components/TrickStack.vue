@@ -12,25 +12,22 @@
   </div>
 </template>
 
-<script>
-import Card from "./Card";
-export default {
-  name: "TrickStack",
-  components: {
-    Card
-  },
-  props: {
-    trickStack: {
-      type: Object,
-      required: true
-    }
-  },
-  computed: {
-    isHidden: function() {
-      return this.trickStack.tricks.length < 1;
-    }
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import Card from "./Card.vue";
+import { TrickStack as TrickStackModel } from "@/models/trickStack";
+
+@Component({
+  components: { Card }
+})
+export default class TrickStack extends Vue {
+  @Prop({ required: true })
+  trickStack!: TrickStackModel;
+
+  get isHidden() {
+    return this.trickStack.tricks.length < 1;
   }
-};
+}
 </script>
 
 <style scoped>

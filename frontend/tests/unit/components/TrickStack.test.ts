@@ -1,4 +1,4 @@
-import TrickStack from "@/components/TrickStack";
+import TrickStack from "@/components/TrickStack.vue";
 import { TrickStack as TrickStackModel } from "@/models/trickStack";
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
