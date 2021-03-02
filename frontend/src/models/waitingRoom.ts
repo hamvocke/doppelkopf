@@ -12,12 +12,18 @@ export const states = {
 };
 
 export class WaitingRoom {
-  constructor(owner = null) {
-    if (owner === null) {
+  owner: Player;
+  gameId?: string;
+  players: Player[];
+  websocket?: WebsocketClient;
+
+  constructor(owner?: Player) {
+    if (!owner) {
       owner = new Player(generateNames(1)[0], true, true, "bottom");
     }
 
-    this.gameId = null;
+    this.owner = owner;
+    this.gameId = undefined;
     this.players = [owner];
     this.websocket = new WebsocketClient();
   }
@@ -33,7 +39,7 @@ export class WaitingRoom {
   }
 
   get gameUrl() {
-    return `${Config.baseUrl}/${this.gameId}`;
+    return `${Config.backend_base_url}/${this.gameId}`;
   }
 
   async register() {
@@ -44,14 +50,14 @@ export class WaitingRoom {
       }
       let gameInfo = await response.json();
       this.gameId = gameInfo.game.id;
-      this.websocket.connect(); // TODO: "connect" should always come with an immediate "join" event
+      this.websocket?.connect(); // TODO: "connect" should always come with an immediate "join" event
     } catch (error) {
       throw new Error(`Failed to create multiplayer game: ${error}`);
     }
   }
 
   // TODO: multiplayer join:
-  static async fetch(gameName) {
+  static async fetch(gameName: string) {
     // [x] get room info from server
     // [x] get response
     // [x] create local representation of room (new WaitingRoom(...))
@@ -59,27 +65,26 @@ export class WaitingRoom {
     // [ ] show waiting room with players who are present as long as state === "waiting"
 
     let gameInfo;
-    this.websocket = new WebsocketClient();
 
     try {
       const response = await http.get(`/api/game/${gameName}`);
       gameInfo = await response.json();
-      this.websocket.connect();
     } catch (error) {
       throw new Error(`Failed to fetch game state: ${error}`);
     }
 
     const waitingPlayers = gameInfo.game.players.map(
-      player => new Player(player.name, true, false)
+      (player: any) => new Player(player.name, true, false)
     );
 
     const room = new WaitingRoom(waitingPlayers[0]);
     room.players = waitingPlayers;
     room.gameId = gameInfo.game.id;
+    room.websocket?.connect();
     return room;
   }
 
-  join(player) {
+  join(player: Player) {
     if (!player) return;
 
     if (this.state === states.ready) {
@@ -97,7 +102,7 @@ export class WaitingRoom {
     return Game.multiPlayer(this.players);
   }
 
-  leave(player) {
+  leave(player: Player) {
     if (!this.players.some(p => p.id === player.id))
       throw new Error(`Player '${player.name}' is not in this room`);
 

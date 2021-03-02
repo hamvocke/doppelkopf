@@ -1,9 +1,9 @@
-import Game from "@/views/Game";
+import Game from "@/views/Game.vue";
 import { Game as GameModel } from "@/models/game";
 import { mount, config } from "@vue/test-utils";
 
-config.mocks["$t"] = msg => msg;
-config.mocks["$tc"] = msg => msg;
+config.mocks["$t"] = (msg: string) => msg;
+config.mocks["$tc"] = (msg: string) => msg;
 config.mocks["$i18n"] = { locale: "en" };
 
 describe("Game.vue", () => {

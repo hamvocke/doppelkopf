@@ -2,13 +2,16 @@ import { WaitingRoom, states } from "@/models/waitingRoom";
 import { Player } from "@/models/player";
 import { Config } from "@/models/config";
 import { WebsocketClient } from "@/helpers/websocketClient";
+import { mocked } from "ts-jest/utils";
+
 jest.mock("@/helpers/websocketClient");
 
 const fetchMock = require("fetch-mock-jest");
+const websocketMock = mocked(WebsocketClient);
 
 beforeEach(() => {
   fetchMock.reset();
-  WebsocketClient.mockClear();
+  websocketMock.mockClear();
   Config.testing = true;
 });
 
@@ -51,7 +54,7 @@ describe("Waiting Room", () => {
     const room = new WaitingRoom(owner);
     await room.register();
 
-    expect(WebsocketClient.mock.instances[0].connect).toHaveBeenCalled();
+    expect(websocketMock.mock.instances[0].connect).toHaveBeenCalled();
   });
 
   test("should fetch waiting room from server", async () => {
@@ -99,7 +102,7 @@ describe("Waiting Room", () => {
 
     await WaitingRoom.fetch("1");
 
-    expect(WebsocketClient.mock.instances[0].connect).toHaveBeenCalled();
+    expect(websocketMock.mock.instances[0].connect).toHaveBeenCalled();
   });
 
   test("should be in 'waiting' state on start", () => {
