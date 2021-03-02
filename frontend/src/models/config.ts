@@ -1,18 +1,17 @@
-// TODO: check interface naming conventions
-interface IConfig {
-  test: IConfigValues;
-  development: IConfigValues;
-  production: IConfigValues;
-}
+type Config = {
+  test: ConfigValues;
+  development: ConfigValues;
+  production: ConfigValues;
+};
 
-interface IConfigValues {
+type ConfigValues = {
   backend_base_url: string;
   backend_ws_base_url: string;
   debug: boolean;
   testing: boolean;
-}
+};
 
-const config: IConfig = {
+const config: Config = {
   test: {
     backend_base_url: "http://localhost:5000",
     backend_ws_base_url: "ws://localhost:5000",
