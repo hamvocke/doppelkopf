@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === "production") {
         });
       };
 
-      notifier.sticky("new_version_available", null, handleRefreshClick);
+      notifier.sticky("new_version_available", undefined, handleRefreshClick);
       console.log("New content is available; please refresh.");
     },
     offline() {

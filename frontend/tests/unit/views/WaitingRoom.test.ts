@@ -1,4 +1,4 @@
-import WaitingRoom from "@/views/WaitingRoom";
+import WaitingRoom from "@/views/WaitingRoom.vue";
 import { WaitingRoom as WaitingRoomModel } from "@/models/waitingRoom";
 import { Player } from "@/models/player";
 import { Config } from "@/models/config";
@@ -6,8 +6,8 @@ import { mount, config } from "@vue/test-utils";
 
 const fetchMock = require("fetch-mock-jest");
 
-config.mocks["$t"] = msg => msg;
-config.mocks["$tc"] = msg => msg;
+config.mocks["$t"] = (msg: string) => msg;
+config.mocks["$tc"] = (msg: string) => msg;
 config.mocks["$i18n"] = { locale: "en" };
 
 const owner = new Player("owner");
