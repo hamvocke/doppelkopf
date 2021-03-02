@@ -4,6 +4,7 @@ import { Config } from "@/models/config";
 import { http } from "@/helpers/httpClient";
 import { WebsocketClient } from "@/helpers/websocketClient";
 import { generateNames } from "@/models/random";
+import { TablePosition } from "./tablePosition";
 
 export const states = {
   waiting: "waiting",
@@ -19,7 +20,7 @@ export class WaitingRoom {
 
   constructor(owner?: Player) {
     if (!owner) {
-      owner = new Player(generateNames(1)[0], true, true, "bottom");
+      owner = new Player(generateNames(1)[0], true, true, TablePosition.Bottom);
     }
 
     this.owner = owner;

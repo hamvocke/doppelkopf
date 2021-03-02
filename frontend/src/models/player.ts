@@ -2,14 +2,15 @@ import { includes, uniqueId } from "lodash-es";
 import { Hand } from "@/models/hand";
 import { TrickStack } from "@/models/trickStack";
 import { Behavior, RuleBasedBehaviour } from "@/models/behaviors";
-import { Notifier } from "@/models/notifier";
-import { options } from "@/models/options";
-import { Announcement } from "@/models/announcements";
-import { playableCards } from "@/models/playableCardFinder";
+import { Notifier } from "./notifier";
+import { options } from "./options";
+import { Announcement } from "./announcements";
+import { playableCards } from "./playableCardFinder";
 import { Memory, PerfectMemory } from "./memory";
 import { Card } from "./card";
 import { Trick } from "./trick";
 import { Game } from "./game";
+import { TablePosition } from "./tablePosition";
 
 const notifier = new Notifier();
 
@@ -31,7 +32,7 @@ export class Player {
     name: string,
     isHuman = false,
     isMe = false,
-    tablePosition = "bottom", // TODO: remove 'position', introduce new 'table view' class?
+    tablePosition = TablePosition.Bottom,
     game?: Game,
     behaviour = new RuleBasedBehaviour(),
     memory = new PerfectMemory()

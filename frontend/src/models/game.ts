@@ -6,6 +6,7 @@ import { Scorecard } from "@/models/scorecard";
 import { RingQueue } from "@/models/ringQueue";
 import { generateNames } from "@/models/random";
 import { Telemetry } from "@/models/telemetry";
+import { TablePosition } from "./tablePosition";
 
 export class Game {
   players: Player[];
@@ -34,10 +35,10 @@ export class Game {
     const isComputer = false;
     const randomNames = generateNames(4);
     return new Game([
-      new Player(randomNames[0], isHuman, true, "bottom"),
-      new Player(randomNames[1], isComputer, false, "left"),
-      new Player(randomNames[2], isComputer, false, "top"),
-      new Player(randomNames[3], isComputer, false, "right")
+      new Player(randomNames[0], isHuman, true, TablePosition.Bottom),
+      new Player(randomNames[1], isComputer, false, TablePosition.Left),
+      new Player(randomNames[2], isComputer, false, TablePosition.Top),
+      new Player(randomNames[3], isComputer, false, TablePosition.Right)
     ]);
   }
 
