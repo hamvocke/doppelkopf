@@ -1,7 +1,7 @@
 import Scorecard from "@/components/Scorecard.vue";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import { Player } from "@/models/player";
-import { re, kontra } from "@/models/party";
+import { PartyName } from "@/models/party";
 import { extras } from "@/models/extras";
 import { ScoreBuilder } from "../../builders/scoreBuilder";
 import { mount, config } from "@vue/test-utils";
@@ -16,15 +16,15 @@ let scorecard: ScorecardModel;
 
 function stubScoreHumanPlayerWins() {
   players = [
-    stubPlayer("Player 1", re, 60),
-    stubPlayer("Player 2", re, 61),
-    stubPlayer("Player 3", kontra, 59),
-    stubPlayer("Player 4", kontra, 60)
+    stubPlayer("Player 1", PartyName.Re, 60),
+    stubPlayer("Player 2", PartyName.Re, 61),
+    stubPlayer("Player 3", PartyName.Kontra, 59),
+    stubPlayer("Player 4", PartyName.Kontra, 60)
   ];
   scorecard = new ScorecardModel(players);
   score = new ScoreBuilder()
-    .withWinners(re, players[0], players[1])
-    .withLosers(kontra, players[2], players[3])
+    .withWinners(PartyName.Re, players[0], players[1])
+    .withLosers(PartyName.Kontra, players[2], players[3])
     .withReExtras([extras.win, extras.announced_re, extras.fox])
     .withKontraExtras([])
     .withRePoints(3)
@@ -34,24 +34,24 @@ function stubScoreHumanPlayerWins() {
 
 function stubPlayer(name: string, party: string, points: number) {
   const stubbedPlayer = new Player(name);
-  stubbedPlayer.isRe = () => party === re;
-  stubbedPlayer.isKontra = () => party !== re;
+  stubbedPlayer.isRe = () => party === PartyName.Re;
+  stubbedPlayer.isKontra = () => party !== PartyName.Re;
   stubbedPlayer.points = () => points;
   return stubbedPlayer;
 }
 
 beforeEach(() => {
   players = [
-    stubPlayer("Player 1", re, 60),
-    stubPlayer("Player 2", re, 59),
-    stubPlayer("Player 3", kontra, 60),
-    stubPlayer("Player 4", kontra, 61)
+    stubPlayer("Player 1", PartyName.Re, 60),
+    stubPlayer("Player 2", PartyName.Re, 59),
+    stubPlayer("Player 3", PartyName.Kontra, 60),
+    stubPlayer("Player 4", PartyName.Kontra, 61)
   ];
 
   scorecard = new ScorecardModel(players);
   score = new ScoreBuilder()
-    .withWinners(kontra, players[2], players[3])
-    .withLosers(re, players[0], players[1])
+    .withWinners(PartyName.Kontra, players[2], players[3])
+    .withLosers(PartyName.Re, players[0], players[1])
     .withKontraExtras([extras.win, extras.announced_re])
     .withReExtras([extras.fox])
     .withRePoints(-2)
@@ -112,16 +112,16 @@ describe("Scorecard.vue", () => {
 
   it("should show 'you lose' message when player lost", () => {
     players = [
-      stubPlayer("Player 1", re, 60),
-      stubPlayer("Player 2", re, 59),
-      stubPlayer("Player 3", kontra, 60),
-      stubPlayer("Player 4", kontra, 61)
+      stubPlayer("Player 1", PartyName.Re, 60),
+      stubPlayer("Player 2", PartyName.Re, 59),
+      stubPlayer("Player 3", PartyName.Kontra, 60),
+      stubPlayer("Player 4", PartyName.Kontra, 61)
     ];
 
     scorecard = new ScorecardModel(players);
     score = new ScoreBuilder()
-      .withWinners(kontra, players[2], players[3])
-      .withLosers(re, players[0], players[1])
+      .withWinners(PartyName.Kontra, players[2], players[3])
+      .withLosers(PartyName.Re, players[0], players[1])
       .withReExtras([])
       .withKontraExtras([extras.win, extras.against_re])
       .withRePoints(-2)
@@ -142,16 +142,16 @@ describe("Scorecard.vue", () => {
   it("should make last scoreline bold", () => {
     scorecard.addScore(
       new ScoreBuilder()
-        .withWinners(re, players[0], players[1])
-        .withLosers(kontra, players[2], players[3])
+        .withWinners(PartyName.Re, players[0], players[1])
+        .withLosers(PartyName.Kontra, players[2], players[3])
         .withPoints(2)
         .build()
     );
 
     scorecard.addScore(
       new ScoreBuilder()
-        .withWinners(re, players[1], players[3])
-        .withLosers(kontra, players[2], players[0])
+        .withWinners(PartyName.Re, players[1], players[3])
+        .withLosers(PartyName.Kontra, players[2], players[0])
         .withPoints(4)
         .build()
     );
@@ -173,16 +173,16 @@ describe("Scorecard.vue", () => {
   it("should show points", () => {
     scorecard.addScore(
       new ScoreBuilder()
-        .withWinners(re, players[0], players[1])
-        .withLosers(kontra, players[2], players[3])
+        .withWinners(PartyName.Re, players[0], players[1])
+        .withLosers(PartyName.Kontra, players[2], players[3])
         .withPoints(2)
         .build()
     );
 
     scorecard.addScore(
       new ScoreBuilder()
-        .withWinners(re, players[1], players[3])
-        .withLosers(kontra, players[2], players[0])
+        .withWinners(PartyName.Re, players[1], players[3])
+        .withLosers(PartyName.Kontra, players[2], players[0])
         .withPoints(4)
         .build()
     );

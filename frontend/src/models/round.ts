@@ -4,7 +4,7 @@ import { Score } from "@/models/score";
 import { options } from "@/models/options";
 import { Notifier } from "@/models/notifier";
 import { extras } from "@/models/extras";
-import { re, kontra, findParties, Party } from "@/models/party";
+import { PartyName, findParties, Party } from "@/models/party";
 import { find } from "lodash-es";
 import { Player } from "./player";
 import { Scorecard } from "./scorecard";
@@ -117,7 +117,10 @@ export class Round {
     this.currentTrick = this.nextTrick();
 
     this.parties = findParties(this.players);
-    this.score = new Score(this.parties[re], this.parties[kontra]);
+    this.score = new Score(
+      this.parties[PartyName.Re],
+      this.parties[PartyName.Kontra]
+    );
     this.scorecard.addScore(this.score);
     this.finished = true;
   }

@@ -1,22 +1,29 @@
 import { Extra } from "./extras";
 import { Player } from "./player";
 
-// TODO: enum
-export const re = "Re";
-export const kontra = "Kontra";
+export enum PartyName {
+  Re = "Re",
+  Kontra = "Kontra"
+}
 
 export function findParties(players: Player[]) {
   return {
-    [re]: new Party(re, ...players.filter(player => player.isRe())),
-    [kontra]: new Party(kontra, ...players.filter(player => player.isKontra()))
+    [PartyName.Re]: new Party(
+      PartyName.Re,
+      ...players.filter(player => player.isRe())
+    ),
+    [PartyName.Kontra]: new Party(
+      PartyName.Kontra,
+      ...players.filter(player => player.isKontra())
+    )
   };
 }
 
 export class Party {
-  name: string;
+  name: PartyName;
   players: Player[];
 
-  constructor(name: string, ...players: Player[]) {
+  constructor(name: PartyName, ...players: Player[]) {
     this.name = name;
     this.players = players;
   }

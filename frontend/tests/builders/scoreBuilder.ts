@@ -1,52 +1,52 @@
 import { Score } from "@/models/score";
-import { re, kontra, Party } from "@/models/party";
+import { Party, PartyName } from "@/models/party";
 import { Extra } from "@/models/extras";
 import { Player } from "@/models/player";
 
 export class ScoreBuilder {
-  extras: { [party: string]: Extra[] };
-  points: { [party: string]: number };
+  extras: { [party in PartyName]: Extra[] };
+  points: { [party in PartyName]: number };
   winningParty?: Party;
   losingParty?: Party;
 
   constructor() {
-    this.extras = { re: [], kontra: [] };
-    this.points = { re: 0, kontra: 0 };
+    this.extras = { [PartyName.Re]: [], [PartyName.Kontra]: [] };
+    this.points = { [PartyName.Re]: 0, [PartyName.Kontra]: 0 };
   }
 
-  withWinners(partyName: string, ...players: Player[]) {
+  withWinners(partyName: PartyName, ...players: Player[]) {
     this.winningParty = new Party(partyName, ...players);
     return this;
   }
 
-  withLosers(partyName: string, ...players: Player[]) {
+  withLosers(partyName: PartyName, ...players: Player[]) {
     this.losingParty = new Party(partyName, ...players);
     return this;
   }
 
   withPoints(points: number) {
-    this.points[re] = points;
-    this.points[kontra] = -points;
+    this.points[PartyName.Re] = points;
+    this.points[PartyName.Kontra] = -points;
     return this;
   }
 
   withRePoints(points: number) {
-    this.points[re] = points;
+    this.points[PartyName.Re] = points;
     return this;
   }
 
   withKontraPoints(points: number) {
-    this.points[kontra] = points;
+    this.points[PartyName.Kontra] = points;
     return this;
   }
 
   withReExtras(extras: Extra[]) {
-    this.extras[re] = extras;
+    this.extras[PartyName.Re] = extras;
     return this;
   }
 
   withKontraExtras(extras: Extra[]) {
-    this.extras[kontra] = extras;
+    this.extras[PartyName.Kontra] = extras;
     return this;
   }
 

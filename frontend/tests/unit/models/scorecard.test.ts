@@ -1,6 +1,6 @@
 import { Scorecard } from "@/models/scorecard";
 import { Player } from "@/models/player";
-import { re, kontra, Party } from "@/models/party";
+import { PartyName } from "@/models/party";
 import { ScoreBuilder } from "../../builders/scoreBuilder";
 
 describe("Scorecard", () => {
@@ -30,8 +30,8 @@ describe("Scorecard", () => {
   test("should calculate score line", () => {
     scorecard.addScore(
       new ScoreBuilder()
-        .withWinners(re, players[0], players[3])
-        .withLosers(kontra, players[1], players[2])
+        .withWinners(PartyName.Re, players[0], players[3])
+        .withLosers(PartyName.Kontra, players[1], players[2])
         .withPoints(4)
         .build()
     );
@@ -46,8 +46,8 @@ describe("Scorecard", () => {
   test("should calculate winning solo score line", () => {
     scorecard.addScore(
       new ScoreBuilder()
-        .withWinners(re, players[0])
-        .withLosers(kontra, players[1], players[2], players[3])
+        .withWinners(PartyName.Re, players[0])
+        .withLosers(PartyName.Kontra, players[1], players[2], players[3])
         .withRePoints(12)
         .withKontraPoints(-4)
         .build()
@@ -65,8 +65,8 @@ describe("Scorecard", () => {
   test("should calculate loosing solo score line", () => {
     scorecard.addScore(
       new ScoreBuilder()
-        .withWinners(re, players[1], players[2], players[3])
-        .withLosers(kontra, players[0])
+        .withWinners(PartyName.Re, players[1], players[2], players[3])
+        .withLosers(PartyName.Kontra, players[0])
         .withRePoints(4)
         .withKontraPoints(-12)
         .build()
@@ -88,16 +88,16 @@ describe("Scorecard", () => {
   test("should calculate final scores", () => {
     scorecard.addScore(
       new ScoreBuilder()
-        .withWinners(re, players[0], players[3])
-        .withLosers(kontra, players[1], players[2])
+        .withWinners(PartyName.Re, players[0], players[3])
+        .withLosers(PartyName.Kontra, players[1], players[2])
         .withPoints(4)
         .build()
     );
 
     scorecard.addScore(
       new ScoreBuilder()
-        .withWinners(re, players[1], players[3])
-        .withLosers(kontra, players[0], players[2])
+        .withWinners(PartyName.Re, players[1], players[3])
+        .withLosers(PartyName.Kontra, players[0], players[2])
         .withPoints(2)
         .build()
     );

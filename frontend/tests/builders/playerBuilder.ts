@@ -1,5 +1,5 @@
 import { Player } from "@/models/player";
-import { re } from "@/models/party";
+import { PartyName } from "@/models/party";
 import { Extra } from "@/models/extras";
 
 export class PlayerBuilder {
@@ -28,8 +28,8 @@ export class PlayerBuilder {
 
   build() {
     const player = new Player(this.name);
-    player.isRe = () => this.party === re;
-    player.isKontra = () => this.party !== re;
+    player.isRe = () => this.party === PartyName.Re;
+    player.isKontra = () => this.party !== PartyName.Re;
     player.points = () => this.points;
     player.trickStack.extras = () => this.extras;
     return player;

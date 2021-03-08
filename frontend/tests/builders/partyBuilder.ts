@@ -1,17 +1,17 @@
 import { Announcement } from "@/models/announcements";
 import { Extra } from "@/models/extras";
 import { Player } from "@/models/player";
-import { Party } from "../../src/models/party";
+import { Party, PartyName } from "../../src/models/party";
 import { PlayerBuilder } from "./playerBuilder";
 
 export class PartyBuilder {
-  party: string;
+  party: PartyName;
   players: Player[];
   announcements: Set<Announcement>;
   extras: Extra[];
   points: number;
 
-  constructor(party: string) {
+  constructor(party: PartyName) {
     this.party = party;
     this.players = [];
     this.announcements = new Set();

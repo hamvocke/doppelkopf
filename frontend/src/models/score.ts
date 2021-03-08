@@ -1,26 +1,26 @@
 import { Announcement } from "@/models/announcements";
 import { Extra, extras } from "@/models/extras";
-import { re, kontra, Party } from "./party";
+import { Party, PartyName } from "./party";
 
 export class Score {
   parties: { [name: string]: Party };
 
   constructor(reParty: Party, kontraParty: Party) {
     this.parties = {};
-    this.parties[re] = reParty;
-    this.parties[kontra] = kontraParty;
+    this.parties[PartyName.Re] = reParty;
+    this.parties[PartyName.Kontra] = kontraParty;
 
-    if (this.parties[re].points() + this.parties[kontra].points() !== 240) {
+    if (this.parties[PartyName.Re].points() + this.parties[PartyName.Kontra].points() !== 240) {
       throw Error(
         // eslint-disable-next-line prettier/prettier
-        `A score must have a total of 240 points. Got ${this.parties[re].points()} for Re, ${this.parties[kontra].points()} for Kontra`
+        `A score must have a total of 240 points. Got ${this.parties[PartyName.Re].points()} for Re, ${this.parties[PartyName.Kontra].points()} for Kontra`
       );
     }
   }
 
-  winningPartyName(): string | null {
-    const reAnnouncements = this.parties[re].announcements();
-    const kontraAnnouncements = this.parties[kontra].announcements();
+  winningPartyName(): PartyName | null {
+    const reAnnouncements = this.parties[PartyName.Re].announcements();
+    const kontraAnnouncements = this.parties[PartyName.Kontra].announcements();
 
     let reWinningThreshold = 121;
     let kontraWinningThreshold = 120;
@@ -77,12 +77,12 @@ export class Score {
       reWinningThreshold = reAnnouncements.length > 0 ? reWinningThreshold : 1;
     }
 
-    if (this.parties[re].points() >= reWinningThreshold) {
-      return re;
+    if (this.parties[PartyName.Re].points() >= reWinningThreshold) {
+      return PartyName.Re;
     }
 
-    if (this.parties[kontra].points() >= kontraWinningThreshold) {
-      return kontra;
+    if (this.parties[PartyName.Kontra].points() >= kontraWinningThreshold) {
+      return PartyName.Kontra;
     }
 
     return null;
@@ -93,7 +93,7 @@ export class Score {
       return null;
     }
 
-    return this.winningPartyName() === re ? kontra : re;
+    return this.winningPartyName() === PartyName.Re ? PartyName.Kontra : PartyName.Re;
   }
 
   winner() {
@@ -105,19 +105,19 @@ export class Score {
     return undefined;
   }
 
-  trickPoints(partyName: string) {
+  trickPoints(partyName: PartyName) {
     return this.parties[partyName].points();
   }
 
-  points(partyName: string) {
+  points(partyName: PartyName) {
     const sumPoints = (accumulator: number, extra: Extra) =>
       accumulator + extra.points;
     return [...this.listExtras(partyName)].reduce(sumPoints, 0);
   }
 
-  totalPoints(partyName: string) {
-    const otherPartyName = partyName === re ? kontra : re;
-    const thisParty = this.parties[partyName] || this.parties[re];
+  totalPoints(partyName: PartyName) {
+    const otherPartyName = partyName === PartyName.Re ? PartyName.Kontra : PartyName.Re;
+    const thisParty = this.parties[partyName] || this.parties[PartyName.Re];
 
     const delta = this.points(partyName) - this.points(otherPartyName);
 
@@ -134,19 +134,18 @@ export class Score {
     );
   }
 
-  // TODO: use enum for 'partyName' everywhere
-  listExtras(partyName: string) {
+  listExtras(partyName: PartyName) {
     const allExtras = [];
     const partyPoints = this.parties[partyName].points();
     const partyAnnouncements = this.parties[partyName].announcements();
     const opponentAnnouncements = this.parties[
-      partyName == re ? kontra : re
+      partyName == PartyName.Re ? PartyName.Kontra : PartyName.Re
     ].announcements();
 
     if (partyName === this.winningPartyName()) {
       allExtras.push(extras.win);
 
-      if (partyName === kontra) {
+      if (partyName === PartyName.Kontra) {
         allExtras.push(extras.beat_re);
       }
 

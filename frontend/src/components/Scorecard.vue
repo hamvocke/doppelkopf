@@ -143,6 +143,7 @@ import PointMeter from "./scorecard/PointMeter.vue";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import { Player } from "@/models/player";
 import { Score } from "@/models/score";
+import { PartyName } from "@/models/party";
 
 @Component({
   components: { PointMeter }
@@ -157,8 +158,8 @@ export default class Scorecard extends Vue {
   @Prop({ required: true })
   currentScore!: Score;
 
-  reExtras = this.currentScore.listExtras("Re");
-  kontraExtras = this.currentScore.listExtras("Kontra");
+  reExtras = this.currentScore.listExtras(PartyName.Re);
+  kontraExtras = this.currentScore.listExtras(PartyName.Kontra);
 
   get message() {
     return includes(this.currentScore.winner()?.players, this.players[0])
