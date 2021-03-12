@@ -21,6 +21,12 @@ def new_game():
     return jsonify({"game": game.serialize()}), 201
 
 
+@blueprint.route("/game/<int:game_id>", methods=["GET"])
+def get_game(game_id: int):
+    game = Game.query.get_or_404(game_id)
+    return jsonify({"game": game.serialize()})
+
+
 @blueprint.route("/game/<int:game_id>/join", methods=["POST"])
 def join_game(game_id: int):
     data = request.json
