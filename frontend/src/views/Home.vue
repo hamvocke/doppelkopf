@@ -8,14 +8,13 @@
         {{ $t("start-game") }}
       </router-link>
 
-      <router-link
+      <button
         v-if="enableMultiplayer"
-        to="/wait"
         class="button start-multiplayer"
-        tag="button"
+        @click="startMultiplayer"
       >
         {{ $t("start-multiplayer-game") }}
-      </router-link>
+      </button>
 
       <router-link
         v-if="showTutorial"
@@ -39,9 +38,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-
+import router from "@/router/index";
 import { Features } from "@/models/features";
 import Logo from "@/components/Logo.vue";
+import { WaitingRoom as WaitingRoomModel } from "@/models/waitingRoom";
 
 @Component({
   components: {
@@ -55,6 +55,14 @@ export default class Home extends Vue {
   created() {
     this.showTutorial = Features.get().enableTutorial;
     this.enableMultiplayer = Features.get().enableMultiplayer;
+  }
+
+  async startMultiplayer() {
+    const room = await WaitingRoomModel.register();
+    router.push({
+      name: "waiting-room",
+      params: { gameName: room.game.id }
+    });
   }
 }
 </script>

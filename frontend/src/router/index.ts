@@ -25,9 +25,10 @@ const routes = [
     component: Tutorial
   },
   {
-    path: "/wait",
+    path: "/wait/:gameName",
     name: "waiting-room",
-    component: WaitingRoom
+    component: WaitingRoom,
+    props: true
   }
 ];
 

@@ -54,19 +54,14 @@ export type CreateResponse = {
 };
 
 export class WaitingRoom {
-  owner: Player;
-  gameId?: string;
+  owner?: Player;
+  gameId: string;
   players: Player[];
   websocket?: WebsocketClient;
 
-  constructor(owner?: Player) {
-    if (!owner) {
-      owner = new Player(generateNames(1)[0], true, true, TablePosition.Bottom);
-    }
-
-    this.owner = owner;
-    this.gameId = undefined;
-    this.players = [owner];
+  constructor() {
+    this.gameId = "";
+    this.players = [];
     this.websocket = new WebsocketClient();
   }
 
@@ -84,33 +79,24 @@ export class WaitingRoom {
     return `${Config.backend_base_url}/${this.gameId}`;
   }
 
-  async register() {
+  static async register(): Promise<CreateResponse> {
     try {
       const response = await http.post("/api/game");
       if (!response.ok) {
         throw new Error(`HTTP request failed with status ${response.status}`);
       }
-      let gameInfo = await response.json();
-      this.gameId = gameInfo.game.id;
-      this.websocket?.connect(); // TODO: "connect" should always come with an immediate "join" event
+      return (await response.json()) as CreateResponse;
     } catch (error) {
       throw new Error(`Failed to create multiplayer game: ${error}`);
     }
   }
 
-  // TODO: multiplayer join:
   static async fetch(gameName: string) {
-    // [x] get room info from server
-    // [x] get response
-    // [x] create local representation of room (new WaitingRoom(...))
-    // [ ] balance player order - "me" should be at position "bottom"
-    // [ ] show waiting room with players who are present as long as state === "waiting"
-
     let gameInfo;
 
     try {
       const response = await http.get(`/api/game/${gameName}`);
-      gameInfo = await response.json();
+      gameInfo = (await response.json()) as CreateResponse;
     } catch (error) {
       throw new Error(`Failed to fetch game state: ${error}`);
     }
@@ -119,10 +105,9 @@ export class WaitingRoom {
       (player: any) => new Player(player.name, true, false)
     );
 
-    const room = new WaitingRoom(waitingPlayers[0]);
+    const room = new WaitingRoom();
     room.players = waitingPlayers;
     room.gameId = gameInfo.game.id;
-    room.websocket?.connect();
     return room;
   }
 
@@ -134,6 +119,8 @@ export class WaitingRoom {
     }
 
     this.players.push(player);
+
+    this.websocket?.connect();
   }
 
   startGame() {

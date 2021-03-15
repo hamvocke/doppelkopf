@@ -1,7 +1,7 @@
 <template>
   <div id="waitingRoom">
     <h1>Doppelkopf</h1>
-    <div class="wrapper">
+    <div v-if="waitingRoom" class="wrapper">
       <h3>
         {{ $t("hey-player", { name: waitingRoom.players[0].name }) }}
       </h3>
@@ -48,47 +48,45 @@
   </div>
 </template>
 
-<script>
-import { WaitingRoom, states } from "@/models/waitingRoom";
-import CopyText from "@/components/CopyText";
+<script lang="ts">
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { WaitingRoom as WaitingRoomModel, states } from "@/models/waitingRoom";
+import CopyText from "@/components/CopyText.vue";
 
-export default {
-  name: "WaitingRoom",
-  components: { CopyText },
-  props: {
-    waitingRoom: {
-      type: Object,
-      default: function() {
-        return new WaitingRoom();
-      }
+@Component({
+  components: { CopyText }
+})
+export default class WaitingRoom extends Vue {
+  @Prop({ required: true })
+  gameName!: string;
+
+  waitingRoom?: WaitingRoomModel;
+
+  get statusMessage() {
+    switch (this.waitingRoom?.state) {
+      case states.ready:
+        return "ready-status";
+      case states.joined:
+        return "waiting-status";
+      case states.waiting:
+        return "waiting-status";
     }
-  },
-  computed: {
-    statusMessage: function() {
-      switch (this.waitingRoom.state) {
-        case states.ready:
-          return "ready-status";
-        case states.joined:
-          return "waiting-status";
-        case states.waiting:
-          return "waiting-status";
-      }
-      return "waiting-status";
-    }
-  },
-  async created() {
-    await this.waitingRoom.register();
-  },
-  methods: {
-    startGame: function() {
-      this.waitingRoom.startGame();
-      this.$router.push("/play");
-    },
-    isReady: function() {
-      return this.waitingRoom.state === states.ready;
-    }
+    return "waiting-status";
   }
-};
+
+  async created() {
+    this.waitingRoom = await WaitingRoomModel.fetch(this.gameName);
+  }
+
+  startGame() {
+    this.waitingRoom?.startGame();
+    this.$router.push("/play");
+  }
+
+  isReady() {
+    return this.waitingRoom?.state === states.ready;
+  }
+}
 </script>
 
 <style scoped>
