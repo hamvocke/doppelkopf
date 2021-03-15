@@ -12,6 +12,47 @@ export const states = {
   ready: "ready"
 };
 
+/*
+
+Creating:
+1. create new multiplayer game: POST /api/game
+2. parse id from response
+3. redirect to room with id given in response
+4. join room with id (see below)
+5. show "invite" link that includes ID
+
+Joining:
+1. parse id from URL
+2. fetch game info via GET /api/game/<id>
+3. parse response, get player info
+4. balance players (0 should be free for me)
+5. create waiting room instance
+6. connect websocket
+7. send "join" event with current player information
+8. listen for other "joined" events
+
+Starting:
+1. if game status == waiting: don't allow
+2. if game status == ready: allow
+3. owner sends "game start" event
+4. everyone listens for "game started" event
+
+Game started:
+1. create new game: Game.multiplayer() - pass balanced players
+2. start listening to play events
+3. done
+
+*/
+
+export type CreateResponse = {
+  game: {
+    id: string;
+    players: {
+      name: string;
+    }[];
+  };
+};
+
 export class WaitingRoom {
   owner: Player;
   gameId?: string;
