@@ -63,4 +63,6 @@ describe("Home.vue", () => {
 
     expect(wrapper.find(".start-multiplayer").exists()).toBe(false);
   });
+
+  test.todo("should start multiplayer game on click");
 });

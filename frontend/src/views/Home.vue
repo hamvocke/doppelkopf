@@ -41,7 +41,7 @@ import { Component, Vue } from "vue-property-decorator";
 import router from "@/router/index";
 import { Features } from "@/models/features";
 import Logo from "@/components/Logo.vue";
-import { WaitingRoom as WaitingRoomModel } from "@/models/waitingRoom";
+import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
 
 @Component({
   components: {
@@ -58,10 +58,10 @@ export default class Home extends Vue {
   }
 
   async startMultiplayer() {
-    const room = await WaitingRoomModel.register();
+    const response = await new MultiplayerHandler().register();
     router.push({
       name: "waiting-room",
-      params: { gameName: room.game.id }
+      params: { gameName: response.game.id }
     });
   }
 }

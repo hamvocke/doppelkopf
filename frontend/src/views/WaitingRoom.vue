@@ -1,9 +1,13 @@
 <template>
   <div id="waitingRoom">
     <h1>Doppelkopf</h1>
+    <div v-if="loading">
+      Loading...
+    </div>
+
     <div v-if="waitingRoom" class="wrapper">
       <h3>
-        {{ $t("hey-player", { name: waitingRoom.players[0].name }) }}
+        {{ $t("hey-player", { name: currentPlayerName }) }}
       </h3>
       <p>
         {{ $t("here-is-your-invite-link") }}
@@ -51,6 +55,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { WaitingRoom as WaitingRoomModel, states } from "@/models/waitingRoom";
+import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
 import CopyText from "@/components/CopyText.vue";
 
 @Component({
@@ -60,7 +65,13 @@ export default class WaitingRoom extends Vue {
   @Prop({ required: true })
   gameName!: string;
 
-  waitingRoom?: WaitingRoomModel;
+  waitingRoom?: WaitingRoomModel = undefined;
+  loading = true;
+  error = undefined;
+
+  get currentPlayerName() {
+    return this.waitingRoom?.players[0]?.name ?? "ho";
+  }
 
   get statusMessage() {
     switch (this.waitingRoom?.state) {
@@ -75,7 +86,8 @@ export default class WaitingRoom extends Vue {
   }
 
   async created() {
-    this.waitingRoom = await WaitingRoomModel.fetch(this.gameName);
+    this.waitingRoom = await new MultiplayerHandler().fetchRoom(this.gameName);
+    this.loading = false;
   }
 
   startGame() {
