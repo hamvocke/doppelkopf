@@ -5,7 +5,7 @@
       Loading...
     </div>
 
-    <div v-if="waitingRoom" class="wrapper">
+    <div v-else-if="waitingRoom" class="wrapper">
       <h3>
         {{ $t("hey-player", { name: currentPlayerName }) }}
       </h3>
