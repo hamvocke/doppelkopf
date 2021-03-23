@@ -20,25 +20,20 @@ export class MultiplayerHandler {
   }
 
   async fetchRoom(gameName: string): Promise<WaitingRoom> {
-    let roomInfo;
-
     try {
       const response = await http.get(`/api/game/${gameName}`);
-
       if (!response.ok) {
         throw new Error(`HTTP request failed with status ${response.status}`);
       }
 
-      roomInfo = (await response.json()) as CreateResponse;
+      const roomInfo = (await response.json()) as CreateResponse;
+      const waitingPlayers = roomInfo.game.players.map(
+        (player: any) => new Player(player.name, true, false)
+      );
+      return new WaitingRoom(roomInfo.game.id, waitingPlayers);
     } catch (error) {
       throw new Error(`Failed to fetch room state: ${error}`);
     }
-
-    const waitingPlayers = roomInfo.game.players.map(
-      (player: any) => new Player(player.name, true, false)
-    );
-
-    return new WaitingRoom(roomInfo.game.id, waitingPlayers);
   }
 }
 

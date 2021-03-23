@@ -1,6 +1,5 @@
 import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
 import { Config } from "@/models/config";
-import { before } from "lodash";
 
 import fetchMock from "fetch-mock-jest";
 
@@ -57,11 +56,45 @@ describe("Multiplayer Handler", () => {
   });
 
   describe("fetch room", () => {
-    test.todo("should fetch room info");
-    test.todo("should return waiting room");
+    test("should fetch room info", async () => {
+      fetchMock.get(
+        "http://localhost:5000/api/game/some-game",
+        stubbedFetchResponse
+      );
+
+      const room = await multiplayer.fetchRoom("some-game");
+
+      expect(room.gameId).toEqual("some-game");
+      expect(room.players.map(p => p.name)).toEqual(["Lenny", "Carl"]);
+    });
+
     test.todo("should handle unknown room id");
-    test.todo("should throw exception on connection error");
-    test.todo("should throw exception on non-ok response");
+
+    test("should throw exception on connection error", async () => {
+      fetchMock.get("http://localhost:5000/api/game/some-game", {
+        throws: "failed"
+      });
+
+      async function failingFetch() {
+        await multiplayer.fetchRoom("some-game");
+      }
+
+      await expect(failingFetch()).rejects.toThrowError(
+        "Failed to fetch room state: failed"
+      );
+    });
+
+    test("should throw exception on non-ok response", async () => {
+      fetchMock.get("http://localhost:5000/api/game/some-game", 503);
+
+      async function failingFetch() {
+        await multiplayer.fetchRoom("some-game");
+      }
+
+      await expect(failingFetch()).rejects.toThrowError(
+        "Failed to fetch room state: Error: HTTP request failed with status 503"
+      );
+    });
   });
 });
 
@@ -70,4 +103,11 @@ const stubbedCreateResponse = {
     id: "2",
     players: []
   }
-}
+};
+
+const stubbedFetchResponse = {
+  game: {
+    id: "some-game",
+    players: [{ name: "Lenny" }, { name: "Carl" }]
+  }
+};
