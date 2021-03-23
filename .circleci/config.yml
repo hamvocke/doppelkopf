@@ -89,9 +89,7 @@ jobs:
       - run:
           name: Smoke test
           command: |
-            source ci/smoke_test_simple.sh
-            smoke_test https://doppelkopf.staging.ham.codes
-            smoke_test https://doppelkopf.staging.ham.codes/api/
+            bash ci/smoke_test.sh
 
   deploy_prod:
     docker:
@@ -118,9 +116,7 @@ jobs:
       - run:
           name: Smoke test
           command: |
-            source ci/smoke_test_simple.sh
-            smoke_test https://doppelkopf.ham.codes
-            smoke_test https://doppelkopf.ham.codes/api/
+            bash ci/smoke_test.sh
 
 workflows:
   version: 2
