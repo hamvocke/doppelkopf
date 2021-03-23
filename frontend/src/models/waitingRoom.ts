@@ -44,24 +44,16 @@ Game started:
 
 */
 
-export type CreateResponse = {
-  game: {
-    id: string;
-    players: {
-      name: string;
-    }[];
-  };
-};
-
 export class WaitingRoom {
-  owner?: Player;
   gameId: string;
+  owner: Player;
   players: Player[];
-  websocket?: WebsocketClient;
+  websocket: WebsocketClient;
 
-  constructor() {
-    this.gameId = "";
-    this.players = [];
+  constructor(gameId: string, players: Player[]) {
+    this.gameId = gameId;
+    this.players = players;
+    this.owner = players[0];
     this.websocket = new WebsocketClient();
   }
 
@@ -77,38 +69,6 @@ export class WaitingRoom {
 
   get gameUrl() {
     return `${Config.backend_base_url}/${this.gameId}`;
-  }
-
-  static async register(): Promise<CreateResponse> {
-    try {
-      const response = await http.post("/api/game");
-      if (!response.ok) {
-        throw new Error(`HTTP request failed with status ${response.status}`);
-      }
-      return (await response.json()) as CreateResponse;
-    } catch (error) {
-      throw new Error(`Failed to create multiplayer game: ${error}`);
-    }
-  }
-
-  static async fetch(gameName: string) {
-    let gameInfo;
-
-    try {
-      const response = await http.get(`/api/game/${gameName}`);
-      gameInfo = (await response.json()) as CreateResponse;
-    } catch (error) {
-      throw new Error(`Failed to fetch game state: ${error}`);
-    }
-
-    const waitingPlayers = gameInfo.game.players.map(
-      (player: any) => new Player(player.name, true, false)
-    );
-
-    const room = new WaitingRoom();
-    room.players = waitingPlayers;
-    room.gameId = gameInfo.game.id;
-    return room;
   }
 
   join(player: Player) {
