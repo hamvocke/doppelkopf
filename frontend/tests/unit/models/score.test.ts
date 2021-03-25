@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Score } from "@/models/score";
-import { PartyName } from "../../../src/models/party";
+import { PartyName } from "@/models/party";
 import { Extra, extras } from "@/models/extras";
 import { Announcement } from "@/models/announcements";
 import { PartyBuilder } from "../../builders/partyBuilder";
@@ -631,7 +631,5 @@ describe("Score valuation", () => {
       expect([...score.listExtras(PartyName.Re)]).toEqual([extras.win]);
       expect(score.totalPoints(PartyName.Re)).toBe(0);
     });
-
-    test.todo("should get 1 point for winning the last trick with 'Charly'");
   });
 });
