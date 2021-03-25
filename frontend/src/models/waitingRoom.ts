@@ -78,6 +78,10 @@ export class WaitingRoom {
       throw new Error("Room is full");
     }
 
+    if (this.players.length === 0) {
+      this.owner = player;
+    }
+
     this.players.push(player);
 
     this.websocket?.connect();

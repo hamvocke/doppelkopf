@@ -8,6 +8,7 @@ jest.mock("@/helpers/websocketClient");
 
 const fetchMock = require("fetch-mock-jest");
 const websocketMock = mocked(WebsocketClient);
+const player = new Player("some-player");
 
 beforeEach(() => {
   fetchMock.reset();
@@ -21,8 +22,29 @@ afterAll(() => {
 });
 
 describe("Waiting Room", () => {
-  test.todo("should join a waiting room");
-  test.todo("should become owner when joining as first player");
+  test("should join a waiting room", () => {
+    const room = new WaitingRoom("some-id", []);
+    const anotherPlayer = new Player("another-player");
+
+    room.join(player);
+    room.join(anotherPlayer);
+
+    expect(room.players).toEqual([player, anotherPlayer]);
+  });
+
+  test("should become owner when joining as first player", () => {
+    const room = new WaitingRoom("some-id", []);
+
+    room.join(player);
+
+    expect(room.owner).toEqual(player);
+  });
+
+  test("should mark first remote player as owner", () => {
+    const room = new WaitingRoom("some-id", [player]);
+
+    expect(room.owner).toEqual(player);
+  });
 
   test.todo("should connect when joining waiting room");
 
