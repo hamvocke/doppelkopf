@@ -1,4 +1,4 @@
-doppelkopf.ham.codes
+localhost, doppelkopf.ham.codes, doppelkopf.party
 
 root * /var/www
 encode zstd gzip
