@@ -10,7 +10,7 @@ max_retries=10
 retries=0
 
 for ADDRESS in ${ADDRESSES[@]}; do
-    echo "Checking ${ADDRESS}"
+    echo "Checking ${ADDRESS}\n"
     until $(curl --output /dev/null --silent --head --fail "${ADDRESS}"); do
         if [ ${retries} -eq ${max_retries} ]; then
             echo "\nGiving up after ${retries} attempts"
