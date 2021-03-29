@@ -1,11 +1,24 @@
 #! /usr/bin/env bash
 
-. ci/smoke.sh
+ADDRESSES=(
+    'https://doppelkopf.ham.codes'
+    'https://doppelkopf.ham.codes/api/'
+    'https://doppelkopf.ham.codes/admin/'
+)
 
-smoke_url_ok "https://doppelkopf.ham.codes"
-    smoke_assert_body "Doppelkopf"
-smoke_url_ok "https://doppelkopf.ham.codes/api/"
-    smoke_assert_body "Healthy"
-smoke_url_ok "https://doppelkopf.ham.codes/admin"
-    smoke_assert_body "Password"
-smoke_report
+max_retries=10
+retries=0
+
+for ADDRESS in ${ADDRESSES[@]}; do
+    echo "Checking ${ADDRESS}"
+    until $(curl --output /dev/null --silent --head --fail "${ADDRESS}"); do
+        if [ ${retries} -eq ${max_retries} ]; then
+            echo "\nGiving up after ${retries} attempts"
+            exit 1
+        fi
+
+        printf 'x'
+        retries=$(($retries+1))
+        sleep 5
+    done
+done
