@@ -54,7 +54,10 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { WaitingRoom as WaitingRoomModel, states } from "@/models/waitingRoom";
+import {
+  WaitingRoom as WaitingRoomModel,
+  RoomState
+} from "@/models/waitingRoom";
 import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
 import CopyText from "@/components/CopyText.vue";
 
@@ -75,11 +78,9 @@ export default class WaitingRoom extends Vue {
 
   get statusMessage() {
     switch (this.waitingRoom?.state) {
-      case states.ready:
+      case RoomState.ready:
         return "ready-status";
-      case states.joined:
-        return "waiting-status";
-      case states.waiting:
+      case RoomState.waiting:
         return "waiting-status";
     }
     return "waiting-status";
@@ -96,7 +97,7 @@ export default class WaitingRoom extends Vue {
   }
 
   isReady() {
-    return this.waitingRoom?.state === states.ready;
+    return this.waitingRoom?.state === RoomState.ready;
   }
 }
 </script>
