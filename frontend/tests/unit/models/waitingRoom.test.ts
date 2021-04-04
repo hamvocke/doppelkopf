@@ -87,17 +87,59 @@ describe("Waiting Room", () => {
     expect(room.state).toEqual(RoomState.waiting);
   });
 
-  test.todo("should put new players in queue");
+  test("should put new players in queue", () => {
+    const room = new WaitingRoom("some-id", []);
+    const anotherPlayer = new Player("player2");
+
+    room.join(player);
+    room.join(anotherPlayer);
+
+    expect(room.players).toEqual([player, anotherPlayer]);
+  });
+
+  test("should remove player when leaving a room", () => {
+    const room = new WaitingRoom("some-id", []);
+    const anotherPlayer = new Player("player2");
+
+    room.join(player);
+    room.join(anotherPlayer);
+
+    room.leave(anotherPlayer);
+
+    expect(room.players).toEqual([player]);
+  });
+
+  test("should not accept more than four players", () => {
+    const room = new WaitingRoom("some-id", []);
+
+    room.join(player);
+    room.join(new Player("player2"));
+    room.join(new Player("player3"));
+    room.join(new Player("player4"));
+
+    function throwingJoin() {
+      room.join(new Player("player5"));
+    }
+
+    expect(throwingJoin).toThrowError("Room is full");
+  });
+
+  test("should error if unknown player tries leaving", () => {
+    const room = new WaitingRoom("some-id", []);
+    const anotherPlayer = new Player("player2");
+
+    room.join(player);
+    room.join(anotherPlayer);
+
+    function throwingLeave() {
+      room.leave(new Player("unknown"));
+    }
+
+    expect(throwingLeave).toThrowError("Player 'unknown' is not in this room");
+  });
 
   test.todo("should not allow starting the game until 4 players are there");
 
-  test.todo("should not accept more than four players");
-
   test.todo("should allow starting the game when game is ready");
 
-  test.todo("should allow leaving room");
-
-  test.todo("should error if unknown player tries leaving");
-
-  test.todo("should change state to 'waiting' if a player leaves");
 });
