@@ -1,4 +1,4 @@
-import { WaitingRoom, states } from "@/models/waitingRoom";
+import { WaitingRoom, RoomState } from "@/models/waitingRoom";
 import { Player } from "@/models/player";
 import { Config } from "@/models/config";
 import { WebsocketClient } from "@/helpers/websocketClient";
@@ -54,7 +54,13 @@ describe("Waiting Room", () => {
     expect(websocketMock.mock.instances[0].connect).toHaveBeenCalled();
   });
 
-  test.todo("should be in 'waiting' state on start");
+  test("should be in 'waiting' state on start", () => {
+    const room = new WaitingRoom("some-id", []);
+
+    room.join(player);
+
+    expect(room.state).toEqual(RoomState.waiting);
+  });
 
   test.todo("should put new players in queue");
 

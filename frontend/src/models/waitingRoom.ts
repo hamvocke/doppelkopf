@@ -6,11 +6,10 @@ import { WebsocketClient } from "@/helpers/websocketClient";
 import { generateNames } from "@/models/random";
 import { TablePosition } from "./tablePosition";
 
-export const states = {
-  waiting: "waiting",
-  joined: "joined",
-  ready: "ready"
-};
+export enum RoomState {
+  waiting = "waiting",
+  ready = "ready"
+}
 
 /*
 
@@ -59,11 +58,9 @@ export class WaitingRoom {
 
   get state() {
     if (this.players.length === 4) {
-      return states.ready;
-    } else if (this.players.some(p => p.isMe)) {
-      return states.joined;
+      return RoomState.ready;
     } else {
-      return states.waiting;
+      return RoomState.waiting;
     }
   }
 
@@ -74,7 +71,7 @@ export class WaitingRoom {
   join(player: Player) {
     if (!player) return;
 
-    if (this.state === states.ready) {
+    if (this.state === RoomState.ready) {
       throw new Error("Room is full");
     }
 
@@ -88,7 +85,7 @@ export class WaitingRoom {
   }
 
   startGame() {
-    if (this.state !== states.ready) {
+    if (this.state !== RoomState.ready) {
       throw new Error("Can't start game until 4 players are there");
     }
 
