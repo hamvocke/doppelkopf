@@ -46,7 +46,13 @@ describe("Waiting Room", () => {
     expect(room.owner).toEqual(player);
   });
 
-  test.todo("should connect when joining waiting room");
+  test("should connect when joining waiting room", () => {
+    const room = new WaitingRoom("some-id", []);
+
+    room.join(player);
+
+    expect(websocketMock.mock.instances[0].connect).toHaveBeenCalled();
+  });
 
   test.todo("should be in 'waiting' state on start");
 
