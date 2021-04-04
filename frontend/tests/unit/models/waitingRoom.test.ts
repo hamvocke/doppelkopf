@@ -62,11 +62,34 @@ describe("Waiting Room", () => {
     expect(room.state).toEqual(RoomState.waiting);
   });
 
+  test("should change state to 'ready' once four players are there", () => {
+    const room = new WaitingRoom("some-id", []);
+
+    room.join(player);
+    room.join(new Player("player2"));
+    room.join(new Player("player3"));
+    room.join(new Player("player4"));
+
+    expect(room.state).toEqual(RoomState.ready);
+  });
+
+  test("should change state to 'waiting' if a player leaves", () => {
+    const room = new WaitingRoom("some-id", []);
+    const leavingPlayer = new Player("player4");
+
+    room.join(player);
+    room.join(new Player("player2"));
+    room.join(new Player("player3"));
+    room.join(leavingPlayer);
+
+    room.leave(leavingPlayer);
+
+    expect(room.state).toEqual(RoomState.waiting);
+  });
+
   test.todo("should put new players in queue");
 
   test.todo("should not allow starting the game until 4 players are there");
-
-  test.todo("should change state to 'ready' once four players are there");
 
   test.todo("should not accept more than four players");
 
