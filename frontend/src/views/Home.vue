@@ -1,37 +1,40 @@
 <template>
-  <div class="welcome">
-    <div class="container">
-      <Logo />
-      <h1>Doppelkopf</h1>
+  <div id="home">
+    <Notifications />
+    <div class="welcome">
+      <div class="container">
+        <Logo />
+        <h1>Doppelkopf</h1>
 
-      <router-link to="/play" class="button start-game" tag="button">
-        {{ $t("start-game") }}
-      </router-link>
+        <router-link to="/play" class="button start-game" tag="button">
+          {{ $t("start-game") }}
+        </router-link>
 
-      <button
-        v-if="enableMultiplayer"
-        class="button start-multiplayer"
-        @click="startMultiplayer"
-      >
-        {{ $t("start-multiplayer-game") }}
-      </button>
+        <button
+          v-if="enableMultiplayer"
+          class="button start-multiplayer"
+          @click="startMultiplayer"
+        >
+          {{ $t("start-multiplayer-game") }}
+        </button>
 
-      <router-link
-        v-if="showTutorial"
-        to="/learn"
-        class="button button-secondary tutorial"
-        tag="button"
-      >
-        {{ $t("how-to-play") }}
-      </router-link>
-      <a
-        v-else
-        :href="$t('tutorial-link')"
-        target="_blank"
-        class="button button-secondary tutorial-link"
-      >
-        {{ $t("how-to-play") }}
-      </a>
+        <router-link
+          v-if="showTutorial"
+          to="/learn"
+          class="button button-secondary tutorial"
+          tag="button"
+        >
+          {{ $t("how-to-play") }}
+        </router-link>
+        <a
+          v-else
+          :href="$t('tutorial-link')"
+          target="_blank"
+          class="button button-secondary tutorial-link"
+        >
+          {{ $t("how-to-play") }}
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -42,15 +45,19 @@ import router from "@/router/index";
 import { Features } from "@/models/features";
 import Logo from "@/components/Logo.vue";
 import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
+import { Notifier } from "@/models/notifier";
+import Notifications from "@/components/Notifications.vue";
 
 @Component({
   components: {
-    Logo
+    Logo,
+    Notifications
   }
 })
 export default class Home extends Vue {
   showTutorial = false;
   enableMultiplayer = false;
+  multiplayerHandler = new MultiplayerHandler();
 
   created() {
     this.showTutorial = Features.get().enableTutorial;
@@ -58,17 +65,29 @@ export default class Home extends Vue {
   }
 
   async startMultiplayer() {
-    const response = await new MultiplayerHandler().register();
-    router.push({
-      name: "waiting-room",
-      params: { gameName: response.game.id }
-    });
+    if (!this.enableMultiplayer) {
+      return;
+    }
+
+    try {
+      const response = await this.multiplayerHandler.register();
+      router.push({
+        name: "waiting-room",
+        params: { gameName: response.game.id }
+      });
+    } catch (error) {
+      new Notifier().info("cannot-connect-to-server");
+    }
   }
 }
 </script>
 
 <style scoped>
 @import "../assets/css/vars.css";
+
+#home {
+  height: 100%;
+}
 
 .welcome {
   display: flex;

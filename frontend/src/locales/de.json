@@ -102,5 +102,7 @@
   "copy": "Kopieren",
   "copied": "Kopiert!",
 
-  "new_version_available": "Ein Update ist verfügbar. Klicke hier um das Spiel zu aktualisieren."
+  "new_version_available": "Ein Update ist verfügbar. Klicke hier um das Spiel zu aktualisieren.",
+  "cannot-connect-to-server": "Du kannst zur Zeit kein Multiplayer Spiel starten, unsere Server antworten nicht. Versuch's bitte später noch einmal!"
+
 }
