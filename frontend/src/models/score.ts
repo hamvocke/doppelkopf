@@ -10,10 +10,11 @@ export class Score {
     this.parties[PartyName.Re] = reParty;
     this.parties[PartyName.Kontra] = kontraParty;
 
-    if (this.parties[PartyName.Re].points() + this.parties[PartyName.Kontra].points() !== 240) {
+    const rePoints = this.parties[PartyName.Re].points();
+    const kontraPoints = this.parties[PartyName.Kontra].points();
+    if (rePoints + kontraPoints !== 240) {
       throw Error(
-        // eslint-disable-next-line prettier/prettier
-        `A score must have a total of 240 points. Got ${this.parties[PartyName.Re].points()} for Re, ${this.parties[PartyName.Kontra].points()} for Kontra`
+        `A score must have a total of 240 points. Got ${rePoints} for Re, ${kontraPoints} for Kontra`
       );
     }
   }
@@ -93,7 +94,9 @@ export class Score {
       return null;
     }
 
-    return this.winningPartyName() === PartyName.Re ? PartyName.Kontra : PartyName.Re;
+    return this.winningPartyName() === PartyName.Re
+      ? PartyName.Kontra
+      : PartyName.Re;
   }
 
   winner() {
