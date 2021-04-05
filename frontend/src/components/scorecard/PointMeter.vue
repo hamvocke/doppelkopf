@@ -21,28 +21,25 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "PointMeter",
-  props: {
-    rePoints: {
-      type: Number,
-      required: true
-    },
-    kontraPoints: {
-      type: Number,
-      required: true
-    }
-  },
-  computed: {
-    reStyle() {
-      return `width: ${(this.rePoints / 240) * 100}%`;
-    },
-    kontraStyle() {
-      return `width: ${(this.kontraPoints / 240) * 100}%`;
-    }
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+
+@Component
+export default class PointMeter extends Vue {
+  @Prop({ required: true })
+  rePoints!: number;
+
+  @Prop({ required: true })
+  kontraPoints!: number;
+
+  get reStyle() {
+    return `width: ${(this.rePoints / 240) * 100}%`;
   }
-};
+
+  get kontraStyle() {
+    return `width: ${(this.kontraPoints / 240) * 100}%`;
+  }
+}
 </script>
 
 <style scoped>

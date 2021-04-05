@@ -14,26 +14,22 @@
   </div>
 </template>
 
-<script>
-import Card from "./Card";
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import Card from "./Card.vue";
+import { Trick as TrickModel } from "@/models/trick";
 
-export default {
-  name: "Trick",
-  components: {
-    Card
-  },
-  props: {
-    currentTrick: {
-      type: Object,
-      default: null
-    }
-  },
-  computed: {
-    cards: function() {
-      return this.currentTrick.cards();
-    }
+@Component({
+  components: { Card }
+})
+export default class Trick extends Vue {
+  @Prop()
+  currentTrick?: TrickModel;
+
+  get cards() {
+    return this.currentTrick?.cards();
   }
-};
+}
 </script>
 
 <style scoped>

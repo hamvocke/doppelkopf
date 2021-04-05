@@ -1,9 +1,13 @@
 <template>
   <div id="waitingRoom">
     <h1>Doppelkopf</h1>
-    <div class="wrapper">
+    <div v-if="loading">
+      Loading...
+    </div>
+
+    <div v-else-if="waitingRoom" class="wrapper">
       <h3>
-        {{ $t("hey-player", { name: waitingRoom.players[0].name }) }}
+        {{ $t("hey-player", { name: currentPlayerName }) }}
       </h3>
       <p>
         {{ $t("here-is-your-invite-link") }}
@@ -48,47 +52,54 @@
   </div>
 </template>
 
-<script>
-import { WaitingRoom, states } from "@/models/waitingRoom";
-import CopyText from "@/components/CopyText";
+<script lang="ts">
+import { Component, Vue, Prop } from "vue-property-decorator";
+import {
+  WaitingRoom as WaitingRoomModel,
+  RoomState
+} from "@/models/waitingRoom";
+import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
+import CopyText from "@/components/CopyText.vue";
 
-export default {
-  name: "WaitingRoom",
-  components: { CopyText },
-  props: {
-    waitingRoom: {
-      type: Object,
-      default: function() {
-        return new WaitingRoom();
-      }
-    }
-  },
-  computed: {
-    statusMessage: function() {
-      switch (this.waitingRoom.state) {
-        case states.ready:
-          return "ready-status";
-        case states.joined:
-          return "waiting-status";
-        case states.waiting:
-          return "waiting-status";
-      }
-      return "waiting-status";
-    }
-  },
-  async created() {
-    await this.waitingRoom.register();
-  },
-  methods: {
-    startGame: function() {
-      this.waitingRoom.startGame();
-      this.$router.push("/play");
-    },
-    isReady: function() {
-      return this.waitingRoom.state === states.ready;
-    }
+@Component({
+  components: { CopyText }
+})
+export default class WaitingRoom extends Vue {
+  @Prop({ required: true })
+  gameName!: string;
+
+  waitingRoom?: WaitingRoomModel = undefined;
+  loading = true;
+  error = undefined;
+
+  get currentPlayerName() {
+    return this.waitingRoom?.players[0]?.name ?? "ho";
   }
-};
+
+  get statusMessage() {
+    switch (this.waitingRoom?.state) {
+      case RoomState.ready:
+        return "ready-status";
+      case RoomState.waiting:
+        return "waiting-status";
+    }
+    return "waiting-status";
+  }
+
+  async created() {
+    this.waitingRoom = await new MultiplayerHandler().fetchRoom(this.gameName);
+    this.loading = false;
+  }
+
+  startGame() {
+    this.waitingRoom?.startGame();
+    this.$router.push("/play");
+  }
+
+  isReady() {
+    return this.waitingRoom?.state === RoomState.ready;
+  }
+}
 </script>
 
 <style scoped>

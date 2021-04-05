@@ -5,19 +5,16 @@
   </div>
 </template>
 
-<script>
-import Card from "@/components/Card";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+
+import Card from "@/components/Card.vue";
 import { trumps } from "@/models/card";
 
-export default {
-  name: "AllTrumps",
-  components: { Card },
-  data() {
-    return {
-      cards: trumps
-    };
-  }
-};
+@Component({ components: { Card } })
+export default class AllTrumps extends Vue {
+  cards = trumps;
+}
 </script>
 
 <style scoped>

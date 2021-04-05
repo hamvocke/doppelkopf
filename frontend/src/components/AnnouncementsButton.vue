@@ -26,38 +26,36 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
 import { ChevronUpIcon, FlagIcon } from "vue-feather-icons";
 import { mixin as clickaway } from "vue-clickaway";
+import { Player } from "@/models/player";
+import { Announcement } from "@/models/announcements";
 
-export default {
-  name: "AnnouncementsButton",
+@Component({
   components: { ChevronUpIcon, FlagIcon },
-  mixins: [clickaway],
-  props: {
-    player: {
-      type: Object,
-      required: true
-    }
-  },
-  data: function() {
-    return {
-      isOpen: false
-    };
-  },
-  methods: {
-    toggleDropdown: function() {
-      this.isOpen = !this.isOpen;
-    },
-    closeDropdown: function() {
-      this.isOpen = false;
-    },
-    announce: function(announcement) {
-      this.player.announce(announcement);
-      this.toggleDropdown();
-    }
+  mixins: [clickaway]
+})
+export default class AnnouncementsButton extends Vue {
+  isOpen: boolean = false;
+
+  @Prop(Player)
+  player!: Player;
+
+  toggleDropdown() {
+    this.isOpen = !this.isOpen;
   }
-};
+
+  closeDropdown() {
+    this.isOpen = false;
+  }
+
+  announce(announcement: Announcement) {
+    this.player.announce(announcement);
+    this.closeDropdown();
+  }
+}
 </script>
 
 <style scoped>

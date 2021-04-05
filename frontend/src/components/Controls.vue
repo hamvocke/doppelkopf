@@ -23,38 +23,33 @@
   </div>
 </template>
 
-<script>
-import AnnouncementsButton from "@/components/AnnouncementsButton";
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import AnnouncementsButton from "@/components/AnnouncementsButton.vue";
 import { Features } from "@/models/features";
+import { Game } from "@/models/game";
 
-export default {
-  name: "Controls",
-  components: {
-    AnnouncementsButton
-  },
-  props: {
-    game: {
-      type: Object,
-      required: true
-    }
-  },
-  data: function() {
-    return {
-      enableAnnouncements: false
-    };
-  },
-  async created() {
-    this.enableAnnouncements = Features.get("game.announcements.enable");
-  },
-  methods: {
-    triggerNextTrick: function() {
-      this.$emit("nextTrick");
-    },
-    triggerFinish: function() {
-      this.$emit("finishRound");
-    }
+@Component({
+  components: { AnnouncementsButton }
+})
+export default class Controls extends Vue {
+  @Prop({ required: true })
+  game!: Game;
+
+  enableAnnouncements = false;
+
+  created() {
+    this.enableAnnouncements = Features.get().enableAnnouncements;
   }
-};
+
+  triggerNextTrick() {
+    this.$emit("nextTrick");
+  }
+
+  triggerFinish() {
+    this.$emit("finishRound");
+  }
+}
 </script>
 
 <style scoped>

@@ -136,66 +136,64 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
 import { includes, join } from "lodash-es";
-import PointMeter from "./scorecard/PointMeter";
+import PointMeter from "./scorecard/PointMeter.vue";
+import { Scorecard as ScorecardModel } from "@/models/scorecard";
+import { Player } from "@/models/player";
+import { Score } from "@/models/score";
+import { PartyName } from "@/models/party";
 
-export default {
-  name: "Scorecard",
-  components: {
-    PointMeter
-  },
-  props: {
-    scorecard: {
-      type: Object,
-      required: true
-    },
-    players: {
-      type: Array,
-      required: true
-    },
-    currentScore: {
-      type: Object,
-      required: true
-    }
-  },
-  data() {
-    return {
-      reExtras: this.currentScore.listExtras("Re"),
-      kontraExtras: this.currentScore.listExtras("Kontra")
-    };
-  },
-  computed: {
-    message() {
-      return includes(this.currentScore.winner().players, this.players[0])
-        ? "you_win"
-        : "you_lose";
-    },
-    extrasLength() {
-      return Math.max(this.reExtras.length, this.kontraExtras.length);
-    }
-  },
-  methods: {
-    triggerNextRound: function() {
-      this.$emit("nextRound");
-    },
-    isLastLine(index) {
-      return index === this.scorecard.scoreLines.length - 1;
-    },
-    reExtra(index) {
-      return this.reExtras[Math.max(index - 1)] || {};
-    },
-    kontraExtra(index) {
-      return this.kontraExtras[Math.max(0, index - 1)] || {};
-    },
-    partyMembers: function(party) {
-      return join(
-        this.currentScore.parties[party].players.map(player => player.name),
-        " & "
-      );
-    }
+@Component({
+  components: { PointMeter }
+})
+export default class Scorecard extends Vue {
+  @Prop({ required: true })
+  scorecard!: ScorecardModel;
+
+  @Prop({ required: true })
+  players!: Player[];
+
+  @Prop({ required: true })
+  currentScore!: Score;
+
+  reExtras = this.currentScore.listExtras(PartyName.Re);
+  kontraExtras = this.currentScore.listExtras(PartyName.Kontra);
+
+  get message() {
+    return includes(this.currentScore.winner()?.players, this.players[0])
+      ? "you_win"
+      : "you_lose";
   }
-};
+
+  get extrasLength() {
+    return Math.max(this.reExtras.length, this.kontraExtras.length);
+  }
+
+  triggerNextRound() {
+    this.$emit("nextRound");
+  }
+
+  isLastLine(index: number) {
+    return index === this.scorecard.scoreLines.length - 1;
+  }
+
+  reExtra(index: number) {
+    return this.reExtras[Math.max(index - 1)] || {};
+  }
+
+  kontraExtra(index: number) {
+    return this.kontraExtras[Math.max(0, index - 1)] || {};
+  }
+
+  partyMembers(party: string) {
+    return join(
+      this.currentScore.parties[party].players.map(player => player.name),
+      " & "
+    );
+  }
+}
 </script>
 
 <style scoped>

@@ -18,6 +18,26 @@ def test_should_create_game(client):
     assert data["game"]["players"] == []
 
 
+def test_should_get_game(client):
+    game_id = start_game(client)
+
+    response = client.get(f"/api/game/{game_id}")
+    data = response.get_json()
+
+    assert response.status_code == 200
+    assert data["game"]["id"] == game_id
+    assert data["game"]["players"] == []
+
+
+def test_should_404_when_getting_unknown_game(client):
+    game_id = 9999
+
+    response = client.get(f"/api/game/{game_id}")
+    data = response.get_json()
+
+    assert response.status_code == 404
+
+
 def test_should_add_cors_header_when_creating_game(client):
     response = client.post("/api/game")
     assert response.headers["Access-Control-Allow-Origin"] == "*"

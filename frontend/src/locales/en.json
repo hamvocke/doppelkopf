@@ -102,6 +102,6 @@
   "copy": "Copy",
   "copied": "Copied!",
 
-  "new_version_available": "The game has been updated. Click here to refresh."
-
+  "new_version_available": "The game has been updated. Click here to refresh.",
+  "cannot-connect-to-server": "Can't start a multiplayer game. Our servers are not responding. Please try again later!"
 }

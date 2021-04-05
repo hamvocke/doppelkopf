@@ -11,7 +11,7 @@ The game is still in early stages. Playing it will probably be a frustrating and
 <h3 align="center"><a href="https://doppelkopf.ham.codes/">Try the Live Demo</a></h3>
 
 ## Development
-This game is implemented using ES2017. The source code is transpiled using Babel and bundled and loaded with Webpack. The frontend is written in [vue.js](https://vuejs.org/). This is where all the game-logic and user interface for the game lives.
+The game is implemented using TypeScript and [vue.js](https://vuejs.org/). It's capable to run as an offline-first, standalone web application that does not rely on being connected to a backend.
 
 The backend part is written in Python and using the [Flask](http://flask.pocoo.org/) microframework. It's a tiny application that's only serving administrative tasks (e.g. feature toggles) and collects some high-level metrics about games that have been played.
 

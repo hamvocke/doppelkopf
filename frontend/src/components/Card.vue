@@ -23,64 +23,55 @@
   </div>
 </template>
 
-<script>
-import { suits } from "@/models/card";
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { Suit, Card as CardModel } from "@/models/card";
 
-export default {
-  name: "Card",
-  props: {
-    card: {
-      type: Object,
-      required: true
-    },
-    isSelected: {
-      type: Boolean,
-      required: false
-    },
-    isCovered: {
-      type: Boolean,
-      required: false
-    },
-    isHighlighted: {
-      type: Boolean,
-      required: false
-    },
-    position: {
-      type: String,
-      required: false,
-      default: "not-set"
-    }
-  },
-  computed: {
-    colorClasses: function() {
-      return {
-        red:
-          this.card.suit === suits.hearts || this.card.suit === suits.diamonds,
-        black: this.card.suit === suits.clubs || this.card.suit === suits.spades
-      };
-    },
-    cardClasses: function() {
-      return {
-        selected: this.isSelected,
-        highlighted: this.isHighlighted,
-        covered: this.isCovered
-      };
-    },
-    positionClasses: function() {
-      return {
-        left: this.position === "left",
-        right: this.position === "right",
-        top: this.position === "top",
-        bottom: this.position === "bottom"
-      };
-    }
-  },
-  methods: {
-    isCard: function() {
-      return this.card ? true : false;
-    }
+@Component
+export default class Card extends Vue {
+  @Prop({ required: true })
+  card!: CardModel;
+
+  @Prop({ default: false })
+  isSelected!: boolean;
+
+  @Prop({ default: false })
+  isCovered!: boolean;
+
+  @Prop({ default: false })
+  isHighlighted!: boolean;
+
+  @Prop({ default: "unknown" })
+  position!: string;
+
+  get colorClasses() {
+    return {
+      red: this.card.suit === Suit.Hearts || this.card.suit === Suit.Diamonds,
+      black: this.card.suit === Suit.Clubs || this.card.suit === Suit.Spades
+    };
   }
-};
+
+  get positionClasses() {
+    return {
+      left: this.position === "left",
+      right: this.position === "right",
+      top: this.position === "top",
+      bottom: this.position === "bottom"
+    };
+  }
+
+  get cardClasses() {
+    return {
+      selected: this.isSelected,
+      highlighted: this.isHighlighted,
+      covered: this.isCovered
+    };
+  }
+
+  isCard() {
+    return this.card ? true : false;
+  }
+}
 </script>
 
 <style scoped>

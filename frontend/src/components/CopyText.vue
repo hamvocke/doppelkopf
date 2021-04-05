@@ -8,47 +8,38 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
 import { CheckIcon, ClipboardIcon } from "vue-feather-icons";
 
-export default {
-  name: "CopyText",
-  components: {
-    CheckIcon,
-    ClipboardIcon
-  },
-  props: {
-    text: {
-      type: String,
-      required: true
-    }
-  },
-  data: function() {
-    return {
-      buttonText: "copy",
-      icon: ClipboardIcon,
-      copying: false
-    };
-  },
-  methods: {
-    copyTextToClipboard: function() {
-      if (this.copying) {
-        return;
-      }
+@Component({
+  components: { CheckIcon, ClipboardIcon }
+})
+export default class CopyText extends Vue {
+  @Prop({ required: true })
+  text!: string;
 
-      this.copying = true;
-      navigator.clipboard.writeText(this.text);
-      let oldText = this.buttonText;
-      this.buttonText = "copied";
-      this.icon = CheckIcon;
-      setTimeout(() => {
-        this.copying = false;
-        this.buttonText = oldText;
-        this.icon = ClipboardIcon;
-      }, 1500);
+  buttonText = "copy";
+  icon = ClipboardIcon;
+  copying = false;
+
+  copyTextToClipboard() {
+    if (this.copying) {
+      return;
     }
+
+    this.copying = true;
+    navigator.clipboard.writeText(this.text);
+    let oldText = this.buttonText;
+    this.buttonText = "copied";
+    this.icon = CheckIcon;
+    setTimeout(() => {
+      this.copying = false;
+      this.buttonText = oldText;
+      this.icon = ClipboardIcon;
+    }, 1500);
   }
-};
+}
 </script>
 
 <style scoped>
