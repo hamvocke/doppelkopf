@@ -141,5 +141,4 @@ describe("Waiting Room", () => {
   test.todo("should not allow starting the game until 4 players are there");
 
   test.todo("should allow starting the game when game is ready");
-
 });

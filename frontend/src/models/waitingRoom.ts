@@ -24,22 +24,23 @@ Joining:
 1. parse id from URL
 2. fetch game info via GET /api/game/<id>
 3. parse response, get player info
-4. balance players (0 should be free for me)
 5. create waiting room instance
 6. connect websocket
 7. send "join" event with current player information
 8. listen for other "joined" events
+9. be aware that joining/leaving can also happen in-game
+  * in waiting room phase: add/remove player from list
+  * in game phase: change online presence
 
 Starting:
 1. if game status == waiting: don't allow
 2. if game status == ready: allow
-3. owner sends "game start" event
+3. owner sends "game start" event with their canonical list of players
 4. everyone listens for "game started" event
-
-Game started:
-1. create new game: Game.multiplayer() - pass balanced players
-2. start listening to play events
-3. done
+5. balance players (everyone's own player should become bottom player)
+6. start game locally, pass balanced players
+7. redirect game via router? what happens on refresh?
+8. start listening to play events
 
 */
 
@@ -82,6 +83,8 @@ export class WaitingRoom {
     this.players.push(player);
 
     this.websocket?.connect();
+
+    // TODO: emit "join" event
   }
 
   startGame() {
@@ -89,6 +92,9 @@ export class WaitingRoom {
       throw new Error("Can't start game until 4 players are there");
     }
 
+    // TODO: emit event via multiplayer handler
+
+    // TODO: rebalance players here
     return Game.multiPlayer(this.players);
   }
 
@@ -97,5 +103,7 @@ export class WaitingRoom {
       throw new Error(`Player '${player.name}' is not in this room`);
 
     this.players = this.players.filter(p => p.id !== player.id);
+
+    // TODO: emit "leave" event
   }
 }
