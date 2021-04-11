@@ -1,6 +1,5 @@
 import { http } from "@/helpers/httpClient";
 import { Player } from "@/models/player";
-import { TablePosition } from "@/models/tablePosition";
 import { WaitingRoom } from "@/models/waitingRoom";
 
 /**
@@ -44,7 +43,6 @@ export class MultiplayerHandler {
   // TODO: handleJoined()
   // try to reconnect players to their previously known position
   // needs to be handled in waiting room AND game
-
 
   // TODO: start game
   // TODO: handleStarted()

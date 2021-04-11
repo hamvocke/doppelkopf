@@ -19,9 +19,14 @@ export class WebsocketClient {
     this.socket = io(this.baseUrl);
   }
 
-  emit(eventName: string, payload: object) {
+  emit(event: Event, payload?: object) {
     if (Config.testing) {
       return;
     }
   }
+}
+
+export enum Event {
+  join = "join",
+  joined = "joined"
 }

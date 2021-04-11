@@ -2,7 +2,7 @@ import { Game } from "@/models/game";
 import { Player } from "@/models/player";
 import { Config } from "@/models/config";
 import { http } from "@/helpers/httpClient";
-import { WebsocketClient } from "@/helpers/websocketClient";
+import { Event, WebsocketClient } from "@/helpers/websocketClient";
 import { generateNames } from "@/models/random";
 import { TablePosition } from "./tablePosition";
 
@@ -84,7 +84,17 @@ export class WaitingRoom {
 
     this.websocket?.connect();
 
-    // TODO: emit "join" event
+    const joinPayload = {
+      game: {
+        id: this.gameId
+      },
+      player: {
+        id: player.id,
+        name: player.name
+      }
+    };
+
+    this.websocket?.emit(Event.join, joinPayload);
   }
 
   startGame() {

@@ -1,7 +1,7 @@
 import { WaitingRoom, RoomState } from "@/models/waitingRoom";
 import { Player } from "@/models/player";
 import { Config } from "@/models/config";
-import { WebsocketClient } from "@/helpers/websocketClient";
+import { Event, WebsocketClient } from "@/helpers/websocketClient";
 import { mocked } from "ts-jest/utils";
 
 jest.mock("@/helpers/websocketClient");
@@ -136,6 +136,26 @@ describe("Waiting Room", () => {
     }
 
     expect(throwingLeave).toThrowError("Player 'unknown' is not in this room");
+  });
+
+  test("should emit websocket event when joining", () => {
+    const room = new WaitingRoom("some-id", []);
+
+    room.join(player);
+
+    const expectedPayload = {
+      game: {
+        id: "some-id"
+      },
+      player: {
+        id: player.id,
+        name: player.name
+      }
+    };
+    expect(websocketMock.mock.instances[0].emit).toHaveBeenCalledWith(
+      Event.join,
+      expectedPayload
+    );
   });
 
   test.todo("should not allow starting the game until 4 players are there");
