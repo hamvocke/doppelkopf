@@ -23,6 +23,8 @@ export class WebsocketClient {
     if (Config.testing) {
       return;
     }
+
+    this.socket?.emit(event, payload);
   }
 }
 
