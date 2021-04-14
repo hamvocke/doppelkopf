@@ -5,6 +5,7 @@ import { http } from "@/helpers/httpClient";
 import { Event, WebsocketClient } from "@/helpers/websocketClient";
 import { generateNames } from "@/models/random";
 import { TablePosition } from "./tablePosition";
+import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
 
 export enum RoomState {
   waiting = "waiting",
@@ -48,13 +49,17 @@ export class WaitingRoom {
   gameId: string;
   owner: Player;
   players: Player[];
-  websocket: WebsocketClient;
+  multiplayer?: MultiplayerHandler;
 
-  constructor(gameId: string, players: Player[]) {
+  constructor(
+    gameId: string,
+    players: Player[],
+    multiplayerHandler?: MultiplayerHandler
+  ) {
     this.gameId = gameId;
     this.players = players;
     this.owner = players[0];
-    this.websocket = new WebsocketClient();
+    this.multiplayer = multiplayerHandler;
   }
 
   get state() {
@@ -82,19 +87,7 @@ export class WaitingRoom {
 
     this.players.push(player);
 
-    this.websocket?.connect();
-
-    const joinPayload = {
-      game: {
-        id: this.gameId
-      },
-      player: {
-        id: player.id,
-        name: player.name
-      }
-    };
-
-    this.websocket?.emit(Event.join, joinPayload);
+    this.multiplayer?.joinRoom(player);
   }
 
   startGame() {

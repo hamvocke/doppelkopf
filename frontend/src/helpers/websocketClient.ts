@@ -26,6 +26,10 @@ export class WebsocketClient {
 
     this.socket?.emit(event, payload);
   }
+
+  on(event: Event, listener: Function) {
+    this.socket?.on(event, listener);
+  }
 }
 
 export enum Event {

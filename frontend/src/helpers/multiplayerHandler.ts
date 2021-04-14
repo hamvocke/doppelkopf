@@ -1,13 +1,17 @@
 import { http } from "@/helpers/httpClient";
 import { Player } from "@/models/player";
 import { WaitingRoom } from "@/models/waitingRoom";
+import { WebsocketClient, Event } from "@/helpers/websocketClient";
 
 /**
  * Takes care of creating a new multiplayer game or establishing a connection to
  * a game that's been started by another player.
+ * Handles all HTTP and WebSocket connections required to play a multiplayer game.
  */
-// TODO: pass optional Game and WaitingRoom instances so both can be notified throughout the lifecycle
 export class MultiplayerHandler {
+  private websocket: WebsocketClient = new WebsocketClient();
+  private waitingRoom?: WaitingRoom;
+
   async register(): Promise<CreateResponse> {
     try {
       const response = await http.post("/api/game");
@@ -31,14 +35,39 @@ export class MultiplayerHandler {
       const waitingPlayers = roomInfo.game.players.map(
         (player: any) => new Player(player.name, true, false)
       );
-      return new WaitingRoom(roomInfo.game.id, waitingPlayers);
+
+      this.websocket.connect();
+      this.websocket.on(Event.joined, this.onJoined);
+
+      this.waitingRoom = new WaitingRoom(
+        roomInfo.game.id,
+        waitingPlayers,
+        this
+      );
+
+      return this.waitingRoom;
     } catch (error) {
       throw new Error(`Failed to fetch room state: ${error}`);
     }
   }
 
-  // TODO: selfJoin()
-  // -> create a player, join a given room
+  joinRoom(player: Player) {
+    const joinPayload = {
+      game: {
+        id: this.waitingRoom?.gameId
+      },
+      player: {
+        id: player.id,
+        name: player.name
+      }
+    };
+
+    this.websocket?.emit(Event.join, joinPayload);
+  }
+
+  onJoined(data: any) {
+    console.log("received join event", data);
+  }
 
   // TODO: handleJoined()
   // try to reconnect players to their previously known position
