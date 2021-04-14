@@ -41,6 +41,12 @@ test("player has a trick stack", () => {
   expect(new Player("some player").trickStack instanceof TrickStack).toBe(true);
 });
 
+test("should create 'me' player", () => {
+  const me = Player.me();
+  expect(me.isHuman).toBe(true);
+  expect(me.name).toBeDefined();
+});
+
 test("should belong to re party", () => {
   player.hand = new Hand([queen.of(Suit.Clubs)]);
 

@@ -11,6 +11,7 @@ import { Card } from "./card";
 import { Trick } from "./trick";
 import { Game } from "./game";
 import { TablePosition } from "./tablePosition";
+import { generateNames } from "@/models/random";
 
 const notifier = new Notifier();
 
@@ -48,6 +49,12 @@ export class Player {
     this.memory = memory;
 
     this.reset();
+  }
+
+  static me(name?: string): Player {
+    let playerName = name || generateNames(1)[0];
+    // todo: set multiplayer behavior here
+    return new Player(playerName, true, true, TablePosition.Bottom);
   }
 
   isRe() {
