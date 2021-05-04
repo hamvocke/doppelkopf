@@ -93,6 +93,7 @@
   "winner": "Gewinner",
   "badge_description": "{name} hat diesen Stich gewonnen",
 
+  "loading": "Laden...",
   "hey-player": "Moin {name}!",
   "here-is-your-invite-link": "Hier ist dein Spiel-Link. Schicke diesen Link an deine Freunde damit sie dem Spiel beitreten können.",
   "you-can-start": "Du kannst das Spiel starten, sobald 4 Spieler hier sind.",
@@ -103,6 +104,6 @@
   "copied": "Kopiert!",
 
   "new_version_available": "Ein Update ist verfügbar. Klicke hier um das Spiel zu aktualisieren.",
-  "cannot-connect-to-server": "Du kannst zur Zeit kein Multiplayer Spiel starten, unsere Server antworten nicht. Versuch's bitte später noch einmal!"
-
+  "cannot-connect-to-server": "Du kannst zur Zeit kein Multiplayer Spiel starten, unsere Server antworten nicht. Versuch's bitte später noch einmal!",
+  "error-connection": "Oh nein! Unsere Server antworten nicht, wir können dich leider nicht mit dem Spiel verbinden. Vielleicht hilft's die Seite zu aktualisieren?"
 }

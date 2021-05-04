@@ -93,6 +93,7 @@
   "winner": "Winner",
   "badge_description": "{name} has won this trick",
 
+  "loading": "Loading...",
   "hey-player": "Hey {name}!",
   "here-is-your-invite-link": "Here is your invite link. Share this link with your friends so they can join the game.",
   "you-can-start": "You can start the game once 4 players have joined.",
@@ -103,5 +104,7 @@
   "copied": "Copied!",
 
   "new_version_available": "The game has been updated. Click here to refresh.",
-  "cannot-connect-to-server": "Can't start a multiplayer game. Our servers are not responding. Please try again later!"
+  "cannot-connect-to-server": "Can't start a multiplayer game. Our servers are not responding. Please try again later!",
+  "error-connection": "Oh no! Our servers don't respond, we can't connect you to the game. Maybe refreshing the site helps?"
+
 }
