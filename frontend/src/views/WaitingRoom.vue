@@ -1,8 +1,13 @@
 <template>
   <div id="waitingRoom">
     <h1>Doppelkopf</h1>
-    <div v-if="loading">
-      Loading...
+    <div v-if="isLoading" class="loading">
+      {{ $t("loading") }}
+    </div>
+
+    <div v-else-if="error" class="error">
+      <cloud-off-icon size="32" class="icon" />
+      {{ $t(error) }}
     </div>
 
     <div v-else-if="waitingRoom" class="wrapper">
@@ -61,19 +66,19 @@ import {
 import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
 import CopyText from "@/components/CopyText.vue";
 import { Player } from "@/models/player";
+import { CloudOffIcon } from "vue-feather-icons";
 
 @Component({
-  components: { CopyText }
+  components: { CopyText, CloudOffIcon }
 })
 export default class WaitingRoom extends Vue {
   @Prop({ required: true })
   gameName!: string;
 
   waitingRoom?: WaitingRoomModel = undefined;
-  loading = true;
-  error = undefined;
-
-  private multiplayer = new MultiplayerHandler();
+  isLoading = false;
+  error?: String = undefined;
+  multiplayer = new MultiplayerHandler();
 
   get currentPlayerName() {
     return this.waitingRoom?.players[0]?.name ?? "ho";
@@ -90,9 +95,16 @@ export default class WaitingRoom extends Vue {
   }
 
   async created() {
-    this.waitingRoom = await this.multiplayer.fetchRoom(this.gameName);
-    this.waitingRoom.join(Player.me());
-    this.loading = false;
+    try {
+      this.isLoading = true;
+      this.error = undefined;
+      this.waitingRoom = await this.multiplayer.fetchRoom(this.gameName);
+      this.waitingRoom.join(Player.me());
+      this.isLoading = false;
+    } catch (error) {
+      this.isLoading = false;
+      this.error = "error-connection";
+    }
   }
 
   startGame() {
@@ -115,6 +127,23 @@ export default class WaitingRoom extends Vue {
   align-items: center;
   justify-content: center;
   height: 100vh;
+}
+
+.error {
+  background: var(--lightblue);
+  color: var(--white);
+  padding: 24px 32px;
+  font-weight: bold;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33%;
+  line-height: 1.4em;
+}
+
+.error .icon {
+  margin-bottom: 32px;
 }
 
 .wrapper {
