@@ -1,24 +1,15 @@
 import { WaitingRoom, RoomState } from "@/models/waitingRoom";
 import { Player } from "@/models/player";
-import { Config } from "@/models/config";
-import { WebsocketClient } from "@/helpers/websocketClient";
 import { mocked } from "ts-jest/utils";
+import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
 
-jest.mock("@/helpers/websocketClient");
+jest.mock("@/helpers/multiplayerHandler");
 
-const fetchMock = require("fetch-mock-jest");
-const websocketMock = mocked(WebsocketClient);
+const multiplayerHandler = mocked(MultiplayerHandler);
 const player = new Player("some-player");
 
 beforeEach(() => {
-  fetchMock.reset();
-  websocketMock.mockClear();
-  // disable testing mode so we're hitting fetchMock requests
-  Config.testing = false;
-});
-
-afterAll(() => {
-  Config.testing = true;
+  multiplayerHandler.mockClear();
 });
 
 describe("Waiting Room", () => {
@@ -46,12 +37,12 @@ describe("Waiting Room", () => {
     expect(room.owner).toEqual(player);
   });
 
-  test("should connect when joining waiting room", () => {
-    const room = new WaitingRoom("some-id", []);
+  test("should call multiplayer handler joining waiting room", () => {
+    const room = new WaitingRoom("some-id", [], new MultiplayerHandler());
 
     room.join(player);
 
-    expect(websocketMock.mock.instances[0].connect).toHaveBeenCalled();
+    expect(multiplayerHandler.mock.instances[0].joinRoom).toHaveBeenCalled();
   });
 
   test("should be in 'waiting' state on start", () => {
@@ -141,5 +132,4 @@ describe("Waiting Room", () => {
   test.todo("should not allow starting the game until 4 players are there");
 
   test.todo("should allow starting the game when game is ready");
-
 });

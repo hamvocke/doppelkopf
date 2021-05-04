@@ -12,6 +12,7 @@ import { Trick } from "./trick";
 import { Game } from "./game";
 import { TablePosition } from "./tablePosition";
 import { Affinities, AffinityEvent } from "@/models/affinities";
+import { generateNames } from "@/models/random";
 
 const notifier = new Notifier();
 
@@ -51,6 +52,12 @@ export class Player {
     this.affinities = new Affinities(this);
 
     this.reset();
+  }
+
+  static me(name?: string): Player {
+    let playerName = name || generateNames(1)[0];
+    // todo: set multiplayer behavior here
+    return new Player(playerName, true, true, TablePosition.Bottom);
   }
 
   isRe() {

@@ -60,6 +60,7 @@ import {
 } from "@/models/waitingRoom";
 import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
 import CopyText from "@/components/CopyText.vue";
+import { Player } from "@/models/player";
 
 @Component({
   components: { CopyText }
@@ -71,6 +72,8 @@ export default class WaitingRoom extends Vue {
   waitingRoom?: WaitingRoomModel = undefined;
   loading = true;
   error = undefined;
+
+  private multiplayer = new MultiplayerHandler();
 
   get currentPlayerName() {
     return this.waitingRoom?.players[0]?.name ?? "ho";
@@ -87,7 +90,8 @@ export default class WaitingRoom extends Vue {
   }
 
   async created() {
-    this.waitingRoom = await new MultiplayerHandler().fetchRoom(this.gameName);
+    this.waitingRoom = await this.multiplayer.fetchRoom(this.gameName);
+    this.waitingRoom.join(Player.me());
     this.loading = false;
   }
 

@@ -1,12 +1,19 @@
 import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
+import { WebsocketClient, Event } from "@/helpers/websocketClient";
 import { Config } from "@/models/config";
+import { mocked } from "ts-jest/utils";
+
+jest.mock("@/helpers/websocketClient");
 
 import fetchMock from "fetch-mock-jest";
+import { Player } from "@/models/player";
+const websocketMock = mocked(WebsocketClient);
 
 beforeEach(() => {
   fetchMock.reset();
   // disable testing mode so we're hitting fetchMock requests
   Config.testing = false;
+  websocketMock.mockClear();
 });
 
 afterAll(() => {
@@ -17,10 +24,6 @@ describe("Multiplayer Handler", () => {
   const multiplayer = new MultiplayerHandler();
 
   describe("register", () => {
-    beforeEach(() => {
-      fetchMock.reset();
-    });
-
     test("should register new game", async () => {
       fetchMock.post("http://localhost:5000/api/game", stubbedCreateResponse);
 
@@ -93,6 +96,53 @@ describe("Multiplayer Handler", () => {
 
       await expect(failingFetch()).rejects.toThrowError(
         "Failed to fetch room state: Error: HTTP request failed with status 503"
+      );
+    });
+
+    test("should connect websocket and register listeners", async () => {
+      fetchMock.get(
+        "http://localhost:5000/api/game/some-game",
+        stubbedFetchResponse
+      );
+      const multiplayer = new MultiplayerHandler();
+
+      await multiplayer.fetchRoom("some-game");
+
+      expect(websocketMock.mock.instances[0].connect).toHaveBeenCalled();
+      expect(websocketMock.mock.instances[0].on).toHaveBeenCalledWith(
+        Event.joined,
+        multiplayer.onJoined
+      );
+    });
+  });
+
+  describe("join", () => {
+    beforeEach(() => {
+      fetchMock.get(
+        "http://localhost:5000/api/game/some-game",
+        stubbedFetchResponse
+      );
+    });
+
+    test("should send join event via socket", async () => {
+      const multiplayer = new MultiplayerHandler();
+      await multiplayer.fetchRoom("some-game"); // attaches waiting room to multiplayer instance behind the scenes
+      const player = new Player("some-player");
+
+      multiplayer.joinRoom(player);
+
+      const expectedPayload = {
+        game: {
+          id: "some-game"
+        },
+        player: {
+          id: player.id,
+          name: player.name
+        }
+      };
+      expect(websocketMock.mock.instances[0].emit).toHaveBeenCalledWith(
+        Event.join,
+        expectedPayload
       );
     });
   });
