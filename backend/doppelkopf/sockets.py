@@ -1,4 +1,4 @@
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit
 from flask import current_app
 
 socketio = SocketIO()
@@ -11,3 +11,10 @@ def init_app(app):
 @socketio.on("connect")
 def on_connect():
     current_app.logger.info("someone connected")
+
+
+@socketio.on("join")
+def on_join(data):
+    current_app.logger.info("someone joined")
+    emit("joined", "{ some: 'data'}")
+
