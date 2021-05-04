@@ -3,11 +3,14 @@ import { Trick } from "@/models/trick";
 import { PartyName, Party } from "@/models/party";
 import { extras } from "@/models/extras";
 import { Announcement } from "@/models/announcements";
+import { Game } from "@/models/game";
 
-const player1 = new Player("Player 1", true);
-const player2 = new Player("Player 2");
-const player3 = new Player("Player 3");
-const player4 = new Player("Player 4");
+const game = Game.singlePlayer();
+
+const player1 = game.players[0];
+const player2 = game.players[1];
+const player3 = game.players[2];
+const player4 = game.players[3];
 
 test("should aggregate points", () => {
   player1.points = () => 10;
@@ -18,9 +21,12 @@ test("should aggregate points", () => {
 
 test("should aggregate announcements", () => {
   player1.numberOfCardsLeft = () => 10;
+  player1.isRe = () => false;
   player1.announce(Announcement.Kontra);
   player1.announce(Announcement.No90);
+
   const party = new Party(PartyName.Kontra, player1, player2);
+
   expect(party.announcements()).toEqual([
     Announcement.Kontra,
     Announcement.No90

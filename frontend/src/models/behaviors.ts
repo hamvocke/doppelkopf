@@ -31,7 +31,7 @@ export class RandomCardBehavior implements Behavior {
       return null;
     }
 
-    const announcementChance = 10;
+    const announcementChance = 0.1;
     if (chance(announcementChance)) {
       return [...possibleAnnouncements][0];
     }
@@ -82,8 +82,27 @@ export class RuleBasedBehaviour implements Behavior {
     if (hand.hasNonTrumps(baseCard.suit)) {
       return this.serveNonTrump(hand, trick, memory);
     } else {
-      let usefulTrump = this.findMostValuableWinningTrump(hand, trick);
-      return usefulTrump ?? sample(playableCards(hand.cards));
+      if (memory.nonTrumpSuitPlayedBefore(baseCard.suit, trick.id)) {
+        return hand.highest().beats(trick.highestCard().card) &&
+          memory.pointsLeftInSuit(baseCard.suit) + trick.points() >= 10
+          ? hand.trumps()[0]
+          : this.playLowValueCard(hand);
+      } else {
+        let usefulTrump = this.findMostValuableWinningTrump(hand, trick);
+        return usefulTrump ?? this.playLowValueCard(hand);
+      }
+    }
+  }
+
+  playLowValueCard(hand: Hand) {
+    if (hand.lowValues().length > 0) {
+      let nonTrumpLows = new Hand(hand.nonTrumps()).lowValues();
+      return nonTrumpLows.length > 0
+        ? sample(playableCards(nonTrumpLows))
+        : new Hand(hand.trumps()).lowValues().splice(-1)[0];
+      //  : "brr";
+    } else {
+      return sample(playableCards(hand.cards));
     }
   }
 
@@ -92,13 +111,14 @@ export class RuleBasedBehaviour implements Behavior {
     let highest = nonTrumpCards[0];
     let lowest = nonTrumpCards.slice(-1)[0];
 
-    if (memory.nonTrumpSuitPlayedBefore(trick.baseCard().suit)) {
+    if (memory.nonTrumpSuitPlayedBefore(trick.baseCard().suit, trick.id)) {
       return lowest;
     }
 
     if (
-      trick.highestCard().card.value < highest.value &&
+      highest.beats(trick.highestCard().card) &&
       highest.rank === Rank.Ace &&
+      // TODO trick.expectedNumberOfCards needs to change as soon as 9er game is possible
       nonTrumpCards.length < trick.expectedNumberOfCards
     ) {
       return highest;

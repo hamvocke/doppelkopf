@@ -64,6 +64,15 @@ describe("Testing functionality", () => {
     expect(memory.nonTrumpSuitPlayedBefore(Suit.Clubs)).toEqual(false);
   });
 
+  test("Should detect that suit hasn't been played before", () => {
+    const memory = new PerfectMemory();
+    memory.memorize(new PlayedCard(ten.of(Suit.Hearts), new Player("A")));
+    memory.memorize(new PlayedCard(queen.of(Suit.Spades), new Player("B")));
+    expect(memory.nonTrumpSuitPlayedBefore(Suit.Hearts)).toEqual(false);
+    expect(memory.nonTrumpSuitPlayedBefore(Suit.Spades)).toEqual(false);
+    expect(memory.nonTrumpSuitPlayedBefore(Suit.Clubs)).toEqual(false);
+  });
+
   test("Should clear all playedCards from memory", () => {
     const memory = new PerfectMemory();
     memory.memorize(new PlayedCard(ace.of(Suit.Hearts), new Player("A")));
@@ -80,5 +89,41 @@ describe("Testing functionality", () => {
     memory.memorize(new PlayedCard(king.of(Suit.Spades), new Player("C")));
     memory.memorize(new PlayedCard(king.of(Suit.Spades), new Player("D")));
     expect(memory.pointsLeftInSuit(Suit.Spades)).toBe(21);
+  });
+
+  test("Should calculate points left in suit, ignoring trumps", () => {
+    const memory = new PerfectMemory();
+    memory.memorize(new PlayedCard(ace.of(Suit.Spades), new Player("A")));
+    memory.memorize(new PlayedCard(ten.of(Suit.Spades), new Player("B")));
+    memory.memorize(new PlayedCard(king.of(Suit.Spades), new Player("C")));
+    memory.memorize(new PlayedCard(king.of(Suit.Spades), new Player("D")));
+    memory.memorize(new PlayedCard(jack.of(Suit.Spades), new Player("E")));
+    memory.memorize(new PlayedCard(jack.of(Suit.Spades), new Player("F")));
+    memory.memorize(new PlayedCard(queen.of(Suit.Spades), new Player("G")));
+    expect(memory.pointsLeftInSuit(Suit.Spades)).toBe(21);
+  });
+
+  test("Should detect that suit has already been played in different trick", () => {
+    const memory = new PerfectMemory();
+    memory.memorize(
+      new PlayedCard(ace.of(Suit.Spades), new Player("A")),
+      "trick1"
+    );
+    expect(memory.nonTrumpSuitPlayedBefore(Suit.Spades)).toEqual(true);
+    expect(memory.nonTrumpSuitPlayedBefore(Suit.Spades, "trick2")).toEqual(
+      true
+    );
+  });
+
+  test("Should detect that suit hasn't been played in different trick", () => {
+    const memory = new PerfectMemory();
+    memory.memorize(
+      new PlayedCard(ace.of(Suit.Spades), new Player("A")),
+      "trick1"
+    );
+    expect(memory.nonTrumpSuitPlayedBefore(Suit.Spades)).toEqual(true);
+    expect(memory.nonTrumpSuitPlayedBefore(Suit.Spades, "trick1")).toEqual(
+      false
+    );
   });
 });

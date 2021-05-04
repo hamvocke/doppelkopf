@@ -1,4 +1,4 @@
-import { Card, Suit, Rank, compare, jack } from "@/models/card";
+import { Card, Suit, Rank, values, compare, jack } from "@/models/card";
 import { find, without } from "lodash-es";
 
 export class Hand {
@@ -58,8 +58,14 @@ export class Hand {
     );
   }
 
-  nonTrumps(suit: Suit) {
-    return this.cards.filter(card => card.suit === suit && !card.isTrump());
+  nonTrumps(suit?: Suit) {
+    return suit
+      ? this.cards.filter(card => card.suit === suit && !card.isTrump())
+      : this.cards.filter(card => !card.isTrump());
+  }
+
+  lowValues() {
+    return this.cards.filter(card => [values.J, values.K].includes(card.value));
   }
 
   hasNonTrumps(suit: Suit) {
@@ -92,6 +98,5 @@ export class Hand {
       if (ace) aces.push(ace);
     });
     return aces;
-    //this.cards.filter(card => !card.isTrump() && card.value === 11);
   }
 }

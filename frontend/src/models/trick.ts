@@ -40,7 +40,7 @@ export class Trick {
     }
 
     this.players.forEach(playerLoop => {
-      playerLoop.memory.memorize(new PlayedCard(card, player));
+      playerLoop.memory.memorize(new PlayedCard(card, player), this.id);
     });
   }
 

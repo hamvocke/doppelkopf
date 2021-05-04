@@ -40,15 +40,22 @@ export class PartyBuilder {
   }
 
   build() {
-    if (this.players === []) {
+    if (this.players.length === 0) {
       this.players = [
-        new PlayerBuilder(`a ${this.party} player`).build(),
-        new PlayerBuilder(`another ${this.party} player`).build()
+        new PlayerBuilder(`a ${this.party} player`)
+          .withParty(this.party)
+          .build(),
+        new PlayerBuilder(`another ${this.party} player`)
+          .withParty(this.party)
+          .build()
       ];
+    } else {
+      this.players.forEach(player => {
+        player.isRe = () => this.party === PartyName.Re;
+      });
     }
 
     const createdParty = new Party(this.party, ...this.players);
-
     createdParty.announcements = () => [...this.announcements];
     createdParty.extras = () => this.extras;
     createdParty.points = () => this.points;

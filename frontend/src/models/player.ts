@@ -7,10 +7,11 @@ import { options } from "./options";
 import { Announcement } from "./announcements";
 import { playableCards } from "./playableCardFinder";
 import { Memory, PerfectMemory } from "./memory";
-import { Card } from "./card";
+import { Card, Suit, queen } from "./card";
 import { Trick } from "./trick";
 import { Game } from "./game";
 import { TablePosition } from "./tablePosition";
+import { Affinities, AffinityEvent } from "@/models/affinities";
 import { generateNames } from "@/models/random";
 
 const notifier = new Notifier();
@@ -28,6 +29,7 @@ export class Player {
   game?: Game;
   behavior: Behavior;
   memory: Memory;
+  affinities: Affinities;
 
   constructor(
     name: string,
@@ -47,6 +49,7 @@ export class Player {
     this.game = game;
     this.behavior = behaviour;
     this.memory = memory;
+    this.affinities = new Affinities(this);
 
     this.reset();
   }
@@ -93,6 +96,7 @@ export class Player {
     if (!card || !cardToBePlayed) {
       throw new Error("can't play a card that's not on the player's hand");
     }
+
     if (!this.canPlay(card)) {
       notifier.info("cant-play-card");
       return;
@@ -101,6 +105,10 @@ export class Player {
     try {
       this.game.currentTrick.add(cardToBePlayed, this);
       this.hand.remove(cardToBePlayed);
+
+      if (card.compareTo(queen.of(Suit.Clubs)) === 0)
+        this.game.affinityEvent(AffinityEvent.QueenOfClubs, this);
+
       console.debug(`Player ${this.name} played: ${cardToBePlayed.cardId}`);
       this.game.currentRound.nextPlayer();
 
@@ -133,6 +141,8 @@ export class Player {
   reset() {
     this.trickStack = new TrickStack();
     this.announcements = new Set();
+    this.memory.clearMemory();
+    this.affinities.reset();
   }
 
   points() {
@@ -143,6 +153,8 @@ export class Player {
     if (![...this.possibleAnnouncements()].includes(announcement)) {
       throw new Error("Invalid announcement");
     }
+
+    this.game?.affinityEvent(AffinityEvent.Announcement, this);
 
     // always announce re/kontra
     let allAnnouncements = this.isRe()
