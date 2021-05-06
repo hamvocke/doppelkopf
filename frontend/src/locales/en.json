@@ -105,6 +105,6 @@
 
   "new_version_available": "The game has been updated. Click here to refresh.",
   "cannot-connect-to-server": "Can't start a multiplayer game. Our servers are not responding. Please try again later!",
-  "error-connection": "Oh no! Our servers don't respond, we can't connect you to the game. Maybe refreshing the site helps?"
+  "error-connection": "Oh no! Our servers don't respond, we can't connect you to the game. Refreshing the site might help!"
 
 }
