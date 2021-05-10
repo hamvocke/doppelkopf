@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 flask = "*"
-sentry-sdk = {extras = ["flask"],version = "==0.13.3"}
+sentry-sdk = {extras = ["flask"]}
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-login = "*"
