@@ -1,5 +1,8 @@
-from flask_socketio import SocketIO, emit
-from flask import current_app
+from flask_socketio import SocketIO, emit, join_room
+from flask import current_app, request
+from .game import Game, Player
+from .db import db
+import json
 
 socketio = SocketIO()
 
@@ -10,11 +13,32 @@ def init_app(app):
 
 @socketio.on("connect")
 def on_connect():
-    current_app.logger.info("someone connected")
+    emit("connected")
 
 
 @socketio.on("join")
 def on_join(data):
-    current_app.logger.info("someone joined")
+    current_app.logger.info(f"someone joined, {data}")
+
+    # payload = json.loads(data);
+    payload = data
+    # todo: validate payload - use marshmallow?
+    player = Player(name=payload["player"]["name"], session_id=request.sid)
+    game_id = payload["game"]["id"]
+
+    game = Game.query.get(game_id)
+
+    if game is None:
+        emit("error", f"Game with id {game_id} not found")
+        return
+
+    game.join(player)
+
+    db.session.add(game)
+    db.session.commit()
+
+    join_room(game_id)
+    current_app.logger.info(f"{player.name} joined room for {game_id}")
+    json.dumps({ "game": game.serialize() })
     emit("joined", "{ some: 'data'}")
 
