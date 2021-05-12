@@ -43,44 +43,6 @@ def test_should_add_cors_header_when_creating_game(client):
     assert response.headers["Access-Control-Allow-Origin"] == "*"
 
 
-def test_should_join_game(client):
-    game_id = start_game(client)
-
-    payload = {"player": {"name": "April"}}
-    response = client.post(f"/api/game/{game_id}/join", json=payload)
-    data = response.get_json()
-
-    assert response.status_code == 200
-    assert data["game"]["id"] == game_id
-    assert data["game"]["players"] == [{"name": "April"}]
-
-
-def test_should_add_cors_header_when_joining_game(client):
-    game_id = start_game(client)
-
-    payload = {"player": {"name": "April"}}
-    response = client.post(f"/api/game/{game_id}/join", json=payload)
-
-    assert response.headers["Access-Control-Allow-Origin"] == "*"
-
-
-def test_should_return_bad_request_when_joining_game_without_data(client):
-    game_id = start_game(client)
-
-    response = client.post(f"/api/game/{game_id}/join")
-
-    assert response.status_code == 400
-
-
-def test_should_return_not_found_when_joining_unknown_game(client):
-    game_id = 42
-
-    payload = {"player": {"name": "April"}}
-    response = client.post(f"/api/game/{game_id}/join", json=payload)
-
-    assert response.status_code == 404
-
-
 def test_should_return_toggles(client):
     save_toggle("some-toggle", enabled=True)
     save_toggle("another-toggle", enabled=False)

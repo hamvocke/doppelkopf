@@ -27,27 +27,6 @@ def get_game(game_id: int):
     return jsonify({"game": game.serialize()})
 
 
-@blueprint.route("/game/<int:game_id>/join", methods=["POST"])
-def join_game(game_id: int):
-    data = request.json
-
-    if data is None:
-        abort(400)
-
-    player = data.get("player")
-
-    if player is None:
-        abort(400)
-
-    game = Game.query.get_or_404(game_id)
-    game.players.append(Player(name=player["name"]))
-
-    db.session.add(game)
-    db.session.commit()
-
-    return jsonify({"game": game.serialize()})
-
-
 @blueprint.route("/features", methods=["GET"])
 def features():
     toggles = Toggle.query.all()
