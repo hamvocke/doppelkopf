@@ -2,6 +2,7 @@ import pytest
 
 from doppelkopf import create_app, db, login
 from doppelkopf.users import User
+from doppelkopf.sockets import socketio
 
 
 _pw_hash = ""
@@ -24,6 +25,11 @@ def app():
 @pytest.fixture
 def client(app):
     return app.test_client()
+
+
+@pytest.fixture
+def socket_client(app, client):
+    return socketio.test_client(app, flask_test_client=client)
 
 
 @pytest.fixture
