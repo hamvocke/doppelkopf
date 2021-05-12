@@ -39,6 +39,5 @@ def on_join(data):
 
     join_room(game_id)
     current_app.logger.info(f"{player.name} joined room for {game_id}")
-    json.dumps({ "game": game.serialize() })
-    emit("joined", "{ some: 'data'}")
+    emit("joined", json.dumps({ "game": game.serialize() }))
 
