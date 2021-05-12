@@ -18,15 +18,23 @@ class Game(db.Model):
             "players": [player.serialize() for player in self.players],
         }
 
+    def join(self, player):
+        # todo check if player is already there, update if so
+        self.players.append(player)
+
 
 class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     name = db.Column(db.String(128), nullable=False, default="unknown")
     game_id = db.Column(db.Integer, db.ForeignKey("game.id"), nullable=False)
+    session_id = db.Column(db.String(128), nullable=True)
 
     def __repr__(self):
         return f"<Player: {self.id, self.name, self.created_at}>"
 
     def serialize(self):
-        return {"name": self.name}
+        return {
+            "id": self.id,
+            "name": self.name
+        }

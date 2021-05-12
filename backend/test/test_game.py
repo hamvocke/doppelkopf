@@ -7,6 +7,15 @@ def test_serialize_game():
 
     expected_serialization = {
         "id": 1,
-        "players": [{"name": "some player"}, {"name": "another player"}],
+        "players": [
+            {
+                "id": 1,
+                "name": "some player"
+            },
+            {
+                "id": 2,
+                "name": "another player"
+            }
+        ],
     }
     assert game.serialize() == expected_serialization
