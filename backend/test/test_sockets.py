@@ -1,4 +1,5 @@
 from doppelkopf.db import db
+from doppelkopf.game import Game
 import json
 
 
@@ -55,3 +56,24 @@ def test_should_emit_joined_event_when_joining_successfully(client, socket_clien
     assert len(received_events) == 2
     assert received_events[0]["name"] == "connected"
     assert received_events[1]["args"][0] == json.dumps(expected_payload)
+
+
+def test_should_update_game_on_join(client, socket_client):
+    game_id = start_game(client)
+
+    payload = {
+        "game": {
+            "id": game_id
+        },
+        "player": {
+            "id": 1,
+            "name": "April"
+        }
+    }
+    socket_client.emit("join", payload)
+
+    g = Game.query.get(game_id)
+
+    assert len(g.players) == 1
+    assert g.players[0].name == "April"
+    assert g.players[0].session_id is not None
