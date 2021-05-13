@@ -4,7 +4,7 @@ import json
 
 
 def test_should_emit_error_when_joining_unknown_game(socket_client):
-    payload = _join_payload(42, 23)
+    payload = _join_payload(42)
 
     socket_client.emit("join", payload)
 
@@ -18,11 +18,10 @@ def test_should_emit_error_when_joining_unknown_game(socket_client):
 def test_should_emit_joined_event_when_joining_successfully(client, socket_client):
     game_id = _start_game(client)
     # TODO: make payloads more consistent
-    payload = _join_payload(game_id, 42)
+    payload = _join_payload(game_id)
 
     socket_client.emit("join", payload)
 
-    # TODO: player id is not relevant on join event
     expected_payload  = {
         "game": {
             "id": game_id,
@@ -41,25 +40,24 @@ def test_should_emit_joined_event_when_joining_successfully(client, socket_clien
 
 def test_should_update_game_on_join(client, socket_client):
     game_id = _start_game(client)
-    payload = _join_payload(game_id, 42)
+    payload = _join_payload(game_id)
 
     socket_client.emit("join", payload)
 
     g = Game.query.get(game_id)
     assert len(g.players) == 1
-    assert g.players[0].id == 1
     assert g.players[0].session_id is not None
 
 
 def test_should_not_let_more_than_4_players_join(client, socket_client):
     game_id = _start_game(client)
 
-    socket_client.emit("join", _join_payload(game_id, 42))
-    socket_client.emit("join", _join_payload(game_id, 43))
-    socket_client.emit("join", _join_payload(game_id, 44))
-    socket_client.emit("join", _join_payload(game_id, 45))
+    socket_client.emit("join", _join_payload(game_id))
+    socket_client.emit("join", _join_payload(game_id))
+    socket_client.emit("join", _join_payload(game_id))
+    socket_client.emit("join", _join_payload(game_id))
 
-    socket_client.emit("join", _join_payload(game_id, 99))
+    socket_client.emit("join", _join_payload(game_id))
 
     received_events = socket_client.get_received()
     g = Game.query.get(game_id)
@@ -74,13 +72,13 @@ def _start_game(client) -> int:
     return response.get_json()["game"]["id"]
 
 
-def _join_payload(game_id, player_id):
+def _join_payload(game_id):
     return {
         "game": {
             "id": game_id
         },
         "player": {
-            "id": player_id,
+            "id": 42,
             "name": "April"
         }
     }
