@@ -32,7 +32,11 @@ def on_join(data):
         emit("error", f"Game with id {game_id} not found")
         return
 
-    game.join(player)
+    try:
+        game.join(player)
+    except Exception:
+        emit("error", f"Can't join game {game_id}. Game has 4 players already.")
+        return
 
     db.session.add(game)
     db.session.commit()
