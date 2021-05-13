@@ -19,6 +19,8 @@ class Game(db.Model):
         }
 
     def join(self, player):
+        if len(self.players) == 4:
+            raise Exception("Can't join game. Game has 4 players already.")
         # todo check if player is already there, update if so
         self.players.append(player)
 
