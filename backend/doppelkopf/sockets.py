@@ -22,7 +22,7 @@ def on_join(data):
 
     # payload = json.loads(data);
     payload = data
-    # todo: validate payload - use marshmallow?
+    # TODO: validate payload - use marshmallow?
     player = Player(name=payload["player"]["name"], session_id=request.sid)
     game_id = payload["game"]["id"]
 

@@ -19,3 +19,11 @@ def test_serialize_game():
         ],
     }
     assert game.serialize() == expected_serialization
+
+def test_should_join_game():
+    player = Player(id=1, name="some player")
+    game = Game(id=1)
+
+    game.join(player)
+
+    assert game.players == [player]
