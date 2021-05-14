@@ -1,7 +1,6 @@
 from doppelkopf.events import Event, EventTypes
 
 
-
 def test_should_save_start_event(client):
     events = Event.query.all()
     assert len(events) == 0
@@ -20,7 +19,9 @@ def test_should_save_win_game_event(client):
     response = client.post("/api/metrics/game/singleplayer/win")
 
     assert response.status_code == 201
-    win_event = Event.query.filter(Event.event_type == EventTypes.GAME_SINGLEPLAYER_WIN).first()
+    win_event = Event.query.filter(
+        Event.event_type == EventTypes.GAME_SINGLEPLAYER_WIN
+    ).first()
     assert win_event is not None
 
 
@@ -31,8 +32,11 @@ def test_should_save_win_game_event(client):
     response = client.post("/api/metrics/game/singleplayer/lose")
 
     assert response.status_code == 201
-    win_event = Event.query.filter(Event.event_type == EventTypes.GAME_SINGLEPLAYER_LOSE).first()
+    win_event = Event.query.filter(
+        Event.event_type == EventTypes.GAME_SINGLEPLAYER_LOSE
+    ).first()
     assert win_event is not None
+
 
 def test_should_log_cron_event(client):
     events = Event.query.all()

@@ -9,17 +9,12 @@ def test_serialize_game():
     expected_serialization = {
         "id": 1,
         "players": [
-            {
-                "id": 1,
-                "name": "some player"
-            },
-            {
-                "id": 2,
-                "name": "another player"
-            }
+            {"id": 1, "name": "some player"},
+            {"id": 2, "name": "another player"},
         ],
     }
     assert game.serialize() == expected_serialization
+
 
 def test_should_join_game():
     player = Player(id=1, name="some player")
@@ -28,6 +23,7 @@ def test_should_join_game():
     game.join(player)
 
     assert game.players == [player]
+
 
 def test_should_not_join_if_game_has_4_players():
     game = Game(id=1)

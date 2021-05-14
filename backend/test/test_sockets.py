@@ -22,14 +22,8 @@ def test_should_emit_joined_event_when_joining_successfully(client, socket_clien
 
     socket_client.emit("join", payload)
 
-    expected_payload  = {
-        "game": {
-            "id": game_id,
-            "players": [{
-                "id": 1,
-                "name": "April"
-            }]
-        }
+    expected_payload = {
+        "game": {"id": game_id, "players": [{"id": 1, "name": "April"}]}
     }
     received_events = socket_client.get_received()
     assert len(received_events) == 2
@@ -63,7 +57,10 @@ def test_should_not_let_more_than_4_players_join(client, socket_client):
     g = Game.query.get(game_id)
     assert len(received_events) == 6
     assert received_events[5]["name"] == "error"
-    assert received_events[5]["args"][0] == f"Can't join game {game_id}. Game has 4 players already."
+    assert (
+        received_events[5]["args"][0]
+        == f"Can't join game {game_id}. Game has 4 players already."
+    )
     assert len(g.players) == 4
 
 
@@ -73,12 +70,4 @@ def _start_game(client) -> int:
 
 
 def _join_payload(game_id):
-    return {
-        "game": {
-            "id": game_id
-        },
-        "player": {
-            "id": 42,
-            "name": "April"
-        }
-    }
+    return {"game": {"id": game_id}, "player": {"id": 42, "name": "April"}}

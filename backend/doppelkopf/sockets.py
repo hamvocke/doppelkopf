@@ -39,5 +39,4 @@ def on_join(data):
     db.session.commit()
 
     join_room(game_id)
-    emit("joined", json.dumps({ "game": game.serialize() }))
-
+    emit("joined", json.dumps({"game": game.serialize()}))

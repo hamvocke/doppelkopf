@@ -25,9 +25,15 @@ def calculate_weekly():
         ]
 
     return {
-        EventTypes.GAME_SINGLEPLAYER_START: filter_events(events_by_date, EventTypes.GAME_SINGLEPLAYER_START),
-        EventTypes.GAME_SINGLEPLAYER_WIN: filter_events(events_by_date, EventTypes.GAME_SINGLEPLAYER_WIN),
-        EventTypes.GAME_SINGLEPLAYER_LOSE: filter_events(events_by_date, EventTypes.GAME_SINGLEPLAYER_LOSE),
+        EventTypes.GAME_SINGLEPLAYER_START: filter_events(
+            events_by_date, EventTypes.GAME_SINGLEPLAYER_START
+        ),
+        EventTypes.GAME_SINGLEPLAYER_WIN: filter_events(
+            events_by_date, EventTypes.GAME_SINGLEPLAYER_WIN
+        ),
+        EventTypes.GAME_SINGLEPLAYER_LOSE: filter_events(
+            events_by_date, EventTypes.GAME_SINGLEPLAYER_LOSE
+        ),
     }
 
 
