@@ -18,9 +18,6 @@ def on_connect():
 
 @socketio.on("join")
 def on_join(data):
-    current_app.logger.info(f"someone joined, {data}")
-
-    # payload = json.loads(data);
     payload = data
     # TODO: validate payload - use marshmallow?
     player = Player(name=payload["player"]["name"], session_id=request.sid)
@@ -42,6 +39,5 @@ def on_join(data):
     db.session.commit()
 
     join_room(game_id)
-    current_app.logger.info(f"{player.name} joined room for {game_id}")
     emit("joined", json.dumps({ "game": game.serialize() }))
 
