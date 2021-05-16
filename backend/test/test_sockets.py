@@ -23,7 +23,7 @@ def test_should_emit_joined_event_when_joining_successfully(client, socket_clien
     socket_client.emit("join", payload)
 
     expected_payload = {
-        "game": {"id": game_id, "players": [{"id": 1, "name": "April"}]}
+        "game": {"id": game_id, "players": [{"id": 1, "name": "April", "online": True}]}
     }
     received_events = socket_client.get_received()
     assert len(received_events) == 2
@@ -87,6 +87,13 @@ def test_should_mark_player_as_disconnected_on_disconnect(client, socket_client)
     g = Game.query.get(game_id)
     assert len(g.players) == 1
     assert g.players[0].disconnected_at is not None
+    received_events = socket_client.get_received()
+    expected_payload = {
+        "game": {"id": game_id, "players": [{"id": 1, "name": "April", "online": False}]}
+    }
+    assert received_events[2]["name"] == "disconnected"
+    assert received_events[2]["args"][0] == json.dumps(expected_payload)
+
 
 
 def _start_game(client) -> int:

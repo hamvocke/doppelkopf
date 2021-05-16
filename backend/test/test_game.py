@@ -9,8 +9,8 @@ def test_serialize_game():
     expected_serialization = {
         "id": 1,
         "players": [
-            {"id": 1, "name": "some player"},
-            {"id": 2, "name": "another player"},
+            {"id": 1, "name": "some player", "online": True},
+            {"id": 2, "name": "another player", "online": True},
         ],
     }
     assert game.serialize() == expected_serialization

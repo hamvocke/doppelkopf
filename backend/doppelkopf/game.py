@@ -37,4 +37,4 @@ class Player(db.Model):
         return f"<Player: {self.id, self.name, self.created_at}>"
 
     def serialize(self):
-        return {"id": self.id, "name": self.name}
+        return {"id": self.id, "name": self.name, "online": self.disconnected_at is None}
