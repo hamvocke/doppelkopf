@@ -78,6 +78,17 @@ def test_should_send_disconnected_event_on_disconnect(client, socket_client):
     assert received_events[3]["name"] == "disconnected"
 
 
+def test_should_mark_player_as_disconnected_on_disconnect(client, socket_client):
+    game_id = _start_game(client)
+    socket_client.emit("join", _join_payload(game_id))
+
+    socket_client.emit("disconnect")
+
+    g = Game.query.get(game_id)
+    assert len(g.players) == 1
+    assert g.players[0].disconnected_at is not None
+
+
 def _start_game(client) -> int:
     response = client.post("/api/game")
     return response.get_json()["game"]["id"]

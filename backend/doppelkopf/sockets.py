@@ -3,6 +3,7 @@ from flask import current_app, request
 from .game import Game, Player
 from .db import db
 import json
+import  datetime
 
 socketio = SocketIO()
 
@@ -49,6 +50,11 @@ def on_disconnect():
     if player is None:
         emit("error", f"Player with session id {request.sid} not found")
         return
+
+    player.disconnected_at = datetime.datetime.utcnow()
+
+    db.session.add(player)
+    db.session.commit()
 
     game = Game.query.get(player.game_id)
 
