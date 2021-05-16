@@ -64,6 +64,20 @@ def test_should_not_let_more_than_4_players_join(client, socket_client):
     assert len(g.players) == 4
 
 
+def test_should_send_disconnected_event_on_disconnect(client, socket_client):
+    game_id = _start_game(client)
+    socket_client.emit("join", _join_payload(game_id))
+    socket_client.emit("join", _join_payload(game_id))
+
+    socket_client.emit("disconnect")
+
+    received_events = socket_client.get_received()
+    assert received_events[0]["name"] == "connected"
+    assert received_events[1]["name"] == "joined"
+    assert received_events[2]["name"] == "joined"
+    assert received_events[3]["name"] == "disconnected"
+
+
 def _start_game(client) -> int:
     response = client.post("/api/game")
     return response.get_json()["game"]["id"]

@@ -20,6 +20,7 @@ def on_connect():
 def on_join(data):
     payload = data
     # TODO: validate payload - use marshmallow?
+    # TODO: handle reconnect case
     player = Player(name=payload["player"]["name"], session_id=request.sid)
     game_id = payload["game"]["id"]
 
@@ -40,3 +41,15 @@ def on_join(data):
 
     join_room(game_id)
     emit("joined", json.dumps({"game": game.serialize()}), to=game_id)
+
+
+@socketio.on("disconnect")
+def on_disconnect():
+    player = Player.query.filter_by(session_id=request.sid).first()
+    if player is None:
+        emit("error", f"Player with session id {request.sid} not found")
+        return
+
+    game = Game.query.get(player.game_id)
+
+    emit("disconnected", json.dumps({"game": game.serialize()}), to=game.id)
