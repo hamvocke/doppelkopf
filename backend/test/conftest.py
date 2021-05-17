@@ -29,7 +29,9 @@ def client(app):
 
 @pytest.fixture
 def socket_client(app, client):
-    return socketio.test_client(app, flask_test_client=client)
+    test_client = socketio.test_client(app, flask_test_client=client)
+    yield test_client
+    test_client.disconnect()
 
 
 @pytest.fixture
