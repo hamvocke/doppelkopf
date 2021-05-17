@@ -19,27 +19,31 @@ def on_connect():
 
 @socketio.on("join")
 def on_join(data):
-    payload = data
-    # TODO: validate payload - use marshmallow?
+    # TODO: validate data - use marshmallow?
     # TODO: handle reconnect case
-    player = Player(name=payload["player"]["name"], session_id=request.sid)
-    game_id = payload["game"]["id"]
-
+    game_id = data["game"]["id"]
     game = Game.query.get(game_id)
 
     if game is None:
         emit("error", f"Game with id {game_id} not found")
         return
 
-    try:
-        game.join(player)
-    except Exception:
-        emit("error", f"Can't join game {game_id}. Game has 4 players already.")
-        return
+    player = None
+    player_id = data["player"].get("id", None)
+    if player_id is not None:
+        # reconnect!
+        player = Player.query.get(player_id)
+        player.session_id = request.sid
+    else:
+        player = Player(name=data["player"]["name"], session_id=request.sid)
+        try:
+            game.join(player)
+        except Exception:
+            emit("error", f"Can't join game {game_id}. Game has 4 players already.")
+            return
 
     db.session.add(game)
     db.session.commit()
-
     join_room(game_id)
     emit("joined", json.dumps({"game": game.serialize()}), to=game_id)
 

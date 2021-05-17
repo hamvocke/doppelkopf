@@ -64,6 +64,19 @@ def test_should_not_let_more_than_4_players_join(client, socket_client):
     assert len(g.players) == 4
 
 
+def test_should_reconnect_on_join(client, socket_client):
+    game_id = _start_game(client)
+    socket_client.emit("join", _join_payload(game_id))
+    socket_client.disconnect()
+    socket_client.connect()
+    player_id = Game.query.get(game_id).players[0].id
+
+    socket_client.emit("join", {"game": {"id": game_id}, "player": {"id": player_id, "name": "April"}})
+
+    g = Game.query.get(game_id)
+    assert len(g.players) == 1
+
+
 def test_should_send_disconnected_event_on_disconnect(client, socket_client):
     game_id = _start_game(client)
     socket_client.emit("join", _join_payload(game_id))
@@ -102,4 +115,4 @@ def _start_game(client) -> int:
 
 
 def _join_payload(game_id):
-    return {"game": {"id": game_id}, "player": {"id": 42, "name": "April"}}
+    return {"game": {"id": game_id}, "player": {"name": "April"}}

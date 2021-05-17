@@ -17,7 +17,7 @@ def test_serialize_game():
 
 
 def test_should_join_game():
-    player = Player(id=1, name="some player")
+    player = Player(name="some player")
     game = Game(id=1)
 
     game.join(player)
