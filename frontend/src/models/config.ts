@@ -14,14 +14,14 @@ type ConfigValues = {
 
 const config: Config = {
   test: {
-    base_url: "http://localhost:8000",
+    base_url: "http://localhost:8080",
     backend_base_url: "http://localhost:5000",
     backend_ws_base_url: "ws://localhost:5000",
     debug: true,
     testing: true
   },
   development: {
-    base_url: "http://localhost:8000",
+    base_url: "http://localhost:8080",
     backend_base_url: "http://localhost:5000",
     backend_ws_base_url: "ws://localhost:5000",
     debug: true,
