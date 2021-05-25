@@ -4,7 +4,8 @@ from datetime import datetime
 
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    started_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow(), server_default='NOW()')
+    started_at = db.Column(db.DateTime, nullable=True)
     finished_at = db.Column(db.DateTime, nullable=True)
     winner = db.Column(db.Integer, nullable=True)
     players = db.relationship("Player")
