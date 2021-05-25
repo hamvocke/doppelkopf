@@ -1,10 +1,6 @@
 import { Game } from "@/models/game";
 import { Player } from "@/models/player";
 import { Config } from "@/models/config";
-import { http } from "@/helpers/httpClient";
-import { Event, WebsocketClient } from "@/helpers/websocketClient";
-import { generateNames } from "@/models/random";
-import { TablePosition } from "./tablePosition";
 import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
 
 export enum RoomState {
@@ -76,6 +72,10 @@ export class WaitingRoom {
 
   join(player: Player) {
     if (!player) return;
+
+    if (this.players.map(p => p.id).includes(player.id)) {
+      return;
+    }
 
     if (this.state === RoomState.ready) {
       throw new Error("Room is full");

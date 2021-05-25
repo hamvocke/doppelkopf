@@ -51,6 +51,18 @@ describe("Waiting Room", () => {
     expect(multiplayerHandler.mock.instances[0].joinRoom).toHaveBeenCalled();
   });
 
+  test("should ignore joining the same room multiple times", () => {
+    const room = new WaitingRoom("some-id", [], new MultiplayerHandler());
+
+    room.join(player);
+    room.join(player);
+    room.join(player);
+
+    expect(multiplayerHandler.mock.instances[0].joinRoom).toHaveBeenCalledTimes(
+      1
+    );
+  });
+
   test("should be in 'waiting' state on start", () => {
     const room = new WaitingRoom("some-id", []);
 
