@@ -31,6 +31,12 @@ describe("Waiting Room", () => {
     expect(room.owner).toEqual(player);
   });
 
+  test("should generate correct game url", () => {
+    const room = new WaitingRoom("some-id", []);
+
+    expect(room.gameUrl).toEqual("http://localhost:8000/#/wait/some-id");
+  });
+
   test("should mark first remote player as owner", () => {
     const room = new WaitingRoom("some-id", [player]);
 

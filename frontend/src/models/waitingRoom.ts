@@ -71,7 +71,7 @@ export class WaitingRoom {
   }
 
   get gameUrl() {
-    return `${Config.backend_base_url}/${this.gameId}`;
+    return `${Config.base_url}/#/wait/${this.gameId}`;
   }
 
   join(player: Player) {
