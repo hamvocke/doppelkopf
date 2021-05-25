@@ -1,6 +1,7 @@
 from doppelkopf.db import db
 from doppelkopf.game import Game
 import json
+import datetime
 
 
 def test_should_emit_error_when_joining_unknown_game(socket_client):
@@ -16,7 +17,7 @@ def test_should_emit_error_when_joining_unknown_game(socket_client):
 
 
 def test_should_emit_joined_event_when_joining_successfully(client, socket_client):
-    game_id = _start_game(client)
+    game_id = _create_game(client)
     # TODO: make payloads more consistent
     payload = _join_payload(game_id)
 
@@ -33,7 +34,7 @@ def test_should_emit_joined_event_when_joining_successfully(client, socket_clien
 
 
 def test_should_update_game_on_join(client, socket_client):
-    game_id = _start_game(client)
+    game_id = _create_game(client)
     payload = _join_payload(game_id)
 
     socket_client.emit("join", payload)
@@ -44,7 +45,7 @@ def test_should_update_game_on_join(client, socket_client):
 
 
 def test_should_not_let_more_than_4_players_join(client, socket_client):
-    game_id = _start_game(client)
+    game_id = _create_game(client)
 
     socket_client.emit("join", _join_payload(game_id))
     socket_client.emit("join", _join_payload(game_id))
@@ -65,7 +66,8 @@ def test_should_not_let_more_than_4_players_join(client, socket_client):
 
 
 def test_should_reconnect_on_join(client, socket_client):
-    game_id = _start_game(client)
+    game_id = _create_game(client)
+    _start_game(game_id)
     socket_client.emit("join", _join_payload(game_id))
     socket_client.disconnect()
     socket_client.connect()
@@ -78,7 +80,7 @@ def test_should_reconnect_on_join(client, socket_client):
 
 
 def test_should_send_disconnected_event_on_disconnect(client, socket_client):
-    game_id = _start_game(client)
+    game_id = _create_game(client)
     socket_client.emit("join", _join_payload(game_id))
     socket_client.emit("join", _join_payload(game_id))
 
@@ -91,8 +93,9 @@ def test_should_send_disconnected_event_on_disconnect(client, socket_client):
     assert received_events[3]["name"] == "disconnected"
 
 
-def test_should_mark_player_as_disconnected_on_disconnect(client, socket_client):
-    game_id = _start_game(client)
+def test_should_mark_player_as_disconnected_on_disconnect_if_game_is_started(client, socket_client):
+    game_id = _create_game(client)
+    _start_game(game_id)
     socket_client.emit("join", _join_payload(game_id))
 
     socket_client.emit("disconnect")
@@ -108,11 +111,33 @@ def test_should_mark_player_as_disconnected_on_disconnect(client, socket_client)
     assert received_events[2]["args"][0] == json.dumps(expected_payload)
 
 
+def test_remove_player_on_disconnect_if_game_is_not_started_yet(client, socket_client):
+    game_id = _create_game(client)
+    socket_client.emit("join", _join_payload(game_id))
 
-def _start_game(client) -> int:
+    socket_client.emit("disconnect")
+
+    g = Game.query.get(game_id)
+    assert len(g.players) == 0
+    received_events = socket_client.get_received()
+    expected_payload = {
+        "game": {"id": game_id, "players": []}
+    }
+    assert received_events[2]["name"] == "disconnected"
+    assert received_events[2]["args"][0] == json.dumps(expected_payload)
+
+
+def _create_game(client) -> int:
     response = client.post("/api/game")
     return response.get_json()["game"]["id"]
 
+
+def _start_game(game_id):
+    # TODO use proper websocket event to start game once available
+    g = Game.query.get(game_id)
+    g.started_at = datetime.datetime.utcnow()
+    db.session.add(g)
+    db.session.commit()
 
 def _join_payload(game_id):
     return {"game": {"id": game_id}, "player": {"name": "April"}}
