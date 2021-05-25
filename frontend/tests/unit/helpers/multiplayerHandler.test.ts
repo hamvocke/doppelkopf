@@ -136,7 +136,6 @@ describe("Multiplayer Handler", () => {
           id: "some-game"
         },
         player: {
-          id: player.id,
           name: player.name
         }
       };

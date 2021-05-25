@@ -57,7 +57,6 @@ export class MultiplayerHandler {
         id: this.waitingRoom?.gameId
       },
       player: {
-        id: player.id,
         name: player.name
       }
     };
@@ -74,10 +73,13 @@ export class MultiplayerHandler {
   // needs to be handled in waiting room AND game
 
   // TODO: start game
+  // -> send a "start" event
+
   // TODO: handleStarted()
   // -> make sure all waiting rooms call Game.multiplayer()
 
   // TODO: leave game
+  // -> this should merely be a "disconnect", e.g. when the browser closes
 
   // TODO: handleLeft
   // -> update presence of player in game instance to "offline"
