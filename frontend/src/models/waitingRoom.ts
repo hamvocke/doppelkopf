@@ -85,9 +85,7 @@ export class WaitingRoom {
       this.owner = player;
     }
 
-    this.players.push(player);
-
-    this.multiplayer?.joinRoom(player);
+    this.players = [...this.players, player];
   }
 
   startGame() {

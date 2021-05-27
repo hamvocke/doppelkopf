@@ -35,7 +35,7 @@
       <div class="players">
         <ol>
           <li
-            v-for="player in waitingRoom.players"
+            v-for="player in players"
             :key="player.id"
             class="player"
             :class="{ highlight: player.isMe }"
@@ -59,14 +59,13 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import {
-  WaitingRoom as WaitingRoomModel,
-  RoomState
-} from "@/models/waitingRoom";
 import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
+import { Event } from "@/helpers/websocketClient";
 import CopyText from "@/components/CopyText.vue";
 import { Player } from "@/models/player";
+import { RoomState, WaitingRoom as WaitingRoomModel } from "@/models/waitingRoom";
 import { CloudOffIcon } from "vue-feather-icons";
+import { Config } from "@/models/config";
 
 @Component({
   components: { CopyText, CloudOffIcon }
@@ -75,10 +74,11 @@ export default class WaitingRoom extends Vue {
   @Prop({ required: true })
   gameName!: string;
 
-  waitingRoom?: WaitingRoomModel = undefined;
   isLoading = false;
   error?: String = undefined;
   multiplayer = new MultiplayerHandler();
+  waitingRoom?: WaitingRoomModel;
+  players?: Player[] = [];
 
   get currentPlayerName() {
     return this.waitingRoom?.players[0]?.name ?? "ho";
@@ -99,12 +99,19 @@ export default class WaitingRoom extends Vue {
       this.isLoading = true;
       this.error = undefined;
       this.waitingRoom = await this.multiplayer.fetchRoom(this.gameName);
-      this.waitingRoom.join(Player.me());
+      this.multiplayer.registerCallback(Event.joined, async () => await this.joined(null));
+      this.multiplayer.joinRoom(Player.me());
       this.isLoading = false;
     } catch (error) {
       this.isLoading = false;
       this.error = "error-connection";
     }
+  }
+
+  async joined(data: any) {
+    console.log("NEXT TICK!");
+    await Vue.nextTick();
+    this.players = this.waitingRoom?.players;
   }
 
   startGame() {

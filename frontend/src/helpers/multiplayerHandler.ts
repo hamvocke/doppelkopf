@@ -37,7 +37,9 @@ export class MultiplayerHandler {
       );
 
       this.websocket.connect();
-      this.websocket.on(Event.joined, this.onJoined);
+      this.websocket.on(Event.joined, (data: any) =>
+        this.onJoined(JSON.parse(data))
+      );
 
       this.waitingRoom = new WaitingRoom(
         roomInfo.game.id,
@@ -57,6 +59,7 @@ export class MultiplayerHandler {
         id: this.waitingRoom?.gameId
       },
       player: {
+        remoteId: player.remoteId,
         name: player.name
       }
     };
@@ -65,7 +68,19 @@ export class MultiplayerHandler {
   }
 
   onJoined(data: any) {
-    console.log("received join event", data);
+    data.game.players
+      .map((p: any) => {
+        const player = new Player(p.name, true);
+        player.remoteId = p.id;
+        return player;
+      })
+      .forEach((p: Player) => this.waitingRoom?.join(p));
+  }
+
+  registerCallback(eventType: Event, callback: Function) {
+    this.websocket.on(eventType, (data: any) => {
+      callback(JSON.parse(data));
+    });
   }
 
   // TODO: handleJoined()

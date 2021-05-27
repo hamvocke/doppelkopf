@@ -1,7 +1,5 @@
 import WaitingRoom from "@/views/WaitingRoom.vue";
-import { WaitingRoom as WaitingRoomModel } from "@/models/waitingRoom";
 import { config, shallowMount } from "@vue/test-utils";
-import { Player } from "@/models/player";
 
 config.mocks["$t"] = (msg: string) => msg;
 config.mocks["$tc"] = (msg: string) => msg;
