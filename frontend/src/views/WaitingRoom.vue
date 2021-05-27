@@ -105,6 +105,7 @@ export default class WaitingRoom extends Vue {
       this.error = undefined;
       const response = await this.multiplayer.fetchRoom(this.gameName);
       const players = response.game.players.map(
+        // TODO: set remote id
         (player: any) => new Player(player.name, true, false)
       );
       this.players = players;

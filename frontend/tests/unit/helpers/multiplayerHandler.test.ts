@@ -65,10 +65,10 @@ describe("Multiplayer Handler", () => {
         stubbedFetchResponse
       );
 
-      const room = await multiplayer.fetchRoom("some-game");
+      const response = await multiplayer.fetchRoom("some-game");
 
-      expect(room.gameId).toEqual("some-game");
-      expect(room.players.map(p => p.name)).toEqual(["Lenny", "Carl"]);
+      expect(response.game.id).toEqual("some-game");
+      expect(response.game.players.map(p => p.name)).toEqual(["Lenny", "Carl"]);
     });
 
     test.todo("should handle unknown room id");
@@ -99,7 +99,7 @@ describe("Multiplayer Handler", () => {
       );
     });
 
-    test("should connect websocket and register listeners", async () => {
+    test("should connect websocket", async () => {
       fetchMock.get(
         "http://localhost:5000/api/game/some-game",
         stubbedFetchResponse
@@ -109,10 +109,6 @@ describe("Multiplayer Handler", () => {
       await multiplayer.fetchRoom("some-game");
 
       expect(websocketMock.mock.instances[0].connect).toHaveBeenCalled();
-      expect(websocketMock.mock.instances[0].on).toHaveBeenCalledWith(
-        Event.joined,
-        multiplayer.onJoined
-      );
     });
   });
 
@@ -129,7 +125,7 @@ describe("Multiplayer Handler", () => {
       await multiplayer.fetchRoom("some-game"); // attaches waiting room to multiplayer instance behind the scenes
       const player = new Player("some-player");
 
-      multiplayer.joinRoom(player);
+      multiplayer.joinRoom("some-game", player);
 
       const expectedPayload = {
         game: {
