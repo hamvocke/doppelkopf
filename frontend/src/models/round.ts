@@ -41,7 +41,6 @@ export class Round {
   nextTrick() {
     let trick = new Trick(this.players);
     if (this.cardsLeft() <= this.players.length) trick.setLastTrickInRound();
-    console.debug("--------- Trick " + trick.id + " ---------");
     return trick;
   }
 
@@ -124,6 +123,5 @@ export class Round {
     );
     this.scorecard.addScore(this.score);
     this.finished = true;
-    console.debug("--------- Finished Round ---------");
   }
 }
