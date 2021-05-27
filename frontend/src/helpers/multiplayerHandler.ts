@@ -1,6 +1,5 @@
 import { http } from "@/helpers/httpClient";
 import { Player } from "@/models/player";
-import { WaitingRoom } from "@/models/waitingRoom";
 import { WebsocketClient, Event } from "@/helpers/websocketClient";
 
 /**
@@ -10,7 +9,6 @@ import { WebsocketClient, Event } from "@/helpers/websocketClient";
  */
 export class MultiplayerHandler {
   private websocket: WebsocketClient = new WebsocketClient();
-  private waitingRoom?: WaitingRoom;
 
   async register(): Promise<CreateResponse> {
     try {
@@ -24,7 +22,7 @@ export class MultiplayerHandler {
     }
   }
 
-  async fetchRoom(gameName: string): Promise<WaitingRoom> {
+  async fetchRoom(gameName: string): Promise<CreateResponse> {
     try {
       const response = await http.get(`/api/game/${gameName}`);
       if (!response.ok) {
@@ -32,31 +30,18 @@ export class MultiplayerHandler {
       }
 
       const roomInfo = (await response.json()) as CreateResponse;
-      const waitingPlayers = roomInfo.game.players.map(
-        (player: any) => new Player(player.name, true, false)
-      );
 
       this.websocket.connect();
-      this.websocket.on(Event.joined, (data: any) =>
-        this.onJoined(JSON.parse(data))
-      );
-
-      this.waitingRoom = new WaitingRoom(
-        roomInfo.game.id,
-        waitingPlayers,
-        this
-      );
-
-      return this.waitingRoom;
+      return roomInfo;
     } catch (error) {
       throw new Error(`Failed to fetch room state: ${error}`);
     }
   }
 
-  joinRoom(player: Player) {
+  joinRoom(gameId: any, player: Player) {
     const joinPayload = {
       game: {
-        id: this.waitingRoom?.gameId
+        id: gameId
       },
       player: {
         remoteId: player.remoteId,
@@ -65,16 +50,6 @@ export class MultiplayerHandler {
     };
 
     this.websocket?.emit(Event.join, joinPayload);
-  }
-
-  onJoined(data: any) {
-    data.game.players
-      .map((p: any) => {
-        const player = new Player(p.name, true);
-        player.remoteId = p.id;
-        return player;
-      })
-      .forEach((p: Player) => this.waitingRoom?.join(p));
   }
 
   registerCallback(eventType: Event, callback: Function) {

@@ -10,7 +10,7 @@
       {{ $t(error) }}
     </div>
 
-    <div v-else-if="waitingRoom" class="wrapper">
+    <div v-else-if="players.length >= 0" class="wrapper">
       <h3>
         {{ $t("hey-player", { name: currentPlayerName }) }}
       </h3>
@@ -18,14 +18,14 @@
         {{ $t("here-is-your-invite-link") }}
       </p>
       <div class="link">
-        <CopyText :text="waitingRoom.gameUrl" />
+        <CopyText :text="gameUrl" />
       </div>
       <div class="roomInfo">
         <p>{{ $t("you-can-start") }}</p>
         <p>
           {{
-            $tc("n-players-are-here", waitingRoom.players.length, {
-              count: waitingRoom.players.length
+            $tc("n-players-are-here", players.length, {
+              count: players.length
             })
           }}
           {{ $t(statusMessage) }}
@@ -46,7 +46,7 @@
       </div>
 
       <button
-        v-if="isReady()"
+        v-if="isReady"
         class="button start-game"
         tag="button"
         @click="startGame()"
@@ -63,7 +63,6 @@ import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
 import { Event } from "@/helpers/websocketClient";
 import CopyText from "@/components/CopyText.vue";
 import { Player } from "@/models/player";
-import { RoomState, WaitingRoom as WaitingRoomModel } from "@/models/waitingRoom";
 import { CloudOffIcon } from "vue-feather-icons";
 import { Config } from "@/models/config";
 
@@ -77,30 +76,43 @@ export default class WaitingRoom extends Vue {
   isLoading = false;
   error?: String = undefined;
   multiplayer = new MultiplayerHandler();
-  waitingRoom?: WaitingRoomModel;
-  players?: Player[] = [];
+  players: Player[] = [];
+  owner?: Player;
 
   get currentPlayerName() {
-    return this.waitingRoom?.players[0]?.name ?? "ho";
+    if (this.players?.length === 0) {
+      return null;
+    }
+
+    return this.players[0].name;
+  }
+
+  get isReady() {
+    return this.players?.length === 4;
   }
 
   get statusMessage() {
-    switch (this.waitingRoom?.state) {
-      case RoomState.ready:
-        return "ready-status";
-      case RoomState.waiting:
-        return "waiting-status";
-    }
-    return "waiting-status";
+    return this.isReady ? "ready-status" : "waiting-status";
+  }
+
+  get gameUrl() {
+    return `${Config.base_url}/#/wait/${this.gameName}`;
   }
 
   async created() {
     try {
       this.isLoading = true;
       this.error = undefined;
-      this.waitingRoom = await this.multiplayer.fetchRoom(this.gameName);
-      this.multiplayer.registerCallback(Event.joined, async () => await this.joined(null));
-      this.multiplayer.joinRoom(Player.me());
+      const response = await this.multiplayer.fetchRoom(this.gameName);
+      const players = response.game.players.map(
+        (player: any) => new Player(player.name, true, false)
+      );
+      this.players = players;
+      if (this.players.length > 0) {
+        this.owner = this.players[0];
+      }
+      this.multiplayer.registerCallback(Event.joined, this.joined);
+      this.multiplayer.joinRoom(this.gameName, Player.me());
       this.isLoading = false;
     } catch (error) {
       this.isLoading = false;
@@ -108,19 +120,40 @@ export default class WaitingRoom extends Vue {
     }
   }
 
-  async joined(data: any) {
-    console.log("NEXT TICK!");
-    await Vue.nextTick();
-    this.players = this.waitingRoom?.players;
+  joined(data: any) {
+    data.game.players
+      .map((p: any) => {
+        const player = new Player(p.name, true);
+        player.remoteId = p.id;
+        return player;
+      })
+      .forEach((p: Player) => this.join(p));
+  }
+
+  join(player: Player) {
+    if (!player) return;
+
+    if (this.players.map(p => p.id).includes(player.id)) {
+      return;
+    }
+
+    if (this.isReady) {
+      throw new Error("Room is full");
+    }
+
+    if (this.players.length === 0) {
+      this.owner = player;
+    }
+
+    this.players = [...this.players, player];
   }
 
   startGame() {
-    this.waitingRoom?.startGame();
-    this.$router.push("/play");
-  }
-
-  isReady() {
-    return this.waitingRoom?.state === RoomState.ready;
+    if (this.isReady) {
+      // TODO: rebalance players here
+      // Game.multiPlayer(this.players);
+      this.$router.push("/play");
+    }
   }
 }
 </script>
