@@ -59,17 +59,6 @@ Run the tests before and after making changes:
 We're very serious about testing. All bug fixes and new features should come with new tests. Backend tests are implemented with [pytest](https://docs.pytest.org/), frontend unit tests with [Jest](https://jestjs.io/) and frontend end-to-end tests with [nightwatch.js](https://nightwatchjs.org/).
 
 
-### Storybook
-The application uses [storybook.js](https://storybook.js.org/) to showcase all vue.js components in different states. You can use the storybook to take a look at components and use it as a visual test case. It's great for getting fast feedback when designing components.
-
-For new components, add a new story to `src/stories`.
-
-You can view the storybook by running
-
-    yarn storybook
-
-from the `frontend/` directory and then pointing your browser to [localhost:6006](http://localhost:6006)
-
 ### Testing the `docker-compose` build
 Make sure `docker-compose` and `docker` are properly installed.
 
