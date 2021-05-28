@@ -1,8 +1,8 @@
-"""empty message
+"""initial migration
 
-Revision ID: 847ca9fb5aac
-Revises:
-Create Date: 2021-01-31 13:05:10.159743
+Revision ID: c65130685be3
+Revises: 
+Create Date: 2021-05-28 20:08:36.557652
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '847ca9fb5aac'
+revision = 'c65130685be3'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,7 +26,8 @@ def upgrade():
     )
     op.create_table('game',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('started_at', sa.DateTime(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), server_default='NOW()', nullable=False),
+    sa.Column('started_at', sa.DateTime(), nullable=True),
     sa.Column('finished_at', sa.DateTime(), nullable=True),
     sa.Column('winner', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
@@ -38,14 +39,16 @@ def upgrade():
     sa.Column('enabled', sa.Boolean(), nullable=False),
     sa.Column('last_changed_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name'),
     sa.UniqueConstraint('name')
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('username', sa.String(length=32), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
-    sa.Column('password_hash', sa.LargeBinary(), nullable=False),
+    sa.Column('password_hash', sa.LargeBinary(length=60), nullable=False),
     sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('username'),
     sa.UniqueConstraint('username')
     )
     op.create_table('player',
@@ -53,6 +56,8 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('name', sa.String(length=128), nullable=False),
     sa.Column('game_id', sa.Integer(), nullable=False),
+    sa.Column('session_id', sa.String(length=128), nullable=True),
+    sa.Column('disconnected_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['game_id'], ['game.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
