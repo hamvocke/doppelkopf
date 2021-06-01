@@ -79,6 +79,7 @@ export type CreateResponse = {
   game: {
     id: string;
     players: {
+      id: number;
       name: string;
     }[];
   };
