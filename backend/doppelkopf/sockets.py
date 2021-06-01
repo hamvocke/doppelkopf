@@ -29,10 +29,10 @@ def on_join(data):
         return
 
     player = None
-    player_id = data["player"].get("id", None)
-    if player_id is not None:
+    player_remote_id = data["player"].get("remoteId", None)
+    if player_remote_id is not None:
         # reconnect!
-        player = Player.query.get(player_id)
+        player = Player.query.get(player_remote_id)
         player.session_id = request.sid
     else:
         player = Player(name=data["player"]["name"], session_id=request.sid)
