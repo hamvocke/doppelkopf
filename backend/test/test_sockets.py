@@ -73,7 +73,7 @@ def test_should_reconnect_on_join(client, socket_client):
     socket_client.connect()
     player_id = Game.query.get(game_id).players[0].id
 
-    socket_client.emit("join", {"game": {"id": game_id}, "player": {"id": player_id, "name": "April"}})
+    socket_client.emit("join", {"game": {"id": game_id}, "player": {"remoteId": player_id, "name": "April"}})
 
     g = Game.query.get(game_id)
     assert len(g.players) == 1
