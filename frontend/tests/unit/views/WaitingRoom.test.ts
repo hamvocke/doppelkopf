@@ -53,7 +53,7 @@ describe("WaitingRoom.vue", () => {
     const mockedResponse: CreateResponse = {
       game: {
         id: "some-game",
-        players: [{ name: "some player" }]
+        players: [{ id: 1, name: "some player" }]
       }
     };
 
