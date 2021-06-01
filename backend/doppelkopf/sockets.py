@@ -9,7 +9,7 @@ socketio = SocketIO()
 
 
 def init_app(app):
-    socketio.init_app(app, cors_allowed_origins=app.config["CORS_ALLOWED_ORIGINS"])
+    socketio.init_app(app, cors_allowed_origins=app.config["CORS_ALLOWED_ORIGINS"], logger=app.config["DEBUG"], engineio_logger=app.config["DEBUG"])
 
 
 @socketio.on("connect")
