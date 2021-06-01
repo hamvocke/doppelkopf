@@ -104,10 +104,11 @@ export default class WaitingRoom extends Vue {
       this.isLoading = true;
       this.error = undefined;
       const response = await this.multiplayer.fetchRoom(this.gameName);
-      const players = response.game.players.map(
-        // TODO: set remote id
-        (player: any) => new Player(player.name, true, false)
-      );
+      const players = response.game.players.map((p: any) => {
+        const player = new Player(p.name, true, false);
+        player.remoteId = p.id;
+        return player;
+      });
       this.players = players;
       if (this.players.length > 0) {
         this.owner = this.players[0];
@@ -134,7 +135,16 @@ export default class WaitingRoom extends Vue {
   join(player: Player) {
     if (!player) return;
 
-    if (this.players.map(p => p.id).includes(player.id)) {
+    if (!player.remoteId) {
+      console.error("Nope, not letting them in", player);
+      return;
+    }
+
+    console.log("joining:", player);
+    const known = this.players.map((p: Player) => p.remoteId);
+    console.log("known", known);
+
+    if (known.includes(player.remoteId)) {
       return;
     }
 
