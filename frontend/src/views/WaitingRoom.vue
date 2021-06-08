@@ -59,8 +59,8 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
-import { Event } from "@/helpers/websocketClient";
+import { CreateResponse } from "@/helpers/multiplayerHandler";
+import { Event, WebsocketClient } from "@/helpers/websocketClient";
 import CopyText from "@/components/CopyText.vue";
 import { Player } from "@/models/player";
 import { CloudOffIcon } from "vue-feather-icons";
@@ -75,7 +75,7 @@ export default class WaitingRoom extends Vue {
 
   isLoading = false;
   error?: String = undefined;
-  multiplayer = new MultiplayerHandler();
+  socket = new WebsocketClient();
   players: Player[] = [];
   owner?: Player;
 
@@ -99,40 +99,44 @@ export default class WaitingRoom extends Vue {
     return `${Config.base_url}/#/wait/${this.gameName}`;
   }
 
-  async created() {
-    try {
-      this.isLoading = true;
-      this.error = undefined;
-      const response = await this.multiplayer.fetchRoom(this.gameName);
-      const players = response.game.players.map((p: any) => {
-        const player = new Player(p.name, true, false);
-        player.remoteId = p.id;
-        return player;
-      });
-      this.players = players;
-      if (this.players.length > 0) {
-        this.owner = this.players[0];
+  created() {
+    this.isLoading = true;
+    this.error = undefined;
+    this.socket.connect();
+    this.socket.on(Event.joined, this.handleJoined);
+    this.sendJoinEvent(Player.me());
+    this.isLoading = false;
+  }
+
+  sendJoinEvent(player: Player) {
+    console.log("game name is", this.gameName);
+
+    const joinPayload = {
+      game: {
+        id: this.gameName
+      },
+      player: {
+        remoteId: player.remoteId,
+        name: player.name
       }
-      this.multiplayer.registerCallback(Event.joined, this.joined);
-      this.multiplayer.joinRoom(this.gameName, Player.me());
-      this.isLoading = false;
-    } catch (error) {
-      this.isLoading = false;
-      this.error = "error-connection";
-    }
+    };
+
+    this.socket.emit(Event.join, joinPayload);
   }
 
-  joined(data: any) {
-    data.game.players
-      .map((p: any) => {
-        const player = new Player(p.name, true);
-        player.remoteId = p.id;
-        return player;
-      })
-      .forEach((p: Player) => this.join(p));
+  handleJoined(d: any) {
+    let data: CreateResponse = JSON.parse(d);
+    console.log("handling 'joined' event", data);
+    const players = data.game.players.map((p: any) => {
+      const player = new Player(p.name, true, false);
+      player.remoteId = p.id;
+      return player;
+    });
+
+    players.forEach((p: Player) => this.updatePlayers(p));
   }
 
-  join(player: Player) {
+  updatePlayers(player: Player) {
     if (!player) return;
 
     if (!player.remoteId) {
@@ -140,9 +144,7 @@ export default class WaitingRoom extends Vue {
       return;
     }
 
-    console.log("joining:", player);
     const known = this.players.map((p: Player) => p.remoteId);
-    console.log("known", known);
 
     if (known.includes(player.remoteId)) {
       return;
@@ -158,6 +160,22 @@ export default class WaitingRoom extends Vue {
 
     this.players = [...this.players, player];
   }
+
+  // TODO: handleJoined()
+  // try to reconnect players to their previously known position
+  // needs to be handled in waiting room AND game
+
+  // TODO: start game
+  // -> send a "start" event
+
+  // TODO: handleStarted()
+  // -> make sure all waiting rooms call Game.multiplayer()
+
+  // TODO: leave game
+  // -> this should merely be a "disconnect", e.g. when the browser closes
+
+  // TODO: handleLeft
+  // -> update presence of player in game instance to "offline"
 
   startGame() {
     if (this.isReady) {
