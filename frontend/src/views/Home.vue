@@ -73,7 +73,7 @@ export default class Home extends Vue {
       const response = await this.multiplayerHandler.register();
       router.push({
         name: "waiting-room",
-        params: { gameName: response.game.id }
+        params: { gameName: response.game.id.toString() }
       });
     } catch (error) {
       new Notifier().info("cannot-connect-to-server");

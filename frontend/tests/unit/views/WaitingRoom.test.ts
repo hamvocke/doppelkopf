@@ -52,7 +52,7 @@ describe("WaitingRoom.vue", () => {
   test("should render players", async () => {
     const mockedResponse: CreateResponse = {
       game: {
-        id: "some-game",
+        id: 1,
         players: [{ id: 1, name: "some player" }]
       }
     };

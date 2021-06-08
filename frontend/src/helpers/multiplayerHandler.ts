@@ -30,7 +30,6 @@ export class MultiplayerHandler {
       }
 
       const roomInfo = (await response.json()) as CreateResponse;
-
       this.websocket.connect();
       return roomInfo;
     } catch (error) {
@@ -51,33 +50,11 @@ export class MultiplayerHandler {
 
     this.websocket?.emit(Event.join, joinPayload);
   }
-
-  registerCallback(eventType: Event, callback: Function) {
-    this.websocket.on(eventType, (data: any) => {
-      callback(JSON.parse(data));
-    });
-  }
-
-  // TODO: handleJoined()
-  // try to reconnect players to their previously known position
-  // needs to be handled in waiting room AND game
-
-  // TODO: start game
-  // -> send a "start" event
-
-  // TODO: handleStarted()
-  // -> make sure all waiting rooms call Game.multiplayer()
-
-  // TODO: leave game
-  // -> this should merely be a "disconnect", e.g. when the browser closes
-
-  // TODO: handleLeft
-  // -> update presence of player in game instance to "offline"
 }
 
 export type CreateResponse = {
   game: {
-    id: string;
+    id: number;
     players: {
       id: number;
       name: string;
