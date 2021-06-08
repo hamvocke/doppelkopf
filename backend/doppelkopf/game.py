@@ -4,7 +4,9 @@ from datetime import datetime
 
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow(), server_default='NOW()')
+    created_at = db.Column(
+        db.DateTime, nullable=False, default=datetime.utcnow(), server_default="NOW()"
+    )
     started_at = db.Column(db.DateTime, nullable=True)
     finished_at = db.Column(db.DateTime, nullable=True)
     winner = db.Column(db.Integer, nullable=True)
@@ -38,4 +40,8 @@ class Player(db.Model):
         return f"<Player: {self.id, self.name, self.created_at}>"
 
     def serialize(self):
-        return {"id": self.id, "name": self.name, "online": self.disconnected_at is None}
+        return {
+            "id": self.id,
+            "name": self.name,
+            "online": self.disconnected_at is None,
+        }

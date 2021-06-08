@@ -3,7 +3,7 @@ from flask import current_app, request
 from .game import Game, Player
 from .db import db
 import json
-import  datetime
+import datetime
 
 socketio = SocketIO()
 
@@ -13,7 +13,7 @@ def init_app(app):
         app,
         cors_allowed_origins=app.config["CORS_ALLOWED_ORIGINS"],
         logger=app.config["DEBUG"],
-        engineio_logger=False
+        engineio_logger=False,
     )
 
 

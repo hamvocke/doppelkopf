@@ -73,7 +73,10 @@ def test_should_reconnect_on_join(client, socket_client):
     socket_client.connect()
     player_id = Game.query.get(game_id).players[0].id
 
-    socket_client.emit("join", {"game": {"id": game_id}, "player": {"remoteId": player_id, "name": "April"}})
+    socket_client.emit(
+        "join",
+        {"game": {"id": game_id}, "player": {"remoteId": player_id, "name": "April"}},
+    )
 
     g = Game.query.get(game_id)
     assert len(g.players) == 1
@@ -93,7 +96,9 @@ def test_should_send_disconnected_event_on_disconnect(client, socket_client):
     assert received_events[3]["name"] == "disconnected"
 
 
-def test_should_mark_player_as_disconnected_on_disconnect_if_game_is_started(client, socket_client):
+def test_should_mark_player_as_disconnected_on_disconnect_if_game_is_started(
+    client, socket_client
+):
     game_id = _create_game(client)
     _start_game(game_id)
     socket_client.emit("join", _join_payload(game_id))
@@ -105,7 +110,10 @@ def test_should_mark_player_as_disconnected_on_disconnect_if_game_is_started(cli
     assert g.players[0].disconnected_at is not None
     received_events = socket_client.get_received()
     expected_payload = {
-        "game": {"id": game_id, "players": [{"id": 1, "name": "April", "online": False}]}
+        "game": {
+            "id": game_id,
+            "players": [{"id": 1, "name": "April", "online": False}],
+        }
     }
     assert received_events[2]["name"] == "disconnected"
     assert received_events[2]["args"][0] == json.dumps(expected_payload)
@@ -120,9 +128,7 @@ def test_remove_player_on_disconnect_if_game_is_not_started_yet(client, socket_c
     g = Game.query.get(game_id)
     assert len(g.players) == 0
     received_events = socket_client.get_received()
-    expected_payload = {
-        "game": {"id": game_id, "players": []}
-    }
+    expected_payload = {"game": {"id": game_id, "players": []}}
     assert received_events[2]["name"] == "disconnected"
     assert received_events[2]["args"][0] == json.dumps(expected_payload)
 
@@ -138,6 +144,7 @@ def _start_game(game_id):
     g.started_at = datetime.datetime.utcnow()
     db.session.add(g)
     db.session.commit()
+
 
 def _join_payload(game_id):
     return {"game": {"id": game_id}, "player": {"name": "April"}}
