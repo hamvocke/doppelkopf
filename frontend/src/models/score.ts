@@ -119,7 +119,8 @@ export class Score {
   }
 
   totalPoints(partyName: PartyName) {
-    const otherPartyName = partyName === PartyName.Re ? PartyName.Kontra : PartyName.Re;
+    const otherPartyName =
+      partyName === PartyName.Re ? PartyName.Kontra : PartyName.Re;
     const thisParty = this.parties[partyName] || this.parties[PartyName.Re];
 
     const delta = this.points(partyName) - this.points(otherPartyName);

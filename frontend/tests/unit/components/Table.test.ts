@@ -45,7 +45,11 @@ describe("Table.vue", () => {
     game.players[0].points = () => 120;
     game.players[1].points = () => 120;
     const reParty = new Party(PartyName.Re, game.players[0], game.players[3]);
-    const kontraParty = new Party(PartyName.Kontra, game.players[1], game.players[2]);
+    const kontraParty = new Party(
+      PartyName.Kontra,
+      game.players[1],
+      game.players[2]
+    );
     const stubScore = new Score(reParty, kontraParty);
     stubScore.winner = () => reParty;
     mockGame.currentRound.score = stubScore;
