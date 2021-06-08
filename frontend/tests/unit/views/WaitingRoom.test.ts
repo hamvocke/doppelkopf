@@ -1,4 +1,3 @@
-import { CreateResponse } from "@/helpers/multiplayerHandler";
 import { Player } from "@/models/player";
 import WaitingRoom from "@/views/WaitingRoom.vue";
 import { config, shallowMount } from "@vue/test-utils";
@@ -7,21 +6,30 @@ config.mocks["$t"] = (msg: string) => msg;
 config.mocks["$tc"] = (msg: string) => msg;
 config.mocks["$i18n"] = { locale: "en" };
 
+const websocketSpy = {
+  connect: jest.fn(),
+  emit: jest.fn(),
+  on: jest.fn()
+};
+
+beforeEach(() => {
+  websocketSpy.connect.mockClear();
+  websocketSpy.emit.mockClear();
+  websocketSpy.on.mockClear();
+});
+
 describe("WaitingRoom.vue", () => {
   test("should render loading state", async () => {
-    const multiplayerHandlerMock = {
-      fetchRoom: jest.fn().mockRejectedValue(new Error("something failed"))
-    };
-
     const wrapper = shallowMount(WaitingRoom, {
       propsData: { gameName: "1" },
-      data: () => ({ multiplayerHandler: multiplayerHandlerMock })
+      data: () => ({
+        isLoading: true,
+        error: undefined,
+        socket: websocketSpy
+      })
     });
 
-    await wrapper.setData({
-      isLoading: true,
-      error: undefined
-    });
+    await wrapper.setData({ isLoading: true });
 
     expect(wrapper.find(".loading").exists()).toBe(true);
     expect(wrapper.find(".error").exists()).toBe(false);
@@ -29,20 +37,17 @@ describe("WaitingRoom.vue", () => {
   });
 
   test("should render error state", async () => {
-    const multiplayerHandlerMock = {
-      fetchRoom: jest.fn().mockRejectedValue(new Error("something failed"))
-    };
-
     const wrapper = shallowMount(WaitingRoom, {
       propsData: { gameName: "1" },
-      data: () => ({ multiplayerHandler: multiplayerHandlerMock }),
-      created: jest.fn()
+      data: () => ({
+        isLoading: false,
+        socket: websocketSpy,
+        error: "some error"
+      })
     });
 
-    await wrapper.setData({
-      isLoading: false,
-      error: "some error"
-    });
+    await wrapper.setData({ error: "some error" });
+
 
     expect(wrapper.find(".loading").exists()).toBe(false);
     expect(wrapper.find(".error").exists()).toBe(true);
@@ -50,27 +55,14 @@ describe("WaitingRoom.vue", () => {
   });
 
   test("should render players", async () => {
-    const mockedResponse: CreateResponse = {
-      game: {
-        id: 1,
-        players: [{ id: 1, name: "some player" }]
-      }
-    };
-
-    const multiplayerHandlerMock = {
-      fetchRoom: jest.fn().mockResolvedValue(mockedResponse)
-    };
-
     const wrapper = shallowMount(WaitingRoom, {
       propsData: { gameName: "1" },
-      data: () => ({ multiplayerHandler: multiplayerHandlerMock }),
-      created: jest.fn()
-    });
-
-    await wrapper.setData({
-      isLoading: false,
-      error: undefined,
-      players: [new Player("some player", true)]
+      data: () => ({
+        isLoading: false,
+        error: undefined,
+        socket: websocketSpy,
+        players: [new Player("some player", true)]
+      })
     });
 
     expect(wrapper.find(".loading").exists()).toBe(false);

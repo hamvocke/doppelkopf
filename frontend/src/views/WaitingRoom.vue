@@ -109,8 +109,6 @@ export default class WaitingRoom extends Vue {
   }
 
   sendJoinEvent(player: Player) {
-    console.log("game name is", this.gameName);
-
     const joinPayload = {
       game: {
         id: this.gameName

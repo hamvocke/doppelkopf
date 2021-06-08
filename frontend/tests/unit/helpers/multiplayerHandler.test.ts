@@ -1,12 +1,11 @@
 import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
-import { WebsocketClient, Event } from "@/helpers/websocketClient";
+import { WebsocketClient } from "@/helpers/websocketClient";
 import { Config } from "@/models/config";
 import { mocked } from "ts-jest/utils";
 
 jest.mock("@/helpers/websocketClient");
 
 import fetchMock from "fetch-mock-jest";
-import { Player } from "@/models/player";
 const websocketMock = mocked(WebsocketClient);
 
 beforeEach(() => {
@@ -57,102 +56,11 @@ describe("Multiplayer Handler", () => {
       );
     });
   });
-
-  describe("fetch room", () => {
-    test("should fetch room info", async () => {
-      fetchMock.get(
-        "http://localhost:5000/api/game/some-game",
-        stubbedFetchResponse
-      );
-
-      const response = await multiplayer.fetchRoom("some-game");
-
-      expect(response.game.id).toEqual("some-game");
-      expect(response.game.players.map(p => p.name)).toEqual(["Lenny", "Carl"]);
-    });
-
-    test.todo("should handle unknown room id");
-
-    test("should throw exception on connection error", async () => {
-      fetchMock.get("http://localhost:5000/api/game/some-game", {
-        throws: "failed"
-      });
-
-      async function failingFetch() {
-        await multiplayer.fetchRoom("some-game");
-      }
-
-      await expect(failingFetch()).rejects.toThrowError(
-        "Failed to fetch room state: failed"
-      );
-    });
-
-    test("should throw exception on non-ok response", async () => {
-      fetchMock.get("http://localhost:5000/api/game/some-game", 503);
-
-      async function failingFetch() {
-        await multiplayer.fetchRoom("some-game");
-      }
-
-      await expect(failingFetch()).rejects.toThrowError(
-        "Failed to fetch room state: Error: HTTP request failed with status 503"
-      );
-    });
-
-    test("should connect websocket", async () => {
-      fetchMock.get(
-        "http://localhost:5000/api/game/some-game",
-        stubbedFetchResponse
-      );
-      const multiplayer = new MultiplayerHandler();
-
-      await multiplayer.fetchRoom("some-game");
-
-      expect(websocketMock.mock.instances[0].connect).toHaveBeenCalled();
-    });
-  });
-
-  describe("join", () => {
-    beforeEach(() => {
-      fetchMock.get(
-        "http://localhost:5000/api/game/some-game",
-        stubbedFetchResponse
-      );
-    });
-
-    test("should send join event via socket", async () => {
-      const multiplayer = new MultiplayerHandler();
-      await multiplayer.fetchRoom("some-game"); // attaches waiting room to multiplayer instance behind the scenes
-      const player = new Player("some-player");
-
-      multiplayer.joinRoom("some-game", player);
-
-      const expectedPayload = {
-        game: {
-          id: "some-game"
-        },
-        player: {
-          name: player.name
-        }
-      };
-      expect(websocketMock.mock.instances[0].emit).toHaveBeenCalledWith(
-        Event.join,
-        expectedPayload
-      );
-    });
-  });
 });
 
 const stubbedCreateResponse = {
   game: {
     id: "2",
     players: []
-  }
-};
-
-const stubbedFetchResponse = {
-  game: {
-    id: "some-game",
-    players: [{ name: "Lenny" }, { name: "Carl" }]
   }
 };
