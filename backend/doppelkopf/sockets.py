@@ -62,7 +62,6 @@ def on_disconnect():
 
     game = Game.query.get(player.game_id)
     if game.started_at is None:
-        print("delete this shit")
         db.session.delete(player)
     else:
         player.disconnected_at = datetime.datetime.utcnow()
