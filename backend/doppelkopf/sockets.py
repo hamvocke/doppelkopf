@@ -49,8 +49,8 @@ def on_join(data):
 
     db.session.add(game)
     db.session.commit()
-    join_room(game_id)
-    emit("joined", json.dumps({"game": game.serialize()}), to=game_id)
+    join_room(game.id)
+    emit("joined", json.dumps({"game": game.serialize()}), to=game.id)
 
 
 @socketio.on("disconnect")
