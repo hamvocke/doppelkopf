@@ -19,7 +19,7 @@ def init_app(app):
 
 @socketio.on("connect")
 def on_connect():
-    emit("connected")
+    emit("connected", broadcast=True)
 
 
 @socketio.on("join")
