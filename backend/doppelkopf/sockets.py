@@ -1,5 +1,5 @@
 from flask_socketio import SocketIO, emit, join_room
-from flask import current_app, request
+from flask import request
 from .game import Game, Player
 from .db import db
 import json
@@ -49,8 +49,8 @@ def on_join(data):
 
     db.session.add(game)
     db.session.commit()
-    join_room(game.id)
-    emit("joined", json.dumps({"game": game.serialize()}), to=game.id)
+    join_room(str(game.id))
+    emit("joined", json.dumps({"game": game.serialize()}), to=str(game.id))
 
 
 @socketio.on("disconnect")
@@ -70,4 +70,4 @@ def on_disconnect():
     db.session.commit()
     game = Game.query.get(player.game_id)
 
-    emit("disconnected", json.dumps({"game": game.serialize()}), to=game.id)
+    emit("disconnected", json.dumps({"game": game.serialize()}), to=str(game.id))
