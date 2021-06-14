@@ -30,7 +30,7 @@ jobs:
 
   backend:
     docker:
-      - image: circleci/python:3.8
+      - image: circleci/python:3.9
     working_directory: ~/hamvocke/doppelkopf
     steps:
       - checkout
