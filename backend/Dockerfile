@@ -6,8 +6,9 @@ FROM python:3.9.5-alpine3.13
 COPY . /app
 WORKDIR /app
 
+# todo: install python3-dev instead to avoid grabbing python2 distribution?
 RUN apk add --no-cache --virtual build-deps build-base gcc libffi libffi-dev
-RUN pip install pipenv && pipenv install --deploy --system --ignore-pipfile
+RUN pip install pipenv && pipenv install --deploy --ignore-pipfile
 
 EXPOSE 5000
 

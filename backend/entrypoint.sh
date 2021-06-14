@@ -1,5 +1,5 @@
 #! /usr/bin/env sh
 
-flask db upgrade
-flask seed-data
-exec python wsgi.py
+pipenv run flask db upgrade
+pipenv run flask seed-data
+exec pipenv run python wsgi.py
