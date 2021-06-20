@@ -10,7 +10,7 @@
       {{ $t(error) }}
     </div>
 
-    <div v-else-if="players.length >= 0" class="wrapper">
+    <div v-else class="wrapper">
       <h3>
         {{ $t("hey-player", { name: currentPlayerName }) }}
       </h3>
@@ -73,7 +73,7 @@ export default class WaitingRoom extends Vue {
   @Prop({ required: true })
   gameName!: string;
 
-  isLoading = false;
+  isLoading = true;
   error?: String = undefined;
   socket = new WebsocketClient();
   players: Player[] = [];
@@ -100,12 +100,12 @@ export default class WaitingRoom extends Vue {
   }
 
   created() {
-    this.isLoading = true;
     this.error = undefined;
+    this.isLoading = true;
     this.socket.connect();
     this.socket.on(Event.joined, this.handleJoined);
+    this.socket.on(Event.error, this.handleError);
     this.sendJoinEvent(Player.me());
-    this.isLoading = false;
   }
 
   sendJoinEvent(player: Player) {
@@ -123,8 +123,8 @@ export default class WaitingRoom extends Vue {
   }
 
   handleJoined(d: any) {
+    this.isLoading = false;
     let data: CreateResponse = JSON.parse(d);
-    console.log("handling 'joined' event", data);
     const players = data.game.players.map((p: any) => {
       const player = new Player(p.name, true, false);
       player.remoteId = p.id;
@@ -138,7 +138,6 @@ export default class WaitingRoom extends Vue {
     if (!player) return;
 
     if (!player.remoteId) {
-      console.error("Nope, not letting them in", player);
       return;
     }
 
@@ -149,7 +148,8 @@ export default class WaitingRoom extends Vue {
     }
 
     if (this.isReady) {
-      throw new Error("Room is full");
+      this.error = "error-room-full";
+      return;
     }
 
     if (this.players.length === 0) {
@@ -174,6 +174,12 @@ export default class WaitingRoom extends Vue {
 
   // TODO: handleLeft
   // -> update presence of player in game instance to "offline"
+
+  handleError(data: string) {
+    this.isLoading = false;
+    this.players = [];
+    this.error = data;
+  }
 
   startGame() {
     if (this.isReady) {

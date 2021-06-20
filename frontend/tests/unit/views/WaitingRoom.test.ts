@@ -46,8 +46,7 @@ describe("WaitingRoom.vue", () => {
       })
     });
 
-    await wrapper.setData({ error: "some error" });
-
+    await wrapper.setData({ error: "some error", isLoading: false });
 
     expect(wrapper.find(".loading").exists()).toBe(false);
     expect(wrapper.find(".error").exists()).toBe(true);
@@ -64,6 +63,9 @@ describe("WaitingRoom.vue", () => {
         players: [new Player("some player", true)]
       })
     });
+
+    await wrapper.setData({ error: undefined, isLoading: false });
+
 
     expect(wrapper.find(".loading").exists()).toBe(false);
     expect(wrapper.find(".error").exists()).toBe(false);
