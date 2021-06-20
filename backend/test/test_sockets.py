@@ -60,7 +60,7 @@ def test_should_not_let_more_than_4_players_join(client, socket_client):
     assert received_events[5]["name"] == "error"
     assert (
         received_events[5]["args"][0]
-        == f"Can't join game {game_id}. Game has 4 players already."
+        == "error-room-full"
     )
     assert len(g.players) == 4
 
