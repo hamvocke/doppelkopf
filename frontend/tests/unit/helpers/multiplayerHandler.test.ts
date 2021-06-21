@@ -20,7 +20,7 @@ afterAll(() => {
 });
 
 describe("Multiplayer Handler", () => {
-  const multiplayer = new MultiplayerHandler();
+  let multiplayer = new MultiplayerHandler();
 
   describe("register", () => {
     test("should register new game", async () => {
@@ -54,6 +54,15 @@ describe("Multiplayer Handler", () => {
       await expect(failingRequest()).rejects.toThrowError(
         "HTTP request failed with status 503"
       );
+    });
+  });
+
+  describe("sockets", () => {
+    test("should connect websockets and register handlers", () => {
+      multiplayer = new MultiplayerHandler();
+
+      expect(websocketMock.mock.instances[0].connect).toHaveBeenCalled();
+      expect(websocketMock.mock.instances[0].on).toHaveBeenCalledTimes(2);
     });
   });
 });

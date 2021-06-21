@@ -66,7 +66,6 @@ describe("WaitingRoom.vue", () => {
 
     await wrapper.setData({ error: undefined, isLoading: false });
 
-
     expect(wrapper.find(".loading").exists()).toBe(false);
     expect(wrapper.find(".error").exists()).toBe(false);
     expect(wrapper.find(".wrapper").exists()).toBe(true);
