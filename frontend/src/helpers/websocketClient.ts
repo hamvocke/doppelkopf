@@ -24,11 +24,11 @@ export class WebsocketClient {
       return;
     }
 
-    this.socket!.emit(event, payload);
+    this.socket?.emit(event, payload);
   }
 
   on(event: Event, listener: Function) {
-    this.socket!.on(event, listener);
+    this.socket?.on(event, listener);
   }
 }
 

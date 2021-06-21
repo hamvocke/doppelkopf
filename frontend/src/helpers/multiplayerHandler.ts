@@ -9,7 +9,6 @@ import { Player } from "@/models/player";
 export class MultiplayerHandler {
   socket = new WebsocketClient();
   listeners: { [eventName: string]: Function[] } = {};
-  gameName?: string;
 
   constructor() {
     this.socket.connect();
@@ -31,6 +30,20 @@ export class MultiplayerHandler {
     } catch (error) {
       throw new Error(`Failed to create multiplayer game: ${error}`);
     }
+  }
+
+  sendJoinEvent(gameId: number, player: Player) {
+    const joinPayload = {
+      game: {
+        id: gameId
+      },
+      player: {
+        remoteId: player.remoteId,
+        name: player.name
+      }
+    };
+
+    this.socket.emit(Event.join, joinPayload);
   }
 
   on(event: Event, callback: (data: any) => void) {

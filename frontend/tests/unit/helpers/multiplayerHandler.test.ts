@@ -12,11 +12,14 @@ import fetchMock from "fetch-mock-jest";
 import { Player } from "@/models/player";
 const websocketMock = mocked(WebsocketClient);
 
+let multiplayer: MultiplayerHandler;
+
 beforeEach(() => {
   fetchMock.reset();
   // disable testing mode so we're hitting fetchMock requests
   Config.testing = false;
   websocketMock.mockClear();
+  multiplayer = new MultiplayerHandler();
 });
 
 afterAll(() => {
@@ -24,8 +27,6 @@ afterAll(() => {
 });
 
 describe("Multiplayer Handler", () => {
-  let multiplayer = new MultiplayerHandler();
-
   describe("register", () => {
     test("should register new game", async () => {
       fetchMock.post("http://localhost:5000/api/game", emptyCreateResponse);
@@ -60,6 +61,29 @@ describe("Multiplayer Handler", () => {
       );
     });
   });
+
+  describe("send events", () => {
+    test("should send join event", () => {
+      let player = new Player("some player", true, true);
+
+      multiplayer.sendJoinEvent(42, player);
+
+      let expectedPayload = {
+        game: {
+          id: 42
+        },
+        player: {
+          remoteId: player.remoteId,
+          name: player.name
+        }
+      };
+
+      expect(websocketMock.mock.instances[0].emit).toHaveBeenCalledWith(
+        Event.join,
+        expectedPayload
+      );
+    });
+  })
 
   describe("sockets", () => {
     test("should connect websockets and register handlers", () => {
