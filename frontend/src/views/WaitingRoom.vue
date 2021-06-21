@@ -143,6 +143,7 @@ export default class WaitingRoom extends Vue {
 
     const known = this.players.map((p: Player) => p.remoteId);
 
+    // TODO: try to reconnect players to their previously known position
     if (known.includes(player.remoteId)) {
       return;
     }
@@ -158,10 +159,6 @@ export default class WaitingRoom extends Vue {
 
     this.players = [...this.players, player];
   }
-
-  // TODO: handleJoined()
-  // try to reconnect players to their previously known position
-  // needs to be handled in waiting room AND game
 
   // TODO: start game
   // -> send a "start" event
