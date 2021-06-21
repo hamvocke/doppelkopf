@@ -1,4 +1,5 @@
 import { Player } from "@/models/player";
+import { WaitingRoom as WaitingRoomModel } from "@/models/waitingRoom";
 import WaitingRoom from "@/views/WaitingRoom.vue";
 import { config, shallowMount } from "@vue/test-utils";
 
@@ -20,16 +21,17 @@ beforeEach(() => {
 
 describe("WaitingRoom.vue", () => {
   test("should render loading state", async () => {
+    let waitingRoom = new WaitingRoomModel(1);
+    waitingRoom.error = undefined;
+    waitingRoom.isLoading = true;
+    waitingRoom.players = [new Player("some player", true)];
+
     const wrapper = shallowMount(WaitingRoom, {
       propsData: { gameName: "1" },
       data: () => ({
-        isLoading: true,
-        error: undefined,
-        socket: websocketSpy
+        waitingRoom: waitingRoom
       })
     });
-
-    await wrapper.setData({ isLoading: true });
 
     expect(wrapper.find(".loading").exists()).toBe(true);
     expect(wrapper.find(".error").exists()).toBe(false);
@@ -37,16 +39,17 @@ describe("WaitingRoom.vue", () => {
   });
 
   test("should render error state", async () => {
+    let waitingRoom = new WaitingRoomModel(1);
+    waitingRoom.error = "some-error";
+    waitingRoom.isLoading = false;
+    waitingRoom.players = [];
+
     const wrapper = shallowMount(WaitingRoom, {
       propsData: { gameName: "1" },
       data: () => ({
-        isLoading: false,
-        socket: websocketSpy,
-        error: "some error"
+        waitingRoom: waitingRoom
       })
     });
-
-    await wrapper.setData({ error: "some error", isLoading: false });
 
     expect(wrapper.find(".loading").exists()).toBe(false);
     expect(wrapper.find(".error").exists()).toBe(true);
@@ -54,17 +57,17 @@ describe("WaitingRoom.vue", () => {
   });
 
   test("should render players", async () => {
+    let waitingRoom = new WaitingRoomModel(1);
+    waitingRoom.error = undefined;
+    waitingRoom.isLoading = false;
+    waitingRoom.players = [new Player("some player", true)];
+
     const wrapper = shallowMount(WaitingRoom, {
       propsData: { gameName: "1" },
       data: () => ({
-        isLoading: false,
-        error: undefined,
-        socket: websocketSpy,
-        players: [new Player("some player", true)]
+        waitingRoom: waitingRoom
       })
     });
-
-    await wrapper.setData({ error: undefined, isLoading: false });
 
     expect(wrapper.find(".loading").exists()).toBe(false);
     expect(wrapper.find(".error").exists()).toBe(false);

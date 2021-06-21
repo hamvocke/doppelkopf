@@ -3,7 +3,7 @@ import { WaitingRoom } from "@/models/waitingRoom";
 let waitingRoom: WaitingRoom;
 
 beforeEach(() => {
-  waitingRoom = new WaitingRoom();
+  waitingRoom = new WaitingRoom(42);
 });
 
 test("should create waiting room", () => {

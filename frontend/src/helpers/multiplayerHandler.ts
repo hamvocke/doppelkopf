@@ -12,8 +12,8 @@ export class MultiplayerHandler {
 
   constructor() {
     this.socket.connect();
-    this.socket.on(Event.joined, this.handleJoined);
-    this.socket.on(Event.error, this.handleError);
+    this.socket.on(Event.joined, (data: any) => this.handleJoined(data));
+    this.socket.on(Event.error, (error: string) => this.handleError(error));
 
     for (let event in Event) {
       this.listeners[event] = [];
@@ -65,7 +65,7 @@ export class MultiplayerHandler {
     this.notifyAll(Event.error, data);
   }
 
-  private notifyAll(event: Event, data: any) {
+  notifyAll(event: Event, data: any) {
     this.listeners[event].forEach(callback => {
       callback(data);
     });

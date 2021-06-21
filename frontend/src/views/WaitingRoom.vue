@@ -1,11 +1,11 @@
 <template>
   <div id="waitingRoom">
     <h1>Doppelkopf</h1>
-    <div v-if="isLoading" class="loading">
+    <div v-if="waitingRoom.isLoading" class="loading">
       {{ $t("loading") }}
     </div>
 
-    <div v-else-if="error" class="error">
+    <div v-else-if="waitingRoom.error" class="error">
       <cloud-off-icon size="32" class="icon" />
       {{ $t(error) }}
     </div>
@@ -24,8 +24,8 @@
         <p>{{ $t("you-can-start") }}</p>
         <p>
           {{
-            $tc("n-players-are-here", players.length, {
-              count: players.length
+            $tc("n-players-are-here", waitingRoom.players.length, {
+              count: waitingRoom.players.length
             })
           }}
           {{ $t(statusMessage) }}
@@ -35,7 +35,7 @@
       <div class="players">
         <ol>
           <li
-            v-for="player in players"
+            v-for="player in waitingRoom.players"
             :key="player.id"
             class="player"
             :class="{ highlight: player.isMe }"
@@ -46,7 +46,7 @@
       </div>
 
       <button
-        v-if="isReady"
+        v-if="waitingRoom.isReady"
         class="button start-game"
         tag="button"
         @click="startGame()"
@@ -59,8 +59,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { CreateResponse } from "@/helpers/multiplayerHandler";
-import { Event, WebsocketClient } from "@/helpers/websocketClient";
+import { WaitingRoom as WaitingRoomModel } from "@/models/waitingRoom";
 import CopyText from "@/components/CopyText.vue";
 import { Player } from "@/models/player";
 import { CloudOffIcon } from "vue-feather-icons";
@@ -73,26 +72,18 @@ export default class WaitingRoom extends Vue {
   @Prop({ required: true })
   gameName!: string;
 
-  isLoading = true;
-  error?: String = undefined;
-  socket = new WebsocketClient();
-  players: Player[] = [];
-  owner?: Player;
+  waitingRoom: WaitingRoomModel = new WaitingRoomModel(parseInt(this.gameName));
 
   get currentPlayerName() {
-    if (this.players?.length === 0) {
+    if (this.waitingRoom.players?.length === 0) {
       return null;
     }
 
-    return this.players[0].name;
-  }
-
-  get isReady() {
-    return this.players?.length === 4;
+    return this.waitingRoom.players[0].name;
   }
 
   get statusMessage() {
-    return this.isReady ? "ready-status" : "waiting-status";
+    return this.waitingRoom.isReady ? "ready-status" : "waiting-status";
   }
 
   get gameUrl() {
@@ -100,64 +91,7 @@ export default class WaitingRoom extends Vue {
   }
 
   created() {
-    this.error = undefined;
-    this.isLoading = true;
-    this.socket.connect();
-    this.socket.on(Event.joined, this.handleJoined);
-    this.socket.on(Event.error, this.handleError);
-    this.sendJoinEvent(Player.me());
-  }
-
-  sendJoinEvent(player: Player) {
-    const joinPayload = {
-      game: {
-        id: this.gameName
-      },
-      player: {
-        remoteId: player.remoteId,
-        name: player.name
-      }
-    };
-
-    this.socket.emit(Event.join, joinPayload);
-  }
-
-  handleJoined(d: any) {
-    this.isLoading = false;
-    let data: CreateResponse = JSON.parse(d);
-    const players = data.game.players.map((p: any) => {
-      const player = new Player(p.name, true, false);
-      player.remoteId = p.id;
-      return player;
-    });
-
-    players.forEach((p: Player) => this.updatePlayers(p));
-  }
-
-  updatePlayers(player: Player) {
-    if (!player) return;
-
-    if (!player.remoteId) {
-      return;
-    }
-
-    const known = this.players.map((p: Player) => p.remoteId);
-
-    // TODO: try to reconnect players to their previously known position
-    if (known.includes(player.remoteId)) {
-      return;
-    }
-
-    if (this.isReady) {
-      this.error = "error-room-full";
-      return;
-    }
-
-    if (this.players.length === 0) {
-      this.owner = player;
-    }
-
-    this.players = [...this.players, player];
+    this.waitingRoom.join(Player.me());
   }
 
   // TODO: start game
@@ -172,14 +106,8 @@ export default class WaitingRoom extends Vue {
   // TODO: handleLeft
   // -> update presence of player in game instance to "offline"
 
-  handleError(data: string) {
-    this.isLoading = false;
-    this.players = [];
-    this.error = data;
-  }
-
   startGame() {
-    if (this.isReady) {
+    if (this.waitingRoom.isReady) {
       // TODO: rebalance players here
       // Game.multiPlayer(this.players);
       this.$router.push("/play");
