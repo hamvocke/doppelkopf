@@ -32,6 +32,31 @@ export class MultiplayerHandler {
       throw new Error(`Failed to create multiplayer game: ${error}`);
     }
   }
+
+  on(event: Event, callback: (data: any) => void) {
+    this.listeners[event].push(callback);
+  }
+
+  handleJoined(d: any) {
+    let data: CreateResponse = JSON.parse(d);
+    const allPlayers = data.game.players.map((p: any) => {
+      const player = new Player(p.name, true, false);
+      player.remoteId = p.id;
+      return player;
+    });
+
+    this.notifyAll(Event.joined, allPlayers);
+  }
+
+  handleError(data: string) {
+    this.notifyAll(Event.error, data);
+  }
+
+  private notifyAll(event: Event, data: any) {
+    this.listeners[event].forEach(callback => {
+      callback(data);
+    });
+  }
 }
 
 export type CreateResponse = {
