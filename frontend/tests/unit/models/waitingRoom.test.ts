@@ -41,3 +41,29 @@ test("should report ready state", () => {
 
   expect(waitingRoom.isReady).toBe(true);
 });
+
+test("should start in loading state and without error", () => {
+  expect(waitingRoom.isLoading).toBe(true);
+  expect(waitingRoom.error).toBeUndefined();
+});
+
+test("should start without players", () => {
+  expect(waitingRoom.players).toEqual([]);
+  expect(waitingRoom.owner).toBeUndefined();
+});
+
+test("should only add unknown players on joined", () => {
+  waitingRoom.handleJoined([player1]);
+  waitingRoom.handleJoined([player1, player2]);
+  expect(waitingRoom.players).toEqual([player1, player2]);
+});
+
+test("should declare first joining player as owner", () => {
+  waitingRoom.handleJoined([player1, player2, player3]);
+  expect(waitingRoom.owner).toEqual(player1);
+});
+
+test("should no longer be loading after joining", () => {
+  waitingRoom.handleJoined([player1, player2, player3]);
+  expect(waitingRoom.isLoading).toBe(false);
+});
