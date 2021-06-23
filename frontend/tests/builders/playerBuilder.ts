@@ -7,23 +7,30 @@ export class PlayerBuilder {
   points: number = 0;
   extras: Extra[] = [];
   party: string = "re";
+  remoteId: number = 0;
 
   constructor(name: string) {
     this.name = name;
   }
 
-  withPoints(points: number) {
+  withPoints(points: number): PlayerBuilder {
     this.points = points;
     return this;
   }
 
-  withParty(party: string) {
+  withParty(party: string): PlayerBuilder {
     this.party = party;
     return this;
   }
 
-  withExtra(extra: Extra) {
+  withExtra(extra: Extra): PlayerBuilder {
     this.extras.push(extra);
+    return this;
+  }
+
+  withRemoteId(id: number): PlayerBuilder {
+    this.remoteId = id;
+    return this;
   }
 
   build() {
@@ -32,6 +39,7 @@ export class PlayerBuilder {
     player.isKontra = () => this.party !== PartyName.Re;
     player.points = () => this.points;
     player.trickStack.extras = () => this.extras;
+    player.remoteId = this.remoteId;
     return player;
   }
 }
