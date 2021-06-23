@@ -13,10 +13,8 @@ export class WaitingRoom {
 
   constructor(gameName: number) {
     this.gameName = gameName;
-    this.multiplayer.on(Event.joined, (players: Player[]) =>
-      this.handleJoined(players)
-    );
-    this.multiplayer.on(Event.error, this.handleError);
+    this.multiplayer.on(Event.joined, this.handleJoined.bind(this));
+    this.multiplayer.on(Event.error, this.handleError.bind(this));
   }
 
   get gameUrl() {

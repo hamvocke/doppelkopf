@@ -12,8 +12,8 @@ export class MultiplayerHandler {
 
   constructor() {
     this.socket.connect();
-    this.socket.on(Event.joined, (data: any) => this.handleJoined(data));
-    this.socket.on(Event.error, (error: string) => this.handleError(error));
+    this.socket.on(Event.joined, this.handleJoined.bind(this));
+    this.socket.on(Event.error, this.handleError.bind(this));
 
     for (let event in Event) {
       this.listeners[event] = [];
