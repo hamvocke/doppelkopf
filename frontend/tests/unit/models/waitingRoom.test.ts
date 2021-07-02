@@ -67,3 +67,9 @@ test("should no longer be loading after joining", () => {
   waitingRoom.handleJoined([player1, player2, player3]);
   expect(waitingRoom.isLoading).toBe(false);
 });
+
+test("should handle error", () => {
+  waitingRoom.handleError("some-error");
+  expect(waitingRoom.isLoading).toBe(false);
+  expect(waitingRoom.error).toEqual("some-error");
+});
