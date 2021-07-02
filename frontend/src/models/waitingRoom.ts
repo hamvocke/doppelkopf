@@ -14,6 +14,7 @@ export class WaitingRoom {
   constructor(gameName: number) {
     this.gameName = gameName;
     this.multiplayer.on(Event.joined, this.handleJoined.bind(this));
+    this.multiplayer.on(Event.left, this.handleLeft.bind(this));
     this.multiplayer.on(Event.error, this.handleError.bind(this));
   }
 
@@ -55,6 +56,15 @@ export class WaitingRoom {
     });
 
     this.isLoading = false;
+  }
+
+  handleLeft(players: Player[]) {
+    console.log("handling left");
+    const known = this.players.map((p: Player) => p.remoteId);
+    const remaining = players.map((p: Player) => p.remoteId);
+    const left = known.find(id => !remaining.includes(id));
+    console.log("removing player");
+    this.players = this.players.filter(p => p.remoteId !== left);
   }
 
   handleError(error: string) {

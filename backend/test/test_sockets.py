@@ -82,7 +82,7 @@ def test_should_reconnect_on_join(client, socket_client):
     assert len(g.players) == 1
 
 
-def test_should_send_disconnected_event_on_disconnect(client, socket_client):
+def test_should_send_left_event_on_disconnect(client, socket_client):
     game_id = _create_game(client)
     socket_client.emit("join", _join_payload(game_id))
     socket_client.emit("join", _join_payload(game_id))
@@ -93,7 +93,7 @@ def test_should_send_disconnected_event_on_disconnect(client, socket_client):
     assert received_events[0]["name"] == "connected"
     assert received_events[1]["name"] == "joined"
     assert received_events[2]["name"] == "joined"
-    assert received_events[3]["name"] == "disconnected"
+    assert received_events[3]["name"] == "left"
 
 
 def test_should_mark_player_as_disconnected_on_disconnect_if_game_is_started(
@@ -115,7 +115,7 @@ def test_should_mark_player_as_disconnected_on_disconnect_if_game_is_started(
             "players": [{"id": 1, "name": "April", "online": False}],
         }
     }
-    assert received_events[2]["name"] == "disconnected"
+    assert received_events[2]["name"] == "left"
     assert received_events[2]["args"][0] == json.dumps(expected_payload)
 
 
@@ -129,7 +129,7 @@ def test_remove_player_on_disconnect_if_game_is_not_started_yet(client, socket_c
     assert len(g.players) == 0
     received_events = socket_client.get_received()
     expected_payload = {"game": {"id": game_id, "players": []}}
-    assert received_events[2]["name"] == "disconnected"
+    assert received_events[2]["name"] == "left"
     assert received_events[2]["args"][0] == json.dumps(expected_payload)
 
 

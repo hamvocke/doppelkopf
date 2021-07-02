@@ -35,5 +35,6 @@ export class WebsocketClient {
 export enum Event {
   join = "join",
   joined = "joined",
+  left = "left",
   error = "error"
 }

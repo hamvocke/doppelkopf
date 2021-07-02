@@ -13,6 +13,7 @@ export class MultiplayerHandler {
   constructor() {
     this.socket.connect();
     this.socket.on(Event.joined, this.handleJoined.bind(this));
+    this.socket.on(Event.left, this.handleLeft.bind(this));
     this.socket.on(Event.error, this.handleError.bind(this));
 
     for (let event in Event) {
@@ -50,15 +51,15 @@ export class MultiplayerHandler {
     this.listeners[event].push(callback);
   }
 
-  handleJoined(d: any) {
+  handleJoined(d: string) {
     let data: CreateResponse = JSON.parse(d);
-    const allPlayers = data.game.players.map((p: any) => {
-      const player = new Player(p.name, true, false);
-      player.remoteId = p.id;
-      return player;
-    });
+    this.notifyAll(Event.joined, mapToPlayers(data));
+  }
 
-    this.notifyAll(Event.joined, allPlayers);
+  handleLeft(d: string) {
+    console.log("multiplayer received left event");
+    let data: CreateResponse = JSON.parse(d);
+    this.notifyAll(Event.left, mapToPlayers(data));
   }
 
   handleError(data: string) {
@@ -81,3 +82,11 @@ export type CreateResponse = {
     }[];
   };
 };
+
+function mapToPlayers(response: CreateResponse) {
+  return response.game.players.map((p: any) => {
+    const player = new Player(p.name, true, false);
+    player.remoteId = p.id;
+    return player;
+  });
+}

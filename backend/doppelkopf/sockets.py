@@ -70,4 +70,4 @@ def on_disconnect():
     db.session.commit()
     game = Game.query.get(player.game_id)
 
-    emit("disconnected", json.dumps({"game": game.serialize()}), to=str(game.id))
+    emit("left", json.dumps({"game": game.serialize()}), to=str(game.id))

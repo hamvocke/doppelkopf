@@ -90,7 +90,7 @@ describe("Multiplayer Handler", () => {
       multiplayer = new MultiplayerHandler();
 
       expect(websocketMock.mock.instances[0].connect).toHaveBeenCalled();
-      expect(websocketMock.mock.instances[0].on).toHaveBeenCalledTimes(2);
+      expect(websocketMock.mock.instances[0].on).toHaveBeenCalledTimes(3);
     });
 
     test("should notify all 'joined' handlers on event", () => {

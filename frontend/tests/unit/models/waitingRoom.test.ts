@@ -73,3 +73,12 @@ test("should handle error", () => {
   expect(waitingRoom.isLoading).toBe(false);
   expect(waitingRoom.error).toEqual("some-error");
 });
+
+test("should handle player leaving", () => {
+  waitingRoom.handleJoined([player1, player2]);
+  waitingRoom.handleLeft([player1]);
+  expect(waitingRoom.players).toEqual([player1]);
+});
+
+test.todo("should handle owner leaving");
+test.todo("should handle unknown player leaving");
