@@ -17,6 +17,8 @@ export function loadPlayer() {
     const playerFromStorage: PersistedPlayer = JSON.parse(found);
     return new Player(playerFromStorage.name, true, true);
   }
+
+  return Player.me();
 }
 
 export function dropPlayer() {
