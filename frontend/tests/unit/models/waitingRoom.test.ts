@@ -2,6 +2,7 @@ import { WebsocketClient, Event } from "@/helpers/websocketClient";
 import { WaitingRoom } from "@/models/waitingRoom";
 import { PlayerBuilder } from "../../builders/playerBuilder";
 import { mocked } from "ts-jest/utils";
+import { Player } from "@/models/player";
 
 jest.mock("@/helpers/websocketClient");
 let websocketMock = mocked(WebsocketClient);
@@ -90,4 +91,11 @@ test("should handle owner leaving", () => {
   expect(waitingRoom.owner).toEqual(player2);
 });
 
-test.todo("should handle unknown player leaving");
+test("should handle unknown player in 'left' handler", () => {
+  waitingRoom.handleJoined([player1, player2]);
+  const unknownPlayer = new Player("unknown");
+
+  waitingRoom.handleLeft([player1, unknownPlayer]);
+
+  expect(waitingRoom.players).toEqual([player1]);
+});
