@@ -3,6 +3,7 @@ import { WaitingRoom } from "@/models/waitingRoom";
 import { PlayerBuilder } from "../../builders/playerBuilder";
 import { mocked } from "ts-jest/utils";
 import { Player } from "@/models/player";
+import * as storage from "@/helpers/storage";
 
 jest.mock("@/helpers/websocketClient");
 let websocketMock = mocked(WebsocketClient);
@@ -17,6 +18,7 @@ let player4 = new PlayerBuilder("player 4").withRemoteId(4).build();
 beforeEach(() => {
   websocketMock.mockReset();
   waitingRoom = new WaitingRoom(42);
+  storage.dropPlayer();
 });
 
 test("should generate game URL", () => {
@@ -67,6 +69,14 @@ test("should declare first joining player as owner", () => {
 test("should no longer be loading after joining", () => {
   waitingRoom.handleJoined([player1, player2, player3]);
   expect(waitingRoom.isLoading).toBe(false);
+});
+
+test("should set own player as 'me' if it matches stored player", () => {
+  storage.savePlayer(player3);
+
+  waitingRoom.handleJoined([player1, player3]);
+
+  expect(waitingRoom.me).toEqual(player3);
 });
 
 test("should handle error", () => {

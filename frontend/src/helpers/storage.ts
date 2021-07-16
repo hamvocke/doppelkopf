@@ -15,7 +15,9 @@ export function loadPlayer() {
   const found = localStorage.getItem(playerKey);
   if (found) {
     const playerFromStorage: PersistedPlayer = JSON.parse(found);
-    return new Player(playerFromStorage.name, true, true);
+    const player = new Player(playerFromStorage.name, true, true);
+    player.id = playerFromStorage.id;
+    return player;
   }
 
   const me = Player.me();

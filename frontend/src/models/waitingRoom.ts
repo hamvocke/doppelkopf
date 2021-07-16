@@ -1,4 +1,5 @@
 import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
+import * as storage from "@/helpers/storage";
 import { Event } from "@/helpers/websocketClient";
 import { Config } from "@/models/config";
 import { Player } from "@/models/player";
@@ -26,6 +27,10 @@ export class WaitingRoom {
     return this.players?.length === 4;
   }
 
+  get me() {
+    return this.players.find(p => p.isMe);
+  }
+
   join(player: Player) {
     this.multiplayer.sendJoinEvent(this.gameName, player);
   }
@@ -46,6 +51,11 @@ export class WaitingRoom {
       if (this.isReady) {
         this.error = "error-room-full";
         return;
+      }
+
+      let storedPlayer = storage.loadPlayer();
+      if (p.name === storedPlayer.name && p.id === storedPlayer.id) {
+        p.isMe = true;
       }
 
       if (this.players.length === 0) {

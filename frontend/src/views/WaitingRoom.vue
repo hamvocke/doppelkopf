@@ -61,7 +61,7 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { WaitingRoom as WaitingRoomModel } from "@/models/waitingRoom";
 import CopyText from "@/components/CopyText.vue";
-import { Player } from "@/models/player";
+import * as storage from "@/helpers/storage";
 import { CloudOffIcon } from "vue-feather-icons";
 import { Config } from "@/models/config";
 
@@ -79,7 +79,8 @@ export default class WaitingRoom extends Vue {
       return null;
     }
 
-    return this.waitingRoom.players[0].name;
+    const loadedPlayer = storage.loadPlayer();
+    return loadedPlayer.name;
   }
 
   get statusMessage() {
@@ -91,7 +92,7 @@ export default class WaitingRoom extends Vue {
   }
 
   created() {
-    this.waitingRoom.join(Player.me());
+    this.waitingRoom.join(storage.loadPlayer());
   }
 
   // TODO: start game
