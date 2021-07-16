@@ -18,7 +18,9 @@ export function loadPlayer() {
     return new Player(playerFromStorage.name, true, true);
   }
 
-  return Player.me();
+  const me = Player.me();
+  savePlayer(me);
+  return me;
 }
 
 export function dropPlayer() {
