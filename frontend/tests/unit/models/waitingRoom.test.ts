@@ -80,5 +80,14 @@ test("should handle player leaving", () => {
   expect(waitingRoom.players).toEqual([player1]);
 });
 
-test.todo("should handle owner leaving");
+test("should handle owner leaving", () => {
+  waitingRoom.handleJoined([player1, player2]);
+  expect(waitingRoom.owner).toEqual(player1);
+
+  waitingRoom.handleLeft([player2]);
+
+  expect(waitingRoom.players).toEqual([player2]);
+  expect(waitingRoom.owner).toEqual(player2);
+});
+
 test.todo("should handle unknown player leaving");

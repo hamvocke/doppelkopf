@@ -59,12 +59,14 @@ export class WaitingRoom {
   }
 
   handleLeft(players: Player[]) {
-    console.log("handling left");
     const known = this.players.map((p: Player) => p.remoteId);
     const remaining = players.map((p: Player) => p.remoteId);
     const left = known.find(id => !remaining.includes(id));
-    console.log("removing player");
     this.players = this.players.filter(p => p.remoteId !== left);
+
+    if (this.owner?.remoteId === left) {
+      this.owner = this.players[0];
+    }
   }
 
   handleError(error: string) {
