@@ -10,10 +10,10 @@ let websocketMock = mocked(WebsocketClient);
 
 let waitingRoom: WaitingRoom;
 
-let player1 = new PlayerBuilder("player 1").withRemoteId(1).build();
-let player2 = new PlayerBuilder("player 2").withRemoteId(2).build();
-let player3 = new PlayerBuilder("player 3").withRemoteId(3).build();
-let player4 = new PlayerBuilder("player 4").withRemoteId(4).build();
+let player1 = new PlayerBuilder("player 1").withId("1").build();
+let player2 = new PlayerBuilder("player 2").withId("2").build();
+let player3 = new PlayerBuilder("player 3").withId("3").build();
+let player4 = new PlayerBuilder("player 4").withId("4").build();
 
 beforeEach(() => {
   websocketMock.mockReset();

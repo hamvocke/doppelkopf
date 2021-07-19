@@ -73,7 +73,7 @@ describe("Multiplayer Handler", () => {
           id: 42
         },
         player: {
-          remoteId: player.remoteId,
+          id: player.id,
           name: player.name
         }
       };
@@ -103,7 +103,7 @@ describe("Multiplayer Handler", () => {
       expect(joinedCallback).toHaveBeenCalled();
       expect(errorCallback).not.toHaveBeenCalled();
       let receivedPlayers = joinedCallback.mock.calls[0][0];
-      expect(receivedPlayers[0].remoteId).toBe(1);
+      expect(receivedPlayers[0].id).toBe(1);
       expect(receivedPlayers[0].name).toBe("some player");
       expect(receivedPlayers[0].isHuman).toBe(true);
       expect(receivedPlayers[0].isMe).toBe(false);

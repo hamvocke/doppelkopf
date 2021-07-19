@@ -1,13 +1,14 @@
 import { Player } from "@/models/player";
 import { PartyName } from "@/models/party";
 import { Extra } from "@/models/extras";
+import { v4 as uuidv4 } from "uuid";
 
 export class PlayerBuilder {
   name: string;
   points: number = 0;
   extras: Extra[] = [];
   party: string = "re";
-  remoteId: number = 0;
+  id: string = uuidv4();
 
   constructor(name: string) {
     this.name = name;
@@ -28,8 +29,8 @@ export class PlayerBuilder {
     return this;
   }
 
-  withRemoteId(id: number): PlayerBuilder {
-    this.remoteId = id;
+  withId(id: string): PlayerBuilder {
+    this.id = id;
     return this;
   }
 
@@ -39,7 +40,7 @@ export class PlayerBuilder {
     player.isKontra = () => this.party !== PartyName.Re;
     player.points = () => this.points;
     player.trickStack.extras = () => this.extras;
-    player.remoteId = this.remoteId;
+    player.id = this.id;
     return player;
   }
 }

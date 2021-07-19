@@ -20,7 +20,6 @@ const notifier = new Notifier();
 // TODO: break circular dependency between player & game, make game non-null
 export class Player {
   id: string = uuidv4();
-  remoteId?: number;
   name: string;
   hand: Hand;
   trickStack: TrickStack = new TrickStack();

@@ -37,14 +37,10 @@ export class WaitingRoom {
 
   handleJoined(players: Player[]) {
     players.forEach(p => {
-      if (!p.remoteId) {
-        return;
-      }
-
-      const known = this.players.map((p: Player) => p.remoteId);
+      const known = this.players.map((p: Player) => p.id);
 
       // TODO: try to reconnect players to their previously known position
-      if (known.includes(p.remoteId)) {
+      if (known.includes(p.id)) {
         return;
       }
 
@@ -69,12 +65,12 @@ export class WaitingRoom {
   }
 
   handleLeft(players: Player[]) {
-    const known = this.players.map((p: Player) => p.remoteId);
-    const remaining = players.map((p: Player) => p.remoteId);
+    const known = this.players.map((p: Player) => p.id);
+    const remaining = players.map((p: Player) => p.id);
     const left = known.find(id => !remaining.includes(id));
-    this.players = this.players.filter(p => p.remoteId !== left);
+    this.players = this.players.filter(p => p.id !== left);
 
-    if (this.owner?.remoteId === left) {
+    if (this.owner?.id === left) {
       this.owner = this.players[0];
     }
   }

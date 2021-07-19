@@ -39,7 +39,7 @@ export class MultiplayerHandler {
         id: gameId
       },
       player: {
-        remoteId: player.remoteId,
+        id: player.id,
         name: player.name
       }
     };
@@ -85,7 +85,7 @@ export type CreateResponse = {
 function mapToPlayers(response: CreateResponse) {
   return response.game.players.map((p: any) => {
     const player = new Player(p.name, true, false);
-    player.remoteId = p.id;
+    player.id = p.id;
     return player;
   });
 }
