@@ -1,4 +1,5 @@
-import { includes, uniqueId } from "lodash-es";
+import { includes } from "lodash-es";
+import { v4 as uuidv4 } from "uuid";
 import { Hand } from "@/models/hand";
 import { TrickStack } from "@/models/trickStack";
 import { Behavior, RuleBasedBehaviour } from "@/models/behaviors";
@@ -18,8 +19,7 @@ const notifier = new Notifier();
 
 // TODO: break circular dependency between player & game, make game non-null
 export class Player {
-  // FIXME: id and remote id need to be replaced with a single GUID. server can track its own internal ID for ease of access
-  id: string;
+  id: string = uuidv4();
   remoteId?: number;
   name: string;
   hand: Hand;
@@ -42,7 +42,6 @@ export class Player {
     behaviour = new RuleBasedBehaviour(),
     memory = new PerfectMemory()
   ) {
-    this.id = uniqueId("player_");
     this.name = name;
     this.hand = new Hand();
     this.isHuman = isHuman;
