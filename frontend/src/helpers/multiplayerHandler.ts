@@ -57,7 +57,6 @@ export class MultiplayerHandler {
   }
 
   handleLeft(d: string) {
-    console.log("multiplayer received left event");
     let data: CreateResponse = JSON.parse(d);
     this.notifyAll(Event.left, mapToPlayers(data));
   }

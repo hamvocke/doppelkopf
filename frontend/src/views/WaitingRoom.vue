@@ -12,7 +12,7 @@
 
     <div v-else class="wrapper">
       <h3>
-        {{ $t("hey-player", { name: currentPlayerName }) }}
+        {{ $t("hey-player", { name: myName }) }}
       </h3>
       <p>
         {{ $t("here-is-your-invite-link") }}
@@ -74,15 +74,6 @@ export default class WaitingRoom extends Vue {
 
   waitingRoom: WaitingRoomModel = new WaitingRoomModel(parseInt(this.gameName));
 
-  get currentPlayerName() {
-    if (this.waitingRoom.players?.length === 0) {
-      return null;
-    }
-
-    const loadedPlayer = storage.loadPlayer();
-    return loadedPlayer.name;
-  }
-
   get statusMessage() {
     return this.waitingRoom.isReady ? "ready-status" : "waiting-status";
   }
@@ -91,8 +82,13 @@ export default class WaitingRoom extends Vue {
     return `${Config.base_url}/#/wait/${this.gameName}`;
   }
 
+  get myName() {
+    return this.waitingRoom.me?.name;
+  }
+
   created() {
-    this.waitingRoom.join(storage.loadPlayer());
+    let p = storage.loadPlayer();
+    this.waitingRoom.join(p);
   }
 
   // TODO: start game

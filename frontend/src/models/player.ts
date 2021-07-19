@@ -18,6 +18,7 @@ const notifier = new Notifier();
 
 // TODO: break circular dependency between player & game, make game non-null
 export class Player {
+  // FIXME: id and remote id need to be replaced with a single GUID. server can track its own internal ID for ease of access
   id: string;
   remoteId?: number;
   name: string;
