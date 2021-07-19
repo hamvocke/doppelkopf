@@ -25,7 +25,6 @@ def on_connect():
 @socketio.on("join")
 def on_join(data):
     # TODO: validate data - use marshmallow?
-    # TODO: handle reconnect case
     game_id = data["game"]["id"]
     game = Game.query.get(game_id)
 
@@ -34,10 +33,9 @@ def on_join(data):
         return
 
     player = None
-    player_remote_id = data["player"].get("remoteId", None)
-    if player_remote_id is not None:
-        # reconnect!
-        player = Player.query.get(player_remote_id)
+    player_id = data["player"]["id"]
+    player = Player.query.get(player_id)
+    if player is not None:
         player.session_id = request.sid
     else:
         player = Player(name=data["player"]["name"], session_id=request.sid)

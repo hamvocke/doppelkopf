@@ -75,7 +75,7 @@ def test_should_reconnect_on_join(client, socket_client):
 
     socket_client.emit(
         "join",
-        {"game": {"id": game_id}, "player": {"remoteId": player_id, "name": "April"}},
+        {"game": {"id": game_id}, "player": {"id": player_id, "name": "April"}}
     )
 
     g = Game.query.get(game_id)
@@ -139,7 +139,6 @@ def _create_game(client) -> int:
 
 
 def _start_game(game_id):
-    # TODO use proper websocket event to start game once available
     g = Game.query.get(game_id)
     g.started_at = datetime.datetime.utcnow()
     db.session.add(g)
@@ -147,4 +146,4 @@ def _start_game(game_id):
 
 
 def _join_payload(game_id):
-    return {"game": {"id": game_id}, "player": {"name": "April"}}
+    return {"game": {"id": game_id}, "player": {"id": "some-id", "name": "April"}}
