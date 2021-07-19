@@ -18,22 +18,10 @@ def test_should_create_game(client):
     assert data["game"]["players"] == []
 
 
-def test_should_get_game(client):
-    game_id = start_game(client)
-
-    response = client.get(f"/api/game/{game_id}")
-    data = response.get_json()
-
-    assert response.status_code == 200
-    assert data["game"]["id"] == game_id
-    assert data["game"]["players"] == []
-
-
 def test_should_404_when_getting_unknown_game(client):
     game_id = 9999
 
     response = client.get(f"/api/game/{game_id}")
-    data = response.get_json()
 
     assert response.status_code == 404
 

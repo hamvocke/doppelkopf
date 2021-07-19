@@ -1,7 +1,7 @@
-from flask import Blueprint, jsonify, request, abort
+from flask import Blueprint, jsonify
 
 from .db import db
-from .game import Game, Player
+from .game import Game
 from .toggles import Toggle
 
 blueprint = Blueprint("api", __name__, url_prefix="/api")
@@ -19,12 +19,6 @@ def new_game():
     db.session.commit()
 
     return jsonify({"game": game.serialize()}), 201
-
-
-@blueprint.route("/game/<int:game_id>", methods=["GET"])
-def get_game(game_id: int):
-    game = Game.query.get_or_404(game_id)
-    return jsonify({"game": game.serialize()})
 
 
 @blueprint.route("/features", methods=["GET"])
