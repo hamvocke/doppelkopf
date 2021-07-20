@@ -1,5 +1,7 @@
 from .db import db
+from .db_helpers import GUID
 from datetime import datetime
+from uuid import UUID
 
 
 class Game(db.Model):
@@ -30,6 +32,7 @@ class Game(db.Model):
 
 class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    uuid: UUID = db.Column(GUID, nullable=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     name = db.Column(db.String(128), nullable=False, default="unknown")
     game_id = db.Column(db.Integer, db.ForeignKey("game.id"), nullable=False)
