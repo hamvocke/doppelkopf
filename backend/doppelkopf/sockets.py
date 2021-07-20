@@ -34,7 +34,7 @@ def on_join(data):
 
     player = None
     player_id = data["player"]["id"]
-    player = Player.query.get(player_id)
+    player = Player.query.filter_by(uuid=player_id).first()
     if player is not None:
         player.session_id = request.sid
     else:

@@ -2,6 +2,7 @@ from doppelkopf.db import db
 from doppelkopf.game import Game
 import json
 import datetime
+import uuid
 
 
 def test_should_emit_error_when_joining_unknown_game(socket_client):
@@ -71,7 +72,7 @@ def test_should_reconnect_on_join(client, socket_client):
     socket_client.emit("join", _join_payload(game_id))
     socket_client.disconnect()
     socket_client.connect()
-    player_id = Game.query.get(game_id).players[0].id
+    player_id = Game.query.get(game_id).players[0].uuid
 
     socket_client.emit(
         "join",
@@ -146,4 +147,4 @@ def _start_game(game_id):
 
 
 def _join_payload(game_id):
-    return {"game": {"id": game_id}, "player": {"id": "some-id", "name": "April"}}
+    return {"game": {"id": game_id}, "player": {"id": str(uuid.uuid4()), "name": "April"}}
