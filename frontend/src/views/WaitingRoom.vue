@@ -7,7 +7,7 @@
 
     <div v-else-if="waitingRoom.error" class="error">
       <cloud-off-icon size="32" class="icon" />
-      {{ $t(error) }}
+      {{ $t(waitingRoom.error) }}
     </div>
 
     <div v-else class="wrapper">
