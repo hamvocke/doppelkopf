@@ -17,6 +17,12 @@ export class WebsocketClient {
     }
 
     this.socket = io(this.baseUrl);
+
+    if (Config.debug) {
+      this.socket?.onAny((event, ...args) => {
+        console.log("[received ws event]", event, args);
+      });
+    }
   }
 
   emit(event: Event, payload?: object) {
