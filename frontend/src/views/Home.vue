@@ -57,7 +57,6 @@ import Notifications from "@/components/Notifications.vue";
 export default class Home extends Vue {
   showTutorial = false;
   enableMultiplayer = false;
-  multiplayerHandler = new MultiplayerHandler();
 
   created() {
     this.showTutorial = Features.get().enableTutorial;
@@ -70,7 +69,7 @@ export default class Home extends Vue {
     }
 
     try {
-      const response = await this.multiplayerHandler.register();
+      const response = await new MultiplayerHandler().register();
       router.push({
         name: "waiting-room",
         params: { gameName: response.game.id.toString() }
