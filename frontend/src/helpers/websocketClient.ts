@@ -33,7 +33,7 @@ export class WebsocketClient {
     this.socket?.emit(event, payload);
   }
 
-  on(event: Event, listener: Function) {
+  on(event: Event, listener: any) {
     this.socket?.on(event, listener);
   }
 }

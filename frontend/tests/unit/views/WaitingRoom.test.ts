@@ -7,18 +7,6 @@ config.mocks["$t"] = (msg: string) => msg;
 config.mocks["$tc"] = (msg: string) => msg;
 config.mocks["$i18n"] = { locale: "en" };
 
-const websocketSpy = {
-  connect: jest.fn(),
-  emit: jest.fn(),
-  on: jest.fn()
-};
-
-beforeEach(() => {
-  websocketSpy.connect.mockClear();
-  websocketSpy.emit.mockClear();
-  websocketSpy.on.mockClear();
-});
-
 describe("WaitingRoom.vue", () => {
   test("should render loading state", async () => {
     let waitingRoom = new WaitingRoomModel(1);
