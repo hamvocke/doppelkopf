@@ -11,6 +11,7 @@ export class MultiplayerHandler {
   listeners: { [eventName: string]: Function[] } = {};
 
   constructor() {
+    // TODO: move to own method to allow connecting explicitly
     this.socket.connect();
     this.socket.on(Event.joined, this.handleJoined.bind(this));
     this.socket.on(Event.left, this.handleLeft.bind(this));
