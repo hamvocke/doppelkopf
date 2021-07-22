@@ -23,7 +23,7 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DB_URI", "sqlite:////app/db/db.sqlite"
     )  # defined in docker-compose.yml
-    CORS_ALLOWED_ORIGINS = ["https://doppelkopf.ham.codes"]
+    CORS_ALLOWED_ORIGINS = ["https://doppelkopf.ham.codes", "https://doppelkopf.party"]
 
 
 class DevelopmentConfig(Config):
