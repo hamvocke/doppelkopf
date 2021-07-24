@@ -252,6 +252,37 @@ test("should clear trick stack when resetting player", () => {
   expect(player.trickStack).toEqual(new TrickStack());
 });
 
+test("should be able to play card directly, when it's your turn", async () => {
+  const trick = new Trick(game.players);
+  trick.add(queen.of(Suit.Clubs), player);
+  trick.add(queen.of(Suit.Spades), game.players[1]);
+  trick.add(queen.of(Suit.Hearts), game.players[2]);
+  trick.add(queen.of(Suit.Diamonds), game.players[3]);
+  game.currentRound.currentTrick = trick;
+  const tenOfClubs = ten.of(Suit.Clubs);
+  player.hand = new Hand([tenOfClubs]);
+
+  await player.play(tenOfClubs);
+
+  expect(game.currentRound.currentTrick).not.toEqual(trick);
+  expect(game.currentRound.currentTrick.playedCards.length).toEqual(1);
+});
+
+test("shouldn't be able to play card directly, when it's not your turn", async () => {
+  const trick = new Trick(game.players);
+  trick.add(queen.of(Suit.Clubs), player);
+  trick.add(ten.of(Suit.Hearts), game.players[1]);
+  trick.add(queen.of(Suit.Hearts), game.players[2]);
+  trick.add(queen.of(Suit.Diamonds), game.players[3]);
+  game.currentRound.currentTrick = trick;
+  const tenOfClubs = ten.of(Suit.Clubs);
+  player.hand = new Hand([tenOfClubs]);
+
+  await player.play(tenOfClubs);
+
+  expect(notifier.notifications[0].text).toBe("not-your-turn");
+});
+
 test("should clear announcements when resetting player", () => {
   player.announce(player.isRe() ? Announcement.Re : Announcement.Kontra);
 
