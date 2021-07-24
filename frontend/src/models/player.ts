@@ -86,30 +86,39 @@ export class Player {
     }
   }
 
-  play(card: Card) {
+  async play(card: Card) {
+    if (!card || !this.hand.find(card)) {
+      throw new Error("can't play a card that's not on the player's hand");
+    }
+    if (
+      this.game?.currentTrick.isFinished &&
+      this.game?.currentTrick.winner() === this
+    ) {
+      await this.game?.currentRound.finishTrick();
+      this.playAction(card);
+      return;
+    }
+    if (!this.canPlay(card)) {
+      notifier.info("cant-play-card");
+      return;
+    }
     if (this.game?.currentRound.waitingForPlayer() !== this) {
       notifier.info("not-your-turn");
       return;
     }
 
-    let cardToBePlayed = this.hand.find(card);
-    if (!card || !cardToBePlayed) {
-      throw new Error("can't play a card that's not on the player's hand");
-    }
+    this.playAction(card);
+  }
 
-    if (!this.canPlay(card)) {
-      notifier.info("cant-play-card");
-      return;
-    }
-
+  playAction(card: Card) {
     try {
-      this.game.currentTrick.add(cardToBePlayed, this);
-      this.hand.remove(cardToBePlayed);
+      this.game?.currentTrick.add(card, this);
+      this.hand.remove(card);
 
       if (card.compareTo(queen.of(Suit.Clubs)) === 0)
-        this.game.affinityEvent(AffinityEvent.QueenOfClubs, this);
+        this.game?.affinityEvent(AffinityEvent.QueenOfClubs, this);
 
-      this.game.currentRound.nextPlayer();
+      this.game?.currentRound.nextPlayer();
 
       if (options.autoplay === true) {
         // timeout to accommodate for animation duration when playing a card
