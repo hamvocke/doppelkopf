@@ -73,6 +73,7 @@ describe("Rule Based Card Behavior", () => {
   const player2 = new Player("p2");
   const player3 = new Player("p3");
   const player4 = new Player("p4");
+  const players = [player1, player2, player3, player4]
   const hand = new Hand([
     ten.of(Suit.Hearts).first(),
     jack.of(Suit.Diamonds).first(),
@@ -95,7 +96,7 @@ describe("Rule Based Card Behavior", () => {
       player4.memory.clearMemory();
     });
     test("should play lowest value nonTrump when not starting", () => {
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       trick.add(ace.of(Suit.Clubs).second(), player1);
       trick.add(ten.of(Suit.Clubs).second(), player2);
       trick.add(king.of(Suit.Clubs).second(), player3);
@@ -104,7 +105,7 @@ describe("Rule Based Card Behavior", () => {
     });
 
     test("should play ace of suit, when first time served and lower card was played", () => {
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       trick.add(ten.of(Suit.Clubs).second(), player1);
       const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
       expect(cardToPlay).toEqual(ace.of(Suit.Clubs).first());
@@ -112,21 +113,21 @@ describe("Rule Based Card Behavior", () => {
 
     test("should play lowest of suit, when first time served and not able to go higher", () => {
       let hand = new Hand([king.of(Suit.Clubs).first(), ten.of(Suit.Clubs)]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       trick.add(ten.of(Suit.Clubs).second(), player1);
       const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
       expect(cardToPlay).toEqual(king.of(Suit.Clubs).first());
     });
 
     test("should play ace, when mustn't serve", () => {
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       trick.add(ace.of(Suit.Hearts).second(), player1);
       const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
       expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
     });
 
     test("should play higher trump when mustn't serve and somebody else is trumping", () => {
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       trick.add(ace.of(Suit.Hearts).second(), player1);
       trick.add(ten.of(Suit.Diamonds).second(), player2);
       trick.add(ace.of(Suit.Diamonds).second(), player3);
@@ -140,14 +141,14 @@ describe("Rule Based Card Behavior", () => {
         jack.of(Suit.Diamonds).first(),
         ten.of(Suit.Hearts)
       ]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       trick.add(ace.of(Suit.Hearts).second(), player1);
       const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
       expect(cardToPlay).toEqual(jack.of(Suit.Diamonds).first());
     });
 
     test("should play lowest card, when can't win because too many cards of suit in own hand", () => {
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       trick.add(king.of(Suit.Spades).second(), player1);
       const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
       expect(cardToPlay).toEqual(king.of(Suit.Spades).first());
@@ -155,7 +156,7 @@ describe("Rule Based Card Behavior", () => {
 
     test("should keep playing a card, if can't serve or trump a suit", () => {
       let hand = new Hand([king.of(Suit.Spades), ten.of(Suit.Spades)]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       trick.add(ace.of(Suit.Hearts).second(), player1);
       const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
       expect(cardToPlay).toEqual(expect.any(Card));
@@ -163,7 +164,7 @@ describe("Rule Based Card Behavior", () => {
 
     test("should keep playing a card, if can't win a trumped suit", () => {
       let hand = new Hand([jack.of(Suit.Spades), ten.of(Suit.Spades)]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       trick.add(ace.of(Suit.Hearts).second(), player1);
       trick.add(jack.of(Suit.Spades).second(), player2);
       const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
@@ -178,7 +179,7 @@ describe("Rule Based Card Behavior", () => {
         ace.of(Suit.Hearts),
         ace.of(Suit.Diamonds)
       ]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
       expect(cardToPlay).toEqual(ace.of(Suit.Spades).first());
     });
@@ -189,7 +190,7 @@ describe("Rule Based Card Behavior", () => {
         ace.of(Suit.Spades).second(),
         ten.of(Suit.Spades)
       ]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       trick.add(king.of(Suit.Spades), player3);
       trick.add(king.of(Suit.Spades), player2);
       const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
@@ -203,7 +204,7 @@ describe("Rule Based Card Behavior", () => {
         ten.of(Suit.Spades).second(),
         king.of(Suit.Spades).second()
       ]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       trick.add(king.of(Suit.Spades).first(), player3);
       trick.add(ten.of(Suit.Spades).first(), player2);
       const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
@@ -217,7 +218,7 @@ describe("Rule Based Card Behavior", () => {
         ten.of(Suit.Spades).second(),
         king.of(Suit.Spades).second()
       ]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       trick.add(king.of(Suit.Clubs).first(), player3);
       trick.add(ace.of(Suit.Clubs).first(), player2);
       const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
@@ -236,7 +237,7 @@ describe("Rule Based Card Behavior", () => {
 
     test("should keep playing a card, if can't play same suit", () => {
       let hand = new Hand([jack.of(Suit.Spades), ten.of(Suit.Diamonds)]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       const aceOfClubs = ace.of(Suit.Clubs).second();
       const jackOfDiamonds = jack.of(Suit.Diamonds).second();
       trick.add(aceOfClubs, player1);
@@ -247,7 +248,7 @@ describe("Rule Based Card Behavior", () => {
 
     test("should play low card, if must serve suit", () => {
       let hand = new Hand([ace.of(Suit.Clubs), king.of(Suit.Clubs).first()]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       const aceOfClubs = ace.of(Suit.Clubs).second();
       const jackOfDiamonds = jack.of(Suit.Diamonds).second();
       trick.add(aceOfClubs, player1);
@@ -264,7 +265,7 @@ describe("Rule Based Card Behavior", () => {
         ace.of(Suit.Hearts).first(),
         ace.of(Suit.Diamonds)
       ]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       player1.memory.memorize(new PlayedCard(ten.of(Suit.Spades), player2));
       const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
       expect(cardToPlay).toEqual(ace.of(Suit.Hearts).first());
@@ -279,7 +280,7 @@ describe("Rule Based Card Behavior", () => {
         queen.of(Suit.Diamonds),
         king.of(Suit.Spades)
       ]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       player1.memory.memorize(new PlayedCard(king.of(Suit.Hearts), player2));
       const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
       expect(cardToPlay).toEqual(expect.any(Card));
@@ -291,7 +292,7 @@ describe("Rule Based Card Behavior", () => {
         jack.of(Suit.Diamonds).first(),
         queen.of(Suit.Diamonds)
       ]);
-      const trick = new Trick([player1, player2, player3, player4]);
+      const trick = new Trick(players);
       player1.memory.memorize(new PlayedCard(king.of(Suit.Spades), player2));
       trick.add(ten.of(Suit.Spades), player4);
       trick.add(king.of(Suit.Spades), player3);
