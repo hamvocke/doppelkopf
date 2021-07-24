@@ -19,7 +19,7 @@ jest.useFakeTimers();
 beforeEach(() => {
   game = Game.singlePlayer();
   player = game.players[0];
-  player.game!.currentRound.waitingForPlayer = () => game.players[0];
+  game!.currentRound.waitingForPlayer = () => player;
   options.autoplay = false;
   jest.runAllTimers();
 });
@@ -120,11 +120,11 @@ test("playing a card adds it to the current trick", () => {
 test("player cannot play card that is not on their hand", () => {
   player.hand = new Hand([king.of(Suit.Diamonds)]);
 
-  function invalidMove() {
-    player.play(queen.of(Suit.Diamonds));
+  async function invalidMove() {
+    await player.play(queen.of(Suit.Diamonds));
   }
 
-  expect(invalidMove).toThrowError(
+  expect(invalidMove()).rejects.toThrowError(
     "can't play a card that's not on the player's hand"
   );
 });
@@ -132,11 +132,11 @@ test("player cannot play card that is not on their hand", () => {
 test("player cannot play undefined card", () => {
   player.hand = new Hand([king.of(Suit.Diamonds)]);
 
-  function invalidMove() {
-    player.play(king.of(Suit.Clubs));
+  async function invalidMove() {
+    await player.play(king.of(Suit.Clubs));
   }
 
-  expect(invalidMove).toThrowError(
+  expect(invalidMove()).rejects.toThrowError(
     "can't play a card that's not on the player's hand"
   );
 });
