@@ -84,7 +84,8 @@ export class RuleBasedBehaviour implements Behavior {
     } else {
       if (memory.nonTrumpSuitPlayedBefore(baseCard.suit, trick.id)) {
         return hand.highest().beats(trick.highestCard().card) &&
-          memory.pointsLeftInSuit(baseCard.suit) + trick.points() >= 10
+          // ToDo this check works but needs tuning
+          memory.pointsLeftInSuit(baseCard.suit) + trick.points() >= 14
           ? hand.trumps()[0]
           : this.playLowValueCard(hand);
       } else {
