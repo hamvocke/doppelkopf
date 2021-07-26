@@ -32,7 +32,7 @@ export class WebsocketClient {
 
     this.on(
       Event.session,
-      (sessionId: string) => (this.auth.sessionId = sessionId)
+      (data: any) => (this.auth.sessionId = JSON.parse(data).sessionId)
     );
   }
 

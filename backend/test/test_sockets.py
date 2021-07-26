@@ -67,13 +67,15 @@ def test_should_not_let_more_than_4_players_join(client, socket_client):
 
 
 def test_should_reconnect_on_join(client, socket_client):
+    auth = {"sessionId": str(uuid.uuid4())}
     game_id = _create_game(client)
     _start_game(game_id)
+    socket_client.connect(auth=auth)
     socket_client.emit("join", _join_payload(game_id))
     socket_client.disconnect()
-    socket_client.connect()
     player_id = Game.query.get(game_id).players[0].uuid
 
+    socket_client.connect(auth=auth)
     socket_client.emit(
         "join",
         {"game": {"id": game_id}, "player": {"id": player_id, "name": "April"}}
@@ -85,6 +87,7 @@ def test_should_reconnect_on_join(client, socket_client):
 
 def test_should_send_left_event_on_disconnect(client, socket_client):
     game_id = _create_game(client)
+    socket_client.connect()
     socket_client.emit("join", _join_payload(game_id))
     socket_client.emit("join", _join_payload(game_id))
 

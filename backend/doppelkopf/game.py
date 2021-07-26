@@ -26,7 +26,6 @@ class Game(db.Model):
     def join(self, player):
         if len(self.players) == 4:
             raise Exception("Can't join game. Game has 4 players already.")
-        # todo check if player is already there, update if so
         self.players.append(player)
 
 
@@ -36,7 +35,7 @@ class Player(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     name = db.Column(db.String(128), nullable=False, default="unknown")
     game_id = db.Column(db.Integer, db.ForeignKey("game.id"), nullable=False)
-    session_id = db.Column(db.String(128), nullable=True)
+    session_id: UUID = db.Column(GUID, nullable=True)
     disconnected_at = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self):
