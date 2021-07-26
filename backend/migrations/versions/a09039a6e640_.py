@@ -1,16 +1,17 @@
-"""initial migration
+"""empty message
 
-Revision ID: c65130685be3
-Revises: 
-Create Date: 2021-05-28 20:08:36.557652
+Revision ID: a09039a6e640
+Revises:
+Create Date: 2021-07-26 20:18:10.628964
 
 """
 from alembic import op
 import sqlalchemy as sa
+from doppelkopf.db_helpers import GUID
 
 
 # revision identifiers, used by Alembic.
-revision = 'c65130685be3'
+revision = 'a09039a6e640'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,7 +40,6 @@ def upgrade():
     sa.Column('enabled', sa.Boolean(), nullable=False),
     sa.Column('last_changed_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('name'),
     sa.UniqueConstraint('name')
     )
     op.create_table('user',
@@ -48,15 +48,15 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('password_hash', sa.LargeBinary(length=60), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('username'),
     sa.UniqueConstraint('username')
     )
     op.create_table('player',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('uuid', GUID(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('name', sa.String(length=128), nullable=False),
     sa.Column('game_id', sa.Integer(), nullable=False),
-    sa.Column('session_id', sa.String(length=128), nullable=True),
+    sa.Column('session_id', GUID(), nullable=True),
     sa.Column('disconnected_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['game_id'], ['game.id'], ),
     sa.PrimaryKeyConstraint('id')
