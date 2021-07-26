@@ -12,7 +12,7 @@ def test_should_emit_error_when_joining_unknown_game(socket_client):
 
     received_events = socket_client.get_received()
     assert len(received_events) == 2
-    assert received_events[0]["name"] == "connected"
+    assert received_events[0]["name"] == "session"
     assert received_events[1]["name"] == "error"
     assert received_events[1]["args"][0] == "Game with id 42 not found"
 
@@ -29,7 +29,7 @@ def test_should_emit_joined_event_when_joining_successfully(client, socket_clien
     }
     received_events = socket_client.get_received()
     assert len(received_events) == 2
-    assert received_events[0]["name"] == "connected"
+    assert received_events[0]["name"] == "session"
     assert received_events[1]["name"] == "joined"
     assert received_events[1]["args"][0] == json.dumps(expected_payload)
 
@@ -91,7 +91,7 @@ def test_should_send_left_event_on_disconnect(client, socket_client):
     socket_client.emit("disconnect")
 
     received_events = socket_client.get_received()
-    assert received_events[0]["name"] == "connected"
+    assert received_events[0]["name"] == "session"
     assert received_events[1]["name"] == "joined"
     assert received_events[2]["name"] == "joined"
     assert received_events[3]["name"] == "left"

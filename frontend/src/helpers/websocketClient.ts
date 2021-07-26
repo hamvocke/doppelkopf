@@ -1,3 +1,4 @@
+import { loadSessionId } from "@/helpers/storage";
 import { Config } from "@/models/config";
 import { io, Socket } from "socket.io-client";
 
@@ -10,19 +11,29 @@ import { io, Socket } from "socket.io-client";
 export class WebsocketClient {
   baseUrl = Config.backend_ws_base_url;
   socket?: Socket;
+  auth: { sessionId?: string } = {};
 
   connect() {
     if (Config.testing) {
       return;
     }
 
-    this.socket = io(this.baseUrl);
+    this.auth = {
+      sessionId: loadSessionId() ?? undefined
+    };
+
+    this.socket = io(this.baseUrl, { auth: this.auth });
 
     if (Config.debug) {
       this.socket?.onAny((event, ...args) => {
         console.log("[received ws event]", event, args);
       });
     }
+
+    this.on(
+      Event.session,
+      (sessionId: string) => (this.auth.sessionId = sessionId)
+    );
   }
 
   emit(event: Event, payload?: object) {
@@ -39,6 +50,7 @@ export class WebsocketClient {
 }
 
 export enum Event {
+  session = "session",
   join = "join",
   joined = "joined",
   left = "left",

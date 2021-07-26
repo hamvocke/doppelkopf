@@ -4,6 +4,7 @@ from .game import Game, Player
 from .db import db
 import json
 import datetime
+import uuid
 
 socketio = SocketIO()
 
@@ -18,8 +19,14 @@ def init_app(app):
 
 
 @socketio.on("connect")
-def on_connect():
-    emit("connected", broadcast=True)
+def on_connect(auth):
+    print(auth)
+    if auth is None:
+        session_id = uuid.uuid4()
+    else:
+        session_id = auth.get("sessionId", uuid.uuid4())
+
+    emit("session", json.dumps({"sessionId": str(session_id)}), broadcast=True)
 
 
 @socketio.on("join")

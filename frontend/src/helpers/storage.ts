@@ -1,6 +1,7 @@
 import { Player } from "@/models/player";
 
 const playerKey = "localPlayer";
+const sessionIdKey = "sessionId";
 
 export function savePlayer(player: Player) {
   const playerToSave: PersistedPlayer = {
@@ -27,6 +28,18 @@ export function loadPlayer() {
 
 export function dropPlayer() {
   localStorage.removeItem(playerKey);
+}
+
+export function saveSessionId(sessionId: string) {
+  localStorage.setItem(sessionIdKey, sessionId);
+}
+
+export function loadSessionId() {
+  return localStorage.getItem(sessionIdKey);
+}
+
+export function dropSessionId() {
+  localStorage.removeItem(sessionIdKey);
 }
 
 type PersistedPlayer = {
