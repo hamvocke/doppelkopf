@@ -4,6 +4,7 @@ import { chance } from "@/models/random";
 import { Card, Suit, Rank } from "@/models/card";
 import { Hand } from "@/models/hand";
 import { Announcement } from "./announcements";
+import { Trick } from "./trick";
 
 export interface Behavior {
   cardToPlay(hand: Hand, trick: any, memory: any): Card | undefined;
@@ -82,6 +83,9 @@ export class RuleBasedBehaviour implements Behavior {
     if (hand.hasNonTrumps(baseCard.suit)) {
       return this.serveNonTrump(hand, trick, memory);
     } else {
+      if (trick.cards().length == 3) {
+        return this.playPosition(hand, trick);
+      }
       if (memory.nonTrumpSuitPlayedBefore(baseCard.suit, trick.id)) {
         return hand.highest().beats(trick.highestCard().card) &&
           // ToDo this check works but needs tuning
@@ -105,6 +109,13 @@ export class RuleBasedBehaviour implements Behavior {
     } else {
       return sample(playableCards(hand.cards));
     }
+  }
+
+  playPosition(hand: Hand, trick: Trick): Card | undefined {
+    let winningTrump = this.findMostValuableWinningTrump(hand, trick);
+    return trick.points() >= 14 && winningTrump
+      ? winningTrump
+      : this.playLowValueCard(hand);
   }
 
   serveNonTrump(hand: Hand, trick: any, memory: any) {
