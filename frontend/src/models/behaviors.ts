@@ -7,7 +7,7 @@ import { Announcement } from "./announcements";
 import { Trick } from "./trick";
 
 export interface Behavior {
-  cardToPlay(hand: Hand, trick: any, memory: any): Card | undefined;
+  cardToPlay(hand: Hand, trick: any, memory: any): Card;
   announcementToMake(
     possibleAnnouncements: Set<Announcement>
   ): Announcement | null;
@@ -24,7 +24,7 @@ export class HighestCardBehavior implements Behavior {
 }
 export class RandomCardBehavior implements Behavior {
   cardToPlay(hand: Hand, trick: any, memory: any) {
-    return sample(playableCards(hand.cards, trick.baseCard()));
+    return sample(playableCards(hand.cards, trick.baseCard()))!;
   }
 
   announcementToMake(possibleAnnouncements: Set<Announcement>) {
@@ -54,7 +54,7 @@ export class RuleBasedBehaviour implements Behavior {
     return null;
   }
 
-  cardToPlay(hand: Hand, trick: any, memory: any) {
+  cardToPlay(hand: Hand, trick: any, memory: any): Card {
     let baseCard = trick.baseCard();
     if (!baseCard) {
       /** It's our turn. Decide how to deal with cards */
@@ -65,20 +65,20 @@ export class RuleBasedBehaviour implements Behavior {
     }
     // ToDo how to play if not starting or mustn't serve nonTrump
     // i'm thinking of something working with expectation value
-    return sample(playableCards(hand.cards, baseCard));
+    return sample(playableCards(hand.cards, baseCard))!;
   }
 
-  startingRule(hand: Hand, memory: any) {
+  startingRule(hand: Hand, memory: any): Card {
     for (const suit of [Suit.Clubs, Suit.Spades, Suit.Hearts]) {
       if (hand.hasBlankAce(suit) && !memory.nonTrumpSuitPlayedBefore(suit)) {
         return hand.nonTrumps(suit)[0];
       }
     }
     // ToDo check if we know with whom we play and if we want to play a strategy
-    return sample(playableCards(hand.cards));
+    return sample(playableCards(hand.cards))!;
   }
 
-  nonTrumpRule(hand: Hand, trick: any, memory: any) {
+  nonTrumpRule(hand: Hand, trick: any, memory: any): Card {
     let baseCard = trick.baseCard();
     if (hand.hasNonTrumps(baseCard.suit)) {
       return this.serveNonTrump(hand, trick, memory);
@@ -99,26 +99,26 @@ export class RuleBasedBehaviour implements Behavior {
     }
   }
 
-  playLowValueCard(hand: Hand) {
+  playLowValueCard(hand: Hand): Card {
     if (hand.lowValues().length > 0) {
       let nonTrumpLows = new Hand(hand.nonTrumps()).lowValues();
       return nonTrumpLows.length > 0
-        ? sample(playableCards(nonTrumpLows))
+        ? sample(playableCards(nonTrumpLows))!
         : new Hand(hand.trumps()).lowValues().splice(-1)[0];
       //  : "brr";
     } else {
-      return sample(playableCards(hand.cards));
+      return sample(playableCards(hand.cards))!;
     }
   }
 
-  playPosition(hand: Hand, trick: Trick): Card | undefined {
+  playPosition(hand: Hand, trick: Trick): Card {
     let winningTrump = this.findMostValuableWinningTrump(hand, trick);
     return trick.points() >= 14 && winningTrump
       ? winningTrump
       : this.playLowValueCard(hand);
   }
 
-  serveNonTrump(hand: Hand, trick: any, memory: any) {
+  serveNonTrump(hand: Hand, trick: any, memory: any): Card {
     let nonTrumpCards = hand.nonTrumps(trick.baseCard().suit);
     let highest = nonTrumpCards[0];
     let lowest = nonTrumpCards.slice(-1)[0];
