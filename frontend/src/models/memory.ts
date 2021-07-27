@@ -7,7 +7,7 @@ export interface Memory {
   playedCards: MemorizedCard[];
   clearMemory(): void;
   memorize(playedCard: PlayedCard, trickId?: string): void;
-  nonTrumpSuitPlayedBefore(suit: string): boolean;
+  nonTrumpSuitPlayedBefore(suit: string, trickid?: string): boolean;
   pointsLeftInSuit(suit: string): number;
 }
 
@@ -126,7 +126,7 @@ export class PriorityMemory {
       this.playedCards.push({ playedCard, trickId });
   }
 
-  nonTrumpSuitPlayedBefore(suit: Suit, trickId?: number) {
+  nonTrumpSuitPlayedBefore(suit: Suit, trickId?: string) {
     return (
       this.playedCards.filter(
         element =>
