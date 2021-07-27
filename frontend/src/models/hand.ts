@@ -65,7 +65,9 @@ export class Hand {
   }
 
   lowValues() {
-    return this.cards.filter(card => [values.J, values.K].includes(card.value));
+    return this.cards.filter(card =>
+      [values.J, values.K, values.Q].includes(card.value)
+    );
   }
 
   hasNonTrumps(suit: Suit) {
