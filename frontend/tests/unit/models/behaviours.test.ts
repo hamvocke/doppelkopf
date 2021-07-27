@@ -314,7 +314,7 @@ describe("Rule Based Card Behavior", () => {
         expect(cardToPlay).toEqual(ten.of(Suit.Hearts).second());
       });
 
-      test.skip("should play position, as lowest trump higher than current wins the trick", () => {
+      test("should play position, as lowest trump higher than current wins the trick", () => {
         let hand = new Hand([
           ace.of(Suit.Diamonds).first(),
           ten.of(Suit.Hearts).second(),
@@ -328,7 +328,7 @@ describe("Rule Based Card Behavior", () => {
         expect(cardToPlay).toEqual(jack.of(Suit.Spades).second());
       });
 
-      test.only("should always play lowest value trump, because trick is lost", () => {
+      test("should always play lowest value trump, because trick is lost", () => {
         let hand = new Hand([
           ten.of(Suit.Hearts).second(),
           queen.of(Suit.Spades).second()
