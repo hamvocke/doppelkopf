@@ -28,14 +28,13 @@ def find_session_id(sid):
 
 @socketio.on("connect")
 def on_connect(auth):
-    print(auth)
     if auth is None:
         session_id = uuid.uuid4()
     else:
         session_id = auth.get("sessionId")
 
-    session_lookup[request.sid] = session_id
-    emit("session", json.dumps({"sessionId": str(session_id)}), broadcast=True)
+    session_lookup.update({request.sid: session_id})
+    emit("session", json.dumps({"sessionId": str(session_id)}))
 
     player = Player.query.filter_by(session_id=session_id).first()
 
@@ -60,18 +59,23 @@ def on_join(data):
 
     player = None
     session_id = find_session_id(request.sid)
+    print(f"found session id {session_id} for sid {request.sid}")
     player = Player.query.filter_by(session_id=session_id).first()
-    if player is None:
-        player = Player(name=data["player"]["name"], session_id=session_id)
-        try:
-            game.join(player)
-            db.session.add(game)
-            db.session.commit()
-            join_room(str(game.id))
-            emit("joined", json.dumps({"game": game.serialize()}), to=str(game.id))
-        except Exception:
-            emit("error", "error-room-full")
-            return
+
+    if player is not None:
+        emit("error", "already joined")
+        return
+
+    player = Player(name=data["player"]["name"], session_id=session_id)
+    try:
+        game.join(player)
+        db.session.add(game)
+        db.session.commit()
+        join_room(str(game.id))
+        emit("joined", json.dumps({"game": game.serialize()}), to=str(game.id))
+    except Exception:
+        emit("error", "error-room-full")
+        return
 
 
 @socketio.on("disconnect")

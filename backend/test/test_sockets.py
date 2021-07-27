@@ -1,8 +1,14 @@
+from doppelkopf.sockets import socketio
 from doppelkopf.db import db
 from doppelkopf.game import Game
 import json
 import datetime
 import uuid
+
+
+def test_should_connect_unknown_player(socket_client):
+    received_events = socket_client.get_received()
+    assert received_events[0]["name"] == "session"
 
 
 def test_should_emit_error_when_joining_unknown_game(socket_client):
@@ -19,7 +25,6 @@ def test_should_emit_error_when_joining_unknown_game(socket_client):
 
 def test_should_emit_joined_event_when_joining_successfully(client, socket_client):
     game_id = _create_game(client)
-    # TODO: make payloads more consistent
     payload = _join_payload(game_id)
 
     socket_client.emit("join", payload)
@@ -45,50 +50,55 @@ def test_should_update_game_on_join(client, socket_client):
     assert g.players[0].session_id is not None
 
 
-def test_should_not_let_more_than_4_players_join(client, socket_client):
+def test_should_not_let_more_than_4_players_join(app, client, socket_client):
     game_id = _create_game(client)
 
-    socket_client.emit("join", _join_payload(game_id))
-    socket_client.emit("join", _join_payload(game_id))
-    socket_client.emit("join", _join_payload(game_id))
-    socket_client.emit("join", _join_payload(game_id))
+    client_2 = socketio.test_client(app, flask_test_client=client)
+    client_3 = socketio.test_client(app, flask_test_client=client)
+    client_4 = socketio.test_client(app, flask_test_client=client)
+    client_5 = socketio.test_client(app, flask_test_client=client)
 
     socket_client.emit("join", _join_payload(game_id))
+    client_2.emit("join", _join_payload(game_id))
+    client_3.emit("join", _join_payload(game_id))
+    client_4.emit("join", _join_payload(game_id))
 
-    received_events = socket_client.get_received()
+    client_5.emit("join", _join_payload(game_id))
+
+    received_events = client_5.get_received()
     g = Game.query.get(game_id)
-    assert len(received_events) == 6
-    assert received_events[5]["name"] == "error"
+    assert len(received_events) == 2
+    assert received_events[1]["name"] == "error"
     assert (
-        received_events[5]["args"][0]
+        received_events[1]["args"][0]
         == "error-room-full"
     )
     assert len(g.players) == 4
+    client_2.disconnect()
+    client_3.disconnect()
+    client_4.disconnect()
+    client_5.disconnect()
 
 
-def test_should_reconnect_on_join(client, socket_client):
-    auth = {"sessionId": str(uuid.uuid4())}
+def test_should_reconnect_when_game_has_started(client, socket_client):
     game_id = _create_game(client)
     _start_game(game_id)
-    socket_client.connect(auth=auth)
     socket_client.emit("join", _join_payload(game_id))
+    received_events = socket_client.get_received()
     socket_client.disconnect()
     player_id = Game.query.get(game_id).players[0].uuid
 
-    socket_client.connect(auth=auth)
-    socket_client.emit(
-        "join",
-        {"game": {"id": game_id}, "player": {"id": player_id, "name": "April"}}
-    )
+    session_id = json.loads(received_events[0]["args"][0])["sessionId"]
+    socket_client.connect(auth={"sessionId": session_id})
 
     g = Game.query.get(game_id)
     assert len(g.players) == 1
+    assert str(g.players[0].session_id) == session_id
+    assert g.players[0].uuid == player_id
 
 
 def test_should_send_left_event_on_disconnect(client, socket_client):
     game_id = _create_game(client)
-    socket_client.connect()
-    socket_client.emit("join", _join_payload(game_id))
     socket_client.emit("join", _join_payload(game_id))
 
     socket_client.emit("disconnect")
@@ -96,8 +106,7 @@ def test_should_send_left_event_on_disconnect(client, socket_client):
     received_events = socket_client.get_received()
     assert received_events[0]["name"] == "session"
     assert received_events[1]["name"] == "joined"
-    assert received_events[2]["name"] == "joined"
-    assert received_events[3]["name"] == "left"
+    assert received_events[2]["name"] == "left"
 
 
 def test_should_mark_player_as_disconnected_on_disconnect_if_game_is_started(
