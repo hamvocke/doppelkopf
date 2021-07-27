@@ -310,5 +310,5 @@ test("should detect low value cards in hand", () => {
   ];
   const hand = new Hand(cards);
 
-  expect(hand.lowValues().length).toBe(2);
+  expect(hand.lowValues().length).toBe(3);
 });
