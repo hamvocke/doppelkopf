@@ -5,16 +5,17 @@ import { Card, Suit, Rank } from "@/models/card";
 import { Hand } from "@/models/hand";
 import { Announcement } from "./announcements";
 import { Trick } from "./trick";
+import { Memory } from "./memory";
 
 export interface Behavior {
-  cardToPlay(hand: Hand, trick: any, memory: any): Card;
+  cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card;
   announcementToMake(
     possibleAnnouncements: Set<Announcement>
   ): Announcement | null;
 }
 
 export class HighestCardBehavior implements Behavior {
-  cardToPlay(hand: Hand, trick: any, memory: any) {
+  cardToPlay(hand: Hand, trick: Trick, memory?: Memory) {
     return playableCards(hand.cards, trick.baseCard())[0];
   }
 
@@ -23,7 +24,7 @@ export class HighestCardBehavior implements Behavior {
   }
 }
 export class RandomCardBehavior implements Behavior {
-  cardToPlay(hand: Hand, trick: any, memory: any) {
+  cardToPlay(hand: Hand, trick: Trick, memory?: Memory) {
     return sample(playableCards(hand.cards, trick.baseCard()))!;
   }
 
@@ -54,7 +55,7 @@ export class RuleBasedBehaviour implements Behavior {
     return null;
   }
 
-  cardToPlay(hand: Hand, trick: any, memory: any): Card {
+  cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card {
     let baseCard = trick.baseCard();
     if (!baseCard) {
       /** It's our turn. Decide how to deal with cards */
@@ -68,9 +69,9 @@ export class RuleBasedBehaviour implements Behavior {
     return sample(playableCards(hand.cards, baseCard))!;
   }
 
-  startingRule(hand: Hand, memory: any): Card {
+  startingRule(hand: Hand, memory?: Memory): Card {
     for (const suit of [Suit.Clubs, Suit.Spades, Suit.Hearts]) {
-      if (hand.hasBlankAce(suit) && !memory.nonTrumpSuitPlayedBefore(suit)) {
+      if (hand.hasBlankAce(suit) && !memory?.nonTrumpSuitPlayedBefore(suit)) {
         return hand.nonTrumps(suit)[0];
       }
     }
@@ -78,18 +79,18 @@ export class RuleBasedBehaviour implements Behavior {
     return sample(playableCards(hand.cards))!;
   }
 
-  nonTrumpRule(hand: Hand, trick: any, memory: any): Card {
+  nonTrumpRule(hand: Hand, trick: Trick, memory?: Memory): Card {
     let baseCard = trick.baseCard();
-    if (hand.hasNonTrumps(baseCard.suit)) {
+    if (hand.hasNonTrumps(baseCard!.suit)) {
       return this.serveNonTrump(hand, trick, memory);
     } else {
       if (trick.cards().length == 3) {
         return this.playPosition(hand, trick);
       }
-      if (memory.nonTrumpSuitPlayedBefore(baseCard.suit, trick.id)) {
-        return hand.highest().beats(trick.highestCard().card) &&
+      if (memory?.nonTrumpSuitPlayedBefore(baseCard!.suit, trick.id!)) {
+        return hand.highest().beats(trick.highestCard()!.card) &&
           // ToDo this check works but needs tuning
-          memory.pointsLeftInSuit(baseCard.suit) + trick.points() >= 14
+          memory.pointsLeftInSuit(baseCard!.suit) + trick.points() >= 14
           ? hand.trumps()[0]
           : this.playLowValueCard(hand);
       } else {
@@ -118,20 +119,20 @@ export class RuleBasedBehaviour implements Behavior {
       : this.playLowValueCard(hand);
   }
 
-  serveNonTrump(hand: Hand, trick: any, memory: any): Card {
-    let nonTrumpCards = hand.nonTrumps(trick.baseCard().suit);
+  serveNonTrump(hand: Hand, trick: Trick, memory?: Memory): Card {
+    let nonTrumpCards = hand.nonTrumps(trick.baseCard()!.suit);
     let highest = nonTrumpCards[0];
     let lowest = nonTrumpCards.slice(-1)[0];
 
-    if (memory.nonTrumpSuitPlayedBefore(trick.baseCard().suit, trick.id)) {
+    if (memory?.nonTrumpSuitPlayedBefore(trick.baseCard()!.suit, trick.id)) {
       return lowest;
     }
 
     if (
-      highest.beats(trick.highestCard().card) &&
+      highest.beats(trick.highestCard()!.card) &&
       highest.rank === Rank.Ace &&
       // TODO trick.expectedNumberOfCards needs to change as soon as 9er game is possible
-      nonTrumpCards.length < trick.expectedNumberOfCards
+      nonTrumpCards.length < trick.players.length
     ) {
       return highest;
     }
@@ -147,8 +148,8 @@ export class RuleBasedBehaviour implements Behavior {
    * @param {Trick} trick - The trick that should be trumped
    * @returns {Card} - The most valuable trump card or null if no winning trump can be found
    */
-  findMostValuableWinningTrump(hand: Hand, trick: any): Card | null {
-    const highestCard = trick.highestCard().card;
+  findMostValuableWinningTrump(hand: Hand, trick: Trick): Card | null {
+    const highestCard = trick.highestCard()!.card;
 
     const aceOfDiamonds = hand.findAny(Suit.Diamonds, Rank.Ace);
     const tenOfDiamonds = hand.findAny(Suit.Diamonds, Rank.Ten);
