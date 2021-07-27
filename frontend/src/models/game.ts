@@ -21,13 +21,13 @@ export class Game {
     this.players.map(p => (p.game = this));
     this.playerOpeningOrder = new RingQueue(this.players);
     this.deck = new Deck();
+    this.deal();
     this.scorecard = new Scorecard(this.players);
     this.currentRound = new Round(
       this.players,
       this.scorecard,
       this.playerOpeningOrder.current()
     );
-    this.deal();
     this.initializeAffinities();
     Telemetry.newGame();
   }
