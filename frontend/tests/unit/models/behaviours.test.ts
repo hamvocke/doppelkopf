@@ -321,11 +321,24 @@ describe("Rule Based Card Behavior", () => {
           jack.of(Suit.Spades).second()
         ]);
         const trick = new Trick(players);
-        trick.add(king.of(Suit.Clubs).first(), player3);
-        trick.add(ace.of(Suit.Clubs).first(), player2);
+        trick.add(king.of(Suit.Clubs).second(), player3);
+        trick.add(ace.of(Suit.Clubs).second(), player2);
         trick.add(jack.of(Suit.Hearts).first(), player4);
         const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
         expect(cardToPlay).toEqual(jack.of(Suit.Spades).second());
+      });
+
+      test.only("should always play lowest value trump, because trick is lost", () => {
+        let hand = new Hand([
+          ten.of(Suit.Hearts).second(),
+          queen.of(Suit.Spades).second()
+        ]);
+        const trick = new Trick(players);
+        trick.add(king.of(Suit.Clubs).first(), player3);
+        trick.add(ace.of(Suit.Clubs).first(), player2);
+        trick.add(ten.of(Suit.Hearts).first(), player4);
+        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+        expect(cardToPlay).toEqual(queen.of(Suit.Spades).second());
       });
     });
 
