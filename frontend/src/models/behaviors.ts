@@ -62,6 +62,9 @@ export class RuleBasedBehaviour implements Behavior {
 
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card {
     let baseCard = trick.baseCard();
+    if (trick.cards().length == 3) {
+      return this.playPosition(hand, trick);
+    }
     if (!baseCard) {
       /** It's our turn. Decide how to deal with cards */
       return this.startingRule(hand, memory);
@@ -89,9 +92,6 @@ export class RuleBasedBehaviour implements Behavior {
     if (hand.hasNonTrumps(baseCard!.suit)) {
       return this.serveNonTrump(hand, trick, memory);
     } else {
-      if (trick.cards().length == 3) {
-        return this.playPosition(hand, trick);
-      }
       if (memory?.nonTrumpSuitPlayedBefore(baseCard!.suit, trick.id!)) {
         return hand.highest().beats(trick.highestCard()!.card) &&
           // ToDo this check works but needs tuning
