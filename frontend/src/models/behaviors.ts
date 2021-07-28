@@ -117,10 +117,22 @@ export class RuleBasedBehaviour implements Behavior {
   }
 
   playPosition(hand: Hand, trick: Trick): Card {
-    let winningTrump = this.findMostValuableWinningTrump(hand, trick);
-    return trick.points() >= 14 && winningTrump
-      ? winningTrump
-      : this.playLowValueCard(hand);
+    if (this.isTeammateKnown(trick) && this.isCurrentWinnerTeammate(trick)) {
+      return this.greaseNonTrumpFirst(hand, trick);
+    }
+    let winningTrump = this.findMostValuableWinningTrump(
+      new Hand(playableCards(hand.cards, trick.baseCard()!)),
+      trick
+    );
+    if (winningTrump) {
+      if (trick.points() >= 14) {
+        return winningTrump;
+      }
+      if (trick.points() < 14 && winningTrump.value <= 3) {
+        return winningTrump;
+      }
+    }
+    return this.findLeastValuableLosingCard(hand, trick);
   }
 
   private greaseNonTrumpFirst(hand: Hand, trick: Trick): Card {
