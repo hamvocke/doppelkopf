@@ -17,14 +17,14 @@ jest.mock("@/models/random", () => ({
 }));
 
 describe("Highest Card Behavior", () => {
-  const behavior = new HighestCardBehavior();
+  const player = new Player("some player");
+  const behavior = new HighestCardBehavior(player.id);
   const hand = new Hand([
     ace.of(Suit.Hearts).first(),
     jack.of(Suit.Clubs).first(),
     queen.of(Suit.Spades).second(),
     king.of(Suit.Hearts).first()
   ]);
-  const player = new Player("some player");
   const trick = new Trick([player]);
   trick.add(ten.of(Suit.Diamonds), player);
 
@@ -35,14 +35,14 @@ describe("Highest Card Behavior", () => {
 });
 
 describe("Random Card Behavior", () => {
-  const behavior = new RandomCardBehavior();
+  const player = new Player("some player");
+  const behavior = new RandomCardBehavior(player.id);
   const hand = new Hand([
     ace.of(Suit.Hearts).first(),
     jack.of(Suit.Clubs).first(),
     queen.of(Suit.Spades).second(),
     king.of(Suit.Hearts).first()
   ]);
-  const player = new Player("some player");
   const trick = new Trick([player]);
   trick.add(ten.of(Suit.Diamonds), player);
 
@@ -67,13 +67,13 @@ describe("Random Card Behavior", () => {
 });
 
 describe("Rule Based Card Behavior", () => {
-  const behavior = new RuleBasedBehaviour();
   const no_memory = new PerfectMemory();
   const player1 = new Player("p1");
   const player2 = new Player("p2");
   const player3 = new Player("p3");
   const player4 = new Player("p4");
   const players = [player1, player2, player3, player4];
+  const behavior = new RuleBasedBehaviour(player1.id);
   const hand = new Hand([
     ten.of(Suit.Hearts).first(),
     jack.of(Suit.Diamonds).first(),

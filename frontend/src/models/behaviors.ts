@@ -8,6 +8,7 @@ import { Trick } from "./trick";
 import { Memory } from "./memory";
 
 export interface Behavior {
+  playerId: string;
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card;
   announcementToMake(
     possibleAnnouncements: Set<Announcement>
@@ -15,6 +16,7 @@ export interface Behavior {
 }
 
 export class HighestCardBehavior implements Behavior {
+  constructor(public playerId: string) {}
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory) {
     return playableCards(hand.cards, trick.baseCard())[0];
   }
@@ -24,6 +26,7 @@ export class HighestCardBehavior implements Behavior {
   }
 }
 export class RandomCardBehavior implements Behavior {
+  constructor(public playerId: string) {}
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory) {
     return sample(playableCards(hand.cards, trick.baseCard()))!;
   }
@@ -43,6 +46,7 @@ export class RandomCardBehavior implements Behavior {
 }
 
 export class RuleBasedBehaviour implements Behavior {
+  constructor(public playerId: string) {}
   announcementToMake(possibleAnnouncements: Set<Announcement>) {
     // ToDo announce by "goodies"
     /**

@@ -38,7 +38,7 @@ export class Player {
     isMe = false,
     tablePosition = TablePosition.Bottom,
     game?: Game,
-    behaviour = new RuleBasedBehaviour(),
+    behaviour = RuleBasedBehaviour,
     memory = new PerfectMemory()
   ) {
     this.name = name;
@@ -47,7 +47,7 @@ export class Player {
     this.isMe = isMe;
     this.tablePosition = tablePosition;
     this.game = game;
-    this.behavior = behaviour;
+    this.behavior = new behaviour(this.id);
     this.memory = memory;
     this.affinities = new Affinities(this);
 
@@ -71,7 +71,7 @@ export class Player {
   autoplay() {
     const cardToBePlayed = this.behavior.cardToPlay(
       this.hand,
-      this.game?.currentTrick,
+      this.game?.currentTrick!,
       this.memory
     );
     if (cardToBePlayed) {
