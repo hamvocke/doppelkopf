@@ -6,6 +6,7 @@ import { Hand } from "@/models/hand";
 import { Announcement } from "./announcements";
 import { Trick } from "./trick";
 import { Memory } from "./memory";
+import { Player } from "./player";
 
 export interface Behavior {
   playerId: string;
@@ -120,6 +121,24 @@ export class RuleBasedBehaviour implements Behavior {
     return trick.points() >= 14 && winningTrump
       ? winningTrump
       : this.playLowValueCard(hand);
+  }
+
+  private isTeammateKnown(trick: Trick): Boolean {
+    return (
+      this.getMyPlayer(trick).affinities.affinityTable.filter(
+        playerAffinity => playerAffinity.affinity === 1
+      ).length > 0
+    );
+  }
+
+  private isCurrentWinnerTeammate(trick: Trick): Boolean {
+    return (
+      trick.highestCard()?.player.isRe() === this.getMyPlayer(trick)?.isRe()
+    );
+  }
+
+  private getMyPlayer(trick: Trick): Player {
+    return trick.players.find(player => player.id === this.playerId)!;
   }
 
   serveNonTrump(hand: Hand, trick: Trick, memory?: Memory): Card {
