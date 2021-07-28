@@ -143,6 +143,7 @@ describe("player order", () => {
 
   test("should change active player on next move", () => {
     const playFirstCardBehavior = {
+      playerId: "p4",
       cardToPlay: (hand: Hand) => hand.cards[0],
       announcementToMake: () => null
     };
