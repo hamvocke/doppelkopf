@@ -96,23 +96,22 @@ export class RuleBasedBehaviour implements Behavior {
           // ToDo this check works but needs tuning
           memory.pointsLeftInSuit(baseCard!.suit) + trick.points() >= 14
           ? hand.trumps()[0]
-          : this.playLowValueCard(hand);
+          : this.playLowValueCard(hand, trick);
       } else {
         let usefulTrump = this.findMostValuableWinningTrump(hand, trick);
-        return usefulTrump ?? this.playLowValueCard(hand);
+        return usefulTrump ?? this.playLowValueCard(hand, trick);
       }
     }
   }
 
-  playLowValueCard(hand: Hand): Card {
-    if (hand.lowValues().length > 0) {
+  playLowValueCard(hand: Hand, trick: Trick): Card {
+    if (playableCards(hand.lowValues(), trick.baseCard()).length > 0) {
       let nonTrumpLows = new Hand(hand.nonTrumps()).lowValues();
       return nonTrumpLows.length > 0
-        ? sample(playableCards(nonTrumpLows))!
+        ? sample(playableCards(nonTrumpLows, trick.baseCard()))!
         : new Hand(hand.trumps()).lowValues().splice(-1)[0];
-      //  : "brr";
     } else {
-      return sample(playableCards(hand.cards))!;
+      return sample(playableCards(hand.cards, trick.baseCard()))!;
     }
   }
 
