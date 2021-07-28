@@ -167,4 +167,20 @@ export class RuleBasedBehaviour implements Behavior {
       trumpPreference.find(card => card && card.beats(highestCard)) ?? null
     );
   }
+
+  /**
+   * Find a card on a given hand that will add as less value as possible.
+   * Will prefer jacks before tens and aces.
+   * @param {Hand} hand - The hand to find the trump on
+   * @param {Trick} trick - The trick that should be trumped
+   * @returns {Card} - The least valuable card that can be found
+   */
+  findLeastValuableLosingCard(hand: Hand, trick: Trick): Card {
+    const cardPreference = [
+      ...hand.nonTrumps().filter(card => card.value === 4),
+      ...hand.lowValues().filter(card => card.value !== 3),
+      ...hand.cards.reverse()
+    ];
+    return playableCards(cardPreference, trick.baseCard())[0];
+  }
 }
