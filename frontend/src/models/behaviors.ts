@@ -1,7 +1,7 @@
 import { sample } from "lodash-es";
 import { playableCards } from "@/models/playableCardFinder";
 import { chance } from "@/models/random";
-import { Card, Suit, Rank } from "@/models/card";
+import { Card, Suit, Rank, byCardValuesDesc } from "@/models/card";
 import { Hand } from "@/models/hand";
 import { Announcement } from "./announcements";
 import { Trick } from "./trick";
@@ -121,6 +121,12 @@ export class RuleBasedBehaviour implements Behavior {
     return trick.points() >= 14 && winningTrump
       ? winningTrump
       : this.playLowValueCard(hand);
+  }
+
+  private greaseNonTrumpFirst(hand: Hand, trick: Trick): Card {
+    return playableCards(hand.cards, trick.baseCard()!).sort(
+      byCardValuesDesc
+    )[0];
   }
 
   private isTeammateKnown(trick: Trick): Boolean {

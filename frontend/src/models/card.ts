@@ -123,6 +123,10 @@ export function compare(oneCard: Card, anotherCard: Card) {
   return findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard);
 }
 
+export function byCardValuesDesc(oneCard: Card, anotherCard: Card) {
+  return anotherCard.value - oneCard.value;
+}
+
 export const ace = new Card(Rank.Ace, Suit.Clubs);
 export const ten = new Card(Rank.Ten, Suit.Clubs);
 export const king = new Card(Rank.King, Suit.Clubs);
