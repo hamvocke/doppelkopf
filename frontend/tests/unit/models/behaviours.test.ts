@@ -399,4 +399,63 @@ describe("Rule Based Card Behavior", () => {
       });
     });
   });
+
+  describe("Greasing your teammate", () => {
+    beforeEach(() => {
+      player1.memory.clearMemory();
+      player2.memory.clearMemory();
+      player3.memory.clearMemory();
+      player4.memory.clearMemory();
+      player1.isRe = () => true;
+      player2.isRe = () => true;
+      player3.isRe = () => false;
+      player4.isRe = () => false;
+      players.forEach(p => p.affinities.setPlayers(players));
+      players.forEach(p => p.affinities.declaresParty(player2));
+    });
+
+    describe("On Position - easy decisions", () => {
+      test("should grease with trump", () => {
+        let hand = new Hand([
+          ace.of(Suit.Diamonds).first(),
+          jack.of(Suit.Clubs).first(),
+          ten.of(Suit.Diamonds).first()
+        ]);
+        const trick = new Trick(players);
+        trick.add(queen.of(Suit.Hearts).first(), player2);
+        trick.add(jack.of(Suit.Clubs).first(), player3);
+        trick.add(jack.of(Suit.Hearts).first(), player4);
+        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+        expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
+      });
+
+      test("should grease with non-trump", () => {
+        let hand = new Hand([
+          ten.of(Suit.Diamonds).first(),
+          ace.of(Suit.Spades).first(),
+          king.of(Suit.Spades).first()
+        ]);
+        const trick = new Trick(players);
+        trick.add(ace.of(Suit.Spades).second(), player2);
+        trick.add(king.of(Suit.Spades).second(), player3);
+        trick.add(ten.of(Suit.Spades).second(), player4);
+        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+        expect(cardToPlay).toEqual(ace.of(Suit.Spades).first());
+      });
+
+      test("shouldn't win the trick, greasing teammate with non-trump", () => {
+        let hand = new Hand([
+          ten.of(Suit.Diamonds).first(),
+          ace.of(Suit.Clubs).first(),
+          king.of(Suit.Clubs).first()
+        ]);
+        const trick = new Trick(players);
+        trick.add(ace.of(Suit.Spades).second(), player2);
+        trick.add(king.of(Suit.Spades).second(), player3);
+        trick.add(ten.of(Suit.Spades).second(), player4);
+        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+        expect(cardToPlay).toEqual(ace.of(Suit.Clubs).first());
+      });
+    });
+  });
 });
