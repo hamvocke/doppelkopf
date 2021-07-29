@@ -5,7 +5,7 @@ import {
 } from "@/models/behaviors";
 import { Hand } from "@/models/hand";
 import { Announcement } from "@/models/announcements";
-import { ace, king, queen, jack, Suit, ten, Card } from "@/models/card";
+import { ace, king, queen, jack, Suit, ten, Card, byCardValuesDesc } from "@/models/card";
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PerfectMemory } from "@/models/memory";
@@ -455,6 +455,19 @@ describe("Rule Based Card Behavior", () => {
         trick.add(ten.of(Suit.Spades).second(), player4);
         const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
         expect(cardToPlay).toEqual(ace.of(Suit.Clubs).first());
+      });
+
+      test("shouldn't grease with ten of hearts, although highest value", () => {
+        let hand = new Hand([
+          ten.of(Suit.Hearts).first(),
+          king.of(Suit.Clubs).first()
+        ]);
+        const trick = new Trick(players);
+        trick.add(ace.of(Suit.Spades).second(), player2);
+        trick.add(king.of(Suit.Spades).second(), player3);
+        trick.add(ten.of(Suit.Spades).second(), player4);
+        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+        expect(cardToPlay).toEqual(king.of(Suit.Clubs).first());
       });
     });
   });
