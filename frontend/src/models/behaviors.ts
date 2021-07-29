@@ -1,7 +1,7 @@
 import { sample } from "lodash-es";
 import { playableCards } from "@/models/playableCardFinder";
 import { chance } from "@/models/random";
-import { Card, Suit, Rank, byCardValuesDesc } from "@/models/card";
+import { Card, Suit, Rank, byCardValuesDesc, ten } from "@/models/card";
 import { Hand } from "@/models/hand";
 import { Announcement } from "./announcements";
 import { Trick } from "./trick";
@@ -118,7 +118,7 @@ export class RuleBasedBehaviour implements Behavior {
 
   playPosition(hand: Hand, trick: Trick): Card {
     if (this.isTeammateKnown(trick) && this.isCurrentWinnerTeammate(trick)) {
-      return this.greaseNonTrumpFirst(hand, trick);
+      return this.findMostSuitableGreasingCard(hand, trick);
     }
     let winningTrump = this.findMostValuableWinningTrump(
       new Hand(playableCards(hand.cards, trick.baseCard()!)),
@@ -133,12 +133,6 @@ export class RuleBasedBehaviour implements Behavior {
       }
     }
     return this.findLeastValuableLosingCard(hand, trick);
-  }
-
-  private greaseNonTrumpFirst(hand: Hand, trick: Trick): Card {
-    return playableCards(hand.cards, trick.baseCard()!).sort(
-      byCardValuesDesc
-    )[0];
   }
 
   private isTeammateKnown(trick: Trick): Boolean {
@@ -178,6 +172,30 @@ export class RuleBasedBehaviour implements Behavior {
     }
 
     return lowest;
+  }
+
+  /**
+   * Find a card on a given hand that will add as much value as suitable.
+   * Will prefer non-trumps over trumps.
+   * Fox is most important though.
+   * Will only grease with ten of hearts if only possibility
+   * @param {Hand} hand - The hand to find the card on
+   * @param {Trick} trick - The trick that should be greased
+   * @returns {Card} - The most suitable greasing card that can be found
+   */
+  findMostSuitableGreasingCard(hand: Hand, trick: Trick): Card {
+    const fox = hand.findAny(Suit.Diamonds, Rank.Ace);
+    const tenOfHearts = hand.findAny(Suit.Hearts, Rank.Ten);
+
+    const cardPreference = [
+      fox!,
+      ...hand.cards
+        .sort(byCardValuesDesc)
+        .filter(card => card.compareTo(ten.of(Suit.Hearts)) != 0),
+      tenOfHearts!
+    ].filter(Boolean);
+
+    return playableCards(cardPreference, trick.baseCard())[0];
   }
 
   /**
