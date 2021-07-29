@@ -124,7 +124,7 @@ export function compare(oneCard: Card, anotherCard: Card) {
 }
 
 export function byCardValuesDesc(oneCard: Card, anotherCard: Card) {
-  return anotherCard.value - oneCard.value;
+  return anotherCard.value - oneCard.value || compare(oneCard, anotherCard);
 }
 
 export const ace = new Card(Rank.Ace, Suit.Clubs);
