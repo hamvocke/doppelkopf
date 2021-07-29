@@ -75,13 +75,13 @@ export class Game {
   }
 
   nextRound() {
+    this.deal();
     this.currentRound = new Round(
       this.players,
       this.scorecard,
       this.playerOpeningOrder.next()
     );
     this.resetPlayers();
-    this.deal();
     this.currentRound.nextMove();
   }
 
