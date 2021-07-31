@@ -54,7 +54,9 @@ export class Hand {
     return (
       this.cards.filter(card => card.rank === Rank.King).length < 5 &&
       this.cards.filter(card => card.value >= 10).length < 7 &&
-      this.highest().compareTo(jack.of(Suit.Diamonds)) < 0
+      this.highest().compareTo(jack.of(Suit.Diamonds)) < 0 &&
+      // ToDo remove last line as soon as poverty is playable
+      this.trumps().length > 3
     );
   }
 
