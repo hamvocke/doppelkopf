@@ -1,7 +1,7 @@
 import { uniqueId } from "lodash-es";
 import { chance } from "@/models/random";
 import { PlayedCard } from "@/models/playedCard";
-import { Suit } from "@/models/card";
+import { Card, Suit } from "@/models/card";
 
 export interface Memory {
   playedCards: MemorizedCard[];
@@ -9,6 +9,7 @@ export interface Memory {
   memorize(playedCard: PlayedCard, trickId?: string): void;
   nonTrumpSuitPlayedBefore(suit: string, trickid?: string): boolean;
   pointsLeftInSuit(suit: string): number;
+  isHighestCardLeft(card: Card): boolean;
 }
 
 interface MemorizedCard {
@@ -26,6 +27,10 @@ export class PercentageMemory implements Memory {
     this.percentage = percentage;
     this.playedCards = [];
     this.id = uniqueId("memory_percent_");
+  }
+
+  isHighestCardLeft(card: Card): boolean {
+    throw new Error("Method not implemented.");
   }
 
   clearMemory() {
@@ -70,6 +75,10 @@ export class PerfectMemory implements Memory {
     this.id = uniqueId("memory_perfect_");
   }
 
+  isHighestCardLeft(card: Card): boolean {
+    throw new Error("Method not implemented.");
+  }
+
   clearMemory() {
     this.playedCards = [];
   }
@@ -103,13 +112,17 @@ export class PerfectMemory implements Memory {
   }
 }
 
-export class PriorityMemory {
+export class PriorityMemory implements Memory {
   playedCards: MemorizedCard[];
   id: string;
 
   constructor() {
     this.playedCards = [];
     this.id = uniqueId("memory_priority_");
+  }
+
+  isHighestCardLeft(card: Card): boolean {
+    throw new Error("Method not implemented.");
   }
 
   clearMemory() {
