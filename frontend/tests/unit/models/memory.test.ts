@@ -19,7 +19,7 @@ describe("Testing memorize function", () => {
     memory.memorize(new PlayedCard(jack.of(Suit.Spades), player));
     memory.memorize(new PlayedCard(jack.of(Suit.Clubs), player));
     memory.memorize(new PlayedCard(jack.of(Suit.Clubs), player));
-    expect(memory.playedCards.length).toBe(8);
+    expect(memory.memorizedCards.length).toBe(8);
   });
 
   test("percentage memory memorizes a percentage of things", () => {
@@ -28,8 +28,8 @@ describe("Testing memorize function", () => {
     for (let index = 0; index < 10000; index++) {
       memory.memorize(new PlayedCard(jack.of(Suit.Diamonds), player));
     }
-    expect(memory.playedCards.length).toBeGreaterThanOrEqual(8700);
-    expect(memory.playedCards.length).toBeLessThanOrEqual(9300);
+    expect(memory.memorizedCards.length).toBeGreaterThanOrEqual(8700);
+    expect(memory.memorizedCards.length).toBeLessThanOrEqual(9300);
   });
 
   test("priority memory memorizes only specific cards", () => {
@@ -43,7 +43,7 @@ describe("Testing memorize function", () => {
     memory.memorize(new PlayedCard(king.of(Suit.Spades), player));
     memory.memorize(new PlayedCard(ace.of(Suit.Diamonds), player));
     memory.memorize(new PlayedCard(ace.of(Suit.Clubs), player));
-    expect(memory.playedCards.length).toBe(5);
+    expect(memory.memorizedCards.length).toBe(5);
   });
 });
 
@@ -73,13 +73,13 @@ describe("Testing functionality", () => {
     expect(memory.nonTrumpSuitPlayedBefore(Suit.Clubs)).toEqual(false);
   });
 
-  test("Should clear all playedCards from memory", () => {
+  test("Should clear all memorizedCards from memory", () => {
     const memory = new PerfectMemory();
     memory.memorize(new PlayedCard(ace.of(Suit.Hearts), new Player("A")));
     memory.memorize(new PlayedCard(ace.of(Suit.Spades), new Player("B")));
-    expect(memory.playedCards.length).toBe(2);
+    expect(memory.memorizedCards.length).toBe(2);
     memory.clearMemory();
-    expect(memory.playedCards.length).toBe(0);
+    expect(memory.memorizedCards.length).toBe(0);
   });
 
   test("Should calculate points left in suit", () => {

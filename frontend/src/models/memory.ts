@@ -10,11 +10,11 @@ interface MemorizedCard {
 
 export abstract class Memory {
   id: string;
-  playedCards: MemorizedCard[];
+  memorizedCards: MemorizedCard[];
 
   constructor() {
     this.id = uniqueId("memory_");
-    this.playedCards = [];
+    this.memorizedCards = [];
   }
 
   isHighestCardLeft(card: Card): boolean {
@@ -22,14 +22,14 @@ export abstract class Memory {
   }
 
   clearMemory() {
-    this.playedCards = [];
+    this.memorizedCards = [];
   }
 
   abstract memorize(playedCard: PlayedCard, trickId?: string): void;
 
   nonTrumpSuitPlayedBefore(suit: Suit, trickId?: string) {
     return (
-      this.playedCards.filter(
+      this.memorizedCards.filter(
         element =>
           element.playedCard.card.suit === suit &&
           !element.playedCard.card.isTrump() &&
@@ -40,8 +40,10 @@ export abstract class Memory {
 
   pointsLeftInSuit(suit: string) {
     return (
+      // ToDo check if this causes issues when suit is heart
+      // 50 is points for non-trump suit. hearts is only 30.
       50 -
-      this.playedCards
+      this.memorizedCards
         .filter(
           element =>
             element.playedCard.card.suit === suit &&
@@ -68,7 +70,7 @@ export class PercentageMemory extends Memory {
    * @param {string} trickId - The trick Identifier the card was played in
    */
   memorize(playedCard: PlayedCard, trickId?: string) {
-    if (chance(this.percentage)) this.playedCards.push({ playedCard, trickId });
+    if (chance(this.percentage)) this.memorizedCards.push({ playedCard, trickId });
   }
 }
 
@@ -84,7 +86,7 @@ export class PerfectMemory extends Memory {
    * @param {string} trickId - The trick Identifier the card was played in
    */
   memorize(playedCard: PlayedCard, trickId?: string) {
-    this.playedCards.push({ playedCard, trickId });
+    this.memorizedCards.push({ playedCard, trickId });
   }
 }
 
@@ -102,6 +104,6 @@ export class PriorityMemory extends Memory {
    */
   memorize(playedCard: PlayedCard, trickId?: string) {
     if ([3, 10, 11].includes(playedCard.card.value))
-      this.playedCards.push({ playedCard, trickId });
+      this.memorizedCards.push({ playedCard, trickId });
   }
 }
