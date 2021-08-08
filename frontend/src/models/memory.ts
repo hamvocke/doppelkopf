@@ -1,7 +1,7 @@
 import { uniqueId } from "lodash-es";
 import { chance } from "@/models/random";
 import { PlayedCard } from "@/models/playedCard";
-import { Card, Suit } from "@/models/card";
+import { Card, cardOrder, compare, Suit } from "@/models/card";
 
 interface MemorizedCard {
   playedCard: PlayedCard;
@@ -18,7 +18,13 @@ export abstract class Memory {
   }
 
   isHighestCardLeft(card: Card): boolean {
-    throw new Error("Method not implemented.");
+    let leftOverCards = cardOrder.filter(
+      x =>
+        !this.memorizedCards
+          .map(mcard => mcard.playedCard.card)
+          .some(y => x.compareTo(y) == 0)
+    );
+    return card.compareTo(leftOverCards[0]) <= 0;
   }
 
   clearMemory() {
@@ -70,7 +76,8 @@ export class PercentageMemory extends Memory {
    * @param {string} trickId - The trick Identifier the card was played in
    */
   memorize(playedCard: PlayedCard, trickId?: string) {
-    if (chance(this.percentage)) this.memorizedCards.push({ playedCard, trickId });
+    if (chance(this.percentage))
+      this.memorizedCards.push({ playedCard, trickId });
   }
 }
 
