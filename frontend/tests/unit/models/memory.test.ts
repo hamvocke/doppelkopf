@@ -126,4 +126,20 @@ describe("Testing functionality", () => {
       false
     );
   });
+
+  test("Should detect that queen of clubs is highest card left in game", () => {
+    const memory = new PerfectMemory();
+    memory.memorize(
+      new PlayedCard(ten.of(Suit.Hearts).first(), new Player("A"))
+    );
+    memory.memorize(
+      new PlayedCard(ten.of(Suit.Hearts).second(), new Player("B"))
+    );
+    memory.memorize(
+      new PlayedCard(queen.of(Suit.Spades).first(), new Player("C"))
+    );
+    expect(memory.isHighestCardLeft(ten.of(Suit.Hearts))).toEqual(true);
+    expect(memory.isHighestCardLeft(queen.of(Suit.Clubs))).toEqual(true);
+    expect(memory.isHighestCardLeft(jack.of(Suit.Spades))).toEqual(false);
+  });
 });
