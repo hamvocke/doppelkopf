@@ -5,7 +5,7 @@ import {
 } from "@/models/behaviors";
 import { Hand } from "@/models/hand";
 import { Announcement } from "@/models/announcements";
-import { ace, king, queen, jack, Suit, ten, Card, byCardValuesDesc } from "@/models/card";
+import { ace, king, queen, jack, Suit, ten, Card } from "@/models/card";
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PerfectMemory } from "@/models/memory";
