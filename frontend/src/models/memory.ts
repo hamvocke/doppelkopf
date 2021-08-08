@@ -3,76 +3,18 @@ import { chance } from "@/models/random";
 import { PlayedCard } from "@/models/playedCard";
 import { Card, Suit } from "@/models/card";
 
-export interface Memory {
-  playedCards: MemorizedCard[];
-  clearMemory(): void;
-  memorize(playedCard: PlayedCard, trickId?: string): void;
-  nonTrumpSuitPlayedBefore(suit: string, trickid?: string): boolean;
-  pointsLeftInSuit(suit: string): number;
-  isHighestCardLeft(card: Card): boolean;
-}
-
 interface MemorizedCard {
   playedCard: PlayedCard;
   trickId?: string;
 }
 
-// TODO: pretty sure we can get rid of id here
-export class PercentageMemory implements Memory {
-  percentage: number;
-  playedCards: MemorizedCard[];
+export abstract class Memory {
   id: string;
-
-  constructor(percentage: number) {
-    this.percentage = percentage;
-    this.playedCards = [];
-    this.id = uniqueId("memory_percent_");
-  }
-
-  isHighestCardLeft(card: Card): boolean {
-    throw new Error("Method not implemented.");
-  }
-
-  clearMemory() {
-    this.playedCards = [];
-  }
-
-  memorize(playedCard: PlayedCard, trickId?: string) {
-    if (chance(this.percentage)) this.playedCards.push({ playedCard, trickId });
-  }
-
-  nonTrumpSuitPlayedBefore(suit: Suit, trickId?: string) {
-    return (
-      this.playedCards.filter(
-        element =>
-          element.playedCard.card.suit === suit &&
-          !element.playedCard.card.isTrump() &&
-          (element.trickId !== trickId || trickId === null)
-      ).length > 0
-    );
-  }
-
-  pointsLeftInSuit(suit: string) {
-    return (
-      50 -
-      this.playedCards
-        .filter(
-          element =>
-            element.playedCard.card.suit === suit &&
-            !element.playedCard.card.isTrump()
-        )
-        .reduce((accu, element) => accu + element.playedCard.card.value, 0)
-    );
-  }
-}
-
-export class PerfectMemory implements Memory {
   playedCards: MemorizedCard[];
-  id: string;
 
   constructor() {
+    this.id = uniqueId("memory_");
     this.playedCards = [];
-    this.id = uniqueId("memory_perfect_");
   }
 
   isHighestCardLeft(card: Card): boolean {
@@ -83,9 +25,7 @@ export class PerfectMemory implements Memory {
     this.playedCards = [];
   }
 
-  memorize(playedCard: PlayedCard, trickId?: string) {
-    this.playedCards.push({ playedCard, trickId });
-  }
+  abstract memorize(playedCard: PlayedCard, trickId?: string): void;
 
   nonTrumpSuitPlayedBefore(suit: Suit, trickId?: string) {
     return (
@@ -112,54 +52,56 @@ export class PerfectMemory implements Memory {
   }
 }
 
-export class PriorityMemory implements Memory {
-  playedCards: MemorizedCard[];
-  id: string;
+// TODO: pretty sure we can get rid of id here
+export class PercentageMemory extends Memory {
+  percentage: number;
 
+  constructor(percentage: number) {
+    super();
+    this.id = uniqueId("memory_percent_");
+    this.percentage = percentage;
+  }
+
+  /**
+   * Will memorize the card by the percentage set in the constructor
+   * @param {PlayedCard} playedCard - The card and the player who has played it
+   * @param {string} trickId - The trick Identifier the card was played in
+   */
+  memorize(playedCard: PlayedCard, trickId?: string) {
+    if (chance(this.percentage)) this.playedCards.push({ playedCard, trickId });
+  }
+}
+
+export class PerfectMemory extends Memory {
   constructor() {
-    this.playedCards = [];
+    super();
+    this.id = uniqueId("memory_perfect_");
+  }
+
+  /**
+   * Will memorize all cards
+   * @param {PlayedCard} playedCard - The card and the player who has played it
+   * @param {string} trickId - The trick Identifier the card was played in
+   */
+  memorize(playedCard: PlayedCard, trickId?: string) {
+    this.playedCards.push({ playedCard, trickId });
+  }
+}
+
+export class PriorityMemory extends Memory {
+  constructor() {
+    super();
     this.id = uniqueId("memory_priority_");
   }
 
-  isHighestCardLeft(card: Card): boolean {
-    throw new Error("Method not implemented.");
-  }
-
-  clearMemory() {
-    this.playedCards = [];
-  }
-
+  /**
+   * Opinionated function to memorize 'important' cards.
+   * Will memorize by value. Only memorizes Queens, Tens, Aces
+   * @param {PlayedCard} playedCard - The card and the player who has played it
+   * @param {string} trickId - The trick Identifier the card was played in
+   */
   memorize(playedCard: PlayedCard, trickId?: string) {
-    /*
-    Opinion-biased function to take care of 'important' cards
-    Will memorize all by value
-    Queens, Tens, Aces
-    */
     if ([3, 10, 11].includes(playedCard.card.value))
       this.playedCards.push({ playedCard, trickId });
-  }
-
-  nonTrumpSuitPlayedBefore(suit: Suit, trickId?: string) {
-    return (
-      this.playedCards.filter(
-        element =>
-          element.playedCard.card.suit === suit &&
-          !element.playedCard.card.isTrump() &&
-          (element.trickId !== trickId || trickId === null)
-      ).length > 0
-    );
-  }
-
-  pointsLeftInSuit(suit: string) {
-    return (
-      50 -
-      this.playedCards
-        .filter(
-          element =>
-            element.playedCard.card.suit === suit &&
-            !element.playedCard.card.isTrump()
-        )
-        .reduce((accu, element) => accu + element.playedCard.card.value, 0)
-    );
   }
 }
