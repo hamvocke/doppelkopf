@@ -63,6 +63,7 @@ export class RuleBasedBehaviour implements Behavior {
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card {
     let baseCard = trick.baseCard();
     if (
+      this.isTeammateKnown(trick) &&
       this.isCurrentWinnerTeammate(trick) &&
       memory?.isHighestCardLeft(trick.highestCard()!.card)
     )
