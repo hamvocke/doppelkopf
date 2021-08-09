@@ -22,7 +22,7 @@ export abstract class Memory {
       x =>
         !this.memorizedCards
           .map(mcard => mcard.playedCard.card)
-          .some(y => x.compareTo(y) == 0)
+          .some(y => x.equals(y))
     );
     return card.compareTo(leftOverCards[0]) <= 0;
   }
