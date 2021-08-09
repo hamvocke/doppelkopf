@@ -117,6 +117,14 @@ export class Card {
 
     return 0;
   }
+
+  equals(anotherCard: Card): Boolean {
+    return (
+      this.rank == anotherCard.rank &&
+      this.suit == anotherCard.suit &&
+      this.id == anotherCard.id
+    );
+  }
 }
 
 export function compare(oneCard: Card, anotherCard: Card) {
