@@ -470,5 +470,38 @@ describe("Rule Based Card Behavior", () => {
         expect(cardToPlay).toEqual(king.of(Suit.Clubs).first());
       });
     });
+
+    describe("On Memory and or Hand - easy decisions with perfect memory", () => {
+      test("should grease with trump, knowing trick will be won anyway", () => {
+        let hand = new Hand([
+          ten.of(Suit.Diamonds).first(),
+          ace.of(Suit.Clubs).first(),
+          jack.of(Suit.Clubs).first()
+        ]);
+        const trick = new Trick(players);
+        trick.add(ten.of(Suit.Hearts).second(), player2);
+        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+        expect(cardToPlay).toEqual(ten.of(Suit.Diamonds).first());
+      });
+
+      test("should grease with trump, knowing highest remaining card was played", () => {
+        let hand = new Hand([
+          ten.of(Suit.Diamonds).first(),
+          ace.of(Suit.Clubs).first(),
+          jack.of(Suit.Clubs).first()
+        ]);
+        const trick = new Trick(players);
+        player1.memory.memorize(
+          new PlayedCard(ten.of(Suit.Hearts).first(), player3)
+        );
+        player1.memory.memorize(
+          new PlayedCard(ten.of(Suit.Hearts).second(), player4)
+        );
+        trick.add(queen.of(Suit.Clubs).second(), player2);
+        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+        expect(cardToPlay).toEqual(ten.of(Suit.Diamonds).first());
+      });
+      // test("should grease with trump, knowing self owns only remaining better trumps", () => {});
+    });
   });
 });
