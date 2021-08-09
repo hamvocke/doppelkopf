@@ -166,4 +166,10 @@ describe("trump explanation", () => {
   test("should have no explanation for non-trump", () => {
     expect(ace.of(Suit.Spades).whyTrump()).toBe("");
   });
+
+  test("shouldn't be same card", () => {
+    let firstQueenOfClubs = queen.of(Suit.Clubs).first();
+    let secondQueenOfClubs = queen.of(Suit.Clubs).second();
+    expect(firstQueenOfClubs.equals(secondQueenOfClubs)).toEqual(false);
+  });
 });
