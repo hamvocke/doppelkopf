@@ -501,7 +501,21 @@ describe("Rule Based Card Behavior", () => {
         const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
         expect(cardToPlay).toEqual(ten.of(Suit.Diamonds).first());
       });
-      // test("should grease with trump, knowing self owns only remaining better trumps", () => {});
+
+      test("should grease with trump, knowing self owns only remaining better trumps", () => {
+        let hand = new Hand([
+          ten.of(Suit.Hearts).first(),
+          ace.of(Suit.Diamonds).first(),
+          jack.of(Suit.Clubs).first()
+        ]);
+        const trick = new Trick(players);
+        player1.memory.memorize(
+          new PlayedCard(ten.of(Suit.Hearts).second(), player3)
+        );
+        trick.add(queen.of(Suit.Clubs).second(), player2);
+        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+        expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
+      });
     });
   });
 });
