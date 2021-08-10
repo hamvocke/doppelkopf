@@ -2,6 +2,7 @@ import { uniqueId } from "lodash-es";
 import { chance } from "@/models/random";
 import { PlayedCard } from "@/models/playedCard";
 import { Card, cardOrder, compare, Suit } from "@/models/card";
+import { Hand } from "./hand";
 
 interface MemorizedCard {
   playedCard: PlayedCard;
@@ -17,12 +18,13 @@ export abstract class Memory {
     this.memorizedCards = [];
   }
 
-  isHighestCardLeft(card: Card): boolean {
+  isHighestCardLeft(card: Card, hand?: Hand): boolean {
+    let allKnownCards = [
+      ...this.memorizedCards.map(mcard => mcard.playedCard.card),
+      ...(hand?.cards || [])
+    ];
     let leftOverCards = cardOrder.filter(
-      x =>
-        !this.memorizedCards
-          .map(mcard => mcard.playedCard.card)
-          .some(y => x.equals(y))
+      x => !allKnownCards.some(y => x.equals(y))
     );
     return card.compareTo(leftOverCards[0]) <= 0;
   }
