@@ -65,7 +65,7 @@ export class RuleBasedBehaviour implements Behavior {
     if (
       this.isTeammateKnown(trick) &&
       this.isCurrentWinnerTeammate(trick) &&
-      memory?.isHighestCardLeft(trick.highestCard()!.card)
+      memory?.isHighestCardLeft(trick.highestCard()!.card, hand)
     )
       return this.findMostSuitableGreasingCard(hand, trick);
     if (trick.cards().length == 3) {
