@@ -96,10 +96,7 @@ export class Affinities {
   }
 
   private isInMyParty(player: Player) {
-    return (
-      this.me.isRe() === player.isRe() ||
-      this.me.isKontra() === player.isKontra()
-    );
+    return this.me.isRe() === player.isRe();
   }
 
   private isMe(player: Player) {

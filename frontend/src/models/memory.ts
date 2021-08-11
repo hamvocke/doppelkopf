@@ -26,7 +26,7 @@ export abstract class Memory {
     let leftOverCards = cardOrder.filter(
       x => !allKnownCards.some(y => x.equals(y))
     );
-    return card.compareTo(leftOverCards[0]) <= 0;
+    return leftOverCards.length > 0 && card.compareTo(leftOverCards[0]) <= 0;
   }
 
   clearMemory() {
