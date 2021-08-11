@@ -131,10 +131,7 @@ export class RuleBasedBehaviour implements Behavior {
       trick
     );
     if (winningTrump) {
-      if (trick.points() >= 14) {
-        return winningTrump;
-      }
-      if (trick.points() < 14 && winningTrump.value <= 3) {
+      if (trick.points() >= 14 || winningTrump.value <= 3) {
         return winningTrump;
       }
     }
