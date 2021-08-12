@@ -48,9 +48,9 @@ export abstract class Memory {
 
   pointsLeftInSuit(suit: string) {
     return (
-      // ToDo check if this causes issues when suit is heart
-      // 50 is points for non-trump suit. hearts is only 30.
-      50 -
+      cardOrder
+        .filter(card => card.suit === suit && !card.isTrump())
+        .reduce((accu, card) => accu + card.value, 0) -
       this.memorizedCards
         .filter(
           element =>
