@@ -53,6 +53,7 @@ export enum AffinityEvent {
 interface PlayerAffinity {
   player: Player;
   affinity: number;
+  playedQueenOfClubs: boolean;
 }
 
 export class Affinities {
@@ -67,7 +68,16 @@ export class Affinities {
   setPlayers(allPlayers: Player[]) {
     this.affinityTable = allPlayers
       .filter(player => player.id !== this.me.id)
-      .map(player => ({ player: player, affinity: 0 }));
+      .map(player => ({
+        player: player,
+        affinity: 0,
+        playedQueenOfClubs: false
+      }));
+  }
+
+  playedQueenOfClubs(player: Player) {
+    this.declaresParty(player);
+    this.getContainerFor(player).playedQueenOfClubs === true;
   }
 
   declaresParty(player: Player) {
@@ -77,11 +87,27 @@ export class Affinities {
       });
     } else {
       this.setAffinity(player, -1);
+      // this will only happen is Queen of Clubs is played twice by the same player
+      if (this.hasPlayedQueenOfClubs(player)) {
+        this.affinityTable
+          .filter(
+            playerAffinity =>
+              !this.isMe(playerAffinity.player) &&
+              playerAffinity.player.id !== player.id
+          )
+          .forEach(playerAffinity =>
+            this.setAffinity(playerAffinity.player, 1)
+          );
+      }
     }
   }
 
   for(player: Player) {
-    return this.affinityTable.find(x => x.player.id === player.id)?.affinity;
+    return this.getContainerFor(player).affinity;
+  }
+
+  hasPlayedQueenOfClubs(player: Player): boolean {
+    return this.getContainerFor(player).playedQueenOfClubs;
   }
 
   setAffinity(player: Player, value: number) {
@@ -92,7 +118,10 @@ export class Affinities {
   }
 
   reset() {
-    this.affinityTable.forEach(x => (x.affinity = 0));
+    this.affinityTable.forEach(x => {
+      x.affinity = 0;
+      x.playedQueenOfClubs = false;
+    });
   }
 
   private isInMyParty(player: Player) {
@@ -101,5 +130,9 @@ export class Affinities {
 
   private isMe(player: Player) {
     return this.me.id === player.id;
+  }
+
+  private getContainerFor(player: Player): PlayerAffinity {
+    return this.affinityTable.find(x => x.player.id === player.id)!;
   }
 }
