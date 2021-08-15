@@ -96,10 +96,14 @@ export class Game {
   affinityEvent(event: AffinityEvent, player: Player) {
     switch (event) {
       case AffinityEvent.Announcement:
-      case AffinityEvent.QueenOfClubs:
         this.players
           .filter(p => p.id !== player.id)
           .forEach(p => p.affinities.declaresParty(player));
+        break;
+      case AffinityEvent.QueenOfClubs:
+        this.players
+          .filter(p => p.id !== player.id)
+          .forEach(p => p.affinities.playedQueenOfClubs(player));
         break;
       default:
         break;
