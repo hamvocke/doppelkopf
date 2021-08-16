@@ -103,7 +103,7 @@ export class Game {
       case AffinityEvent.QueenOfClubs:
         this.players
           .filter(p => p.id !== player.id)
-          .forEach(p => p.affinities.playedQueenOfClubs(player));
+          .forEach(p => p.affinities.declaresParty(player, true));
         break;
       default:
         break;

@@ -27,8 +27,10 @@ describe("Affinities", () => {
       player2.affinities.setPlayers(players);
       player3.affinities.setPlayers(players);
       player4.affinities.setPlayers(players);
-      player2.possibleAnnouncements = () => new Set([Announcement.Re]);
-      player3.possibleAnnouncements = () => new Set([Announcement.Kontra]);
+      player2.possibleAnnouncements = () =>
+        new Set([Announcement.Re, Announcement.No90]);
+      player3.possibleAnnouncements = () =>
+        new Set([Announcement.Kontra, Announcement.No90]);
 
       expect(player1.isRe()).toEqual(true);
       expect(player2.isRe()).toEqual(true);
@@ -38,6 +40,20 @@ describe("Affinities", () => {
 
     test("Re announces", () => {
       player2.announce(Announcement.Re);
+      expect(player1.affinities.for(player2)).toEqual(1);
+      expect(player1.affinities.for(player3)).toEqual(-1);
+      expect(player1.affinities.for(player4)).toEqual(-1);
+      expect(player3.affinities.for(player1)).toEqual(0);
+      expect(player3.affinities.for(player2)).toEqual(-1);
+      expect(player3.affinities.for(player4)).toEqual(0);
+      expect(player4.affinities.for(player1)).toEqual(0);
+      expect(player4.affinities.for(player2)).toEqual(-1);
+      expect(player4.affinities.for(player3)).toEqual(0);
+    });
+
+    test("Re announces twice", () => {
+      player2.announce(Announcement.Re);
+      player2.announce(Announcement.No90);
       expect(player1.affinities.for(player2)).toEqual(1);
       expect(player1.affinities.for(player3)).toEqual(-1);
       expect(player1.affinities.for(player4)).toEqual(-1);
@@ -62,6 +78,37 @@ describe("Affinities", () => {
       expect(player4.affinities.for(player3)).toEqual(1);
     });
 
+    test("Both announce", () => {
+      player1.announce(Announcement.Re);
+      player3.announce(Announcement.Kontra);
+      expect(player1.affinities.for(player2)).toEqual(0);
+      expect(player1.affinities.for(player3)).toEqual(-1);
+      expect(player1.affinities.for(player4)).toEqual(0);
+      expect(player2.affinities.for(player1)).toEqual(1);
+      expect(player2.affinities.for(player3)).toEqual(-1);
+      expect(player2.affinities.for(player4)).toEqual(-1);
+      expect(player3.affinities.for(player1)).toEqual(-1);
+      expect(player3.affinities.for(player2)).toEqual(0);
+      expect(player3.affinities.for(player4)).toEqual(0);
+      expect(player4.affinities.for(player1)).toEqual(-1);
+      expect(player4.affinities.for(player2)).toEqual(-1);
+      expect(player4.affinities.for(player3)).toEqual(1);
+    });
+
+    test("Kontra announced, responded with No90", () => {
+      player3.announce(Announcement.Kontra);
+      player4.announce(Announcement.No90);
+      expect(player1.affinities.for(player2)).toEqual(1);
+      expect(player1.affinities.for(player3)).toEqual(-1);
+      expect(player1.affinities.for(player4)).toEqual(-1);
+      expect(player2.affinities.for(player1)).toEqual(1);
+      expect(player2.affinities.for(player3)).toEqual(-1);
+      expect(player2.affinities.for(player4)).toEqual(-1);
+      expect(player4.affinities.for(player1)).toEqual(-1);
+      expect(player4.affinities.for(player2)).toEqual(-1);
+      expect(player4.affinities.for(player3)).toEqual(1);
+    });
+
     test("Queen of clubs played", () => {
       game.currentRound.playerOrder.prioritize(player2);
       player2.hand = new Hand([queen.of(Suit.Clubs).first()]);
@@ -75,6 +122,37 @@ describe("Affinities", () => {
       expect(player4.affinities.for(player1)).toEqual(0);
       expect(player4.affinities.for(player2)).toEqual(-1);
       expect(player4.affinities.for(player3)).toEqual(0);
+    });
+
+    test("Queen of clubs played twice - everybody knows now", () => {
+      player1.hand = new Hand([queen.of(Suit.Clubs).first()]);
+      player2.hand = new Hand([queen.of(Suit.Clubs).second()]);
+      player1.play(player1.hand.highest());
+      player2.play(player2.hand.highest());
+      expect(player2.affinities.for(player1)).toEqual(1);
+      expect(player2.affinities.for(player3)).toEqual(-1);
+      expect(player2.affinities.for(player4)).toEqual(-1);
+      expect(player3.affinities.for(player1)).toEqual(-1);
+      expect(player3.affinities.for(player2)).toEqual(-1);
+      expect(player3.affinities.for(player4)).toEqual(1);
+      expect(player4.affinities.for(player1)).toEqual(-1);
+      expect(player4.affinities.for(player3)).toEqual(1);
+      expect(player4.affinities.for(player2)).toEqual(-1);
+    });
+
+    test("Re announces, Queen Of Clubs played", () => {
+      player2.announce(Announcement.Re);
+      player1.hand = new Hand([queen.of(Suit.Clubs).first()]);
+      player1.play(player1.hand.highest());
+      expect(player1.affinities.for(player2)).toEqual(1);
+      expect(player1.affinities.for(player3)).toEqual(-1);
+      expect(player1.affinities.for(player4)).toEqual(-1);
+      expect(player3.affinities.for(player1)).toEqual(-1);
+      expect(player3.affinities.for(player2)).toEqual(-1);
+      expect(player3.affinities.for(player4)).toEqual(1);
+      expect(player4.affinities.for(player1)).toEqual(-1);
+      expect(player4.affinities.for(player2)).toEqual(-1);
+      expect(player4.affinities.for(player3)).toEqual(1);
     });
   });
 
