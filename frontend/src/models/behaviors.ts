@@ -84,8 +84,17 @@ export class RuleBasedBehaviour implements Behavior {
   }
 
   startingRule(hand: Hand, memory?: Memory): Card {
+    for (const ace of hand.getBlankAces()) {
+      if (!memory?.nonTrumpSuitPlayedBefore(ace.suit)) {
+        return ace;
+      }
+    }
     for (const suit of [Suit.Clubs, Suit.Spades, Suit.Hearts]) {
-      if (hand.hasBlankAce(suit) && !memory?.nonTrumpSuitPlayedBefore(suit)) {
+      if (
+        hand.findAny(suit, Rank.Ace) &&
+        !memory?.nonTrumpSuitPlayedBefore(suit) &&
+        hand.nonTrumps(suit).length <= 3
+      ) {
         return hand.nonTrumps(suit)[0];
       }
     }
