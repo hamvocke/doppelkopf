@@ -151,4 +151,23 @@ describe("Testing functionality", () => {
     expect(memory.isHighestCardLeft(queen.of(Suit.Clubs))).toEqual(true);
     expect(memory.isHighestCardLeft(jack.of(Suit.Spades))).toEqual(false);
   });
+
+  test("Should detect if non-trump suits have been started before", () => {
+    const memory = new PerfectMemory();
+    memory.memorizeTrick("1", ace.of(Suit.Clubs), new Player("A"));
+    memory.memorizeTrick("2", queen.of(Suit.Spades), new Player("A"));
+    expect(memory.hasNonTrumpSuitBeenStartedBefore(Suit.Clubs)).toEqual(true);
+    expect(memory.hasNonTrumpSuitBeenStartedBefore(Suit.Spades)).toEqual(false);
+    expect(memory.hasNonTrumpSuitBeenStartedBefore(Suit.Hearts)).toEqual(false);
+  });
+
+  test("Should detect if non-trump suits have been thrown", () => {
+    const memory = new PerfectMemory();
+    memory.memorizeTrick("1", ace.of(Suit.Spades), new Player("A"));
+    memory.memorize(new PlayedCard(ace.of(Suit.Clubs), new Player("B")), "1");
+    memory.memorize(new PlayedCard(jack.of(Suit.Hearts), new Player("C")), "1");
+    expect(memory.hasSuitBeenThrown(Suit.Clubs)).toEqual(true);
+    expect(memory.hasSuitBeenThrown(Suit.Spades)).toEqual(false);
+    expect(memory.hasSuitBeenThrown(Suit.Hearts)).toEqual(false);
+  });
 });
