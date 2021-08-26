@@ -90,6 +90,15 @@ export class Round {
 
   async evaluateLatestTrick() {
     const winner = this.currentTrick.winner()!;
+
+    this.players.forEach(player =>
+      player.memory.memorizeTrick(
+        this.currentTrick.id,
+        this.currentTrick.baseCard()!,
+        winner
+      )
+    );
+
     winner.win(this.currentTrick);
     this.playerOrder.prioritize(winner);
     await this.showExtras();
