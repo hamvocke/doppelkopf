@@ -3,19 +3,28 @@ import { chance } from "@/models/random";
 import { PlayedCard } from "@/models/playedCard";
 import { Card, cardOrder, compare, Suit } from "@/models/card";
 import { Hand } from "./hand";
+import { Player } from "./player";
 
 interface MemorizedCard {
   playedCard: PlayedCard;
   trickId?: string;
 }
 
+interface MemorizedTrick {
+  trickId: string;
+  baseCard: Card;
+  winner: Player;
+}
+
 export abstract class Memory {
   id: string;
   memorizedCards: MemorizedCard[];
+  memorizedTricks: MemorizedTrick[];
 
   constructor() {
     this.id = uniqueId("memory_");
     this.memorizedCards = [];
+    this.memorizedTricks = [];
   }
 
   isHighestCardLeft(card: Card, hand?: Hand): boolean {
@@ -34,6 +43,26 @@ export abstract class Memory {
   }
 
   abstract memorize(playedCard: PlayedCard, trickId?: string): void;
+
+  memorizeTrick(trickId: string, baseCard: Card, winner: Player): void {
+    this.memorizedTricks.push({ trickId, baseCard, winner });
+  }
+
+  hasNonTrumpSuitBeenStartedBefore(suit: Suit): boolean {
+    return (
+      this.memorizedTricks.filter(
+        memTrick =>
+          memTrick.baseCard.suit === suit && !memTrick.baseCard.isTrump()
+      ).length > 0
+    );
+  }
+
+  hasSuitBeenThrown(suit: Suit): boolean {
+    return (
+      !this.hasNonTrumpSuitBeenStartedBefore(suit) &&
+      this.nonTrumpSuitPlayedBefore(suit)
+    );
+  }
 
   nonTrumpSuitPlayedBefore(suit: Suit, trickId?: string) {
     return (
