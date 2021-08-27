@@ -170,4 +170,32 @@ describe("Testing functionality", () => {
     expect(memory.hasSuitBeenThrown(Suit.Spades)).toEqual(false);
     expect(memory.hasSuitBeenThrown(Suit.Hearts)).toEqual(false);
   });
+
+  test("Should remember and calculate points for player", () => {
+    const memory = new PerfectMemory();
+    const player1 = new Player("A");
+    const player2 = new Player("B");
+    memory.memorizeTrick("1", ace.of(Suit.Spades), player1);
+    memory.memorize(new PlayedCard(ace.of(Suit.Spades), player1), "1");
+    memory.memorize(new PlayedCard(ace.of(Suit.Clubs), player2), "1");
+    expect(memory.pointsForPlayer(player1)).toEqual(22);
+    expect(memory.pointsForPlayer(player2)).toEqual(0);
+  });
+
+  test("Should remember and calculate points for player within round", () => {
+    const memory = new PerfectMemory();
+    const player1 = new Player("A");
+    const player2 = new Player("B");
+    memory.memorizeTrick("1", ace.of(Suit.Spades), player1);
+    memory.memorize(new PlayedCard(ace.of(Suit.Spades), player1), "1");
+    memory.memorize(new PlayedCard(ten.of(Suit.Clubs), player2), "1");
+    memory.memorizeTrick("2", ace.of(Suit.Clubs), player2);
+    memory.memorize(new PlayedCard(ace.of(Suit.Spades), player1), "2");
+    memory.memorize(new PlayedCard(ace.of(Suit.Clubs), player2), "2");
+    memory.memorizeTrick("3", ace.of(Suit.Spades), player1);
+    memory.memorize(new PlayedCard(ace.of(Suit.Hearts), player1), "3");
+    memory.memorize(new PlayedCard(king.of(Suit.Hearts), player2), "3");
+    expect(memory.pointsForPlayer(player1)).toEqual(36);
+    expect(memory.pointsForPlayer(player2)).toEqual(22);
+  });
 });
