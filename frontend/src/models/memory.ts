@@ -75,6 +75,18 @@ export abstract class Memory {
     );
   }
 
+  pointsForPlayer(player: Player): number {
+    let points = 0;
+    this.memorizedTricks.forEach(trick => {
+      if (trick.winner.id === player.id) {
+        points += this.memorizedCards
+          .filter(card => card.trickId === trick.trickId)
+          .reduce((accu, memCard) => accu + memCard.playedCard.card.value, 0);
+      }
+    });
+    return points;
+  }
+
   pointsLeftInSuit(suit: string) {
     return (
       cardOrder
