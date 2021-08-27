@@ -209,7 +209,7 @@ export class Player {
       : Announcement.Kontra;
 
     if (cardsLeft >= 9) {
-      return this._removeExisting([
+      return this.removeExisting([
         winningAnnouncement,
         Announcement.No90,
         Announcement.No60,
@@ -219,7 +219,7 @@ export class Player {
     }
 
     if (cardsLeft >= 8 && this.hasAnnounced(winningAnnouncement)) {
-      return this._removeExisting([
+      return this.removeExisting([
         Announcement.No90,
         Announcement.No60,
         Announcement.No30,
@@ -231,7 +231,7 @@ export class Player {
       cardsLeft >= 7 &&
       this.hasAnnounced(winningAnnouncement, Announcement.No90)
     ) {
-      return this._removeExisting([
+      return this.removeExisting([
         Announcement.No60,
         Announcement.No30,
         Announcement.NoPoints
@@ -246,7 +246,7 @@ export class Player {
         Announcement.No60
       )
     ) {
-      return this._removeExisting([Announcement.No30, Announcement.NoPoints]);
+      return this.removeExisting([Announcement.No30, Announcement.NoPoints]);
     }
 
     if (
@@ -258,13 +258,13 @@ export class Player {
         Announcement.No30
       )
     ) {
-      return this._removeExisting([Announcement.NoPoints]);
+      return this.removeExisting([Announcement.NoPoints]);
     }
 
     return new Set<Announcement>();
   }
 
-  _removeExisting(possibleAnnouncements: Announcement[]) {
+  private removeExisting(possibleAnnouncements: Announcement[]) {
     return new Set(
       possibleAnnouncements.filter(a => ![...this.announcements].includes(a))
     );
