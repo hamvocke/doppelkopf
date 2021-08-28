@@ -172,8 +172,26 @@ export class Player {
     notifier.info("player-announced-" + announcement, { name: this.name });
   }
 
-  hasAnnounced(...announcements: Announcement[]) {
+  hasAnnounced(...announcements: Announcement[]): boolean {
     return announcements.every(a => [...this.announcements].includes(a));
+  }
+
+  wasAnnounced(...announcements: Announcement[]): boolean {
+    return announcements.every(a =>
+      [...this.announcements, ...this.getTeammateAnnouncements()].includes(a)
+    );
+  }
+
+  hasTeammateAnnounced(): boolean {
+    return this.getTeammateAnnouncements().size > 0;
+  }
+
+  getTeammateAnnouncements(): Set<Announcement> {
+    return (
+      this.game?.players.find(
+        player => this.id !== player.id && this.isRe() === player.isRe()
+      )?.announcements || new Set<Announcement>()
+    );
   }
 
   possibleAnnouncements(): Set<Announcement> {
@@ -184,10 +202,14 @@ export class Player {
     const announcements = getAnnouncementOrder(this.isRe());
     const cardBasedAllowedAnnouncements = announcements.slice(0, diff);
     const leftOverAnnouncements = announcements.slice(diff);
-    return this.hasAnnounced(...cardBasedAllowedAnnouncements)
+    return this.wasAnnounced(...cardBasedAllowedAnnouncements)
       ? new Set<Announcement>(
           leftOverAnnouncements.filter(
-            a => ![...this.announcements].includes(a)
+            a =>
+              ![
+                ...this.announcements,
+                ...this.getTeammateAnnouncements()
+              ].includes(a)
           )
         )
       : new Set<Announcement>();
