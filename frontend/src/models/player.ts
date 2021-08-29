@@ -5,7 +5,7 @@ import { TrickStack } from "@/models/trickStack";
 import { Behavior, RuleBasedBehaviour } from "@/models/behaviors";
 import { Notifier } from "./notifier";
 import { options } from "./options";
-import { Announcement } from "./announcements";
+import { Announcement, getAnnouncementOrder } from "./announcements";
 import { playableCards } from "./playableCardFinder";
 import { Memory, PerfectMemory } from "./memory";
 import { Card, Suit, queen } from "./card";
@@ -14,6 +14,7 @@ import { Game } from "./game";
 import { TablePosition } from "./tablePosition";
 import { Affinities, AffinityEvent } from "@/models/affinities";
 import { generateNames } from "@/models/random";
+import { allCards } from "./deck";
 
 const notifier = new Notifier();
 
@@ -196,77 +197,25 @@ export class Player {
     return announcements.every(a => [...this.announcements].includes(a));
   }
 
-  // todo: make this configurable for playing with 9s (add 2 to each threshold)
   possibleAnnouncements(): Set<Announcement> {
-    const cardsLeft = this.numberOfCardsLeft();
-
-    if (cardsLeft < 4) {
-      return new Set<Announcement>();
-    }
-
-    const winningAnnouncement = this.isRe()
-      ? Announcement.Re
-      : Announcement.Kontra;
-
-    if (cardsLeft >= 9) {
-      return this.removeExisting([
-        winningAnnouncement,
-        Announcement.No90,
-        Announcement.No60,
-        Announcement.No30,
-        Announcement.NoPoints
-      ]);
-    }
-
-    if (cardsLeft >= 8 && this.hasAnnounced(winningAnnouncement)) {
-      return this.removeExisting([
-        Announcement.No90,
-        Announcement.No60,
-        Announcement.No30,
-        Announcement.NoPoints
-      ]);
-    }
-
-    if (
-      cardsLeft >= 7 &&
-      this.hasAnnounced(winningAnnouncement, Announcement.No90)
-    ) {
-      return this.removeExisting([
-        Announcement.No60,
-        Announcement.No30,
-        Announcement.NoPoints
-      ]);
-    }
-
-    if (
-      cardsLeft >= 6 &&
-      this.hasAnnounced(
-        winningAnnouncement,
-        Announcement.No90,
-        Announcement.No60
-      )
-    ) {
-      return this.removeExisting([Announcement.No30, Announcement.NoPoints]);
-    }
-
-    if (
-      cardsLeft >= 5 &&
-      this.hasAnnounced(
-        winningAnnouncement,
-        Announcement.No90,
-        Announcement.No60,
-        Announcement.No30
-      )
-    ) {
-      return this.removeExisting([Announcement.NoPoints]);
-    }
-
-    return new Set<Announcement>();
+    const diff = Math.max(
+      0,
+      this.getStartingCards() - this.numberOfCardsLeft() - 1
+    );
+    const announcements = getAnnouncementOrder(this.isRe());
+    const cardBasedAllowedAnnouncements = announcements.slice(0, diff);
+    const leftOverAnnouncements = announcements.slice(diff);
+    return this.hasAnnounced(...cardBasedAllowedAnnouncements)
+      ? new Set<Announcement>(
+          leftOverAnnouncements.filter(
+            a => ![...this.announcements].includes(a)
+          )
+        )
+      : new Set<Announcement>();
   }
 
-  private removeExisting(possibleAnnouncements: Announcement[]) {
-    return new Set(
-      possibleAnnouncements.filter(a => ![...this.announcements].includes(a))
-    );
+  // ToDo use better way to find out if game sharp doko
+  private getStartingCards(): number {
+    return allCards.length / this.game?.players.length!;
   }
 }
