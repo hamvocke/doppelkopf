@@ -165,31 +165,10 @@ export class Player {
 
     this.game?.affinityEvent(AffinityEvent.Announcement, this);
 
-    // always announce re/kontra
-    let allAnnouncements = this.isRe()
-      ? [Announcement.Re]
-      : [Announcement.Kontra];
+    const announcementOrder = getAnnouncementOrder(this.isRe());
+    const pos = announcementOrder.findIndex(a => a === announcement);
+    this.announcements = new Set(announcementOrder.slice(0, pos + 1));
 
-    if (announcement === Announcement.No60) {
-      allAnnouncements.push(Announcement.No90);
-    }
-
-    if (announcement === Announcement.No30) {
-      allAnnouncements.push(Announcement.No90);
-      allAnnouncements.push(Announcement.No60);
-    }
-
-    if (announcement === Announcement.NoPoints) {
-      allAnnouncements.push(Announcement.No90);
-      allAnnouncements.push(Announcement.No60);
-      allAnnouncements.push(Announcement.No30);
-    }
-
-    // finally, add the actual announement
-    allAnnouncements.push(announcement);
-
-    allAnnouncements.forEach(a => this.announcements.add(a));
-    this.announcements = new Set(allAnnouncements);
     notifier.info("player-announced-" + announcement, { name: this.name });
   }
 
