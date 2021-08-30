@@ -460,6 +460,16 @@ describe("announcements", () => {
     expect(player2.getTeammateAnnouncements()).toContain(Announcement.Re);
     expect(failingAnnouncement).toThrowError("Invalid announcement");
   });
+
+  test("should be able to announce after teammate", () => {
+    let player2 = game.players[1];
+    player.hand = aHandWith(9, queen.of(Suit.Clubs));
+    player2.hand = aHandWith(8, queen.of(Suit.Clubs));
+    player.announce(Announcement.Re);
+    player2.announce(Announcement.No90);
+
+    expect(player.getTeammateAnnouncements()).toContain(Announcement.No90);
+  });
 });
 
 function aHandWith(numberOfCards: number, ...cards: Card[]) {
