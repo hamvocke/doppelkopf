@@ -63,7 +63,7 @@ export class RuleBasedBehaviour implements Behavior {
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card {
     let baseCard = trick.baseCard();
     if (
-      this.isTeammateKnown(trick) &&
+      this.isTeammateKnown() &&
       this.isCurrentWinnerTeammate(trick) &&
       memory?.isHighestCardLeft(trick.highestCard()!.card, hand)
     )
@@ -132,7 +132,7 @@ export class RuleBasedBehaviour implements Behavior {
   }
 
   playPosition(hand: Hand, trick: Trick): Card {
-    if (this.isTeammateKnown(trick) && this.isCurrentWinnerTeammate(trick)) {
+    if (this.isTeammateKnown() && this.isCurrentWinnerTeammate(trick)) {
       return this.findMostSuitableGreasingCard(hand, trick);
     }
     let winningTrump = this.findMostValuableWinningTrump(
@@ -147,7 +147,7 @@ export class RuleBasedBehaviour implements Behavior {
     return this.findLeastValuableLosingCard(hand, trick);
   }
 
-  private isTeammateKnown(trick: Trick): Boolean {
+  private isTeammateKnown(): Boolean {
     return (
       this.getMyPlayer(trick).affinities.affinityTable.filter(
         playerAffinity => playerAffinity.affinity === 1
