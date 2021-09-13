@@ -10,6 +10,7 @@ import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PerfectMemory } from "@/models/memory";
 import { PlayedCard } from "@/models/playedCard";
+import { Affinities } from "@/models/affinities";
 
 jest.mock("@/models/random", () => ({
   __esModule: true,
@@ -18,7 +19,7 @@ jest.mock("@/models/random", () => ({
 
 describe("Highest Card Behavior", () => {
   const player = new Player("some player");
-  const behavior = new HighestCardBehavior(player.id);
+  const behavior = new HighestCardBehavior(player.id, new Affinities(player));
   const hand = new Hand([
     ace.of(Suit.Hearts).first(),
     jack.of(Suit.Clubs).first(),
@@ -36,7 +37,7 @@ describe("Highest Card Behavior", () => {
 
 describe("Random Card Behavior", () => {
   const player = new Player("some player");
-  const behavior = new RandomCardBehavior(player.id);
+  const behavior = new RandomCardBehavior(player.id, new Affinities(player));
   const hand = new Hand([
     ace.of(Suit.Hearts).first(),
     jack.of(Suit.Clubs).first(),
@@ -73,7 +74,7 @@ describe("Rule Based Card Behavior", () => {
   const player3 = new Player("p3");
   const player4 = new Player("p4");
   const players = [player1, player2, player3, player4];
-  const behavior = new RuleBasedBehaviour(player1.id);
+  const behavior = new RuleBasedBehaviour(player1.id, new Affinities(player1));
   const hand = new Hand([
     ten.of(Suit.Hearts).first(),
     jack.of(Suit.Diamonds).first(),
@@ -410,8 +411,8 @@ describe("Rule Based Card Behavior", () => {
       player2.isRe = () => true;
       player3.isRe = () => false;
       player4.isRe = () => false;
-      players.forEach(p => p.affinities.setPlayers(players));
-      players.forEach(p => p.affinities.declaresParty(player2));
+      behavior.affinities.setPlayers(players);
+      behavior.affinities.declaresParty(player2);
     });
 
     describe("On Position - easy decisions", () => {

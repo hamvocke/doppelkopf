@@ -9,6 +9,7 @@ import { options } from "@/models/options";
 import { sampleSize } from "lodash-es";
 import { Announcement } from "@/models/announcements";
 import { Trick } from "@/models/trick";
+import { Affinities } from "@/models/affinities";
 
 let game: any;
 let player: Player;
@@ -157,6 +158,8 @@ test("should autoplay a card", () => {
   player.hand = new Hand([queenOnHand, kingOnHand]);
   player.behavior = {
     playerId: player.id,
+    affinities: new Affinities(player),
+    reset: jest.fn(() => null),
     cardToPlay: jest.fn(() => kingOnHand),
     announcementToMake: jest.fn(() => null)
   };
@@ -176,6 +179,8 @@ test("should try to make an announcement", () => {
   game.currentRound.waitingForPlayer = () => game.players[0];
   player.behavior = {
     playerId: player.id,
+    affinities: new Affinities(player),
+    reset: jest.fn(() => null),
     cardToPlay: jest.fn(() => player.hand.cards[0]),
     announcementToMake: jest.fn(() => null)
   };

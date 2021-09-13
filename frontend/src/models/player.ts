@@ -31,7 +31,6 @@ export class Player {
   game?: Game;
   behavior: Behavior;
   memory: Memory;
-  affinities: Affinities;
 
   constructor(
     name: string,
@@ -48,9 +47,8 @@ export class Player {
     this.isMe = isMe;
     this.tablePosition = tablePosition;
     this.game = game;
-    this.behavior = new behaviour(this.id);
+    this.behavior = new behaviour(this.id, new Affinities(this));
     this.memory = memory;
-    this.affinities = new Affinities(this);
 
     this.reset();
   }
@@ -151,7 +149,7 @@ export class Player {
     this.trickStack = new TrickStack();
     this.announcements = new Set();
     this.memory.clearMemory();
-    this.affinities.reset();
+    this.behavior.reset();
   }
 
   points() {

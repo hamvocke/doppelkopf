@@ -7,6 +7,7 @@ import { Hand } from "@/models/hand";
 import { TrickStack } from "@/models/trickStack";
 import { Trick } from "@/models/trick";
 import { Extra } from "@/models/extras";
+import { Affinities } from "@/models/affinities";
 
 const game = Game.singlePlayer();
 let round = game.currentRound;
@@ -144,6 +145,8 @@ describe("player order", () => {
   test("should change active player on next move", () => {
     const playFirstCardBehavior = {
       playerId: "p4",
+      affinities: new Affinities(round.players[3]),
+      reset: jest.fn(() => null),
       cardToPlay: (hand: Hand) => hand.cards[0],
       announcementToMake: () => null
     };

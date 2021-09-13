@@ -7,9 +7,12 @@ import { Announcement } from "./announcements";
 import { Trick } from "./trick";
 import { Memory } from "./memory";
 import { Player } from "./player";
+import { Affinities } from "./affinities";
 
 export interface Behavior {
   playerId: string;
+  affinities: Affinities;
+  reset(): void;
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card;
   announcementToMake(
     possibleAnnouncements: Set<Announcement>
@@ -17,7 +20,12 @@ export interface Behavior {
 }
 
 export class HighestCardBehavior implements Behavior {
-  constructor(public playerId: string) {}
+  constructor(public playerId: string, public affinities: Affinities) {}
+
+  reset() {
+    this.affinities.reset();
+  }
+
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory) {
     return playableCards(hand.cards, trick.baseCard())[0];
   }
@@ -27,7 +35,12 @@ export class HighestCardBehavior implements Behavior {
   }
 }
 export class RandomCardBehavior implements Behavior {
-  constructor(public playerId: string) {}
+  constructor(public playerId: string, public affinities: Affinities) {}
+
+  reset() {
+    this.affinities.reset();
+  }
+
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory) {
     return sample(playableCards(hand.cards, trick.baseCard()))!;
   }
@@ -47,7 +60,12 @@ export class RandomCardBehavior implements Behavior {
 }
 
 export class RuleBasedBehaviour implements Behavior {
-  constructor(public playerId: string) {}
+  constructor(public playerId: string, public affinities: Affinities) {}
+
+  reset() {
+    this.affinities.reset();
+  }
+
   announcementToMake(possibleAnnouncements: Set<Announcement>) {
     // ToDo announce by "goodies"
     /**
@@ -149,7 +167,7 @@ export class RuleBasedBehaviour implements Behavior {
 
   private isTeammateKnown(): Boolean {
     return (
-      this.getMyPlayer(trick).affinities.affinityTable.filter(
+      this.affinities.affinityTable.filter(
         playerAffinity => playerAffinity.affinity === 1
       ).length > 0
     );

@@ -61,9 +61,9 @@ export class Affinities {
   me: Player;
   affinityTable: PlayerAffinity[] = [];
 
-  constructor(me: Player) {
+  constructor(me: Player, players?: Player[]) {
     this.me = me;
-    this.setPlayers([]);
+    this.setPlayers(players || []);
   }
 
   setPlayers(allPlayers: Player[]) {

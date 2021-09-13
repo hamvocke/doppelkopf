@@ -90,7 +90,9 @@ export class Game {
   }
 
   initializeAffinities() {
-    this.players.forEach(player => player.affinities.setPlayers(this.players));
+    this.players.forEach(player =>
+      player.behavior.affinities.setPlayers(this.players)
+    );
   }
 
   affinityEvent(event: AffinityEvent, player: Player) {
@@ -98,12 +100,12 @@ export class Game {
       case AffinityEvent.Announcement:
         this.players
           .filter(p => p.id !== player.id)
-          .forEach(p => p.affinities.declaresParty(player));
+          .forEach(p => p.behavior.affinities.declaresParty(player));
         break;
       case AffinityEvent.QueenOfClubs:
         this.players
           .filter(p => p.id !== player.id)
-          .forEach(p => p.affinities.declaresParty(player, true));
+          .forEach(p => p.behavior.affinities.declaresParty(player, true));
         break;
       default:
         break;
