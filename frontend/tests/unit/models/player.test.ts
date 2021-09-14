@@ -456,8 +456,7 @@ describe("announcements", () => {
 
     let failingAnnouncement = () => player2.announce(Announcement.Re);
 
-    expect(player2.hasTeammateAnnounced(Announcement.Re)).toEqual(true);
-    expect(player2.getTeammateAnnouncements()).toContain(Announcement.Re);
+    expect(player2.possibleAnnouncements()).not.toContain(Announcement.Re);
     expect(failingAnnouncement).toThrowError("Invalid announcement");
   });
 
@@ -468,7 +467,7 @@ describe("announcements", () => {
     player.announce(Announcement.Re);
     player2.announce(Announcement.No90);
 
-    expect(player.getTeammateAnnouncements()).toContain(Announcement.No90);
+    expect(player.possibleAnnouncements()).not.toContain(Announcement.No90);
   });
 });
 

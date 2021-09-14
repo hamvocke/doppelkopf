@@ -15,6 +15,7 @@ import { TablePosition } from "./tablePosition";
 import { Affinities, AffinityEvent } from "@/models/affinities";
 import { generateNames } from "@/models/random";
 import { allCards } from "./deck";
+import { findParties, PartyName } from "./party";
 
 const notifier = new Notifier();
 
@@ -67,6 +68,10 @@ export class Player {
 
   isKontra() {
     return !this.isRe();
+  }
+
+  getParty(): PartyName {
+    return this.isRe() ? PartyName.Re : PartyName.Kontra;
   }
 
   autoplay() {
@@ -172,25 +177,15 @@ export class Player {
     notifier.info("player-announced-" + announcement, { name: this.name });
   }
 
-  hasAnnounced(...announcements: Announcement[]): boolean {
-    return announcements.every(a => [...this.announcements].includes(a));
-  }
-
-  wasAnnounced(...announcements: Announcement[]): boolean {
+  hasPartyAnnounced(...announcements: Announcement[]): boolean {
     return announcements.every(a =>
-      [...this.announcements, ...this.getTeammateAnnouncements()].includes(a)
+      [...this.getPartyAnnouncements()].includes(a)
     );
   }
 
-  hasTeammateAnnounced(): boolean {
-    return this.getTeammateAnnouncements().size > 0;
-  }
-
-  getTeammateAnnouncements(): Set<Announcement> {
-    return (
-      this.game?.players.find(
-        player => this.id !== player.id && this.isRe() === player.isRe()
-      )?.announcements || new Set<Announcement>()
+  private getPartyAnnouncements(): Set<Announcement> {
+    return new Set<Announcement>(
+      findParties(this.game!.players)[this.getParty()].announcements()
     );
   }
 
@@ -202,14 +197,10 @@ export class Player {
     const announcements = getAnnouncementOrder(this.isRe());
     const cardBasedAllowedAnnouncements = announcements.slice(0, diff);
     const leftOverAnnouncements = announcements.slice(diff);
-    return this.wasAnnounced(...cardBasedAllowedAnnouncements)
+    return this.hasPartyAnnounced(...cardBasedAllowedAnnouncements)
       ? new Set<Announcement>(
           leftOverAnnouncements.filter(
-            a =>
-              ![
-                ...this.announcements,
-                ...this.getTeammateAnnouncements()
-              ].includes(a)
+            a => ![...this.getPartyAnnouncements()].includes(a)
           )
         )
       : new Set<Announcement>();
