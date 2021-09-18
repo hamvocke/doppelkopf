@@ -1,4 +1,5 @@
 {
+  "10": "10",
   "trick": "No tricks | 1 trick | {count} tricks",
   "next-trick": "Next trick",
   "finish-round": "Finish round",
@@ -9,13 +10,10 @@
   "start-game": "Start Game!",
   "start-multiplayer-game": "Play with friends",
   "how-to-play": "How to play?",
-
-  "10": "10",
   "J": "J",
   "Q": "Q",
   "K": "K",
   "A": "A",
-
   "win": "Win",
   "win_description": "This party won the game",
   "beat_re": "Against the elders",
@@ -79,7 +77,6 @@
   "got_60_against_no_30_description": "Got 60 points against announcement of 'no 30'",
   "got_30_against_no_points": "Got 30 points against announcement of 'no points'",
   "got_30_against_no_points_description": "Got 30 points against announcement of 'no points'",
-
   "you_lose": "You lost the game!",
   "you_win": "You won the game!",
   "trick_goes_to": "Trick goes to:",
@@ -92,7 +89,6 @@
   "tutorial-link": "https://en.wikipedia.org/wiki/Doppelkopf",
   "winner": "Winner",
   "badge_description": "{name} has won this trick",
-
   "loading": "Loading...",
   "hey-player": "Hey {name}!",
   "here-is-your-invite-link": "Here is your invite link. Share this link with your friends so they can join the game.",
@@ -102,10 +98,10 @@
   "ready-status": "Ready to start the game.",
   "copy": "Copy",
   "copied": "Copied!",
-
   "new_version_available": "The game has been updated. Click here to refresh.",
   "cannot-connect-to-server": "Can't start a multiplayer game. Our servers are not responding. Please try again later!",
   "error-connection": "Oh no! Our servers don't respond, we can't connect you to the game. Refreshing the site might help!",
-  "error-room-full": "Can't join the game. There are 4 players waiting already."
-
+  "error-room-full": "Can't join the game. There are 4 players waiting already.",
+  "enter_name_input": "Your name",
+  "enter_name_label": "Please enter your name"
 }
