@@ -36,8 +36,9 @@ export class Game {
     const isHuman = true;
     const isComputer = false;
     const randomNames = generateNames(4);
+    const playerName = localStorage.getItem("name") || randomNames[0];
     return new Game([
-      new Player(randomNames[0], isHuman, true, TablePosition.Bottom),
+      new Player(playerName, isHuman, true, TablePosition.Bottom),
       new Player(randomNames[1], isComputer, false, TablePosition.Left),
       new Player(randomNames[2], isComputer, false, TablePosition.Top),
       new Player(randomNames[3], isComputer, false, TablePosition.Right)
