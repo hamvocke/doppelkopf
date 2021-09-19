@@ -116,11 +116,7 @@ export class Affinities {
   }
 
   reset() {
-    this.affinityTable.forEach(x => {
-      x.affinity = 0;
-      x.declaredParty = false;
-      x.playedQueenOfClubs = false;
-    });
+    this.setPlayers(this.affinityTable.map(x => x.player));
   }
 
   private makeTeammatesExcept(player: Player) {
