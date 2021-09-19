@@ -38,6 +38,17 @@ describe("Affinities", () => {
       expect(player4.isKontra()).toEqual(true);
     });
 
+    test("Affinities are resettable", () => {
+      player1.announce(Announcement.Re);
+      expect(player2.behavior.affinities.for(player1)).toEqual(1);
+      expect(player2.behavior.affinities.for(player3)).toEqual(-1);
+      expect(player2.behavior.affinities.for(player4)).toEqual(-1);
+      player2.behavior.reset();
+      expect(player2.behavior.affinities.for(player1)).toEqual(0);
+      expect(player2.behavior.affinities.for(player3)).toEqual(0);
+      expect(player2.behavior.affinities.for(player4)).toEqual(0);
+    });
+
     test("Re announces", () => {
       player2.announce(Announcement.Re);
       expect(player1.behavior.affinities.for(player2)).toEqual(1);
