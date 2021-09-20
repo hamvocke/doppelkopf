@@ -415,6 +415,37 @@ describe("Rule Based Card Behavior", () => {
       behavior.affinities.declaresParty(player2);
     });
 
+    describe("Card Order", () => {
+      test("should grease fox", () => {
+        let hand = new Hand([
+          ace.of(Suit.Diamonds).first(),
+          jack.of(Suit.Clubs).first(),
+          king.of(Suit.Diamonds).first()
+        ]);
+        const cardToPlay = behavior.findMostSuitableGreasingCard(hand);
+        expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
+      });
+
+      test("shouldn't grease queen, although more points", () => {
+        let hand = new Hand([
+          jack.of(Suit.Clubs).first(),
+          queen.of(Suit.Diamonds).first()
+        ]);
+        const cardToPlay = behavior.findMostSuitableGreasingCard(hand);
+        expect(cardToPlay).toEqual(jack.of(Suit.Clubs).first());
+      });
+
+      test("should pick lowest suit", () => {
+        let hand = new Hand([
+          jack.of(Suit.Diamonds).first(),
+          jack.of(Suit.Hearts).first(),
+          jack.of(Suit.Clubs).first()
+        ]);
+        const cardToPlay = behavior.findMostSuitableGreasingCard(hand);
+        expect(cardToPlay).toEqual(jack.of(Suit.Diamonds).first());
+      });
+    });
+
     describe("On Position - easy decisions", () => {
       test("should grease with trump", () => {
         let hand = new Hand([
