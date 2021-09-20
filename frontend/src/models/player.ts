@@ -15,7 +15,7 @@ import { TablePosition } from "./tablePosition";
 import { Affinities, AffinityEvent } from "@/models/affinities";
 import { generateNames } from "@/models/random";
 import { allCards } from "./deck";
-import { findParties, PartyName } from "./party";
+import { findParties, Party, PartyName } from "./party";
 
 const notifier = new Notifier();
 
@@ -58,7 +58,6 @@ export class Player {
 
   static me(name?: string): Player {
     let playerName = name || generateNames(1)[0];
-    // todo: set multiplayer behavior here
     return new Player(playerName, true, true, TablePosition.Bottom);
   }
 
@@ -70,8 +69,9 @@ export class Player {
     return !this.isRe();
   }
 
-  getParty(): PartyName {
-    return this.isRe() ? PartyName.Re : PartyName.Kontra;
+  getParty(): Party {
+    const partyName = this.isRe() ? PartyName.Re : PartyName.Kontra;
+    return findParties(this.game!.players)[partyName];
   }
 
   autoplay() {
@@ -184,9 +184,7 @@ export class Player {
   }
 
   private getPartyAnnouncements(): Set<Announcement> {
-    return new Set<Announcement>(
-      findParties(this.game!.players)[this.getParty()].announcements()
-    );
+    return new Set<Announcement>(this.getParty().announcements());
   }
 
   possibleAnnouncements(): Set<Announcement> {
