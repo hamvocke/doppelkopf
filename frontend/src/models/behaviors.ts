@@ -213,19 +213,24 @@ export class RuleBasedBehaviour implements Behavior {
    * @param {Trick} trick - The trick that should be greased
    * @returns {Card} - The most suitable greasing card that can be found
    */
-  findMostSuitableGreasingCard(hand: Hand, trick: Trick): Card {
+  findMostSuitableGreasingCard(hand: Hand, trick?: Trick): Card {
     const fox = hand.findAny(Suit.Diamonds, Rank.Ace);
     const tenOfHearts = hand.findAny(Suit.Hearts, Rank.Ten);
+    const queens = hand.cards.filter(card => card.rank == Rank.Queen).reverse();
 
     const cardPreference = [
       fox!,
       ...hand.cards
         .sort(byCardValuesDesc)
-        .filter(card => card.compareTo(ten.of(Suit.Hearts)) != 0),
+        .filter(
+          card =>
+            card.compareTo(ten.of(Suit.Hearts)) != 0 && card.rank != Rank.Queen
+        ),
+      ...queens,
       tenOfHearts!
     ].filter(Boolean);
 
-    return playableCards(cardPreference, trick.baseCard())[0];
+    return playableCards(cardPreference, trick?.baseCard())[0];
   }
 
   /**
