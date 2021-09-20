@@ -15,6 +15,7 @@ import { TablePosition } from "./tablePosition";
 import { Affinities, AffinityEvent } from "@/models/affinities";
 import { generateNames } from "@/models/random";
 import { allCards } from "./deck";
+import { findParties, Party, PartyName } from "./party";
 
 const notifier = new Notifier();
 
@@ -55,7 +56,6 @@ export class Player {
 
   static me(name?: string): Player {
     let playerName = name || generateNames(1)[0];
-    // todo: set multiplayer behavior here
     return new Player(playerName, true, true, TablePosition.Bottom);
   }
 
@@ -65,6 +65,11 @@ export class Player {
 
   isKontra() {
     return !this.isRe();
+  }
+
+  getParty(): Party {
+    const partyName = this.isRe() ? PartyName.Re : PartyName.Kontra;
+    return findParties(this.game!.players)[partyName];
   }
 
   autoplay() {
@@ -170,8 +175,14 @@ export class Player {
     notifier.info("player-announced-" + announcement, { name: this.name });
   }
 
-  hasAnnounced(...announcements: Announcement[]) {
-    return announcements.every(a => [...this.announcements].includes(a));
+  hasPartyAnnounced(...announcements: Announcement[]): boolean {
+    return announcements.every(a =>
+      [...this.getPartyAnnouncements()].includes(a)
+    );
+  }
+
+  private getPartyAnnouncements(): Set<Announcement> {
+    return new Set<Announcement>(this.getParty().announcements());
   }
 
   possibleAnnouncements(): Set<Announcement> {
@@ -182,10 +193,10 @@ export class Player {
     const announcements = getAnnouncementOrder(this.isRe());
     const cardBasedAllowedAnnouncements = announcements.slice(0, diff);
     const leftOverAnnouncements = announcements.slice(diff);
-    return this.hasAnnounced(...cardBasedAllowedAnnouncements)
+    return this.hasPartyAnnounced(...cardBasedAllowedAnnouncements)
       ? new Set<Announcement>(
           leftOverAnnouncements.filter(
-            a => ![...this.announcements].includes(a)
+            a => ![...this.getPartyAnnouncements()].includes(a)
           )
         )
       : new Set<Announcement>();

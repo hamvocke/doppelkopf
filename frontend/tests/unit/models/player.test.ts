@@ -452,6 +452,28 @@ describe("announcements", () => {
 
     expect(possibleAnnouncements).toEqual(new Set());
   });
+
+  test("shouldn't be able to announce same as teammate", () => {
+    let player2 = game.players[1];
+    player.hand = aHandWith(9, queen.of(Suit.Clubs));
+    player2.hand = aHandWith(9, queen.of(Suit.Clubs));
+    player.announce(Announcement.Re);
+
+    let failingAnnouncement = () => player2.announce(Announcement.Re);
+
+    expect(player2.possibleAnnouncements()).not.toContain(Announcement.Re);
+    expect(failingAnnouncement).toThrowError("Invalid announcement");
+  });
+
+  test("should be able to announce after teammate", () => {
+    let player2 = game.players[1];
+    player.hand = aHandWith(9, queen.of(Suit.Clubs));
+    player2.hand = aHandWith(8, queen.of(Suit.Clubs));
+    player.announce(Announcement.Re);
+    player2.announce(Announcement.No90);
+
+    expect(player.possibleAnnouncements()).not.toContain(Announcement.No90);
+  });
 });
 
 function aHandWith(numberOfCards: number, ...cards: Card[]) {
