@@ -13,16 +13,15 @@ beforeEach(() => {
 test("should fetch features from backend", async () => {
   const stubbedFeatures = {
     features: {
-      "game.multiplayer.enable": false,
-      "game.announcements.enable": false
+      "game.announcements.enable": true
     }
   };
   fetchMock.mock("http://localhost:5000/api/features", stubbedFeatures);
 
   await Features.fetch();
-  const feature = Features.get().enableMultiplayer;
+  const feature = Features.get().enableAnnouncements;
 
-  expect(feature).toBe(false);
+  expect(feature).toBe(true);
 });
 
 test("should use default features if fetching fails", async () => {

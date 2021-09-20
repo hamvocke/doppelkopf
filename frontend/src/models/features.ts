@@ -4,13 +4,11 @@ import { Config } from "@/models/config";
 const DEFAULT_FEATURES: Features = {
   enableTutorial: Config.debug,
   enableAnnouncements: true,
-  enableMultiplayer: Config.debug
 };
 
 interface Features {
   enableTutorial: boolean;
   enableAnnouncements: boolean;
-  enableMultiplayer: boolean;
 }
 
 class FeatureManager {
@@ -40,7 +38,6 @@ class FeatureManager {
     const f = json["features"];
     return {
       enableAnnouncements: f["game.announcements.enable"] as boolean,
-      enableMultiplayer: f["game.multiplayer.enable"] as boolean,
       enableTutorial: f["game.tutorial.enable"] as boolean
     };
   }
