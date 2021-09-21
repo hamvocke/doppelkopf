@@ -21,6 +21,8 @@ jobs:
       - run:
           name: Test frontend
           command: 'pushd frontend && yarn test:ci && yarn test:e2e && popd'
+      - store_artifacts:
+          path: coverage
       - run:
           name: Build frontend
           command: 'pushd frontend && yarn build && popd'
