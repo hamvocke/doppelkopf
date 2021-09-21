@@ -31,7 +31,8 @@ jobs:
           command: 'pushd frontend && yarn build && popd'
       - persist_to_workspace:
           root: .
-          paths: frontend/dist
+          paths:
+            - frontend/dist
       - codecov/upload:
           file: coverage/coverage-final.json
           flags: frontend
