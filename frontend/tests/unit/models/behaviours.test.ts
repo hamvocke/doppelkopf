@@ -389,7 +389,7 @@ describe("Rule Based Card Behavior", () => {
     });
   });
 
-  describe("Greasing your teammate", () => {
+  describe("Knowing your teammate", () => {
     beforeEach(() => {
       player1.memory.clearMemory();
       player2.memory.clearMemory();
@@ -403,138 +403,182 @@ describe("Rule Based Card Behavior", () => {
       behavior.affinities.declaresParty(player2);
     });
 
-    describe("Card Order", () => {
-      test("should grease fox", () => {
+    describe("When losing, play least valuable card", () => {
+      test("when trick is lost on position", () => {
         let hand = new Hand([
           ace.of(Suit.Diamonds).first(),
-          jack.of(Suit.Clubs).first(),
-          king.of(Suit.Diamonds).first()
-        ]);
-        const cardToPlay = behavior.findMostSuitableGreasingCard(hand);
-        expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
-      });
-
-      test("shouldn't grease queen, although more points", () => {
-        let hand = new Hand([
-          jack.of(Suit.Clubs).first(),
+          jack.of(Suit.Diamonds).first(),
           queen.of(Suit.Diamonds).first()
         ]);
-        const cardToPlay = behavior.findMostSuitableGreasingCard(hand);
-        expect(cardToPlay).toEqual(jack.of(Suit.Clubs).first());
+        const trick = new Trick(players);
+        trick.add(queen.of(Suit.Hearts).first(), player2);
+        trick.add(queen.of(Suit.Spades).first(), player3);
+        trick.add(ten.of(Suit.Hearts).first(), player4);
+        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+        expect(cardToPlay).toEqual(jack.of(Suit.Diamonds).first());
       });
 
-      test("should pick lowest suit", () => {
+      test("when highest card has been played", () => {
         let hand = new Hand([
+          ace.of(Suit.Diamonds).first(),
           jack.of(Suit.Diamonds).first(),
-          jack.of(Suit.Hearts).first(),
-          jack.of(Suit.Clubs).first()
+          queen.of(Suit.Diamonds).first()
         ]);
-        const cardToPlay = behavior.findMostSuitableGreasingCard(hand);
+        const trick = new Trick(players);
+        trick.add(ten.of(Suit.Hearts).first(), player3);
+        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+        expect(cardToPlay).toEqual(jack.of(Suit.Diamonds).first());
+      });
+
+      test("when highest left over card has been played", () => {
+        let hand = new Hand([
+          ace.of(Suit.Diamonds).first(),
+          jack.of(Suit.Diamonds).first(),
+          queen.of(Suit.Diamonds).first()
+        ]);
+        const trick = new Trick(players);
+        player1.memory.memorizeMany([
+          new PlayedCard(ten.of(Suit.Hearts).first(), player3),
+          new PlayedCard(ten.of(Suit.Hearts).second(), player3)
+        ]);
+        trick.add(queen.of(Suit.Clubs).first(), player3);
+        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
         expect(cardToPlay).toEqual(jack.of(Suit.Diamonds).first());
       });
     });
 
-    describe("On Position - easy decisions", () => {
-      test("should grease with trump", () => {
-        let hand = new Hand([
-          ace.of(Suit.Diamonds).first(),
-          jack.of(Suit.Clubs).first(),
-          ten.of(Suit.Diamonds).first()
-        ]);
-        const trick = new Trick(players);
-        trick.add(queen.of(Suit.Hearts).first(), player2);
-        trick.add(jack.of(Suit.Clubs).first(), player3);
-        trick.add(jack.of(Suit.Hearts).first(), player4);
-        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
-        expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
+    describe("Greasing your teammate", () => {
+      describe("Card Order", () => {
+        test("should grease fox", () => {
+          let hand = new Hand([
+            ace.of(Suit.Diamonds).first(),
+            jack.of(Suit.Clubs).first(),
+            king.of(Suit.Diamonds).first()
+          ]);
+          const cardToPlay = behavior.findMostSuitableGreasingCard(hand);
+          expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
+        });
+
+        test("shouldn't grease queen, although more points", () => {
+          let hand = new Hand([
+            jack.of(Suit.Clubs).first(),
+            queen.of(Suit.Diamonds).first()
+          ]);
+          const cardToPlay = behavior.findMostSuitableGreasingCard(hand);
+          expect(cardToPlay).toEqual(jack.of(Suit.Clubs).first());
+        });
+
+        test("should pick lowest suit", () => {
+          let hand = new Hand([
+            jack.of(Suit.Diamonds).first(),
+            jack.of(Suit.Hearts).first(),
+            jack.of(Suit.Clubs).first()
+          ]);
+          const cardToPlay = behavior.findMostSuitableGreasingCard(hand);
+          expect(cardToPlay).toEqual(jack.of(Suit.Diamonds).first());
+        });
       });
 
-      test("should grease with non-trump", () => {
-        let hand = new Hand([
-          ten.of(Suit.Diamonds).first(),
-          ace.of(Suit.Spades).first(),
-          king.of(Suit.Spades).first()
-        ]);
-        const trick = new Trick(players);
-        trick.add(ace.of(Suit.Spades).second(), player2);
-        trick.add(king.of(Suit.Spades).second(), player3);
-        trick.add(ten.of(Suit.Spades).second(), player4);
-        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
-        expect(cardToPlay).toEqual(ace.of(Suit.Spades).first());
+      describe("On Position - easy decisions", () => {
+        test("should grease with trump", () => {
+          let hand = new Hand([
+            ace.of(Suit.Diamonds).first(),
+            jack.of(Suit.Clubs).first(),
+            ten.of(Suit.Diamonds).first()
+          ]);
+          const trick = new Trick(players);
+          trick.add(queen.of(Suit.Hearts).first(), player2);
+          trick.add(jack.of(Suit.Clubs).first(), player3);
+          trick.add(jack.of(Suit.Hearts).first(), player4);
+          const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+          expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
+        });
+
+        test("should grease with non-trump", () => {
+          let hand = new Hand([
+            ten.of(Suit.Diamonds).first(),
+            ace.of(Suit.Spades).first(),
+            king.of(Suit.Spades).first()
+          ]);
+          const trick = new Trick(players);
+          trick.add(ace.of(Suit.Spades).second(), player2);
+          trick.add(king.of(Suit.Spades).second(), player3);
+          trick.add(ten.of(Suit.Spades).second(), player4);
+          const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+          expect(cardToPlay).toEqual(ace.of(Suit.Spades).first());
+        });
+
+        test("shouldn't win the trick, greasing teammate with non-trump", () => {
+          let hand = new Hand([
+            ten.of(Suit.Diamonds).first(),
+            ace.of(Suit.Clubs).first(),
+            king.of(Suit.Clubs).first()
+          ]);
+          const trick = new Trick(players);
+          trick.add(ace.of(Suit.Spades).second(), player2);
+          trick.add(king.of(Suit.Spades).second(), player3);
+          trick.add(ten.of(Suit.Spades).second(), player4);
+          const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+          expect(cardToPlay).toEqual(ace.of(Suit.Clubs).first());
+        });
+
+        test("shouldn't grease with ten of hearts, although highest value", () => {
+          let hand = new Hand([
+            ten.of(Suit.Hearts).first(),
+            king.of(Suit.Clubs).first()
+          ]);
+          const trick = new Trick(players);
+          trick.add(ace.of(Suit.Spades).second(), player2);
+          trick.add(king.of(Suit.Spades).second(), player3);
+          trick.add(ten.of(Suit.Spades).second(), player4);
+          const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+          expect(cardToPlay).toEqual(king.of(Suit.Clubs).first());
+        });
       });
 
-      test("shouldn't win the trick, greasing teammate with non-trump", () => {
-        let hand = new Hand([
-          ten.of(Suit.Diamonds).first(),
-          ace.of(Suit.Clubs).first(),
-          king.of(Suit.Clubs).first()
-        ]);
-        const trick = new Trick(players);
-        trick.add(ace.of(Suit.Spades).second(), player2);
-        trick.add(king.of(Suit.Spades).second(), player3);
-        trick.add(ten.of(Suit.Spades).second(), player4);
-        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
-        expect(cardToPlay).toEqual(ace.of(Suit.Clubs).first());
-      });
+      describe("On Memory and or Hand - easy decisions with perfect memory", () => {
+        test("should grease with trump, knowing trick will be won anyway", () => {
+          let hand = new Hand([
+            ten.of(Suit.Diamonds).first(),
+            ace.of(Suit.Clubs).first(),
+            jack.of(Suit.Clubs).first()
+          ]);
+          const trick = new Trick(players);
+          trick.add(ten.of(Suit.Hearts).second(), player2);
+          const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+          expect(cardToPlay).toEqual(ten.of(Suit.Diamonds).first());
+        });
 
-      test("shouldn't grease with ten of hearts, although highest value", () => {
-        let hand = new Hand([
-          ten.of(Suit.Hearts).first(),
-          king.of(Suit.Clubs).first()
-        ]);
-        const trick = new Trick(players);
-        trick.add(ace.of(Suit.Spades).second(), player2);
-        trick.add(king.of(Suit.Spades).second(), player3);
-        trick.add(ten.of(Suit.Spades).second(), player4);
-        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
-        expect(cardToPlay).toEqual(king.of(Suit.Clubs).first());
-      });
-    });
+        test("should grease with trump, knowing highest remaining card was played", () => {
+          let hand = new Hand([
+            ten.of(Suit.Diamonds).first(),
+            ace.of(Suit.Clubs).first(),
+            jack.of(Suit.Clubs).first()
+          ]);
+          const trick = new Trick(players);
+          player1.memory.memorizeMany([
+            new PlayedCard(ten.of(Suit.Hearts).first(), player3),
+            new PlayedCard(ten.of(Suit.Hearts).second(), player4)
+          ]);
+          trick.add(queen.of(Suit.Clubs).second(), player2);
+          const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+          expect(cardToPlay).toEqual(ten.of(Suit.Diamonds).first());
+        });
 
-    describe("On Memory and or Hand - easy decisions with perfect memory", () => {
-      test("should grease with trump, knowing trick will be won anyway", () => {
-        let hand = new Hand([
-          ten.of(Suit.Diamonds).first(),
-          ace.of(Suit.Clubs).first(),
-          jack.of(Suit.Clubs).first()
-        ]);
-        const trick = new Trick(players);
-        trick.add(ten.of(Suit.Hearts).second(), player2);
-        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
-        expect(cardToPlay).toEqual(ten.of(Suit.Diamonds).first());
-      });
-
-      test("should grease with trump, knowing highest remaining card was played", () => {
-        let hand = new Hand([
-          ten.of(Suit.Diamonds).first(),
-          ace.of(Suit.Clubs).first(),
-          jack.of(Suit.Clubs).first()
-        ]);
-        const trick = new Trick(players);
-        player1.memory.memorize(
-          new PlayedCard(ten.of(Suit.Hearts).first(), player3)
-        );
-        player1.memory.memorize(
-          new PlayedCard(ten.of(Suit.Hearts).second(), player4)
-        );
-        trick.add(queen.of(Suit.Clubs).second(), player2);
-        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
-        expect(cardToPlay).toEqual(ten.of(Suit.Diamonds).first());
-      });
-
-      test("should grease with trump, knowing self owns only remaining better trumps", () => {
-        let hand = new Hand([
-          ten.of(Suit.Hearts).first(),
-          ace.of(Suit.Diamonds).first(),
-          jack.of(Suit.Clubs).first()
-        ]);
-        const trick = new Trick(players);
-        player1.memory.memorize(
-          new PlayedCard(ten.of(Suit.Hearts).second(), player3)
-        );
-        trick.add(queen.of(Suit.Clubs).second(), player2);
-        const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
-        expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
+        test("should grease with trump, knowing self owns only remaining better trumps", () => {
+          let hand = new Hand([
+            ten.of(Suit.Hearts).first(),
+            ace.of(Suit.Diamonds).first(),
+            jack.of(Suit.Clubs).first()
+          ]);
+          const trick = new Trick(players);
+          player1.memory.memorize(
+            new PlayedCard(ten.of(Suit.Hearts).second(), player3)
+          );
+          trick.add(queen.of(Suit.Clubs).second(), player2);
+          const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
+          expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
+        });
       });
     });
   });
