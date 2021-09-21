@@ -80,12 +80,10 @@ export class RuleBasedBehaviour implements Behavior {
 
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card {
     let baseCard = trick.baseCard();
-    if (
-      this.isTeammateKnown() &&
-      this.isCurrentWinnerTeammate(trick) &&
-      memory?.isHighestCardLeft(trick.highestCard()!.card, hand)
-    )
+    // Teammate will win trick no matter what
+    if (this.teammateWinsTrick(trick, hand, memory))
       return this.findMostSuitableGreasingCard(hand, trick);
+
     if (trick.cards().length == 3) {
       return this.playPosition(hand, trick);
     }
@@ -163,6 +161,14 @@ export class RuleBasedBehaviour implements Behavior {
       }
     }
     return this.findLeastValuableLosingCard(hand, trick);
+  }
+
+  teammateWinsTrick(trick: Trick, hand: Hand, memory?: Memory): Boolean {
+    return (
+      this.isTeammateKnown() &&
+      this.isCurrentWinnerTeammate(trick) &&
+      !!memory?.isHighestCardLeft(trick.highestCard()!.card, hand)
+    );
   }
 
   private isTeammateKnown(): Boolean {
