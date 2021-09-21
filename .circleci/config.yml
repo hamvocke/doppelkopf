@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  codecov: codecov/codecov@3.1.0
+
 jobs:
   frontend:
     docker:
@@ -29,6 +32,9 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: frontend/dist
+      - codecov/upload:
+          file: coverage/coverage-final.json
+          flags: frontend
 
   backend:
     docker:
