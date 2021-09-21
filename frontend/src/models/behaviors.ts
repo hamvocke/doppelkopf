@@ -87,6 +87,11 @@ export class RuleBasedBehaviour implements Behavior {
     if (trick.cards().length == 3) {
       return this.playPosition(hand, trick);
     }
+
+    // You're not able to win the trick on your own no matter what
+    if (this.trickCannotBeWon(hand, trick, memory))
+      return this.findLeastValuableLosingCard(hand, trick);
+
     if (!baseCard) {
       /** It's our turn. Decide how to deal with cards */
       return this.startingRule(hand, memory);
@@ -168,6 +173,14 @@ export class RuleBasedBehaviour implements Behavior {
       this.isTeammateKnown() &&
       this.isCurrentWinnerTeammate(trick) &&
       !!memory?.isHighestCardLeft(trick.highestCard()!.card, hand)
+    );
+  }
+
+  trickCannotBeWon(hand: Hand, trick: Trick, memory?: Memory): Boolean {
+    return (
+      !!trick.baseCard()?.isTrump() &&
+      (!hand.highest().beats(trick.highestCard()!.card) ||
+        !!memory?.isHighestCardLeft(trick.highestCard()!.card))
     );
   }
 
