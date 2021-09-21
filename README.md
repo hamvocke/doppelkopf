@@ -1,5 +1,6 @@
 # Doppelkopf
 [![Build status](https://circleci.com/gh/hamvocke/doppelkopf.svg?style=svg)](https://circleci.com/gh/hamvocke/doppelkopf)
+[![codecov](https://codecov.io/gh/hamvocke/doppelkopf/branch/master/graph/badge.svg?token=00G78SO5HF)](https://codecov.io/gh/hamvocke/doppelkopf)
 
 An in-browser implementation of the traditional German [Doppelkopf](https://en.wikipedia.org/wiki/Doppelkopf) card game.
 
