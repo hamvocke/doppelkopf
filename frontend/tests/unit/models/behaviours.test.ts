@@ -236,18 +236,12 @@ describe("Rule Based Card Behavior", () => {
     describe("Above 10 Points left in Suit", () => {
       beforeEach(() => {
         players.forEach(playerLoop => {
-          playerLoop.memory.memorize(
-            new PlayedCard(ace.of(Suit.Clubs).first(), player1)
-          );
-          playerLoop.memory.memorize(
-            new PlayedCard(king.of(Suit.Clubs).first(), player2)
-          );
-          playerLoop.memory.memorize(
-            new PlayedCard(ten.of(Suit.Clubs).first(), player3)
-          );
-          playerLoop.memory.memorize(
+          playerLoop.memory.memorizeMany([
+            new PlayedCard(ace.of(Suit.Clubs).first(), player1),
+            new PlayedCard(king.of(Suit.Clubs).first(), player2),
+            new PlayedCard(ten.of(Suit.Clubs).first(), player3),
             new PlayedCard(ten.of(Suit.Clubs).second(), player4)
-          );
+          ]);
         });
       });
 
@@ -346,18 +340,12 @@ describe("Rule Based Card Behavior", () => {
     describe("Less than 10 Points left in Suit", () => {
       beforeEach(() => {
         players.forEach(playerLoop => {
-          playerLoop.memory.memorize(
-            new PlayedCard(ace.of(Suit.Clubs).first(), player1)
-          );
-          playerLoop.memory.memorize(
-            new PlayedCard(ace.of(Suit.Clubs).second(), player2)
-          );
-          playerLoop.memory.memorize(
-            new PlayedCard(ten.of(Suit.Clubs).first(), player3)
-          );
-          playerLoop.memory.memorize(
+          playerLoop.memory.memorizeMany([
+            new PlayedCard(ace.of(Suit.Clubs).first(), player1),
+            new PlayedCard(ace.of(Suit.Clubs).second(), player2),
+            new PlayedCard(ten.of(Suit.Clubs).first(), player3),
             new PlayedCard(ten.of(Suit.Clubs).second(), player4)
-          );
+          ]);
         });
       });
 

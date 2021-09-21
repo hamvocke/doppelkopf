@@ -44,6 +44,10 @@ export abstract class Memory {
 
   abstract memorize(playedCard: PlayedCard, trickId?: string): void;
 
+  memorizeMany(playedCards: PlayedCard[], trickId?: string): void {
+    playedCards.forEach(playedCard => this.memorize(playedCard, trickId));
+  }
+
   memorizeTrick(trickId: string, baseCard: Card, winner: Player): void {
     this.memorizedTricks.push({ trickId, baseCard, winner });
   }
