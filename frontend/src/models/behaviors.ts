@@ -124,14 +124,14 @@ export class RuleBasedBehaviour implements Behavior {
   }
 
   nonTrumpRule(hand: Hand, trick: Trick, memory?: Memory): Card {
-    let baseCard = trick.baseCard();
-    if (hand.hasNonTrumps(baseCard!.suit)) {
+    let baseCard = trick.baseCard()!;
+    if (hand.hasNonTrumps(baseCard.suit)) {
       return this.serveNonTrump(hand, trick, memory);
     } else {
-      if (memory?.nonTrumpSuitPlayedBefore(baseCard!.suit, trick.id!)) {
+      if (memory?.nonTrumpSuitPlayedBefore(baseCard.suit, trick.id!)) {
         return hand.highest().beats(trick.highestCard()!.card) &&
           // ToDo this check works but needs tuning
-          memory.pointsLeftInSuit(baseCard!.suit) + trick.points() >= 14
+          memory.pointsLeftInSuit(baseCard.suit) + trick.points() >= 14
           ? hand.trumps()[0]
           : this.playLowValueCard(hand, trick);
       } else {
