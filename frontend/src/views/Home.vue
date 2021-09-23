@@ -2,13 +2,15 @@
   <div id="home">
     <Notifications />
     <div class="welcome">
-      <div class="container">
-        <Logo />
+      <Logo />
 
-        <h1>Doppelkopf</h1>
+      <h1>Doppelkopf</h1>
 
-        <label for="player-name">
-          {{ $t("enter_name_label") }}
+      <div class="name-form">
+        <div class="form-wrapper">
+          <label for="player-name">
+            {{ $t("enter_name_label") }}
+          </label>
           <input
             id="player-name"
             v-model="playerName"
@@ -16,10 +18,10 @@
             :placeholder="$t('enter_name_input')"
             @blur="saveName"
           />
-        </label>
+        </div>
+      </div>
 
-        <hr />
-
+      <div>
         <router-link to="/play" class="button start-game" tag="button">
           {{ $t("start-game") }}
         </router-link>
@@ -111,11 +113,9 @@ export default class Home extends Vue {
 }
 
 .welcome {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-content: center;
   height: 100%;
-  text-align: center;
 }
 
 .logo {
@@ -134,28 +134,30 @@ export default class Home extends Vue {
 }
 
 .input {
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
+  padding: 0.375em 0.75em;
   line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
+  border: none;
   border-bottom: 5px solid rgb(203, 203, 203);
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  margin-bottom: 1.5rem;
+  border-radius: 6px;
+}
+
+.input:focus {
+  outline: 3px solid var(--lightblue);
+}
+
+.name-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3em;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 label {
-  font-size: 1em;
-  display: inline-block;
-  margin-bottom: 0.5rem;
-}
-
-hr {
-  width: 100%;
-  margin: 0px;
-  color: transparent;
+  margin-bottom: 0.6em;
 }
 </style>
