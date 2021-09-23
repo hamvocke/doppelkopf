@@ -7,14 +7,16 @@
 
         <h1>Doppelkopf</h1>
 
-        <label>{{ $t("enter_name_label") }}</label>
-        <hr />
-        <input
-          class="input"
-          :value="playerName"
-          :placeholder="$t('enter_name_input')"
-          @input="updateName($event)"
-        />
+        <label for="player-name">
+          {{ $t("enter_name_label") }}
+          <input
+            id="player-name"
+            v-model="playerName"
+            class="input"
+            :placeholder="$t('enter_name_input')"
+            @blur="saveName"
+          />
+        </label>
 
         <hr />
 
@@ -72,10 +74,10 @@ export default class Home extends Vue {
   multiplayerHandler = new MultiplayerHandler();
   playerName: string = localStorage.name || "";
 
-  updateName($event: { target: { value: string } }) {
-    this.playerName = $event.target.value;
-    localStorage.setItem("name", $event.target.value);
-    console.log($event.target.value);
+  saveName() {
+    if (this.playerName) {
+      localStorage.setItem("name", this.playerName);
+    }
   }
 
   created() {
