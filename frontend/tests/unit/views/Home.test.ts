@@ -39,6 +39,18 @@ describe("Home.vue", () => {
     expect(wrapper.find(".tutorial-link").exists()).toBe(true);
   });
 
+  test("should save player name", async () => {
+    const wrapper = shallowMount(Home, {
+      stubs: { "router-link": RouterLinkStub }
+    });
+
+    const nameInput = wrapper.find("#player-name");
+    await nameInput.setValue("my name");
+    await nameInput.trigger("blur");
+
+    expect(localStorage.getItem("name")).toEqual("my name");
+  });
+
   test("should show multiplayer game button if feature is enabled", () => {
     Features.get = () => {
       return {
