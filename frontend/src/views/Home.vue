@@ -131,6 +131,7 @@ export default class Home extends Vue {
     6px 6px 0 var(--red), 7px 7px 0 var(--red);
   font-size: clamp(48px, 10vw, 96px);
   margin: 12px 0 64px;
+  text-align: center;
 }
 
 .input {
