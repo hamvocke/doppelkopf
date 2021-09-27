@@ -94,7 +94,7 @@ export class RuleBasedBehaviour implements Behavior {
 
     if (!baseCard) {
       /** It's our turn. Decide how to deal with cards */
-      return this.startingRule(hand, memory);
+      return this.startingRule(hand, trick, memory);
     }
     if (!baseCard.isTrump()) {
       return this.nonTrumpRule(hand, trick, memory);
@@ -104,7 +104,7 @@ export class RuleBasedBehaviour implements Behavior {
     return sample(playableCards(hand.cards, baseCard))!;
   }
 
-  startingRule(hand: Hand, memory?: Memory): Card {
+  startingRule(hand: Hand, trick: Trick, memory?: Memory): Card {
     for (const ace of hand.getBlankAces()) {
       if (!memory?.nonTrumpSuitPlayedBefore(ace.suit)) {
         return ace;
@@ -120,7 +120,16 @@ export class RuleBasedBehaviour implements Behavior {
       }
     }
     // ToDo check if we know with whom we play and if we want to play a strategy
-    return sample(playableCards(hand.cards))!;
+    if (this.getMyPlayer(trick).isKontra()) {
+      return this.findLeastValuableLosingCard(hand, trick);
+    } else {
+      return (
+        hand
+          .lowValues()
+          .filter(card => card.isTrump())
+          .reverse()[0] ?? this.findLeastValuableLosingCard(hand, trick)
+      );
+    }
   }
 
   nonTrumpRule(hand: Hand, trick: Trick, memory?: Memory): Card {
