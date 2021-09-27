@@ -89,6 +89,57 @@ describe("Rule Based Card Behavior", () => {
     king.of(Suit.Spades).first()
   ]);
 
+  describe("Starting rules", () => {
+    beforeEach(() => {
+      player1.memory.clearMemory();
+      player2.memory.clearMemory();
+      player3.memory.clearMemory();
+      player4.memory.clearMemory();
+    });
+
+    test("should start with ace", () => {
+      let hand = new Hand([
+        ace.of(Suit.Spades).first(),
+        ace.of(Suit.Clubs),
+        ten.of(Suit.Clubs),
+        ace.of(Suit.Hearts),
+        ace.of(Suit.Diamonds)
+      ]);
+      const trick = new Trick(players);
+      const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
+      expect(cardToPlay).toEqual(ace.of(Suit.Spades).first());
+    });
+
+    test("kontra should start with least valueable card", () => {
+      let hand = new Hand([
+        king.of(Suit.Clubs).first(),
+        ten.of(Suit.Clubs),
+        ten.of(Suit.Spades),
+        ace.of(Suit.Diamonds),
+        jack.of(Suit.Spades).first(),
+        jack.of(Suit.Clubs).first()
+      ]);
+      const trick = new Trick(players);
+      const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
+      expect(cardToPlay).toEqual(king.of(Suit.Clubs).first());
+    });
+
+    test("re should start with trump", () => {
+      let hand = new Hand([
+        king.of(Suit.Clubs).first(),
+        ten.of(Suit.Clubs),
+        ten.of(Suit.Spades),
+        ace.of(Suit.Diamonds),
+        jack.of(Suit.Spades).first(),
+        jack.of(Suit.Clubs).first()
+      ]);
+      const trick = new Trick(players);
+      player1.isRe = () => true;
+      const cardToPlay = player1.behavior.cardToPlay(hand, trick, no_memory);
+      expect(cardToPlay).toEqual(jack.of(Suit.Spades).first());
+    });
+  });
+
   describe("Non-trump has been played for the first time", () => {
     beforeEach(() => {
       player1.memory.clearMemory();
@@ -96,6 +147,7 @@ describe("Rule Based Card Behavior", () => {
       player3.memory.clearMemory();
       player4.memory.clearMemory();
     });
+
     test("should play lowest value nonTrump when not starting", () => {
       const trick = new Trick(players);
       trick.add(ace.of(Suit.Clubs).second(), player1);
@@ -170,19 +222,6 @@ describe("Rule Based Card Behavior", () => {
       trick.add(jack.of(Suit.Spades).second(), player2);
       const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
       expect(cardToPlay).toEqual(expect.any(Card));
-    });
-
-    test("should start with ace", () => {
-      let hand = new Hand([
-        ace.of(Suit.Spades).first(),
-        ace.of(Suit.Clubs),
-        ten.of(Suit.Clubs),
-        ace.of(Suit.Hearts),
-        ace.of(Suit.Diamonds)
-      ]);
-      const trick = new Trick(players);
-      const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
-      expect(cardToPlay).toEqual(ace.of(Suit.Spades).first());
     });
 
     test("should play ace because chance of winning", () => {
