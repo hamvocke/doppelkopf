@@ -77,14 +77,18 @@ export class RuleBasedBehaviour implements Behavior {
     possibleAnnouncements: Set<Announcement>,
     hand: Hand
   ): Announcement | null {
-    // ToDo announce by "goodies"
-    /**
-     * for instance
-     * only one nonTrumpsuit
-     * high number of trumps
-     * high trumps, such as 2x ten of hearts
-     * blank ace and starting
-     */
+    if (
+      [...possibleAnnouncements].includes(Announcement.Kontra) ||
+      [...possibleAnnouncements].includes(Announcement.Re)
+    ) {
+      let counter = 0;
+      if (hand.getBlankAces().length > 0) counter++;
+      if (hand.trumps().length >= 7) counter++;
+      if (hand.cards.filter(c => c.compareTo(ten.of(Suit.Hearts))).length === 2)
+        counter++;
+      counter += hand.missingSuites().length;
+      return counter > 2 ? [...possibleAnnouncements][0] : null;
+    }
     return null;
   }
 
