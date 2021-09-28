@@ -89,6 +89,37 @@ describe("Rule Based Card Behavior", () => {
     king.of(Suit.Spades).first()
   ]);
 
+  test("shouldn't announce", () => {
+    const announcement = behavior.announcementToMake(
+      new Set([Announcement.Re, Announcement.No90]),
+      hand
+    );
+
+    expect(announcement).toBeNull();
+  });
+
+  test("should announce", () => {
+    const hand = new Hand([
+      king.of(Suit.Hearts).first(),
+      ace.of(Suit.Hearts).first(),
+      king.of(Suit.Diamonds).second(),
+      ace.of(Suit.Diamonds).first(),
+      jack.of(Suit.Diamonds).first(),
+      jack.of(Suit.Clubs).first(),
+      jack.of(Suit.Spades).first(),
+      queen.of(Suit.Hearts).first(),
+      queen.of(Suit.Clubs).first(),
+      ten.of(Suit.Hearts).first()
+    ]);
+
+    const announcement = behavior.announcementToMake(
+      new Set([Announcement.Re, Announcement.No90]),
+      hand
+    );
+
+    expect(announcement).toEqual(Announcement.Re);
+  });
+
   describe("Starting rules", () => {
     beforeEach(() => {
       player1.memory.clearMemory();
