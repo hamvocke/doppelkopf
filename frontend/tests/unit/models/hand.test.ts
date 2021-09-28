@@ -312,3 +312,22 @@ test("should detect low value cards in hand", () => {
 
   expect(hand.lowValues().length).toBe(3);
 });
+
+test("should detect low value cards in hand", () => {
+  const cards = [
+    ace.of(Suit.Hearts),
+    king.of(Suit.Clubs),
+    ten.of(Suit.Clubs),
+    ace.of(Suit.Clubs),
+    jack.of(Suit.Spades),
+    jack.of(Suit.Clubs),
+    queen.of(Suit.Spades),
+    queen.of(Suit.Clubs),
+    ten.of(Suit.Hearts),
+    ten.of(Suit.Hearts)
+  ];
+  const hand = new Hand(cards);
+
+  expect(hand.missingSuites().length).toBe(1);
+  expect(hand.missingSuites()).toContain(Suit.Spades);
+});
