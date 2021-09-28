@@ -83,7 +83,8 @@ export class Player {
     }
 
     const announcement = this.behavior.announcementToMake(
-      this.possibleAnnouncements()
+      this.possibleAnnouncements(),
+      this.hand
     );
     if (announcement !== null) {
       this.announce(announcement);

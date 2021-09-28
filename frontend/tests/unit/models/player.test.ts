@@ -187,7 +187,10 @@ test("should try to make an announcement", () => {
 
   player.autoplay();
 
-  expect(player.behavior.announcementToMake).toBeCalledWith(expect.any(Set));
+  expect(player.behavior.announcementToMake).toBeCalledWith(
+    expect.any(Set),
+    expect.any(Hand)
+  );
 });
 
 test("should not play a card if its not the players turn", () => {

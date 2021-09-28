@@ -15,7 +15,8 @@ export interface Behavior {
   reset(): void;
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card;
   announcementToMake(
-    possibleAnnouncements: Set<Announcement>
+    possibleAnnouncements: Set<Announcement>,
+    hand?: Hand
   ): Announcement | null;
 }
 
@@ -30,7 +31,10 @@ export class HighestCardBehavior implements Behavior {
     return playableCards(hand.cards, trick.baseCard())[0];
   }
 
-  announcementToMake(possibleAnnouncements: Set<Announcement>) {
+  announcementToMake(
+    possibleAnnouncements: Set<Announcement>,
+    hand?: Hand
+  ): Announcement | null {
     return null;
   }
 }
@@ -45,7 +49,10 @@ export class RandomCardBehavior implements Behavior {
     return sample(playableCards(hand.cards, trick.baseCard()))!;
   }
 
-  announcementToMake(possibleAnnouncements: Set<Announcement>) {
+  announcementToMake(
+    possibleAnnouncements: Set<Announcement>,
+    hand?: Hand
+  ): Announcement | null {
     if (possibleAnnouncements.size === 0) {
       return null;
     }
@@ -66,7 +73,10 @@ export class RuleBasedBehaviour implements Behavior {
     this.affinities.reset();
   }
 
-  announcementToMake(possibleAnnouncements: Set<Announcement>) {
+  announcementToMake(
+    possibleAnnouncements: Set<Announcement>,
+    hand: Hand
+  ): Announcement | null {
     // ToDo announce by "goodies"
     /**
      * for instance
