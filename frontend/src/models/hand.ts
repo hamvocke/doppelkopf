@@ -103,4 +103,12 @@ export class Hand {
     });
     return aces;
   }
+
+  missingSuites(): Suit[] {
+    let suits = new Array<Suit>();
+    for (const suit of [Suit.Clubs, Suit.Spades, Suit.Hearts]) {
+      if (this.nonTrumps(suit).length === 0) suits.push(suit);
+    }
+    return suits;
+  }
 }
