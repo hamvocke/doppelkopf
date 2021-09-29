@@ -9,24 +9,22 @@ import { Memory } from "./memory";
 import { Player } from "./player";
 import { Affinities } from "./affinities";
 
-export interface Behavior {
-  playerId: string;
-  affinities: Affinities;
-  reset(): void;
-  cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card;
-  announcementToMake(
-    possibleAnnouncements: Set<Announcement>,
-    hand?: Hand
-  ): Announcement | null;
-}
-
-export class HighestCardBehavior implements Behavior {
+export abstract class Behavior {
   constructor(public playerId: string, public affinities: Affinities) {}
 
   reset() {
     this.affinities.reset();
   }
 
+  abstract cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card;
+
+  abstract announcementToMake(
+    possibleAnnouncements: Set<Announcement>,
+    hand?: Hand
+  ): Announcement | null;
+}
+
+export class HighestCardBehavior extends Behavior {
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory) {
     return playableCards(hand.cards, trick.baseCard())[0];
   }
@@ -38,13 +36,7 @@ export class HighestCardBehavior implements Behavior {
     return null;
   }
 }
-export class RandomCardBehavior implements Behavior {
-  constructor(public playerId: string, public affinities: Affinities) {}
-
-  reset() {
-    this.affinities.reset();
-  }
-
+export class RandomCardBehavior extends Behavior {
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory) {
     return sample(playableCards(hand.cards, trick.baseCard()))!;
   }
@@ -66,13 +58,7 @@ export class RandomCardBehavior implements Behavior {
   }
 }
 
-export class RuleBasedBehaviour implements Behavior {
-  constructor(public playerId: string, public affinities: Affinities) {}
-
-  reset() {
-    this.affinities.reset();
-  }
-
+export class RuleBasedBehaviour extends Behavior {
   announcementToMake(
     possibleAnnouncements: Set<Announcement>,
     hand: Hand
