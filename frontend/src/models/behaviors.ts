@@ -106,14 +106,14 @@ export class RuleBasedBehaviour extends Behavior {
 
   startingRule(hand: Hand, trick: Trick, memory?: Memory): Card {
     for (const ace of hand.getBlankAces()) {
-      if (!memory?.nonTrumpSuitPlayedBefore(ace.suit)) {
+      if (!memory?.hasSuitBeenPlayedBefore(ace.suit)) {
         return ace;
       }
     }
     for (const suit of [Suit.Clubs, Suit.Spades, Suit.Hearts]) {
       if (
         hand.findAny(suit, Rank.Ace) &&
-        !memory?.nonTrumpSuitPlayedBefore(suit) &&
+        !memory?.hasSuitBeenPlayedBefore(suit) &&
         hand.nonTrumps(suit).length <= 3
       ) {
         return hand.nonTrumps(suit)[0];
@@ -137,7 +137,7 @@ export class RuleBasedBehaviour extends Behavior {
     if (hand.hasNonTrumps(baseCard.suit)) {
       return this.serveNonTrump(hand, trick, memory);
     } else {
-      if (memory?.nonTrumpSuitPlayedBefore(baseCard.suit, trick.id!)) {
+      if (memory?.hasSuitBeenPlayedBefore(baseCard.suit, trick.id!)) {
         return hand.highest().beats(trick.highestCard()!.card) &&
           // ToDo this check works but needs tuning
           memory.pointsLeftInSuit(baseCard.suit) + trick.points() >= 14
@@ -205,7 +205,7 @@ export class RuleBasedBehaviour extends Behavior {
     let highest = nonTrumpCards[0];
     let lowest = nonTrumpCards.slice(-1)[0];
 
-    if (memory?.nonTrumpSuitPlayedBefore(trick.baseCard()!.suit, trick.id)) {
+    if (memory?.hasSuitBeenPlayedBefore(trick.baseCard()!.suit, trick.id)) {
       return lowest;
     }
 

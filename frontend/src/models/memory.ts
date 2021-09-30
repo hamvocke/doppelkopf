@@ -52,7 +52,7 @@ export abstract class Memory {
     this.memorizedTricks.push({ trickId, baseCard, winner });
   }
 
-  hasNonTrumpSuitBeenStartedBefore(suit: Suit): boolean {
+  hasSuitBeenStartedBefore(suit: Suit): boolean {
     return (
       this.memorizedTricks.filter(
         memTrick =>
@@ -63,20 +63,23 @@ export abstract class Memory {
 
   hasSuitBeenThrown(suit: Suit): boolean {
     return (
-      !this.hasNonTrumpSuitBeenStartedBefore(suit) &&
-      this.nonTrumpSuitPlayedBefore(suit)
+      this.hasSuitBeenPlayedBefore(suit) && !this.hasSuitBeenStartedBefore(suit)
     );
   }
 
-  nonTrumpSuitPlayedBefore(suit: Suit, trickId?: string) {
-    return (
-      this.memorizedCards.filter(
-        element =>
-          element.playedCard.card.suit === suit &&
-          !element.playedCard.card.isTrump() &&
-          (element.trickId !== trickId || !trickId)
-      ).length > 0
-    );
+  hasSuitBeenPlayedBefore(suit: Suit, trickId?: string): boolean {
+    return this.getPlayersBySuitPlayed(suit, trickId).length > 0;
+  }
+
+  getPlayersBySuitPlayed(suit: Suit, trickId?: string): Player[] {
+    return this.memorizedCards
+      .filter(
+        memCards =>
+          memCards.playedCard.card.suit === suit &&
+          !memCards.playedCard.card.isTrump() &&
+          (memCards.trickId !== trickId || !trickId)
+      )
+      .map(memCards => memCards.playedCard.player);
   }
 
   pointsForPlayer(player: Player): number {
@@ -91,7 +94,7 @@ export abstract class Memory {
     return points;
   }
 
-  pointsLeftInSuit(suit: string) {
+  pointsLeftInSuit(suit: string): number {
     return (
       cardOrder
         .filter(card => card.suit === suit && !card.isTrump())
