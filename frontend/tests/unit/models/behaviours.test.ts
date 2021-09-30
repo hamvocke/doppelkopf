@@ -468,6 +468,7 @@ describe("Rule Based Card Behavior", () => {
 
   describe("Knowing your teammate", () => {
     beforeEach(() => {
+      jest.clearAllMocks();
       player1.memory.clearMemory();
       player2.memory.clearMemory();
       player3.memory.clearMemory();
@@ -478,6 +479,46 @@ describe("Rule Based Card Behavior", () => {
       player4.isRe = () => false;
       behavior.affinities.setPlayers(players);
       behavior.affinities.declaresParty(player2);
+    });
+
+    test("should play suit already thrown by teammate", () => {
+      let hand = new Hand([
+        ten.of(Suit.Spades).first(),
+        king.of(Suit.Spades).first(),
+        jack.of(Suit.Spades).first()
+      ]);
+      player1.memory.hasSuitBeenThrownByPlayer = jest
+        .fn()
+        .mockImplementation(
+          (suit, player) => suit === Suit.Spades && player.id === player2.id
+        );
+      const cardToPlay = behavior.cardToPlay(
+        hand,
+        new Trick(players),
+        player1.memory
+      );
+      expect(cardToPlay).toEqual(ten.of(Suit.Spades).first());
+    });
+
+    test("shouldn't play suit thrown by teammate because enemy has thrown too", () => {
+      let hand = new Hand([
+        ten.of(Suit.Spades).first(),
+        king.of(Suit.Spades).first(),
+        jack.of(Suit.Spades).first()
+      ]);
+      player1.memory.hasSuitBeenThrownByPlayer = jest
+        .fn()
+        .mockImplementation(
+          (suit, player) =>
+            suit === Suit.Spades &&
+            (player.id === player2.id || player.id === player4.id)
+        );
+      const cardToPlay = behavior.cardToPlay(
+        hand,
+        new Trick(players),
+        player1.memory
+      );
+      expect(cardToPlay).toEqual(jack.of(Suit.Spades).first());
     });
 
     describe("When losing, play least valuable card", () => {

@@ -119,6 +119,32 @@ export class RuleBasedBehaviour extends Behavior {
         return hand.nonTrumps(suit)[0];
       }
     }
+
+    /**
+     * Play Suit that has been thrown by teammate
+     */
+    for (const suit of [Suit.Clubs, Suit.Spades, Suit.Hearts]) {
+      if (hand.nonTrumps(suit)[0]) {
+        let teammateThrew = false;
+        let enemiesThrew = false;
+        // is there a teammate who has thrown
+        for (let teammate of this.getTeammates()) {
+          if (memory?.hasSuitBeenThrownByPlayer(suit, teammate)) {
+            teammateThrew = true;
+          }
+        }
+        // is there an enemy who has thrown
+        for (let enemy of this.getEnemies()) {
+          if (memory?.hasSuitBeenThrownByPlayer(suit, enemy)) {
+            enemiesThrew = true;
+          }
+        }
+        if (teammateThrew && !enemiesThrew) {
+          return hand.nonTrumps(suit)[0];
+        }
+      }
+    }
+
     // ToDo check if we know with whom we play and if we want to play a strategy
     if (this.getMyPlayer(trick).isKontra()) {
       return this.findLeastValuableLosingCard(hand, trick);
@@ -188,6 +214,18 @@ export class RuleBasedBehaviour extends Behavior {
         playerAffinity => playerAffinity.affinity === 1
       ).length > 0
     );
+  }
+
+  private getTeammates(): Player[] {
+    return this.affinities.affinityTable
+      .filter(playerAffinity => playerAffinity.affinity === 1)
+      .map(playerAffinity => playerAffinity.player);
+  }
+
+  private getEnemies(): Player[] {
+    return this.affinities.affinityTable
+      .filter(playerAffinity => playerAffinity.affinity === -1)
+      .map(playerAffinity => playerAffinity.player);
   }
 
   private isCurrentWinnerTeammate(trick: Trick): Boolean {
