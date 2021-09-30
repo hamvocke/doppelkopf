@@ -169,6 +169,21 @@ describe("Testing functionality", () => {
     expect(memory.hasSuitBeenThrown(Suit.Hearts)).toEqual(false);
   });
 
+  test("Should detect player that threw a suit", () => {
+    const memory = new PerfectMemory();
+    const bob = new Player("B");
+    const chad = new Player("C");
+    memory.memorizeTrick("1", ace.of(Suit.Spades), new Player("A"));
+    memory.memorize(new PlayedCard(ace.of(Suit.Clubs), bob), "1");
+    memory.memorize(new PlayedCard(ten.of(Suit.Spades), chad), "1");
+    expect(memory.hasSuitBeenThrownByPlayer(Suit.Clubs, bob)).toEqual(true);
+    expect(memory.hasSuitBeenThrownByPlayer(Suit.Spades, bob)).toEqual(false);
+    expect(memory.hasSuitBeenThrownByPlayer(Suit.Hearts, bob)).toEqual(false);
+    expect(memory.hasSuitBeenThrownByPlayer(Suit.Clubs, chad)).toEqual(false);
+    expect(memory.hasSuitBeenThrownByPlayer(Suit.Spades, chad)).toEqual(false);
+    expect(memory.hasSuitBeenThrownByPlayer(Suit.Hearts, chad)).toEqual(false);
+  });
+
   test("Should remember and calculate points for player", () => {
     const memory = new PerfectMemory();
     const player1 = new Player("A");

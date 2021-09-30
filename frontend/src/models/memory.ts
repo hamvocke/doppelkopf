@@ -67,6 +67,15 @@ export abstract class Memory {
     );
   }
 
+  hasSuitBeenThrownByPlayer(suit: Suit, player: Player): boolean {
+    return (
+      this.hasSuitBeenThrown(suit) &&
+      this.getPlayersBySuitPlayed(suit)
+        .map(p => p.id)
+        .includes(player.id)
+    );
+  }
+
   hasSuitBeenPlayedBefore(suit: Suit, trickId?: string): boolean {
     return this.getPlayersBySuitPlayed(suit, trickId).length > 0;
   }
