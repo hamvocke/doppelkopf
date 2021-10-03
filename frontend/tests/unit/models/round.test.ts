@@ -148,7 +148,8 @@ describe("player order", () => {
       affinities: new Affinities(round.players[3]),
       reset: jest.fn(() => null),
       cardToPlay: (hand: Hand) => hand.cards[0],
-      announcementToMake: () => null
+      announcementToMake: jest.fn(() => null),
+      handleAffinityEvent: jest.fn(() => null)
     };
     round.playerOrder.prioritize(round.players[3]);
     round.players[3].behavior = playFirstCardBehavior;

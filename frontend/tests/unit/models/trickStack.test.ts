@@ -9,6 +9,10 @@ const player2 = new Player("player 2");
 const player3 = new Player("player 3");
 const player4 = new Player("player 4");
 const players = [player1, player2, player3, player4];
+players.forEach(p => {
+  p.behavior.affinities.setPlayers(players);
+  p.behavior.affinities.declaresParty(player2);
+});
 
 let trickStack: TrickStack;
 

@@ -9,6 +9,10 @@ const player2 = new Player("Player 2");
 const player3 = new Player("Player 3");
 const player4 = new Player("Player 4");
 const players = [player1, player2, player3, player4];
+players.forEach(p => {
+  p.behavior.affinities.setPlayers(players);
+  p.behavior.affinities.declaresParty(player2);
+});
 
 test("new trick is empty", () => {
   expect(new Trick(players).cards).toHaveLength(0);

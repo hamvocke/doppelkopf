@@ -477,6 +477,10 @@ describe("Rule Based Card Behavior", () => {
       player2.isRe = () => true;
       player3.isRe = () => false;
       player4.isRe = () => false;
+      players.forEach(p => {
+        p.behavior.affinities.setPlayers(players);
+        p.behavior.affinities.declaresParty(player2);
+      });
       behavior.affinities.setPlayers(players);
       behavior.affinities.declaresParty(player2);
     });

@@ -1,9 +1,10 @@
 import { uniqueId } from "lodash-es";
-import { Card } from "@/models/card";
+import { Card, queen } from "@/models/card";
 import { PlayedCard } from "@/models/playedCard";
 import { Rank, Suit } from "@/models/card";
 import { Extra, extras as extrasModel } from "@/models/extras";
 import { Player } from "./player";
+import { AffinityEvent } from "./affinities";
 
 export class Trick {
   players: Player[];
@@ -26,7 +27,7 @@ export class Trick {
     this.lastTrickInRound = true;
   }
 
-  add(card: Card, player: any) {
+  add(card: Card, player: Player) {
     if (this.cardBy(player)) {
       throw Error(`Player ${player.name} already played a card`);
     }
@@ -42,6 +43,16 @@ export class Trick {
     this.players.forEach(playerLoop => {
       playerLoop.memory.memorize(new PlayedCard(card, player), this.id);
     });
+
+    this.checkForAffinityEvent(card, player);
+  }
+
+  checkForAffinityEvent(card: Card, player: Player): void {
+    if (card.compareTo(queen.of(Suit.Clubs)) === 0) {
+      this.players.forEach(p => {
+        p.behavior.handleAffinityEvent(AffinityEvent.QueenOfClubs, player);
+      });
+    }
   }
 
   cards() {

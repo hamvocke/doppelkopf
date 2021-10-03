@@ -120,9 +120,6 @@ export class Player {
       this.game?.currentTrick.add(card, this);
       this.hand.remove(card);
 
-      if (card.compareTo(queen.of(Suit.Clubs)) === 0)
-        this.game?.affinityEvent(AffinityEvent.QueenOfClubs, this);
-
       this.game?.currentRound.nextPlayer();
 
       if (options.autoplay === true) {
@@ -167,7 +164,9 @@ export class Player {
       throw new Error("Invalid announcement");
     }
 
-    this.game?.affinityEvent(AffinityEvent.Announcement, this);
+    this.game?.players.forEach(p => {
+      p.behavior.handleAffinityEvent(AffinityEvent.Announcement, this);
+    });
 
     const announcementOrder = getAnnouncementOrder(this.isRe());
     const pos = announcementOrder.findIndex(a => a === announcement);

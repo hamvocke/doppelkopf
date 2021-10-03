@@ -95,21 +95,4 @@ export class Game {
       player.behavior.affinities.setPlayers(this.players)
     );
   }
-
-  affinityEvent(event: AffinityEvent, player: Player) {
-    switch (event) {
-      case AffinityEvent.Announcement:
-        this.players
-          .filter(p => p.id !== player.id)
-          .forEach(p => p.behavior.affinities.declaresParty(player));
-        break;
-      case AffinityEvent.QueenOfClubs:
-        this.players
-          .filter(p => p.id !== player.id)
-          .forEach(p => p.behavior.affinities.declaresParty(player, true));
-        break;
-      default:
-        break;
-    }
-  }
 }

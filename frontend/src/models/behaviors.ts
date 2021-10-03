@@ -7,7 +7,7 @@ import { Announcement } from "./announcements";
 import { Trick } from "./trick";
 import { Memory } from "./memory";
 import { Player } from "./player";
-import { Affinities } from "./affinities";
+import { Affinities, AffinityEvent } from "./affinities";
 
 export abstract class Behavior {
   constructor(public playerId: string, public affinities: Affinities) {}
@@ -18,6 +18,8 @@ export abstract class Behavior {
 
   abstract cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card;
 
+  abstract handleAffinityEvent(event: AffinityEvent, player: Player): void;
+
   abstract announcementToMake(
     possibleAnnouncements: Set<Announcement>,
     hand?: Hand
@@ -25,6 +27,8 @@ export abstract class Behavior {
 }
 
 export class HighestCardBehavior extends Behavior {
+  handleAffinityEvent(event: AffinityEvent, player: Player): void {}
+
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory) {
     return playableCards(hand.cards, trick.baseCard())[0];
   }
@@ -37,6 +41,8 @@ export class HighestCardBehavior extends Behavior {
   }
 }
 export class RandomCardBehavior extends Behavior {
+  handleAffinityEvent(event: AffinityEvent, player: Player): void {}
+
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory) {
     return sample(playableCards(hand.cards, trick.baseCard()))!;
   }
@@ -59,6 +65,19 @@ export class RandomCardBehavior extends Behavior {
 }
 
 export class RuleBasedBehaviour extends Behavior {
+  handleAffinityEvent(event: AffinityEvent, player: Player): void {
+    switch (event) {
+      case AffinityEvent.Announcement:
+        this.affinities.declaresParty(player);
+        break;
+      case AffinityEvent.QueenOfClubs:
+        this.affinities.declaresParty(player, true);
+        break;
+      default:
+        break;
+    }
+  }
+
   announcementToMake(
     possibleAnnouncements: Set<Announcement>,
     hand: Hand

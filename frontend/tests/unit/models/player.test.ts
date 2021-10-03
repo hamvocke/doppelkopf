@@ -161,7 +161,8 @@ test("should autoplay a card", () => {
     affinities: new Affinities(player),
     reset: jest.fn(() => null),
     cardToPlay: jest.fn(() => kingOnHand),
-    announcementToMake: jest.fn(() => null)
+    announcementToMake: jest.fn(() => null),
+    handleAffinityEvent: jest.fn(() => null)
   };
 
   player.autoplay();
@@ -182,7 +183,8 @@ test("should try to make an announcement", () => {
     affinities: new Affinities(player),
     reset: jest.fn(() => null),
     cardToPlay: jest.fn(() => player.hand.cards[0]),
-    announcementToMake: jest.fn(() => null)
+    announcementToMake: jest.fn(() => null),
+    handleAffinityEvent: jest.fn(() => null)
   };
 
   player.autoplay();
