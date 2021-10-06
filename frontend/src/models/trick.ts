@@ -1,5 +1,5 @@
 import { uniqueId } from "lodash-es";
-import { Card, queen } from "@/models/card";
+import { Card, queen, ten } from "@/models/card";
 import { PlayedCard } from "@/models/playedCard";
 import { Rank, Suit } from "@/models/card";
 import { Extra, extras as extrasModel } from "@/models/extras";
@@ -51,6 +51,19 @@ export class Trick {
     if (card.compareTo(queen.of(Suit.Clubs)) === 0) {
       this.players.forEach(p => {
         p.behavior.handleAffinityEvent(AffinityEvent.QueenOfClubs, player);
+      });
+    }
+    if (
+      card.compareTo(ten.of(Suit.Hearts)) === 0 &&
+      this.playedCards.filter(
+        playedCard => playedCard.card.compareTo(queen.of(Suit.Clubs)) === 0
+      )
+    ) {
+      this.players.forEach(p => {
+        p.behavior.handleAffinityEvent(
+          AffinityEvent.QueenOfClubsTricked,
+          player
+        );
       });
     }
   }

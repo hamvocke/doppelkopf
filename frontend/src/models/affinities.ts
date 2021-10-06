@@ -3,6 +3,7 @@ import { Player } from "@/models/player";
 export enum AffinityEvent {
   Announcement = "announcement",
   QueenOfClubs = "queen_of_clubs",
+  QueenOfClubsTricked = "queen_of_clubs_tricked",
   PlayedCard = "played_card"
 }
 
