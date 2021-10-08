@@ -3,6 +3,7 @@ import { Player } from "@/models/player";
 import { PlayedCard } from "@/models/playedCard";
 import { queen, jack, king, Suit, ten, ace } from "@/models/card";
 import { extras } from "@/models/extras";
+import { AffinityEvent } from "@/models/affinities";
 
 const player1 = new Player("Player 1", true);
 const player2 = new Player("Player 2");
@@ -12,6 +13,10 @@ const players = [player1, player2, player3, player4];
 players.forEach(p => {
   p.behavior.affinities.setPlayers(players);
   p.behavior.affinities.declaresParty(player2);
+});
+
+beforeEach(() => {
+  jest.clearAllMocks();
 });
 
 test("new trick is empty", () => {
@@ -305,5 +310,29 @@ describe("extras", () => {
       extras.charlie_caught,
       extras.charlie
     ]);
+  });
+
+  describe("Affinity event handling", () => {
+    test("should call queen of clubs event", () => {
+      const affinityEvents = (player2.behavior.handleAffinityEvent = jest.fn());
+      const trick = new Trick(players);
+      trick.add(queen.of(Suit.Clubs), player1);
+      expect(affinityEvents).toHaveBeenCalledWith(
+        AffinityEvent.QueenOfClubs,
+        player1
+      );
+    });
+
+    test("should call queen of clubs tricked event", () => {
+      const affinityEvents = (player1.behavior.handleAffinityEvent = jest.fn());
+      const trick = new Trick(players);
+      trick.add(queen.of(Suit.Clubs), player1);
+      trick.add(jack.of(Suit.Spades), player2);
+      trick.add(ten.of(Suit.Hearts), player3);
+      expect(affinityEvents).toHaveBeenCalledWith(
+        AffinityEvent.QueenOfClubsTricked,
+        player3
+      );
+    });
   });
 });
