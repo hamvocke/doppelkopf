@@ -57,7 +57,7 @@ export class Trick {
       card.compareTo(ten.of(Suit.Hearts)) === 0 &&
       this.playedCards.filter(
         playedCard => playedCard.card.compareTo(queen.of(Suit.Clubs)) === 0
-      )
+      ).length > 0
     ) {
       this.players.forEach(p => {
         p.behavior.handleAffinityEvent(
