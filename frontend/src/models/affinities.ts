@@ -1,4 +1,5 @@
 import { Player } from "@/models/player";
+import { getPartyName, PartyName } from "./party";
 
 export enum AffinityEvent {
   Announcement = "announcement",
@@ -78,6 +79,18 @@ export class Affinities {
       }));
   }
 
+  private suggestPartyForPlayer(player: Player, party: PartyName): void {
+    this.setAffinity(player, getPartyName(this.me) === party ? 1 : -1);
+  }
+
+  suggestKontraFor(player: Player): void {
+    this.suggestPartyForPlayer(player, PartyName.Kontra);
+  }
+
+  suggestReFor(player: Player): void {
+    this.suggestPartyForPlayer(player, PartyName.Re);
+  }
+
   declaresParty(player: Player, playedQueenOfClubs?: boolean) {
     if (this.isMe(player)) return;
     if (this.isInMyParty(player)) {
@@ -109,10 +122,11 @@ export class Affinities {
     return this.getContainerFor(player).declaredParty;
   }
 
-  setAffinity(player: Player, value: number) {
+  setAffinity(player: Player, value: number, hasDeclared: boolean = false) {
     if (!this.isMe(player) && !this.hasDeclaredParty(player)) {
       let index = this.affinityTable.findIndex(x => x.player.id === player.id);
       this.affinityTable[index].affinity = value;
+      this.affinityTable[index].declaredParty = hasDeclared;
     }
   }
 
