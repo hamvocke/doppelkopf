@@ -73,6 +73,9 @@ export class RuleBasedBehaviour extends Behavior {
       case AffinityEvent.QueenOfClubs:
         this.affinities.declaresParty(player, true);
         break;
+      case AffinityEvent.QueenOfClubsTricked:
+        this.affinities.suggestKontraFor(player);
+        break;
       default:
         break;
     }
