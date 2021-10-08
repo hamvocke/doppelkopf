@@ -10,7 +10,7 @@ import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PerfectMemory } from "@/models/memory";
 import { PlayedCard } from "@/models/playedCard";
-import { Affinities } from "@/models/affinities";
+import { Affinities, AffinityEvent } from "@/models/affinities";
 
 jest.mock("@/models/random", () => ({
   __esModule: true,
@@ -523,6 +523,25 @@ describe("Rule Based Card Behavior", () => {
         player1.memory
       );
       expect(cardToPlay).toEqual(jack.of(Suit.Spades).first());
+    });
+
+    test("should suggest player is kontra and grease", () => {
+      let hand = new Hand([
+        ace.of(Suit.Diamonds).first(),
+        jack.of(Suit.Diamonds).first(),
+        queen.of(Suit.Diamonds).first()
+      ]);
+      const trick = new Trick(players);
+      trick.add(queen.of(Suit.Clubs), player1);
+      trick.add(jack.of(Suit.Spades), player2);
+      trick.add(ten.of(Suit.Hearts), player3);
+      expect(player4.behavior.affinities.for(player3)).toEqual(1);
+      const cardToPlay = player4.behavior.cardToPlay(
+        hand,
+        trick,
+        player4.memory
+      );
+      expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
     });
 
     describe("When losing, play least valuable card", () => {
