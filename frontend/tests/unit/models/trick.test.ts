@@ -313,6 +313,10 @@ describe("extras", () => {
   });
 
   describe("Affinity event handling", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
     test("should call queen of clubs event", () => {
       const affinityEvents = (player2.behavior.handleAffinityEvent = jest.fn());
       const trick = new Trick(players);
@@ -332,6 +336,30 @@ describe("extras", () => {
       expect(affinityEvents).toHaveBeenCalledWith(
         AffinityEvent.QueenOfClubsTricked,
         player3
+      );
+    });
+
+    test("should call queen of clubs greased event when ace of diamonds added", () => {
+      const affinityEvents = (player1.behavior.handleAffinityEvent = jest.fn());
+      const trick = new Trick(players);
+      trick.add(queen.of(Suit.Clubs), player1);
+      trick.add(ace.of(Suit.Diamonds), player2);
+      trick.add(jack.of(Suit.Spades), player3);
+      expect(affinityEvents).toHaveBeenCalledWith(
+        AffinityEvent.QueenOfClubsGreased,
+        player2
+      );
+    });
+
+    test("should call queen of clubs greased event when ten of diamonds added", () => {
+      const affinityEvents = (player1.behavior.handleAffinityEvent = jest.fn());
+      const trick = new Trick(players);
+      trick.add(queen.of(Suit.Clubs), player1);
+      trick.add(ten.of(Suit.Diamonds), player2);
+      trick.add(jack.of(Suit.Spades), player3);
+      expect(affinityEvents).toHaveBeenCalledWith(
+        AffinityEvent.QueenOfClubsGreased,
+        player2
       );
     });
   });

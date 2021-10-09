@@ -473,10 +473,10 @@ describe("Rule Based Card Behavior", () => {
       player2.memory.clearMemory();
       player3.memory.clearMemory();
       player4.memory.clearMemory();
-      player1.isRe = () => true;
-      player2.isRe = () => true;
-      player3.isRe = () => false;
-      player4.isRe = () => false;
+      player1.isRe = jest.fn().mockReturnValue(true);
+      player2.isRe = jest.fn().mockReturnValue(true);
+      player3.isRe = jest.fn().mockReturnValue(false);
+      player4.isRe = jest.fn().mockReturnValue(false);
       players.forEach(p => {
         p.behavior.affinities.setPlayers(players);
         p.behavior.affinities.declaresParty(player2);
@@ -542,6 +542,18 @@ describe("Rule Based Card Behavior", () => {
         player4.memory
       );
       expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
+    });
+
+    test("should suggest player is re", () => {
+      const trick = new Trick(players);
+      trick.add(queen.of(Suit.Clubs), player2);
+      trick.add(ace.of(Suit.Diamonds), player1);
+      expect(player2.behavior.affinities.for(player1)).toEqual(1);
+      expect(player3.behavior.affinities.for(player1)).toEqual(-1);
+      expect(player4.behavior.affinities.for(player1)).toEqual(-1);
+      // ToDo implement 'make' left over player teammate
+      // expect(player3.behavior.affinities.for(player4)).toEqual(1);
+      // expect(player4.behavior.affinities.for(player3)).toEqual(1);
     });
 
     describe("When losing, play least valuable card", () => {
