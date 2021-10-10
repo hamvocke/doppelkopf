@@ -48,15 +48,15 @@ export class Trick {
   }
 
   checkForAffinityEvent(card: Card, player: Player): void {
-    if (card.compareTo(queen.of(Suit.Clubs)) === 0) {
+    if (card.is(queen.of(Suit.Clubs))) {
       this.players.forEach(p => {
         p.behavior.handleAffinityEvent(AffinityEvent.QueenOfClubs, player);
       });
     }
     if (
-      card.compareTo(ten.of(Suit.Hearts)) === 0 &&
-      this.playedCards.filter(
-        playedCard => playedCard.card.compareTo(queen.of(Suit.Clubs)) === 0
+      card.is(ten.of(Suit.Hearts)) &&
+      this.playedCards.filter(playedCard =>
+        playedCard.card.is(queen.of(Suit.Clubs))
       ).length > 0
     ) {
       this.players.forEach(p => {
@@ -67,10 +67,9 @@ export class Trick {
       });
     }
     if (
-      (card.compareTo(ace.of(Suit.Diamonds)) === 0 ||
-        card.compareTo(ten.of(Suit.Diamonds)) === 0) &&
-      this.playedCards.filter(
-        playedCard => playedCard.card.compareTo(queen.of(Suit.Clubs)) === 0
+      (card.is(ace.of(Suit.Diamonds)) || card.is(ten.of(Suit.Diamonds))) &&
+      this.playedCards.filter(playedCard =>
+        playedCard.card.is(queen.of(Suit.Clubs))
       ).length > 0
     ) {
       this.players.forEach(p => {

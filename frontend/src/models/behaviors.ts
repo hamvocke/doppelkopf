@@ -95,7 +95,7 @@ export class RuleBasedBehaviour extends Behavior {
       let counter = 0;
       if (hand.getBlankAces().length > 0) counter++;
       if (hand.trumps().length >= 7) counter++;
-      if (hand.cards.filter(c => c.compareTo(ten.of(Suit.Hearts))).length === 2)
+      if (hand.cards.filter(c => c.is(ten.of(Suit.Hearts))).length === 2)
         counter++;
       counter += hand.missingSuites().length;
       return counter > 2 ? [...possibleAnnouncements][0] : null;
@@ -303,8 +303,7 @@ export class RuleBasedBehaviour extends Behavior {
       ...hand.cards
         .sort(byCardValuesDesc)
         .filter(
-          card =>
-            card.compareTo(ten.of(Suit.Hearts)) != 0 && card.rank != Rank.Queen
+          card => !card.is(ten.of(Suit.Hearts)) && card.rank != Rank.Queen
         ),
       ...queens,
       tenOfHearts!
