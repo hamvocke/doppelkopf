@@ -81,6 +81,7 @@ export class Affinities {
 
   private suggestPartyForPlayer(player: Player, party: PartyName): void {
     this.setAffinity(player, getPartyName(this.me) === party ? 1 : -1);
+    this.balanceAffinities();
   }
 
   suggestKontraFor(player: Player): void {
@@ -108,6 +109,7 @@ export class Affinities {
     if (this.affinityTable.filter(x => x.declaredParty).length === 2) {
       this.setAllAffinities();
     }
+    this.balanceAffinities();
   }
 
   for(player: Player) {
@@ -128,6 +130,7 @@ export class Affinities {
       this.affinityTable[index].affinity = value;
       this.affinityTable[index].declaredParty = hasDeclared;
     }
+    this.balanceAffinities();
   }
 
   reset() {
@@ -160,5 +163,23 @@ export class Affinities {
 
   private getContainerFor(player: Player): PlayerAffinity {
     return this.affinityTable.find(x => x.player.id === player.id)!;
+  }
+
+  private affinitySum(): number {
+    return this.affinityTable.reduce(
+      (accu, playerAffinity) => accu + playerAffinity.affinity,
+      0
+    );
+  }
+
+  private balanceAffinities(): void {
+    if (this.affinitySum() == -2) {
+      this.affinityTable.forEach(pA => {
+        if (pA.affinity === 0) {
+          pA.affinity = 1;
+          return;
+        }
+      });
+    }
   }
 }

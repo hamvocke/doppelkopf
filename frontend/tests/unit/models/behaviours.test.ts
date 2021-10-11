@@ -551,9 +551,8 @@ describe("Rule Based Card Behavior", () => {
       expect(player2.behavior.affinities.for(player1)).toEqual(1);
       expect(player3.behavior.affinities.for(player1)).toEqual(-1);
       expect(player4.behavior.affinities.for(player1)).toEqual(-1);
-      // ToDo implement 'make' left over player teammate
-      // expect(player3.behavior.affinities.for(player4)).toEqual(1);
-      // expect(player4.behavior.affinities.for(player3)).toEqual(1);
+      expect(player3.behavior.affinities.for(player4)).toEqual(1);
+      expect(player4.behavior.affinities.for(player3)).toEqual(1);
     });
 
     describe("When losing, play least valuable card", () => {
