@@ -555,6 +555,17 @@ describe("Rule Based Card Behavior", () => {
       expect(player4.behavior.affinities.for(player3)).toEqual(1);
     });
 
+    test("should suggest player is kontra because didn't grease", () => {
+      const trick = new Trick(players);
+      trick.add(jack.of(Suit.Spades), player1);
+      trick.add(queen.of(Suit.Clubs), player2);
+      trick.add(jack.of(Suit.Hearts), player3);
+      trick.add(jack.of(Suit.Diamonds), player4);
+      expect(player1.behavior.affinities.for(player4)).toEqual(-1);
+      expect(player2.behavior.affinities.for(player4)).toEqual(-1);
+      expect(player3.behavior.affinities.for(player4)).toEqual(1);
+    });
+
     describe("When losing, play least valuable card", () => {
       test("when trick is lost on position", () => {
         let hand = new Hand([

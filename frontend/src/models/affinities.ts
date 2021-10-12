@@ -5,7 +5,8 @@ export enum AffinityEvent {
   Announcement = "announcement",
   QueenOfClubs = "queen_of_clubs",
   QueenOfClubsTricked = "queen_of_clubs_tricked",
-  QueenOfClubsGreased = "queen_of_clubs_greased"
+  QueenOfClubsGreased = "queen_of_clubs_greased",
+  QueenOfClubsNotGreased = "queen_of_clubs_not_greased"
 }
 
 /**

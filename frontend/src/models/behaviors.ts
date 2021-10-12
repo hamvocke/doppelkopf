@@ -76,6 +76,9 @@ export class RuleBasedBehaviour extends Behavior {
       case AffinityEvent.QueenOfClubsTricked:
         this.affinities.suggestKontraFor(player);
         break;
+      case AffinityEvent.QueenOfClubsNotGreased:
+        this.affinities.suggestKontraFor(player);
+        break;
       case AffinityEvent.QueenOfClubsGreased:
         this.affinities.suggestReFor(player);
         break;

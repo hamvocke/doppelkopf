@@ -70,6 +70,19 @@ export class Trick {
           );
         });
       }
+      // right now affinity check is called after card is pushed to playedcards
+      // this might do some trouble when card is queen.of.clubs - keep this in mind
+      if (
+        this.playedCards.length === 4 &&
+        !(card.is(ace.of(Suit.Diamonds)) || card.is(ten.of(Suit.Diamonds)))
+      ) {
+        this.players.forEach(p => {
+          p.behavior.handleAffinityEvent(
+            AffinityEvent.QueenOfClubsNotGreased,
+            player
+          );
+        });
+      }
     }
   }
 
