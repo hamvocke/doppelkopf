@@ -53,7 +53,7 @@ export class Trick {
         p.behavior.handleAffinityEvent(AffinityEvent.QueenOfClubs, player);
       });
     }
-    if (this.wasPlayed(queen.of(Suit.Clubs))) {
+    if (this.contains(queen.of(Suit.Clubs))) {
       if (card.is(ten.of(Suit.Hearts))) {
         this.players.forEach(p => {
           p.behavior.handleAffinityEvent(
@@ -96,7 +96,7 @@ export class Trick {
     )[0];
   }
 
-  private wasPlayed(card: Card): Boolean {
+  contains(card: Card): Boolean {
     return (
       this.playedCards.filter(playedCard => playedCard.card.is(card)).length > 0
     );
