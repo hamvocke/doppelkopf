@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <div>
+      <div class="buttons">
         <router-link to="/play" class="button start-game" tag="button">
           {{ $t("start-game") }}
         </router-link>
@@ -156,6 +156,12 @@ export default class Home extends Vue {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 label {
