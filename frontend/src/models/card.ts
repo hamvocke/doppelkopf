@@ -132,7 +132,14 @@ export class Card {
 }
 
 export function compare(oneCard: Card, anotherCard: Card) {
-  return findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard);
+  const isOneCard = (element: Card) =>
+    element.rank === oneCard.rank && element.suit === oneCard.suit;
+  const isAnotherCard = (element: Card) =>
+    element.rank === anotherCard.rank && element.suit === anotherCard.suit;
+  return (
+    findIndex(cardOrder, isAnotherCard) - findIndex(cardOrder, isOneCard) ||
+    findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard)
+  );
 }
 
 export function byCardValuesDesc(oneCard: Card, anotherCard: Card) {

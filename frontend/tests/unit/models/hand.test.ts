@@ -331,3 +331,19 @@ test("should detect low value cards in hand", () => {
   expect(hand.missingSuites().length).toBe(1);
   expect(hand.missingSuites()).toContain(Suit.Spades);
 });
+
+test("should detect highest card in hand", () => {
+  const tenOfHearts = ten.of(Suit.Hearts);
+
+  const cards = [
+    ace.of(Suit.Hearts),
+    tenOfHearts,
+    king.of(Suit.Clubs),
+    queen.of(Suit.Hearts),
+    jack.of(Suit.Clubs)
+  ];
+  const hand = new Hand(cards);
+
+  expect(hand.highest()).toEqual(tenOfHearts);
+  expect(hand.trumps()[0]).toEqual(tenOfHearts);
+});
