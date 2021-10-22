@@ -228,8 +228,8 @@ describe("Rule Based Card Behavior", () => {
 
     test("should play jack, when mustn't serve and high value card isn't available", () => {
       let hand = new Hand([
-        king.of(Suit.Diamonds),
         jack.of(Suit.Diamonds).first(),
+        queen.of(Suit.Diamonds).first(),
         ten.of(Suit.Hearts)
       ]);
       const trick = new Trick(players);
@@ -272,7 +272,7 @@ describe("Rule Based Card Behavior", () => {
       trick.add(king.of(Suit.Spades), player3);
       trick.add(king.of(Suit.Spades), player2);
       const cardToPlay = behavior.cardToPlay(hand, trick, player1.memory);
-      expect(cardToPlay).toEqual(ace.of(Suit.Spades).second());
+      expect(cardToPlay).toEqual(ace.of(Suit.Spades).first());
     });
 
     test("should play king because no chance of winning", () => {
