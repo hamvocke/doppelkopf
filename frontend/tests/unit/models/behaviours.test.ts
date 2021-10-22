@@ -129,10 +129,7 @@ describe("Rule Based Card Behavior", () => {
 
   describe("Starting rules", () => {
     beforeEach(() => {
-      player1.memory.clearMemory();
-      player2.memory.clearMemory();
-      player3.memory.clearMemory();
-      player4.memory.clearMemory();
+      players.forEach(p => p.memory.clearMemory());
     });
 
     test("should start with ace", () => {
@@ -180,10 +177,7 @@ describe("Rule Based Card Behavior", () => {
 
   describe("Non-trump has been played for the first time", () => {
     beforeEach(() => {
-      player1.memory.clearMemory();
-      player2.memory.clearMemory();
-      player3.memory.clearMemory();
-      player4.memory.clearMemory();
+      players.forEach(p => p.memory.clearMemory());
     });
 
     test("should play lowest value nonTrump when not starting", () => {
@@ -469,15 +463,12 @@ describe("Rule Based Card Behavior", () => {
   describe("Knowing your teammate", () => {
     beforeEach(() => {
       jest.clearAllMocks();
-      player1.memory.clearMemory();
-      player2.memory.clearMemory();
-      player3.memory.clearMemory();
-      player4.memory.clearMemory();
       player1.isRe = jest.fn().mockReturnValue(true);
       player2.isRe = jest.fn().mockReturnValue(true);
       player3.isRe = jest.fn().mockReturnValue(false);
       player4.isRe = jest.fn().mockReturnValue(false);
       players.forEach(p => {
+        p.memory.clearMemory();
         p.behavior.affinities.setPlayers(players);
         p.behavior.affinities.declaresParty(player2);
       });
