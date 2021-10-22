@@ -1,7 +1,7 @@
 import { sample } from "lodash-es";
 import { playableCards } from "@/models/playableCardFinder";
 import { chance } from "@/models/random";
-import { Card, Suit, Rank, byCardValuesDesc, ten } from "@/models/card";
+import { Card, Suit, Rank, byCardValuesDesc, ten, ace } from "@/models/card";
 import { Hand } from "@/models/hand";
 import { Announcement } from "./announcements";
 import { Trick } from "./trick";
@@ -127,6 +127,7 @@ export class RuleBasedBehaviour extends Behavior {
     if (!baseCard.isTrump()) {
       return this.nonTrumpRule(hand, trick, memory);
     }
+    if (trick.contains(ace.of(Suit.Diamonds))) return hand.highest();
     // ToDo how to play if not starting or mustn't serve nonTrump
     // i'm thinking of something working with expectation value
     return sample(playableCards(hand.cards, baseCard))!;

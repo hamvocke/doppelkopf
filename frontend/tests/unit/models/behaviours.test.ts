@@ -460,6 +460,38 @@ describe("Rule Based Card Behavior", () => {
     });
   });
 
+  describe("Standard Trump play", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      players.forEach(p => p.memory.clearMemory());
+    });
+
+    test("should play highest card when fox is in trick no matter what", () => {
+      let hand = new Hand([
+        ten.of(Suit.Hearts).first(),
+        king.of(Suit.Diamonds).first(),
+        queen.of(Suit.Spades).first()
+      ]);
+      const trick = new Trick(players);
+      trick.add(ace.of(Suit.Diamonds), player2);
+      const cardToPlay = behavior.cardToPlay(hand, trick);
+      expect(cardToPlay).toEqual(ten.of(Suit.Hearts).first());
+    });
+
+    test("shouldn't play highest card when fox is in trick because wouldn't win", () => {
+      let hand = new Hand([
+        ten.of(Suit.Hearts).first(),
+        king.of(Suit.Diamonds).first(),
+        queen.of(Suit.Spades).first()
+      ]);
+      const trick = new Trick(players);
+      trick.add(ace.of(Suit.Diamonds), player2);
+      trick.add(ten.of(Suit.Hearts), player3);
+      const cardToPlay = behavior.cardToPlay(hand, trick);
+      expect(cardToPlay).toEqual(king.of(Suit.Diamonds).first());
+    });
+  });
+
   describe("Knowing your teammate", () => {
     beforeEach(() => {
       jest.clearAllMocks();
