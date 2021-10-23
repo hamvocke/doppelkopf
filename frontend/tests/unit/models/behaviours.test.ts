@@ -10,7 +10,8 @@ import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PerfectMemory } from "@/models/memory";
 import { PlayedCard } from "@/models/playedCard";
-import { Affinities, AffinityEvent } from "@/models/affinities";
+import { Affinities } from "@/models/affinities";
+import { sample } from "lodash";
 
 jest.mock("@/models/random", () => ({
   __esModule: true,
@@ -587,6 +588,43 @@ describe("Rule Based Card Behavior", () => {
       expect(player1.behavior.affinities.for(player4)).toEqual(-1);
       expect(player2.behavior.affinities.for(player4)).toEqual(-1);
       expect(player3.behavior.affinities.for(player4)).toEqual(1);
+    });
+
+    test("should grease, speculating teammate will win on last position", () => {
+      let hand = new Hand([
+        ace.of(Suit.Diamonds).first(),
+        jack.of(Suit.Clubs).first()
+      ]);
+      const trick = new Trick(players);
+      trick.add(jack.of(Suit.Spades), player3);
+      trick.add(jack.of(Suit.Spades), player4);
+      const cardToPlay = behavior.cardToPlay(hand, trick);
+      expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
+    });
+
+    test("shouldn't grease, since highest card is too high", () => {
+      let hand = new Hand([
+        ace.of(Suit.Diamonds).first(),
+        jack.of(Suit.Clubs).first()
+      ]);
+      const trick = new Trick(players);
+      trick.add(queen.of(Suit.Hearts), player3);
+      const cardToPlay = behavior.cardToPlay(hand, trick);
+      expect(cardToPlay).toEqual(jack.of(Suit.Clubs).first());
+    });
+
+    test("shouldn't grease, since teammate isn't on last position", () => {
+      let hand = new Hand([
+        ace.of(Suit.Diamonds).first(),
+        jack.of(Suit.Clubs).first()
+      ]);
+      const trick = new Trick(players);
+      trick.add(jack.of(Suit.Spades), player3);
+      const play = ((<RuleBasedBehaviour>(
+        player1.behavior
+      )).defaultPlay = jest.fn());
+      const cardToPlay = player1.behavior.cardToPlay(hand, trick);
+      expect(play).toHaveBeenCalled();
     });
 
     describe("When losing, play least valuable card", () => {

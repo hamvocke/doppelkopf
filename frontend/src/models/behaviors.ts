@@ -1,7 +1,15 @@
 import { sample } from "lodash-es";
 import { playableCards } from "@/models/playableCardFinder";
 import { chance } from "@/models/random";
-import { Card, Suit, Rank, byCardValuesDesc, ten, ace } from "@/models/card";
+import {
+  Card,
+  Suit,
+  Rank,
+  byCardValuesDesc,
+  ten,
+  ace,
+  queen
+} from "@/models/card";
 import { Hand } from "@/models/hand";
 import { Announcement } from "./announcements";
 import { Trick } from "./trick";
@@ -120,17 +128,26 @@ export class RuleBasedBehaviour extends Behavior {
     if (this.trickCannotBeWon(hand, trick, memory))
       return this.findLeastValuableLosingCard(hand, trick);
 
-    if (!baseCard) {
-      /** It's our turn. Decide how to deal with cards */
-      return this.startingRule(hand, trick, memory);
-    }
-    if (!baseCard.isTrump()) {
-      return this.nonTrumpRule(hand, trick, memory);
-    }
+    /** It's our turn. Decide how to deal with cards */
+    if (!baseCard) return this.startingRule(hand, trick, memory);
+    if (!baseCard.isTrump()) return this.nonTrumpRule(hand, trick, memory);
     if (trick.contains(ace.of(Suit.Diamonds))) return hand.highest();
+    if (
+      baseCard.isTrump() &&
+      this.isTeammateAfterMe(trick) &&
+      trick.cards().length === 2 &&
+      this.hasHighValueTrump(hand) &&
+      trick.highestCard() &&
+      queen.of(Suit.Hearts).beats(trick.highestCard()!.card)
+    )
+      return this.findMostSuitableGreasingCard(hand, trick);
     // ToDo how to play if not starting or mustn't serve nonTrump
     // i'm thinking of something working with expectation value
-    return sample(playableCards(hand.cards, baseCard))!;
+    return this.defaultPlay(hand, trick);
+  }
+
+  defaultPlay(hand: Hand, trick: Trick): Card {
+    return sample(playableCards(hand.cards, trick.baseCard()))!;
   }
 
   startingRule(hand: Hand, trick: Trick, memory?: Memory): Card {
@@ -270,6 +287,13 @@ export class RuleBasedBehaviour extends Behavior {
     return (
       this.getTeammates().filter(mate => !playersPlayed.includes(mate)).length >
       0
+    );
+  }
+
+  private hasHighValueTrump(hand: Hand): Boolean {
+    return (
+      hand.contains(ace.of(Suit.Diamonds)) ||
+      hand.contains(ten.of(Suit.Diamonds))
     );
   }
 
