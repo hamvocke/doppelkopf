@@ -61,6 +61,7 @@ test("can find card on hand by rank and suit", () => {
   const hand = new Hand(cards);
 
   expect(hand.findAny(Suit.Spades, Rank.Queen)).toEqual(queenOfSpades);
+  expect(hand.contains(queenOfSpades)).toBe(true);
 });
 
 test("should return empty list if card on hand cannot be found by rank and suit", () => {
@@ -69,6 +70,7 @@ test("should return empty list if card on hand cannot be found by rank and suit"
   const hand = new Hand(cards);
 
   expect(hand.findAny(Suit.Spades, Rank.King)).toBeNull();
+  expect(hand.contains(king.of(Suit.Spades))).toBe(false);
 });
 
 test("can not find non-existing card on hand", () => {

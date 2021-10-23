@@ -34,6 +34,10 @@ export class Hand {
     return find(this.cards, { suit, rank }) || null;
   }
 
+  contains(card: Card): Boolean {
+    return !!this.findAny(card.suit, card.rank);
+  }
+
   highest(): Card {
     return this.cards[0];
   }
