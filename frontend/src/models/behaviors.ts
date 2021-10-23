@@ -263,6 +263,16 @@ export class RuleBasedBehaviour extends Behavior {
     );
   }
 
+  private isTeammateAfterMe(trick: Trick): Boolean {
+    const playersPlayed = trick.playedCards.map(
+      playedCard => playedCard.player
+    );
+    return (
+      this.getTeammates().filter(mate => !playersPlayed.includes(mate)).length >
+      0
+    );
+  }
+
   private getMyPlayer(trick: Trick): Player {
     return trick.players.find(player => player.id === this.playerId)!;
   }
