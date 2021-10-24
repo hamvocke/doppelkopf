@@ -137,7 +137,6 @@ export class RuleBasedBehaviour extends Behavior {
       this.isTeammateAfterMe(trick) &&
       trick.cards().length === 2 &&
       this.hasHighValueTrump(hand) &&
-      trick.highestCard() &&
       queen.of(Suit.Hearts).beats(trick.highestCard()!.card)
     )
       return this.findMostSuitableGreasingCard(hand, trick);

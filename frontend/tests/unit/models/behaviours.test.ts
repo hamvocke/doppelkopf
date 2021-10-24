@@ -620,11 +620,10 @@ describe("Rule Based Card Behavior", () => {
       ]);
       const trick = new Trick(players);
       trick.add(jack.of(Suit.Spades), player3);
-      const play = ((<RuleBasedBehaviour>(
-        player1.behavior
-      )).defaultPlay = jest.fn());
+      const play = jest.spyOn(RuleBasedBehaviour.prototype, "defaultPlay");
       const cardToPlay = player1.behavior.cardToPlay(hand, trick);
       expect(play).toHaveBeenCalled();
+      expect(cardToPlay).toEqual(expect.any(Card));
     });
 
     describe("When losing, play least valuable card", () => {
