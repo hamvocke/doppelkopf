@@ -212,11 +212,13 @@ export class RuleBasedBehaviour extends Behavior {
         return hand.highest().beats(trick.highestCard()!.card) &&
           // ToDo this check works but needs tuning
           memory.pointsLeftInSuit(baseCard.suit) + trick.points() >= 14
-          ? hand.trumps()[0]
-          : this.findLeastValuableLosingCard(hand, trick);
+          ? hand.highest()
+          : this.findMostSuitableBeatingCard(hand, trick);
       } else {
-        let usefulTrump = this.findMostValuableWinningTrump(hand, trick);
-        return usefulTrump ?? this.findLeastValuableLosingCard(hand, trick);
+        return (
+          this.findMostValuableWinningTrump(hand, trick) ??
+          this.findLeastValuableLosingCard(hand, trick)
+        );
       }
     }
   }
@@ -319,6 +321,25 @@ export class RuleBasedBehaviour extends Behavior {
     }
 
     return lowest;
+  }
+
+  findMostSuitableBeatingCard(hand: Hand, trick: Trick): Card {
+    const beats = playableCards(
+      [
+        ...hand.cards
+          .filter(
+            card =>
+              card.isTrump() &&
+              card.beats(trick.highestCard()?.card) &&
+              card.value < 10
+          )
+          .reverse()
+      ],
+      trick.baseCard()
+    );
+    return beats.length > 0
+      ? beats[0]
+      : this.findLeastValuableLosingCard(hand, trick);
   }
 
   /**
