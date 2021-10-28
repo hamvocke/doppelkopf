@@ -146,7 +146,7 @@ export class RuleBasedBehaviour extends Behavior {
   }
 
   defaultPlay(hand: Hand, trick: Trick): Card {
-    return sample(playableCards(hand.cards, trick.baseCard()))!;
+    return this.findMostSuitableBeatingCard(hand, trick);
   }
 
   startingRule(hand: Hand, trick: Trick, memory?: Memory): Card {
