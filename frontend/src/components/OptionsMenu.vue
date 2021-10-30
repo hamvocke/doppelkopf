@@ -1,6 +1,6 @@
 <template>
   <div class="options">
-    <div class="options-icon" @click="toggleMenu()">
+    <div class="icon icon-options" @click="toggleMenu()">
       <settings-icon></settings-icon>
     </div>
     <div v-if="visible" class="options-menu" @click.self="toggleMenu()">
@@ -29,10 +29,10 @@
 import { Component, Vue } from "vue-property-decorator";
 import LanguagePicker from "./LanguagePicker.vue";
 import { Config } from "@/models/config";
-import { SettingsIcon } from "vue-feather-icons";
+import { RotateCcwIcon, SettingsIcon } from "vue-feather-icons";
 
 @Component({
-  components: { LanguagePicker, SettingsIcon }
+  components: { LanguagePicker, SettingsIcon, RotateCcwIcon }
 })
 export default class OptionsMenu extends Vue {
   config = Config;
@@ -47,10 +47,8 @@ export default class OptionsMenu extends Vue {
 <style scoped>
 @import "../assets/css/vars.css";
 
-.options-icon {
+.icon {
   position: absolute;
-  top: 12px;
-  right: 12px;
   border-radius: 4px;
   background-color: var(--shell);
   padding: 8px;
@@ -62,6 +60,16 @@ export default class OptionsMenu extends Vue {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.icon-options {
+  top: 12px;
+  right: 12px;
+}
+
+.icon-rewind {
+  top: 60px;
+  right: 12px;
 }
 
 .options-menu {
