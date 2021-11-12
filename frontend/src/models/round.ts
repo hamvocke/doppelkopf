@@ -17,6 +17,7 @@ export class Round {
   scorecard: Scorecard;
   score?: Score;
   finished: boolean;
+  lastTrick: Trick | undefined;
   currentTrick: Trick;
   playerOrder: RingQueue<Player>;
 
@@ -39,6 +40,7 @@ export class Round {
   }
 
   nextTrick() {
+    this.lastTrick = this.currentTrick ?? undefined;
     let trick = new Trick(this.players);
     if (this.cardsLeft() <= this.players.length) trick.setLastTrickInRound();
     return trick;

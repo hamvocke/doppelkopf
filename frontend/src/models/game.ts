@@ -75,6 +75,10 @@ export class Game {
     return this.currentRound.currentTrick;
   }
 
+  get lastTrick() {
+    return this.currentRound.lastTrick;
+  }
+
   nextRound() {
     this.deal();
     this.currentRound = new Round(
