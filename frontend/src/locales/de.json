@@ -1,4 +1,5 @@
 {
+  "10": "10",
   "trick": "Kein Stich | 1 Stich | {count} Stiche",
   "next-trick": "Nächster Stich",
   "finish-round": "Runde beenden",
@@ -9,7 +10,6 @@
   "start-game": "Spiel starten!",
   "start-multiplayer-game": "Mit Freunden spielen",
   "how-to-play": "Spielregeln",
-  "10": "10",
   "J": "B",
   "Q": "D",
   "K": "K",
@@ -103,5 +103,7 @@
   "error-connection": "Oh nein! Unsere Server antworten nicht, wir können dich leider nicht mit dem Spiel verbinden. Vielleicht hilft's die Seite zu aktualisieren?",
   "error-room-full": "Du kannst dem Spiel nicht beitreten. Es warten schon 4 Spieler.",
   "enter_name_input": "Dein Name",
-  "enter_name_label": "Wie heißt du?"
+  "enter_name_label": "Wie heißt du?",
+  "show_last_trick_header": "Letzter Stich",
+  "show_last_trick_label": "Den letzten Stich hat {name} gewonnen"
 }

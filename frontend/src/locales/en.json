@@ -1,4 +1,5 @@
 {
+  "10": "10",
   "trick": "No tricks | 1 trick | {count} tricks",
   "next-trick": "Next trick",
   "finish-round": "Finish round",
@@ -9,7 +10,6 @@
   "start-game": "Start Game!",
   "start-multiplayer-game": "Play with friends",
   "how-to-play": "How to play?",
-  "10": "10",
   "J": "J",
   "Q": "Q",
   "K": "K",
@@ -103,5 +103,7 @@
   "error-connection": "Oh no! Our servers don't respond, we can't connect you to the game. Refreshing the site might help!",
   "error-room-full": "Can't join the game. There are 4 players waiting already.",
   "enter_name_input": "Your name",
-  "enter_name_label": "What's your name?"
+  "enter_name_label": "What's your name?",
+  "show_last_trick_header": "Last trick",
+  "show_last_trick_label": "The last trick was won by {name}"
 }
