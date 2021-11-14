@@ -24,10 +24,10 @@ import { Trick as TrickModel } from "@/models/trick";
 })
 export default class Trick extends Vue {
   @Prop()
-  currentTrick?: TrickModel;
+  trick?: TrickModel;
 
   get cards() {
-    return this.currentTrick?.cards();
+    return this.trick?.cards();
   }
 }
 </script>
