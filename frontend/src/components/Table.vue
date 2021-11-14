@@ -4,7 +4,7 @@
     <Player :player="game.players[2]" class="top" />
 
     <div class="center">
-      <Trick :current-trick="game.currentTrick" />
+      <Trick :trick="game.currentTrick" />
     </div>
 
     <Controls
