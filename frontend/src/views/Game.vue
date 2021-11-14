@@ -3,6 +3,7 @@
     <Notifications />
     <Table :game="game" />
     <OptionsMenu />
+    <ShowLastTrick :trick="game.lastTrick" />
   </div>
 </template>
 
@@ -10,7 +11,7 @@
 import Notifications from "@/components/Notifications";
 import Table from "@/components/Table";
 import OptionsMenu from "@/components/OptionsMenu";
-
+import ShowLastTrick from "@/components/ShowLastTrick";
 import { Game } from "@/models/game";
 
 export default {
@@ -18,7 +19,8 @@ export default {
   components: {
     Table,
     Notifications,
-    OptionsMenu
+    OptionsMenu,
+    ShowLastTrick
   },
   props: {
     game: {
