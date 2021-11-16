@@ -11,7 +11,7 @@ describe("OptionsMenu.vue", () => {
 
     await wrapper.setData({ visible: true });
 
-    expect(wrapper.find(".options-icon").exists()).toBe(true);
+    expect(wrapper.find(".icon.icon-options").exists()).toBe(true);
   });
 
   test("should not show options", async () => {
@@ -26,7 +26,7 @@ describe("OptionsMenu.vue", () => {
     const wrapper = mount(OptionsMenu);
 
     await wrapper.setData({ visible: false });
-    await wrapper.find(".options-icon").trigger("click");
+    await wrapper.find(".icon.icon-options").trigger("click");
 
     expect(wrapper.find(".options-menu").exists()).toBe(true);
   });
