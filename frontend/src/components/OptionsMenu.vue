@@ -67,11 +67,6 @@ export default class OptionsMenu extends Vue {
   right: 12px;
 }
 
-.icon-rewind {
-  top: 60px;
-  right: 12px;
-}
-
 .options-menu {
   position: fixed;
   top: 0;

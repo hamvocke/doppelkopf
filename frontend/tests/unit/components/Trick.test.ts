@@ -17,14 +17,14 @@ beforeEach(() => {
 
 describe("Trick.vue", () => {
   test("should show empty trick on initialization", () => {
-    const wrapper = mount(Trick, { propsData: { currentTrick: trick } });
+    const wrapper = mount(Trick, { propsData: { trick: trick } });
     expect(wrapper.findAll("div.card").length).toEqual(0);
   });
 
   test("should render cards in current trick", () => {
     trick.add(ace.of(Suit.Hearts), game.players[0]);
 
-    const wrapper = mount(Trick, { propsData: { currentTrick: trick } });
+    const wrapper = mount(Trick, { propsData: { trick: trick } });
 
     expect(wrapper.findAll("div.card").length).toEqual(1);
   });
