@@ -17,6 +17,7 @@
   --flash-layer: 40;
   --scorecard-layer: 50;
   --card-selected-layer: 200;
+  --show-last-trick-layer: 300;
   --options-menu-layer:400;
   --options-icon-layer:500;
 }
