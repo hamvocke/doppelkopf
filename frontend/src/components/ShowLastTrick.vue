@@ -3,8 +3,8 @@
     <div v-if="trick" class="icon icon-rewind" @click="toggleVisibility()">
       <rotate-ccw-icon></rotate-ccw-icon>
     </div>
-    <div v-if="visible" class="options-menu" @click.self="toggleVisibility()">
-      <div class="options-menu-content">
+    <div v-if="visible" class="last-trick" @click.self="toggleVisibility()">
+      <div class="last-trick-content">
         <h2>{{ $t("show_last_trick_header") }}</h2>
         <div class="option">
           <span class="label">
@@ -63,7 +63,7 @@ export default class ShowLastTrick extends Vue {
   right: 12px;
 }
 
-.options-menu {
+.last-trick {
   position: fixed;
   top: 0;
   display: flex;
@@ -76,7 +76,7 @@ export default class ShowLastTrick extends Vue {
   background-color: color(var(--black) a(80%));
 }
 
-.options-menu-content {
+.last-trick-content {
   max-width: 40%;
   background-color: var(--shell);
   border-radius: 8px;
@@ -106,7 +106,7 @@ h2 {
 }
 
 @media screen and (max-width: 680px) {
-  .options-menu-content {
+  .last-trick-content {
     max-width: 100%;
   }
 }
