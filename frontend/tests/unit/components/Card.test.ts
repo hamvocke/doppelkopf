@@ -87,15 +87,40 @@ describe("Card.vue", () => {
     expect(wrapper.find(".background").exists()).toBe(true);
   });
 
-  it("should render highlighted card", () => {
+  it("should render basecard", () => {
     const wrapper = mount(Card, {
       propsData: {
         card: ace.of(Suit.Spades),
         isCovered: false,
-        isHighlighted: true
+        isBasecard: true
       }
     });
 
-    expect(wrapper.find(".card-inner").classes()).toContain("highlighted");
+    expect(wrapper.find(".card-inner").classes()).toContain("basecard");
+  });
+
+  it("should render winning card", () => {
+    const wrapper = mount(Card, {
+      propsData: {
+        card: ace.of(Suit.Spades),
+        isCovered: false,
+        isWinner: true
+      }
+    });
+
+    expect(wrapper.find(".card-inner").classes()).toContain("winner");
+  });
+
+  it("should render winning basecard", () => {
+    const wrapper = mount(Card, {
+      propsData: {
+        card: ace.of(Suit.Spades),
+        isCovered: false,
+        isBasecard: true,
+        isWinner: true
+      }
+    });
+
+    expect(wrapper.find(".card-inner").classes()).toContain("basewin");
   });
 });
