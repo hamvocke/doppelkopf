@@ -39,7 +39,10 @@ export default class Card extends Vue {
   isCovered!: boolean;
 
   @Prop({ default: false })
-  isHighlighted!: boolean;
+  isBasecard!: boolean;
+
+  @Prop({ default: false })
+  isWinner!: boolean;
 
   @Prop({ default: "unknown" })
   position!: string;
@@ -63,8 +66,10 @@ export default class Card extends Vue {
   get cardClasses() {
     return {
       selected: this.isSelected,
-      highlighted: this.isHighlighted,
-      covered: this.isCovered
+      covered: this.isCovered,
+      basecard: this.isBasecard && !this.isWinner,
+      winner: this.isWinner && !this.isBasecard,
+      basewin: this.isWinner && this.isBasecard
     };
   }
 
@@ -116,6 +121,21 @@ export default class Card extends Vue {
   z-index: var(--card-selected-layer);
 }
 
+.basecard {
+  box-shadow: rgba(29, 53, 87, 0.5) 0px 0px 3px 5px,
+    0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.winner {
+  box-shadow: rgba(230, 57, 71, 0.5) 0px 0px 3px 5px,
+    0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.basewin {
+  box-shadow: rgba(127, 43, 175, 0.5) 0px 0px 3px 5px,
+    0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
 .card-top {
   position: absolute;
   font-size: 1.1em;
@@ -159,9 +179,6 @@ export default class Card extends Vue {
   width: 100%;
   display: inline-block;
   border-radius: 6px;
-}
-
-.highlighted {
 }
 
 @media screen and (max-width: 680px) {
