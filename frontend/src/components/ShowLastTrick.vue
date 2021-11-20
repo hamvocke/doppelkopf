@@ -11,7 +11,7 @@
             {{ $t("show_last_trick_label", { name: trick.winner().name }) }}
           </span>
         </div>
-        <Trick :trick="trick" />
+        <Trick :trick="trick" :highlight-cards="true" />
       </div>
     </div>
   </div>

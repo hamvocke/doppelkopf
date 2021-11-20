@@ -8,6 +8,12 @@
           :card="playedCard.card"
           :player="playedCard.player"
           :position="playedCard.player.tablePosition"
+          :is-basecard="
+            highlightCards && playedCard.card.equals(trick.baseCard())
+          "
+          :is-winner="
+            highlightCards && playedCard.card.equals(trick.highestCard().card)
+          "
         />
       </transition-group>
     </div>
@@ -25,6 +31,9 @@ import { Trick as TrickModel } from "@/models/trick";
 export default class Trick extends Vue {
   @Prop()
   trick?: TrickModel;
+
+  @Prop({ default: false })
+  highlightCards!: boolean;
 
   get cards() {
     return this.trick?.cards();
