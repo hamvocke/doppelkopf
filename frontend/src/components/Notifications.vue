@@ -56,7 +56,7 @@ export default class Notifications extends Vue {
 .notifications {
   width: 100%;
   position: absolute;
-  top: 0px;
+  top: 2px;
   z-index: var(--notification-layer);
   display: flex;
   flex-direction: column;
@@ -68,7 +68,7 @@ export default class Notifications extends Vue {
   align-items: center;
   margin: 0px auto 6px;
   padding: 8px;
-  width: 80%;
+  width: 50%;
   font-size: 1em;
   background: var(--lightblue);
   color: var(--white);
@@ -99,5 +99,11 @@ export default class Notifications extends Vue {
 
 .clickable {
   cursor: pointer;
+}
+
+@media screen and (max-width: 680px) {
+  .message {
+    width: 90%;
+  }
 }
 </style>
