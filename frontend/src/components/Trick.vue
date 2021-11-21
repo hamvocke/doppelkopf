@@ -113,7 +113,5 @@ export default class Trick extends Vue {
   .bottom {
     transform: rotate(4deg) translateY(-22px);
   }
-
 }
-
 </style>
