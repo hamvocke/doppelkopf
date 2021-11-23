@@ -192,7 +192,7 @@ export default class Card extends Vue {
     bottom: 3px;
   }
 
-  .card-top .rank {
+  .rank {
     font-size: 0.9em;
     font-weight: bold;
   }
