@@ -99,6 +99,9 @@ export class RuleBasedBehaviour extends Behavior {
     possibleAnnouncements: Set<Announcement>,
     hand: Hand
   ): Announcement | null {
+    /* TODO outsource this code and make it modular
+     * add expectation value at some point
+
     if (
       [...possibleAnnouncements].includes(Announcement.Kontra) ||
       [...possibleAnnouncements].includes(Announcement.Re)
@@ -110,6 +113,23 @@ export class RuleBasedBehaviour extends Behavior {
         counter++;
       counter += hand.missingSuites().length;
       return counter > 2 ? [...possibleAnnouncements][0] : null;
+    }
+    */
+    if (
+      [...possibleAnnouncements].includes(Announcement.Kontra) ||
+      [...possibleAnnouncements].includes(Announcement.Re)
+    ) {
+      if (
+        hand.trumps().length >= 9 ||
+        (hand.trumps().length >= 8 && hand.missingSuites().length >= 1) ||
+        (hand.trumps().length >= 8 &&
+          hand.contains(ten.of(Suit.Hearts)) &&
+          hand.cards.filter(c => c.rank === Rank.Queen).length >= 3)
+        // TODO add to clause: starts next trick (aufspiel)
+        //|| (hand.trumps().length >= 7 && hand.getBlankAces().length >= 1)
+      ) {
+        return [...possibleAnnouncements][0];
+      }
     }
     return null;
   }
