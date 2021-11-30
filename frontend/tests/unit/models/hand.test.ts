@@ -330,8 +330,8 @@ test("should detect low value cards in hand", () => {
   ];
   const hand = new Hand(cards);
 
-  expect(hand.missingSuites().length).toBe(1);
-  expect(hand.missingSuites()).toContain(Suit.Spades);
+  expect(hand.getChicanes().length).toBe(1);
+  expect(hand.getChicanes()).toContain(Suit.Spades);
 });
 
 test("should detect highest card in hand", () => {

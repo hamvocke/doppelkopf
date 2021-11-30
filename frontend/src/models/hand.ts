@@ -108,11 +108,16 @@ export class Hand {
     return aces;
   }
 
-  missingSuites(): Suit[] {
+  chicane(suit: Suit): boolean {
+    return this.nonTrumps(suit).length === 0;
+  }
+
+  // TODO rename to sth with chicane
+  getChicanes(): Suit[] {
     let suits = new Array<Suit>();
-    for (const suit of [Suit.Clubs, Suit.Spades, Suit.Hearts]) {
-      if (this.nonTrumps(suit).length === 0) suits.push(suit);
-    }
+    [Suit.Clubs, Suit.Spades, Suit.Hearts].forEach(suit => {
+      if (this.chicane(suit)) suits.push(suit);
+    });
     return suits;
   }
 }

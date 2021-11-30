@@ -111,7 +111,7 @@ export class RuleBasedBehaviour extends Behavior {
       if (hand.trumps().length >= 7) counter++;
       if (hand.cards.filter(c => c.is(ten.of(Suit.Hearts))).length === 2)
         counter++;
-      counter += hand.missingSuites().length;
+      counter += hand.getChicanes().length;
       return counter > 2 ? [...possibleAnnouncements][0] : null;
     }
     */
@@ -121,7 +121,7 @@ export class RuleBasedBehaviour extends Behavior {
     ) {
       if (
         hand.trumps().length >= 9 ||
-        (hand.trumps().length >= 8 && hand.missingSuites().length >= 1) ||
+        (hand.trumps().length >= 8 && hand.getChicanes().length >= 1) ||
         (hand.trumps().length >= 8 &&
           hand.contains(ten.of(Suit.Hearts)) &&
           hand.cards.filter(c => c.rank === Rank.Queen).length >= 3)
