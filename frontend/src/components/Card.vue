@@ -38,12 +38,6 @@ export default class Card extends Vue {
   @Prop({ default: false })
   isCovered!: boolean;
 
-  @Prop({ default: false })
-  isBasecard!: boolean;
-
-  @Prop({ default: false })
-  isWinner!: boolean;
-
   @Prop({ default: "unknown" })
   position!: string;
 
@@ -66,10 +60,7 @@ export default class Card extends Vue {
   get cardClasses() {
     return {
       selected: this.isSelected,
-      covered: this.isCovered,
-      basecard: this.isBasecard && !this.isWinner,
-      winner: this.isWinner && !this.isBasecard,
-      basewin: this.isWinner && this.isBasecard
+      covered: this.isCovered
     };
   }
 
@@ -96,7 +87,7 @@ export default class Card extends Vue {
   padding: 6px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.42), 0 1px 2px rgba(0, 0, 0, 0.34);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.92), 0 0 4px rgba(0, 0, 0, 0.24);
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-property: top, box-shadow;
   user-select: none;
@@ -119,21 +110,6 @@ export default class Card extends Vue {
   top: -10px;
   box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
   z-index: var(--card-selected-layer);
-}
-
-.basecard {
-  box-shadow: rgba(29, 53, 87, 0.5) 0px 0px 3px 5px,
-    0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-
-.winner {
-  box-shadow: rgba(230, 57, 71, 0.5) 0px 0px 3px 5px,
-    0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-
-.basewin {
-  box-shadow: rgba(127, 43, 175, 0.5) 0px 0px 3px 5px,
-    0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .card-top {
