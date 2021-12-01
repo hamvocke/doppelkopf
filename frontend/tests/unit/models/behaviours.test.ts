@@ -105,7 +105,7 @@ describe("Rule Based Card Behavior", () => {
       expect(announcement).toBeNull();
     });
 
-    test("should announce", () => {
+    test("should announce >= 9 trumps", () => {
       const hand = new Hand([
         king.of(Suit.Hearts).first(),
         ace.of(Suit.Hearts).first(),
@@ -114,6 +114,28 @@ describe("Rule Based Card Behavior", () => {
         jack.of(Suit.Diamonds).first(),
         jack.of(Suit.Clubs).first(),
         jack.of(Suit.Spades).first(),
+        queen.of(Suit.Hearts).first(),
+        queen.of(Suit.Clubs).first(),
+        ten.of(Suit.Hearts).first()
+      ]);
+
+      const announcement = behavior.announcementToMake(
+        new Set([Announcement.Re, Announcement.No90]),
+        hand
+      );
+
+      expect(announcement).toEqual(Announcement.Re);
+    });
+
+    test("should announce ten of hearts and three queens", () => {
+      const hand = new Hand([
+        king.of(Suit.Spades).first(),
+        king.of(Suit.Clubs).first(),
+        king.of(Suit.Diamonds).second(),
+        ace.of(Suit.Diamonds).first(),
+        jack.of(Suit.Diamonds).first(),
+        jack.of(Suit.Clubs).first(),
+        queen.of(Suit.Spades).first(),
         queen.of(Suit.Hearts).first(),
         queen.of(Suit.Clubs).first(),
         ten.of(Suit.Hearts).first()

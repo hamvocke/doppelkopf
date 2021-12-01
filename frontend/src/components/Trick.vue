@@ -64,24 +64,28 @@ export default class Trick extends Vue {
   grid-area: top;
   justify-content: center;
   align-items: end;
+  transform: rotate(185deg) translateY(-46px);
 }
 
 .left {
   grid-area: left;
   justify-content: end;
   align-items: center;
+  transform: rotate(102deg) translateY(-16px);
 }
 
 .right {
   grid-area: right;
   justify-content: start;
   align-items: center;
+  transform: rotate(-97deg) translateY(-22px);
 }
 
 .bottom {
   grid-area: bottom;
   justify-content: center;
   align-items: start;
+  transform: rotate(4deg) translateY(-30px);
 }
 
 .card-enter-active {
@@ -100,5 +104,23 @@ export default class Trick extends Vue {
 
 .card-enter {
   opacity: 0;
+}
+
+@media screen and (max-width: 680px) {
+  .top {
+    transform: rotate(185deg) translateY(-19px);
+  }
+
+  .left {
+    transform: rotate(102deg) translateY(-14px);
+  }
+
+  .right {
+    transform: rotate(-97deg) translateY(-14px);
+  }
+
+  .bottom {
+    transform: rotate(4deg) translateY(-22px);
+  }
 }
 </style>

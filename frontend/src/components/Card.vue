@@ -96,7 +96,7 @@ export default class Card extends Vue {
   padding: 6px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.42), 0 1px 2px rgba(0, 0, 0, 0.34);
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-property: top, box-shadow;
   user-select: none;
@@ -205,10 +205,11 @@ export default class Card extends Vue {
   }
 
   .card-bottom {
-    display: none;
+    right: 3px;
+    bottom: 3px;
   }
 
-  .card-top .rank {
+  .rank {
     font-size: 0.9em;
     font-weight: bold;
   }

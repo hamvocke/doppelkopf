@@ -72,6 +72,7 @@ export default class Table extends Vue {
   grid-template-columns: minmax(140px, auto) 1fr minmax(140px, auto);
   overflow: auto;
   height: 100%;
+  margin: auto;
 }
 
 .top {
@@ -106,6 +107,12 @@ export default class Table extends Vue {
       "controls controls controls";
 
     grid-template-columns: minmax(120px, auto) 1fr minmax(120px, auto);
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .table {
+    max-width: 1200px;
   }
 }
 </style>
