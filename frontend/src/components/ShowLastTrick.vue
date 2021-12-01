@@ -71,7 +71,7 @@ export default class ShowLastTrick extends Vue {
   justify-content: center;
   height: 100%;
   width: 100%;
-  z-index: var(--show-last-trick-layer);
+  z-index: var(--options-menu-layer);
   color: var(--black);
   background-color: color(var(--black) a(80%));
 }
