@@ -28,29 +28,4 @@ describe("Trick.vue", () => {
 
     expect(wrapper.findAll("div.card").length).toEqual(1);
   });
-
-  test("should highlight base and winning card current trick", () => {
-    trick.add(ace.of(Suit.Hearts), game.players[0]);
-    trick.add(ace.of(Suit.Diamonds), game.players[1]);
-
-    const wrapper = mount(Trick, {
-      propsData: { trick: trick, highlightCards: true }
-    });
-
-    expect(wrapper.find("div.card-inner.winner").exists()).toBe(true);
-    expect(wrapper.find("div.card-inner.basecard").exists()).toBe(true);
-    expect(wrapper.find("div.card-inner.basewin").exists()).toBe(false);
-  });
-
-  test("should highlight basecard being the winning card", () => {
-    trick.add(ace.of(Suit.Hearts), game.players[0]);
-
-    const wrapper = mount(Trick, {
-      propsData: { trick: trick, highlightCards: true }
-    });
-
-    expect(wrapper.find("div.card-inner.winner").exists()).toBe(false);
-    expect(wrapper.find("div.card-inner.basecard").exists()).toBe(false);
-    expect(wrapper.find("div.card-inner.basewin").exists()).toBe(true);
-  });
 });
