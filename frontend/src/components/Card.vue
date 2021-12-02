@@ -87,7 +87,7 @@ export default class Card extends Vue {
   padding: 6px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.92), 0 0 4px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.92), 0 0 3px rgba(0, 0, 0, 0.24);
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-property: top, box-shadow;
   user-select: none;
