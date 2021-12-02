@@ -75,8 +75,8 @@ export class Game {
     return this.currentRound.currentTrick;
   }
 
-  get lastTrick() {
-    return this.currentRound.lastTrick;
+  get previousTrick() {
+    return this.currentRound.previousTrick;
   }
 
   nextRound() {

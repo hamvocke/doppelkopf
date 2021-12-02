@@ -27,7 +27,7 @@ import Trick from "@/components/Trick.vue";
 @Component({
   components: { RotateCcwIcon, Trick }
 })
-export default class ShowLastTrick extends Vue {
+export default class ShowPreviousTrick extends Vue {
   @Prop()
   trick?: TrickModel;
 
