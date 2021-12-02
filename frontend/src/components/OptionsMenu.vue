@@ -1,6 +1,10 @@
 <template>
   <div class="options">
-    <div class="icon icon-options" @click="toggleMenu()">
+    <div
+      class="icon icon-options"
+      :title="$t('options-header')"
+      @click="toggleMenu()"
+    >
       <settings-icon></settings-icon>
     </div>
     <div

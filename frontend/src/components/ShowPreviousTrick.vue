@@ -1,6 +1,11 @@
 <template>
   <div class="options">
-    <div v-if="trick" class="icon icon-rewind" @click="toggleVisibility()">
+    <div
+      v-if="trick"
+      class="icon icon-rewind"
+      :title="$t('show_last_trick_header')"
+      @click="toggleVisibility()"
+    >
       <rotate-ccw-icon></rotate-ccw-icon>
     </div>
     <div
