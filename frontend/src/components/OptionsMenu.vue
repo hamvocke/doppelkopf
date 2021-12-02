@@ -3,7 +3,12 @@
     <div class="icon icon-options" @click="toggleMenu()">
       <settings-icon></settings-icon>
     </div>
-    <div v-if="visible" class="options-menu" @click.self="toggleMenu()">
+    <div
+      v-if="visible"
+      v-on-clickaway="toggleMenu"
+      class="options-menu"
+      @click.self="toggleMenu()"
+    >
       <div class="options-menu-content">
         <h2>{{ $t("options-header") }}</h2>
         <div class="option">
@@ -28,11 +33,13 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import LanguagePicker from "./LanguagePicker.vue";
+import { mixin as clickaway } from "vue-clickaway";
 import { Config } from "@/models/config";
 import { RotateCcwIcon, SettingsIcon } from "vue-feather-icons";
 
 @Component({
-  components: { LanguagePicker, SettingsIcon, RotateCcwIcon }
+  components: { LanguagePicker, SettingsIcon, RotateCcwIcon },
+  mixins: [clickaway]
 })
 export default class OptionsMenu extends Vue {
   config = Config;

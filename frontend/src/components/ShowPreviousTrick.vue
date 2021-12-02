@@ -3,7 +3,12 @@
     <div v-if="trick" class="icon icon-rewind" @click="toggleVisibility()">
       <rotate-ccw-icon></rotate-ccw-icon>
     </div>
-    <div v-if="visible" class="last-trick" @click.self="toggleVisibility()">
+    <div
+      v-if="visible"
+      v-on-clickaway="toggleVisibility"
+      class="last-trick"
+      @click.self="toggleVisibility()"
+    >
       <div class="last-trick-content">
         <h2>{{ $t("show_last_trick_header") }}</h2>
         <div class="option">
@@ -20,12 +25,14 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Config } from "@/models/config";
+import { mixin as clickaway } from "vue-clickaway";
 import { RotateCcwIcon } from "vue-feather-icons";
 import { Trick as TrickModel } from "@/models/trick";
 import Trick from "@/components/Trick.vue";
 
 @Component({
-  components: { RotateCcwIcon, Trick }
+  components: { RotateCcwIcon, Trick },
+  mixins: [clickaway]
 })
 export default class ShowPreviousTrick extends Vue {
   @Prop()
