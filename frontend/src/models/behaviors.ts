@@ -218,7 +218,6 @@ export class RuleBasedBehaviour extends Behavior {
         hand
           .lowValues()
           .filter(card => card.isTrump())
-          .slice()
           .reverse()[0] ?? this.findLeastValuableLosingCard(hand, trick)
       );
     }
@@ -354,7 +353,6 @@ export class RuleBasedBehaviour extends Behavior {
               card.beats(trick.highestCard()?.card) &&
               card.value < 10
           )
-          .slice()
           .reverse()
       ],
       trick.baseCard()
@@ -376,10 +374,7 @@ export class RuleBasedBehaviour extends Behavior {
   findMostSuitableGreasingCard(hand: Hand, trick?: Trick): Card {
     const fox = hand.findAny(Suit.Diamonds, Rank.Ace);
     const tenOfHearts = hand.findAny(Suit.Hearts, Rank.Ten);
-    const queens = hand.cards
-      .filter(card => card.rank == Rank.Queen)
-      .slice()
-      .reverse();
+    const queens = hand.cards.filter(card => card.rank == Rank.Queen).reverse();
 
     const cardPreference = [
       fox!,
@@ -412,12 +407,8 @@ export class RuleBasedBehaviour extends Behavior {
     const trumpPreference = [
       aceOfDiamonds,
       tenOfDiamonds,
-      ...hand
-        .trumps()
-        .slice()
-        .reverse()
+      ...hand.trumps().reverse()
     ];
-
     return (
       trumpPreference.find(card => card && card.beats(highestCard)) ?? null
     );
@@ -433,8 +424,11 @@ export class RuleBasedBehaviour extends Behavior {
   findLeastValuableLosingCard(hand: Hand, trick: Trick): Card {
     const cardPreference = [
       ...hand.nonTrumps().filter(card => card.value === 4),
-      ...hand.lowValues().filter(card => card.value !== 3),
-      ...hand.cards.slice().reverse()
+      ...hand
+        .lowValues()
+        .filter(card => card.value !== 3)
+        .reverse(),
+      ...hand.cards.reverse()
     ];
     return playableCards(cardPreference, trick.baseCard())[0];
   }
