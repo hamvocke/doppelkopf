@@ -234,6 +234,18 @@ describe("Rule Based Card Behavior", () => {
       expect(cardToPlay).toEqual(ace.of(Suit.Diamonds).first());
     });
 
+    test("should play lowest trump, when mustn't serve", () => {
+      let hand = new Hand([
+        jack.of(Suit.Diamonds).first(),
+        jack.of(Suit.Clubs),
+        queen.of(Suit.Clubs)
+      ]);
+      const trick = new Trick(players);
+      trick.add(ace.of(Suit.Hearts).second(), player1);
+      const cardToPlay = behavior.cardToPlay(hand, trick, no_memory);
+      expect(cardToPlay).toEqual(jack.of(Suit.Diamonds).first());
+    });
+
     test("should play higher trump when mustn't serve and somebody else is trumping", () => {
       const trick = new Trick(players);
       trick.add(ace.of(Suit.Hearts).second(), player1);
@@ -367,6 +379,7 @@ describe("Rule Based Card Behavior", () => {
         let hand = new Hand([
           ace.of(Suit.Diamonds),
           jack.of(Suit.Diamonds).first(),
+          jack.of(Suit.Spades),
           queen.of(Suit.Diamonds)
         ]);
         const trick = new Trick(players);
@@ -706,11 +719,12 @@ describe("Rule Based Card Behavior", () => {
 
         test("shouldn't grease queen, although more points", () => {
           let hand = new Hand([
+            jack.of(Suit.Diamonds).first(),
             jack.of(Suit.Clubs).first(),
             queen.of(Suit.Diamonds).first()
           ]);
           const cardToPlay = behavior.findMostSuitableGreasingCard(hand);
-          expect(cardToPlay).toEqual(jack.of(Suit.Clubs).first());
+          expect(cardToPlay).toEqual(jack.of(Suit.Diamonds).first());
         });
 
         test("should pick lowest suit", () => {
