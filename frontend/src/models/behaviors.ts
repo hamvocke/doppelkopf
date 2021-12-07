@@ -1,6 +1,5 @@
 import { sample } from "lodash-es";
 import { playableCards } from "@/models/playableCardFinder";
-import { chance } from "@/models/random";
 import {
   Card,
   Suit,
@@ -16,6 +15,10 @@ import { Trick } from "./trick";
 import { Memory } from "./memory";
 import { Player } from "./player";
 import { Affinities, AffinityEvent } from "./affinities";
+import {
+  chanceAnnouncement,
+  conservativeAnnouncement
+} from "@/models/announcementRules";
 
 export abstract class Behavior {
   constructor(public playerId: string, public affinities: Affinities) {}
@@ -59,16 +62,8 @@ export class RandomCardBehavior extends Behavior {
     possibleAnnouncements: Set<Announcement>,
     hand?: Hand
   ): Announcement | null {
-    if (possibleAnnouncements.size === 0) {
-      return null;
-    }
-
-    const announcementChance = 0.1;
-    if (chance(announcementChance)) {
-      return [...possibleAnnouncements][0];
-    }
-
-    return null;
+    const decision = new chanceAnnouncement(0.1);
+    return decision.announcementToMake(possibleAnnouncements, hand);
   }
 }
 
@@ -99,39 +94,8 @@ export class RuleBasedBehaviour extends Behavior {
     possibleAnnouncements: Set<Announcement>,
     hand: Hand
   ): Announcement | null {
-    /* TODO outsource this code and make it modular
-     * add expectation value at some point
-
-    if (
-      [...possibleAnnouncements].includes(Announcement.Kontra) ||
-      [...possibleAnnouncements].includes(Announcement.Re)
-    ) {
-      let counter = 0;
-      if (hand.getBlankAces().length > 0) counter++;
-      if (hand.trumps().length >= 7) counter++;
-      if (hand.cards.filter(c => c.is(ten.of(Suit.Hearts))).length === 2)
-        counter++;
-      counter += hand.getChicanes().length;
-      return counter > 2 ? [...possibleAnnouncements][0] : null;
-    }
-    */
-    if (
-      [...possibleAnnouncements].includes(Announcement.Kontra) ||
-      [...possibleAnnouncements].includes(Announcement.Re)
-    ) {
-      if (
-        hand.trumps().length >= 9 ||
-        (hand.trumps().length >= 8 && hand.getChicanes().length >= 1) ||
-        (hand.trumps().length >= 8 &&
-          hand.contains(ten.of(Suit.Hearts)) &&
-          hand.cards.filter(c => c.rank === Rank.Queen).length >= 3)
-        // TODO add to clause: starts next trick (aufspiel)
-        //|| (hand.trumps().length >= 7 && hand.getBlankAces().length >= 1)
-      ) {
-        return [...possibleAnnouncements][0];
-      }
-    }
-    return null;
+    const decision = new conservativeAnnouncement();
+    return decision.announcementToMake(possibleAnnouncements, hand);
   }
 
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card {
