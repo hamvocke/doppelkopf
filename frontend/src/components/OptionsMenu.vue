@@ -67,7 +67,7 @@ export default class OptionsMenu extends Vue {
   cursor: pointer;
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
     0 5px 15px 0 rgba(0, 0, 0, 0.08);
-  z-index: var(--options-icon-layer);
+  z-index: var(--menu-icon-layer);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,7 +86,7 @@ export default class OptionsMenu extends Vue {
   justify-content: center;
   height: 100%;
   width: 100%;
-  z-index: var(--options-menu-layer);
+  z-index: var(--modal-layer);
   color: var(--black);
   background-color: color(var(--black) a(80%));
 }
