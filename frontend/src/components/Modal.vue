@@ -49,4 +49,10 @@ export default class Modal extends Vue {
   display: flex;
   flex-direction: column;
 }
+
+@media screen and (max-width: 680px) {
+  .modal-content {
+    max-width: 100%;
+  }
+}
 </style>
