@@ -7,30 +7,26 @@
   </div>
 </template>
 
-<script>
-import Notifications from "@/components/Notifications";
-import Table from "@/components/Table";
-import OptionsMenu from "@/components/OptionsMenu";
-import ShowPreviousTrick from "@/components/ShowPreviousTrick";
+<script lang="ts">
+import { Component, Vue, Prop } from "vue-property-decorator";
+import Notifications from "@/components/Notifications.vue";
+import Table from "@/components/Table.vue";
+import OptionsMenu from "@/components/OptionsMenu.vue";
+import ShowPreviousTrick from "@/components/ShowPreviousTrick.vue";
 import { Game } from "@/models/game";
 
-export default {
-  name: "Game",
+@Component({
   components: {
     Table,
     Notifications,
     OptionsMenu,
     ShowPreviousTrick
-  },
-  props: {
-    game: {
-      type: Object,
-      default: function() {
-        return Game.singlePlayer();
-      }
-    }
   }
-};
+})
+export default class GameView extends Vue {
+  @Prop({ default: () => Game.singlePlayer() })
+  game!: Game;
+}
 </script>
 
 <style scoped>

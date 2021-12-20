@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
-import Game from "@/views/Game.vue";
+import GameView from "@/views/Game.vue";
 import Tutorial from "@/views/Tutorial.vue";
 import WaitingRoom from "@/views/WaitingRoom.vue";
 import Preview from "@/views/Preview.vue";
@@ -19,7 +19,7 @@ const routes = [
   {
     path: "/play",
     name: "play",
-    component: Game
+    component: GameView
   },
   {
     path: "/learn",
