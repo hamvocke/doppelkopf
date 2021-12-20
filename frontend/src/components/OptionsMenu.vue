@@ -3,46 +3,40 @@
     <div
       class="icon icon-options"
       :title="$t('options-header')"
-      @click="toggleMenu()"
+      @click="toggleMenu"
     >
       <settings-icon></settings-icon>
     </div>
-    <div
-      v-if="visible"
-      v-on-clickaway="toggleMenu"
-      class="options-menu"
-      @click.self="toggleMenu()"
-    >
-      <div class="options-menu-content">
-        <h2>{{ $t("options-header") }}</h2>
-        <div class="option">
-          <span class="label">{{ $t("language") }}</span>
-          <LanguagePicker />
-        </div>
+    <modal :visible="visible" @clickaway="hideMenu">
+      <h2>{{ $t("options-header") }}</h2>
+      <div class="option">
+        <span class="label">{{ $t("language") }}</span>
+        <LanguagePicker />
+      </div>
 
-        <div v-if="config.Debug" class="option">
-          <span class="label">Debug Mode</span>
-          <div>
-            Enabled
-          </div>
-          <div>
-            {{ config }}
-          </div>
+      <div v-if="config.debug" class="option">
+        <span class="label">Debug Mode</span>
+        <div>
+          Enabled
+        </div>
+        <div>
+          {{ config }}
         </div>
       </div>
-    </div>
+    </modal>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import LanguagePicker from "./LanguagePicker.vue";
+import Modal from "./Modal.vue";
 import { mixin as clickaway } from "vue-clickaway";
 import { Config } from "@/models/config";
 import { RotateCcwIcon, SettingsIcon } from "vue-feather-icons";
 
 @Component({
-  components: { LanguagePicker, SettingsIcon, RotateCcwIcon },
+  components: { LanguagePicker, SettingsIcon, RotateCcwIcon, Modal },
   mixins: [clickaway]
 })
 export default class OptionsMenu extends Vue {
@@ -51,6 +45,10 @@ export default class OptionsMenu extends Vue {
 
   toggleMenu() {
     this.visible = !this.visible;
+  }
+
+  hideMenu() {
+    this.visible = false;
   }
 }
 </script>
@@ -76,32 +74,6 @@ export default class OptionsMenu extends Vue {
 .icon-options {
   top: 12px;
   right: 12px;
-}
-
-.options-menu {
-  position: fixed;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  z-index: var(--modal-layer);
-  color: var(--black);
-  background-color: color(var(--black) a(80%));
-}
-
-.options-menu-content {
-  max-width: 40%;
-  background-color: var(--shell);
-  border-radius: 8px;
-  box-sizing: border-box;
-  padding: 16px;
-  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
-    0 5px 15px 0 rgba(0, 0, 0, 0.08);
-  position: relative;
-  display: flex;
-  flex-direction: column;
 }
 
 .option {
