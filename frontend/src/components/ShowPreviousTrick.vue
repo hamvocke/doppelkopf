@@ -11,10 +11,10 @@
     <div
       v-if="visible"
       v-on-clickaway="toggleVisibility"
-      class="last-trick"
+      class="previous-trick"
       @click.self="toggleVisibility()"
     >
-      <div class="last-trick-content">
+      <div class="previous-trick-content">
         <h2>{{ $t("show_last_trick_header") }}</h2>
         <div class="option">
           <span class="label">
@@ -75,7 +75,7 @@ export default class ShowPreviousTrick extends Vue {
   right: 12px;
 }
 
-.last-trick {
+.previous-trick {
   position: fixed;
   top: 0;
   display: flex;
@@ -88,7 +88,7 @@ export default class ShowPreviousTrick extends Vue {
   background-color: color(var(--black) a(80%));
 }
 
-.last-trick-content {
+.previous-trick-content {
   max-width: 40%;
   background-color: var(--shell);
   border-radius: 8px;
@@ -118,7 +118,7 @@ h2 {
 }
 
 @media screen and (max-width: 680px) {
-  .last-trick-content {
+  .previous-trick-content {
     max-width: 100%;
   }
 }

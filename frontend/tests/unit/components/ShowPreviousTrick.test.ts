@@ -21,7 +21,7 @@ describe("ShowPreviousTrick.vue", () => {
     trick.add(ace.of(Suit.Clubs), p1);
   });
 
-  test("should show last trick icon", async () => {
+  test("should show previous trick icon", async () => {
     const wrapper = mount(ShowPreviousTrick, { propsData: { trick: trick } });
 
     await wrapper.setData({ visible: true });
@@ -36,7 +36,7 @@ describe("ShowPreviousTrick.vue", () => {
 
     await wrapper.setData({ visible: false });
 
-    expect(wrapper.find(".last-trick").exists()).toBe(false);
+    expect(wrapper.find(".previous-trick").exists()).toBe(false);
   });
 
   test("should show options", async () => {
@@ -46,7 +46,7 @@ describe("ShowPreviousTrick.vue", () => {
 
     await wrapper.find(".icon.icon-rewind").trigger("click");
 
-    expect(wrapper.find(".last-trick").exists()).toBe(true);
+    expect(wrapper.find(".previous-trick").exists()).toBe(true);
   });
 
   test("should contain last trick component", async () => {
@@ -54,6 +54,6 @@ describe("ShowPreviousTrick.vue", () => {
 
     await wrapper.setData({ visible: true });
 
-    expect(wrapper.find(".last-trick-content .trick").exists()).toBe(true);
+    expect(wrapper.find(".previous-trick-content .trick").exists()).toBe(true);
   });
 });
