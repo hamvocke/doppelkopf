@@ -4,6 +4,8 @@ import Home from "@/views/Home.vue";
 import Game from "@/views/Game.vue";
 import Tutorial from "@/views/Tutorial.vue";
 import WaitingRoom from "@/views/WaitingRoom.vue";
+import Preview from "@/views/Preview.vue";
+import { Config } from "@/models/config";
 
 Vue.use(VueRouter);
 
@@ -31,6 +33,14 @@ const routes = [
     props: true
   }
 ];
+
+if (Config.debug) {
+  routes.push({
+    path: "/preview",
+    name: "preview",
+    component: Preview
+  });
+}
 
 const router = new VueRouter({
   base: process.env.BASE_URL,
