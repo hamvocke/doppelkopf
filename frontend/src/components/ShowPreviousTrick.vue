@@ -8,22 +8,15 @@
     >
       <rotate-ccw-icon></rotate-ccw-icon>
     </div>
-    <div
-      v-if="visible"
-      v-on-clickaway="toggleVisibility"
-      class="previous-trick"
-      @click.self="toggleVisibility()"
-    >
-      <div class="previous-trick-content">
-        <h2>{{ $t("show_last_trick_header") }}</h2>
-        <div class="option">
-          <span class="label">
-            {{ $t("show_last_trick_label", { name: trick.winner().name }) }}
-          </span>
-        </div>
-        <Trick :trick="trick" />
+    <modal v-if="trick" :visible="visible" @clickaway="hideMenu">
+      <h2>{{ $t("show_last_trick_header") }}</h2>
+      <div class="option">
+        <span class="label">
+          {{ $t("show_last_trick_label", { name: trick.winner().name }) }}
+        </span>
       </div>
-    </div>
+      <Trick :trick="trick" />
+    </modal>
   </div>
 </template>
 
@@ -34,9 +27,10 @@ import { mixin as clickaway } from "vue-clickaway";
 import { RotateCcwIcon } from "vue-feather-icons";
 import { Trick as TrickModel } from "@/models/trick";
 import Trick from "@/components/Trick.vue";
+import Modal from "@/components/Modal.vue";
 
 @Component({
-  components: { RotateCcwIcon, Trick },
+  components: { RotateCcwIcon, Trick, Modal },
   mixins: [clickaway]
 })
 export default class ShowPreviousTrick extends Vue {
@@ -48,6 +42,10 @@ export default class ShowPreviousTrick extends Vue {
 
   toggleVisibility() {
     this.visible = !this.visible;
+  }
+
+  hideMenu() {
+    this.visible = false;
   }
 }
 </script>
@@ -75,32 +73,6 @@ export default class ShowPreviousTrick extends Vue {
   right: 12px;
 }
 
-.previous-trick {
-  position: fixed;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  z-index: var(--modal-layer);
-  color: var(--black);
-  background-color: color(var(--black) a(80%));
-}
-
-.previous-trick-content {
-  max-width: 40%;
-  background-color: var(--shell);
-  border-radius: 8px;
-  box-sizing: border-box;
-  padding: 16px;
-  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
-    0 5px 15px 0 rgba(0, 0, 0, 0.08);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
 .option {
   display: flex;
   flex-direction: row;
@@ -115,11 +87,5 @@ export default class ShowPreviousTrick extends Vue {
 
 h2 {
   margin-top: 0;
-}
-
-@media screen and (max-width: 680px) {
-  .previous-trick-content {
-    max-width: 100%;
-  }
 }
 </style>

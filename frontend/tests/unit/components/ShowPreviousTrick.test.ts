@@ -26,34 +26,23 @@ describe("ShowPreviousTrick.vue", () => {
 
     await wrapper.setData({ visible: true });
 
-    expect(trick.playedCards.length).toBe(1);
-    expect(trick.winner()).toBe(p1);
     expect(wrapper.find(".icon.icon-rewind").exists()).toBe(true);
   });
 
-  test("should not show options", async () => {
+  test("should not show previous trick modal initially", async () => {
     const wrapper = mount(ShowPreviousTrick, { propsData: { trick: trick } });
 
     await wrapper.setData({ visible: false });
 
-    expect(wrapper.find(".previous-trick").exists()).toBe(false);
+    expect(wrapper.find(".modal").exists()).toBe(false);
   });
 
-  test("should show options", async () => {
+  test("should show previous trick modal on icon click", async () => {
     const wrapper = mount(ShowPreviousTrick, { propsData: { trick: trick } });
 
     await wrapper.setData({ visible: false });
-
     await wrapper.find(".icon.icon-rewind").trigger("click");
 
-    expect(wrapper.find(".previous-trick").exists()).toBe(true);
-  });
-
-  test("should contain last trick component", async () => {
-    const wrapper = mount(ShowPreviousTrick, { propsData: { trick: trick } });
-
-    await wrapper.setData({ visible: true });
-
-    expect(wrapper.find(".previous-trick-content .trick").exists()).toBe(true);
+    expect(wrapper.find(".modal").exists()).toBe(true);
   });
 });

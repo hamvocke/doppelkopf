@@ -1,14 +1,13 @@
 <template>
-  <div class="modal">
-    <div class="modal-content">Reservations</div>
-  </div>
+  <modal>Reservations</modal>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { Game } from "@/models/game";
+import Modal from "@/components/Modal.vue";
 
-@Component({})
+@Component({ components: { Modal } })
 export default class Reservations extends Vue {
   @Prop({ required: true })
   game!: Game;
@@ -17,30 +16,4 @@ export default class Reservations extends Vue {
 
 <style scoped>
 @import "../assets/css/vars.css";
-
-.modal {
-  position: fixed;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  z-index: var(--modal-layer);
-  color: var(--black);
-  background-color: color(var(--black) a(80%));
-}
-
-.modal-content {
-  max-width: 40%;
-  background-color: var(--shell);
-  border-radius: 8px;
-  box-sizing: border-box;
-  padding: 16px;
-  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
-    0 5px 15px 0 rgba(0, 0, 0, 0.08);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
 </style>

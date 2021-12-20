@@ -91,10 +91,4 @@ export default class OptionsMenu extends Vue {
 h2 {
   margin-top: 0;
 }
-
-@media screen and (max-width: 680px) {
-  .options-menu-content {
-    max-width: 100%;
-  }
-}
 </style>
