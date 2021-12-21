@@ -177,34 +177,34 @@ export class RuleBasedBehaviour extends Behavior {
     // ToDo check if we know with whom we play and if we want to play a strategy
     if (this.getMyPlayer(trick).isKontra()) {
       return this.findLeastValuableLosingCard(hand, trick);
-    } else {
-      return (
-        hand
-          .lowValues()
-          .filter(card => card.isTrump())
-          .reverse()[0] ?? this.findLeastValuableLosingCard(hand, trick)
-      );
     }
+
+    return (
+      hand
+        .lowValues()
+        .filter(card => card.isTrump())
+        .reverse()[0] ?? this.findLeastValuableLosingCard(hand, trick)
+    );
   }
 
   nonTrumpRule(hand: Hand, trick: Trick, memory?: Memory): Card {
     let baseCard = trick.baseCard()!;
-    if (hand.hasNonTrumps(baseCard.suit)) {
+    if (hand.nonTrumps(baseCard.suit).length) {
       return this.serveNonTrump(hand, trick, memory);
-    } else {
-      if (memory?.hasSuitBeenPlayedBefore(baseCard.suit, trick.id!)) {
-        return hand.highest().beats(trick.highestCard()!.card) &&
-          // ToDo this check works but needs tuning
-          memory.pointsLeftInSuit(baseCard.suit) + trick.points() >= 14
-          ? hand.highest()
-          : this.findMostSuitableBeatingCard(hand, trick);
-      } else {
-        return (
-          this.findMostValuableWinningTrump(hand, trick) ??
-          this.findLeastValuableLosingCard(hand, trick)
-        );
-      }
     }
+
+    if (memory?.hasSuitBeenPlayedBefore(baseCard.suit, trick.id!)) {
+      return hand.highest().beats(trick.highestCard()!.card) &&
+        // ToDo this check works but needs tuning
+        memory.pointsLeftInSuit(baseCard.suit) + trick.points() >= 14
+        ? hand.highest()
+        : this.findMostSuitableBeatingCard(hand, trick);
+    }
+
+    return (
+      this.findMostValuableWinningTrump(hand, trick) ??
+      this.findLeastValuableLosingCard(hand, trick)
+    );
   }
 
   playPosition(hand: Hand, trick: Trick): Card {

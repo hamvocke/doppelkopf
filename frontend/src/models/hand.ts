@@ -76,10 +76,6 @@ export class Hand {
     );
   }
 
-  hasNonTrumps(suit: Suit): boolean {
-    return this.nonTrumps(suit).length > 0;
-  }
-
   trumps(): Card[] {
     return this.cards.filter(card => card.isTrump());
   }
