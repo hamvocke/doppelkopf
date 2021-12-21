@@ -24,15 +24,11 @@ export const values: { [id: string]: number } = {
 };
 
 export class Card {
-  id: number | string;
+  id: number;
   rank: Rank;
   suit: Suit;
 
-  constructor(
-    rank: Rank,
-    suit = Suit.Clubs,
-    id: number | string = uniqueId("card_")
-  ) {
+  constructor(rank: Rank, suit = Suit.Clubs, id: number = 0) {
     this.rank = rank;
     this.suit = suit;
     this.id = id;
@@ -136,14 +132,7 @@ export class Card {
 }
 
 export function compare(oneCard: Card, anotherCard: Card) {
-  const isOneCard = (element: Card) =>
-    element.rank === oneCard.rank && element.suit === oneCard.suit;
-  const isAnotherCard = (element: Card) =>
-    element.rank === anotherCard.rank && element.suit === anotherCard.suit;
-  return (
-    findIndex(cardOrder, isAnotherCard) - findIndex(cardOrder, isOneCard) ||
-    findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard)
-  );
+  return findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard);
 }
 
 export function byCardValuesDesc(oneCard: Card, anotherCard: Card) {

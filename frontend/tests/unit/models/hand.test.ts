@@ -295,14 +295,14 @@ test("should detect low value cards in hand", () => {
 });
 
 test("should detect highest card in hand", () => {
-  const tenOfHearts = ten.of(Suit.Hearts);
+  const tenOfHearts = ten.of(Suit.Hearts).first();
 
   const cards = [
-    ace.of(Suit.Hearts),
+    ace.of(Suit.Hearts).first(),
     tenOfHearts,
-    king.of(Suit.Clubs),
-    queen.of(Suit.Hearts),
-    jack.of(Suit.Clubs)
+    king.of(Suit.Clubs).first(),
+    queen.of(Suit.Hearts).first(),
+    jack.of(Suit.Clubs).first()
   ];
   const hand = new Hand(cards);
 
