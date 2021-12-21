@@ -87,9 +87,11 @@ export class Card {
   }
 
   beats(anotherCard: Card | undefined) {
-    return anotherCard instanceof Card
-      ? this.compareTo(anotherCard) < 0
-      : false;
+    if (!anotherCard) {
+      return false;
+    }
+
+    return this.compareTo(anotherCard) < 0;
   }
 
   compareTo(anotherCard: Card) {

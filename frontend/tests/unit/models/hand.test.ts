@@ -1,5 +1,14 @@
 import { Hand } from "@/models/hand";
-import { Card, Rank, Suit, ace, ten, king, queen, jack } from "@/models/card";
+import {
+  Rank,
+  Suit,
+  ace,
+  ten,
+  king,
+  queen,
+  jack,
+  cardOrder
+} from "@/models/card";
 import { allCards } from "@/models/deck";
 import { shuffle } from "lodash";
 
@@ -108,56 +117,7 @@ test("should sort hand by visual order", () => {
 
   const hand = new Hand(shuffle(cards));
 
-  const sortedDeck = [
-    new Card(Rank.Ten, Suit.Hearts, 0),
-    new Card(Rank.Ten, Suit.Hearts, 1),
-
-    new Card(Rank.Queen, Suit.Clubs, 0),
-    new Card(Rank.Queen, Suit.Clubs, 1),
-    new Card(Rank.Queen, Suit.Spades, 0),
-    new Card(Rank.Queen, Suit.Spades, 1),
-    new Card(Rank.Queen, Suit.Hearts, 0),
-    new Card(Rank.Queen, Suit.Hearts, 1),
-    new Card(Rank.Queen, Suit.Diamonds, 0),
-    new Card(Rank.Queen, Suit.Diamonds, 1),
-
-    new Card(Rank.Jack, Suit.Clubs, 0),
-    new Card(Rank.Jack, Suit.Clubs, 1),
-    new Card(Rank.Jack, Suit.Spades, 0),
-    new Card(Rank.Jack, Suit.Spades, 1),
-    new Card(Rank.Jack, Suit.Hearts, 0),
-    new Card(Rank.Jack, Suit.Hearts, 1),
-    new Card(Rank.Jack, Suit.Diamonds, 0),
-    new Card(Rank.Jack, Suit.Diamonds, 1),
-
-    new Card(Rank.Ace, Suit.Diamonds, 0),
-    new Card(Rank.Ace, Suit.Diamonds, 1),
-    new Card(Rank.Ten, Suit.Diamonds, 0),
-    new Card(Rank.Ten, Suit.Diamonds, 1),
-    new Card(Rank.King, Suit.Diamonds, 0),
-    new Card(Rank.King, Suit.Diamonds, 1),
-
-    new Card(Rank.Ace, Suit.Clubs, 0),
-    new Card(Rank.Ace, Suit.Clubs, 1),
-    new Card(Rank.Ten, Suit.Clubs, 0),
-    new Card(Rank.Ten, Suit.Clubs, 1),
-    new Card(Rank.King, Suit.Clubs, 0),
-    new Card(Rank.King, Suit.Clubs, 1),
-
-    new Card(Rank.Ace, Suit.Spades, 0),
-    new Card(Rank.Ace, Suit.Spades, 1),
-    new Card(Rank.Ten, Suit.Spades, 0),
-    new Card(Rank.Ten, Suit.Spades, 1),
-    new Card(Rank.King, Suit.Spades, 0),
-    new Card(Rank.King, Suit.Spades, 1),
-
-    new Card(Rank.Ace, Suit.Hearts, 0),
-    new Card(Rank.Ace, Suit.Hearts, 1),
-    new Card(Rank.King, Suit.Hearts, 0),
-    new Card(Rank.King, Suit.Hearts, 1)
-  ];
-
-  expect(hand.cards).toEqual(sortedDeck);
+  expect(hand.cards).toEqual(cardOrder);
 });
 
 test("should detect hand with 5 kings as not playable", () => {
