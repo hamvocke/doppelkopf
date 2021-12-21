@@ -30,14 +30,16 @@
         <p>
           Du möchtest ein Sonderspiel spielen.
         </p>
-        <button type="button" class="button" @click="showVorbehalt = true">Vorbehalt</button>
+        <button type="button" class="button" @click="showVorbehalt = true">
+          Vorbehalt
+        </button>
       </div>
 
       <div v-if="showVorbehalt" class="reservation-group">
         <h3>Solo</h3>
         <p>
-          Du spielst allein gegen die drei anderen Spieler. Nur Karten deines
-          angesagten Solos sind Trumpf, alle anderen Karten sind Fehl.
+          Du spielst allein gegen die drei anderen Spieler. Die
+          Kartenreihenfolge ändert sich je nach Solo.
         </p>
 
         <div class="solo">
@@ -168,6 +170,14 @@ p {
   margin-top: 4px;
   font-weight: normal;
   font-style: italic;
+}
+
+input {
+  accent-color: var(--red);
+}
+
+input:checked + label {
+  color: var(--red);
 }
 
 .solo {
