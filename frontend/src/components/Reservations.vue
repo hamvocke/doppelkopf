@@ -25,11 +25,19 @@
         <button type="button" class="button">Gesund</button>
       </div>
 
-      <div class="reservation-group">
+      <div v-if="!showVorbehalt" class="reservation-group">
+        <h3>Vorbehalt</h3>
+        <p>
+          Du möchtest ein Sonderspiel spielen.
+        </p>
+        <button type="button" class="button" @click="showVorbehalt = true">Vorbehalt</button>
+      </div>
+
+      <div v-if="showVorbehalt" class="reservation-group">
         <h3>Solo</h3>
         <p>
-          Du spielst ein Solo, allein gegen die drei anderen Spieler. Nur Karten
-          deines angesagten Solos sind Trumpf, alle anderen Karten sind Fehl.
+          Du spielst allein gegen die drei anderen Spieler. Nur Karten deines
+          angesagten Solos sind Trumpf, alle anderen Karten sind Fehl.
         </p>
 
         <div class="solo">
@@ -51,9 +59,9 @@
         <div class="solo">
           <input id="kreuzsolo" type="radio" name="solo" value="kreuzsolo" />
           <label for="kreuzsolo">
-            Kreuz-Solo
+            Kreuzsolo
             <small>
-              Kreuzkarten sind Trumpf, alle anderen Karten sind Fehl
+              Kreuz ersetzt Karo als Trumpffarbe
             </small>
           </label>
         </div>
@@ -61,16 +69,24 @@
         <div class="solo">
           <input id="piksolo" type="radio" name="solo" value="piksolo" />
           <label for="piksolo">
-            Pik-Solo
-            <small>Pikkarten sind Trumpf, alle anderen Karten sind Fehl</small>
+            Piksolo
+            <small>Pik ersetzt Karo als Trumpffarbe</small>
           </label>
         </div>
 
         <div class="solo">
           <input id="herzsolo" type="radio" name="solo" value="herzsolo" />
           <label for="herzsolo">
-            Herz-Solo
-            <small>Herzkarten sind Trumpf, alle anderen Karten sind Fehl</small>
+            Herzsolo
+            <small>Herz ersetzt Karo als Trumpffarbe</small>
+          </label>
+        </div>
+
+        <div class="solo">
+          <input id="karosolo" type="radio" name="solo" value="karosolo" />
+          <label for="karosolo">
+            Karosolo
+            <small>Die Kartenreihenfolge bleibt, aber du spielst alleine</small>
           </label>
         </div>
 
@@ -83,9 +99,11 @@
             </small>
           </label>
         </div>
+
+        <button type="button" class="button">Solo</button>
       </div>
 
-      <div class="reservation-group">
+      <div v-if="showVorbehalt" class="reservation-group">
         <h3>Hochzeit</h3>
         <p>
           Du hast beide Re-Damen und meldest eine Hochzeit an. Wer den ersten
@@ -107,6 +125,8 @@ import Hand from "@/components/Hand.vue";
 export default class Reservations extends Vue {
   @Prop({ required: true })
   game!: Game;
+
+  showVorbehalt = false;
 }
 </script>
 
@@ -119,12 +139,38 @@ p {
 
 .reservations-wrapper {
   display: flex;
-  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
 }
 
 .reservation-group {
-  flex-grow: 1;
   padding: 8px;
-  margin: 8px;
+  flex: 1 100%;
+}
+
+.solo {
+  display: flex;
+  align-items: flex-start;
+}
+
+.solo input {
+  margin-top: 2px;
+}
+
+.solo label {
+  display: inline-flex;
+  flex-direction: column;
+  margin-left: 12px;
+  font-weight: bold;
+}
+
+.solo small {
+  margin-top: 4px;
+  font-weight: normal;
+  font-style: italic;
+}
+
+.solo {
+  margin: 24px 0;
 }
 </style>
