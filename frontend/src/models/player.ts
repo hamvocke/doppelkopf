@@ -8,13 +8,14 @@ import { options } from "./options";
 import { Announcement, getAnnouncementOrder } from "./announcements";
 import { playableCards } from "./playableCardFinder";
 import { Memory, PerfectMemory } from "./memory";
-import { Card, Suit, queen } from "./card";
+import { Card } from "./card";
 import { Trick } from "./trick";
 import { Game } from "./game";
 import { TablePosition } from "./tablePosition";
 import { Affinities, AffinityEvent } from "@/models/affinities";
 import { generateNames } from "@/models/random";
 import { allCards } from "./deck";
+import { findParties, Party, PartyName } from "./party";
 
 const notifier = new Notifier();
 
@@ -66,18 +67,25 @@ export class Player {
     return !this.isRe();
   }
 
-  autoplay() {
+  getParty(): Party {
+    const partyName = this.isRe() ? PartyName.Re : PartyName.Kontra;
+    return findParties(this.game!.players)[partyName];
+  }
+
+  async autoplay() {
     const cardToBePlayed = this.behavior.cardToPlay(
       this.hand,
       this.game?.currentTrick!,
       this.memory
     );
+
     if (cardToBePlayed) {
-      this.play(cardToBePlayed);
+      await this.play(cardToBePlayed);
     }
 
     const announcement = this.behavior.announcementToMake(
-      this.possibleAnnouncements()
+      this.possibleAnnouncements(),
+      this.hand
     );
     if (announcement !== null) {
       this.announce(announcement);
@@ -93,7 +101,7 @@ export class Player {
       this.game?.currentTrick.winner() === this
     ) {
       await this.game?.currentRound.finishTrick();
-      this.playAction(card);
+      await this.playAction(card);
       return;
     }
     if (!this.canPlay(card)) {
@@ -105,22 +113,19 @@ export class Player {
       return;
     }
 
-    this.playAction(card);
+    await this.playAction(card);
   }
 
-  playAction(card: Card) {
+  private async playAction(card: Card) {
     try {
       this.game?.currentTrick.add(card, this);
       this.hand.remove(card);
 
-      if (card.compareTo(queen.of(Suit.Clubs)) === 0)
-        this.game?.affinityEvent(AffinityEvent.QueenOfClubs, this);
-
       this.game?.currentRound.nextPlayer();
 
       if (options.autoplay === true) {
-        // timeout to accommodate for animation duration when playing a card
-        setTimeout(() => this.game?.currentRound.nextMove(), 800);
+        await new Promise(r => setTimeout(r, 800)); // timeout to accommodate for animation duration when playing a card
+        await this.game?.currentRound.nextMove();
       }
     } catch (error) {
       if (this.isHuman) {
@@ -160,7 +165,9 @@ export class Player {
       throw new Error("Invalid announcement");
     }
 
-    this.game?.affinityEvent(AffinityEvent.Announcement, this);
+    this.game?.players.forEach(p => {
+      p.behavior.handleAffinityEvent(AffinityEvent.Announcement, this);
+    });
 
     const announcementOrder = getAnnouncementOrder(this.isRe());
     const pos = announcementOrder.findIndex(a => a === announcement);
@@ -169,8 +176,14 @@ export class Player {
     notifier.info("player-announced-" + announcement, { name: this.name });
   }
 
-  hasAnnounced(...announcements: Announcement[]) {
-    return announcements.every(a => [...this.announcements].includes(a));
+  hasPartyAnnounced(...announcements: Announcement[]): boolean {
+    return announcements.every(a =>
+      [...this.getPartyAnnouncements()].includes(a)
+    );
+  }
+
+  private getPartyAnnouncements(): Set<Announcement> {
+    return new Set<Announcement>(this.getParty().announcements());
   }
 
   possibleAnnouncements(): Set<Announcement> {
@@ -181,10 +194,10 @@ export class Player {
     const announcements = getAnnouncementOrder(this.isRe());
     const cardBasedAllowedAnnouncements = announcements.slice(0, diff);
     const leftOverAnnouncements = announcements.slice(diff);
-    return this.hasAnnounced(...cardBasedAllowedAnnouncements)
+    return this.hasPartyAnnounced(...cardBasedAllowedAnnouncements)
       ? new Set<Announcement>(
           leftOverAnnouncements.filter(
-            a => ![...this.announcements].includes(a)
+            a => ![...this.getPartyAnnouncements()].includes(a)
           )
         )
       : new Set<Announcement>();

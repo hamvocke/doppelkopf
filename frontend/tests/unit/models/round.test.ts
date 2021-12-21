@@ -60,45 +60,45 @@ test("should trigger next move when finishing trick", async () => {
   expect(round.players[1].autoplay).toBeCalled();
 });
 
-test("should autoplay for computer players", () => {
+test("should autoplay for computer players", async () => {
   const mockedComputerPlayer = round.players[1];
   mockedComputerPlayer.autoplay = jest.fn();
   round.playerOrder.prioritize(mockedComputerPlayer);
 
-  round.nextMove();
+  await round.nextMove();
 
   expect(mockedComputerPlayer.autoplay).toBeCalled();
 });
 
-test("should not autoplay for human players", () => {
+test("should not autoplay for human players", async () => {
   const mockedHumanPlayer = round.players[0];
   mockedHumanPlayer.autoplay = jest.fn();
   round.playerOrder.prioritize(mockedHumanPlayer);
 
-  round.nextMove();
+  await round.nextMove();
 
   expect(mockedHumanPlayer.autoplay).not.toBeCalled();
 });
 
-test("should not autoplay if trick is finished", () => {
+test("should not autoplay if trick is finished", async () => {
   const mockedComputerPlayer = round.players[1];
   mockedComputerPlayer.autoplay = jest.fn();
   round.playerOrder.prioritize(mockedComputerPlayer);
   round.currentTrick.finished = true;
 
-  round.nextMove();
+  await round.nextMove();
 
   expect(mockedComputerPlayer.autoplay).not.toBeCalled();
 });
 
-test("should not autoplay if round is finished", () => {
+test("should not autoplay if round is finished", async () => {
   const mockedComputerPlayer = round.players[1];
   mockedComputerPlayer.autoplay = jest.fn();
   round.playerOrder.prioritize(mockedComputerPlayer);
   round.currentTrick.finished = false;
   round.finished = true;
 
-  round.nextMove();
+  await round.nextMove();
 
   expect(mockedComputerPlayer.autoplay).not.toBeCalled();
 });
@@ -142,18 +142,19 @@ describe("player order", () => {
     expect(round.waitingForPlayer().id).toEqual(round.players[3].id);
   });
 
-  test("should change active player on next move", () => {
+  test("should change active player on next move", async () => {
     const playFirstCardBehavior = {
       playerId: "p4",
       affinities: new Affinities(round.players[3]),
       reset: jest.fn(() => null),
       cardToPlay: (hand: Hand) => hand.cards[0],
-      announcementToMake: () => null
+      announcementToMake: jest.fn(() => null),
+      handleAffinityEvent: jest.fn(() => null)
     };
     round.playerOrder.prioritize(round.players[3]);
     round.players[3].behavior = playFirstCardBehavior;
 
-    round.nextMove();
+    await round.nextMove();
 
     expect(round.waitingForPlayer()).toBe(round.players[0]);
   });

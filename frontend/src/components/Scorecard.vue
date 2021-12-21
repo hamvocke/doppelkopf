@@ -219,7 +219,7 @@ export default class Scorecard extends Vue {
   color: var(--black);
   display: flex;
   flex-direction: column;
-  z-index: var(--notification-layer);
+  z-index: var(--modal-layer);
 }
 
 .scroll-container {

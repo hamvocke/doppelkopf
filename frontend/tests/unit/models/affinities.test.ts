@@ -120,10 +120,10 @@ describe("Affinities", () => {
       expect(player4.behavior.affinities.for(player3)).toEqual(1);
     });
 
-    test("Queen of clubs played", () => {
+    test("Queen of clubs played", async () => {
       game.currentRound.playerOrder.prioritize(player2);
       player2.hand = new Hand([queen.of(Suit.Clubs).first()]);
-      player2.play(player2.hand.highest());
+      await player2.play(player2.hand.highest());
       expect(player1.behavior.affinities.for(player2)).toEqual(1);
       expect(player1.behavior.affinities.for(player3)).toEqual(-1);
       expect(player1.behavior.affinities.for(player4)).toEqual(-1);
@@ -135,11 +135,11 @@ describe("Affinities", () => {
       expect(player4.behavior.affinities.for(player3)).toEqual(0);
     });
 
-    test("Queen of clubs played twice - everybody knows now", () => {
+    test("Queen of clubs played twice - everybody knows now", async () => {
       player1.hand = new Hand([queen.of(Suit.Clubs).first()]);
       player2.hand = new Hand([queen.of(Suit.Clubs).second()]);
-      player1.play(player1.hand.highest());
-      player2.play(player2.hand.highest());
+      await player1.play(player1.hand.highest());
+      await player2.play(player2.hand.highest());
       expect(player2.behavior.affinities.for(player1)).toEqual(1);
       expect(player2.behavior.affinities.for(player3)).toEqual(-1);
       expect(player2.behavior.affinities.for(player4)).toEqual(-1);
@@ -151,10 +151,10 @@ describe("Affinities", () => {
       expect(player4.behavior.affinities.for(player2)).toEqual(-1);
     });
 
-    test("Re announces, Queen Of Clubs played", () => {
+    test("Re announces, Queen Of Clubs played", async () => {
       player2.announce(Announcement.Re);
       player1.hand = new Hand([queen.of(Suit.Clubs).first()]);
-      player1.play(player1.hand.highest());
+      await player1.play(player1.hand.highest());
       expect(player1.behavior.affinities.for(player2)).toEqual(1);
       expect(player1.behavior.affinities.for(player3)).toEqual(-1);
       expect(player1.behavior.affinities.for(player4)).toEqual(-1);
@@ -184,6 +184,7 @@ describe("Affinities", () => {
     let game = new Game(players);
 
     beforeEach(() => {
+      jest.clearAllMocks();
       game = new Game(players);
       player1.reset();
       player2.reset();
@@ -193,18 +194,17 @@ describe("Affinities", () => {
       player2.behavior.affinities.setPlayers(players);
       player3.behavior.affinities.setPlayers(players);
       player4.behavior.affinities.setPlayers(players);
-      player2.possibleAnnouncements = () => new Set([Announcement.Re]);
-      player3.possibleAnnouncements = () => new Set([Announcement.Kontra]);
-
-      expect(player1.isRe()).toEqual(true);
-      expect(player2.isKontra()).toEqual(true);
-      expect(player3.isKontra()).toEqual(true);
-      expect(player4.isKontra()).toEqual(true);
+      player2.possibleAnnouncements = jest
+        .fn()
+        .mockReturnValue(new Set([Announcement.Re]));
+      player3.possibleAnnouncements = jest
+        .fn()
+        .mockReturnValue(new Set([Announcement.Kontra]));
     });
 
-    test("Queen of clubs played once - nobody knows about the silent wedding", () => {
+    test("Queen of clubs played once - nobody knows about the silent wedding", async () => {
       player1.hand = new Hand([queen.of(Suit.Clubs).second()]);
-      player1.play(player1.hand.highest());
+      await player1.play(player1.hand.highest());
       expect(player2.behavior.affinities.for(player1)).toEqual(-1);
       expect(player2.behavior.affinities.for(player3)).toEqual(0);
       expect(player2.behavior.affinities.for(player4)).toEqual(0);
@@ -216,12 +216,18 @@ describe("Affinities", () => {
       expect(player4.behavior.affinities.for(player2)).toEqual(0);
     });
 
-    test("Queen of clubs played twice - everybody knows now", () => {
-      player2.behavior.affinities.hasPlayedQueenOfClubs = () => true;
-      player3.behavior.affinities.hasPlayedQueenOfClubs = () => true;
-      player4.behavior.affinities.hasPlayedQueenOfClubs = () => true;
+    test("Queen of clubs played twice - everybody knows now", async () => {
+      player2.behavior.affinities.hasPlayedQueenOfClubs = jest
+        .fn()
+        .mockReturnValue(true);
+      player3.behavior.affinities.hasPlayedQueenOfClubs = jest
+        .fn()
+        .mockReturnValue(true);
+      player4.behavior.affinities.hasPlayedQueenOfClubs = jest
+        .fn()
+        .mockReturnValue(true);
       player1.hand = new Hand([queen.of(Suit.Clubs).second()]);
-      player1.play(player1.hand.highest());
+      await player1.play(player1.hand.highest());
       expect(player2.behavior.affinities.for(player1)).toEqual(-1);
       expect(player2.behavior.affinities.for(player3)).toEqual(1);
       expect(player2.behavior.affinities.for(player4)).toEqual(1);

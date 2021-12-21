@@ -1,9 +1,12 @@
 import { Player } from "@/models/player";
+import { getPartyName, PartyName } from "./party";
 
 export enum AffinityEvent {
   Announcement = "announcement",
   QueenOfClubs = "queen_of_clubs",
-  PlayedCard = "played_card"
+  QueenOfClubsTricked = "queen_of_clubs_tricked",
+  QueenOfClubsGreased = "queen_of_clubs_greased",
+  QueenOfClubsNotGreased = "queen_of_clubs_not_greased"
 }
 
 /**
@@ -77,6 +80,19 @@ export class Affinities {
       }));
   }
 
+  private suggestPartyForPlayer(player: Player, party: PartyName): void {
+    this.setAffinity(player, getPartyName(this.me) === party ? 1 : -1);
+    this.balanceAffinities();
+  }
+
+  suggestKontraFor(player: Player): void {
+    this.suggestPartyForPlayer(player, PartyName.Kontra);
+  }
+
+  suggestReFor(player: Player): void {
+    this.suggestPartyForPlayer(player, PartyName.Re);
+  }
+
   declaresParty(player: Player, playedQueenOfClubs?: boolean) {
     if (this.isMe(player)) return;
     if (this.isInMyParty(player)) {
@@ -94,6 +110,7 @@ export class Affinities {
     if (this.affinityTable.filter(x => x.declaredParty).length === 2) {
       this.setAllAffinities();
     }
+    this.balanceAffinities();
   }
 
   for(player: Player) {
@@ -108,11 +125,13 @@ export class Affinities {
     return this.getContainerFor(player).declaredParty;
   }
 
-  setAffinity(player: Player, value: number) {
+  setAffinity(player: Player, value: number, hasDeclared: boolean = false) {
     if (!this.isMe(player) && !this.hasDeclaredParty(player)) {
       let index = this.affinityTable.findIndex(x => x.player.id === player.id);
       this.affinityTable[index].affinity = value;
+      this.affinityTable[index].declaredParty = hasDeclared;
     }
+    this.balanceAffinities();
   }
 
   reset() {
@@ -145,5 +164,23 @@ export class Affinities {
 
   private getContainerFor(player: Player): PlayerAffinity {
     return this.affinityTable.find(x => x.player.id === player.id)!;
+  }
+
+  private affinitySum(): number {
+    return this.affinityTable.reduce(
+      (accu, playerAffinity) => accu + playerAffinity.affinity,
+      0
+    );
+  }
+
+  private balanceAffinities(): void {
+    if (this.affinitySum() == -2) {
+      this.affinityTable.forEach(pA => {
+        if (pA.affinity === 0) {
+          pA.affinity = 1;
+          return;
+        }
+      });
+    }
   }
 }

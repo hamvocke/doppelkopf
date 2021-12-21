@@ -19,6 +19,10 @@ export function findParties(players: Player[]) {
   };
 }
 
+export function getPartyName(player: Player): PartyName {
+  return player.isRe() ? PartyName.Re : PartyName.Kontra;
+}
+
 export class Party {
   name: PartyName;
   players: Player[];

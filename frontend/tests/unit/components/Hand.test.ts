@@ -8,14 +8,14 @@ config.mocks["$tc"] = () => {};
 
 const reHand = new HandModel([
   queen.of(Suit.Clubs),
-  ace.of(Suit.Hearts),
-  ace.of(Suit.Hearts),
+  ace.of(Suit.Hearts).first(),
+  ace.of(Suit.Hearts).second(),
   ace.of(Suit.Clubs)
 ]);
 
 const kontraHand = new HandModel([
-  ace.of(Suit.Hearts),
-  ace.of(Suit.Hearts),
+  ace.of(Suit.Hearts).first(),
+  ace.of(Suit.Hearts).second(),
   ace.of(Suit.Clubs)
 ]);
 

@@ -11,31 +11,23 @@ describe("OptionsMenu.vue", () => {
 
     await wrapper.setData({ visible: true });
 
-    expect(wrapper.find(".options-icon").exists()).toBe(true);
+    expect(wrapper.find(".icon.icon-options").exists()).toBe(true);
   });
 
-  test("should not show options", async () => {
+  test("should not show options modal initially", async () => {
     const wrapper = mount(OptionsMenu);
 
     await wrapper.setData({ visible: false });
 
-    expect(wrapper.find(".options-menu").exists()).toBe(false);
+    expect(wrapper.find(".modal").exists()).toBe(false);
   });
 
-  test("should show options", async () => {
+  test("should show options modal on icon click", async () => {
     const wrapper = mount(OptionsMenu);
 
     await wrapper.setData({ visible: false });
-    await wrapper.find(".options-icon").trigger("click");
+    await wrapper.find(".icon.icon-options").trigger("click");
 
-    expect(wrapper.find(".options-menu").exists()).toBe(true);
-  });
-
-  test("should contain language picker", async () => {
-    const wrapper = mount(OptionsMenu);
-
-    await wrapper.setData({ visible: true });
-
-    expect(wrapper.find(".options-menu #languages").exists()).toBe(true);
+    expect(wrapper.find(".modal").exists()).toBe(true);
   });
 });

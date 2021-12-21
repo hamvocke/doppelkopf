@@ -11,12 +11,10 @@
 
   /* z-index layers */
   --base-layer: 1;
-  --popover-layer: 10;
-  --modal-layer: 20;
-  --notification-layer: 30;
-  --flash-layer: 40;
-  --scorecard-layer: 50;
-  --card-selected-layer: 200;
-  --options-menu-layer:400;
-  --options-icon-layer:500;
+  --card-selected-layer: 10;
+  --popover-layer: 20;
+  --modal-layer: 30;
+  --notification-layer: 40;
+  --flash-layer: 50;
+  --menu-icon-layer: 60;
 }

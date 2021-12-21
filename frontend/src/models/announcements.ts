@@ -1,5 +1,3 @@
-import { findIndex } from "lodash-es";
-
 export enum Announcement {
   Re = "re", // note: the enum values are used as i18n keys so don't change them without changing i18n keys, too
   Kontra = "kontra",
@@ -21,18 +19,4 @@ export const announcementOrder = [
 export function getAnnouncementOrder(isRe: boolean): Announcement[] {
   const filterOut = isRe ? Announcement.Kontra : Announcement.Re;
   return announcementOrder.filter(a => a !== filterOut);
-}
-
-export function compare(
-  oneAnnouncement: Announcement,
-  anotherAnnouncement: Announcement
-): number {
-  return (
-    findIndex(announcementOrder, anotherAnnouncement) -
-    findIndex(announcementOrder, oneAnnouncement)
-  );
-}
-
-export function sort(announcements: Set<Announcement>): Announcement[] {
-  return [...announcements].sort(compare);
 }

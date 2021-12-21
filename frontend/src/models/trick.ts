@@ -1,9 +1,10 @@
 import { uniqueId } from "lodash-es";
-import { Card } from "@/models/card";
+import { ace, Card, queen, ten } from "@/models/card";
 import { PlayedCard } from "@/models/playedCard";
 import { Rank, Suit } from "@/models/card";
 import { Extra, extras as extrasModel } from "@/models/extras";
 import { Player } from "./player";
+import { AffinityEvent } from "./affinities";
 
 export class Trick {
   players: Player[];
@@ -13,7 +14,7 @@ export class Trick {
   finished: boolean;
   private expectedNumberOfCards: number;
 
-  constructor(players: Array<any>) {
+  constructor(players: Array<Player>) {
     this.players = players;
     this.expectedNumberOfCards = players.length;
     this.playedCards = [];
@@ -22,11 +23,11 @@ export class Trick {
     this.lastTrickInRound = false;
   }
 
-  setLastTrickInRound() {
+  setLastTrickInRound(): void {
     this.lastTrickInRound = true;
   }
 
-  add(card: Card, player: any) {
+  add(card: Card, player: Player): void {
     if (this.cardBy(player)) {
       throw Error(`Player ${player.name} already played a card`);
     }
@@ -42,31 +43,74 @@ export class Trick {
     this.players.forEach(playerLoop => {
       playerLoop.memory.memorize(new PlayedCard(card, player), this.id);
     });
+
+    this.checkForAffinityEvent(card, player);
   }
 
-  cards() {
+  checkForAffinityEvent(card: Card, player: Player): void {
+    if (card.is(queen.of(Suit.Clubs))) {
+      this.players.forEach(p => {
+        p.behavior.handleAffinityEvent(AffinityEvent.QueenOfClubs, player);
+      });
+    }
+    if (this.contains(queen.of(Suit.Clubs))) {
+      if (card.is(ten.of(Suit.Hearts))) {
+        this.players.forEach(p => {
+          p.behavior.handleAffinityEvent(
+            AffinityEvent.QueenOfClubsTricked,
+            player
+          );
+        });
+      }
+      if (card.is(ace.of(Suit.Diamonds)) || card.is(ten.of(Suit.Diamonds))) {
+        this.players.forEach(p => {
+          p.behavior.handleAffinityEvent(
+            AffinityEvent.QueenOfClubsGreased,
+            player
+          );
+        });
+      }
+      // right now affinity check is called after card is pushed to playedcards
+      // this might do some trouble when card is queen.of.clubs - keep this in mind
+      if (
+        this.playedCards.length === 4 &&
+        !(card.is(ace.of(Suit.Diamonds)) || card.is(ten.of(Suit.Diamonds)))
+      ) {
+        this.players.forEach(p => {
+          p.behavior.handleAffinityEvent(
+            AffinityEvent.QueenOfClubsNotGreased,
+            player
+          );
+        });
+      }
+    }
+  }
+
+  cards(): PlayedCard[] {
     return this.playedCards;
   }
 
-  cardBy(player: any) {
+  cardBy(player: any): PlayedCard {
     return this.playedCards.filter(
       playedCard => playedCard.player.id === player.id
     )[0];
   }
 
-  isFinished() {
+  contains(card: Card): Boolean {
+    return (
+      this.playedCards.filter(playedCard => playedCard.card.is(card)).length > 0
+    );
+  }
+
+  isFinished(): boolean {
     return this.finished;
   }
 
-  baseCard() {
-    if (!this.playedCards[0]) {
-      return undefined;
-    }
-
-    return this.playedCards[0].card;
+  baseCard(): Card | undefined {
+    return this.playedCards[0]?.card;
   }
 
-  highestCard() {
+  highestCard(): PlayedCard | undefined {
     if (!this.playedCards[0]) {
       return undefined;
     }
@@ -80,19 +124,18 @@ export class Trick {
     return highestPlayed;
   }
 
-  winner() {
-    let highestCard = this.highestCard();
-    return highestCard ? highestCard.player : undefined;
+  winner(): Player | undefined {
+    return this.highestCard()?.player;
   }
 
-  points() {
+  points(): number {
     return this.playedCards.reduce(
       (acc, playedCard) => acc + playedCard.card.value,
       0
     );
   }
 
-  extras() {
+  extras(): Extra[] {
     let extras = new Array<Extra>();
     if (this.points() >= 40) {
       extras.push(extrasModel.doppelkopf);
@@ -105,7 +148,7 @@ export class Trick {
     return extras;
   }
 
-  findFox() {
+  findFox(): PlayedCard[] {
     return this.playedCards.filter(
       playedCard =>
         playedCard.card.rank === Rank.Ace &&
@@ -113,7 +156,7 @@ export class Trick {
     );
   }
 
-  caughtFox() {
+  caughtFox(): Extra[] {
     let extras: Array<Extra> = [];
     this.findFox().forEach(fox => {
       const caughtByOtherParty =
@@ -124,7 +167,7 @@ export class Trick {
     return extras;
   }
 
-  findCharlie() {
+  findCharlie(): PlayedCard[] {
     return this.playedCards.filter(
       playedCard =>
         playedCard.card.rank === Rank.Jack &&
@@ -132,7 +175,7 @@ export class Trick {
     );
   }
 
-  caughtCharlie() {
+  caughtCharlie(): Extra[] {
     let extras: Array<Extra> = [];
     if (this.lastTrickInRound) {
       this.findCharlie().forEach(charlie => {
@@ -145,14 +188,14 @@ export class Trick {
     return extras;
   }
 
-  charlie() {
+  charlie(): boolean {
     let charlies = this.findCharlie();
     if (this.lastTrickInRound && charlies.length > 0) {
       // first charlie has to be highest card in trick
       let charlie = charlies[0];
       const charlie_trump =
-        ((charlie.player.isRe() && this.winner()?.isRe()) ||
-          (charlie.player.isKontra() && this.winner()?.isKontra())) &&
+        ((charlie.player.isRe() && this.winner()!.isRe()) ||
+          (charlie.player.isKontra() && this.winner()!.isKontra())) &&
         // here is the magic
         this.highestCard() === charlie;
       return charlie_trump;

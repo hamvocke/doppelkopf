@@ -2,10 +2,26 @@
   <div id="home">
     <Notifications />
     <div class="welcome">
-      <div class="container">
-        <Logo />
-        <h1>Doppelkopf</h1>
+      <Logo />
 
+      <h1>Doppelkopf</h1>
+
+      <div class="name-form">
+        <div class="form-wrapper">
+          <label for="player-name">
+            {{ $t("enter_name_label") }}
+          </label>
+          <input
+            id="player-name"
+            v-model="playerName"
+            class="input"
+            :placeholder="$t('enter_name_input')"
+            @blur="saveName"
+          />
+        </div>
+      </div>
+
+      <div class="buttons">
         <router-link to="/play" class="button start-game" tag="button">
           {{ $t("start-game") }}
         </router-link>
@@ -33,7 +49,6 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import router from "@/router/index";
 import { Features } from "@/models/features";
 import Logo from "@/components/Logo.vue";
 import Notifications from "@/components/Notifications.vue";
@@ -46,6 +61,13 @@ import Notifications from "@/components/Notifications.vue";
 })
 export default class Home extends Vue {
   showTutorial = false;
+  playerName: string = localStorage.name || "";
+
+  saveName() {
+    if (this.playerName) {
+      localStorage.setItem("name", this.playerName);
+    }
+  }
 
   created() {
     this.showTutorial = Features.get().enableTutorial;
@@ -61,11 +83,9 @@ export default class Home extends Vue {
 }
 
 .welcome {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-content: center;
   height: 100%;
-  text-align: center;
 }
 
 .logo {
@@ -81,5 +101,40 @@ export default class Home extends Vue {
     6px 6px 0 var(--red), 7px 7px 0 var(--red);
   font-size: clamp(48px, 10vw, 96px);
   margin: 12px 0 64px;
+  text-align: center;
+}
+
+.input {
+  padding: 0.375em 0.75em;
+  line-height: 1.5;
+  border: none;
+  border-bottom: 5px solid rgb(203, 203, 203);
+  border-radius: 6px;
+}
+
+.input:focus {
+  outline: 3px solid var(--lightblue);
+}
+
+.name-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3em;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+label {
+  margin-bottom: 0.6em;
 }
 </style>

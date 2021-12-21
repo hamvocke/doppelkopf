@@ -1,8 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
-import Game from "@/views/Game.vue";
+import GameView from "@/views/Game.vue";
 import Tutorial from "@/views/Tutorial.vue";
+import Preview from "@/views/Preview.vue";
+import { Config } from "@/models/config";
 
 Vue.use(VueRouter);
 
@@ -16,7 +18,7 @@ const routes = [
   {
     path: "/play",
     name: "play",
-    component: Game
+    component: GameView
   },
   {
     path: "/learn",
@@ -24,6 +26,14 @@ const routes = [
     component: Tutorial
   }
 ];
+
+if (Config.debug) {
+  routes.push({
+    path: "/preview",
+    name: "preview",
+    component: Preview
+  });
+}
 
 const router = new VueRouter({
   base: process.env.BASE_URL,

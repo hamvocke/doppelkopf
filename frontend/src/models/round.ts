@@ -5,7 +5,6 @@ import { options } from "@/models/options";
 import { Notifier } from "@/models/notifier";
 import { extras } from "@/models/extras";
 import { PartyName, findParties, Party } from "@/models/party";
-import { find } from "lodash-es";
 import { Player } from "./player";
 import { Scorecard } from "./scorecard";
 
@@ -17,6 +16,7 @@ export class Round {
   scorecard: Scorecard;
   score?: Score;
   finished: boolean;
+  previousTrick?: Trick;
   currentTrick: Trick;
   playerOrder: RingQueue<Player>;
 
@@ -39,6 +39,7 @@ export class Round {
   }
 
   nextTrick() {
+    this.previousTrick = this.currentTrick;
     let trick = new Trick(this.players);
     if (this.cardsLeft() <= this.players.length) trick.setLastTrickInRound();
     return trick;
@@ -52,7 +53,7 @@ export class Round {
     return this.playerOrder.current();
   }
 
-  nextMove() {
+  async nextMove() {
     if (this.waitingForPlayer().isHuman) {
       return;
     }
@@ -61,7 +62,7 @@ export class Round {
       return;
     }
 
-    this.waitingForPlayer().autoplay();
+    await this.waitingForPlayer().autoplay();
   }
 
   noMoreCardsLeft() {

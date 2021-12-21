@@ -1,14 +1,15 @@
 # Doppelkopf
 [![Build status](https://circleci.com/gh/hamvocke/doppelkopf.svg?style=svg)](https://circleci.com/gh/hamvocke/doppelkopf)
+[![codecov](https://codecov.io/gh/hamvocke/doppelkopf/branch/master/graph/badge.svg?token=00G78SO5HF)](https://codecov.io/gh/hamvocke/doppelkopf)
 
 An in-browser implementation of the traditional German [Doppelkopf](https://en.wikipedia.org/wiki/Doppelkopf) card game.
 
 ## Live Demo
 The game is still in early stages. Playing it will probably be a frustrating and confusing experience. If you're curious enough to give it a try (and play against a really shitty AI), I encourage you to do so:
 
-[![Screenshot](https://i.imgur.com/qQPyE3I.png)](https://doppelkopf.ham.codes/)
+[![Screenshot](https://i.imgur.com/qQPyE3I.png)](https://doppelkopf.party)
 
-<h3 align="center"><a href="https://doppelkopf.ham.codes/">Try the Live Demo</a></h3>
+<h3 align="center"><a href="https://doppelkopf.party/">Try the Live Demo at doppelkopf.party</a></h3>
 
 ## Development
 The game is implemented using TypeScript and [vue.js](https://vuejs.org/). It's capable to run as an offline-first, standalone web application that does not rely on being connected to a backend.

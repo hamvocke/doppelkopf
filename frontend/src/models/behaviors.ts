@@ -1,152 +1,210 @@
 import { sample } from "lodash-es";
 import { playableCards } from "@/models/playableCardFinder";
-import { chance } from "@/models/random";
-import { Card, Suit, Rank, byCardValuesDesc, ten } from "@/models/card";
+import {
+  Card,
+  Suit,
+  Rank,
+  byCardValuesDesc,
+  ten,
+  ace,
+  queen
+} from "@/models/card";
 import { Hand } from "@/models/hand";
 import { Announcement } from "./announcements";
 import { Trick } from "./trick";
 import { Memory } from "./memory";
 import { Player } from "./player";
-import { Affinities } from "./affinities";
+import { Affinities, AffinityEvent } from "./affinities";
+import {
+  chanceAnnouncement,
+  conservativeAnnouncement
+} from "@/models/announcementRules";
 
-export interface Behavior {
-  playerId: string;
-  affinities: Affinities;
-  reset(): void;
-  cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card;
-  announcementToMake(
-    possibleAnnouncements: Set<Announcement>
-  ): Announcement | null;
-}
-
-export class HighestCardBehavior implements Behavior {
+export abstract class Behavior {
   constructor(public playerId: string, public affinities: Affinities) {}
 
   reset() {
     this.affinities.reset();
   }
+
+  abstract cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card;
+
+  abstract handleAffinityEvent(event: AffinityEvent, player: Player): void;
+
+  abstract announcementToMake(
+    possibleAnnouncements: Set<Announcement>,
+    hand?: Hand
+  ): Announcement | null;
+}
+
+export class HighestCardBehavior extends Behavior {
+  handleAffinityEvent(event: AffinityEvent, player: Player): void {}
 
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory) {
     return playableCards(hand.cards, trick.baseCard())[0];
   }
 
-  announcementToMake(possibleAnnouncements: Set<Announcement>) {
+  announcementToMake(
+    possibleAnnouncements: Set<Announcement>,
+    hand?: Hand
+  ): Announcement | null {
     return null;
   }
 }
-export class RandomCardBehavior implements Behavior {
-  constructor(public playerId: string, public affinities: Affinities) {}
-
-  reset() {
-    this.affinities.reset();
-  }
+export class RandomCardBehavior extends Behavior {
+  handleAffinityEvent(event: AffinityEvent, player: Player): void {}
 
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory) {
     return sample(playableCards(hand.cards, trick.baseCard()))!;
   }
 
-  announcementToMake(possibleAnnouncements: Set<Announcement>) {
-    if (possibleAnnouncements.size === 0) {
-      return null;
-    }
-
-    const announcementChance = 0.1;
-    if (chance(announcementChance)) {
-      return [...possibleAnnouncements][0];
-    }
-
-    return null;
+  announcementToMake(
+    possibleAnnouncements: Set<Announcement>,
+    hand?: Hand
+  ): Announcement | null {
+    const decision = new chanceAnnouncement(0.1);
+    return decision.announcementToMake(possibleAnnouncements, hand);
   }
 }
 
-export class RuleBasedBehaviour implements Behavior {
-  constructor(public playerId: string, public affinities: Affinities) {}
-
-  reset() {
-    this.affinities.reset();
+export class RuleBasedBehaviour extends Behavior {
+  handleAffinityEvent(event: AffinityEvent, player: Player): void {
+    switch (event) {
+      case AffinityEvent.Announcement:
+        this.affinities.declaresParty(player);
+        break;
+      case AffinityEvent.QueenOfClubs:
+        this.affinities.declaresParty(player, true);
+        break;
+      case AffinityEvent.QueenOfClubsTricked:
+        this.affinities.suggestKontraFor(player);
+        break;
+      case AffinityEvent.QueenOfClubsNotGreased:
+        this.affinities.suggestKontraFor(player);
+        break;
+      case AffinityEvent.QueenOfClubsGreased:
+        this.affinities.suggestReFor(player);
+        break;
+      default:
+        break;
+    }
   }
 
-  announcementToMake(possibleAnnouncements: Set<Announcement>) {
-    // ToDo announce by "goodies"
-    /**
-     * for instance
-     * only one nonTrumpsuit
-     * high number of trumps
-     * high trumps, such as 2x ten of hearts
-     * blank ace and starting
-     */
-    return null;
+  announcementToMake(
+    possibleAnnouncements: Set<Announcement>,
+    hand: Hand
+  ): Announcement | null {
+    const decision = new conservativeAnnouncement();
+    return decision.announcementToMake(possibleAnnouncements, hand);
   }
 
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card {
     let baseCard = trick.baseCard();
-    if (
-      this.isTeammateKnown() &&
-      this.isCurrentWinnerTeammate(trick) &&
-      memory?.isHighestCardLeft(trick.highestCard()!.card, hand)
-    )
+    // Teammate will win trick no matter what
+    if (this.teammateWinsTrick(trick, hand, memory))
       return this.findMostSuitableGreasingCard(hand, trick);
+
     if (trick.cards().length == 3) {
       return this.playPosition(hand, trick);
     }
-    if (!baseCard) {
-      /** It's our turn. Decide how to deal with cards */
-      return this.startingRule(hand, memory);
-    }
-    if (!baseCard.isTrump()) {
-      return this.nonTrumpRule(hand, trick, memory);
-    }
+
+    // You're not able to win the trick on your own no matter what
+    if (this.trickCannotBeWon(hand, trick, memory))
+      return this.findLeastValuableLosingCard(hand, trick);
+
+    /** It's our turn. Decide how to deal with cards */
+    if (!baseCard) return this.startingRule(hand, trick, memory);
+    if (!baseCard.isTrump()) return this.nonTrumpRule(hand, trick, memory);
+    if (trick.contains(ace.of(Suit.Diamonds))) return hand.highest();
+    if (
+      baseCard.isTrump() &&
+      this.isTeammateAfterMe(trick) &&
+      trick.cards().length === 2 &&
+      this.hasHighValueTrump(hand) &&
+      queen.of(Suit.Hearts).beats(trick.highestCard()!.card)
+    )
+      return this.findMostSuitableGreasingCard(hand, trick);
     // ToDo how to play if not starting or mustn't serve nonTrump
     // i'm thinking of something working with expectation value
-    return sample(playableCards(hand.cards, baseCard))!;
+    return this.defaultPlay(hand, trick);
   }
 
-  startingRule(hand: Hand, memory?: Memory): Card {
+  defaultPlay(hand: Hand, trick: Trick): Card {
+    return this.findMostSuitableBeatingCard(hand, trick);
+  }
+
+  startingRule(hand: Hand, trick: Trick, memory?: Memory): Card {
     for (const ace of hand.getBlankAces()) {
-      if (!memory?.nonTrumpSuitPlayedBefore(ace.suit)) {
+      if (!memory?.hasSuitBeenPlayedBefore(ace.suit)) {
         return ace;
       }
     }
     for (const suit of [Suit.Clubs, Suit.Spades, Suit.Hearts]) {
       if (
         hand.findAny(suit, Rank.Ace) &&
-        !memory?.nonTrumpSuitPlayedBefore(suit) &&
+        !memory?.hasSuitBeenPlayedBefore(suit) &&
         hand.nonTrumps(suit).length <= 3
       ) {
         return hand.nonTrumps(suit)[0];
       }
     }
+
+    /**
+     * Play Suit that has been thrown by teammate
+     */
+    for (const suit of [Suit.Clubs, Suit.Spades, Suit.Hearts]) {
+      if (hand.nonTrumps(suit)[0]) {
+        let teammateThrew = false;
+        let enemiesThrew = false;
+        // is there a teammate who has thrown
+        for (let teammate of this.getTeammates()) {
+          if (memory?.hasSuitBeenThrownByPlayer(suit, teammate)) {
+            teammateThrew = true;
+          }
+        }
+        // is there an enemy who has thrown
+        for (let enemy of this.getEnemies()) {
+          if (memory?.hasSuitBeenThrownByPlayer(suit, enemy)) {
+            enemiesThrew = true;
+          }
+        }
+        if (teammateThrew && !enemiesThrew) {
+          return hand.nonTrumps(suit)[0];
+        }
+      }
+    }
+
     // ToDo check if we know with whom we play and if we want to play a strategy
-    return sample(playableCards(hand.cards))!;
+    if (this.getMyPlayer(trick).isKontra()) {
+      return this.findLeastValuableLosingCard(hand, trick);
+    }
+
+    return (
+      hand
+        .lowValues()
+        .filter(card => card.isTrump())
+        .reverse()[0] ?? this.findLeastValuableLosingCard(hand, trick)
+    );
   }
 
   nonTrumpRule(hand: Hand, trick: Trick, memory?: Memory): Card {
-    let baseCard = trick.baseCard();
-    if (hand.hasNonTrumps(baseCard!.suit)) {
+    let baseCard = trick.baseCard()!;
+    if (hand.nonTrumps(baseCard.suit).length) {
       return this.serveNonTrump(hand, trick, memory);
-    } else {
-      if (memory?.nonTrumpSuitPlayedBefore(baseCard!.suit, trick.id!)) {
-        return hand.highest().beats(trick.highestCard()!.card) &&
-          // ToDo this check works but needs tuning
-          memory.pointsLeftInSuit(baseCard!.suit) + trick.points() >= 14
-          ? hand.trumps()[0]
-          : this.playLowValueCard(hand, trick);
-      } else {
-        let usefulTrump = this.findMostValuableWinningTrump(hand, trick);
-        return usefulTrump ?? this.playLowValueCard(hand, trick);
-      }
     }
-  }
 
-  playLowValueCard(hand: Hand, trick: Trick): Card {
-    if (playableCards(hand.lowValues(), trick.baseCard()).length > 0) {
-      let nonTrumpLows = new Hand(hand.nonTrumps()).lowValues();
-      return nonTrumpLows.length > 0
-        ? sample(playableCards(nonTrumpLows, trick.baseCard()))!
-        : new Hand(hand.trumps()).lowValues().splice(-1)[0];
-    } else {
-      return sample(playableCards(hand.cards, trick.baseCard()))!;
+    if (memory?.hasSuitBeenPlayedBefore(baseCard.suit, trick.id!)) {
+      return hand.highest().beats(trick.highestCard()!.card) &&
+        // ToDo this check works but needs tuning
+        memory.pointsLeftInSuit(baseCard.suit) + trick.points() >= 14
+        ? hand.highest()
+        : this.findMostSuitableBeatingCard(hand, trick);
     }
+
+    return (
+      this.findMostValuableWinningTrump(hand, trick) ??
+      this.findLeastValuableLosingCard(hand, trick)
+    );
   }
 
   playPosition(hand: Hand, trick: Trick): Card {
@@ -165,6 +223,22 @@ export class RuleBasedBehaviour implements Behavior {
     return this.findLeastValuableLosingCard(hand, trick);
   }
 
+  teammateWinsTrick(trick: Trick, hand: Hand, memory?: Memory): Boolean {
+    return (
+      this.isTeammateKnown() &&
+      this.isCurrentWinnerTeammate(trick) &&
+      !!memory?.isHighestCardLeft(trick.highestCard()!.card, hand)
+    );
+  }
+
+  trickCannotBeWon(hand: Hand, trick: Trick, memory?: Memory): Boolean {
+    return (
+      !!trick.baseCard()?.isTrump() &&
+      (!hand.highest().beats(trick.highestCard()!.card) ||
+        !!memory?.isHighestCardLeft(trick.highestCard()!.card))
+    );
+  }
+
   private isTeammateKnown(): Boolean {
     return (
       this.affinities.affinityTable.filter(
@@ -173,9 +247,38 @@ export class RuleBasedBehaviour implements Behavior {
     );
   }
 
+  private getTeammates(): Player[] {
+    return this.affinities.affinityTable
+      .filter(playerAffinity => playerAffinity.affinity === 1)
+      .map(playerAffinity => playerAffinity.player);
+  }
+
+  private getEnemies(): Player[] {
+    return this.affinities.affinityTable
+      .filter(playerAffinity => playerAffinity.affinity === -1)
+      .map(playerAffinity => playerAffinity.player);
+  }
+
   private isCurrentWinnerTeammate(trick: Trick): Boolean {
     return (
       trick.highestCard()?.player.isRe() === this.getMyPlayer(trick)?.isRe()
+    );
+  }
+
+  private isTeammateAfterMe(trick: Trick): Boolean {
+    const playersPlayed = trick.playedCards.map(
+      playedCard => playedCard.player
+    );
+    return (
+      this.getTeammates().filter(mate => !playersPlayed.includes(mate)).length >
+      0
+    );
+  }
+
+  private hasHighValueTrump(hand: Hand): Boolean {
+    return (
+      hand.contains(ace.of(Suit.Diamonds)) ||
+      hand.contains(ten.of(Suit.Diamonds))
     );
   }
 
@@ -188,7 +291,7 @@ export class RuleBasedBehaviour implements Behavior {
     let highest = nonTrumpCards[0];
     let lowest = nonTrumpCards.slice(-1)[0];
 
-    if (memory?.nonTrumpSuitPlayedBefore(trick.baseCard()!.suit, trick.id)) {
+    if (memory?.hasSuitBeenPlayedBefore(trick.baseCard()!.suit, trick.id)) {
       return lowest;
     }
 
@@ -204,6 +307,25 @@ export class RuleBasedBehaviour implements Behavior {
     return lowest;
   }
 
+  findMostSuitableBeatingCard(hand: Hand, trick: Trick): Card {
+    const beats = playableCards(
+      [
+        ...hand.cards
+          .filter(
+            card =>
+              card.isTrump() &&
+              card.beats(trick.highestCard()?.card) &&
+              card.value < 10
+          )
+          .reverse()
+      ],
+      trick.baseCard()
+    );
+    return beats.length > 0
+      ? beats[0]
+      : this.findLeastValuableLosingCard(hand, trick);
+  }
+
   /**
    * Find a card on a given hand that will add as much value as suitable.
    * Will prefer non-trumps over trumps.
@@ -213,19 +335,23 @@ export class RuleBasedBehaviour implements Behavior {
    * @param {Trick} trick - The trick that should be greased
    * @returns {Card} - The most suitable greasing card that can be found
    */
-  findMostSuitableGreasingCard(hand: Hand, trick: Trick): Card {
+  findMostSuitableGreasingCard(hand: Hand, trick?: Trick): Card {
     const fox = hand.findAny(Suit.Diamonds, Rank.Ace);
     const tenOfHearts = hand.findAny(Suit.Hearts, Rank.Ten);
+    const queens = hand.cards.filter(card => card.rank == Rank.Queen).reverse();
 
     const cardPreference = [
       fox!,
       ...hand.cards
         .sort(byCardValuesDesc)
-        .filter(card => card.compareTo(ten.of(Suit.Hearts)) != 0),
+        .filter(
+          card => !card.is(ten.of(Suit.Hearts)) && card.rank != Rank.Queen
+        ),
+      ...queens,
       tenOfHearts!
     ].filter(Boolean);
 
-    return playableCards(cardPreference, trick.baseCard())[0];
+    return playableCards(cardPreference, trick?.baseCard())[0];
   }
 
   /**
@@ -247,7 +373,6 @@ export class RuleBasedBehaviour implements Behavior {
       tenOfDiamonds,
       ...hand.trumps().reverse()
     ];
-
     return (
       trumpPreference.find(card => card && card.beats(highestCard)) ?? null
     );
@@ -263,7 +388,10 @@ export class RuleBasedBehaviour implements Behavior {
   findLeastValuableLosingCard(hand: Hand, trick: Trick): Card {
     const cardPreference = [
       ...hand.nonTrumps().filter(card => card.value === 4),
-      ...hand.lowValues().filter(card => card.value !== 3),
+      ...hand
+        .lowValues()
+        .filter(card => card.value !== 3)
+        .reverse(),
       ...hand.cards.reverse()
     ];
     return playableCards(cardPreference, trick.baseCard())[0];

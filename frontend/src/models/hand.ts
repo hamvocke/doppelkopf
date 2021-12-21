@@ -14,27 +14,31 @@ export class Hand {
     });
   }
 
-  isRe() {
+  isRe(): boolean {
     return this.isReParty;
   }
 
-  isKontra() {
+  isKontra(): boolean {
     return !this.isRe();
   }
 
-  value() {
+  value(): number {
     return this.cards.reduce((acc, card) => acc + card.value, 0);
   }
 
-  find(card: Card) {
-    return find(this.cards, card);
+  find(card: Card): Card | null {
+    return find(this.cards, card) || null;
   }
 
-  findAny(suit: Suit, rank: Rank) {
-    return find(this.cards, { suit, rank });
+  findAny(suit: Suit, rank: Rank): Card | null {
+    return find(this.cards, { suit, rank }) || null;
   }
 
-  highest() {
+  contains(card: Card): Boolean {
+    return !!this.findAny(card.suit, card.rank);
+  }
+
+  highest(): Card {
     return this.cards[0];
   }
 
@@ -47,10 +51,10 @@ export class Hand {
   }
 
   sort() {
-    return this.cards.sort(compare).reverse();
+    this.cards = this.cards.sort(compare).reverse();
   }
 
-  isPlayable() {
+  isPlayable(): boolean {
     return (
       this.cards.filter(card => card.rank === Rank.King).length < 5 &&
       this.cards.filter(card => card.value >= 10).length < 7 &&
@@ -60,47 +64,46 @@ export class Hand {
     );
   }
 
-  nonTrumps(suit?: Suit) {
+  nonTrumps(suit?: Suit): Card[] {
     return suit
       ? this.cards.filter(card => card.suit === suit && !card.isTrump())
       : this.cards.filter(card => !card.isTrump());
   }
 
-  lowValues() {
+  lowValues(): Card[] {
     return this.cards.filter(card =>
       [values.J, values.K, values.Q].includes(card.value)
     );
   }
 
-  hasNonTrumps(suit: Suit) {
-    return this.nonTrumps(suit).length > 0;
-  }
-
-  trumps() {
+  trumps(): Card[] {
     return this.cards.filter(card => card.isTrump());
   }
 
-  hasTrumps() {
-    return this.trumps().length > 0;
-  }
-
-  getBlankAce(suit: Suit) {
-    let nonTrumpCards = this.nonTrumps(suit);
-    return nonTrumpCards.length === 1 && nonTrumpCards[0].rank === Rank.Ace
-      ? nonTrumpCards[0]
-      : null;
-  }
-
-  hasBlankAce(suit: Suit) {
-    return this.getBlankAce(suit) ? true : false;
-  }
-
-  getBlankAces() {
+  getBlankAces(): Card[] {
     let aces = new Array<Card>();
     [Suit.Clubs, Suit.Spades, Suit.Hearts].forEach(suit => {
       let ace = this.getBlankAce(suit);
       if (ace) aces.push(ace);
     });
     return aces;
+  }
+
+  private getBlankAce(suit: Suit): Card | undefined {
+    const nonTrumpCards = this.nonTrumps(suit);
+
+    if (nonTrumpCards.length > 1) {
+      return undefined;
+    }
+
+    return nonTrumpCards.find(c => c.rank === Rank.Ace);
+  }
+
+  getMissingSuites(): Suit[] {
+    let suits = new Array<Suit>();
+    [Suit.Clubs, Suit.Spades, Suit.Hearts].forEach(suit => {
+      if (this.nonTrumps(suit).length === 0) suits.push(suit);
+    });
+    return suits;
   }
 }

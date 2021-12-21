@@ -36,8 +36,9 @@ export class Game {
     const isHuman = true;
     const isComputer = false;
     const randomNames = generateNames(4);
+    const playerName = localStorage.getItem("name") || randomNames[0];
     return new Game([
-      new Player(randomNames[0], isHuman, true, TablePosition.Bottom),
+      new Player(playerName, isHuman, true, TablePosition.Bottom),
       new Player(randomNames[1], isComputer, false, TablePosition.Left),
       new Player(randomNames[2], isComputer, false, TablePosition.Top),
       new Player(randomNames[3], isComputer, false, TablePosition.Right)
@@ -74,6 +75,10 @@ export class Game {
     return this.currentRound.currentTrick;
   }
 
+  get previousTrick() {
+    return this.currentRound.previousTrick;
+  }
+
   nextRound() {
     this.deal();
     this.currentRound = new Round(
@@ -93,22 +98,5 @@ export class Game {
     this.players.forEach(player =>
       player.behavior.affinities.setPlayers(this.players)
     );
-  }
-
-  affinityEvent(event: AffinityEvent, player: Player) {
-    switch (event) {
-      case AffinityEvent.Announcement:
-        this.players
-          .filter(p => p.id !== player.id)
-          .forEach(p => p.behavior.affinities.declaresParty(player));
-        break;
-      case AffinityEvent.QueenOfClubs:
-        this.players
-          .filter(p => p.id !== player.id)
-          .forEach(p => p.behavior.affinities.declaresParty(player, true));
-        break;
-      default:
-        break;
-    }
   }
 }

@@ -4,7 +4,7 @@
     <Player :player="game.players[2]" class="top" />
 
     <div class="center">
-      <Trick :current-trick="game.currentTrick" />
+      <Trick :trick="game.currentTrick" />
     </div>
 
     <Controls
@@ -42,12 +42,12 @@ export default class Table extends Vue {
   @Prop({ required: true })
   game!: Game;
 
-  nextMove() {
-    this.game.currentRound.nextMove();
+  async nextMove() {
+    await this.game.currentRound.nextMove();
   }
 
-  finishTrick() {
-    this.game.currentRound.finishTrick();
+  async finishTrick() {
+    await this.game.currentRound.finishTrick();
   }
 
   finishRound() {
@@ -72,6 +72,7 @@ export default class Table extends Vue {
   grid-template-columns: minmax(140px, auto) 1fr minmax(140px, auto);
   overflow: auto;
   height: 100%;
+  margin: auto;
 }
 
 .top {
@@ -106,6 +107,12 @@ export default class Table extends Vue {
       "controls controls controls";
 
     grid-template-columns: minmax(120px, auto) 1fr minmax(120px, auto);
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .table {
+    max-width: 1200px;
   }
 }
 </style>

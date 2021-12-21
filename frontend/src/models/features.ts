@@ -3,7 +3,7 @@ import { Config } from "@/models/config";
 
 const DEFAULT_FEATURES: Features = {
   enableTutorial: Config.debug,
-  enableAnnouncements: true,
+  enableAnnouncements: true
 };
 
 interface Features {

@@ -38,9 +38,6 @@ export default class Card extends Vue {
   @Prop({ default: false })
   isCovered!: boolean;
 
-  @Prop({ default: false })
-  isHighlighted!: boolean;
-
   @Prop({ default: "unknown" })
   position!: string;
 
@@ -63,7 +60,6 @@ export default class Card extends Vue {
   get cardClasses() {
     return {
       selected: this.isSelected,
-      highlighted: this.isHighlighted,
       covered: this.isCovered
     };
   }
@@ -91,7 +87,7 @@ export default class Card extends Vue {
   padding: 6px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.72), 0 0 3px rgba(0, 0, 0, 0.24);
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-property: top, box-shadow;
   user-select: none;
@@ -161,9 +157,6 @@ export default class Card extends Vue {
   border-radius: 6px;
 }
 
-.highlighted {
-}
-
 @media screen and (max-width: 680px) {
   .background {
     border-radius: 4px;
@@ -178,8 +171,6 @@ export default class Card extends Vue {
 
   .selected {
     top: -6px;
-    box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
-    z-index: var(--card-selected-layer);
   }
 
   .card-top {
@@ -188,10 +179,11 @@ export default class Card extends Vue {
   }
 
   .card-bottom {
-    display: none;
+    right: 3px;
+    bottom: 3px;
   }
 
-  .card-top .rank {
+  .rank {
     font-size: 0.9em;
     font-weight: bold;
   }

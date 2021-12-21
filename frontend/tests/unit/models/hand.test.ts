@@ -1,5 +1,14 @@
 import { Hand } from "@/models/hand";
-import { Card, Rank, Suit, ace, ten, king, queen, jack } from "@/models/card";
+import {
+  Rank,
+  Suit,
+  ace,
+  ten,
+  king,
+  queen,
+  jack,
+  cardOrder
+} from "@/models/card";
 import { allCards } from "@/models/deck";
 import { shuffle } from "lodash";
 
@@ -61,6 +70,7 @@ test("can find card on hand by rank and suit", () => {
   const hand = new Hand(cards);
 
   expect(hand.findAny(Suit.Spades, Rank.Queen)).toEqual(queenOfSpades);
+  expect(hand.contains(queenOfSpades)).toBe(true);
 });
 
 test("should return empty list if card on hand cannot be found by rank and suit", () => {
@@ -68,7 +78,8 @@ test("should return empty list if card on hand cannot be found by rank and suit"
   const cards = [queenOfSpades];
   const hand = new Hand(cards);
 
-  expect(hand.findAny(Suit.Spades, Rank.King)).toBeUndefined;
+  expect(hand.findAny(Suit.Spades, Rank.King)).toBeNull();
+  expect(hand.contains(king.of(Suit.Spades))).toBe(false);
 });
 
 test("can not find non-existing card on hand", () => {
@@ -76,7 +87,7 @@ test("can not find non-existing card on hand", () => {
   const cards = [queenOfSpades];
   const hand = new Hand(cards);
 
-  expect(hand.find(king.of(Suit.Spades))).toBeUndefined();
+  expect(hand.find(king.of(Suit.Spades))).toBeNull();
 });
 
 test("can remove card from hand", () => {
@@ -86,7 +97,7 @@ test("can remove card from hand", () => {
 
   hand.remove(cards[0]);
 
-  expect(hand.find(cards[0])).toBeUndefined();
+  expect(hand.find(cards[0])).toBeNull();
 });
 
 test("cannot remove non-existing card from hand", () => {
@@ -106,56 +117,7 @@ test("should sort hand by visual order", () => {
 
   const hand = new Hand(shuffle(cards));
 
-  const sortedDeck = [
-    new Card(Rank.Ten, Suit.Hearts, 0),
-    new Card(Rank.Ten, Suit.Hearts, 1),
-
-    new Card(Rank.Queen, Suit.Clubs, 0),
-    new Card(Rank.Queen, Suit.Clubs, 1),
-    new Card(Rank.Queen, Suit.Spades, 0),
-    new Card(Rank.Queen, Suit.Spades, 1),
-    new Card(Rank.Queen, Suit.Hearts, 0),
-    new Card(Rank.Queen, Suit.Hearts, 1),
-    new Card(Rank.Queen, Suit.Diamonds, 0),
-    new Card(Rank.Queen, Suit.Diamonds, 1),
-
-    new Card(Rank.Jack, Suit.Clubs, 0),
-    new Card(Rank.Jack, Suit.Clubs, 1),
-    new Card(Rank.Jack, Suit.Spades, 0),
-    new Card(Rank.Jack, Suit.Spades, 1),
-    new Card(Rank.Jack, Suit.Hearts, 0),
-    new Card(Rank.Jack, Suit.Hearts, 1),
-    new Card(Rank.Jack, Suit.Diamonds, 0),
-    new Card(Rank.Jack, Suit.Diamonds, 1),
-
-    new Card(Rank.Ace, Suit.Diamonds, 0),
-    new Card(Rank.Ace, Suit.Diamonds, 1),
-    new Card(Rank.Ten, Suit.Diamonds, 0),
-    new Card(Rank.Ten, Suit.Diamonds, 1),
-    new Card(Rank.King, Suit.Diamonds, 0),
-    new Card(Rank.King, Suit.Diamonds, 1),
-
-    new Card(Rank.Ace, Suit.Clubs, 0),
-    new Card(Rank.Ace, Suit.Clubs, 1),
-    new Card(Rank.Ten, Suit.Clubs, 0),
-    new Card(Rank.Ten, Suit.Clubs, 1),
-    new Card(Rank.King, Suit.Clubs, 0),
-    new Card(Rank.King, Suit.Clubs, 1),
-
-    new Card(Rank.Ace, Suit.Spades, 0),
-    new Card(Rank.Ace, Suit.Spades, 1),
-    new Card(Rank.Ten, Suit.Spades, 0),
-    new Card(Rank.Ten, Suit.Spades, 1),
-    new Card(Rank.King, Suit.Spades, 0),
-    new Card(Rank.King, Suit.Spades, 1),
-
-    new Card(Rank.Ace, Suit.Hearts, 0),
-    new Card(Rank.Ace, Suit.Hearts, 1),
-    new Card(Rank.King, Suit.Hearts, 0),
-    new Card(Rank.King, Suit.Hearts, 1)
-  ];
-
-  expect(hand.cards).toEqual(sortedDeck);
+  expect(hand.cards).toEqual(cardOrder);
 });
 
 test("should detect hand with 5 kings as not playable", () => {
@@ -248,9 +210,6 @@ test("should detect suits that can be served", () => {
   expect(hand.nonTrumps(Suit.Spades).length).toEqual(0);
   expect(hand.nonTrumps(Suit.Hearts).length).toEqual(2);
   expect(hand.nonTrumps(Suit.Clubs).length).toEqual(2);
-  expect(hand.hasNonTrumps(Suit.Spades)).toBe(false);
-  expect(hand.hasNonTrumps(Suit.Hearts)).toBe(true);
-  expect(hand.hasNonTrumps(Suit.Clubs)).toBe(true);
 });
 
 test("should detect correct number of trumps in hand", () => {
@@ -286,9 +245,6 @@ test("should detect multiple single blank aces", () => {
   ];
   const hand = new Hand(cards);
 
-  expect(hand.hasBlankAce(Suit.Clubs)).toBe(false);
-  expect(hand.hasBlankAce(Suit.Hearts)).toBe(true);
-  expect(hand.hasBlankAce(Suit.Spades)).toBe(true);
   expect(hand.getBlankAces()).toEqual([
     ace.of(Suit.Spades).first(),
     ace.of(Suit.Hearts).first()
@@ -311,4 +267,38 @@ test("should detect low value cards in hand", () => {
   const hand = new Hand(cards);
 
   expect(hand.lowValues().length).toBe(3);
+});
+
+test("should detect low value cards in hand", () => {
+  const cards = [
+    ace.of(Suit.Hearts),
+    king.of(Suit.Clubs),
+    ten.of(Suit.Clubs),
+    ace.of(Suit.Clubs),
+    jack.of(Suit.Spades),
+    jack.of(Suit.Clubs),
+    queen.of(Suit.Spades),
+    queen.of(Suit.Clubs),
+    ten.of(Suit.Hearts),
+    ten.of(Suit.Hearts)
+  ];
+  const hand = new Hand(cards);
+
+  expect(hand.getMissingSuites()).toEqual([Suit.Spades]);
+});
+
+test("should detect highest card in hand", () => {
+  const tenOfHearts = ten.of(Suit.Hearts).first();
+
+  const cards = [
+    ace.of(Suit.Hearts).first(),
+    tenOfHearts,
+    king.of(Suit.Clubs).first(),
+    queen.of(Suit.Hearts).first(),
+    jack.of(Suit.Clubs).first()
+  ];
+  const hand = new Hand(cards);
+
+  expect(hand.highest()).toEqual(tenOfHearts);
+  expect(hand.trumps()[0]).toEqual(tenOfHearts);
 });

@@ -72,7 +72,6 @@ export default class Logo extends Vue {}
   z-index: -1;
   height: 180px;
   width: 120px;
-  margin: -8px;
   border-radius: 16px;
   border: 16px solid var(--white);
 }

@@ -24,15 +24,11 @@ export const values: { [id: string]: number } = {
 };
 
 export class Card {
-  id: number | string;
+  id: number;
   rank: Rank;
   suit: Suit;
 
-  constructor(
-    rank: Rank,
-    suit = Suit.Clubs,
-    id: number | string = uniqueId("card_")
-  ) {
+  constructor(rank: Rank, suit = Suit.Clubs, id: number = 0) {
     this.rank = rank;
     this.suit = suit;
     this.id = id;
@@ -86,7 +82,11 @@ export class Card {
     return "";
   }
 
-  beats(anotherCard: Card) {
+  beats(anotherCard: Card | undefined) {
+    if (!anotherCard) {
+      return false;
+    }
+
     return this.compareTo(anotherCard) < 0;
   }
 
@@ -124,6 +124,10 @@ export class Card {
       this.suit == anotherCard.suit &&
       this.id == anotherCard.id
     );
+  }
+
+  is(anotherCard: Card): Boolean {
+    return this.rank === anotherCard.rank && this.suit === anotherCard.suit;
   }
 }
 

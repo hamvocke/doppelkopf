@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  codecov: codecov/codecov@3.1.0
+
 jobs:
   frontend:
     docker:
@@ -21,12 +24,18 @@ jobs:
       - run:
           name: Test frontend
           command: 'pushd frontend && yarn test:ci && yarn test:e2e && popd'
+      - store_artifacts:
+          path: coverage
       - run:
           name: Build frontend
           command: 'pushd frontend && yarn build && popd'
       - persist_to_workspace:
           root: .
-          paths: frontend/dist
+          paths:
+            - frontend/dist
+      - codecov/upload:
+          file: coverage/coverage-final.json
+          flags: frontend
 
   backend:
     docker:

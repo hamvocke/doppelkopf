@@ -1,49 +1,46 @@
 <template>
   <div class="options">
     <div
-      class="icon icon-options"
-      :title="$t('options-header')"
-      @click="toggleMenu"
+      v-if="trick"
+      class="icon icon-rewind"
+      :title="$t('show_last_trick_header')"
+      @click="toggleVisibility()"
     >
-      <settings-icon></settings-icon>
+      <rotate-ccw-icon></rotate-ccw-icon>
     </div>
-    <modal :visible="visible" @clickaway="hideMenu">
-      <h2>{{ $t("options-header") }}</h2>
+    <modal v-if="trick" :visible="visible" @clickaway="hideMenu">
+      <h2>{{ $t("show_last_trick_header") }}</h2>
       <div class="option">
-        <span class="label">{{ $t("language") }}</span>
-        <LanguagePicker />
+        <span class="label">
+          {{ $t("show_last_trick_label", { name: trick.winner().name }) }}
+        </span>
       </div>
-
-      <div v-if="config.debug" class="option">
-        <span class="label">Debug Mode</span>
-        <div>
-          Enabled
-        </div>
-        <div>
-          {{ config }}
-        </div>
-      </div>
+      <Trick :trick="trick" />
     </modal>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import LanguagePicker from "./LanguagePicker.vue";
-import Modal from "./Modal.vue";
-import { mixin as clickaway } from "vue-clickaway";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import { Config } from "@/models/config";
-import { RotateCcwIcon, SettingsIcon } from "vue-feather-icons";
+import { mixin as clickaway } from "vue-clickaway";
+import { RotateCcwIcon } from "vue-feather-icons";
+import { Trick as TrickModel } from "@/models/trick";
+import Trick from "@/components/Trick.vue";
+import Modal from "@/components/Modal.vue";
 
 @Component({
-  components: { LanguagePicker, SettingsIcon, RotateCcwIcon, Modal },
+  components: { RotateCcwIcon, Trick, Modal },
   mixins: [clickaway]
 })
-export default class OptionsMenu extends Vue {
+export default class ShowPreviousTrick extends Vue {
+  @Prop()
+  trick?: TrickModel;
+
   config = Config;
   visible: boolean = false;
 
-  toggleMenu() {
+  toggleVisibility() {
     this.visible = !this.visible;
   }
 
@@ -71,8 +68,8 @@ export default class OptionsMenu extends Vue {
   align-items: center;
 }
 
-.icon-options {
-  top: 12px;
+.icon-rewind {
+  top: 60px;
   right: 12px;
 }
 
