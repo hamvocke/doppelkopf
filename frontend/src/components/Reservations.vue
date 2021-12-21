@@ -17,7 +17,7 @@
 
     <div class="reservations-wrapper">
       <div class="reservation-group">
-        <h3>Gesund</h3>
+        <h3>Normales Spiel</h3>
         <p>
           Du meldest keinen Vorbehalt an und möchtest ein normales Spiel
           spielen.
