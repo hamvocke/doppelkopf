@@ -26,14 +26,6 @@
           {{ $t("start-game") }}
         </router-link>
 
-        <button
-          v-if="enableMultiplayer"
-          class="button start-multiplayer"
-          @click="startMultiplayer"
-        >
-          {{ $t("start-multiplayer-game") }}
-        </button>
-
         <router-link
           v-if="showTutorial"
           to="/learn"
@@ -57,11 +49,8 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import router from "@/router/index";
 import { Features } from "@/models/features";
 import Logo from "@/components/Logo.vue";
-import { MultiplayerHandler } from "@/helpers/multiplayerHandler";
-import { Notifier } from "@/models/notifier";
 import Notifications from "@/components/Notifications.vue";
 
 @Component({
@@ -72,8 +61,6 @@ import Notifications from "@/components/Notifications.vue";
 })
 export default class Home extends Vue {
   showTutorial = false;
-  enableMultiplayer = false;
-  multiplayerHandler = new MultiplayerHandler();
   playerName: string = localStorage.name || "";
 
   saveName() {
@@ -84,23 +71,6 @@ export default class Home extends Vue {
 
   created() {
     this.showTutorial = Features.get().enableTutorial;
-    this.enableMultiplayer = Features.get().enableMultiplayer;
-  }
-
-  async startMultiplayer() {
-    if (!this.enableMultiplayer) {
-      return;
-    }
-
-    try {
-      const response = await this.multiplayerHandler.register();
-      router.push({
-        name: "waiting-room",
-        params: { gameName: response.game.id.toString() }
-      });
-    } catch (error) {
-      new Notifier().info("cannot-connect-to-server");
-    }
   }
 }
 </script>

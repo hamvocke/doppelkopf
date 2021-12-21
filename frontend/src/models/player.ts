@@ -54,11 +54,6 @@ export class Player {
     this.reset();
   }
 
-  static me(name?: string): Player {
-    let playerName = name || generateNames(1)[0];
-    return new Player(playerName, true, true, TablePosition.Bottom);
-  }
-
   isRe() {
     return this.hand.isRe();
   }

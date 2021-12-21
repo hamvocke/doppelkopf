@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 import GameView from "@/views/Game.vue";
 import Tutorial from "@/views/Tutorial.vue";
-import WaitingRoom from "@/views/WaitingRoom.vue";
 import Preview from "@/views/Preview.vue";
 import { Config } from "@/models/config";
 
@@ -25,12 +24,6 @@ const routes = [
     path: "/learn",
     name: "tutorial",
     component: Tutorial
-  },
-  {
-    path: "/wait/:gameName",
-    name: "waiting-room",
-    component: WaitingRoom,
-    props: true
   }
 ];
 
