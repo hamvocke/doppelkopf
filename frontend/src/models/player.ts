@@ -8,7 +8,7 @@ import { options } from "./options";
 import { Announcement, getAnnouncementOrder } from "./announcements";
 import { playableCards } from "./playableCardFinder";
 import { Memory, PerfectMemory } from "./memory";
-import { Card, Suit, queen } from "./card";
+import { Card } from "./card";
 import { Trick } from "./trick";
 import { Game } from "./game";
 import { TablePosition } from "./tablePosition";

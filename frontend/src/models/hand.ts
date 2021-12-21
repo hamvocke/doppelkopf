@@ -50,8 +50,8 @@ export class Hand {
     this.cards = without(this.cards, card);
   }
 
-  sort(): Card[] {
-    return this.cards.sort(compare).reverse();
+  sort() {
+    this.cards = this.cards.sort(compare).reverse();
   }
 
   isPlayable(): boolean {

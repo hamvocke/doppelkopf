@@ -1,7 +1,7 @@
 import { uniqueId } from "lodash-es";
 import { chance } from "@/models/random";
 import { PlayedCard } from "@/models/playedCard";
-import { Card, cardOrder, compare, Suit } from "@/models/card";
+import { Card, cardOrder, Suit } from "@/models/card";
 import { Hand } from "./hand";
 import { Player } from "./player";
 
