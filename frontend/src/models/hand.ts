@@ -84,10 +84,6 @@ export class Hand {
     return this.cards.filter(card => card.isTrump());
   }
 
-  hasTrumps(): boolean {
-    return this.trumps().length > 0;
-  }
-
   private getBlankAce(suit: Suit): Card | null {
     let nonTrumpCards = this.nonTrumps(suit);
     return nonTrumpCards.length === 1 && nonTrumpCards[0].rank === Rank.Ace
