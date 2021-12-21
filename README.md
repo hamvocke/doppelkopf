@@ -5,11 +5,22 @@
 An in-browser implementation of the traditional German [Doppelkopf](https://en.wikipedia.org/wiki/Doppelkopf) card game.
 
 ## Live Demo
-The game is still in early stages. Playing it will probably be a frustrating and confusing experience. If you're curious enough to give it a try (and play against a really shitty AI), I encourage you to do so:
-
 [![Screenshot](https://i.imgur.com/qQPyE3I.png)](https://doppelkopf.party)
 
 <h3 align="center"><a href="https://doppelkopf.party/">Try the Live Demo at doppelkopf.party</a></h3>
+
+## Features
+
+This game is still a work in progress. You will see that it's playable but some features are still missing that you might know from other Doppelkopf games:
+
+* [x] Single player mode
+* [x] Playing multiple rounds
+* [x] Score calculation
+* [x] Announcements & Bids
+* [x] Extra points for winning a Doppelkopf, catching a fox, Charlie
+* [ ] Playing solo
+* [ ] Weddings
+* [ ] Custom rules
 
 ## Development
 The game is implemented using TypeScript and [vue.js](https://vuejs.org/). It's capable to run as an offline-first, standalone web application that does not rely on being connected to a backend.
