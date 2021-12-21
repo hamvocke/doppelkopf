@@ -1,3 +1,5 @@
+import { Config } from "./config";
+
 export const options = {
-  autoplay: true
+  autoplay: !Config.testing
 };

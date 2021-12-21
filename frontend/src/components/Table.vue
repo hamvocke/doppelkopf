@@ -42,12 +42,12 @@ export default class Table extends Vue {
   @Prop({ required: true })
   game!: Game;
 
-  nextMove() {
-    this.game.currentRound.nextMove();
+  async nextMove() {
+    await this.game.currentRound.nextMove();
   }
 
-  finishTrick() {
-    this.game.currentRound.finishTrick();
+  async finishTrick() {
+    await this.game.currentRound.finishTrick();
   }
 
   finishRound() {

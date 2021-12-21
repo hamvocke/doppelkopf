@@ -72,14 +72,15 @@ export class Player {
     return findParties(this.game!.players)[partyName];
   }
 
-  autoplay() {
+  async autoplay() {
     const cardToBePlayed = this.behavior.cardToPlay(
       this.hand,
       this.game?.currentTrick!,
       this.memory
     );
+
     if (cardToBePlayed) {
-      this.play(cardToBePlayed);
+      await this.play(cardToBePlayed);
     }
 
     const announcement = this.behavior.announcementToMake(
@@ -100,7 +101,7 @@ export class Player {
       this.game?.currentTrick.winner() === this
     ) {
       await this.game?.currentRound.finishTrick();
-      this.playAction(card);
+      await this.playAction(card);
       return;
     }
     if (!this.canPlay(card)) {
@@ -112,10 +113,10 @@ export class Player {
       return;
     }
 
-    this.playAction(card);
+    await this.playAction(card);
   }
 
-  playAction(card: Card) {
+  private async playAction(card: Card) {
     try {
       this.game?.currentTrick.add(card, this);
       this.hand.remove(card);
@@ -123,8 +124,8 @@ export class Player {
       this.game?.currentRound.nextPlayer();
 
       if (options.autoplay === true) {
-        // timeout to accommodate for animation duration when playing a card
-        setTimeout(() => this.game?.currentRound.nextMove(), 800);
+        await new Promise(r => setTimeout(r, 800)); // timeout to accommodate for animation duration when playing a card
+        await this.game?.currentRound.nextMove();
       }
     } catch (error) {
       if (this.isHuman) {

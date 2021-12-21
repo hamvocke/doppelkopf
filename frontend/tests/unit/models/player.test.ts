@@ -62,56 +62,62 @@ test("should belong to kontra party", () => {
   expect(player.isKontra()).toBe(true);
 });
 
-test("player can play card from hand", () => {
+test("player can play card from hand", async () => {
   const kingOnHand = king.of(Suit.Diamonds);
   const queenOnHand = queen.of(Suit.Spades);
   player.hand = new Hand([kingOnHand, queenOnHand]);
 
-  player.play(kingOnHand);
+  await player.play(kingOnHand);
 
   expect(player.hand.cards).not.toContain(kingOnHand);
   expect(player.hand.cards).toContain(queenOnHand);
 });
 
-test("should move to next player after playing a card", () => {
+test("should move to next player after playing a card", async () => {
   player.game!.currentRound.nextPlayer = jest.fn();
   const kingOnHand = king.of(Suit.Diamonds);
   player.hand = new Hand([kingOnHand]);
 
-  player.play(kingOnHand);
+  await player.play(kingOnHand);
 
-  expect(player.game!.currentRound.nextPlayer).toBeCalled();
+  expect(player.game!.currentRound.nextPlayer).toHaveBeenCalled();
 });
 
-test("should trigger next move if autoplay option is enabled", () => {
+test("should trigger next move if autoplay option is enabled", async () => {
   options.autoplay = true;
-  player.game!.currentRound.nextMove = jest.fn();
+  expect.assertions(1);
+  const nextMoveMock = jest.fn();
+  player.game!.currentRound.nextMove = nextMoveMock;
   const kingOnHand = king.of(Suit.Diamonds);
   player.hand = new Hand([kingOnHand]);
 
-  player.play(kingOnHand);
+  let promise = player.play(kingOnHand);
   jest.runAllTimers();
+  await promise;
 
-  expect(player.game!.currentRound.nextMove).toBeCalled();
+  expect(nextMoveMock).toHaveBeenCalled();
 });
 
-test("should not trigger next move if autoplay option is disabled", () => {
+test("should not trigger next move if autoplay option is disabled", async () => {
   options.autoplay = false;
-  player.game!.currentRound.nextMove = jest.fn();
+  expect.assertions(1);
+  const nextMoveMock = jest.fn();
+  player.game!.currentRound.nextMove = nextMoveMock;
   const kingOnHand = king.of(Suit.Diamonds);
   player.hand = new Hand([kingOnHand]);
 
-  player.play(kingOnHand);
+  const promise = player.play(kingOnHand);
   jest.runAllTimers();
+  await promise;
 
-  expect(player.game!.currentRound.nextMove).not.toBeCalled();
+  expect(nextMoveMock).not.toHaveBeenCalled();
 });
 
-test("playing a card adds it to the current trick", () => {
+test("playing a card adds it to the current trick", async () => {
   const queenOnHand = queen.of(Suit.Spades);
   player.hand = new Hand([queenOnHand]);
 
-  player.play(queenOnHand);
+  await player.play(queenOnHand);
 
   const expectedCard = new PlayedCard(queenOnHand, player);
 
@@ -151,7 +157,7 @@ test("player can win a trick", () => {
   expect(player.trickStack.tricks).toEqual([trick]);
 });
 
-test("should autoplay a card", () => {
+test("should autoplay a card", async () => {
   const queenOnHand = queen.of(Suit.Spades);
   const kingOnHand = king.of(Suit.Diamonds);
   player.game!.currentTrick.baseCard = () => queen.of(Suit.Diamonds);
@@ -165,7 +171,7 @@ test("should autoplay a card", () => {
     handleAffinityEvent: jest.fn(() => null)
   };
 
-  player.autoplay();
+  await player.autoplay();
 
   expect(player.hand.cards).not.toContain(kingOnHand);
   expect(player.behavior.cardToPlay).toBeCalledWith(
@@ -175,7 +181,7 @@ test("should autoplay a card", () => {
   );
 });
 
-test("should try to make an announcement", () => {
+test("should try to make an announcement", async () => {
   player.hand = aHandWith(10);
   game.currentRound.waitingForPlayer = () => game.players[0];
   player.behavior = {
@@ -187,7 +193,7 @@ test("should try to make an announcement", () => {
     handleAffinityEvent: jest.fn(() => null)
   };
 
-  player.autoplay();
+  await player.autoplay();
 
   expect(player.behavior.announcementToMake).toBeCalledWith(
     expect.any(Set),
@@ -195,34 +201,34 @@ test("should try to make an announcement", () => {
   );
 });
 
-test("should not play a card if its not the players turn", () => {
+test("should not play a card if its not the players turn", async () => {
   const queenOnHand = queen.of(Suit.Spades);
   player.hand = new Hand([queenOnHand]);
   game.currentRound.waitingForPlayer = () => game.players[1];
 
-  player.play(queenOnHand);
+  await player.play(queenOnHand);
 
   expect(player.hand.cards).toContain(queenOnHand);
 });
 
-test("should show notification if trying to play a card when its not your turn", () => {
+test("should show notification if trying to play a card when its not your turn", async () => {
   const queenOnHand = queen.of(Suit.Spades);
   player.hand = new Hand([queenOnHand]);
   game.currentRound.waitingForPlayer = () => game.players[1];
 
-  player.play(queenOnHand);
+  await player.play(queenOnHand);
 
   expect(notifier.notifications[0].text).toBe("not-your-turn");
 });
 
-test("should not play card and show notification if trying to play an invalid card", () => {
+test("should not play card and show notification if trying to play an invalid card", async () => {
   const queenOnHand = queen.of(Suit.Spades);
   const tenOnHand = ten.of(Suit.Spades);
   player.hand = new Hand([queenOnHand, tenOnHand]);
   game.currentRound.waitingForPlayer = () => player;
   game.currentTrick.baseCard = () => ten.of(Suit.Spades);
 
-  player.play(queenOnHand);
+  await player.play(queenOnHand);
 
   expect(player.hand.cards).toContain(queenOnHand);
   expect(notifier.notifications[0].text).toBe("cant-play-card");

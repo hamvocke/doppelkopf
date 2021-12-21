@@ -53,7 +53,7 @@ export class Round {
     return this.playerOrder.current();
   }
 
-  nextMove() {
+  async nextMove() {
     if (this.waitingForPlayer().isHuman) {
       return;
     }
@@ -62,7 +62,7 @@ export class Round {
       return;
     }
 
-    this.waitingForPlayer().autoplay();
+    await this.waitingForPlayer().autoplay();
   }
 
   noMoreCardsLeft() {
