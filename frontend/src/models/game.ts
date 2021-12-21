@@ -1,5 +1,4 @@
 import { Round } from "@/models/round";
-import { AffinityEvent } from "@/models/affinities";
 import { Player } from "@/models/player";
 import { Deck } from "@/models/deck";
 import { Hand } from "@/models/hand";
@@ -43,10 +42,6 @@ export class Game {
       new Player(randomNames[2], isComputer, false, TablePosition.Top),
       new Player(randomNames[3], isComputer, false, TablePosition.Right)
     ]);
-  }
-
-  static multiPlayer(players: Player[]) {
-    return new Game(players);
   }
 
   // todo: make this configurable for playing with 9s
