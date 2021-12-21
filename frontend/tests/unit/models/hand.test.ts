@@ -284,8 +284,7 @@ test("should detect low value cards in hand", () => {
   ];
   const hand = new Hand(cards);
 
-  expect(hand.getChicanes().length).toBe(1);
-  expect(hand.getChicanes()).toContain(Suit.Spades);
+  expect(hand.getMissingSuites()).toEqual([Suit.Spades]);
 });
 
 test("should detect highest card in hand", () => {

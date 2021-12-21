@@ -47,7 +47,7 @@ export class goodyAnnouncement implements announcementRules {
       if (hand.trumps().length >= 7) counter++;
       if (hand.cards.filter(c => c.is(ten.of(Suit.Hearts))).length === 2)
         counter++;
-      counter += hand.getChicanes().length;
+      counter += hand.getMissingSuites().length;
       return counter > 2 ? [...possibleAnnouncements][0] : null;
     }
     return null;
@@ -65,7 +65,7 @@ export class conservativeAnnouncement implements announcementRules {
     ) {
       if (
         hand.trumps().length >= 9 ||
-        (hand.trumps().length >= 8 && hand.getChicanes().length >= 1) ||
+        (hand.trumps().length >= 8 && hand.getMissingSuites().length >= 1) ||
         (hand.trumps().length >= 8 &&
           hand.contains(ten.of(Suit.Hearts)) &&
           hand.cards.filter(c => c.rank === Rank.Queen).length >= 3)

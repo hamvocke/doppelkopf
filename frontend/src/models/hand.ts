@@ -80,17 +80,6 @@ export class Hand {
     return this.cards.filter(card => card.isTrump());
   }
 
-  private getBlankAce(suit: Suit): Card | null {
-    let nonTrumpCards = this.nonTrumps(suit);
-    return nonTrumpCards.length === 1 && nonTrumpCards[0].rank === Rank.Ace
-      ? nonTrumpCards[0]
-      : null;
-  }
-
-  hasBlankAce(suit: Suit): boolean {
-    return this.getBlankAce(suit) ? true : false;
-  }
-
   getBlankAces(): Card[] {
     let aces = new Array<Card>();
     [Suit.Clubs, Suit.Spades, Suit.Hearts].forEach(suit => {
@@ -100,15 +89,20 @@ export class Hand {
     return aces;
   }
 
-  chicane(suit: Suit): boolean {
-    return this.nonTrumps(suit).length === 0;
+  private getBlankAce(suit: Suit): Card | undefined {
+    const nonTrumpCards = this.nonTrumps(suit);
+
+    if (nonTrumpCards.length > 1) {
+      return undefined;
+    }
+
+    return nonTrumpCards.find(c => c.rank === Rank.Ace);
   }
 
-  // TODO rename to sth with chicane
-  getChicanes(): Suit[] {
+  getMissingSuites(): Suit[] {
     let suits = new Array<Suit>();
     [Suit.Clubs, Suit.Spades, Suit.Hearts].forEach(suit => {
-      if (this.chicane(suit)) suits.push(suit);
+      if (this.nonTrumps(suit).length === 0) suits.push(suit);
     });
     return suits;
   }
