@@ -332,7 +332,7 @@ td {
 
 .names {
   padding: 6px 12px 6px 32px;
-  background-color: var(--lightgray);
+  background-color: var(--white-200);
   border-radius: 18px;
   margin-left: -24px;
   z-index: 0;

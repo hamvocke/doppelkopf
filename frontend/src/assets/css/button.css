@@ -38,7 +38,7 @@
 .button-secondary:hover,
 .button-secondary:active,
 .button-secondary:focus {
-  background: color(var(--lightgray) shade(5%));
+  background: color(var(--white) shade(10%));
   border-bottom-color: color(var(--white) shade(35%));
   color: color(var(--black) shade(20%)) !important;
 }

@@ -56,7 +56,7 @@ export default class ShowPreviousTrick extends Vue {
 .icon {
   position: absolute;
   border-radius: 4px;
-  background-color: var(--shell);
+  background-color: var(--white);
   padding: 8px;
   color: var(--black);
   cursor: pointer;

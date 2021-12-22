@@ -20,7 +20,7 @@ body {
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--shell);
+  color: var(--white);
   z-index: var(--base-layer);
 }
 
@@ -33,7 +33,7 @@ h1, h2, h3, h4, h5, h6, .title-font {
 p {
   text-align: left;
   line-height: 1.4em;
-  color: var(--shell);
+  color: var(--white);
 }
 
 a {

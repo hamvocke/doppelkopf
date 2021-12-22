@@ -94,7 +94,7 @@ export default class Home extends Vue {
 }
 
 .welcome h1 {
-  color: var(--shell);
+  color: var(--white-200);
   display: block;
   text-shadow: 1px 1px 0 var(--black), 2px 2px 0 var(--black),
     3px 3px 0 var(--black), 4px 4px 0 var(--black), 5px 5px 0 var(--black),

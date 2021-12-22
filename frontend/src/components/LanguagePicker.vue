@@ -32,6 +32,7 @@ label {
 
 input[type="radio"]:checked + label {
   background-color: var(--lightblue);
+  color: var(--white);
 }
 
 input {
