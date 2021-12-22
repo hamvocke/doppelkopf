@@ -38,7 +38,7 @@ export default class Modal extends Vue {
 }
 
 .modal-content {
-  max-width: 40%;
+  max-width: 80%;
   background-color: var(--white-100);
   border-radius: 8px;
   box-sizing: border-box;
@@ -48,6 +48,7 @@ export default class Modal extends Vue {
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 
 @media screen and (max-width: 680px) {
