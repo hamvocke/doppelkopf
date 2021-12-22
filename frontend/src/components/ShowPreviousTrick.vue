@@ -15,7 +15,9 @@
           {{ $t("show_last_trick_label", { name: trick.winner().name }) }}
         </span>
       </div>
-      <Trick :trick="trick" />
+      <div class="background-wrapper">
+        <Trick :trick="trick" />
+      </div>
     </modal>
   </div>
 </template>
@@ -87,5 +89,10 @@ export default class ShowPreviousTrick extends Vue {
 
 h2 {
   margin-top: 0;
+}
+
+.background-wrapper {
+  background: var(--black);
+  border-radius: 8px;
 }
 </style>
