@@ -2,7 +2,6 @@
   <div class="player">
     <div class="info">
       <div class="name-info">
-        <!-- <div class="avatar"><img src="../assets/icons/..." alt="avatar"></div> -->
         <div class="name title-font">
           {{ player.name }}
           <AwardIcon
@@ -144,27 +143,6 @@ export default class Player extends Vue {
   margin-right: 4px;
 }
 
-.avatar {
-  background: var(--lightgray);
-  border-radius: 50%;
-  height: 48px;
-  width: 48px;
-  border: 3px solid var(--white);
-  margin-right: 8px;
-}
-
-.left .avatar,
-.right .avatar {
-  margin-right: 0;
-  margin-bottom: 8px;
-}
-
-.avatar img {
-  height: 48px;
-  width: 48px;
-  clip-path: circle();
-}
-
 .party {
   background: var(--lightblue);
   color: var(--white);
@@ -229,16 +207,6 @@ export default class Player extends Vue {
 }
 
 @media screen and (max-width: 680px) {
-  .avatar {
-    height: 24px;
-    width: 24px;
-  }
-
-  .avatar img {
-    height: 24px;
-    width: 24px;
-  }
-
   .name {
     font-size: 1.1em;
   }
