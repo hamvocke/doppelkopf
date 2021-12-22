@@ -19,9 +19,10 @@
         <div>
           Enabled
         </div>
-        <div>
-          {{ config }}
-        </div>
+      </div>
+      <div v-if="config.debug" class="option">
+        <span class="label">Config</span>
+        <pre><code>{{ JSON.stringify(config, null, 2) }}</code></pre>
       </div>
     </modal>
   </div>
