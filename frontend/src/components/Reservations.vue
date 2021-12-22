@@ -3,14 +3,15 @@
     <h2>Alle Gesund?</h2>
     <hr />
     <p>Hier ist deine Hand:</p>
-
-    <hand
-      :hand="game.players[0].hand"
-      :position="game.players[0].tablePosition"
-      :is-selectable="false"
-      :is-covered="false"
-      :playable-cards="[]"
-    />
+    <div class="hand-wrapper">
+      <hand
+        :hand="game.players[0].hand"
+        :position="game.players[0].tablePosition"
+        :is-selectable="false"
+        :is-covered="false"
+        :playable-cards="[]"
+      />
+    </div>
     <p>
       Willst du ein normales Spiel oder ein Sonderspiel spielen?
     </p>
@@ -148,6 +149,12 @@ p {
 .reservation-group {
   padding: 8px;
   flex: 1 100%;
+}
+
+.hand-wrapper {
+  border-radius: 8px;
+  background: var(--black);
+  padding: 24px;
 }
 
 .solo {
