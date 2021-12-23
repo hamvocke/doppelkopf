@@ -1,8 +1,10 @@
 <template>
   <modal :visible="true">
     <h2>Alle Gesund?</h2>
-    <hr />
-    <p>Hier ist deine Hand:</p>
+    <p>
+      Hier sind deine Karten.<br />
+      Willst du ein normales Spiel oder ein Sonderspiel spielen?
+    </p>
     <div class="hand-wrapper">
       <hand
         :hand="game.players[0].hand"
@@ -12,9 +14,6 @@
         :playable-cards="[]"
       />
     </div>
-    <p>
-      Willst du ein normales Spiel oder ein Sonderspiel spielen?
-    </p>
 
     <div class="reservations-wrapper">
       <div class="reservation-group">
