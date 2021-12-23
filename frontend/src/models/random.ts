@@ -4,6 +4,19 @@ export function generateNames(numberOfNames: number) {
   return sampleSize(names, numberOfNames);
 }
 
+/** Returns a random integer between 0 and `exclusiveMax - 1` */
+function randomInt(exclusiveMax: number): number {
+  return Math.floor(Math.random() * exclusiveMax);
+}
+
+export function sample<T>(array: Array<T>): T | undefined {
+  if (array.length === 0) {
+    return undefined;
+  }
+
+  return array[randomInt(array.length)];
+}
+
 export function chance(percentage: number) {
   return Math.random() <= percentage;
 }
