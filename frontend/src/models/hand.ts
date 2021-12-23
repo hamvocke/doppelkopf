@@ -1,5 +1,5 @@
 import { Card, Suit, Rank, values, compare, jack } from "@/models/card";
-import { find, without } from "lodash-es";
+import { find } from "lodash-es";
 
 export class Hand {
   cards: Array<Card>;
@@ -47,7 +47,7 @@ export class Hand {
       throw new Error("can't remove card that isn't on hand");
     }
 
-    this.cards = without(this.cards, card);
+    this.cards = this.cards.filter(c => !card.equals(c));
   }
 
   sort() {
