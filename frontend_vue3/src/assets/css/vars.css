@@ -1,0 +1,21 @@
+:root {
+  /* colors */
+  --red: #e63946;
+  --black: #1d3557;
+  --lightblue: #457b9d;
+  --cyan: #a8dadc;
+  --white: #f8fafc;
+  --white-100: #f1f5f9;
+  --white-200: #e2e8f0;
+  --lightgray: #e6e8f2;
+
+
+  /* z-index layers */
+  --base-layer: 1;
+  --card-selected-layer: 10;
+  --popover-layer: 20;
+  --modal-layer: 30;
+  --notification-layer: 40;
+  --flash-layer: 50;
+  --menu-icon-layer: 60;
+}
