@@ -78,7 +78,7 @@ test("should return empty list if card on hand cannot be found by rank and suit"
   const cards = [queenOfSpades];
   const hand = new Hand(cards);
 
-  expect(hand.findAny(Suit.Spades, Rank.King)).toBeNull();
+  expect(hand.findAny(Suit.Spades, Rank.King)).toBeUndefined();
   expect(hand.contains(king.of(Suit.Spades))).toBe(false);
 });
 
@@ -87,7 +87,7 @@ test("can not find non-existing card on hand", () => {
   const cards = [queenOfSpades];
   const hand = new Hand(cards);
 
-  expect(hand.find(king.of(Suit.Spades))).toBeNull();
+  expect(hand.find(king.of(Suit.Spades))).toBeUndefined();
 });
 
 test("can remove card from hand", () => {
@@ -97,7 +97,7 @@ test("can remove card from hand", () => {
 
   hand.remove(cards[0]);
 
-  expect(hand.find(cards[0])).toBeNull();
+  expect(hand.find(cards[0])).toBeUndefined();
 });
 
 test("cannot remove non-existing card from hand", () => {

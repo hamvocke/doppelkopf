@@ -14,7 +14,8 @@ import { Affinities } from "@/models/affinities";
 
 jest.mock("@/models/random", () => ({
   __esModule: true,
-  chance: () => true
+  chance: () => true,
+  sample: (arr: Array<any>) => arr[0]
 }));
 
 describe("Highest Card Behavior", () => {

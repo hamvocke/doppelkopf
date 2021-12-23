@@ -1,5 +1,4 @@
 import { Card, Suit, Rank, values, compare, jack } from "@/models/card";
-import { find } from "lodash-es";
 
 export class Hand {
   cards: Array<Card>;
@@ -8,10 +7,7 @@ export class Hand {
   constructor(cards = new Array<Card>()) {
     this.cards = cards;
     this.sort();
-    this.isReParty = !!find(this.cards, {
-      suit: Suit.Clubs,
-      rank: Rank.Queen
-    });
+    this.isReParty = !!this.findAny(Suit.Clubs, Rank.Queen);
   }
 
   isRe(): boolean {
@@ -26,12 +22,12 @@ export class Hand {
     return this.cards.reduce((acc, card) => acc + card.value, 0);
   }
 
-  find(card: Card): Card | null {
-    return find(this.cards, card) || null;
+  find(card: Card): Card | undefined {
+    return this.cards.find(c => c.equals(card));
   }
 
-  findAny(suit: Suit, rank: Rank): Card | null {
-    return find(this.cards, { suit, rank }) || null;
+  findAny(suit: Suit, rank: Rank): Card | undefined {
+    return this.cards.find(c => c.suit === suit && c.rank === rank);
   }
 
   contains(card: Card): Boolean {
