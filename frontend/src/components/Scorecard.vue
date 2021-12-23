@@ -138,7 +138,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { includes, join } from "lodash-es";
 import PointMeter from "./scorecard/PointMeter.vue";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import { Player } from "@/models/player";
@@ -162,7 +161,7 @@ export default class Scorecard extends Vue {
   kontraExtras = this.currentScore.listExtras(PartyName.Kontra);
 
   get message() {
-    return includes(this.currentScore.winner()?.players, this.players[0])
+    return this.currentScore.winner()?.players.includes(this.players[0])
       ? "you_win"
       : "you_lose";
   }
@@ -188,10 +187,7 @@ export default class Scorecard extends Vue {
   }
 
   partyMembers(party: string) {
-    return join(
-      this.currentScore.parties[party].players.map(player => player.name),
-      " & "
-    );
+    return this.currentScore.parties[party].playerNames();
   }
 }
 </script>
