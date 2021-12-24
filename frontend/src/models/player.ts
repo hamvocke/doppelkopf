@@ -1,4 +1,3 @@
-import { includes } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 import { Hand } from "@/models/hand";
 import { TrickStack } from "@/models/trickStack";
@@ -13,7 +12,6 @@ import { Trick } from "./trick";
 import { Game } from "./game";
 import { TablePosition } from "./tablePosition";
 import { Affinities, AffinityEvent } from "@/models/affinities";
-import { generateNames } from "@/models/random";
 import { allCards } from "./deck";
 import { findParties, Party, PartyName } from "./party";
 
@@ -134,10 +132,10 @@ export class Player {
     return this.hand.cards.length;
   }
 
-  canPlay(card: Card) {
+  canPlay(card: Card): boolean {
     const baseCard = this.game?.currentTrick.baseCard();
     const playable = playableCards(this.hand.cards, baseCard);
-    return includes(playable, card);
+    return playable.includes(card);
   }
 
   win(trick: Trick) {
