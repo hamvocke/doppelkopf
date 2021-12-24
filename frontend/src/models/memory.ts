@@ -1,4 +1,3 @@
-import { uniqueId } from "lodash-es";
 import { chance } from "@/models/random";
 import { PlayedCard } from "@/models/playedCard";
 import { Card, cardOrder, Suit } from "@/models/card";
@@ -17,12 +16,10 @@ interface MemorizedTrick {
 }
 
 export abstract class Memory {
-  id: string;
   memorizedCards: MemorizedCard[];
   memorizedTricks: MemorizedTrick[];
 
   constructor() {
-    this.id = uniqueId("memory_");
     this.memorizedCards = [];
     this.memorizedTricks = [];
   }
@@ -119,13 +116,11 @@ export abstract class Memory {
   }
 }
 
-// TODO: pretty sure we can get rid of id here
 export class PercentageMemory extends Memory {
   percentage: number;
 
   constructor(percentage: number) {
     super();
-    this.id = uniqueId("memory_percent_");
     this.percentage = percentage;
   }
 
@@ -143,7 +138,6 @@ export class PercentageMemory extends Memory {
 export class PerfectMemory extends Memory {
   constructor() {
     super();
-    this.id = uniqueId("memory_perfect_");
   }
 
   /**
@@ -159,7 +153,6 @@ export class PerfectMemory extends Memory {
 export class PriorityMemory extends Memory {
   constructor() {
     super();
-    this.id = uniqueId("memory_priority_");
   }
 
   /**
