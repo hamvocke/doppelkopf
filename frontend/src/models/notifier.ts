@@ -1,4 +1,5 @@
-import { uniqueId } from "lodash-es";
+import { v4 as uuidv4 } from "uuid";
+
 let instance: Notifier;
 
 export class Notifier {
@@ -15,9 +16,7 @@ export class Notifier {
   }
 
   async info(message: string, args?: object) {
-    this.notifications.push(
-      new Notification(uniqueId("message_"), message, args)
-    );
+    this.notifications.push(new Notification(uuidv4(), message, args));
     await this.wait(4000);
     this.notifications.pop();
   }
@@ -28,7 +27,7 @@ export class Notifier {
     onClick?: () => void,
     onDismiss?: () => void
   ) {
-    const id = uniqueId("message_");
+    const id = uuidv4();
     const onDismissDefault = () => {
       this.stickies = this.stickies.filter(n => n.id !== id);
     };
@@ -44,7 +43,7 @@ export class Notifier {
   }
 
   async flash(message: string) {
-    this.flashMessages.push(new Notification(uniqueId("message_"), message));
+    this.flashMessages.push(new Notification(uuidv4(), message));
 
     await this.wait(3000);
     this.flashMessages.pop();

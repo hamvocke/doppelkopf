@@ -10,7 +10,7 @@ import {
   cardOrder
 } from "@/models/card";
 import { allCards } from "@/models/deck";
-import { shuffle } from "lodash";
+import { shuffle } from "@/models/random";
 
 test("a hand with queen of clubs is re", () => {
   const cards = [queen.of(Suit.Clubs)];

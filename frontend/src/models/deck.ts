@@ -1,25 +1,10 @@
 import { Card, Rank, Suit } from "@/models/card";
-import { randomInt } from "@/models/random";
+import { shuffle } from "@/models/random";
 export class Deck {
   cards: Card[];
 
   constructor() {
-    this.cards = this.shuffle(new Array<Card>().concat(...allCards));
-  }
-
-  /**
-   * Fisher-Yates shuffle. It's simple and we're dealing with 40 cards only.
-   * https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
-   */
-  shuffle<T>(arr: T[]): T[] {
-    const a = [...arr]; // copy, we want to keep it immutable
-
-    for (let i = a.length - 1; i >= 1; i--) {
-      let j = randomInt(i + 1);
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-
-    return a;
+    this.cards = shuffle(new Array<Card>().concat(...allCards));
   }
 }
 

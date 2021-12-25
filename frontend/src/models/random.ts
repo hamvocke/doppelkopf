@@ -3,7 +3,7 @@ export function generateNames(numberOfNames: number) {
 }
 
 /** Returns a random integer between 0 and `exclusiveMax - 1` */
-export function randomInt(exclusiveMax: number): number {
+function randomInt(exclusiveMax: number): number {
   return Math.floor(Math.random() * exclusiveMax);
 }
 
@@ -39,6 +39,22 @@ export function sampleSize<T>(array: Array<T>, n: number = 1): T[] {
 
 export function chance(percentage: number) {
   return Math.random() <= percentage;
+}
+
+/**
+ * Shuffle an array.
+ * Implements Fisher-Yates shuffle. It's simple and we're dealing with 40 cards only.
+ * https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+ */
+export function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr]; // copy, we want to keep it immutable
+
+  for (let i = a.length - 1; i >= 1; i--) {
+    let j = randomInt(i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+
+  return a;
 }
 
 const names = [
