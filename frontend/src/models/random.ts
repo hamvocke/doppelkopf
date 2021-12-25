@@ -3,7 +3,7 @@ export function generateNames(numberOfNames: number) {
 }
 
 /** Returns a random integer between 0 and `exclusiveMax - 1` */
-function randomInt(exclusiveMax: number): number {
+export function randomInt(exclusiveMax: number): number {
   return Math.floor(Math.random() * exclusiveMax);
 }
 
