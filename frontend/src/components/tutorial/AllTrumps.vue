@@ -9,11 +9,11 @@
 import { Component, Vue } from "vue-property-decorator";
 
 import Card from "@/components/Card.vue";
-import { trumps } from "@/models/card";
+import { defaultTrumps } from "@/models/card";
 
 @Component({ components: { Card } })
 export default class AllTrumps extends Vue {
-  cards = trumps;
+  cards = defaultTrumps;
 }
 </script>
 

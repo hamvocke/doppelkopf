@@ -25,11 +25,29 @@ export class Card {
   id: number;
   rank: Rank;
   suit: Suit;
+  private trumpOrder: Card[] | undefined;
+  private sortOrder: Card[] | undefined;
 
   constructor(rank: Rank, suit = Suit.Clubs, id: number = 0) {
     this.rank = rank;
     this.suit = suit;
     this.id = id;
+  }
+
+  get trumps(): Card[] {
+    return this.trumpOrder ?? defaultTrumps;
+  }
+
+  set trumps(cards: Card[]) {
+    this.trumpOrder = cards;
+  }
+
+  get cardOrder(): Card[] {
+    return this.sortOrder ?? defaultCardOrder;
+  }
+
+  set cardOrder(cards: Card[]) {
+    this.sortOrder = cards;
   }
 
   get value() {
@@ -53,7 +71,7 @@ export class Card {
   }
 
   isTrump() {
-    return trumps.some(c => c.is(this));
+    return this.trumps.some(c => c.is(this));
   }
 
   /**
@@ -102,8 +120,8 @@ export class Card {
 
     if (thisIsTrump && otherCardIsTrump) {
       return (
-        trumps.findIndex(c => c.is(this)) -
-        trumps.findIndex(c => c.is(anotherCard))
+        this.trumps.findIndex(c => c.is(this)) -
+        this.trumps.findIndex(c => c.is(anotherCard))
       );
     }
 
@@ -130,9 +148,10 @@ export class Card {
 }
 
 export function compare(oneCard: Card, anotherCard: Card) {
+  // maybe check if cardorders on both cards aren't identical shouldn't happen though
   return (
-    cardOrder.findIndex(c => c.equals(anotherCard)) -
-    cardOrder.findIndex(c => c.equals(oneCard))
+    oneCard.cardOrder.findIndex(c => c.equals(anotherCard)) -
+    oneCard.cardOrder.findIndex(c => c.equals(oneCard))
   );
 }
 
@@ -146,7 +165,7 @@ export const king = new Card(Rank.King, Suit.Clubs);
 export const queen = new Card(Rank.Queen, Suit.Clubs);
 export const jack = new Card(Rank.Jack, Suit.Clubs);
 
-export const trumps = [
+export const defaultTrumps = [
   ten.of(Suit.Hearts),
   queen.of(Suit.Clubs),
   queen.of(Suit.Spades),
@@ -161,7 +180,7 @@ export const trumps = [
   king.of(Suit.Diamonds)
 ];
 
-export const cardOrder = [
+export const defaultCardOrder = [
   new Card(Rank.Ten, Suit.Hearts, 0),
   new Card(Rank.Ten, Suit.Hearts, 1),
 
@@ -209,3 +228,17 @@ export const cardOrder = [
   new Card(Rank.King, Suit.Hearts, 0),
   new Card(Rank.King, Suit.Hearts, 1)
 ];
+
+export const defaultSuitOrder = [
+  Suit.Clubs,
+  Suit.Spades,
+  Suit.Hearts,
+  Suit.Diamonds
+];
+
+export function compareSuites(first: Suit, second: Suit) {
+  return (
+    defaultSuitOrder.findIndex(s => s === first) -
+    defaultSuitOrder.findIndex(s => s === second)
+  );
+}
