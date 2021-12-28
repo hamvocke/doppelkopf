@@ -10,7 +10,8 @@ export enum Rank {
   Ten = "10",
   King = "K",
   Queen = "Q",
-  Jack = "J"
+  Jack = "J",
+  Nine = "9"
 }
 
 export const values: { [id: string]: number } = {
@@ -18,7 +19,8 @@ export const values: { [id: string]: number } = {
   "10": 10,
   K: 4,
   Q: 3,
-  J: 2
+  J: 2,
+  "9": 0
 };
 
 export class Card {
@@ -164,6 +166,7 @@ export const ten = new Card(Rank.Ten, Suit.Clubs);
 export const king = new Card(Rank.King, Suit.Clubs);
 export const queen = new Card(Rank.Queen, Suit.Clubs);
 export const jack = new Card(Rank.Jack, Suit.Clubs);
+export const nine = new Card(Rank.Nine, Suit.Clubs);
 
 export const defaultTrumps = [
   ten.of(Suit.Hearts),
@@ -177,7 +180,8 @@ export const defaultTrumps = [
   jack.of(Suit.Diamonds),
   ace.of(Suit.Diamonds),
   ten.of(Suit.Diamonds),
-  king.of(Suit.Diamonds)
+  king.of(Suit.Diamonds),
+  nine.of(Suit.Diamonds)
 ];
 
 export const defaultCardOrder = [
@@ -208,6 +212,8 @@ export const defaultCardOrder = [
   new Card(Rank.Ten, Suit.Diamonds, 1),
   new Card(Rank.King, Suit.Diamonds, 0),
   new Card(Rank.King, Suit.Diamonds, 1),
+  new Card(Rank.Nine, Suit.Diamonds, 0),
+  new Card(Rank.Nine, Suit.Diamonds, 1),
 
   new Card(Rank.Ace, Suit.Clubs, 0),
   new Card(Rank.Ace, Suit.Clubs, 1),
@@ -215,6 +221,8 @@ export const defaultCardOrder = [
   new Card(Rank.Ten, Suit.Clubs, 1),
   new Card(Rank.King, Suit.Clubs, 0),
   new Card(Rank.King, Suit.Clubs, 1),
+  new Card(Rank.Nine, Suit.Clubs, 0),
+  new Card(Rank.Nine, Suit.Clubs, 1),
 
   new Card(Rank.Ace, Suit.Spades, 0),
   new Card(Rank.Ace, Suit.Spades, 1),
@@ -222,11 +230,15 @@ export const defaultCardOrder = [
   new Card(Rank.Ten, Suit.Spades, 1),
   new Card(Rank.King, Suit.Spades, 0),
   new Card(Rank.King, Suit.Spades, 1),
+  new Card(Rank.Nine, Suit.Spades, 0),
+  new Card(Rank.Nine, Suit.Spades, 1),
 
   new Card(Rank.Ace, Suit.Hearts, 0),
   new Card(Rank.Ace, Suit.Hearts, 1),
   new Card(Rank.King, Suit.Hearts, 0),
-  new Card(Rank.King, Suit.Hearts, 1)
+  new Card(Rank.King, Suit.Hearts, 1),
+  new Card(Rank.Nine, Suit.Hearts, 0),
+  new Card(Rank.Nine, Suit.Hearts, 1)
 ];
 
 export const defaultSuitOrder = [

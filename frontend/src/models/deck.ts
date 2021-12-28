@@ -5,6 +5,7 @@ import {
   defaultCardOrder,
   defaultTrumps,
   king,
+  nine,
   Rank,
   Suit,
   ten
@@ -17,16 +18,14 @@ export class Deck {
   rules: RoundRules[] | undefined;
 
   constructor(rules?: RoundRules[]) {
-    this.cards = shuffle(new Array<Card>().concat(...defaultCardOrder));
-    // TODO replace with card.rank != NINE if SHARP DOKO
-    // TODO sharp doko should come from game settings, not round
-    if (rules?.includes(RoundRules.SHARP_DOKO)) {
-      this.cards.filter(card => card.value != 0);
-    }
+    this.cards = shuffle(new Array<Card>().concat(...allCards));
     this.refreshRules(rules);
   }
 
   refreshRules(rules?: RoundRules[]) {
+    if (rules?.includes(RoundRules.SHARP_DOKO)) {
+      this.cards = this.cards.filter(card => card.rank !== Rank.Nine);
+    }
     this.cards.forEach(card => {
       card.trumps = defaultTrumps!;
       card.cardOrder = defaultCardOrder;
@@ -97,7 +96,8 @@ export class Deck {
       .map(suit => [
         ace.of(suit),
         ...(suit === Suit.Hearts ? [] : [ten.of(suit)]),
-        king.of(suit)
+        king.of(suit),
+        nine.of(suit)
       ])
       .flat()
       .map(c => [c.first(), c.second()])
@@ -118,7 +118,8 @@ export class Deck {
       ...defaultTrumps.slice(0, -4),
       ace.of(suit).first(),
       ...(suit === Suit.Hearts ? [] : [ten.of(suit).first()]),
-      king.of(suit).first()
+      king.of(suit).first(),
+      nine.of(suit).first()
     ];
   }
 

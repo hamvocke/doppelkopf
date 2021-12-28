@@ -2,13 +2,18 @@ import { Deck } from "@/models/deck";
 import { ace, Card, Rank, Suit } from "@/models/card";
 import { RoundRules } from "@/models/rules";
 
-test("deck has 40 cards", () => {
+test("deck has 48 cards", () => {
   const deck = new Deck();
+  expect(deck.cards).toHaveLength(48);
+});
+
+test("sharp doko has 40 cards", () => {
+  const deck = new Deck([RoundRules.SHARP_DOKO]);
   expect(deck.cards).toHaveLength(40);
 });
 
 test("deck has two aces of diamonds", () => {
-  const deck = new Deck();
+  const deck = new Deck([RoundRules.SHARP_DOKO]);
 
   const firstAce = new Card(Rank.Ace, Suit.Diamonds, 0);
   const secondAce = new Card(Rank.Ace, Suit.Diamonds, 1);
@@ -24,7 +29,7 @@ test("deck is shuffled", () => {
 });
 
 test("deck updates piggies to be highest trump", () => {
-  const deck = new Deck([RoundRules.PIGGIES]);
+  const deck = new Deck([RoundRules.SHARP_DOKO, RoundRules.PIGGIES]);
   expect(deck.cards.filter(card => card.isTrump())).toHaveLength(24);
   expect(deck.cards[0].trumps[0].is(ace.of(Suit.Diamonds))).toBe(true);
   expect(deck.cards[0].cardOrder[0].is(ace.of(Suit.Diamonds))).toBe(true);

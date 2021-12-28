@@ -14,6 +14,7 @@ import { TablePosition } from "./tablePosition";
 import { Affinities, AffinityEvent } from "@/models/affinities";
 import { allCards } from "./deck";
 import { findParties, Party, PartyName } from "./party";
+import { GameRules } from "./rules";
 
 const notifier = new Notifier();
 
@@ -198,6 +199,6 @@ export class Player {
 
   // ToDo use better way to find out if game sharp doko
   private getStartingCards(): number {
-    return allCards.length / this.game?.players.length!;
+    return this.game?.rules.includes(GameRules.SHARP_DOKO) ? 10 : 12;
   }
 }
