@@ -1,18 +1,14 @@
 <template>
   <div class="controls">
     <button
-      v-if="
-        game.currentTrick.isFinished() && !game.currentRound.noMoreCardsLeft()
-      "
+      v-if="showNextTrickButton()"
       class="button next"
       @click="$emit('nextTrick')"
     >
       {{ $t("next-trick") }}
     </button>
     <button
-      v-if="
-        game.currentRound.noMoreCardsLeft() && !game.currentRound.isFinished()
-      "
+      v-if="showFinishRoundButton()"
       class="button finish"
       @click="$emit('finishRound')"
     >
@@ -24,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, PropType } from 'vue'
+import { ref, PropType } from 'vue'
 import AnnouncementsButton from "@/components/AnnouncementsButton.vue";
 import { Features } from "@/models/features";
 import { Game } from "@/models/game";
@@ -37,6 +33,14 @@ const props = defineProps({
 })
 
 const emit = defineEmits(["nextTrick", "finishRound"]);
+
+function showNextTrickButton() {
+  return props.game.currentTrick.isFinished() && !props.game.currentRound.noMoreCardsLeft();
+}
+
+function showFinishRoundButton() {
+  return props.game.currentRound.noMoreCardsLeft() && !props.game.currentRound.isFinished()
+}
 
 const enableAnnouncements = ref(false);
 enableAnnouncements.value = Features.get().enableAnnouncements;
