@@ -1,6 +1,6 @@
 import { Game } from "@/models/game";
 import { Round } from "@/models/round";
-import { Notifier } from "@/models/notifier";
+import { notifier } from "@/models/notifier";
 import { jack, Suit, ace } from "@/models/card";
 import { options } from "@/models/options";
 import { Hand } from "@/models/hand";
@@ -110,7 +110,6 @@ test("should show extras as flash message", async () => {
   round.currentTrick.add(ace.of(Suit.Hearts), round.players[3]);
   round.currentTrick.add(ace.of(Suit.Diamonds), round.players[0]);
 
-  const notifier = new Notifier();
   notifier.flash = jest.fn();
 
   await round.finishTrick();

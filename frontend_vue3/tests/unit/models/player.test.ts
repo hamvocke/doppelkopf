@@ -4,7 +4,7 @@ import { Hand } from "@/models/hand";
 import { PlayedCard } from "@/models/playedCard";
 import { king, queen, ten, Suit } from "@/models/card";
 import { TrickStack } from "@/models/trickStack";
-import { Notifier } from "@/models/notifier";
+import { notifier } from "@/models/notifier";
 import { options } from "@/models/options";
 import { Announcement } from "@/models/announcements";
 import { Trick } from "@/models/trick";
@@ -13,7 +13,6 @@ import { aHandWith, aHandWithout } from "../../builders/handBuilder";
 
 let game: any;
 let player: Player;
-const notifier = new Notifier();
 
 jest.useFakeTimers();
 

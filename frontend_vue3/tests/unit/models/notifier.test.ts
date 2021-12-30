@@ -1,16 +1,10 @@
-import { Notifier } from "@/models/notifier";
+import { notifier } from "@/models/notifier";
 
-const notifier = new Notifier();
 
 jest.useFakeTimers();
 
 beforeEach(() => {
   jest.runAllTimers();
-});
-
-test("notifier is always the same instance", () => {
-  const anotherNotifier = new Notifier();
-  expect(notifier).toBe(anotherNotifier);
 });
 
 test("should add notification", () => {
