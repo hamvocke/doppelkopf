@@ -11,11 +11,11 @@ import { Player } from "@/models/player";
 import { PerfectMemory } from "@/models/memory";
 import { PlayedCard } from "@/models/playedCard";
 import { Affinities } from "@/models/affinities";
-import { sample } from "lodash";
 
 jest.mock("@/models/random", () => ({
   __esModule: true,
-  chance: () => true
+  chance: () => true,
+  sample: (arr: Array<any>) => arr[0]
 }));
 
 describe("Highest Card Behavior", () => {

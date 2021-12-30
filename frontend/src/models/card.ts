@@ -1,5 +1,3 @@
-import { some, findIndex, uniqueId } from "lodash-es";
-
 export enum Suit {
   Clubs = "♣",
   Diamonds = "♦",
@@ -55,7 +53,7 @@ export class Card {
   }
 
   isTrump() {
-    return some(trumps, { rank: this.rank, suit: this.suit });
+    return trumps.some(c => c.is(this));
   }
 
   /**
@@ -104,8 +102,8 @@ export class Card {
 
     if (thisIsTrump && otherCardIsTrump) {
       return (
-        findIndex(trumps, { rank: this.rank, suit: this.suit }) -
-        findIndex(trumps, { rank: anotherCard.rank, suit: anotherCard.suit })
+        trumps.findIndex(c => c.is(this)) -
+        trumps.findIndex(c => c.is(anotherCard))
       );
     }
 
@@ -132,7 +130,10 @@ export class Card {
 }
 
 export function compare(oneCard: Card, anotherCard: Card) {
-  return findIndex(cardOrder, anotherCard) - findIndex(cardOrder, oneCard);
+  return (
+    cardOrder.findIndex(c => c.equals(anotherCard)) -
+    cardOrder.findIndex(c => c.equals(oneCard))
+  );
 }
 
 export function byCardValuesDesc(oneCard: Card, anotherCard: Card) {

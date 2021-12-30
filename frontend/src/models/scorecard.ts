@@ -1,4 +1,3 @@
-import { includes, last } from "lodash-es";
 import { Player } from "./player";
 import { Score } from "./score";
 
@@ -18,7 +17,7 @@ export class Scorecard {
     const loserPoints = score.totalPoints(score.losingPartyName()!);
 
     this.players.forEach(p => {
-      newTotalPoints[p.id] = includes(winningPlayers, p)
+      newTotalPoints[p.id] = winningPlayers?.includes(p)
         ? this.totalPointsFor(p) + winnerPoints
         : this.totalPointsFor(p) + loserPoints;
     });
@@ -32,10 +31,11 @@ export class Scorecard {
   }
 
   totalPointsFor(player: Player) {
-    if (!last(this.scoreLines)) {
+    const lineCount = this.scoreLines.length;
+    if (lineCount === 0) {
       return 0;
     }
-    return last(this.scoreLines)!.totalPoints[player.id];
+    return this.scoreLines[lineCount - 1].totalPoints[player.id];
   }
 }
 
