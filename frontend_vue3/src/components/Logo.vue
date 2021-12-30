@@ -39,12 +39,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-
-@Component
-export default class Logo extends Vue {}
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 @import "../assets/css/vars.css";
