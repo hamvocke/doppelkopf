@@ -4,8 +4,9 @@
       <div class="name-info">
         <div class="name title-font">
           {{ player.name }}
-          <AwardIcon
-            v-if="winner"
+          <vue-feather
+            v-if="isWinner()"
+            type="award"
             class="winner"
             :title="$t('badge_description', { name: player.name })"
             size="18"
@@ -14,7 +15,7 @@
       </div>
       <div class="stats">
         <div v-if="player.isHuman" class="party">
-          <UsersIcon size="14" />
+          <vue-feather type="users" size="14" />
           {{ player.hand.isRe() ? "Re" : "Kontra" }}
         </div>
         <div class="announcements">
@@ -22,7 +23,7 @@
             v-if="player.announcements.size > 0"
             class="announcement flag-icon"
           >
-            <FlagIcon size="14" />
+            <vue-feather type="flag" size="14" />
           </div>
           <div
             v-for="announcement in player.announcements"
@@ -51,42 +52,41 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
 import Hand from "./Hand.vue";
 import TrickStack from "./TrickStack.vue";
+import VueFeather from "vue-feather";
 import { Player as PlayerModel } from "@/models/player";
 import { playableCards } from "@/models/playableCardFinder";
-import { UsersIcon, FlagIcon, AwardIcon } from "vue-feather-icons";
 import { Card } from "@/models/card";
+import { PropType, ref } from "vue";
 
-@Component({
-  components: { Hand, TrickStack, UsersIcon, AwardIcon, FlagIcon }
-})
-export default class Player extends Vue {
-  @Prop({ required: true })
-  player!: PlayerModel;
-
-  isCovered = !this.player.isHuman;
-  isHandSelectable = this.player.isHuman;
-
-  get winner() {
-    return (
-      this.player.game?.currentTrick.winner() == this.player &&
-      this.player.game?.currentTrick.isFinished()
-    );
+const props = defineProps({
+  player: {
+    type: Object as PropType<PlayerModel>,
+    required: true
   }
+});
 
-  play(card: Card) {
-    this.player.play(card);
-  }
+const isCovered = ref(!props.player.isHuman);
+const isHandSelectable = ref(props.player.isHuman);
 
-  playable() {
-    return playableCards(
-      this.player.hand.cards,
-      this.player.game?.currentTrick.baseCard()
-    );
-  }
+function isWinner() {
+  return (
+    props.player.game?.currentTrick.winner() == props.player &&
+    props.player.game?.currentTrick.isFinished()
+  );
+}
+
+function play(card: Card) {
+  props.player.play(card);
+}
+
+function playable() {
+  return playableCards(
+    props.player.hand.cards,
+    props.player.game?.currentTrick.baseCard()
+  );
 }
 </script>
 

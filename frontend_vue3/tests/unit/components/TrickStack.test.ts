@@ -5,8 +5,8 @@ import { Player } from "@/models/player";
 import { ace, queen, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
 
-config.mocks["$t"] = () => {};
-config.mocks["$tc"] = () => {};
+config.global.mocks["$t"] = () => {};
+config.global.mocks["$tc"] = () => {};
 
 const player1 = new Player("player 1");
 const player2 = new Player("player 2");
@@ -18,7 +18,7 @@ describe("TrickStack.vue", () => {
   test("should show placeholder if player has no trick", () => {
     const emptyTrickStack = new TrickStackModel();
     const wrapper = mount(TrickStack, {
-      propsData: { trickStack: emptyTrickStack }
+      props: { trickStack: emptyTrickStack }
     });
     expect(wrapper.find(".placeholder").exists()).toBe(true);
   });
@@ -27,7 +27,7 @@ describe("TrickStack.vue", () => {
     const trickStack = new TrickStackModel();
     trickStack.add(trick);
     const wrapper = mount(TrickStack, {
-      propsData: { trickStack: trickStack }
+      props: { trickStack: trickStack }
     });
     expect(trick.playedCards).toHaveLength(2);
     expect(wrapper.find("div.trickStack").exists()).toBe(true);
@@ -40,7 +40,7 @@ describe("TrickStack.vue", () => {
     trickStack.add(trick);
     trickStack.add(trick);
     const wrapper = mount(TrickStack, {
-      propsData: { trickStack: trickStack }
+      props: { trickStack: trickStack }
     });
     expect(wrapper.find(".trickCount").exists()).toBe(true);
   });
