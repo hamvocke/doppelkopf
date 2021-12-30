@@ -7,13 +7,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+<script setup lang="ts">
+import { ref } from "vue";
 
-@Component
-export default class LanguagePicker extends Vue {
-  availableLanguages = ["en", "de"];
-}
+const availableLanguages = ref(["en", "de"]);
 </script>
 
 <style scoped>

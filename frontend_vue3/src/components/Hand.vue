@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType } from 'vue';
+import { ref, PropType } from "vue";
 import Card from "./Card.vue";
 import { Hand as HandModel } from "@/models/hand";
 import { Card as CardModel } from "@/models/card";
