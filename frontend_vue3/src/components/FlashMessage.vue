@@ -5,17 +5,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
+import { ref, PropType } from 'vue'
 
-@Component
-export default class FlashMessage extends Vue {
-  @Prop({ required: true })
-  message!: string;
 
-  @Prop({ default: undefined })
-  icon?: string;
-}
+const props = defineProps({
+  message: {
+    type: String,
+    required: true
+  },
+  icon: {
+    type: String,
+    default: undefined
+  }
+});
 </script>
 
 <style scoped>
