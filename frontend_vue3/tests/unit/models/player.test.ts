@@ -2,14 +2,14 @@ import { Player } from "@/models/player";
 import { Game } from "@/models/game";
 import { Hand } from "@/models/hand";
 import { PlayedCard } from "@/models/playedCard";
-import { king, queen, ten, Suit, Card, cardOrder } from "@/models/card";
+import { king, queen, ten, Suit } from "@/models/card";
 import { TrickStack } from "@/models/trickStack";
 import { Notifier } from "@/models/notifier";
 import { options } from "@/models/options";
-import { sampleSize } from "lodash-es";
 import { Announcement } from "@/models/announcements";
 import { Trick } from "@/models/trick";
 import { Affinities } from "@/models/affinities";
+import { aHandWith, aHandWithout } from "../../builders/handBuilder";
 
 let game: any;
 let player: Player;
@@ -481,21 +481,3 @@ describe("announcements", () => {
   });
 });
 
-function aHandWith(numberOfCards: number, ...cards: Card[]) {
-  let cardsOnHand = cards;
-
-  cardsOnHand.push(...sampleSize(cardOrder, numberOfCards - cards.length));
-
-  return new Hand(cardsOnHand);
-}
-
-function aHandWithout(numberOfCards: number, excludedCard: Card) {
-  let cards = sampleSize(
-    cardOrder.filter(
-      card =>
-        !(card.suit === excludedCard.suit && card.rank === excludedCard.rank)
-    ),
-    numberOfCards
-  );
-  return new Hand(cards);
-}

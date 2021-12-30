@@ -1,9 +1,9 @@
-import { Player } from "@/models/player";
 import { Trick } from "@/models/trick";
 import { PartyName, Party } from "@/models/party";
 import { extras } from "@/models/extras";
 import { Announcement } from "@/models/announcements";
 import { Game } from "@/models/game";
+import { PlayerBuilder } from "../../builders/playerBuilder";
 
 const game = Game.singlePlayer();
 
@@ -47,4 +47,15 @@ test("should aggregate extras", () => {
 
   const party = new Party(PartyName.Kontra, player1, player2);
   expect(party.extras()).toEqual([extras.doppelkopf, extras.fox]);
+});
+
+test("should return player names as string", () => {
+  const one = new PlayerBuilder("One").build();
+  const two = new PlayerBuilder("Two").build();
+  const three = new PlayerBuilder("Three").build();
+  const party = new Party(PartyName.Re, one, two, three);
+
+  const partyMembers = party.playerNames();
+
+  expect(partyMembers).toEqual("One & Two & Three");
 });
