@@ -7,8 +7,8 @@ import { ScoreBuilder } from "../../builders/scoreBuilder";
 import { mount, config } from "@vue/test-utils";
 import { Score } from "@/models/score";
 
-config.mocks["$t"] = (key: string) => key;
-config.mocks["$tc"] = (msg: string, count: number) => `${count} ${msg}`;
+config.global.mocks["$t"] = (key: string) => key;
+config.global.mocks["$tc"] = (msg: string, count: number) => `${count} ${msg}`;
 
 let players: Player[];
 let score: Score;
@@ -62,7 +62,7 @@ beforeEach(() => {
 describe("Scorecard.vue", () => {
   it("should display scorecard", () => {
     const wrapper = mount(Scorecard, {
-      propsData: {
+      props: {
         scorecard: scorecard,
         players: players,
         currentScore: score
@@ -74,7 +74,7 @@ describe("Scorecard.vue", () => {
 
   it("should display next round button", () => {
     const wrapper = mount(Scorecard, {
-      propsData: {
+      props: {
         scorecard: scorecard,
         players: players,
         currentScore: score
@@ -86,7 +86,7 @@ describe("Scorecard.vue", () => {
 
   test("should emit next round event if next round button is clicked", () => {
     const wrapper = mount(Scorecard, {
-      propsData: {
+      props: {
         scorecard: scorecard,
         players: players,
         currentScore: score
@@ -97,10 +97,10 @@ describe("Scorecard.vue", () => {
     expect(wrapper.emitted().nextRound).toHaveLength(1);
   });
 
-  it("should show 'you won' message when player won", () => {
+  it("should show 'you win' message when player won", () => {
     stubScoreHumanPlayerWins();
     const wrapper = mount(Scorecard, {
-      propsData: {
+      props: {
         scorecard: scorecard,
         players: players,
         currentScore: score
@@ -129,7 +129,7 @@ describe("Scorecard.vue", () => {
       .build();
 
     const wrapper = mount(Scorecard, {
-      propsData: {
+      props: {
         scorecard: scorecard,
         players: players,
         currentScore: score
@@ -157,7 +157,7 @@ describe("Scorecard.vue", () => {
     );
 
     const wrapper = mount(Scorecard, {
-      propsData: {
+      props: {
         scorecard: scorecard,
         players: players,
         currentScore: score
@@ -166,8 +166,8 @@ describe("Scorecard.vue", () => {
 
     const scorelines = wrapper.findAll(".scoreLine");
     expect(scorelines).toHaveLength(2);
-    expect(scorelines.at(0).classes("bold")).toBe(false);
-    expect(scorelines.at(1).classes("bold")).toBe(true);
+    expect(scorelines[0].classes("bold")).toBe(false);
+    expect(scorelines[1].classes("bold")).toBe(true);
   });
 
   it("should show points", () => {
@@ -188,7 +188,7 @@ describe("Scorecard.vue", () => {
     );
 
     const wrapper = mount(Scorecard, {
-      propsData: {
+      props: {
         scorecard: scorecard,
         players: players,
         currentScore: score
@@ -198,14 +198,12 @@ describe("Scorecard.vue", () => {
     const scorelines = wrapper.findAll(".scoreLine");
     expect(scorelines).toHaveLength(2);
     expect(
-      scorelines
-        .at(0)
+      scorelines[0]
         .text()
         .replace(/\s*/g, "")
     ).toEqual("22-2-22");
     expect(
-      scorelines
-        .at(1)
+      scorelines[1]
         .text()
         .replace(/\s*/g, "")
     ).toEqual("-26-624");
@@ -213,7 +211,7 @@ describe("Scorecard.vue", () => {
 
   it("should show extras list", () => {
     const wrapper = mount(Scorecard, {
-      propsData: {
+      props: {
         scorecard: scorecard,
         players: players,
         currentScore: score
@@ -221,15 +219,13 @@ describe("Scorecard.vue", () => {
     });
 
     const kontraExtrasList = wrapper.findAll(".extras .kontra");
-    expect(wrapper.find(".extras").exists()).toBe(true);
-    expect(kontraExtrasList.exists()).toBe(true);
     expect(kontraExtrasList).toHaveLength(2);
-    expect(kontraExtrasList.at(0).text()).toContain("win");
+    expect(kontraExtrasList[0].text()).toContain("win");
   });
 
   it("should show sum of scores for winning party", () => {
     const wrapper = mount(Scorecard, {
-      propsData: {
+      props: {
         scorecard: scorecard,
         players: players,
         currentScore: score

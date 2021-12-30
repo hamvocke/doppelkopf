@@ -1,12 +1,12 @@
 <template>
   <div class="scorecard">
     <div class="scroll-container">
-      <h1 class="message">{{ $t(message) }}</h1>
+      <h1 class="message">{{ $t(message()) }}</h1>
 
       <div class="parties">
         <div class="party-wrapper">
           <div
-            v-if="currentScore.winningPartyName() === 'Re'"
+            v-if="currentScore.winningPartyName() === PartyName.Re"
             class="winner-balloon"
           >
             🎈 {{ $t("winner") }}
@@ -23,7 +23,7 @@
 
         <div class="party-wrapper">
           <div
-            v-if="currentScore.winningPartyName() === 'Kontra'"
+            v-if="currentScore.winningPartyName() === PartyName.Kontra"
             class="winner-balloon"
           >
             🎈 {{ $t("winner") }}
@@ -41,8 +41,8 @@
 
       <div class="meter">
         <PointMeter
-          :re-points="currentScore.trickPoints('Re')"
-          :kontra-points="currentScore.trickPoints('Kontra')"
+          :re-points="currentScore.trickPoints(PartyName.Re)"
+          :kontra-points="currentScore.trickPoints(PartyName.Kontra)"
         />
       </div>
 
@@ -71,7 +71,7 @@
                   </div>
                 </th>
               </tr>
-              <tr v-for="i in extrasLength" :key="i" class="extras">
+              <tr v-for="i in extrasLength()" :key="i" class="extras">
                 <td>{{ reExtra(i).points }}</td>
                 <td class="re">{{ $t(reExtra(i).i18nKey) }}</td>
                 <td>{{ kontraExtra(i).points }}</td>
@@ -79,13 +79,13 @@
               </tr>
               <tr>
                 <td colspan="2" class="sum re">
-                  <span v-if="currentScore.winningPartyName() === 'Re'">
-                    {{ $tc("points", currentScore.totalPoints("Re")) }}
+                  <span v-if="currentScore.winningPartyName() === PartyName.Re">
+                    {{ $tc("points", currentScore.totalPoints(PartyName.Re)) }}
                   </span>
                 </td>
                 <td colspan="2" class="sum kontra">
-                  <span v-if="currentScore.winningPartyName() === 'Kontra'">
-                    {{ $tc("points", currentScore.totalPoints("Kontra")) }}
+                  <span v-if="currentScore.winningPartyName() === PartyName.Kontra">
+                    {{ $tc("points", currentScore.totalPoints(PartyName.Kontra)) }}
                   </span>
                 </td>
               </tr>
@@ -136,59 +136,62 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
 import PointMeter from "./scorecard/PointMeter.vue";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import { Player } from "@/models/player";
 import { Score } from "@/models/score";
 import { PartyName } from "@/models/party";
+import { PropType } from "vue";
 
-@Component({
-  components: { PointMeter }
-})
-export default class Scorecard extends Vue {
-  @Prop({ required: true })
-  scorecard!: ScorecardModel;
-
-  @Prop({ required: true })
-  players!: Player[];
-
-  @Prop({ required: true })
-  currentScore!: Score;
-
-  reExtras = this.currentScore.listExtras(PartyName.Re);
-  kontraExtras = this.currentScore.listExtras(PartyName.Kontra);
-
-  get message() {
-    return this.currentScore.winner()?.players.includes(this.players[0])
-      ? "you_win"
-      : "you_lose";
+const props = defineProps({
+  scorecard: {
+    type: Object as PropType<ScorecardModel>,
+    required: true
+  },
+  players: {
+    type: Object as PropType<Player[]>,
+    required: true
+  },
+  currentScore: {
+    type: Object as PropType<Score>,
+    required: true
   }
+});
 
-  get extrasLength() {
-    return Math.max(this.reExtras.length, this.kontraExtras.length);
-  }
+const emit = defineEmits(["nextRound"]);
 
-  triggerNextRound() {
-    this.$emit("nextRound");
-  }
+const reExtras = props.currentScore.listExtras(PartyName.Re);
+const kontraExtras = props.currentScore.listExtras(PartyName.Kontra);
 
-  isLastLine(index: number) {
-    return index === this.scorecard.scoreLines.length - 1;
-  }
+function message() {
+  return props.currentScore.winner()?.players.map(p => p.id).includes(props.players[0].id)
+    ? "you_win"
+    : "you_lose";
+}
 
-  reExtra(index: number) {
-    return this.reExtras[Math.max(index - 1)] || {};
-  }
+function extrasLength() {
+  return Math.max(reExtras.length, kontraExtras.length);
+}
 
-  kontraExtra(index: number) {
-    return this.kontraExtras[Math.max(0, index - 1)] || {};
-  }
+function triggerNextRound() {
+  emit("nextRound");
+}
 
-  partyMembers(party: string) {
-    return this.currentScore.parties[party].playerNames();
-  }
+function isLastLine(index: number) {
+  return index === props.scorecard.scoreLines.length - 1;
+}
+
+function reExtra(index: number) {
+  return reExtras[Math.max(index - 1)] || {};
+}
+
+function kontraExtra(index: number) {
+  return kontraExtras[Math.max(0, index - 1)] || {};
+}
+
+function partyMembers(party: string) {
+  return props.currentScore.parties[party].playerNames();
 }
 </script>
 
