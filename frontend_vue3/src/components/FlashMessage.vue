@@ -6,8 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType } from 'vue';
-
 const props = defineProps({
   message: {
     type: String,

@@ -1,21 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
-
-let instance: Notifier;
-
 export class Notifier {
   stickies = new Array<Notification>();
   notifications = new Array<Notification>();
   flashMessages = new Array<Notification>();
 
-  constructor() {
-    if (instance) {
-      return instance;
-    }
-
-    instance = this;
-  }
-
-  async info(message: string, args?: object) {
+  async info(message: string, args?: {}) {
+    // TODO: get rid of uuids after migrating to vue3
     this.notifications.push(new Notification(uuidv4(), message, args));
     await this.wait(4000);
     this.notifications.pop();
@@ -23,7 +13,7 @@ export class Notifier {
 
   sticky(
     message: string,
-    args?: object,
+    args?: {},
     onClick?: () => void,
     onDismiss?: () => void
   ) {
@@ -57,20 +47,22 @@ export class Notifier {
 export class Notification {
   id: string;
   text: string;
-  args?: object;
+  args: {};
   onClick?: () => void;
   onDismiss?: () => void;
   constructor(
     id: string,
     text: string,
-    args?: object,
+    args?: {},
     onClick?: () => void,
     onDismiss?: () => void
   ) {
     this.id = id;
     this.text = text;
-    this.args = args;
+    this.args = args || {};
     this.onClick = onClick;
     this.onDismiss = onDismiss;
   }
 }
+
+export const notifier = new Notifier();

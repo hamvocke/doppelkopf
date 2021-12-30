@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Hand } from "@/models/hand";
 import { TrickStack } from "@/models/trickStack";
 import { Behavior, RuleBasedBehaviour } from "@/models/behaviors";
-import { Notifier } from "./notifier";
+import { notifier } from "./notifier";
 import { options } from "./options";
 import { Announcement, getAnnouncementOrder } from "./announcements";
 import { playableCards } from "./playableCardFinder";
@@ -14,8 +14,6 @@ import { TablePosition } from "./tablePosition";
 import { Affinities, AffinityEvent } from "@/models/affinities";
 import { allCards } from "./deck";
 import { findParties, Party, PartyName } from "./party";
-
-const notifier = new Notifier();
 
 // TODO: break circular dependency between player & game, make game non-null
 export class Player {

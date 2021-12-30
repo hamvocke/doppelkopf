@@ -4,16 +4,16 @@
       <div
         v-for="sticky in stickies"
         :key="sticky.id"
-        class="message clickable"
+        class="messsage clickable sticky"
         @click="sticky.onClick"
       >
         {{ $t(sticky.text, sticky.args) }}
         <button class="close-button" @click.stop.prevent="sticky.onDismiss">
-          <x-icon size="20" />
+          <vue-feather type="x" size="20" />
         </button>
       </div>
     </transition-group>
-    <transition-group name="message" class="notifications">
+    <transition-group name="message">
       <div
         v-for="notification in notifications"
         :key="notification.id"
@@ -23,31 +23,21 @@
       </div>
     </transition-group>
     <div class="flashMessages">
-      <FlashMessage
-        v-if="flashMessages[0]"
-        :message="flashMessages[0].text"
-        :icon="flashMessages[0].icon"
-      />
+      <FlashMessage v-if="flashMessages[0]" :message="flashMessages[0].text"/>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { Notifier, Notification } from "@/models/notifier";
+<script setup lang="ts">
+// TODO: check visually wether this still works
+import { reactive} from "vue";
+import { notifier, } from "@/models/notifier";
 import FlashMessage from "@/components/FlashMessage.vue";
-import { XIcon } from "vue-feather-icons";
+import VueFeather from "vue-feather";
 
-const notifier = new Notifier();
-
-@Component({
-  components: { FlashMessage, XIcon }
-})
-export default class Notifications extends Vue {
-  stickies: Notification[] = notifier.stickies;
-  notifications: Notification[] = notifier.notifications;
-  flashMessages: Notification[] = notifier.flashMessages;
-}
+const stickies = reactive(notifier.stickies);
+const notifications = reactive(notifier.notifications);
+const flashMessages = reactive(notifier.flashMessages);
 </script>
 
 <style scoped>
@@ -62,7 +52,7 @@ export default class Notifications extends Vue {
   flex-direction: column;
 }
 
-.message {
+.msg {
   display: flex;
   justify-content: center;
   align-items: center;
