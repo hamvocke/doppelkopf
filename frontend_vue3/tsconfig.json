@@ -11,7 +11,6 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "types": ["vite/client", "@types/jest"],
-    // "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
