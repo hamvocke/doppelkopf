@@ -1,19 +1,19 @@
 <template>
-  <div class="card" :class="[positionClasses]">
+  <div class="card" :class="[positionClasses()]">
     <template v-if="card">
-      <div class="card-inner" :class="cardClasses">
+      <div class="card-inner" :class="cardClasses()">
         <template v-if="isCovered">
           <div class="background"></div>
         </template>
         <template v-else>
-          <div class="card-top" :class="colorClasses">
+          <div class="card-top" :class="colorClasses()">
             <div class="rank">{{ $t(card.rank) }}</div>
             <div class="suit">{{ card.suit }}</div>
           </div>
-          <span class="card-center" :class="colorClasses">
+          <span class="card-center" :class="colorClasses()">
             {{ card.suit }}
           </span>
-          <div class="card-bottom" :class="colorClasses">
+          <div class="card-bottom" :class="colorClasses()">
             <div class="rank">{{ $t(card.rank) }}</div>
             <div class="suit">{{ card.suit }}</div>
           </div>
@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, PropType } from 'vue'
+import { defineProps, PropType } from 'vue'
 import { Suit, Card as CardModel } from "@/models/card";
 
 const props = defineProps({
