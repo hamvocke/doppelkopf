@@ -30,7 +30,7 @@ import { Suit, Card as CardModel } from "@/models/card";
 const props = defineProps({
   card: {
     type: Object as PropType<CardModel>,
-    required: true
+    required: false
   },
   isSelected: {
     type: Boolean,
@@ -48,8 +48,8 @@ const props = defineProps({
 
 function colorClasses() {
   return {
-    red: props.card.suit === Suit.Hearts || props.card.suit === Suit.Diamonds,
-    black: props.card.suit === Suit.Clubs || props.card.suit === Suit.Spades
+    red: props.card?.suit === Suit.Hearts || props.card?.suit === Suit.Diamonds,
+    black: props.card?.suit === Suit.Clubs || props.card?.suit === Suit.Spades
   };
 }
 
