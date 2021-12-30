@@ -6,7 +6,6 @@ import Tutorial from "@/views/Tutorial.vue";
 import Preview from "@/views/Preview.vue";
 
 const routes = [
-  { path: "*", redirect: "/" }, // catch-all route
   {
     path: "/",
     name: "home",
@@ -21,7 +20,8 @@ const routes = [
     path: "/learn",
     name: "tutorial",
     component: Tutorial
-  }
+  },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: Home },
 ];
 
 if (Config.debug) {
