@@ -9,16 +9,16 @@
 
     <Controls
       :game="game"
-      @nextTrick="finishTrick"
-      @nextMove="nextMove"
-      @finishRound="finishRound"
+      @nextTrick="finishTrick()"
+      @nextMove="nextMove()"
+      @finishRound="finishRound()"
     />
 
     <Player :player="game.players[3]" class="right" />
     <Player :player="game.players[0]" class="bottom" />
 
     <Scorecard
-      v-if="game.currentRound.isFinished()"
+      v-if="game.currentRound.score && game.currentRound.isFinished()"
       :scorecard="game.scorecard"
       :players="game.players"
       :current-score="game.currentRound.score"
@@ -27,36 +27,35 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
 import Player from "./Player.vue";
 import Trick from "./Trick.vue";
 import Controls from "./Controls.vue";
 import Scorecard from "./Scorecard.vue";
 import { Game } from "@/models/game";
+import { PropType } from "vue";
 
-@Component({
-  components: { Player, Trick, Controls, Scorecard }
-})
-export default class Table extends Vue {
-  @Prop({ required: true })
-  game!: Game;
-
-  async nextMove() {
-    await this.game.currentRound.nextMove();
+const props = defineProps({
+  game: {
+    type: Object as PropType<Game>,
+    required: true
   }
+});
 
-  async finishTrick() {
-    await this.game.currentRound.finishTrick();
-  }
+async function nextMove() {
+  await props.game.currentRound.nextMove();
+}
 
-  finishRound() {
-    this.game.currentRound.finishRound();
-  }
+async function finishTrick() {
+  await props.game.currentRound.finishTrick();
+}
 
-  nextRound() {
-    this.game.nextRound();
-  }
+function finishRound() {
+  props.game.currentRound.finishRound();
+}
+
+function nextRound() {
+  props.game.nextRound();
 }
 </script>
 
