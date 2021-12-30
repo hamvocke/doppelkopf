@@ -72,6 +72,19 @@ describe("Hand.vue", () => {
     expect(wrapper.findAll("div.card")[0].find(".card-inner").classes()).toContain("selected");
   });
 
+  test("clicking on card twice should emit event", async () => {
+    const wrapper = mount(Hand, {
+      props: { hand: kontraHand, playableCards: [], isSelectable: true }
+    });
+
+    const firstCard = wrapper.findAll("div.card")[0];
+    await firstCard.trigger("click");
+    await firstCard.trigger("click");
+
+    expect(wrapper.emitted()).toHaveProperty("play");
+    expect(wrapper.emitted()["play"][0]).toEqual([kontraHand.cards[0]]);
+  });
+
   test("should not select cards if hand is marked as not selectable", async () => {
     const wrapper = mount(Hand, {
       props: { hand: kontraHand, playableCards: [], isSelectable: false }
