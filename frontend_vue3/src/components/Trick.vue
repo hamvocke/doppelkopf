@@ -3,7 +3,7 @@
     <div class="cards">
       <transition-group name="card" tag="span">
         <Card
-          v-for="playedCard in cards"
+          v-for="playedCard in cards()"
           :key="playedCard.id"
           :card="playedCard.card"
           :player="playedCard.player"
@@ -14,21 +14,19 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
+import { PropType } from "vue";
 import Card from "./Card.vue";
 import { Trick as TrickModel } from "@/models/trick";
 
-@Component({
-  components: { Card }
-})
-export default class Trick extends Vue {
-  @Prop()
-  trick?: TrickModel;
-
-  get cards() {
-    return this.trick?.cards();
+const props = defineProps({
+  trick: {
+    type: Object as PropType<TrickModel>
   }
+})
+
+function cards() {
+  return props.trick?.cards();
 }
 </script>
 

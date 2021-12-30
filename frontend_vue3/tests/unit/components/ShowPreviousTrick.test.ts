@@ -4,9 +4,9 @@ import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { ace, Suit } from "@/models/card";
 
-config.mocks["$t"] = (msg: string) => msg;
-config.mocks["$tc"] = (msg: string) => msg;
-config.mocks["$i18n"] = { locale: "en" };
+config.global.mocks["$t"] = (msg: string) => msg;
+config.global.mocks["$tc"] = (msg: string) => msg;
+config.global.mocks["$i18n"] = { locale: "en" };
 
 const p1 = new Player("1");
 const p2 = new Player("2");
@@ -22,25 +22,20 @@ describe("ShowPreviousTrick.vue", () => {
   });
 
   test("should show previous trick icon", async () => {
-    const wrapper = mount(ShowPreviousTrick, { propsData: { trick: trick } });
-
-    await wrapper.setData({ visible: true });
+    const wrapper = mount(ShowPreviousTrick, { props: { trick: trick } });
 
     expect(wrapper.find(".icon.icon-rewind").exists()).toBe(true);
   });
 
   test("should not show previous trick modal initially", async () => {
-    const wrapper = mount(ShowPreviousTrick, { propsData: { trick: trick } });
-
-    await wrapper.setData({ visible: false });
+    const wrapper = mount(ShowPreviousTrick, { props: { trick: trick } });
 
     expect(wrapper.find(".modal").exists()).toBe(false);
   });
 
   test("should show previous trick modal on icon click", async () => {
-    const wrapper = mount(ShowPreviousTrick, { propsData: { trick: trick } });
+    const wrapper = mount(ShowPreviousTrick, { props: { trick: trick } });
 
-    await wrapper.setData({ visible: false });
     await wrapper.find(".icon.icon-rewind").trigger("click");
 
     expect(wrapper.find(".modal").exists()).toBe(true);

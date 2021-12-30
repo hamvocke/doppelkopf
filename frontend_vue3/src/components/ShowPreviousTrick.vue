@@ -6,13 +6,13 @@
       :title="$t('show_last_trick_header')"
       @click="toggleVisibility()"
     >
-      <rotate-ccw-icon></rotate-ccw-icon>
+      <vue-feather type="rotate-ccw" />
     </div>
-    <modal v-if="trick" :visible="visible" @clickaway="hideMenu">
+    <modal v-if="trick" :visible="visible" @clickaway="hideMenu()">
       <h2>{{ $t("show_last_trick_header") }}</h2>
       <div class="option">
         <span class="label">
-          {{ $t("show_last_trick_label", { name: trick.winner().name }) }}
+          {{ $t("show_last_trick_label", { name: trick.winner()?.name }) }}
         </span>
       </div>
       <div class="background-wrapper">
@@ -22,33 +22,28 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { Config } from "@/models/config";
-import { mixin as clickaway } from "vue-clickaway";
-import { RotateCcwIcon } from "vue-feather-icons";
+<script setup lang="ts">
+import { PropType, ref } from "vue";
 import { Trick as TrickModel } from "@/models/trick";
 import Trick from "@/components/Trick.vue";
 import Modal from "@/components/Modal.vue";
+import VueFeather from "vue-feather";
 
-@Component({
-  components: { RotateCcwIcon, Trick, Modal },
-  mixins: [clickaway]
+
+const props = defineProps({
+  trick: {
+    type: Object as PropType<TrickModel>
+  }
 })
-export default class ShowPreviousTrick extends Vue {
-  @Prop()
-  trick?: TrickModel;
 
-  config = Config;
-  visible: boolean = false;
+const visible = ref(false);
 
-  toggleVisibility() {
-    this.visible = !this.visible;
-  }
+function toggleVisibility() {
+  visible.value = !visible.value;
+}
 
-  hideMenu() {
-    this.visible = false;
-  }
+function hideMenu() {
+  visible.value = false;
 }
 </script>
 
