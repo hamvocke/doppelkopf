@@ -50,4 +50,8 @@ export class Party {
       new Array<Extra>()
     );
   }
+
+  playerNames(): string {
+    return this.players.map(player => player.name).join(" & ");
+  }
 }

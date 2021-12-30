@@ -1,4 +1,4 @@
-import { uniqueId } from "lodash-es";
+import { v4 as uuidv4 } from "uuid";
 import { ace, Card, queen, ten } from "@/models/card";
 import { PlayedCard } from "@/models/playedCard";
 import { Rank, Suit } from "@/models/card";
@@ -19,7 +19,7 @@ export class Trick {
     this.expectedNumberOfCards = players.length;
     this.playedCards = [];
     this.finished = false;
-    this.id = uniqueId("trick_");
+    this.id = uuidv4(); // TODO: once we migrate to vue 3 we can drop all ids (they're only used for `v-for` keys)
     this.lastTrickInRound = false;
   }
 

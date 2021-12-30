@@ -1,4 +1,4 @@
-import { sample } from "lodash-es";
+import { sample } from "@/models/random";
 import { playableCards } from "@/models/playableCardFinder";
 import {
   Card,
