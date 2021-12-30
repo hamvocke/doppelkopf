@@ -16,7 +16,7 @@
             v-model="playerName"
             class="input"
             :placeholder="$t('enter_name_input')"
-            @blur="saveName"
+            @blur="saveName()"
           />
         </div>
       </div>
@@ -47,30 +47,18 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+<script setup lang="ts">
+import { ref } from "vue";
 import { Features } from "@/models/features";
 import Logo from "@/components/Logo.vue";
 import Notifications from "@/components/Notifications.vue";
 
-@Component({
-  components: {
-    Logo,
-    Notifications
-  }
-})
-export default class Home extends Vue {
-  showTutorial = false;
-  playerName: string = localStorage.name || "";
+const playerName = ref(localStorage.name as string || "");
+const showTutorial = ref(Features.get().enableTutorial);
 
-  saveName() {
-    if (this.playerName) {
-      localStorage.setItem("name", this.playerName);
-    }
-  }
-
-  created() {
-    this.showTutorial = Features.get().enableTutorial;
+function saveName() {
+  if (playerName.value) {
+    localStorage.setItem("name", playerName.value);
   }
 }
 </script>

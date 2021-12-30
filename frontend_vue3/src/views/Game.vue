@@ -7,26 +7,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+<script setup lang="ts">
+import { PropType } from "vue";
 import Notifications from "@/components/Notifications.vue";
 import Table from "@/components/Table.vue";
 import OptionsMenu from "@/components/OptionsMenu.vue";
 import ShowPreviousTrick from "@/components/ShowPreviousTrick.vue";
 import { Game } from "@/models/game";
 
-@Component({
-  components: {
-    Table,
-    Notifications,
-    OptionsMenu,
-    ShowPreviousTrick
+const props = defineProps({
+  game: {
+    type: Object as PropType<Game>,
+    default: () => Game.singlePlayer()
   }
-})
-export default class GameView extends Vue {
-  @Prop({ default: () => Game.singlePlayer() })
-  game!: Game;
-}
+});
 </script>
 
 <style scoped>
