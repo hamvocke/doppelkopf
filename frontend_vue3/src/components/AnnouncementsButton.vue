@@ -1,7 +1,6 @@
 <template>
   <div
-    v-show="player.possibleAnnouncements().size > 0"
-    v-on-clickaway="closeDropdown"
+    v-show="canAnnounce()"
     class="announcements-button"
   >
     <button
@@ -9,17 +8,12 @@
       :class="{ open: isOpen }"
       @click="toggleDropdown"
     >
-      <flag-icon size="20" />
+      <vue-feather type="flag" size="20" />
       <span class="button-text">{{ $t("announce") }}</span>
-      <chevron-up-icon size="16" />
+      <vue-feather type="chevron-up" size="16" />
     </button>
     <div v-show="isOpen" class="dropdown">
-      <button
-        v-for="a in Array.from(player.possibleAnnouncements()).reverse()"
-        :key="a"
-        class="button"
-        @click="announce(a)"
-      >
+      <button v-for="a in allAnnouncements()" :key="a" class="button" @click="announce(a)">
         {{ $t(a) }}
       </button>
     </div>
@@ -27,10 +21,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, PropType } from 'vue'
-import { ChevronUpIcon, FlagIcon } from "vue-feather-icons";
+import { ref, PropType } from 'vue'
+import VueFeather from "vue-feather";
 import { Player } from "@/models/player";
 import { Announcement } from "@/models/announcements";
+
+// TODO: reintroduce clickaway
 
 const isOpen = ref(false);
 
@@ -50,8 +46,16 @@ function closeDropdown() {
 }
 
 function announce(announcement: Announcement) {
-  props.player?.announce(announcement);
+  props.player!.announce(announcement);
   closeDropdown();
+}
+
+function canAnnounce() {
+  return props.player?.possibleAnnouncements().size > 0;
+}
+
+function allAnnouncements() {
+  return Array.from(props.player!.possibleAnnouncements()).reverse()
 }
 </script>
 
