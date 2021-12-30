@@ -8,16 +8,17 @@
     "test": "jest"
   },
   "dependencies": {
+    "feather-icons": "^4.28.0",
     "uuid": "^8.3.2",
     "vue": "^3.2.25",
-    "vue-feather-icons": "^5.1.0",
+    "vue-feather": "^2.0.0-rc.1",
     "vue-i18n": "^9.2.0-beta.26",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
+    "@types/feather-icons": "^4.7.0",
     "@types/jest": "^27.0.3",
     "@types/uuid": "^8.3.3",
-    "@types/vue-feather-icons": "^5.0.2",
     "@vitejs/plugin-vue": "^2.0.0",
     "@vue/test-utils": "^2.0.0-rc.18",
     "jest": "^26.6.3",
