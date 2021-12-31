@@ -116,7 +116,11 @@ export class Card {
     return 0;
   }
 
-  equals(anotherCard: Card): Boolean {
+  equals(anotherCard: Card | undefined) {
+    if (!anotherCard) {
+      return false;
+    }
+
     return (
       this.rank == anotherCard.rank &&
       this.suit == anotherCard.suit &&
@@ -124,7 +128,7 @@ export class Card {
     );
   }
 
-  is(anotherCard: Card): Boolean {
+  is(anotherCard: Card) {
     return this.rank === anotherCard.rank && this.suit === anotherCard.suit;
   }
 }

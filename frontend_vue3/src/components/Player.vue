@@ -69,7 +69,7 @@ const props = defineProps({
 });
 
 const isCovered = ref(!props.player.isHuman);
-const isHandSelectable = ref(props.player.isHuman);
+const isHandSelectable = props.player.isHuman;
 
 function isWinner() {
   return (

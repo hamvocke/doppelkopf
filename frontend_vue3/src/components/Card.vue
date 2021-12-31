@@ -1,6 +1,5 @@
 <template>
-  <div class="card" :class="[positionClasses()]">
-    <template v-if="card">
+  <div v-if="card" class="card" :class="[positionClasses()]">
       <div class="card-inner" :class="cardClasses()">
         <template v-if="isCovered">
           <div class="background"></div>
@@ -19,7 +18,10 @@
           </div>
         </template>
       </div>
-    </template>
+  </div>
+  <!-- no card means we render an empty placeholder-->
+  <div v-else class="card" :class="[positionClasses]">
+    <div class="card-inner" :class="cardClasses"></div>
   </div>
 </template>
 

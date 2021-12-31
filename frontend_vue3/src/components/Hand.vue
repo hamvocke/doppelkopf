@@ -12,11 +12,11 @@
           v-for="card in hand.cards"
           :key="card.cardId"
           :card="card"
-          :is-selected="card === selectedCard"
+          :is-selected="card.equals(selectedCard)"
           :is-covered="isCovered"
           :is-highlighted="highlight(card)"
           :position="position"
-          @click="select(card)"
+          @click.native="select(card)"
         />
       </transition-group>
     </div>
@@ -46,7 +46,7 @@ const props = defineProps({
   isSelectable: Boolean,
 })
 
-const selectedCard = ref<CardModel>();
+const selectedCard = ref<CardModel | undefined>();
 
 const emit = defineEmits(["play"]);
 
@@ -57,7 +57,7 @@ function isEmpty() {
 function select(card: CardModel) {
   if (!props.isSelectable) return;
 
-  if (selectedCard.value === card) {
+  if (card.equals(selectedCard.value)) {
     emit("play", card);
   } else {
     selectedCard.value = card;
