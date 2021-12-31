@@ -22,7 +22,9 @@
           Du meldest keinen Vorbehalt an und möchtest ein normales Spiel
           spielen.
         </p>
-        <button type="button" class="button">Gesund</button>
+        <button type="button" class="button" @click="refreshRules([])">
+          Gesund
+        </button>
       </div>
 
       <div v-if="!showVorbehalt" class="reservation-group">
@@ -43,7 +45,13 @@
         </p>
 
         <div class="solo">
-          <input id="damensolo" type="radio" name="solo" value="damensolo" />
+          <input
+            id="damensolo"
+            type="radio"
+            name="solo"
+            value="damensolo"
+            @click="refreshRules([RoundRules.QUEEN_SOLO])"
+          />
           <label for="damensolo">
             Damensolo
             <small>Damen sind Trumpf, alle anderen Karten sind Fehl</small>
@@ -51,7 +59,13 @@
         </div>
 
         <div class="solo">
-          <input id="bubensolo" type="radio" name="solo" value="bubensolo" />
+          <input
+            id="bubensolo"
+            type="radio"
+            name="solo"
+            value="bubensolo"
+            @click="refreshRules([RoundRules.JACK_SOLO])"
+          />
           <label for="bubensolo">
             Bubensolo
             <small>Buben sind Trumpf, alle anderen Karten sind Fehl</small>
@@ -59,7 +73,13 @@
         </div>
 
         <div class="solo">
-          <input id="kreuzsolo" type="radio" name="solo" value="kreuzsolo" />
+          <input
+            id="kreuzsolo"
+            type="radio"
+            name="solo"
+            value="kreuzsolo"
+            @click="refreshRules([RoundRules.CLUBS_SOLO])"
+          />
           <label for="kreuzsolo">
             Kreuzsolo
             <small>
@@ -69,7 +89,13 @@
         </div>
 
         <div class="solo">
-          <input id="piksolo" type="radio" name="solo" value="piksolo" />
+          <input
+            id="piksolo"
+            type="radio"
+            name="solo"
+            value="piksolo"
+            @click="refreshRules([RoundRules.SPADES_SOLO])"
+          />
           <label for="piksolo">
             Piksolo
             <small>Pik ersetzt Karo als Trumpffarbe</small>
@@ -77,7 +103,13 @@
         </div>
 
         <div class="solo">
-          <input id="herzsolo" type="radio" name="solo" value="herzsolo" />
+          <input
+            id="herzsolo"
+            type="radio"
+            name="solo"
+            value="herzsolo"
+            @click="refreshRules([RoundRules.HEARTS_SOLO])"
+          />
           <label for="herzsolo">
             Herzsolo
             <small>Herz ersetzt Karo als Trumpffarbe</small>
@@ -85,7 +117,13 @@
         </div>
 
         <div class="solo">
-          <input id="karosolo" type="radio" name="solo" value="karosolo" />
+          <input
+            id="karosolo"
+            type="radio"
+            name="solo"
+            value="karosolo"
+            @click="refreshRules([RoundRules.DIAMONDS_SOLO])"
+          />
           <label for="karosolo">
             Karosolo
             <small>Die Kartenreihenfolge bleibt, aber du spielst alleine</small>
@@ -93,7 +131,13 @@
         </div>
 
         <div class="solo">
-          <input id="fleischlos" type="radio" name="solo" value="fleischlos" />
+          <input
+            id="fleischlos"
+            type="radio"
+            name="solo"
+            value="fleischlos"
+            @click="refreshRules([RoundRules.NO_TRUMPS])"
+          />
           <label for="fleischlos">
             Fleischloser
             <small>
@@ -111,7 +155,9 @@
           Du hast beide Re-Damen und meldest eine Hochzeit an. Wer den ersten
           Stich gewinnt, spielt mit dir zusammen.
         </p>
-        <button type="button" class="button">Hochzeit</button>
+        <button type="button" class="button" @click="refreshRules([])">
+          Hochzeit
+        </button>
       </div>
     </div>
   </modal>
@@ -122,6 +168,7 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import { Game } from "@/models/game";
 import Modal from "@/components/Modal.vue";
 import Hand from "@/components/Hand.vue";
+import { RoundRules } from "@/models/rules";
 
 @Component({ components: { Modal, Hand } })
 export default class Reservations extends Vue {
@@ -129,6 +176,19 @@ export default class Reservations extends Vue {
   game!: Game;
 
   showVorbehalt = false;
+
+  refreshRules(rules: RoundRules[]) {
+    this.game.deck.refreshRules(rules);
+    this.game.players.forEach(player => {
+      player.hand.sort();
+    });
+  }
+
+  data() {
+    return {
+      RoundRules: RoundRules
+    };
+  }
 }
 </script>
 
