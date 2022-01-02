@@ -59,7 +59,7 @@ import VueFeather from "vue-feather";
 import { Player as PlayerModel } from "@/models/player";
 import { playableCards } from "@/models/playableCardFinder";
 import { Card } from "@/models/card";
-import { PropType, ref } from "vue";
+import { PropType } from "vue";
 
 const props = defineProps({
   player: {
@@ -68,7 +68,7 @@ const props = defineProps({
   }
 });
 
-const isCovered = ref(!props.player.isHuman);
+const isCovered = !props.player.isHuman;
 const isHandSelectable = props.player.isHuman;
 
 function isWinner() {
@@ -78,8 +78,8 @@ function isWinner() {
   );
 }
 
-function play(card: Card) {
-  props.player.play(card);
+async function play(card: Card) {
+  await props.player.play(card);
 }
 
 function playable() {
