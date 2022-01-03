@@ -1,27 +1,23 @@
 <template>
-  <div v-if="card" class="card" :class="[positionClasses()]">
-      <div class="card-inner" :class="cardClasses()">
-        <template v-if="isCovered">
-          <div class="background"></div>
-        </template>
-        <template v-else>
-          <div class="card-top" :class="colorClasses()">
-            <div class="rank">{{ $t(card.rank) }}</div>
-            <div class="suit">{{ card.suit }}</div>
-          </div>
-          <span class="card-center" :class="colorClasses()">
-            {{ card.suit }}
-          </span>
-          <div class="card-bottom" :class="colorClasses()">
-            <div class="rank">{{ $t(card.rank) }}</div>
-            <div class="suit">{{ card.suit }}</div>
-          </div>
-        </template>
-      </div>
-  </div>
-  <!-- no card means we render an empty placeholder-->
-  <div v-else class="card" :class="[positionClasses]">
-    <div class="card-inner" :class="cardClasses"></div>
+  <div class="card" :class="[positionClasses()]">
+    <div class="card-inner" :class="cardClasses()">
+      <template v-if="isCovered || !card">
+        <div class="background"></div>
+      </template>
+      <template v-else>
+        <div class="card-top" :class="colorClasses()">
+          <div class="rank">{{ $t(card.rank) }}</div>
+          <div class="suit">{{ card.suit }}</div>
+        </div>
+        <span class="card-center" :class="colorClasses()">
+          {{ card.suit }}
+        </span>
+        <div class="card-bottom" :class="colorClasses()">
+          <div class="rank">{{ $t(card.rank) }}</div>
+          <div class="suit">{{ card.suit }}</div>
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
