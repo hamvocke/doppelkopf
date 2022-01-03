@@ -88,7 +88,7 @@ function nextCard() {
   transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.card-enter {
+.card-enter-from {
   opacity: 0;
   transform: scale(2, 2);
 }
@@ -98,12 +98,11 @@ function nextCard() {
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.message-leave-to,
-.message-leave {
+.message-leave-to {
   opacity: 0;
 }
 
-.message-enter {
+.message-enter-from {
   opacity: 0;
   transform: scale(0.5, 0.5);
 }

@@ -87,13 +87,11 @@ function cards() {
   transition-delay: 0s;
 }
 
+.card-enter-from,
 .card-leave-to {
   opacity: 0;
 }
 
-.card-enter {
-  opacity: 0;
-}
 
 @media screen and (max-width: 680px) {
   .top {

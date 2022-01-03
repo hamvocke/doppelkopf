@@ -57,12 +57,12 @@ function isHidden() {
   transition: none;
 }
 
-.stack-enter,
+.stack-enter-from,
 .stack-leave-to {
   opacity: 0;
 }
 
-.stack-enter {
+.stack-enter-from {
   transform: scale(2, 2);
 }
 
