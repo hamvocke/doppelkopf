@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { reactive } from "vue";
 export class Notifier {
   stickies = new Array<Notification>();
   notifications = new Array<Notification>();
@@ -9,6 +10,7 @@ export class Notifier {
     this.notifications.push(new Notification(uuidv4(), message, args));
     await this.wait(4000);
     this.notifications.pop();
+    console.log("popped", this.notifications);
   }
 
   sticky(
@@ -65,4 +67,8 @@ export class Notification {
   }
 }
 
-export const notifier = new Notifier();
+// it's not cool that something in the model/ package depends on vue directly.
+// however, it seems that vue3's new explicit reactivity implementation behaves
+// differently to vue2, forcing us to make this a reactive reference in order
+// to be able to track changes within our vue components
+export const notifier = reactive(new Notifier());

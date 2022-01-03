@@ -1,27 +1,29 @@
 <template>
   <div class="notification-container">
-    <transition-group name="message" class="notifications">
-      <div
-        v-for="sticky in stickies"
-        :key="sticky.id"
-        class="messsage clickable sticky"
-        @click="sticky.onClick"
-      >
-        {{ $t(sticky.text, sticky.args) }}
-        <button class="close-button" @click.stop.prevent="sticky.onDismiss">
-          <vue-feather type="x" size="20" />
-        </button>
-      </div>
-    </transition-group>
-    <transition-group name="message">
-      <div
-        v-for="notification in notifications"
-        :key="notification.id"
-        class="message"
-      >
-        {{ $t(notification.text, notification.args) }}
-      </div>
-    </transition-group>
+    <div class="notifications">
+      <transition-group name="message">
+        <div
+          v-for="sticky in stickies"
+          :key="sticky.id"
+          class="msg clickable sticky"
+          @click="sticky.onClick"
+        >
+          {{ $t(sticky.text, sticky.args) }}
+          <button class="close-button" @click.stop.prevent="sticky.onDismiss">
+            <vue-feather type="x" size="20" />
+          </button>
+        </div>
+      </transition-group>
+      <transition-group name="message">
+        <div
+          v-for="notification in notifications"
+          :key="notification.id"
+          class="msg"
+        >
+          {{ $t(notification.text, notification.args) }}
+        </div>
+      </transition-group>
+    </div>
     <div class="flashMessages">
       <FlashMessage v-if="flashMessages[0]" :message="flashMessages[0].text"/>
     </div>
@@ -29,15 +31,12 @@
 </template>
 
 <script setup lang="ts">
-// TODO: check visually wether this still works
-import { reactive} from "vue";
 import { notifier, } from "@/models/notifier";
 import FlashMessage from "@/components/FlashMessage.vue";
 import VueFeather from "vue-feather";
 
-const stickies = reactive(notifier.stickies);
-const notifications = reactive(notifier.notifications);
-const flashMessages = reactive(notifier.flashMessages);
+
+const { stickies, notifications, flashMessages } = notifier;
 </script>
 
 <style scoped>
@@ -71,7 +70,7 @@ const flashMessages = reactive(notifier.flashMessages);
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.message-enter,
+.message-enter-from,
 .message-leave-to {
   opacity: 0;
   transform: translateY(-48px);
