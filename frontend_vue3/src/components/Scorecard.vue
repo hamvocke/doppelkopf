@@ -72,10 +72,10 @@
                 </th>
               </tr>
               <tr v-for="i in extrasLength()" :key="i" class="extras">
-                <td>{{ reExtra(i).points }}</td>
-                <td class="re">{{ $t(reExtra(i).i18nKey) }}</td>
-                <td>{{ kontraExtra(i).points }}</td>
-                <td class="kontra">{{ $t(kontraExtra(i).i18nKey) }}</td>
+                <td v-if="reExtra(i)">{{ reExtra(i).points }}</td>
+                <td v-if="reExtra(i)" class="re">{{ $t(reExtra(i).i18nKey) }}</td>
+                <td v-if="kontraExtra(i)">{{ kontraExtra(i).points }}</td>
+                <td v-if="kontraExtra(i)" class="kontra">{{ $t(kontraExtra(i).i18nKey) }}</td>
               </tr>
               <tr>
                 <td colspan="2" class="sum re">
@@ -183,11 +183,11 @@ function isLastLine(index: number) {
 }
 
 function reExtra(index: number) {
-  return reExtras[Math.max(index - 1)] || {};
+  return reExtras[Math.max(index - 1)] || undefined;
 }
 
 function kontraExtra(index: number) {
-  return kontraExtras[Math.max(0, index - 1)] || {};
+  return kontraExtras[Math.max(0, index - 1)] || undefined;
 }
 
 function partyMembers(party: string) {
