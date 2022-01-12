@@ -21,8 +21,8 @@
       v-if="game.currentRound.score && game.currentRound.isFinished()"
       :scorecard="game.scorecard"
       :players="game.players"
-      :current-score="game.currentRound.score"
-      @nextRound="nextRound"
+      :currentScore="game.currentRound.score"
+      @nextRound="nextRound()"
     />
   </div>
 </template>
@@ -50,8 +50,8 @@ async function finishTrick() {
   await props.game.currentRound.finishTrick();
 }
 
-function finishRound() {
-  props.game.currentRound.finishRound();
+async function finishRound() {
+  await props.game.currentRound.finishRound();
 }
 
 function nextRound() {
