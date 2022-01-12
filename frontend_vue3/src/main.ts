@@ -5,6 +5,7 @@ import router  from "./router";
 import "@/assets/css/app.css";
 
 // TODO: register service worker
+// TODO set up sentry
 
 async function loadLocaleMessages() {
   return {
