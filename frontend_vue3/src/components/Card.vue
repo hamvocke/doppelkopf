@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, PropType } from 'vue'
+import { PropType } from 'vue'
 import { Suit, Card as CardModel } from "@/models/card";
 
 const props = defineProps({
