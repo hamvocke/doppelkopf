@@ -10,7 +10,6 @@ export class Notifier {
     this.notifications.push(new Notification(uuidv4(), message, args));
     await this.wait(4000);
     this.notifications.pop();
-    console.log("popped", this.notifications);
   }
 
   sticky(
