@@ -11,8 +11,8 @@
       <span class="bright"></span>
     </div>
     <div class="bar-wrapper">
-      <div class="bar re" :style="reStyle"></div>
-      <div class="bar kontra" :style="kontraStyle"></div>
+      <div class="bar re" :style="reStyle()"></div>
+      <div class="bar kontra" :style="kontraStyle()"></div>
     </div>
     <div class="points">
       <span>{{ $tc("points", rePoints) }}</span>
