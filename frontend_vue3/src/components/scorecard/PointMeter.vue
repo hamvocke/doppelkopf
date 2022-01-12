@@ -87,14 +87,14 @@ function kontraStyle() {
 
 .kontra {
   background-color: var(--cyan);
-  border-bottom: 5px solid color(var(--cyan) shade(25%));
+  border-bottom: 5px solid var(--cyan-dark);
   border-radius: 0 8px 8px 0;
   color: var(--black);
 }
 
 .re {
   background-color: var(--lightblue);
-  border-bottom: 5px solid color(var(--lightblue) shade(25%));
+  border-bottom: 5px solid var(--lightblue-dark);
   border-radius: 8px 0 0 8px;
   color: var(--white);
 }

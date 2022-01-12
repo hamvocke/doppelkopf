@@ -42,9 +42,9 @@ a {
 a:hover,
 a:active,
 a:focus {
-  color: color(var(--red) tint(20%));
+  color: var(--red-light);
 }
 
 a:visited {
-  color: color(var(--red) shade(20%));
+  color: var(--red-darker);
 }
