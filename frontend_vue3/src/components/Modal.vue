@@ -9,7 +9,7 @@
 <script setup lang="ts">
 // TODO: reintroduce clickaway on modal?
 
-const props = defineProps({
+defineProps({
   visible: {
     type: Boolean,
     default: false

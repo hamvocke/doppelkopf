@@ -46,7 +46,7 @@ function closeDropdown() {
 }
 
 function announce(announcement: Announcement) {
-  props.player!.announce(announcement);
+  props.player?.announce(announcement);
   closeDropdown();
 }
 
@@ -55,7 +55,7 @@ function canAnnounce() {
 }
 
 function allAnnouncements() {
-  return Array.from(props.player!.possibleAnnouncements()).reverse()
+  return Array.from(props.player?.possibleAnnouncements()).reverse()
 }
 </script>
 
