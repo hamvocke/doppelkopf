@@ -28,8 +28,6 @@ import VueFeather from "vue-feather";
 import { Player } from "@/models/player";
 import { Announcement } from "@/models/announcements";
 
-// TODO: reintroduce clickaway
-
 const isOpen = ref(false);
 
 const props = defineProps({

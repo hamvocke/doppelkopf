@@ -27,7 +27,6 @@
 </template>
 
 <script setup lang="ts">
-// TODO: reactivate clickaway?
 import { ref } from "vue";
 import LanguagePicker from "./LanguagePicker.vue";
 import Modal from "./Modal.vue";

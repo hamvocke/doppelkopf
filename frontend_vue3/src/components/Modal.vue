@@ -7,8 +7,6 @@
 </template>
 
 <script setup lang="ts">
-// TODO: reintroduce clickaway on modal?
-
 defineProps({
   visible: {
     type: Boolean,

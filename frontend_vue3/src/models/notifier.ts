@@ -5,7 +5,7 @@ export class Notifier {
   notifications = new Array<Notification>();
   flashMessages = new Array<Notification>();
 
-  async info(message: string, args?: {}) {
+  async info(message: string, args?: Record<string, unknown>) {
     // TODO: get rid of uuids after migrating to vue3
     this.notifications.push(new Notification(uuidv4(), message, args));
     await this.wait(4000);
