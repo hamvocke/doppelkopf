@@ -47,10 +47,10 @@ export class PartyBuilder {
           .build(),
         new PlayerBuilder(`another ${this.party} player`)
           .withParty(this.party)
-          .build()
+          .build(),
       ];
     } else {
-      this.players.forEach(player => {
+      this.players.forEach((player) => {
         player.isRe = () => this.party === PartyName.Re;
       });
     }

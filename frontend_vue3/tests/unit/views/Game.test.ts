@@ -9,7 +9,7 @@ config.global.mocks["$i18n"] = { locale: "en" };
 describe("Game.vue", () => {
   test("should render Table", () => {
     const wrapper = mount(Game, {
-      props: { game: GameModel.singlePlayer() }
+      props: { game: GameModel.singlePlayer() },
     });
 
     expect(wrapper.find(".table").exists()).toBe(true);

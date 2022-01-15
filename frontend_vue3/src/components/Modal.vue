@@ -12,8 +12,8 @@
 defineProps({
   visible: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const emit = defineEmits(["clickaway"]);

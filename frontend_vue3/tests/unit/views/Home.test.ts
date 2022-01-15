@@ -16,7 +16,7 @@ beforeEach(() => {
 describe("Home.vue", () => {
   test("should show start button", () => {
     const wrapper = shallowMount(Home, {
-      global: { stubs: { "router-link": RouterLinkStub } }
+      global: { stubs: { "router-link": RouterLinkStub } },
     });
 
     expect(wrapper.find(".welcome").exists()).toBe(true);
@@ -27,20 +27,20 @@ describe("Home.vue", () => {
     Features.get = () => {
       return {
         enableTutorial: false,
-        enableAnnouncements: false
+        enableAnnouncements: false,
       };
     };
 
     const wrapper = shallowMount(Home, {
       global: { stubs: { "router-link": RouterLinkStub } },
-      props: { showTutorial: false }
+      props: { showTutorial: false },
     });
     expect(wrapper.find(".tutorial-link").exists()).toBe(true);
   });
 
   test("should save player name", async () => {
     const wrapper = shallowMount(Home, {
-      global: { stubs: { "router-link": RouterLinkStub } }
+      global: { stubs: { "router-link": RouterLinkStub } },
     });
 
     const nameInput = wrapper.find("#player-name");

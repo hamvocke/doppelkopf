@@ -59,10 +59,10 @@ test("finds all trumps", () => {
     jack.of(Suit.Diamonds),
     ace.of(Suit.Diamonds),
     ten.of(Suit.Diamonds),
-    king.of(Suit.Diamonds)
+    king.of(Suit.Diamonds),
   ];
 
-  trumps.forEach(card => {
+  trumps.forEach((card) => {
     expect(card.isTrump()).toBeTruthy();
   });
 });
@@ -76,10 +76,10 @@ test("finds all non-trumps", () => {
     ten.of(Suit.Spades),
     king.of(Suit.Spades),
     ace.of(Suit.Hearts),
-    king.of(Suit.Hearts)
+    king.of(Suit.Hearts),
   ];
 
-  nonTrumps.forEach(card => {
+  nonTrumps.forEach((card) => {
     expect(card.isTrump()).toBeFalsy();
   });
 });

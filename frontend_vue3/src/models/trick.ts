@@ -40,7 +40,7 @@ export class Trick {
       this.finished = true;
     }
 
-    this.players.forEach(playerLoop => {
+    this.players.forEach((playerLoop) => {
       playerLoop.memory.memorize(new PlayedCard(card, player), this.id);
     });
 
@@ -49,13 +49,13 @@ export class Trick {
 
   checkForAffinityEvent(card: Card, player: Player): void {
     if (card.is(queen.of(Suit.Clubs))) {
-      this.players.forEach(p => {
+      this.players.forEach((p) => {
         p.behavior.handleAffinityEvent(AffinityEvent.QueenOfClubs, player);
       });
     }
     if (this.contains(queen.of(Suit.Clubs))) {
       if (card.is(ten.of(Suit.Hearts))) {
-        this.players.forEach(p => {
+        this.players.forEach((p) => {
           p.behavior.handleAffinityEvent(
             AffinityEvent.QueenOfClubsTricked,
             player
@@ -63,7 +63,7 @@ export class Trick {
         });
       }
       if (card.is(ace.of(Suit.Diamonds)) || card.is(ten.of(Suit.Diamonds))) {
-        this.players.forEach(p => {
+        this.players.forEach((p) => {
           p.behavior.handleAffinityEvent(
             AffinityEvent.QueenOfClubsGreased,
             player
@@ -76,7 +76,7 @@ export class Trick {
         this.playedCards.length === 4 &&
         !(card.is(ace.of(Suit.Diamonds)) || card.is(ten.of(Suit.Diamonds)))
       ) {
-        this.players.forEach(p => {
+        this.players.forEach((p) => {
           p.behavior.handleAffinityEvent(
             AffinityEvent.QueenOfClubsNotGreased,
             player
@@ -90,15 +90,16 @@ export class Trick {
     return this.playedCards;
   }
 
-  cardBy(player: any): PlayedCard {
+  cardBy(player: Player): PlayedCard {
     return this.playedCards.filter(
-      playedCard => playedCard.player.id === player.id
+      (playedCard) => playedCard.player.id === player.id
     )[0];
   }
 
-  contains(card: Card): Boolean {
+  contains(card: Card): boolean {
     return (
-      this.playedCards.filter(playedCard => playedCard.card.is(card)).length > 0
+      this.playedCards.filter((playedCard) => playedCard.card.is(card)).length >
+      0
     );
   }
 
@@ -116,7 +117,7 @@ export class Trick {
     }
 
     let highestPlayed = this.playedCards[0];
-    for (let played of this.playedCards) {
+    for (const played of this.playedCards) {
       if (played.card.beats(highestPlayed.card)) {
         highestPlayed = played;
       }
@@ -150,7 +151,7 @@ export class Trick {
 
   findFox(): PlayedCard[] {
     return this.playedCards.filter(
-      playedCard =>
+      (playedCard) =>
         playedCard.card.rank === Rank.Ace &&
         playedCard.card.suit === Suit.Diamonds
     );
@@ -158,7 +159,7 @@ export class Trick {
 
   caughtFox(): Extra[] {
     let extras: Array<Extra> = [];
-    this.findFox().forEach(fox => {
+    this.findFox().forEach((fox) => {
       const caughtByOtherParty =
         (fox.player.isRe() && !this.winner()?.isRe()) ||
         (fox.player.isKontra() && !this.winner()?.isKontra());
@@ -169,16 +170,16 @@ export class Trick {
 
   findCharlie(): PlayedCard[] {
     return this.playedCards.filter(
-      playedCard =>
+      (playedCard) =>
         playedCard.card.rank === Rank.Jack &&
         playedCard.card.suit === Suit.Clubs
     );
   }
 
   caughtCharlie(): Extra[] {
-    let extras: Array<Extra> = [];
+    const extras: Extra[] = [];
     if (this.lastTrickInRound) {
-      this.findCharlie().forEach(charlie => {
+      this.findCharlie().forEach((charlie) => {
         const caughtCharlie =
           (charlie.player.isRe() && !this.winner()?.isRe()) ||
           (charlie.player.isKontra() && !this.winner()?.isKontra());
@@ -189,10 +190,10 @@ export class Trick {
   }
 
   charlie(): boolean {
-    let charlies = this.findCharlie();
+    const charlies = this.findCharlie();
     if (this.lastTrickInRound && charlies.length > 0) {
       // first charlie has to be highest card in trick
-      let charlie = charlies[0];
+      const charlie = charlies[0];
       const charlie_trump =
         ((charlie.player.isRe() && this.winner()!.isRe()) ||
           (charlie.player.isKontra() && this.winner()!.isKontra())) &&

@@ -64,8 +64,8 @@ import { PropType } from "vue";
 const props = defineProps({
   player: {
     type: Object as PropType<PlayerModel>,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const isCovered = !props.player.isHuman;

@@ -13,7 +13,7 @@ const cards = [
   jack.of(Suit.Spades),
   ten.of(Suit.Hearts),
   ace.of(Suit.Diamonds),
-  king.of(Suit.Diamonds)
+  king.of(Suit.Diamonds),
 ];
 </script>
 

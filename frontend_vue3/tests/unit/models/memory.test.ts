@@ -4,7 +4,7 @@ import { Player } from "@/models/player";
 import {
   PercentageMemory,
   PerfectMemory,
-  PriorityMemory
+  PriorityMemory,
 } from "@/models/memory";
 
 describe("Testing memorize function", () => {

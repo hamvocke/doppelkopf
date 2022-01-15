@@ -17,7 +17,7 @@ export class Game {
 
   constructor(players: Player[] = []) {
     this.players = players;
-    this.players.map(p => (p.game = this));
+    this.players.map((p) => (p.game = this));
     this.playerOpeningOrder = new RingQueue(this.players);
     this.deck = new Deck();
     this.deal();
@@ -40,7 +40,7 @@ export class Game {
       new Player(playerName, isHuman, true, TablePosition.Bottom),
       new Player(randomNames[1], isComputer, false, TablePosition.Left),
       new Player(randomNames[2], isComputer, false, TablePosition.Top),
-      new Player(randomNames[3], isComputer, false, TablePosition.Right)
+      new Player(randomNames[3], isComputer, false, TablePosition.Right),
     ]);
   }
 
@@ -54,7 +54,7 @@ export class Game {
       hands[1] = new Hand(this.deck.cards.slice(10, 20));
       hands[2] = new Hand(this.deck.cards.slice(20, 30));
       hands[3] = new Hand(this.deck.cards.slice(30, 40));
-    } while (!hands.every(hand => hand.isPlayable()));
+    } while (!hands.every((hand) => hand.isPlayable()));
 
     this.players[0].hand = hands[0];
     this.players[1].hand = hands[1];
@@ -86,11 +86,11 @@ export class Game {
   }
 
   resetPlayers() {
-    this.players.forEach(player => player.reset());
+    this.players.forEach((player) => player.reset());
   }
 
   initializeAffinities() {
-    this.players.forEach(player =>
+    this.players.forEach((player) =>
       player.behavior.affinities.setPlayers(this.players)
     );
   }

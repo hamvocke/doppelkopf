@@ -8,7 +8,7 @@ describe("Scorecard", () => {
     new Player("one"),
     new Player("two"),
     new Player("three"),
-    new Player("four")
+    new Player("four"),
   ];
   let scorecard: Scorecard;
 
@@ -77,7 +77,7 @@ describe("Scorecard", () => {
     expect(scorecard.scoreLines[0].winners).toEqual([
       players[1],
       players[2],
-      players[3]
+      players[3],
     ]);
     expect(scorecard.scoreLines[0].totalPoints[players[0].id]).toEqual(-12);
     expect(scorecard.scoreLines[0].totalPoints[players[1].id]).toEqual(4);

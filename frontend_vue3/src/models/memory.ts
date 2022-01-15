@@ -26,11 +26,11 @@ export abstract class Memory {
 
   isHighestCardLeft(card: Card, hand?: Hand): boolean {
     let allKnownCards = [
-      ...this.memorizedCards.map(mcard => mcard.playedCard.card),
-      ...(hand?.cards || [])
+      ...this.memorizedCards.map((mcard) => mcard.playedCard.card),
+      ...(hand?.cards || []),
     ];
     let leftOverCards = cardOrder.filter(
-      x => !allKnownCards.some(y => x.equals(y))
+      (x) => !allKnownCards.some((y) => x.equals(y))
     );
     return leftOverCards.length > 0 && card.compareTo(leftOverCards[0]) <= 0;
   }
@@ -42,7 +42,7 @@ export abstract class Memory {
   abstract memorize(playedCard: PlayedCard, trickId?: string): void;
 
   memorizeMany(playedCards: PlayedCard[], trickId?: string): void {
-    playedCards.forEach(playedCard => this.memorize(playedCard, trickId));
+    playedCards.forEach((playedCard) => this.memorize(playedCard, trickId));
   }
 
   memorizeTrick(trickId: string, baseCard: Card, winner: Player): void {
@@ -52,7 +52,7 @@ export abstract class Memory {
   hasSuitBeenStartedBefore(suit: Suit): boolean {
     return (
       this.memorizedTricks.filter(
-        memTrick =>
+        (memTrick) =>
           memTrick.baseCard.suit === suit && !memTrick.baseCard.isTrump()
       ).length > 0
     );
@@ -68,7 +68,7 @@ export abstract class Memory {
     return (
       this.hasSuitBeenThrown(suit) &&
       this.getPlayersBySuitPlayed(suit)
-        .map(p => p.id)
+        .map((p) => p.id)
         .includes(player.id)
     );
   }
@@ -80,20 +80,20 @@ export abstract class Memory {
   getPlayersBySuitPlayed(suit: Suit, trickId?: string): Player[] {
     return this.memorizedCards
       .filter(
-        memCards =>
+        (memCards) =>
           memCards.playedCard.card.suit === suit &&
           !memCards.playedCard.card.isTrump() &&
           (memCards.trickId !== trickId || !trickId)
       )
-      .map(memCards => memCards.playedCard.player);
+      .map((memCards) => memCards.playedCard.player);
   }
 
   pointsForPlayer(player: Player): number {
     let points = 0;
-    this.memorizedTricks.forEach(trick => {
+    this.memorizedTricks.forEach((trick) => {
       if (trick.winner.id === player.id) {
         points += this.memorizedCards
-          .filter(card => card.trickId === trick.trickId)
+          .filter((card) => card.trickId === trick.trickId)
           .reduce((accu, memCard) => accu + memCard.playedCard.card.value, 0);
       }
     });
@@ -103,11 +103,11 @@ export abstract class Memory {
   pointsLeftInSuit(suit: string): number {
     return (
       cardOrder
-        .filter(card => card.suit === suit && !card.isTrump())
+        .filter((card) => card.suit === suit && !card.isTrump())
         .reduce((accu, card) => accu + card.value, 0) -
       this.memorizedCards
         .filter(
-          element =>
+          (element) =>
             element.playedCard.card.suit === suit &&
             !element.playedCard.card.isTrump()
         )

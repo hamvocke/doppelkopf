@@ -19,7 +19,7 @@ function stubScoreHumanPlayerWins() {
     stubPlayer("Player 1", PartyName.Re, 60),
     stubPlayer("Player 2", PartyName.Re, 61),
     stubPlayer("Player 3", PartyName.Kontra, 59),
-    stubPlayer("Player 4", PartyName.Kontra, 60)
+    stubPlayer("Player 4", PartyName.Kontra, 60),
   ];
   scorecard = new ScorecardModel(players);
   score = new ScoreBuilder()
@@ -45,7 +45,7 @@ beforeEach(() => {
     stubPlayer("Player 1", PartyName.Re, 60),
     stubPlayer("Player 2", PartyName.Re, 59),
     stubPlayer("Player 3", PartyName.Kontra, 60),
-    stubPlayer("Player 4", PartyName.Kontra, 61)
+    stubPlayer("Player 4", PartyName.Kontra, 61),
   ];
 
   scorecard = new ScorecardModel(players);
@@ -65,8 +65,8 @@ describe("Scorecard.vue", () => {
       props: {
         scorecard: scorecard,
         players: players,
-        currentScore: score
-      }
+        currentScore: score,
+      },
     });
 
     expect(wrapper.find("table").exists()).toBe(true);
@@ -77,8 +77,8 @@ describe("Scorecard.vue", () => {
       props: {
         scorecard: scorecard,
         players: players,
-        currentScore: score
-      }
+        currentScore: score,
+      },
     });
 
     expect(wrapper.find("button.next-round").exists()).toBe(true);
@@ -89,8 +89,8 @@ describe("Scorecard.vue", () => {
       props: {
         scorecard: scorecard,
         players: players,
-        currentScore: score
-      }
+        currentScore: score,
+      },
     });
     wrapper.find("button.next-round").trigger("click");
 
@@ -103,8 +103,8 @@ describe("Scorecard.vue", () => {
       props: {
         scorecard: scorecard,
         players: players,
-        currentScore: score
-      }
+        currentScore: score,
+      },
     });
 
     expect(wrapper.find("h1.message").text()).toContain("you_win");
@@ -115,7 +115,7 @@ describe("Scorecard.vue", () => {
       stubPlayer("Player 1", PartyName.Re, 60),
       stubPlayer("Player 2", PartyName.Re, 59),
       stubPlayer("Player 3", PartyName.Kontra, 60),
-      stubPlayer("Player 4", PartyName.Kontra, 61)
+      stubPlayer("Player 4", PartyName.Kontra, 61),
     ];
 
     scorecard = new ScorecardModel(players);
@@ -132,8 +132,8 @@ describe("Scorecard.vue", () => {
       props: {
         scorecard: scorecard,
         players: players,
-        currentScore: score
-      }
+        currentScore: score,
+      },
     });
 
     expect(wrapper.find("h1.message").text()).toContain("you_lose");
@@ -160,8 +160,8 @@ describe("Scorecard.vue", () => {
       props: {
         scorecard: scorecard,
         players: players,
-        currentScore: score
-      }
+        currentScore: score,
+      },
     });
 
     const scorelines = wrapper.findAll(".scoreLine");
@@ -191,22 +191,14 @@ describe("Scorecard.vue", () => {
       props: {
         scorecard: scorecard,
         players: players,
-        currentScore: score
-      }
+        currentScore: score,
+      },
     });
 
     const scorelines = wrapper.findAll(".scoreLine");
     expect(scorelines).toHaveLength(2);
-    expect(
-      scorelines[0]
-        .text()
-        .replace(/\s*/g, "")
-    ).toEqual("22-2-22");
-    expect(
-      scorelines[1]
-        .text()
-        .replace(/\s*/g, "")
-    ).toEqual("-26-624");
+    expect(scorelines[0].text().replace(/\s*/g, "")).toEqual("22-2-22");
+    expect(scorelines[1].text().replace(/\s*/g, "")).toEqual("-26-624");
   });
 
   it("should show extras list", () => {
@@ -214,8 +206,8 @@ describe("Scorecard.vue", () => {
       props: {
         scorecard: scorecard,
         players: players,
-        currentScore: score
-      }
+        currentScore: score,
+      },
     });
 
     const kontraExtrasList = wrapper.findAll(".extras .kontra");
@@ -228,8 +220,8 @@ describe("Scorecard.vue", () => {
       props: {
         scorecard: scorecard,
         players: players,
-        currentScore: score
-      }
+        currentScore: score,
+      },
     });
 
     const sumKontra = wrapper.find(".sum.kontra");

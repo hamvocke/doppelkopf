@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 import { Config } from "@/models/config";
 import Home from "@/views/Home.vue";
 import GameView from "@/views/Game.vue";
@@ -9,26 +9,26 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
+    component: Home,
   },
   {
     path: "/play",
     name: "play",
-    component: GameView
+    component: GameView,
   },
   {
     path: "/learn",
     name: "tutorial",
-    component: Tutorial
+    component: Tutorial,
   },
-  { path: '/:pathMatch(.*)*', name: 'NotFound', component: Home },
+  { path: "/:pathMatch(.*)*", name: "NotFound", component: Home },
 ];
 
 if (Config.debug) {
   routes.push({
     path: "/preview",
     name: "preview",
-    component: Preview
+    component: Preview,
   });
 }
 

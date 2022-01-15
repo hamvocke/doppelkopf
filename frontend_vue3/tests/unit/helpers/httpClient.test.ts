@@ -3,8 +3,12 @@ import { Config } from "@/models/config";
 
 Config.testing = false; // make httpClient fire "real" requests so it's hitting fetch
 
-function mockFetch(data: {}, ok = true, status = 200, ) {
-  return jest.fn().mockImplementationOnce(() => Promise.resolve({ ok: ok, status: status, json: () => data }));
+function mockFetch(data: {}, ok = true, status = 200) {
+  return jest
+    .fn()
+    .mockImplementationOnce(() =>
+      Promise.resolve({ ok: ok, status: status, json: () => data })
+    );
 }
 
 describe("HTTP Client", () => {

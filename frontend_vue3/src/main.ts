@@ -1,8 +1,8 @@
-import { createApp } from 'vue'
+import { createApp } from "vue";
 import { createI18n } from "vue-i18n";
 import * as Sentry from "@sentry/vue";
-import App from './App.vue'
-import router  from "./router";
+import App from "./App.vue";
+import router from "./router";
 import "@/assets/css/app.css";
 import { Config } from "@/models/config";
 import { Features } from "@/models/features";
@@ -20,11 +20,10 @@ async function loadLocaleMessages() {
 const i18n = createI18n({
   locale: navigator.language.split("-")[0] || "en",
   fallbackLocale: "en",
-  messages: await loadLocaleMessages()
+  messages: await loadLocaleMessages(),
 });
 
-
-let app = createApp(App)
+let app = createApp(App);
 
 if (!Config.debug) {
   Sentry.init({
@@ -33,9 +32,7 @@ if (!Config.debug) {
   });
 }
 
-app.use(i18n)
-  .use(router)
-  .mount("#app");
+app.use(i18n).use(router).mount("#app");
 
 // load feature toggles
 Features.fetch();

@@ -18,7 +18,7 @@ const cards = reactive([
   ten.of(Suit.Spades),
   king.of(Suit.Spades),
   ace.of(Suit.Hearts),
-  king.of(Suit.Hearts)
+  king.of(Suit.Hearts),
 ]);
 </script>
 

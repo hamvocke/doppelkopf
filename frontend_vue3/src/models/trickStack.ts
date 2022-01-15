@@ -17,8 +17,8 @@ export class TrickStack {
   }
 
   cards() {
-    const playedCards = this.tricks.flatMap(trick => trick.playedCards);
-    return playedCards.map(playedCard => playedCard.card);
+    const playedCards = this.tricks.flatMap((trick) => trick.playedCards);
+    return playedCards.map((playedCard) => playedCard.card);
   }
 
   points() {

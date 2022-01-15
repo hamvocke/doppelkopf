@@ -6,12 +6,8 @@
     </transition>
     <div class="text">
       <div class="question">Diese Karte ist&hellip;</div>
-      <button class="button trump" @click="checkAnswer(true)">
-        Trumpf
-      </button>
-      <button class="button non-trump" @click="checkAnswer(false)">
-        Fehl
-      </button>
+      <button class="button trump" @click="checkAnswer(true)">Trumpf</button>
+      <button class="button non-trump" @click="checkAnswer(false)">Fehl</button>
     </div>
 
     <transition name="message">
@@ -37,7 +33,7 @@ const cards = [
   ace.of(Suit.Spades),
   queen.of(Suit.Spades),
   king.of(Suit.Diamonds),
-  ten.of(Suit.Hearts)
+  ten.of(Suit.Hearts),
 ];
 const currentCard = ref(0);
 const lastMessage = ref("");

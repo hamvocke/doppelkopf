@@ -22,13 +22,13 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
+import { PropType } from "vue";
 import { Suit, Card as CardModel } from "@/models/card";
 
 const props = defineProps({
   card: {
     type: Object as PropType<CardModel>,
-    required: false
+    required: false,
   },
   isSelected: {
     type: Boolean,
@@ -47,7 +47,7 @@ const props = defineProps({
 function colorClasses() {
   return {
     red: props.card?.suit === Suit.Hearts || props.card?.suit === Suit.Diamonds,
-    black: props.card?.suit === Suit.Clubs || props.card?.suit === Suit.Spades
+    black: props.card?.suit === Suit.Clubs || props.card?.suit === Suit.Spades,
   };
 }
 
@@ -56,14 +56,14 @@ function positionClasses() {
     left: props.position === "left",
     right: props.position === "right",
     top: props.position === "top",
-    bottom: props.position === "bottom"
+    bottom: props.position === "bottom",
   };
 }
 
 function cardClasses() {
   return {
     selected: props.isSelected,
-    covered: props.isCovered
+    covered: props.isCovered,
   };
 }
 </script>

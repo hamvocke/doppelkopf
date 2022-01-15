@@ -4,8 +4,12 @@ import { Config } from "@/models/config";
 // disable testing mode so we're hitting fetchMock
 Config.testing = false;
 
-function mockFetch(data: {}, ok = true, status = 200, ) {
-  return jest.fn().mockImplementationOnce(() => Promise.resolve({ ok: ok, status: status, json: () => data }));
+function mockFetch(data: {}, ok = true, status = 200) {
+  return jest
+    .fn()
+    .mockImplementationOnce(() =>
+      Promise.resolve({ ok: ok, status: status, json: () => data })
+    );
 }
 
 beforeEach(() => {
@@ -15,8 +19,8 @@ beforeEach(() => {
 test("should fetch features from backend", async () => {
   const stubbedFeatures = {
     features: {
-      "game.announcements.enable": true
-    }
+      "game.announcements.enable": true,
+    },
   };
   window.fetch = mockFetch(stubbedFeatures);
 

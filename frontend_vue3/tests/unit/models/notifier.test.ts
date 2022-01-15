@@ -1,6 +1,5 @@
 import { notifier } from "@/models/notifier";
 
-
 jest.useFakeTimers();
 
 beforeEach(() => {

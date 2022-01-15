@@ -12,9 +12,9 @@ import Reservations from "@/components/Reservations.vue";
 
 const props = defineProps({
   game: {
-    default: () => Game.singlePlayer()
-  }
-})
+    default: () => Game.singlePlayer(),
+  },
+});
 </script>
 
 <style scoped>

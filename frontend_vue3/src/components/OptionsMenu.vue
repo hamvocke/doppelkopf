@@ -16,9 +16,7 @@
 
       <div v-if="config.debug" class="option">
         <span class="label">Debug Mode</span>
-        <div>
-          Enabled
-        </div>
+        <div>Enabled</div>
       </div>
       <div v-if="config.debug" class="option">
         <span class="label">Config</span>

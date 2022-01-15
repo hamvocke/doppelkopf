@@ -26,13 +26,13 @@
 const props = defineProps({
   rePoints: {
     type: Number,
-    required: true
+    required: true,
   },
   kontraPoints: {
     type: Number,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
 function reStyle() {
   return `width: ${(props.rePoints / 240) * 100}%`;

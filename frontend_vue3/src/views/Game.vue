@@ -18,8 +18,8 @@ import { Game } from "@/models/game";
 const props = defineProps({
   game: {
     type: Object as PropType<Game>,
-    default: () => Game.singlePlayer()
-  }
+    default: () => Game.singlePlayer(),
+  },
 });
 
 // This one's essential. With vue 3 we need to explicitly tell vue which part of our

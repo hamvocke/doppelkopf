@@ -18,7 +18,7 @@ describe("TrickStack.vue", () => {
   test("should show placeholder if player has no trick", () => {
     const emptyTrickStack = new TrickStackModel();
     const wrapper = mount(TrickStack, {
-      props: { trickStack: emptyTrickStack }
+      props: { trickStack: emptyTrickStack },
     });
     expect(wrapper.find(".placeholder").exists()).toBe(true);
   });
@@ -27,7 +27,7 @@ describe("TrickStack.vue", () => {
     const trickStack = new TrickStackModel();
     trickStack.add(trick);
     const wrapper = mount(TrickStack, {
-      props: { trickStack: trickStack }
+      props: { trickStack: trickStack },
     });
     expect(trick.playedCards).toHaveLength(2);
     expect(wrapper.find("div.trickStack").exists()).toBe(true);
@@ -40,7 +40,7 @@ describe("TrickStack.vue", () => {
     trickStack.add(trick);
     trickStack.add(trick);
     const wrapper = mount(TrickStack, {
-      props: { trickStack: trickStack }
+      props: { trickStack: trickStack },
     });
     expect(wrapper.find(".trickCount").exists()).toBe(true);
   });

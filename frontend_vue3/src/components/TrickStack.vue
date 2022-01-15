@@ -20,9 +20,9 @@ import { PropType } from "vue";
 const props = defineProps({
   trickStack: {
     type: Object as PropType<TrickStackModel>,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
 function isHidden() {
   return props.trickStack.tricks.length < 1;

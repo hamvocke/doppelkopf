@@ -12,9 +12,7 @@
             🎈 {{ $t("winner") }}
           </div>
           <div class="party-bubble">
-            <div class="party re">
-              Re
-            </div>
+            <div class="party re">Re</div>
             <div class="names">
               {{ partyMembers("Re") }}
             </div>
@@ -29,9 +27,7 @@
             🎈 {{ $t("winner") }}
           </div>
           <div class="party-bubble">
-            <div class="party kontra">
-              Kontra
-            </div>
+            <div class="party kontra">Kontra</div>
             <div class="names">
               {{ partyMembers("Kontra") }}
             </div>
@@ -73,9 +69,13 @@
               </tr>
               <tr v-for="i in extrasLength()" :key="i" class="extras">
                 <td v-if="reExtra(i)">{{ reExtra(i).points }}</td>
-                <td v-if="reExtra(i)" class="re">{{ $t(reExtra(i).i18nKey) }}</td>
+                <td v-if="reExtra(i)" class="re">
+                  {{ $t(reExtra(i).i18nKey) }}
+                </td>
                 <td v-if="kontraExtra(i)">{{ kontraExtra(i).points }}</td>
-                <td v-if="kontraExtra(i)" class="kontra">{{ $t(kontraExtra(i).i18nKey) }}</td>
+                <td v-if="kontraExtra(i)" class="kontra">
+                  {{ $t(kontraExtra(i).i18nKey) }}
+                </td>
               </tr>
               <tr>
                 <td colspan="2" class="sum re">
@@ -84,8 +84,12 @@
                   </span>
                 </td>
                 <td colspan="2" class="sum kontra">
-                  <span v-if="currentScore.winningPartyName() === PartyName.Kontra">
-                    {{ $tc("points", currentScore.totalPoints(PartyName.Kontra)) }}
+                  <span
+                    v-if="currentScore.winningPartyName() === PartyName.Kontra"
+                  >
+                    {{
+                      $tc("points", currentScore.totalPoints(PartyName.Kontra))
+                    }}
                   </span>
                 </td>
               </tr>
@@ -147,16 +151,16 @@ import { PropType } from "vue";
 const props = defineProps({
   scorecard: {
     type: Object as PropType<ScorecardModel>,
-    required: true
+    required: true,
   },
   players: {
     type: Object as PropType<Player[]>,
-    required: true
+    required: true,
   },
   currentScore: {
     type: Object as PropType<Score>,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const emit = defineEmits(["nextRound"]);
@@ -165,7 +169,10 @@ const reExtras = props.currentScore.listExtras(PartyName.Re);
 const kontraExtras = props.currentScore.listExtras(PartyName.Kontra);
 
 function message() {
-  return props.currentScore.winner()?.players.map(p => p.id).includes(props.players[0].id)
+  return props.currentScore
+    .winner()
+    ?.players.map((p) => p.id)
+    .includes(props.players[0].id)
     ? "you_win"
     : "you_lose";
 }

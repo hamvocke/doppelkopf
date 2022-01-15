@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-show="canAnnounce()"
-    class="announcements-button"
-  >
+  <div v-show="canAnnounce()" class="announcements-button">
     <button
       class="toggle button"
       :class="{ open: isOpen }"
@@ -13,7 +10,12 @@
       <vue-feather type="chevron-up" size="16" />
     </button>
     <div v-show="isOpen" class="dropdown">
-      <button v-for="a in allAnnouncements()" :key="a" class="button" @click="announce(a)">
+      <button
+        v-for="a in allAnnouncements()"
+        :key="a"
+        class="button"
+        @click="announce(a)"
+      >
         {{ $t(a) }}
       </button>
     </div>
@@ -21,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType } from 'vue'
+import { ref, PropType } from "vue";
 import VueFeather from "vue-feather";
 import { Player } from "@/models/player";
 import { Announcement } from "@/models/announcements";
@@ -33,8 +35,8 @@ const isOpen = ref(false);
 const props = defineProps({
   player: {
     required: true,
-    type: Object as PropType<Player>
-  }
+    type: Object as PropType<Player>,
+  },
 });
 
 function toggleDropdown() {
@@ -55,7 +57,7 @@ function canAnnounce() {
 }
 
 function allAnnouncements() {
-  return Array.from(props.player?.possibleAnnouncements()).reverse()
+  return Array.from(props.player?.possibleAnnouncements()).reverse();
 }
 </script>
 

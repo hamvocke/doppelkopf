@@ -27,9 +27,7 @@
 
       <div v-if="!showVorbehalt" class="reservation-group">
         <h3>Vorbehalt</h3>
-        <p>
-          Du möchtest ein Sonderspiel spielen.
-        </p>
+        <p>Du möchtest ein Sonderspiel spielen.</p>
         <button type="button" class="button" @click="showVorbehalt = true">
           Vorbehalt
         </button>
@@ -62,9 +60,7 @@
           <input id="kreuzsolo" type="radio" name="solo" value="kreuzsolo" />
           <label for="kreuzsolo">
             Kreuzsolo
-            <small>
-              Kreuz ersetzt Karo als Trumpffarbe
-            </small>
+            <small> Kreuz ersetzt Karo als Trumpffarbe </small>
           </label>
         </div>
 
@@ -126,9 +122,9 @@ import { PropType, ref } from "vue";
 const props = defineProps({
   game: {
     type: Object as PropType<Game>,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
 const showVorbehalt = ref(false);
 </script>

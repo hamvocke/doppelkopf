@@ -53,7 +53,7 @@ import { Features } from "@/models/features";
 import Logo from "@/components/Logo.vue";
 import Notifications from "@/components/Notifications.vue";
 
-const playerName = ref(localStorage.name as string || "");
+const playerName = ref((localStorage.name as string) || "");
 const showTutorial = ref(Features.get().enableTutorial);
 
 function saveName() {

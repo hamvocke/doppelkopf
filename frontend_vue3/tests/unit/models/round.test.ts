@@ -148,7 +148,7 @@ describe("player order", () => {
       reset: jest.fn(() => null),
       cardToPlay: (hand: Hand) => hand.cards[0],
       announcementToMake: jest.fn(() => null),
-      handleAffinityEvent: jest.fn(() => null)
+      handleAffinityEvent: jest.fn(() => null),
     };
     round.playerOrder.prioritize(round.players[3]);
     round.players[3].behavior = playFirstCardBehavior;
@@ -255,7 +255,7 @@ function trickStack(points: number, extras: Array<Extra>): TrickStack {
     extras: () => extras,
     tricks: new Array<Trick>(),
     add: () => {},
-    cards: () => []
+    cards: () => [],
   };
 }
 

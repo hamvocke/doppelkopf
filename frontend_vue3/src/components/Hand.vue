@@ -32,7 +32,7 @@ import { Card as CardModel } from "@/models/card";
 const props = defineProps({
   hand: {
     type: Object as PropType<HandModel>,
-    required: true
+    required: true,
   },
   isCovered: {
     type: Boolean,
@@ -44,7 +44,7 @@ const props = defineProps({
     required: true,
   },
   isSelectable: Boolean,
-})
+});
 
 const selectedCard = ref<CardModel | undefined>();
 

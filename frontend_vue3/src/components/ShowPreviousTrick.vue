@@ -29,12 +29,11 @@ import Trick from "@/components/Trick.vue";
 import Modal from "@/components/Modal.vue";
 import VueFeather from "vue-feather";
 
-
 const props = defineProps({
   trick: {
-    type: Object as PropType<TrickModel>
-  }
-})
+    type: Object as PropType<TrickModel>,
+  },
+});
 
 const visible = ref(false);
 

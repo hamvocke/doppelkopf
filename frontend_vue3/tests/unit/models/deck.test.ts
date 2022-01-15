@@ -11,8 +11,8 @@ test("deck has two aces of diamonds", () => {
 
   const firstAce = new Card(Rank.Ace, Suit.Diamonds, 0);
   const secondAce = new Card(Rank.Ace, Suit.Diamonds, 1);
-  expect(deck.cards.filter(card => card.equals(firstAce))).toHaveLength(1);
-  expect(deck.cards.filter(card => card.equals(secondAce))).toHaveLength(1);
+  expect(deck.cards.filter((card) => card.equals(firstAce))).toHaveLength(1);
+  expect(deck.cards.filter((card) => card.equals(secondAce))).toHaveLength(1);
 });
 
 test("deck is shuffled", () => {

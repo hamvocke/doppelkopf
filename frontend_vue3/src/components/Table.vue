@@ -38,8 +38,8 @@ import { PropType } from "vue";
 const props = defineProps({
   game: {
     type: Object as PropType<Game>,
-    required: true
-  }
+    required: true,
+  },
 });
 
 async function nextMove() {

@@ -2,7 +2,7 @@ export enum Suit {
   Clubs = "♣",
   Diamonds = "♦",
   Hearts = "♥",
-  Spades = "♠"
+  Spades = "♠",
 }
 
 export enum Rank {
@@ -10,7 +10,7 @@ export enum Rank {
   Ten = "10",
   King = "K",
   Queen = "Q",
-  Jack = "J"
+  Jack = "J",
 }
 
 export const values: { [id: string]: number } = {
@@ -18,7 +18,7 @@ export const values: { [id: string]: number } = {
   "10": 10,
   K: 4,
   Q: 3,
-  J: 2
+  J: 2,
 };
 
 export class Card {
@@ -53,7 +53,7 @@ export class Card {
   }
 
   isTrump() {
-    return trumps.some(c => c.is(this));
+    return trumps.some((c) => c.is(this));
   }
 
   /**
@@ -102,8 +102,8 @@ export class Card {
 
     if (thisIsTrump && otherCardIsTrump) {
       return (
-        trumps.findIndex(c => c.is(this)) -
-        trumps.findIndex(c => c.is(anotherCard))
+        trumps.findIndex((c) => c.is(this)) -
+        trumps.findIndex((c) => c.is(anotherCard))
       );
     }
 
@@ -135,8 +135,8 @@ export class Card {
 
 export function compare(oneCard: Card, anotherCard: Card) {
   return (
-    cardOrder.findIndex(c => c.equals(anotherCard)) -
-    cardOrder.findIndex(c => c.equals(oneCard))
+    cardOrder.findIndex((c) => c.equals(anotherCard)) -
+    cardOrder.findIndex((c) => c.equals(oneCard))
   );
 }
 
@@ -162,7 +162,7 @@ export const trumps = [
   jack.of(Suit.Diamonds),
   ace.of(Suit.Diamonds),
   ten.of(Suit.Diamonds),
-  king.of(Suit.Diamonds)
+  king.of(Suit.Diamonds),
 ];
 
 export const cardOrder = [
@@ -211,5 +211,5 @@ export const cardOrder = [
   new Card(Rank.Ace, Suit.Hearts, 0),
   new Card(Rank.Ace, Suit.Hearts, 1),
   new Card(Rank.King, Suit.Hearts, 0),
-  new Card(Rank.King, Suit.Hearts, 1)
+  new Card(Rank.King, Suit.Hearts, 1),
 ];

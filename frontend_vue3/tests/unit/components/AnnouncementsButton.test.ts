@@ -15,7 +15,7 @@ beforeEach(() => {
 describe("AnnouncementsButton.vue", () => {
   test("should hide announcements", () => {
     const wrapper = mount(AnnouncementsButton, {
-      props: { player: game.players[0] }
+      props: { player: game.players[0] },
     });
 
     expect(wrapper.find("button.toggle").exists()).toBe(true);
@@ -25,7 +25,7 @@ describe("AnnouncementsButton.vue", () => {
 
   test("should show possible announcements if button is clicked", async () => {
     const wrapper = mount(AnnouncementsButton, {
-      props: { player: game.players[0] }
+      props: { player: game.players[0] },
     });
 
     await wrapper.find("button.toggle").trigger("click");
@@ -36,7 +36,7 @@ describe("AnnouncementsButton.vue", () => {
   test("should hide possible announcements after announcing", async () => {
     let player = game.players[0];
     const wrapper = mount(AnnouncementsButton, {
-      props: { player: player }
+      props: { player: player },
     });
 
     await wrapper.find("button.toggle").trigger("click");
@@ -50,7 +50,7 @@ describe("AnnouncementsButton.vue", () => {
     player.possibleAnnouncements = () => new Set<Announcement>();
 
     const wrapper = mount(AnnouncementsButton, {
-      props: { player: player }
+      props: { player: player },
     });
 
     expect(wrapper.find(".announcements-button").isVisible()).toBe(false);

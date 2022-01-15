@@ -90,7 +90,7 @@ export class Round {
   async evaluateLatestTrick() {
     const winner = this.currentTrick.winner()!;
 
-    this.players.forEach(player =>
+    this.players.forEach((player) =>
       player.memory.memorizeTrick(
         this.currentTrick.id,
         this.currentTrick.baseCard()!,

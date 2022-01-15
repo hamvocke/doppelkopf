@@ -9,7 +9,7 @@ export class Deck {
 }
 
 export const allCards = Object.values(Rank)
-  .map(rank => [
+  .map((rank) => [
     new Card(rank, Suit.Clubs, 0),
     new Card(rank, Suit.Spades, 0),
     new Card(rank, Suit.Hearts, 0),
@@ -17,6 +17,6 @@ export const allCards = Object.values(Rank)
     new Card(rank, Suit.Clubs, 1),
     new Card(rank, Suit.Spades, 1),
     new Card(rank, Suit.Hearts, 1),
-    new Card(rank, Suit.Diamonds, 1)
+    new Card(rank, Suit.Diamonds, 1),
   ])
   .flat();

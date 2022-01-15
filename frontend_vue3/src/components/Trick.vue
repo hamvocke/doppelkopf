@@ -21,9 +21,9 @@ import { Trick as TrickModel } from "@/models/trick";
 
 const props = defineProps({
   trick: {
-    type: Object as PropType<TrickModel>
-  }
-})
+    type: Object as PropType<TrickModel>,
+  },
+});
 
 function cards() {
   return props.trick?.cards();
@@ -91,7 +91,6 @@ function cards() {
 .card-leave-to {
   opacity: 0;
 }
-
 
 @media screen and (max-width: 680px) {
   .top {

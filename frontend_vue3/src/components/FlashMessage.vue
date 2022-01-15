@@ -9,12 +9,12 @@
 const props = defineProps({
   message: {
     type: String,
-    required: true
+    required: true,
   },
   icon: {
     type: String,
-    default: undefined
-  }
+    default: undefined,
+  },
 });
 </script>
 

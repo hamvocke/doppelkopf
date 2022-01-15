@@ -29,7 +29,7 @@ test("should aggregate announcements", () => {
 
   expect(party.announcements()).toEqual([
     Announcement.Kontra,
-    Announcement.No90
+    Announcement.No90,
   ]);
 });
 

@@ -6,7 +6,6 @@ config.global.mocks["$t"] = (msg: string) => msg;
 config.global.mocks["$tc"] = (msg: string) => msg;
 jest.useFakeTimers();
 
-
 // TODO: figure out how to get this test back to work - or remove it
 // before, we asserted on vm.data, which was a bad pattern to begin with.
 // it's better to assert on the actual DOM being rendered but there seems
@@ -20,11 +19,15 @@ describe.skip("Notifications.vue", () => {
   });
 
   it("should display message", () => {
-    const wrapper = mount(Notifications, { global: { stubs: { 'transition-group': false }}});
+    const wrapper = mount(Notifications, {
+      global: { stubs: { "transition-group": false } },
+    });
 
     notifier.info("Hello World");
 
-    expect(wrapper.find(".notification-container .flashMessages").exists()).toBe(true);
+    expect(
+      wrapper.find(".notification-container .flashMessages").exists()
+    ).toBe(true);
     expect(wrapper.findAll(".msg")).toHaveLength(1);
     expect(wrapper.findAll(".msg")[0].text).toBe("Hello World");
   });
@@ -44,7 +47,9 @@ describe.skip("Notifications.vue", () => {
     notifier.sticky("An update is available!", undefined, jest.fn());
 
     expect(wrapper.findAll(".message.sticky")).toHaveLength(1);
-    expect(wrapper.findAll(".message.sticky")[0].text).toBe("An update is available!");
+    expect(wrapper.findAll(".message.sticky")[0].text).toBe(
+      "An update is available!"
+    );
   });
 
   it("should handle sticky messages click", async () => {

@@ -3,7 +3,7 @@ import { Config } from "@/models/config";
 
 const DEFAULT_FEATURES: Features = {
   enableTutorial: Config.debug,
-  enableAnnouncements: true
+  enableAnnouncements: true,
 };
 
 interface Features {
@@ -38,7 +38,7 @@ class FeatureManager {
     const f = json["features"];
     return {
       enableAnnouncements: f["game.announcements.enable"] as boolean,
-      enableTutorial: f["game.tutorial.enable"] as boolean
+      enableTutorial: f["game.tutorial.enable"] as boolean,
     };
   }
 }

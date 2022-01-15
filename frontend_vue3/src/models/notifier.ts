@@ -20,7 +20,7 @@ export class Notifier {
   ) {
     const id = uuidv4();
     const onDismissDefault = () => {
-      this.stickies = this.stickies.filter(n => n.id !== id);
+      this.stickies = this.stickies.filter((n) => n.id !== id);
     };
     const notification = new Notification(
       id,
@@ -41,7 +41,7 @@ export class Notifier {
   }
 
   wait(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
 

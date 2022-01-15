@@ -10,7 +10,7 @@ const player2 = new Player("Player 2");
 const player3 = new Player("Player 3");
 const player4 = new Player("Player 4");
 const players = [player1, player2, player3, player4];
-players.forEach(p => {
+players.forEach((p) => {
   p.behavior.affinities.setPlayers(players);
   p.behavior.affinities.declaresParty(player2);
 });
@@ -244,7 +244,7 @@ describe("extras", () => {
 
     expect(trick.extras()).toEqual([
       extras.charlie_caught,
-      extras.charlie_caught
+      extras.charlie_caught,
     ]);
   });
 
@@ -308,7 +308,7 @@ describe("extras", () => {
     expect(trick.extras()).toEqual([
       extras.fox,
       extras.charlie_caught,
-      extras.charlie
+      extras.charlie,
     ]);
   });
 

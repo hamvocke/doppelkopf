@@ -25,16 +25,15 @@
       </transition-group>
     </div>
     <div class="flashMessages">
-      <FlashMessage v-if="flashMessages[0]" :message="flashMessages[0].text"/>
+      <FlashMessage v-if="flashMessages[0]" :message="flashMessages[0].text" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { notifier, } from "@/models/notifier";
+import { notifier } from "@/models/notifier";
 import FlashMessage from "@/components/FlashMessage.vue";
 import VueFeather from "vue-feather";
-
 
 const { stickies, notifications, flashMessages } = notifier;
 </script>

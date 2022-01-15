@@ -45,7 +45,7 @@ export class goodyAnnouncement implements announcementRules {
       let counter = 0;
       if (hand.getBlankAces().length > 0) counter++;
       if (hand.trumps().length >= 7) counter++;
-      if (hand.cards.filter(c => c.is(ten.of(Suit.Hearts))).length === 2)
+      if (hand.cards.filter((c) => c.is(ten.of(Suit.Hearts))).length === 2)
         counter++;
       counter += hand.getMissingSuites().length;
       return counter > 2 ? [...possibleAnnouncements][0] : null;
@@ -68,7 +68,7 @@ export class conservativeAnnouncement implements announcementRules {
         (hand.trumps().length >= 8 && hand.getMissingSuites().length >= 1) ||
         (hand.trumps().length >= 8 &&
           hand.contains(ten.of(Suit.Hearts)) &&
-          hand.cards.filter(c => c.rank === Rank.Queen).length >= 3)
+          hand.cards.filter((c) => c.rank === Rank.Queen).length >= 3)
         // TODO add to clause: starts next trick (aufspiel)
         //|| (hand.trumps().length >= 7 && hand.getBlankAces().length >= 1)
       ) {
