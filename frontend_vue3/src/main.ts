@@ -7,9 +7,6 @@ import "@/assets/css/app.css";
 import { Config } from "@/models/config";
 import { Features } from "@/models/features";
 
-// TODO: register service worker
-// TODO: set up eslint, prettier
-
 async function loadLocaleMessages() {
   return {
     de: (await import("./locales/de.json")).default,
