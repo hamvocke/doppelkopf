@@ -22,6 +22,7 @@ import { Trick as TrickModel } from "@/models/trick";
 const props = defineProps({
   trick: {
     type: Object as PropType<TrickModel>,
+    required: true,
   },
 });
 

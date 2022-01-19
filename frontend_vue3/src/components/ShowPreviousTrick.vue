@@ -29,9 +29,10 @@ import Trick from "@/components/Trick.vue";
 import Modal from "@/components/Modal.vue";
 import VueFeather from "vue-feather";
 
-const props = defineProps({
+defineProps({
   trick: {
     type: Object as PropType<TrickModel>,
+    required: true,
   },
 });
 

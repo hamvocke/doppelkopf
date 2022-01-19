@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-// TODO: add test?
 const props = defineProps({
   rePoints: {
     type: Number,

@@ -119,7 +119,7 @@ import Modal from "@/components/Modal.vue";
 import Hand from "@/components/Hand.vue";
 import { PropType, ref } from "vue";
 
-const props = defineProps({
+defineProps({
   game: {
     type: Object as PropType<Game>,
     required: true,
