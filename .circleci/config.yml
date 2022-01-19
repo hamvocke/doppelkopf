@@ -28,7 +28,7 @@ jobs:
           path: coverage
       - run:
           name: Build frontend
-          command: 'pushd frontend && npm build && popd'
+          command: 'pushd frontend && npm run build && popd'
       - persist_to_workspace:
           root: .
           paths:
