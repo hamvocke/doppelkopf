@@ -13,7 +13,7 @@ export function aHandWith(numberOfCards: number, ...cards: Card[]) {
 export function aHandWithout(numberOfCards: number, excludedCard: Card) {
   let cards = sampleSize(
     cardOrder.filter(
-      card =>
+      (card) =>
         !(card.suit === excludedCard.suit && card.rank === excludedCard.rank)
     ),
     numberOfCards

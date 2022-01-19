@@ -133,7 +133,7 @@ export class Score {
   }
 
   _hasAnyPartyAnnounced(announcement: Announcement) {
-    return Object.values(this.parties).some(party =>
+    return Object.values(this.parties).some((party) =>
       party.announcements().includes(announcement)
     );
   }
@@ -142,9 +142,10 @@ export class Score {
     const allExtras = [];
     const partyPoints = this.parties[partyName].points();
     const partyAnnouncements = this.parties[partyName].announcements();
-    const opponentAnnouncements = this.parties[
-      partyName == PartyName.Re ? PartyName.Kontra : PartyName.Re
-    ].announcements();
+    const opponentAnnouncements =
+      this.parties[
+        partyName == PartyName.Re ? PartyName.Kontra : PartyName.Re
+      ].announcements();
 
     if (partyName === this.winningPartyName()) {
       allExtras.push(extras.win);

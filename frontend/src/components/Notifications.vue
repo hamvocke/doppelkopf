@@ -1,53 +1,41 @@
 <template>
   <div class="notification-container">
-    <transition-group name="message" class="notifications">
-      <div
-        v-for="sticky in stickies"
-        :key="sticky.id"
-        class="message clickable"
-        @click="sticky.onClick"
-      >
-        {{ $t(sticky.text, sticky.args) }}
-        <button class="close-button" @click.stop.prevent="sticky.onDismiss">
-          <x-icon size="20" />
-        </button>
-      </div>
-    </transition-group>
-    <transition-group name="message" class="notifications">
-      <div
-        v-for="notification in notifications"
-        :key="notification.id"
-        class="message"
-      >
-        {{ $t(notification.text, notification.args) }}
-      </div>
-    </transition-group>
+    <div class="notifications">
+      <transition-group name="message">
+        <div
+          v-for="sticky in stickies"
+          :key="sticky.id"
+          class="msg clickable sticky"
+          @click="sticky.onClick"
+        >
+          {{ $t(sticky.text, sticky.args) }}
+          <button class="close-button" @click.stop.prevent="sticky.onDismiss">
+            <vue-feather type="x" size="20" />
+          </button>
+        </div>
+      </transition-group>
+      <transition-group name="message">
+        <div
+          v-for="notification in notifications"
+          :key="notification.id"
+          class="msg"
+        >
+          {{ $t(notification.text, notification.args) }}
+        </div>
+      </transition-group>
+    </div>
     <div class="flashMessages">
-      <FlashMessage
-        v-if="flashMessages[0]"
-        :message="flashMessages[0].text"
-        :icon="flashMessages[0].icon"
-      />
+      <FlashMessage v-if="flashMessages[0]" :message="flashMessages[0].text" />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { Notifier, Notification } from "@/models/notifier";
+<script setup lang="ts">
+import { notifier } from "@/models/notifier";
 import FlashMessage from "@/components/FlashMessage.vue";
-import { XIcon } from "vue-feather-icons";
+import VueFeather from "vue-feather";
 
-const notifier = new Notifier();
-
-@Component({
-  components: { FlashMessage, XIcon }
-})
-export default class Notifications extends Vue {
-  stickies: Notification[] = notifier.stickies;
-  notifications: Notification[] = notifier.notifications;
-  flashMessages: Notification[] = notifier.flashMessages;
-}
+const { stickies, notifications, flashMessages } = notifier;
 </script>
 
 <style scoped>
@@ -62,7 +50,7 @@ export default class Notifications extends Vue {
   flex-direction: column;
 }
 
-.message {
+.msg {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,7 +69,7 @@ export default class Notifications extends Vue {
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.message-enter,
+.message-enter-from,
 .message-leave-to {
   opacity: 0;
   transform: translateY(-48px);

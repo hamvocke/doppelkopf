@@ -1,32 +1,31 @@
 <template>
   <div class="trickStack">
-    <div v-if="isHidden" class="placeholder">
-      <Card :is-covered="true" :card="{}" />
+    <div v-if="isHidden()" class="placeholder">
+      <Card :is-covered="true" />
     </div>
     <transition name="stack">
-      <div v-if="!isHidden" class="cards">
-        <Card :is-covered="true" :card="{}" />
+      <div v-if="!isHidden()" class="cards">
+        <Card :is-covered="true" />
       </div>
     </transition>
     <div class="trickCount">{{ $tc("trick", trickStack.tricks.length) }}</div>
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
 import Card from "./Card.vue";
 import { TrickStack as TrickStackModel } from "@/models/trickStack";
+import { PropType } from "vue";
 
-@Component({
-  components: { Card }
-})
-export default class TrickStack extends Vue {
-  @Prop({ required: true })
-  trickStack!: TrickStackModel;
+const props = defineProps({
+  trickStack: {
+    type: Object as PropType<TrickStackModel>,
+    required: true,
+  },
+});
 
-  get isHidden() {
-    return this.trickStack.tricks.length < 1;
-  }
+function isHidden() {
+  return props.trickStack.tricks.length < 1;
 }
 </script>
 
@@ -58,12 +57,12 @@ export default class TrickStack extends Vue {
   transition: none;
 }
 
-.stack-enter,
+.stack-enter-from,
 .stack-leave-to {
   opacity: 0;
 }
 
-.stack-enter {
+.stack-enter-from {
   transform: scale(2, 2);
 }
 

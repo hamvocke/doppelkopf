@@ -4,8 +4,4 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Tutorial"
-};
-</script>
+<script setup lang="ts"></script>

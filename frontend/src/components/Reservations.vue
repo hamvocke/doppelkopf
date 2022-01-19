@@ -27,9 +27,7 @@
 
       <div v-if="!showVorbehalt" class="reservation-group">
         <h3>Vorbehalt</h3>
-        <p>
-          Du möchtest ein Sonderspiel spielen.
-        </p>
+        <p>Du möchtest ein Sonderspiel spielen.</p>
         <button type="button" class="button" @click="showVorbehalt = true">
           Vorbehalt
         </button>
@@ -62,9 +60,7 @@
           <input id="kreuzsolo" type="radio" name="solo" value="kreuzsolo" />
           <label for="kreuzsolo">
             Kreuzsolo
-            <small>
-              Kreuz ersetzt Karo als Trumpffarbe
-            </small>
+            <small> Kreuz ersetzt Karo als Trumpffarbe </small>
           </label>
         </div>
 
@@ -117,19 +113,20 @@
   </modal>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+<script setup lang="ts">
 import { Game } from "@/models/game";
 import Modal from "@/components/Modal.vue";
 import Hand from "@/components/Hand.vue";
+import { PropType, ref } from "vue";
 
-@Component({ components: { Modal, Hand } })
-export default class Reservations extends Vue {
-  @Prop({ required: true })
-  game!: Game;
+defineProps({
+  game: {
+    type: Object as PropType<Game>,
+    required: true,
+  },
+});
 
-  showVorbehalt = false;
-}
+const showVorbehalt = ref(false);
 </script>
 
 <style scoped>

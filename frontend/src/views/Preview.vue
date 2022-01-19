@@ -6,16 +6,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+<script setup lang="ts">
 import { Game } from "@/models/game";
 import Reservations from "@/components/Reservations.vue";
 
-@Component({ components: { Reservations } })
-export default class Preview extends Vue {
-  @Prop({ default: () => Game.singlePlayer() })
-  game!: Game;
-}
+const props = defineProps({
+  game: {
+    default: () => Game.singlePlayer(),
+  },
+});
 </script>
 
 <style scoped>

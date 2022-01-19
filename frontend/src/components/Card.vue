@@ -1,72 +1,70 @@
 <template>
-  <div class="card" :class="[positionClasses]">
-    <template v-if="card">
-      <div class="card-inner" :class="cardClasses">
-        <template v-if="isCovered">
-          <div class="background"></div>
-        </template>
-        <template v-else>
-          <div class="card-top" :class="colorClasses">
-            <div class="rank">{{ $t(card.rank) }}</div>
-            <div class="suit">{{ card.suit }}</div>
-          </div>
-          <span class="card-center" :class="colorClasses">
-            {{ card.suit }}
-          </span>
-          <div class="card-bottom" :class="colorClasses">
-            <div class="rank">{{ $t(card.rank) }}</div>
-            <div class="suit">{{ card.suit }}</div>
-          </div>
-        </template>
-      </div>
-    </template>
+  <div class="card" :class="[positionClasses()]">
+    <div class="card-inner" :class="cardClasses()">
+      <template v-if="isCovered || !card">
+        <div class="background"></div>
+      </template>
+      <template v-else>
+        <div class="card-top" :class="colorClasses()">
+          <div class="rank">{{ $t(card.rank) }}</div>
+          <div class="suit">{{ card.suit }}</div>
+        </div>
+        <span class="card-center" :class="colorClasses()">
+          {{ card.suit }}
+        </span>
+        <div class="card-bottom" :class="colorClasses()">
+          <div class="rank">{{ $t(card.rank) }}</div>
+          <div class="suit">{{ card.suit }}</div>
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
+import { PropType } from "vue";
 import { Suit, Card as CardModel } from "@/models/card";
 
-@Component
-export default class Card extends Vue {
-  @Prop({ required: true })
-  card!: CardModel;
+const props = defineProps({
+  card: {
+    type: Object as PropType<CardModel>,
+    required: false,
+  },
+  isSelected: {
+    type: Boolean,
+    default: false,
+  },
+  isCovered: {
+    type: Boolean,
+    default: false,
+  },
+  position: {
+    type: String,
+    default: "unknown",
+  },
+});
 
-  @Prop({ default: false })
-  isSelected!: boolean;
+function colorClasses() {
+  return {
+    red: props.card?.suit === Suit.Hearts || props.card?.suit === Suit.Diamonds,
+    black: props.card?.suit === Suit.Clubs || props.card?.suit === Suit.Spades,
+  };
+}
 
-  @Prop({ default: false })
-  isCovered!: boolean;
+function positionClasses() {
+  return {
+    left: props.position === "left",
+    right: props.position === "right",
+    top: props.position === "top",
+    bottom: props.position === "bottom",
+  };
+}
 
-  @Prop({ default: "unknown" })
-  position!: string;
-
-  get colorClasses() {
-    return {
-      red: this.card.suit === Suit.Hearts || this.card.suit === Suit.Diamonds,
-      black: this.card.suit === Suit.Clubs || this.card.suit === Suit.Spades
-    };
-  }
-
-  get positionClasses() {
-    return {
-      left: this.position === "left",
-      right: this.position === "right",
-      top: this.position === "top",
-      bottom: this.position === "bottom"
-    };
-  }
-
-  get cardClasses() {
-    return {
-      selected: this.isSelected,
-      covered: this.isCovered
-    };
-  }
-
-  isCard() {
-    return this.card ? true : false;
-  }
+function cardClasses() {
+  return {
+    selected: props.isSelected,
+    covered: props.isCovered,
+  };
 }
 </script>
 

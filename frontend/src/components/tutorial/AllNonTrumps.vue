@@ -5,25 +5,21 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-
+<script setup lang="ts">
+import { reactive } from "vue";
 import Card from "@/components/Card.vue";
 import { ace, king, ten, Suit } from "@/models/card";
 
-@Component({ components: { Card } })
-export default class AllNonTrumps extends Vue {
-  cards = [
-    ace.of(Suit.Clubs),
-    ten.of(Suit.Clubs),
-    king.of(Suit.Clubs),
-    ace.of(Suit.Spades),
-    ten.of(Suit.Spades),
-    king.of(Suit.Spades),
-    ace.of(Suit.Hearts),
-    king.of(Suit.Hearts)
-  ];
-}
+const cards = reactive([
+  ace.of(Suit.Clubs),
+  ten.of(Suit.Clubs),
+  king.of(Suit.Clubs),
+  ace.of(Suit.Spades),
+  ten.of(Suit.Spades),
+  king.of(Suit.Spades),
+  ace.of(Suit.Hearts),
+  king.of(Suit.Hearts),
+]);
 </script>
 
 <style scoped>

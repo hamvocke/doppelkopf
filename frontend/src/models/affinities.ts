@@ -6,7 +6,7 @@ export enum AffinityEvent {
   QueenOfClubs = "queen_of_clubs",
   QueenOfClubsTricked = "queen_of_clubs_tricked",
   QueenOfClubsGreased = "queen_of_clubs_greased",
-  QueenOfClubsNotGreased = "queen_of_clubs_not_greased"
+  QueenOfClubsNotGreased = "queen_of_clubs_not_greased",
 }
 
 /**
@@ -71,12 +71,12 @@ export class Affinities {
 
   setPlayers(allPlayers: Player[]) {
     this.affinityTable = allPlayers
-      .filter(player => player.id !== this.me.id)
-      .map(player => ({
+      .filter((player) => player.id !== this.me.id)
+      .map((player) => ({
         player: player,
         affinity: 0,
         declaredParty: false,
-        playedQueenOfClubs: false
+        playedQueenOfClubs: false,
       }));
   }
 
@@ -96,7 +96,7 @@ export class Affinities {
   declaresParty(player: Player, playedQueenOfClubs?: boolean) {
     if (this.isMe(player)) return;
     if (this.isInMyParty(player)) {
-      this.affinityTable.forEach(x => {
+      this.affinityTable.forEach((x) => {
         this.setAffinity(x.player, this.isInMyParty(x.player) ? 1 : -1);
       });
     } else {
@@ -107,7 +107,7 @@ export class Affinities {
       }
     }
     this.getContainerFor(player).declaredParty = true;
-    if (this.affinityTable.filter(x => x.declaredParty).length === 2) {
+    if (this.affinityTable.filter((x) => x.declaredParty).length === 2) {
       this.setAllAffinities();
     }
     this.balanceAffinities();
@@ -127,7 +127,9 @@ export class Affinities {
 
   setAffinity(player: Player, value: number, hasDeclared: boolean = false) {
     if (!this.isMe(player) && !this.hasDeclaredParty(player)) {
-      let index = this.affinityTable.findIndex(x => x.player.id === player.id);
+      let index = this.affinityTable.findIndex(
+        (x) => x.player.id === player.id
+      );
       this.affinityTable[index].affinity = value;
       this.affinityTable[index].declaredParty = hasDeclared;
     }
@@ -135,21 +137,21 @@ export class Affinities {
   }
 
   reset() {
-    this.setPlayers(this.affinityTable.map(x => x.player));
+    this.setPlayers(this.affinityTable.map((x) => x.player));
   }
 
   private makeTeammatesExcept(player: Player) {
     this.affinityTable
       .filter(
-        playerAffinity =>
+        (playerAffinity) =>
           !this.isMe(playerAffinity.player) &&
           playerAffinity.player.id !== player.id
       )
-      .forEach(playerAffinity => this.setAffinity(playerAffinity.player, 1));
+      .forEach((playerAffinity) => this.setAffinity(playerAffinity.player, 1));
   }
 
   private setAllAffinities(): void {
-    this.affinityTable.forEach(x => {
+    this.affinityTable.forEach((x) => {
       this.setAffinity(x.player, this.isInMyParty(x.player) ? 1 : -1);
     });
   }
@@ -163,7 +165,7 @@ export class Affinities {
   }
 
   private getContainerFor(player: Player): PlayerAffinity {
-    return this.affinityTable.find(x => x.player.id === player.id)!;
+    return this.affinityTable.find((x) => x.player.id === player.id)!;
   }
 
   private affinitySum(): number {
@@ -175,7 +177,7 @@ export class Affinities {
 
   private balanceAffinities(): void {
     if (this.affinitySum() == -2) {
-      this.affinityTable.forEach(pA => {
+      this.affinityTable.forEach((pA) => {
         if (pA.affinity === 0) {
           pA.affinity = 1;
           return;

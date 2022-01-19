@@ -4,7 +4,7 @@ export enum Announcement {
   No90 = "no_90",
   No60 = "no_60",
   No30 = "no_30",
-  NoPoints = "no_points"
+  NoPoints = "no_points",
 }
 
 export const announcementOrder = [
@@ -13,10 +13,10 @@ export const announcementOrder = [
   Announcement.No90,
   Announcement.No60,
   Announcement.No30,
-  Announcement.NoPoints
+  Announcement.NoPoints,
 ];
 
 export function getAnnouncementOrder(isRe: boolean): Announcement[] {
   const filterOut = isRe ? Announcement.Kontra : Announcement.Re;
-  return announcementOrder.filter(a => a !== filterOut);
+  return announcementOrder.filter((a) => a !== filterOut);
 }

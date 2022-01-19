@@ -164,5 +164,5 @@ const names = [
   "Waltraud",
   "Beate",
   "Rita",
-  "Katharina"
+  "Katharina",
 ];

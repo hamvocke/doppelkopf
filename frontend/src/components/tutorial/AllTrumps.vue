@@ -1,20 +1,13 @@
 <template>
   <div class="all-trumps">
-    <Card v-for="card in cards" :key="card.cardId" :card="card" />
+    <Card v-for="card in trumps" :key="card.cardId" :card="card" />
     <p>All trumps ordered from highest to lowest</p>
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-
+<script setup lang="ts">
 import Card from "@/components/Card.vue";
 import { trumps } from "@/models/card";
-
-@Component({ components: { Card } })
-export default class AllTrumps extends Vue {
-  cards = trumps;
-}
 </script>
 
 <style scoped>

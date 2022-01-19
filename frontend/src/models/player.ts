@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Hand } from "@/models/hand";
 import { TrickStack } from "@/models/trickStack";
 import { Behavior, RuleBasedBehaviour } from "@/models/behaviors";
-import { Notifier } from "./notifier";
+import { notifier } from "./notifier";
 import { options } from "./options";
 import { Announcement, getAnnouncementOrder } from "./announcements";
 import { playableCards } from "./playableCardFinder";
@@ -14,8 +14,6 @@ import { TablePosition } from "./tablePosition";
 import { Affinities, AffinityEvent } from "@/models/affinities";
 import { allCards } from "./deck";
 import { findParties, Party, PartyName } from "./party";
-
-const notifier = new Notifier();
 
 // TODO: break circular dependency between player & game, make game non-null
 export class Player {
@@ -117,7 +115,7 @@ export class Player {
       this.game?.currentRound.nextPlayer();
 
       if (options.autoplay === true) {
-        await new Promise(r => setTimeout(r, 800)); // timeout to accommodate for animation duration when playing a card
+        await new Promise((r) => setTimeout(r, 800)); // timeout to accommodate for animation duration when playing a card
         await this.game?.currentRound.nextMove();
       }
     } catch (error) {
@@ -158,19 +156,19 @@ export class Player {
       throw new Error("Invalid announcement");
     }
 
-    this.game?.players.forEach(p => {
+    this.game?.players.forEach((p) => {
       p.behavior.handleAffinityEvent(AffinityEvent.Announcement, this);
     });
 
     const announcementOrder = getAnnouncementOrder(this.isRe());
-    const pos = announcementOrder.findIndex(a => a === announcement);
+    const pos = announcementOrder.findIndex((a) => a === announcement);
     this.announcements = new Set(announcementOrder.slice(0, pos + 1));
 
     notifier.info("player-announced-" + announcement, { name: this.name });
   }
 
   hasPartyAnnounced(...announcements: Announcement[]): boolean {
-    return announcements.every(a =>
+    return announcements.every((a) =>
       [...this.getPartyAnnouncements()].includes(a)
     );
   }
@@ -190,7 +188,7 @@ export class Player {
     return this.hasPartyAnnounced(...cardBasedAllowedAnnouncements)
       ? new Set<Announcement>(
           leftOverAnnouncements.filter(
-            a => ![...this.getPartyAnnouncements()].includes(a)
+            (a) => ![...this.getPartyAnnouncements()].includes(a)
           )
         )
       : new Set<Announcement>();

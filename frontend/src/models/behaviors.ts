@@ -7,7 +7,7 @@ import {
   byCardValuesDesc,
   ten,
   ace,
-  queen
+  queen,
 } from "@/models/card";
 import { Hand } from "@/models/hand";
 import { Announcement } from "./announcements";
@@ -17,7 +17,7 @@ import { Player } from "./player";
 import { Affinities, AffinityEvent } from "./affinities";
 import {
   chanceAnnouncement,
-  conservativeAnnouncement
+  conservativeAnnouncement,
 } from "@/models/announcementRules";
 
 export abstract class Behavior {
@@ -182,7 +182,7 @@ export class RuleBasedBehaviour extends Behavior {
     return (
       hand
         .lowValues()
-        .filter(card => card.isTrump())
+        .filter((card) => card.isTrump())
         .reverse()[0] ?? this.findLeastValuableLosingCard(hand, trick)
     );
   }
@@ -242,21 +242,21 @@ export class RuleBasedBehaviour extends Behavior {
   private isTeammateKnown(): Boolean {
     return (
       this.affinities.affinityTable.filter(
-        playerAffinity => playerAffinity.affinity === 1
+        (playerAffinity) => playerAffinity.affinity === 1
       ).length > 0
     );
   }
 
   private getTeammates(): Player[] {
     return this.affinities.affinityTable
-      .filter(playerAffinity => playerAffinity.affinity === 1)
-      .map(playerAffinity => playerAffinity.player);
+      .filter((playerAffinity) => playerAffinity.affinity === 1)
+      .map((playerAffinity) => playerAffinity.player);
   }
 
   private getEnemies(): Player[] {
     return this.affinities.affinityTable
-      .filter(playerAffinity => playerAffinity.affinity === -1)
-      .map(playerAffinity => playerAffinity.player);
+      .filter((playerAffinity) => playerAffinity.affinity === -1)
+      .map((playerAffinity) => playerAffinity.player);
   }
 
   private isCurrentWinnerTeammate(trick: Trick): Boolean {
@@ -267,11 +267,11 @@ export class RuleBasedBehaviour extends Behavior {
 
   private isTeammateAfterMe(trick: Trick): Boolean {
     const playersPlayed = trick.playedCards.map(
-      playedCard => playedCard.player
+      (playedCard) => playedCard.player
     );
     return (
-      this.getTeammates().filter(mate => !playersPlayed.includes(mate)).length >
-      0
+      this.getTeammates().filter((mate) => !playersPlayed.includes(mate))
+        .length > 0
     );
   }
 
@@ -283,7 +283,7 @@ export class RuleBasedBehaviour extends Behavior {
   }
 
   private getMyPlayer(trick: Trick): Player {
-    return trick.players.find(player => player.id === this.playerId)!;
+    return trick.players.find((player) => player.id === this.playerId)!;
   }
 
   serveNonTrump(hand: Hand, trick: Trick, memory?: Memory): Card {
@@ -312,12 +312,12 @@ export class RuleBasedBehaviour extends Behavior {
       [
         ...hand.cards
           .filter(
-            card =>
+            (card) =>
               card.isTrump() &&
               card.beats(trick.highestCard()?.card) &&
               card.value < 10
           )
-          .reverse()
+          .reverse(),
       ],
       trick.baseCard()
     );
@@ -338,17 +338,19 @@ export class RuleBasedBehaviour extends Behavior {
   findMostSuitableGreasingCard(hand: Hand, trick?: Trick): Card {
     const fox = hand.findAny(Suit.Diamonds, Rank.Ace);
     const tenOfHearts = hand.findAny(Suit.Hearts, Rank.Ten);
-    const queens = hand.cards.filter(card => card.rank == Rank.Queen).reverse();
+    const queens = hand.cards
+      .filter((card) => card.rank == Rank.Queen)
+      .reverse();
 
     const cardPreference = [
       fox!,
       ...hand.cards
         .sort(byCardValuesDesc)
         .filter(
-          card => !card.is(ten.of(Suit.Hearts)) && card.rank != Rank.Queen
+          (card) => !card.is(ten.of(Suit.Hearts)) && card.rank != Rank.Queen
         ),
       ...queens,
-      tenOfHearts!
+      tenOfHearts!,
     ].filter(Boolean);
 
     return playableCards(cardPreference, trick?.baseCard())[0];
@@ -371,10 +373,10 @@ export class RuleBasedBehaviour extends Behavior {
     const trumpPreference = [
       aceOfDiamonds,
       tenOfDiamonds,
-      ...hand.trumps().reverse()
+      ...hand.trumps().reverse(),
     ];
     return (
-      trumpPreference.find(card => card && card.beats(highestCard)) ?? null
+      trumpPreference.find((card) => card && card.beats(highestCard)) ?? null
     );
   }
 
@@ -387,12 +389,12 @@ export class RuleBasedBehaviour extends Behavior {
    */
   findLeastValuableLosingCard(hand: Hand, trick: Trick): Card {
     const cardPreference = [
-      ...hand.nonTrumps().filter(card => card.value === 4),
+      ...hand.nonTrumps().filter((card) => card.value === 4),
       ...hand
         .lowValues()
-        .filter(card => card.value !== 3)
+        .filter((card) => card.value !== 3)
         .reverse(),
-      ...hand.cards.reverse()
+      ...hand.cards.reverse(),
     ];
     return playableCards(cardPreference, trick.baseCard())[0];
   }

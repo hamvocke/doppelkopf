@@ -9,7 +9,7 @@ describe("Playable Card Finder", () => {
       queen.of(Suit.Spades),
       ten.of(Suit.Diamonds),
       queen.of(Suit.Diamonds),
-      matchingNonTrump
+      matchingNonTrump,
     ];
 
     const foundCards = playableCards(cards, baseCard);
@@ -22,7 +22,7 @@ describe("Playable Card Finder", () => {
     const trumps = [
       ten.of(Suit.Hearts),
       queen.of(Suit.Clubs),
-      ten.of(Suit.Diamonds)
+      ten.of(Suit.Diamonds),
     ];
     const cards = [...trumps, ace.of(Suit.Clubs), ten.of(Suit.Spades)];
 
@@ -36,7 +36,7 @@ describe("Playable Card Finder", () => {
     const cards = [
       ace.of(Suit.Clubs),
       ten.of(Suit.Spades),
-      queen.of(Suit.Diamonds)
+      queen.of(Suit.Diamonds),
     ];
 
     const foundCards = playableCards(cards, baseCard);
@@ -49,7 +49,7 @@ describe("Playable Card Finder", () => {
     const cards = [
       queen.of(Suit.Diamonds),
       ace.of(Suit.Diamonds),
-      ace.of(Suit.Clubs)
+      ace.of(Suit.Clubs),
     ];
 
     const foundCards = playableCards(cards, baseCard);

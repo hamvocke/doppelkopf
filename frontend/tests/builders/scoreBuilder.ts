@@ -62,8 +62,8 @@ export class ScoreBuilder {
     const score = new Score(this.winningParty!, this.losingParty!);
     score.winningPartyName = () => this.winningParty!.name;
     score.winner = () => this.winningParty;
-    score.totalPoints = partyName => this.points[partyName];
-    score.listExtras = partyName => this.extras[partyName];
+    score.totalPoints = (partyName) => this.points[partyName];
+    score.listExtras = (partyName) => this.extras[partyName];
     return score;
   }
 }

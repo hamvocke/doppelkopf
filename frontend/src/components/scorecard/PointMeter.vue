@@ -11,8 +11,8 @@
       <span class="bright"></span>
     </div>
     <div class="bar-wrapper">
-      <div class="bar re" :style="reStyle"></div>
-      <div class="bar kontra" :style="kontraStyle"></div>
+      <div class="bar re" :style="reStyle()"></div>
+      <div class="bar kontra" :style="kontraStyle()"></div>
     </div>
     <div class="points">
       <span>{{ $tc("points", rePoints) }}</span>
@@ -21,24 +21,24 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
+const props = defineProps({
+  rePoints: {
+    type: Number,
+    required: true,
+  },
+  kontraPoints: {
+    type: Number,
+    required: true,
+  },
+});
 
-@Component
-export default class PointMeter extends Vue {
-  @Prop({ required: true })
-  rePoints!: number;
+function reStyle() {
+  return `width: ${(props.rePoints / 240) * 100}%`;
+}
 
-  @Prop({ required: true })
-  kontraPoints!: number;
-
-  get reStyle() {
-    return `width: ${(this.rePoints / 240) * 100}%`;
-  }
-
-  get kontraStyle() {
-    return `width: ${(this.kontraPoints / 240) * 100}%`;
-  }
+function kontraStyle() {
+  return `width: ${(props.kontraPoints / 240) * 100}%`;
 }
 </script>
 
@@ -86,14 +86,14 @@ export default class PointMeter extends Vue {
 
 .kontra {
   background-color: var(--cyan);
-  border-bottom: 5px solid color(var(--cyan) shade(25%));
+  border-bottom: 5px solid var(--cyan-dark);
   border-radius: 0 8px 8px 0;
   color: var(--black);
 }
 
 .re {
   background-color: var(--lightblue);
-  border-bottom: 5px solid color(var(--lightblue) shade(25%));
+  border-bottom: 5px solid var(--lightblue-dark);
   border-radius: 8px 0 0 8px;
   color: var(--white);
 }

@@ -2,13 +2,11 @@ import { Trick } from "@/models/trick";
 import { RingQueue } from "@/models/ringQueue";
 import { Score } from "@/models/score";
 import { options } from "@/models/options";
-import { Notifier } from "@/models/notifier";
+import { notifier } from "@/models/notifier";
 import { extras } from "@/models/extras";
 import { PartyName, findParties, Party } from "@/models/party";
 import { Player } from "./player";
 import { Scorecard } from "./scorecard";
-
-const notifier = new Notifier();
 
 export class Round {
   players: Player[];
@@ -92,7 +90,7 @@ export class Round {
   async evaluateLatestTrick() {
     const winner = this.currentTrick.winner()!;
 
-    this.players.forEach(player =>
+    this.players.forEach((player) =>
       player.memory.memorizeTrick(
         this.currentTrick.id,
         this.currentTrick.baseCard()!,

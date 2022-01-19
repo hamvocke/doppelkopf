@@ -1,21 +1,17 @@
 <template>
-  <div
-    v-show="player.possibleAnnouncements().size > 0"
-    v-on-clickaway="closeDropdown"
-    class="announcements-button"
-  >
+  <div v-show="canAnnounce()" class="announcements-button">
     <button
       class="toggle button"
       :class="{ open: isOpen }"
       @click="toggleDropdown"
     >
-      <flag-icon size="20" />
+      <vue-feather type="flag" size="20" />
       <span class="button-text">{{ $t("announce") }}</span>
-      <chevron-up-icon size="16" />
+      <vue-feather type="chevron-up" size="16" />
     </button>
     <div v-show="isOpen" class="dropdown">
       <button
-        v-for="a in Array.from(player.possibleAnnouncements()).reverse()"
+        v-for="a in allAnnouncements()"
         :key="a"
         class="button"
         @click="announce(a)"
@@ -26,35 +22,40 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { ChevronUpIcon, FlagIcon } from "vue-feather-icons";
-import { mixin as clickaway } from "vue-clickaway";
+<script setup lang="ts">
+import { ref, PropType } from "vue";
+import VueFeather from "vue-feather";
 import { Player } from "@/models/player";
 import { Announcement } from "@/models/announcements";
 
-@Component({
-  components: { ChevronUpIcon, FlagIcon },
-  mixins: [clickaway]
-})
-export default class AnnouncementsButton extends Vue {
-  isOpen: boolean = false;
+const isOpen = ref(false);
 
-  @Prop(Player)
-  player!: Player;
+const props = defineProps({
+  player: {
+    required: true,
+    type: Object as PropType<Player>,
+  },
+});
 
-  toggleDropdown() {
-    this.isOpen = !this.isOpen;
-  }
+function toggleDropdown() {
+  isOpen.value = !isOpen.value;
+}
 
-  closeDropdown() {
-    this.isOpen = false;
-  }
+function closeDropdown() {
+  isOpen.value = false;
+}
 
-  announce(announcement: Announcement) {
-    this.player.announce(announcement);
-    this.closeDropdown();
-  }
+function announce(announcement: Announcement) {
+  props.player?.announce(announcement);
+  closeDropdown();
+}
+
+function canAnnounce() {
+  return props.player?.possibleAnnouncements().size > 0;
+}
+
+function allAnnouncements() {
+  return Array.from(props.player?.possibleAnnouncements()).reverse();
 }
 </script>
 
@@ -71,7 +72,7 @@ export default class AnnouncementsButton extends Vue {
 }
 
 .open {
-  background: color(var(--red) shade(15%));
+  background: var(--red-dark);
   transform: scale(0.95, 0.95);
 }
 
@@ -90,13 +91,13 @@ export default class AnnouncementsButton extends Vue {
 .dropdown button:hover,
 .dropdown button:active,
 .dropdown button:focus {
-  background: color(var(--red) shade(15%));
+  background: var(--red-dark);
 }
 
 .dropdown button:hover ~ button,
 .dropdown button:active ~ button,
 .dropdown button:focus ~ button {
-  background: color(var(--red) shade(15%));
+  background: var(--red-dark);
 }
 
 .hidden {

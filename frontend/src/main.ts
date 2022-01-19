@@ -1,41 +1,33 @@
-import Vue from "vue";
+import { createApp } from "vue";
+import { createI18n } from "vue-i18n";
+import * as Sentry from "@sentry/vue";
 import App from "./App.vue";
-import "./registerServiceWorker";
-import * as Sentry from "@sentry/browser";
-import { Vue as VueIntegration } from "@sentry/integrations";
-import { Integrations } from "@sentry/tracing";
+import router from "./router";
 import "@/assets/css/app.css";
-import i18n from "./i18n";
-import router from "./router/index";
 import { Config } from "@/models/config";
 import { Features } from "@/models/features";
+import { languages, defaultLocale } from "./i18n";
 
-Vue.config.productionTip = Config.debug;
+const messages = Object.assign(languages);
 
-new Vue({
-  i18n,
-  router,
-  render: h => h(App)
-}).$mount("#app");
+console.log(messages);
+
+const i18n = createI18n({
+  locale: navigator.language.split("-")[0] || defaultLocale,
+  fallbackLocale: "en",
+  messages,
+});
+
+let app = createApp(App);
 
 if (!Config.debug) {
   Sentry.init({
-    dsn: "https://69b3af20d4fa454f851a6be71502334c@sentry.io/1235644",
-    integrations: [
-      new Integrations.BrowserTracing(),
-      new VueIntegration({
-        Vue,
-        logErrors: Config.debug,
-        tracing: true,
-        tracingOptions: {
-          trackComponents: true
-        }
-      })
-    ],
-    tracesSampleRate: Config.debug ? 1.0 : 0.2,
-    environment: process.env.NODE_ENV || process.env.server_env || "not-set"
+    app,
+    dsn: "https://69b3af20d4fa454f851a6be71502334c@o57417.ingest.sentry.io/1235644",
   });
 }
+
+app.use(i18n).use(router).mount("#app");
 
 // load feature toggles
 Features.fetch();

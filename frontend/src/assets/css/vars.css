@@ -1,21 +1,28 @@
 :root {
-  /* colors */
-  --red: #e63946;
-  --black: #1d3557;
-  --lightblue: #457b9d;
-  --cyan: #a8dadc;
-  --white: #f8fafc;
-  --white-100: #f1f5f9;
-  --white-200: #e2e8f0;
-  --lightgray: #e6e8f2;
+    /* colors */
+    --red: #e63946;
+    --red-light: #eb616b;
+    --red-dark: #ca323e;
+    --red-darker: #b82e38;
+    --red-darkest: #a12831;
+    --black: #1d3557;
+    --lightblue: #457b9d;
+    --lightblue-dark: #345c76;
+    --cyan: #a8dadc;
+    --cyan-dark: #7ea4a5;
+    --white: #f8fafc;
+    --white-100: #f1f5f9;
+    --white-200: #e2e8f0;
+    --white-300: #c6c8ca;
+    --white-400: #a1a3a4;
+    --outline-color: rgba(69, 123, 157, 0.4); /* lightblue, with 0.4 opacity */
 
-
-  /* z-index layers */
-  --base-layer: 1;
-  --card-selected-layer: 10;
-  --popover-layer: 20;
-  --modal-layer: 30;
-  --notification-layer: 40;
-  --flash-layer: 50;
-  --menu-icon-layer: 60;
+    /* z-index layers */
+    --base-layer: 1;
+    --card-selected-layer: 10;
+    --popover-layer: 20;
+    --modal-layer: 30;
+    --notification-layer: 40;
+    --flash-layer: 50;
+    --menu-icon-layer: 60;
 }

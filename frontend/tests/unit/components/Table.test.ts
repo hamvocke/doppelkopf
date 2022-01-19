@@ -5,9 +5,9 @@ import { Party, PartyName } from "@/models/party";
 import { mount, config } from "@vue/test-utils";
 import { Game as GameModel } from "@/models/game";
 
-config.mocks["$t"] = (msg: string) => msg;
-config.mocks["$tc"] = (msg: string) => msg;
-config.mocks["$i18n"] = { locale: "en" };
+config.global.mocks["$t"] = (msg: string) => msg;
+config.global.mocks["$tc"] = (msg: string) => msg;
+config.global.mocks["$i18n"] = { locale: "en" };
 
 let game: GameModel;
 
@@ -17,7 +17,7 @@ beforeEach(() => {
 
 describe("Table.vue", () => {
   test("should render table components", () => {
-    const wrapper = mount(Table, { propsData: { game: game } });
+    const wrapper = mount(Table, { props: { game: game } });
     expect(wrapper.findAll("div.player")).toHaveLength(4);
     expect(wrapper.find("div.trick").exists()).toBe(true);
     expect(wrapper.find("div.controls").exists()).toBe(true);
@@ -26,7 +26,7 @@ describe("Table.vue", () => {
   test("should hide Scorecard if game is not finished", () => {
     game.currentRound.isFinished = () => false;
 
-    const wrapper = mount(Table, { propsData: { game: game } });
+    const wrapper = mount(Table, { props: { game: game } });
 
     expect(wrapper.find("div.scorecard").exists()).toBe(false);
   });
@@ -45,7 +45,7 @@ describe("Table.vue", () => {
     game.currentRound.score = stubScore;
     game.currentRound.isFinished = () => true;
 
-    const wrapper = mount(Table, { propsData: { game: game } });
+    const wrapper = mount(Table, { props: { game: game } });
 
     expect(wrapper.find("div.scorecard").exists()).toBe(true);
   });
