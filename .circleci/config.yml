@@ -6,7 +6,7 @@ orbs:
 jobs:
   frontend:
     docker:
-      - image: circleci/node:14.17.0-browsers
+      - image: circleci/node:17.4.0-browsers
     working_directory: ~/hamvocke/doppelkopf
     steps:
       - checkout
@@ -75,7 +75,7 @@ jobs:
 
   deploy_staging:
     docker:
-      - image: cimg/base:2020.08
+      - image: cimg/base:2022.01
     working_directory: ~/hamvocke/doppelkopf
     steps:
       - checkout
@@ -102,7 +102,7 @@ jobs:
 
   deploy_prod:
     docker:
-      - image: cimg/base:2020.08
+      - image: cimg/base:2022.01
     working_directory: ~/hamvocke/doppelkopf
     steps:
       - checkout
