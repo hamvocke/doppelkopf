@@ -6,6 +6,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "jest",
+    "test:ci": "jest --maxWorkers=2 --collectCoverage=true --detectOpenHandles",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write"
   },

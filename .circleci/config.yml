@@ -23,7 +23,7 @@ jobs:
             - frontend/node_modules
       - run:
           name: Test frontend
-          command: 'pushd frontend && npm run test && popd'
+          command: 'pushd frontend && npm run test:ci && popd'
       - store_artifacts:
           path: coverage
       - run:
