@@ -6,7 +6,7 @@ orbs:
 jobs:
   frontend:
     docker:
-      - image: circleci/node:17.3.1-browsers
+      - image: cimg/node:17.4.0-browsers
     working_directory: ~/hamvocke/doppelkopf
     steps:
       - checkout
@@ -39,7 +39,7 @@ jobs:
 
   backend:
     docker:
-      - image: circleci/python:3.9
+      - image: cimg/python:3.9
     working_directory: ~/hamvocke/doppelkopf
     steps:
       - checkout
