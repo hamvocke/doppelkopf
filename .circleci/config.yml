@@ -13,22 +13,22 @@ jobs:
       - attach_workspace:
           at: ~/hamvocke/doppelkopf
       - restore_cache:
-          key: v1-frontend-yarn-{{ checksum "frontend/yarn.lock" }}
+          key: v1-frontend-npm-{{ checksum "frontend/package-lock.json" }}
       - run:
           name: Install frontend dependencies
-          command: 'pushd frontend && yarn install && popd'
+          command: 'pushd frontend && npm install && popd'
       - save_cache:
-          key: v1-frontend-yarn-{{ checksum "frontend/yarn.lock" }}
+          key: v1-frontend-npm-{{ checksum "frontend/package-lock.json" }}
           paths:
             - frontend/node_modules
       - run:
           name: Test frontend
-          command: 'pushd frontend && yarn test:ci && yarn test:e2e && popd'
+          command: 'pushd frontend && npm run test && popd'
       - store_artifacts:
           path: coverage
       - run:
           name: Build frontend
-          command: 'pushd frontend && yarn build && popd'
+          command: 'pushd frontend && npm build && popd'
       - persist_to_workspace:
           root: .
           paths:
@@ -60,7 +60,7 @@ jobs:
       - attach_workspace:
           at: ~/hamvocke/doppelkopf
       - restore_cache:
-          key: v1-frontend-yarn-{{ checksum "frontend/yarn.lock" }}
+          key: v1-frontend-npm-{{ checksum "frontend/package-lock.json" }}
       - run:
           name: Docker login
           command: 'echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin'
