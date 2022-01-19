@@ -32,7 +32,8 @@ import VueFeather from "vue-feather";
 defineProps({
   trick: {
     type: Object as PropType<TrickModel>,
-    required: true,
+    required: false,
+    default: undefined,
   },
 });
 

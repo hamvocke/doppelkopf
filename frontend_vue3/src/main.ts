@@ -6,18 +6,12 @@ import router from "./router";
 import "@/assets/css/app.css";
 import { Config } from "@/models/config";
 import { Features } from "@/models/features";
-
-async function loadLocaleMessages() {
-  return {
-    de: (await import("./locales/de.json")).default,
-    en: (await import("./locales/en.json")).default,
-  };
-}
+import { languages, defaultLocale } from "./i18n";
 
 const i18n = createI18n({
-  locale: navigator.language.split("-")[0] || "en",
+  locale: navigator.language.split("-")[0] || defaultLocale,
   fallbackLocale: "en",
-  messages: await loadLocaleMessages(),
+  messages: Object.assign(languages),
 });
 
 let app = createApp(App);
