@@ -8,10 +8,14 @@ import { Config } from "@/models/config";
 import { Features } from "@/models/features";
 import { languages, defaultLocale } from "./i18n";
 
+const messages = Object.assign(languages);
+
+console.log(messages);
+
 const i18n = createI18n({
   locale: navigator.language.split("-")[0] || defaultLocale,
   fallbackLocale: "en",
-  messages: Object.assign(languages),
+  messages,
 });
 
 let app = createApp(App);
