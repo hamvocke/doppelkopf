@@ -480,4 +480,3 @@ describe("announcements", () => {
     expect(player.possibleAnnouncements()).not.toContain(Announcement.No90);
   });
 });
-

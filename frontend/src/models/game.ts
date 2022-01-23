@@ -7,6 +7,7 @@ import { RingQueue } from "@/models/ringQueue";
 import { generateNames } from "@/models/random";
 import { Telemetry } from "@/models/telemetry";
 import { TablePosition } from "./tablePosition";
+import { GameRules, RoundRules } from "./rules";
 
 export class Game {
   players: Player[];
@@ -14,6 +15,7 @@ export class Game {
   deck: Deck;
   scorecard: Scorecard;
   currentRound: Round;
+  rules: GameRules[];
 
   constructor(players: Player[] = []) {
     this.players = players;
@@ -29,6 +31,12 @@ export class Game {
     );
     this.initializeAffinities();
     Telemetry.newGame();
+    this.rules = [
+      GameRules.SHARP_DOKO,
+      GameRules.FOX,
+      GameRules.DOPPELKOPF,
+      GameRules.CHARLIE
+    ];
   }
 
   static singlePlayer() {
@@ -44,16 +52,18 @@ export class Game {
     ]);
   }
 
-  // todo: make this configurable for playing with 9s
+  // TODO at some point remove isPlayable and replace with reservation option
   deal() {
     let hands = [];
 
     do {
-      this.deck = new Deck();
-      hands[0] = new Hand(this.deck.cards.slice(0, 10));
-      hands[1] = new Hand(this.deck.cards.slice(10, 20));
-      hands[2] = new Hand(this.deck.cards.slice(20, 30));
-      hands[3] = new Hand(this.deck.cards.slice(30, 40));
+      this.deck = new Deck([RoundRules.SHARP_DOKO]);
+      const handLength = this.deck.cards.length / this.players.length;
+      for (let i = 0; i < this.players.length; i++) {
+        hands[i] = new Hand(
+          this.deck.cards.slice(i * handLength, (i + 1) * handLength)
+        );
+      }
     } while (!hands.every(hand => hand.isPlayable()));
 
     this.players[0].hand = hands[0];

@@ -7,7 +7,7 @@ import {
   king,
   queen,
   jack,
-  cardOrder
+  defaultCardOrder
 } from "@/models/card";
 import { allCards } from "@/models/deck";
 import { shuffle } from "@/models/random";
@@ -117,7 +117,7 @@ test("should sort hand by visual order", () => {
 
   const hand = new Hand(shuffle(cards));
 
-  expect(hand.cards).toEqual(cardOrder);
+  expect(hand.cards).toEqual(defaultCardOrder);
 });
 
 test("should detect hand with 5 kings as not playable", () => {

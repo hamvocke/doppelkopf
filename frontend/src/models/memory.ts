@@ -1,8 +1,8 @@
 import { chance } from "@/models/random";
 import { PlayedCard } from "@/models/playedCard";
-import { Card, cardOrder, Suit } from "@/models/card";
-import { Hand } from "./hand";
-import { Player } from "./player";
+import { Card, defaultCardOrder, Suit } from "@/models/card";
+import { Hand } from "@/models/hand";
+import { Player } from "@/models//player";
 
 interface MemorizedCard {
   playedCard: PlayedCard;
@@ -29,7 +29,7 @@ export abstract class Memory {
       ...this.memorizedCards.map(mcard => mcard.playedCard.card),
       ...(hand?.cards || [])
     ];
-    let leftOverCards = cardOrder.filter(
+    let leftOverCards = defaultCardOrder.filter(
       x => !allKnownCards.some(y => x.equals(y))
     );
     return leftOverCards.length > 0 && card.compareTo(leftOverCards[0]) <= 0;
@@ -102,7 +102,7 @@ export abstract class Memory {
 
   pointsLeftInSuit(suit: string): number {
     return (
-      cardOrder
+      defaultCardOrder
         .filter(card => card.suit === suit && !card.isTrump())
         .reduce((accu, card) => accu + card.value, 0) -
       this.memorizedCards
