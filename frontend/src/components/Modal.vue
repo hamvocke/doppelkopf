@@ -1,24 +1,20 @@
 <template>
-  <div v-if="visible" class="modal" @click.self="clickaway">
-    <div v-on-clickaway="clickaway" class="modal-content">
+  <div v-if="visible" class="modal" @click.self="emit('clickaway')">
+    <div class="modal-content">
       <slot></slot>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { mixin as clickaway } from "vue-clickaway";
-import { Component, Vue, Prop } from "vue-property-decorator";
+<script setup lang="ts">
+defineProps({
+  visible: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-@Component({ mixins: [clickaway] })
-export default class Modal extends Vue {
-  @Prop({ default: false })
-  visible!: boolean;
-
-  clickaway() {
-    this.$emit("clickaway");
-  }
-}
+const emit = defineEmits(["clickaway"]);
 </script>
 
 <style scoped>
@@ -34,7 +30,7 @@ export default class Modal extends Vue {
   width: 100%;
   z-index: var(--modal-layer);
   color: var(--black);
-  background-color: color(var(--black) a(80%));
+  background-color: var(--outline-color);
 }
 
 .modal-content {

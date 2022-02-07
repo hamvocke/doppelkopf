@@ -35,9 +35,9 @@ export class HttpClient {
     let fetchOptions = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: data ? JSON.stringify(data) : null
+      body: data ? JSON.stringify(data) : null,
     };
     return await fetch(this.baseUrl + path, fetchOptions);
   }

@@ -1,20 +1,16 @@
 <template>
   <div class="controls">
     <button
-      v-if="
-        game.currentTrick.isFinished() && !game.currentRound.noMoreCardsLeft()
-      "
+      v-if="showNextTrickButton()"
       class="button next"
-      @click="triggerNextTrick()"
+      @click="$emit('nextTrick')"
     >
       {{ $t("next-trick") }}
     </button>
     <button
-      v-if="
-        game.currentRound.noMoreCardsLeft() && !game.currentRound.isFinished()
-      "
+      v-if="showFinishRoundButton()"
       class="button finish"
-      @click="triggerFinish()"
+      @click="$emit('finishRound')"
     >
       {{ $t("finish-round") }}
     </button>
@@ -23,33 +19,37 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
+import { ref, PropType } from "vue";
 import AnnouncementsButton from "@/components/AnnouncementsButton.vue";
 import { Features } from "@/models/features";
 import { Game } from "@/models/game";
 
-@Component({
-  components: { AnnouncementsButton }
-})
-export default class Controls extends Vue {
-  @Prop({ required: true })
-  game!: Game;
+const props = defineProps({
+  game: {
+    type: Object as PropType<Game>,
+    required: true,
+  },
+});
 
-  enableAnnouncements = false;
+const emit = defineEmits(["nextTrick", "finishRound"]);
 
-  created() {
-    this.enableAnnouncements = Features.get().enableAnnouncements;
-  }
-
-  triggerNextTrick() {
-    this.$emit("nextTrick");
-  }
-
-  triggerFinish() {
-    this.$emit("finishRound");
-  }
+function showNextTrickButton() {
+  return (
+    props.game.currentTrick.isFinished() &&
+    !props.game.currentRound.noMoreCardsLeft()
+  );
 }
+
+function showFinishRoundButton() {
+  return (
+    props.game.currentRound.noMoreCardsLeft() &&
+    !props.game.currentRound.isFinished()
+  );
+}
+
+const enableAnnouncements = ref(false);
+enableAnnouncements.value = Features.get().enableAnnouncements;
 </script>
 
 <style scoped>

@@ -3,19 +3,19 @@ import { Player } from "./player";
 
 export enum PartyName {
   Re = "Re",
-  Kontra = "Kontra"
+  Kontra = "Kontra",
 }
 
 export function findParties(players: Player[]) {
   return {
     [PartyName.Re]: new Party(
       PartyName.Re,
-      ...players.filter(player => player.isRe())
+      ...players.filter((player) => player.isRe())
     ),
     [PartyName.Kontra]: new Party(
       PartyName.Kontra,
-      ...players.filter(player => player.isKontra())
-    )
+      ...players.filter((player) => player.isKontra())
+    ),
   };
 }
 
@@ -41,7 +41,7 @@ export class Party {
   }
 
   announcements() {
-    return this.players.flatMap(p => [...p.announcements]);
+    return this.players.flatMap((p) => [...p.announcements]);
   }
 
   extras() {
@@ -52,6 +52,6 @@ export class Party {
   }
 
   playerNames(): string {
-    return this.players.map(player => player.name).join(" & ");
+    return this.players.map((player) => player.name).join(" & ");
   }
 }

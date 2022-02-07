@@ -23,7 +23,7 @@ This game is still a work in progress. You will see that it's playable but some 
 * [ ] Custom rules
 
 ## Development
-The game is implemented using TypeScript and [vue.js](https://vuejs.org/). It's capable to run as an offline-first, standalone web application that does not rely on being connected to a backend.
+The game is implemented using TypeScript and [vue.js](https://vuejs.org/). It's capable to run as a standalone web application that does not rely on being connected to a backend.
 
 The backend part is written in Python and using the [Flask](http://flask.pocoo.org/) microframework. It's a tiny application that's only serving administrative tasks (e.g. feature toggles) and collects some high-level metrics about games that have been played.
 
@@ -36,16 +36,15 @@ To work on the frontend, go to the `frontend/` directory
 
 Install frontend dependencies:
 
-    yarn install
+    npm install
 
-Serve the frontend development server on [localhost:8080](http://localhost:8080).
+Serve the frontend development server on [localhost:3000](http://localhost:3000).
 
-    yarn serve
+    npm run dev
 
 Run the tests before and after making changes:
 
-    yarn test:unit
-    yarn test:e2e
+    npm run test
 
 
 ### Backend
@@ -92,9 +91,5 @@ Using `docker-compose` you can start the proxy server that serves the frontend a
 
 Build the frontend application for production, with minification:
 
-    yarn build
-
-Build for production and view the bundle analyzer report
-
-    yarn build --report
+    npm run build
 

@@ -3,9 +3,9 @@ import { Features } from "@/models/features";
 import { shallowMount, config } from "@vue/test-utils";
 import { RouterLinkStub } from "@vue/test-utils";
 
-config.mocks["$t"] = (msg: string) => msg;
-config.mocks["$tc"] = (msg: string) => msg;
-config.mocks["$i18n"] = { locale: "en" };
+config.global.mocks["$t"] = (msg: string) => msg;
+config.global.mocks["$tc"] = (msg: string) => msg;
+config.global.mocks["$i18n"] = { locale: "en" };
 
 jest.useFakeTimers();
 
@@ -16,30 +16,31 @@ beforeEach(() => {
 describe("Home.vue", () => {
   test("should show start button", () => {
     const wrapper = shallowMount(Home, {
-      stubs: { "router-link": RouterLinkStub }
+      global: { stubs: { "router-link": RouterLinkStub } },
     });
+
     expect(wrapper.find(".welcome").exists()).toBe(true);
-    expect(wrapper.find("button.start-game").exists()).toBe(true);
+    expect(wrapper.find(".start-game").exists()).toBe(true);
   });
 
   test("should show tutorial link when feature is disabled", () => {
     Features.get = () => {
       return {
         enableTutorial: false,
-        enableAnnouncements: false
+        enableAnnouncements: false,
       };
     };
 
     const wrapper = shallowMount(Home, {
-      stubs: { "router-link": RouterLinkStub },
-      propsData: { showTutorial: false }
+      global: { stubs: { "router-link": RouterLinkStub } },
+      props: { showTutorial: false },
     });
     expect(wrapper.find(".tutorial-link").exists()).toBe(true);
   });
 
   test("should save player name", async () => {
     const wrapper = shallowMount(Home, {
-      stubs: { "router-link": RouterLinkStub }
+      global: { stubs: { "router-link": RouterLinkStub } },
     });
 
     const nameInput = wrapper.find("#player-name");

@@ -1,12 +1,15 @@
 import { http } from "@/helpers/httpClient";
 import { Config } from "@/models/config";
-import fetchMock from "fetch-mock-jest";
 
-Config.testing = false; // make httpClient fire "real" requests so it's hitting fetchMock
+Config.testing = false; // make httpClient fire "real" requests so it's hitting fetch
 
-beforeEach(() => {
-  fetchMock.reset();
-});
+function mockFetch(data: {}, ok = true, status = 200) {
+  return jest
+    .fn()
+    .mockImplementationOnce(() =>
+      Promise.resolve({ ok: ok, status: status, json: () => data })
+    );
+}
 
 describe("HTTP Client", () => {
   test("should load base url from config", () => {
@@ -14,13 +17,13 @@ describe("HTTP Client", () => {
   });
 
   test("should perform get request", async () => {
-    fetchMock.get("http://localhost:5000/api", 200);
+    window.fetch = mockFetch({}, true, 200);
     const response = await http.get("/api");
     expect(response.status).toEqual(200);
   });
 
   test("should perform post request", async () => {
-    fetchMock.post("http://localhost:5000/api", { some: "data" });
+    window.fetch = mockFetch({ some: "data" }, true, 200);
     const response = await http.post("/api", { input: "data" });
     const responseBody = await response.json();
     expect(response.status).toEqual(200);

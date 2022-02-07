@@ -1,9 +1,9 @@
 import LanguagePicker from "@/components/LanguagePicker.vue";
 import { mount, config } from "@vue/test-utils";
 
-config.mocks["$t"] = (msg: string) => msg;
-config.mocks["$tc"] = (msg: string) => msg;
-config.mocks["$i18n"] = { locale: "en" };
+config.global.mocks["$t"] = (msg: string) => msg;
+config.global.mocks["$tc"] = (msg: string) => msg;
+config.global.mocks["$i18n"] = { locale: "en" };
 
 describe("LanguagePicker.vue", () => {
   test("should show select with two language options", () => {

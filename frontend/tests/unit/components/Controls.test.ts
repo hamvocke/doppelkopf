@@ -4,8 +4,8 @@ import { ace, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
 import { Trick } from "@/models/trick";
 
-config.mocks["$t"] = () => {};
-config.mocks["$tc"] = () => {};
+config.global.mocks["$t"] = () => {};
+config.global.mocks["$tc"] = () => {};
 
 let game: Game;
 let trick: Trick;
@@ -24,7 +24,7 @@ describe("Controls.vue", () => {
 
     game.currentRound.noMoreCardsLeft = () => false;
 
-    const wrapper = mount(Controls, { propsData: { game: game } });
+    const wrapper = mount(Controls, { props: { game: game } });
 
     expect(wrapper.find("button.next").exists()).toBe(true);
   });
@@ -32,13 +32,13 @@ describe("Controls.vue", () => {
   test("should not render next trick button if round can be finished", () => {
     game.currentRound.noMoreCardsLeft = () => false;
 
-    const wrapper = mount(Controls, { propsData: { game: game } });
+    const wrapper = mount(Controls, { props: { game: game } });
 
     expect(wrapper.find("button.next").exists()).toBe(false);
   });
 
   test("should not render next button if trick is empty", () => {
-    const wrapper = mount(Controls, { propsData: { game: game } });
+    const wrapper = mount(Controls, { props: { game: game } });
 
     expect(wrapper.find("button.next").exists()).toBe(false);
   });
@@ -48,7 +48,7 @@ describe("Controls.vue", () => {
     trick.add(ace.of(Suit.Hearts), game.players[1]);
     trick.add(ace.of(Suit.Hearts), game.players[2]);
     trick.add(ace.of(Suit.Hearts), game.players[3]);
-    const wrapper = mount(Controls, { propsData: { game: game } });
+    const wrapper = mount(Controls, { props: { game: game } });
 
     wrapper.find("button.next").trigger("click");
 
@@ -58,7 +58,7 @@ describe("Controls.vue", () => {
   test("should not render finish button if there are still cards left on hands", () => {
     game.currentRound.noMoreCardsLeft = () => false;
 
-    const wrapper = mount(Controls, { propsData: { game: game } });
+    const wrapper = mount(Controls, { props: { game: game } });
 
     expect(wrapper.find("button.finish").exists()).toBe(false);
   });
@@ -66,7 +66,7 @@ describe("Controls.vue", () => {
   test("should render finish button if no more cards are left", () => {
     game.currentRound.noMoreCardsLeft = () => true;
 
-    const wrapper = mount(Controls, { propsData: { game: game } });
+    const wrapper = mount(Controls, { props: { game: game } });
 
     expect(wrapper.find("button.finish").exists()).toBe(true);
   });
@@ -75,14 +75,14 @@ describe("Controls.vue", () => {
     game.currentRound.noMoreCardsLeft = () => true;
     game.currentRound.isFinished = () => true;
 
-    const wrapper = mount(Controls, { propsData: { game: game } });
+    const wrapper = mount(Controls, { props: { game: game } });
 
     expect(wrapper.find("button.finish").exists()).toBe(false);
   });
 
   test("should emit finish event if finish button is clicked", () => {
     game.currentRound.noMoreCardsLeft = () => true;
-    const wrapper = mount(Controls, { propsData: { game: game } });
+    const wrapper = mount(Controls, { props: { game: game } });
 
     wrapper.find("button.finish").trigger("click");
 

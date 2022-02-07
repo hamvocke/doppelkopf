@@ -4,8 +4,8 @@ import { Trick as TrickModel } from "@/models/trick";
 import { ace, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
 
-config.mocks["$t"] = () => {};
-config.mocks["$tc"] = () => {};
+config.global.mocks["$t"] = () => {};
+config.global.mocks["$tc"] = () => {};
 
 let game: Game;
 let trick: TrickModel;
@@ -17,14 +17,14 @@ beforeEach(() => {
 
 describe("Trick.vue", () => {
   test("should show empty trick on initialization", () => {
-    const wrapper = mount(Trick, { propsData: { trick: trick } });
+    const wrapper = mount(Trick, { props: { trick: trick } });
     expect(wrapper.findAll("div.card").length).toEqual(0);
   });
 
   test("should render cards in current trick", () => {
     trick.add(ace.of(Suit.Hearts), game.players[0]);
 
-    const wrapper = mount(Trick, { propsData: { trick: trick } });
+    const wrapper = mount(Trick, { props: { trick: trick } });
 
     expect(wrapper.findAll("div.card").length).toEqual(1);
   });

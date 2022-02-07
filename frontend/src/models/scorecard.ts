@@ -16,7 +16,7 @@ export class Scorecard {
     const winnerPoints = score.totalPoints(score.winningPartyName()!);
     const loserPoints = score.totalPoints(score.losingPartyName()!);
 
-    this.players.forEach(p => {
+    this.players.forEach((p) => {
       newTotalPoints[p.id] = winningPlayers?.includes(p)
         ? this.totalPointsFor(p) + winnerPoints
         : this.totalPointsFor(p) + loserPoints;

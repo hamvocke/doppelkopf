@@ -5,7 +5,7 @@
       :title="$t('options-header')"
       @click="toggleMenu"
     >
-      <settings-icon></settings-icon>
+      <vue-feather type="settings" />
     </div>
     <modal :visible="visible" @clickaway="hideMenu">
       <h2>{{ $t("options-header") }}</h2>
@@ -16,9 +16,7 @@
 
       <div v-if="config.debug" class="option">
         <span class="label">Debug Mode</span>
-        <div>
-          Enabled
-        </div>
+        <div>Enabled</div>
       </div>
       <div v-if="config.debug" class="option">
         <span class="label">Config</span>
@@ -28,29 +26,22 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+<script setup lang="ts">
+import { ref } from "vue";
 import LanguagePicker from "./LanguagePicker.vue";
 import Modal from "./Modal.vue";
-import { mixin as clickaway } from "vue-clickaway";
 import { Config } from "@/models/config";
-import { RotateCcwIcon, SettingsIcon } from "vue-feather-icons";
+import VueFeather from "vue-feather";
 
-@Component({
-  components: { LanguagePicker, SettingsIcon, RotateCcwIcon, Modal },
-  mixins: [clickaway]
-})
-export default class OptionsMenu extends Vue {
-  config = Config;
-  visible: boolean = false;
+const config = ref(Config);
+const visible = ref(false);
 
-  toggleMenu() {
-    this.visible = !this.visible;
-  }
+function toggleMenu() {
+  visible.value = !visible.value;
+}
 
-  hideMenu() {
-    this.visible = false;
-  }
+function hideMenu() {
+  visible.value = false;
 }
 </script>
 

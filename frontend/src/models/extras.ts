@@ -26,18 +26,18 @@ export const extras: { [name: string]: Extra } = {
   got_30_against_no_points: { i18nKey: "got_30_against_no_points", points: 1 },
   opposing_party_announced_no_90: {
     i18nKey: "opposing_party_announced_no_90",
-    points: 1
+    points: 1,
   },
   opposing_party_announced_no_60: {
     i18nKey: "opposing_party_announced_no_60",
-    points: 1
+    points: 1,
   },
   opposing_party_announced_no_30: {
     i18nKey: "opposing_party_announced_no_30",
-    points: 1
+    points: 1,
   },
   opposing_party_announced_no_points: {
     i18nKey: "opposing_party_announced_no_points",
-    points: 1
-  }
+    points: 1,
+  },
 };

@@ -1,6 +1,6 @@
 import { Game } from "@/models/game";
 import { Round } from "@/models/round";
-import { Notifier } from "@/models/notifier";
+import { notifier } from "@/models/notifier";
 import { jack, Suit, ace } from "@/models/card";
 import { options } from "@/models/options";
 import { Hand } from "@/models/hand";
@@ -110,7 +110,6 @@ test("should show extras as flash message", async () => {
   round.currentTrick.add(ace.of(Suit.Hearts), round.players[3]);
   round.currentTrick.add(ace.of(Suit.Diamonds), round.players[0]);
 
-  const notifier = new Notifier();
   notifier.flash = jest.fn();
 
   await round.finishTrick();
@@ -149,7 +148,7 @@ describe("player order", () => {
       reset: jest.fn(() => null),
       cardToPlay: (hand: Hand) => hand.cards[0],
       announcementToMake: jest.fn(() => null),
-      handleAffinityEvent: jest.fn(() => null)
+      handleAffinityEvent: jest.fn(() => null),
     };
     round.playerOrder.prioritize(round.players[3]);
     round.players[3].behavior = playFirstCardBehavior;
@@ -256,7 +255,7 @@ function trickStack(points: number, extras: Array<Extra>): TrickStack {
     extras: () => extras,
     tricks: new Array<Trick>(),
     add: () => {},
-    cards: () => []
+    cards: () => [],
   };
 }
 

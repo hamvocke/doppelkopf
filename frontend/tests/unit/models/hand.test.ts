@@ -7,7 +7,7 @@ import {
   king,
   queen,
   jack,
-  cardOrder
+  cardOrder,
 } from "@/models/card";
 import { allCards } from "@/models/deck";
 import { shuffle } from "@/models/random";
@@ -43,7 +43,7 @@ test("hand has a value", () => {
   const cards = [
     queen.of(Suit.Spades),
     ten.of(Suit.Hearts),
-    ace.of(Suit.Diamonds)
+    ace.of(Suit.Diamonds),
   ];
   const hand = new Hand(cards);
 
@@ -131,7 +131,7 @@ test("should detect hand with 5 kings as not playable", () => {
     ten.of(Suit.Spades),
     king.of(Suit.Diamonds),
     queen.of(Suit.Spades),
-    queen.of(Suit.Hearts)
+    queen.of(Suit.Hearts),
   ];
   const hand = new Hand(cards);
 
@@ -149,7 +149,7 @@ test("should detect playable hand", () => {
     ten.of(Suit.Spades),
     king.of(Suit.Diamonds),
     queen.of(Suit.Spades),
-    queen.of(Suit.Hearts)
+    queen.of(Suit.Hearts),
   ];
   const hand = new Hand(cards);
 
@@ -167,7 +167,7 @@ test("should detect hand with more than seven ten point cards", () => {
     ten.of(Suit.Hearts),
     king.of(Suit.Hearts),
     queen.of(Suit.Spades),
-    queen.of(Suit.Hearts)
+    queen.of(Suit.Hearts),
   ];
   const hand = new Hand(cards);
 
@@ -185,7 +185,7 @@ test("should detect hand with trumps equal or lesser than jack of diamonds", () 
     ten.of(Suit.Diamonds),
     ten.of(Suit.Diamonds),
     jack.of(Suit.Diamonds),
-    jack.of(Suit.Diamonds)
+    jack.of(Suit.Diamonds),
   ];
   const hand = new Hand(cards);
 
@@ -203,7 +203,7 @@ test("should detect suits that can be served", () => {
     ten.of(Suit.Diamonds),
     ten.of(Suit.Diamonds),
     jack.of(Suit.Spades),
-    jack.of(Suit.Spades)
+    jack.of(Suit.Spades),
   ];
   const hand = new Hand(cards);
 
@@ -223,7 +223,7 @@ test("should detect correct number of trumps in hand", () => {
     ten.of(Suit.Diamonds),
     ten.of(Suit.Diamonds),
     jack.of(Suit.Diamonds),
-    jack.of(Suit.Diamonds)
+    jack.of(Suit.Diamonds),
   ];
   const hand = new Hand(cards);
 
@@ -241,13 +241,13 @@ test("should detect multiple single blank aces", () => {
     ten.of(Suit.Hearts),
     queen.of(Suit.Diamonds),
     ace.of(Suit.Diamonds),
-    jack.of(Suit.Spades)
+    jack.of(Suit.Spades),
   ];
   const hand = new Hand(cards);
 
   expect(hand.getBlankAces()).toEqual([
     ace.of(Suit.Spades).first(),
-    ace.of(Suit.Hearts).first()
+    ace.of(Suit.Hearts).first(),
   ]);
 });
 
@@ -262,7 +262,7 @@ test("should detect low value cards in hand", () => {
     ten.of(Suit.Hearts),
     queen.of(Suit.Diamonds),
     ace.of(Suit.Diamonds),
-    jack.of(Suit.Spades)
+    jack.of(Suit.Spades),
   ];
   const hand = new Hand(cards);
 
@@ -280,7 +280,7 @@ test("should detect low value cards in hand", () => {
     queen.of(Suit.Spades),
     queen.of(Suit.Clubs),
     ten.of(Suit.Hearts),
-    ten.of(Suit.Hearts)
+    ten.of(Suit.Hearts),
   ];
   const hand = new Hand(cards);
 
@@ -295,7 +295,7 @@ test("should detect highest card in hand", () => {
     tenOfHearts,
     king.of(Suit.Clubs).first(),
     queen.of(Suit.Hearts).first(),
-    jack.of(Suit.Clubs).first()
+    jack.of(Suit.Clubs).first(),
   ];
   const hand = new Hand(cards);
 

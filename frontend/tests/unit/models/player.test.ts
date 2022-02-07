@@ -4,7 +4,7 @@ import { Hand } from "@/models/hand";
 import { PlayedCard } from "@/models/playedCard";
 import { king, queen, ten, Suit } from "@/models/card";
 import { TrickStack } from "@/models/trickStack";
-import { Notifier } from "@/models/notifier";
+import { notifier } from "@/models/notifier";
 import { options } from "@/models/options";
 import { Announcement } from "@/models/announcements";
 import { Trick } from "@/models/trick";
@@ -13,7 +13,6 @@ import { aHandWith, aHandWithout } from "../../builders/handBuilder";
 
 let game: any;
 let player: Player;
-const notifier = new Notifier();
 
 jest.useFakeTimers();
 
@@ -162,7 +161,7 @@ test("should autoplay a card", async () => {
     reset: jest.fn(() => null),
     cardToPlay: jest.fn(() => kingOnHand),
     announcementToMake: jest.fn(() => null),
-    handleAffinityEvent: jest.fn(() => null)
+    handleAffinityEvent: jest.fn(() => null),
   };
 
   await player.autoplay();
@@ -184,7 +183,7 @@ test("should try to make an announcement", async () => {
     reset: jest.fn(() => null),
     cardToPlay: jest.fn(() => player.hand.cards[0]),
     announcementToMake: jest.fn(() => null),
-    handleAffinityEvent: jest.fn(() => null)
+    handleAffinityEvent: jest.fn(() => null),
   };
 
   await player.autoplay();
@@ -331,7 +330,7 @@ describe("announcements", () => {
         Announcement.No90,
         Announcement.No60,
         Announcement.No30,
-        Announcement.NoPoints
+        Announcement.NoPoints,
       ])
     );
   });
@@ -346,7 +345,7 @@ describe("announcements", () => {
       Announcement.No90,
       Announcement.No60,
       Announcement.No30,
-      Announcement.NoPoints
+      Announcement.NoPoints,
     ]);
     expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
@@ -361,7 +360,7 @@ describe("announcements", () => {
       Announcement.No90,
       Announcement.No60,
       Announcement.No30,
-      Announcement.NoPoints
+      Announcement.NoPoints,
     ]);
     expect(possibleAnnouncements).toEqual(expectedAnnouncements);
   });
@@ -374,13 +373,13 @@ describe("announcements", () => {
         Announcement.No90,
         Announcement.No60,
         Announcement.No30,
-        Announcement.NoPoints
-      ]
+        Announcement.NoPoints,
+      ],
     },
     {
       numberOfCards: 8,
       previousAnnouncements: [],
-      expectedAnnouncements: []
+      expectedAnnouncements: [],
     },
     {
       numberOfCards: 7,
@@ -388,27 +387,27 @@ describe("announcements", () => {
       expectedAnnouncements: [
         Announcement.No60,
         Announcement.No30,
-        Announcement.NoPoints
-      ]
+        Announcement.NoPoints,
+      ],
     },
     {
       numberOfCards: 7,
       previousAnnouncements: [Announcement.Re],
-      expectedAnnouncements: []
+      expectedAnnouncements: [],
     },
     {
       numberOfCards: 6,
       previousAnnouncements: [
         Announcement.Re,
         Announcement.No90,
-        Announcement.No60
+        Announcement.No60,
       ],
-      expectedAnnouncements: [Announcement.No30, Announcement.NoPoints]
+      expectedAnnouncements: [Announcement.No30, Announcement.NoPoints],
     },
     {
       numberOfCards: 6,
       previousAnnouncements: [Announcement.Re, Announcement.No90],
-      expectedAnnouncements: []
+      expectedAnnouncements: [],
     },
     {
       numberOfCards: 5,
@@ -416,26 +415,26 @@ describe("announcements", () => {
         Announcement.Re,
         Announcement.No90,
         Announcement.No60,
-        Announcement.No30
+        Announcement.No30,
       ],
-      expectedAnnouncements: [Announcement.NoPoints]
+      expectedAnnouncements: [Announcement.NoPoints],
     },
     {
       numberOfCards: 5,
       previousAnnouncements: [
         Announcement.Re,
         Announcement.No90,
-        Announcement.No60
+        Announcement.No60,
       ],
-      expectedAnnouncements: []
-    }
+      expectedAnnouncements: [],
+    },
   ];
 
   test.each(announcementThreholds)(
     "should respect announcement thresholds",
     ({ numberOfCards, previousAnnouncements, expectedAnnouncements }) => {
       player.hand = aHandWith(numberOfCards, queen.of(Suit.Clubs));
-      previousAnnouncements.forEach(a => player.announcements.add(a));
+      previousAnnouncements.forEach((a) => player.announcements.add(a));
 
       const possibleAnnouncements = player.possibleAnnouncements();
 
@@ -450,8 +449,8 @@ describe("announcements", () => {
       Announcement.No90,
       Announcement.No60,
       Announcement.No30,
-      Announcement.NoPoints
-    ].forEach(a => player.announcements.add(a));
+      Announcement.NoPoints,
+    ].forEach((a) => player.announcements.add(a));
 
     let possibleAnnouncements = player.possibleAnnouncements();
 
@@ -480,4 +479,3 @@ describe("announcements", () => {
     expect(player.possibleAnnouncements()).not.toContain(Announcement.No90);
   });
 });
-

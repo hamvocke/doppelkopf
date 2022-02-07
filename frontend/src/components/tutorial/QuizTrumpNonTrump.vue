@@ -6,12 +6,8 @@
     </transition>
     <div class="text">
       <div class="question">Diese Karte ist&hellip;</div>
-      <button class="button trump" @click="checkAnswer(true)">
-        Trumpf
-      </button>
-      <button class="button non-trump" @click="checkAnswer(false)">
-        Fehl
-      </button>
+      <button class="button trump" @click="checkAnswer(true)">Trumpf</button>
+      <button class="button non-trump" @click="checkAnswer(false)">Fehl</button>
     </div>
 
     <transition name="message">
@@ -22,58 +18,55 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+<script setup lang="ts">
+import { ref, nextTick } from "vue";
 import Card from "@/components/Card.vue";
 import { ace, jack, queen, king, ten, Suit } from "@/models/card";
 
-@Component({ components: { Card } })
-export default class QuizTrumpNonTrump extends Vue {
-  cards = [
-    ace.of(Suit.Clubs),
-    ace.of(Suit.Diamonds),
-    jack.of(Suit.Spades),
-    jack.of(Suit.Hearts),
-    ten.of(Suit.Clubs),
-    king.of(Suit.Hearts),
-    ace.of(Suit.Spades),
-    queen.of(Suit.Spades),
-    king.of(Suit.Diamonds),
-    ten.of(Suit.Hearts)
-  ];
-  currentCard = 0;
-  lastMessage = "";
-  showCard = true;
+const cards = [
+  ace.of(Suit.Clubs),
+  ace.of(Suit.Diamonds),
+  jack.of(Suit.Spades),
+  jack.of(Suit.Hearts),
+  ten.of(Suit.Clubs),
+  king.of(Suit.Hearts),
+  ace.of(Suit.Spades),
+  queen.of(Suit.Spades),
+  king.of(Suit.Diamonds),
+  ten.of(Suit.Hearts),
+];
+const currentCard = ref(0);
+const lastMessage = ref("");
+const showCard = ref(true);
 
-  checkAnswer(answeredTrump: boolean) {
-    let card = this.cards[this.currentCard];
-    if (card.isTrump() == answeredTrump) {
-      // hack: need to hide and show on next tick to make transition work
-      this.showCard = false;
-      this.showMessage("🎉 Correct!");
+function checkAnswer(answeredTrump: boolean) {
+  let card = cards[currentCard.value];
+  if (card.isTrump() == answeredTrump) {
+    // hack: need to hide and show on next tick to make transition work
+    showCard.value = false;
+    showMessage("🎉 Correct!");
 
-      this.nextCard();
-      this.$nextTick(() => {
-        this.showCard = true;
-      });
-    } else {
-      let message = "❌ Nah, that's not right.";
-      message += ` ${card.whyTrump()}`;
-      this.showMessage(message);
-    }
+    nextCard();
+    nextTick(() => {
+      showCard.value = true;
+    });
+  } else {
+    let message = "❌ Nah, that's not right.";
+    message += ` ${card.whyTrump()}`;
+    showMessage(message);
   }
+}
 
-  showMessage(message: string) {
-    this.lastMessage = message;
+function showMessage(message: string) {
+  lastMessage.value = message;
 
-    setTimeout(() => {
-      this.lastMessage = "";
-    }, 4000);
-  }
+  setTimeout(() => {
+    lastMessage.value = "";
+  }, 4000);
+}
 
-  nextCard() {
-    this.currentCard = (this.currentCard + 1) % this.cards.length;
-  }
+function nextCard() {
+  currentCard.value = (currentCard.value + 1) % cards.length;
 }
 </script>
 
@@ -91,7 +84,7 @@ export default class QuizTrumpNonTrump extends Vue {
   transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.card-enter {
+.card-enter-from {
   opacity: 0;
   transform: scale(2, 2);
 }
@@ -101,12 +94,11 @@ export default class QuizTrumpNonTrump extends Vue {
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.message-leave-to,
-.message-leave {
+.message-leave-to {
   opacity: 0;
 }
 
-.message-enter {
+.message-enter-from {
   opacity: 0;
   transform: scale(0.5, 0.5);
 }
