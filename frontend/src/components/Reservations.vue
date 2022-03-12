@@ -16,29 +16,40 @@
     </div>
 
     <div class="reservations-wrapper">
-      <div class="reservation-group">
-        <h3>Normales Spiel</h3>
-        <p>
-          Du meldest keinen Vorbehalt an und möchtest ein normales Spiel
-          spielen.
-        </p>
-        <button type="button" class="button">Gesund</button>
+      <div class="reservation">
+        <h3>Gesund!</h3>
+        <div class="description">
+          <vue-feather type="heart" size="36" />
+          <p>
+            Du möchtest ein normales Spiel spielen und meldest keinen Vorbehalt
+            an.
+          </p>
+        </div>
       </div>
 
-      <div v-if="!showVorbehalt" class="reservation-group">
-        <h3>Vorbehalt</h3>
-        <p>Du möchtest ein Sonderspiel spielen.</p>
-        <button type="button" class="button" @click="showVorbehalt = true">
-          Vorbehalt
-        </button>
+      <div class="reservation disabled">
+        <h3>Hochzeit</h3>
+        <span class="badge">coming soon</span>
+        <div class="description">
+          <vue-feather type="bell" size="36" />
+          <p>
+            Du hast beide Re-Damen. Wer den ersten Stich gewinnt, wird dein
+            Partner.
+          </p>
+        </div>
       </div>
+    </div>
 
-      <div v-if="showVorbehalt" class="reservation-group">
+    <div class="reservation-wrapper">
+      <div class="reservation">
         <h3>Solo</h3>
-        <p>
-          Du spielst allein gegen die drei anderen Spieler. Die
-          Kartenreihenfolge ändert sich je nach Solo.
-        </p>
+        <div class="description">
+          <vue-feather type="user" size="36" />
+          <p>
+            Du spielst allein gegen die drei anderen Spieler. Die
+            Kartenreihenfolge ändert sich je nach Solo.
+          </p>
+        </div>
 
         <div class="solo">
           <input id="damensolo" type="radio" name="solo" value="damensolo" />
@@ -100,15 +111,6 @@
 
         <button type="button" class="button">Solo</button>
       </div>
-
-      <div v-if="showVorbehalt" class="reservation-group">
-        <h3>Hochzeit</h3>
-        <p>
-          Du hast beide Re-Damen und meldest eine Hochzeit an. Wer den ersten
-          Stich gewinnt, spielt mit dir zusammen.
-        </p>
-        <button type="button" class="button">Hochzeit</button>
-      </div>
     </div>
   </modal>
 </template>
@@ -118,6 +120,7 @@ import { Game } from "@/models/game";
 import Modal from "@/components/Modal.vue";
 import Hand from "@/components/Hand.vue";
 import { PropType, ref } from "vue";
+import VueFeather from "vue-feather";
 
 defineProps({
   game: {
@@ -142,9 +145,46 @@ p {
   justify-content: center;
 }
 
-.reservation-group {
-  padding: 8px;
-  flex: 1 100%;
+.reservation {
+  padding: 16px;
+  flex: 1 1 0px;
+  margin: 12px 0;
+  border: 2px solid var(--lightblue);
+}
+
+.reservation.disabled {
+  border: 2px dashed var(--lightblue);
+  opacity: 0.5;
+}
+
+.reservation h3 {
+  margin-top: 0;
+  display: inline-block;
+}
+
+.badge {
+  display: inline-block;
+  color: var(--white);
+  background: var(--lightblue);
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  margin-left: 6px;
+}
+
+.description {
+  display: flex;
+  align-items: top;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.description i {
+  flex-shrink: 0;
+}
+
+.description p {
+  margin: 0;
 }
 
 .hand-wrapper {
