@@ -220,7 +220,8 @@ function partyMembers(party: string) {
   right: calc(-50vw + 50%);
   margin-left: auto;
   margin-right: auto;
-  width: 66%;
+  max-width: 900px;
+  width: 75%;
   max-height: 90%;
   color: var(--black);
   display: flex;
