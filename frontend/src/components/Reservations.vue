@@ -1,10 +1,12 @@
 <template>
   <modal :visible="true">
-    <h2>Alle Gesund?</h2>
+    <h1>Alle Gesund?</h1>
+
     <p>
-      Hier sind deine Karten.<br />
-      Willst du ein normales Spiel oder ein Sonderspiel spielen?
+      Hier sind deine Karten. Willst du ein normales Spiel oder ein Sonderspiel
+      spielen?
     </p>
+
     <div class="hand-wrapper">
       <hand
         :hand="game.players[0].hand"
@@ -130,15 +132,22 @@ p {
 
 .reservations-wrapper {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   justify-content: center;
 }
 
 .reservation {
+  min-width: 200px;
   padding: 16px;
   flex: 1 1 0px;
   margin: 12px 0;
-  border: 2px solid var(--lightblue);
+  border-radius: 8px;
+  border: 2px solid var(--white-300);
+}
+
+.reservation.selected {
+  border-color: var(--red-dark);
 }
 
 .reservation.disabled {
@@ -180,10 +189,12 @@ p {
   border-radius: 8px;
   background: var(--black);
   padding: 24px;
+  margin: 32px 0;
 }
 
 .solo-wrapper {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
 }
 
