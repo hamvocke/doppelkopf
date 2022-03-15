@@ -44,7 +44,7 @@
 
       <div class="row">
         <div class="column">
-          <h2>{{ $t("results") }}</h2>
+          <h2>{{ $t("score") }}</h2>
 
           <div class="row">
             <table>
@@ -98,7 +98,7 @@
         </div>
 
         <div class="column">
-          <h2>{{ $t("points-plain") }}</h2>
+          <h2>{{ $t("scorecard") }}</h2>
           <table>
             <tr>
               <th
