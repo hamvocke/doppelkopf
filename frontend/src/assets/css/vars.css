@@ -10,11 +10,17 @@
     --lightblue-dark: #345c76;
     --cyan: #a8dadc;
     --cyan-dark: #7ea4a5;
-    --white: #f8fafc;
+    --white: #ffffff;
+    --white-050: #f8fafc;
     --white-100: #f1f5f9;
     --white-200: #e2e8f0;
-    --white-300: #c6c8ca;
-    --white-400: #a1a3a4;
+    --white-300: #cbd5e1;
+    --white-400: #94a3b8;
+    --white-500: #64748b;
+    --white-600: #475569;
+    --white-700: #334155;
+    --white-800: #1E293B;
+    --white-900: #0F172A;
     --outline-color: rgba(69, 123, 157, 0.4); /* lightblue, with 0.4 opacity */
 
     /* z-index layers */
