@@ -34,7 +34,8 @@ const emit = defineEmits(["clickaway"]);
 }
 
 .modal-content {
-  max-width: 80%;
+  max-width: 900px;
+  max-height: 100%;
   background-color: var(--white);
   border-radius: 8px;
   box-sizing: border-box;
@@ -45,11 +46,5 @@ const emit = defineEmits(["clickaway"]);
   display: flex;
   flex-direction: column;
   overflow: auto;
-}
-
-@media screen and (max-width: 680px) {
-  .modal-content {
-    max-width: 100%;
-  }
 }
 </style>
