@@ -46,71 +46,60 @@
         <div class="description">
           <vue-feather type="user" size="36" />
           <p>
-            Du spielst allein gegen die drei anderen Spieler. Die
-            Kartenreihenfolge ändert sich je nach Solo.
+            Du spielst allein gegen die drei anderen Spieler. Gewinnst du,
+            erhältst du die dreifache Punktzahl.
           </p>
         </div>
 
-        <div class="solo">
-          <input id="damensolo" type="radio" name="solo" value="damensolo" />
-          <label for="damensolo">
-            Damensolo
-            <small>Damen sind Trumpf, alle anderen Karten sind Fehl</small>
-          </label>
-        </div>
+        <div class="solo-wrapper">
+          <div class="solo">
+            <vue-feather type="user" size="36" />
+            <input id="damensolo" type="radio" name="solo" value="damensolo" />
+            <label for="damensolo">
+              Damensolo
+              <small>Damen sind Trumpf, alle anderen Karten sind Fehl</small>
+            </label>
+          </div>
 
-        <div class="solo">
-          <input id="bubensolo" type="radio" name="solo" value="bubensolo" />
-          <label for="bubensolo">
-            Bubensolo
-            <small>Buben sind Trumpf, alle anderen Karten sind Fehl</small>
-          </label>
-        </div>
+          <div class="solo">
+            <vue-feather type="user" size="36" />
+            <input id="bubensolo" type="radio" name="solo" value="bubensolo" />
+            <label for="bubensolo">
+              Bubensolo
+              <small>Buben sind Trumpf, alle anderen Karten sind Fehl</small>
+            </label>
+          </div>
 
-        <div class="solo">
-          <input id="kreuzsolo" type="radio" name="solo" value="kreuzsolo" />
-          <label for="kreuzsolo">
-            Kreuzsolo
-            <small> Kreuz ersetzt Karo als Trumpffarbe </small>
-          </label>
-        </div>
+          <div class="solo">
+            <vue-feather type="user" size="36" />
+            <input id="kreuzsolo" type="radio" name="solo" value="kreuzsolo" />
+            <label for="kreuzsolo">
+              Kreuzsolo
+              <small> Kreuz ersetzt Karo als Trumpffarbe </small>
+            </label>
+          </div>
 
-        <div class="solo">
-          <input id="piksolo" type="radio" name="solo" value="piksolo" />
-          <label for="piksolo">
-            Piksolo
-            <small>Pik ersetzt Karo als Trumpffarbe</small>
-          </label>
+          <div class="solo">
+            <vue-feather type="user" size="36" />
+            <input
+              id="fleischlos"
+              type="radio"
+              name="solo"
+              value="fleischlos"
+            />
+            <label for="fleischlos">
+              Fleischloser
+              <small>
+                Es gibt keine Trümpfe, alle Karten sind Fehl und werden eingereiht
+              </small>
+            </label>
+          </div>
         </div>
-
-        <div class="solo">
-          <input id="herzsolo" type="radio" name="solo" value="herzsolo" />
-          <label for="herzsolo">
-            Herzsolo
-            <small>Herz ersetzt Karo als Trumpffarbe</small>
-          </label>
-        </div>
-
-        <div class="solo">
-          <input id="karosolo" type="radio" name="solo" value="karosolo" />
-          <label for="karosolo">
-            Karosolo
-            <small>Die Kartenreihenfolge bleibt, aber du spielst alleine</small>
-          </label>
-        </div>
-
-        <div class="solo">
-          <input id="fleischlos" type="radio" name="solo" value="fleischlos" />
-          <label for="fleischlos">
-            Fleischloser
-            <small>
-              Es gibt keine Trümpfe, alle Karten sind Fehl und werden eingereiht
-            </small>
-          </label>
-        </div>
-
-        <button type="button" class="button">Solo</button>
       </div>
+    </div>
+
+    <div>
+      <button type="button" class="button">Vorbehalt anmelden</button>
     </div>
   </modal>
 </template>
@@ -193,19 +182,27 @@ p {
   padding: 24px;
 }
 
-.solo {
+.solo-wrapper {
   display: flex;
-  align-items: flex-start;
+  gap: 6px;
+}
+
+.solo {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
 }
 
 .solo input {
-  margin-top: 2px;
+  display: none;
 }
 
 .solo label {
+  text-align: center;
   display: inline-flex;
   flex-direction: column;
-  margin-left: 12px;
   font-weight: bold;
 }
 
