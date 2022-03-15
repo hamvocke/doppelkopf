@@ -81,7 +81,7 @@ function cardClasses() {
   height: 85px;
   width: 58px;
   color: var(--black);
-  background: var(--white);
+  background: var(--white-050);
   padding: 6px;
   border-radius: 10px;
   text-align: center;

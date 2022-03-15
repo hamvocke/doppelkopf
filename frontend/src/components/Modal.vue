@@ -35,7 +35,7 @@ const emit = defineEmits(["clickaway"]);
 
 .modal-content {
   max-width: 80%;
-  background-color: var(--white-100);
+  background-color: var(--white);
   border-radius: 8px;
   box-sizing: border-box;
   padding: 16px;
