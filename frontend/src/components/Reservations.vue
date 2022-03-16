@@ -18,7 +18,7 @@
     </div>
 
     <div class="reservations-wrapper">
-      <div class="reservation">
+      <div class="reservation selectable" tabindex="0">
         <h3>Gesund!</h3>
         <div class="description">
           <vue-feather type="heart" size="36" />
@@ -42,60 +42,58 @@
       </div>
     </div>
 
-    <div class="reservation-wrapper">
-      <div class="reservation">
-        <h3>Solo</h3>
-        <div class="description">
+    <div class="reservation-wrapper solos">
+      <h3>Solo</h3>
+      <div class="description">
+        <vue-feather type="user" size="36" />
+        <p>
+          Du spielst allein gegen die drei anderen Spieler. Gewinnst du,
+          erhältst du die dreifache Punktzahl.
+        </p>
+      </div>
+
+      <div class="solo-wrapper">
+        <div class="solo selectable" tabindex="0">
           <vue-feather type="user" size="36" />
-          <p>
-            Du spielst allein gegen die drei anderen Spieler. Gewinnst du,
-            erhältst du die dreifache Punktzahl.
-          </p>
+          <input id="damensolo" type="radio" name="solo" value="damensolo" />
+          <label for="damensolo">
+            Damensolo
+            <small>Damen sind Trumpf, alle anderen Karten sind Fehl</small>
+          </label>
         </div>
 
-        <div class="solo-wrapper">
-          <div class="solo">
-            <vue-feather type="user" size="36" />
-            <input id="damensolo" type="radio" name="solo" value="damensolo" />
-            <label for="damensolo">
-              Damensolo
-              <small>Damen sind Trumpf, alle anderen Karten sind Fehl</small>
-            </label>
-          </div>
+        <div class="solo selectable" tabindex="0">
+          <vue-feather type="user" size="36" />
+          <input id="bubensolo" type="radio" name="solo" value="bubensolo" />
+          <label for="bubensolo">
+            Bubensolo
+            <small>Buben sind Trumpf, alle anderen Karten sind Fehl</small>
+          </label>
+        </div>
 
-          <div class="solo">
-            <vue-feather type="user" size="36" />
-            <input id="bubensolo" type="radio" name="solo" value="bubensolo" />
-            <label for="bubensolo">
-              Bubensolo
-              <small>Buben sind Trumpf, alle anderen Karten sind Fehl</small>
-            </label>
-          </div>
+        <div class="solo selectable" tabindex="0">
+          <vue-feather type="user" size="36" />
+          <input id="kreuzsolo" type="radio" name="solo" value="kreuzsolo" />
+          <label for="kreuzsolo">
+            Farbsolo
+            <small>Kreuz ersetzt Karo als Trumpffarbe</small>
+          </label>
+        </div>
 
-          <div class="solo">
-            <vue-feather type="user" size="36" />
-            <input id="kreuzsolo" type="radio" name="solo" value="kreuzsolo" />
-            <label for="kreuzsolo">
-              Kreuzsolo
-              <small> Kreuz ersetzt Karo als Trumpffarbe </small>
-            </label>
-          </div>
-
-          <div class="solo">
-            <vue-feather type="user" size="36" />
-            <input
-              id="fleischlos"
-              type="radio"
-              name="solo"
-              value="fleischlos"
-            />
-            <label for="fleischlos">
-              Fleischloser
-              <small>
-                Es gibt keine Trümpfe, alle Karten sind Fehl und werden eingereiht
-              </small>
-            </label>
-          </div>
+        <div class="solo selectable" tabindex="0">
+          <vue-feather type="user" size="36" />
+          <input
+            id="fleischlos"
+            type="radio"
+            name="solo"
+            value="fleischlos"
+          />
+          <label for="fleischlos">
+            Fleischloser
+            <small>
+              Es gibt keine Trümpfe, alle Karten sind Fehl und werden eingereiht
+            </small>
+          </label>
         </div>
       </div>
     </div>
@@ -133,17 +131,28 @@ p {
 .reservations-wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 16px;
   justify-content: center;
+}
+
+.selectable {
+  cursor: pointer;
 }
 
 .reservation {
   min-width: 200px;
   padding: 16px;
   flex: 1 1 0px;
-  margin: 12px 0;
+  margin: 16px 0;
   border-radius: 8px;
   border: 2px solid var(--white-300);
+}
+
+.reservation:hover,
+.reservation:active,
+.solo:hover,
+.solo:active {
+  border-color: var(--white-400);
 }
 
 .reservation.selected {
@@ -198,12 +207,21 @@ p {
   gap: 6px;
 }
 
+.solos {
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid var(--white-300);
+}
+
 .solo {
   flex: 1 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--white-300);
+  background-color: var(--white-050);
 }
 
 .solo input {
