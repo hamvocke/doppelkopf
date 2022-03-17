@@ -5,10 +5,10 @@
     tabindex="0"
     @click="toggle"
   >
-    <div>
+    <div class="flex">
       <slot></slot>
     </div>
-    <div v-if="selected" class="checkmark flex-item">
+    <div :class="{ show: selected }" class="checkmark flex-item">
       <vue-feather type="check" size="16" />
     </div>
   </div>
@@ -58,6 +58,12 @@ function toggle() {
   border: 1px solid var(--red-dark);
 }
 
+.flex {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
 .checkmark {
   display: inline-flex;
   justify-items: center;
@@ -69,6 +75,12 @@ function toggle() {
   width: 18px;
   color: var(--white);
   padding: 2px;
+  margin-left: 12px;
+  visibility: hidden;
+}
+
+.show {
+  visibility: visible;
 }
 .checkmark i {
   display: block;
