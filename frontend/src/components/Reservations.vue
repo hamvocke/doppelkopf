@@ -18,11 +18,20 @@
     </div>
 
     <div class="dark-box">
+      <h1>Spiel mit Partner</h1>
+      <p>
+        Du möchtest mit einem Partner gegen zwei andere Spieler spielen. Wer
+        dein Partner ist, musst du erst noch herausfinden.
+      </p>
       <div class="reservations-wrapper">
         <div class="reservation selectable" tabindex="0">
-          <h3>Gesund!</h3>
+          <h2>Gesund!</h2>
           <div class="description">
-            <vue-feather type="heart" size="36" />
+            <img
+              src="@/assets/img/healthy.png"
+              alt="healthy icon"
+              class="reservation-icon"
+            />
             <p>
               Du möchtest ein normales Spiel spielen und meldest keinen
               Vorbehalt an.
@@ -31,10 +40,14 @@
         </div>
 
         <div class="reservation disabled">
-          <h3>Hochzeit</h3>
+          <h2>Hochzeit</h2>
           <span class="badge">coming soon</span>
           <div class="description">
-            <vue-feather type="bell" size="36" />
+            <img
+              src="@/assets/img/rings.png"
+              alt="wedding icon"
+              class="reservation-icon"
+            />
             <p>
               Du hast beide Re-Damen. Wer den ersten Stich gewinnt, wird dein
               Partner.
@@ -44,9 +57,13 @@
       </div>
 
       <div class="reservation-wrapper solos">
-        <h3>Solo</h3>
+        <h1>Solo</h1>
         <div class="description">
-          <vue-feather type="user" size="36" />
+          <img
+            src="@/assets/img/team.png"
+            alt="solo icon"
+            class="reservation-icon"
+          />
           <p>
             Du spielst allein gegen die drei anderen Spieler. Gewinnst du,
             erhältst du die dreifache Punktzahl.
@@ -55,7 +72,11 @@
 
         <div class="solo-wrapper">
           <div class="solo selectable" tabindex="0">
-            <vue-feather type="user" size="36" />
+            <img
+              src="@/assets/img/queen.png"
+              alt="queen icon"
+              class="reservation-icon"
+            />
             <input id="damensolo" type="radio" name="solo" value="damensolo" />
             <label for="damensolo">
               Damensolo
@@ -64,7 +85,11 @@
           </div>
 
           <div class="solo selectable" tabindex="0">
-            <vue-feather type="user" size="36" />
+            <img
+              src="@/assets/img/jack.png"
+              alt="jack icon"
+              class="reservation-icon"
+            />
             <input id="bubensolo" type="radio" name="solo" value="bubensolo" />
             <label for="bubensolo">
               Bubensolo
@@ -74,7 +99,11 @@
 
           <div class="solo-selector">
             <div class="solo selectable" tabindex="0">
-              <vue-feather type="user" size="36" />
+              <img
+                src="@/assets/img/heart.png"
+                alt="heart icon"
+                class="reservation-icon"
+              />
               <input id="kreuzsolo" type="radio" name="solo" value="kreuzsolo" />
               <label for="kreuzsolo">
                 Farbsolo
@@ -82,15 +111,19 @@
               </label>
             </div>
             <div class="solo-suits">
-              <div class="suit-box">♣</div>
-              <div class="suit-box active">♠</div>
-              <div class="suit-box">♥</div>
-              <div class="suit-box">♦</div>
+              <div class="suit-box black">♣</div>
+              <div class="suit-box black active">♠</div>
+              <div class="suit-box red">♥</div>
+              <div class="suit-box red">♦</div>
             </div>
           </div>
 
           <div class="solo selectable" tabindex="0">
-            <vue-feather type="user" size="36" />
+            <img
+              src="@/assets/img/skeleton.png"
+              alt="skeleton icon"
+              class="reservation-icon"
+            />
             <input
               id="fleischlos"
               type="radio"
@@ -183,7 +216,7 @@ p {
   opacity: 0.6;
 }
 
-.reservation h3 {
+.reservation h2 {
   margin-top: 0;
   display: inline-block;
 }
@@ -283,6 +316,13 @@ p {
   border: 1px solid var(--white-400);
 }
 
+.suit-box.red {
+  color: var(--red);
+}
+
+.suit-box.black {
+  color: var(--black);
+}
 .solo input {
   display: none;
 }
@@ -306,5 +346,10 @@ input {
 
 input:checked + label {
   color: var(--red);
+}
+
+.reservation-icon {
+  max-width: 64px;
+  max-height: 64px;
 }
 </style>
