@@ -32,7 +32,12 @@
       </div>
 
       <div class="flex-container">
-        <selectable-box v-model="reservation" class="flex-item">
+        <selectable-box
+          v-model="reservation"
+          selected-value="gesund"
+          :selected="reservation === 'gesund'"
+          class="flex-item"
+        >
           <img
             src="@/assets/img/healthy.png"
             alt="healthy icon"
@@ -47,7 +52,12 @@
           </div>
         </selectable-box>
 
-        <selectable-box v-model="reservation" class="flex-item" disabled>
+        <selectable-box
+          v-model="reservation"
+          selected-value="hochzeit"
+          class="flex-item"
+          disabled
+        >
           <img
             src="@/assets/img/rings.png"
             alt="wedding icon"
@@ -160,7 +170,6 @@ import { Game } from "@/models/game";
 import Modal from "@/components/Modal.vue";
 import Hand from "@/components/Hand.vue";
 import { PropType, ref } from "vue";
-import VueFeather from "vue-feather";
 import SelectableBox from "./reservations/SelectableBox.vue";
 
 defineProps({
@@ -170,7 +179,6 @@ defineProps({
   },
 });
 
-const showVorbehalt = ref(false);
 const reservation = ref("");
 </script>
 

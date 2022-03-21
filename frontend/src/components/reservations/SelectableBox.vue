@@ -1,47 +1,47 @@
 <template>
-  <div class="selectable-box" :class="{ selected: isSelected }" tabindex="0">
+  <div
+    class="selectable-box"
+    :class="{ selected, disabled }"
+    tabindex="0"
+    @click="select"
+  >
     <div class="flex">
       <slot></slot>
     </div>
-    <div :class="{ show: isSelected }" class="checkmark flex-item">
+    <div :class="{ show: selected }" class="checkmark flex-item">
       <vue-feather type="check" size="32" />
     </div>
-    <input
-      v-model="selectedValue"
-      type="radio"
-      :name="radioGroup"
-      :value="modelValue"
-      @input="$emit('update:modelValue', $event.target?.value)"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
 import VueFeather from "vue-feather";
 
 const props = defineProps({
   disabled: {
     type: Boolean,
   },
-  radioGroup: {
-    type: String,
-    default: "radioGroup",
-  },
   modelValue: {
     type: String,
     required: true,
   },
+  selectedValue: {
+    type: String,
+    required: true,
+  },
+  selected: {
+    type: Boolean,
+  },
 });
 
-defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
 
-const selectedValue = ref("");
-
-const isSelected = computed(() => {
-  console.log("selected", selectedValue.value);
-  return selectedValue.value === props.modelValue;
-});
+function select() {
+  if (props.disabled) {
+    return;
+  }
+  emit("update:modelValue", props.selectedValue);
+}
 </script>
 
 <style scoped>
@@ -57,18 +57,22 @@ const isSelected = computed(() => {
   border-radius: 6px;
 }
 
-.selectable-box:active,
-.selectable-box:focus {
+.selectable-box:active:not(.disabled),
+.selectable-box:focus:not(.disabled) {
   outline: 3px solid var(--outline-color);
 }
 
-.selectable-box:hover,
-.selectable-box:active {
+.selectable-box:hover:not(.disabled),
+.selectable-box:active:not(.disabled) {
   border-color: var(--white-500);
 }
 
 .selected {
   border: 1px solid var(--red-dark);
+}
+
+.disabled {
+  opacity: 0.5;
 }
 
 .flex {
