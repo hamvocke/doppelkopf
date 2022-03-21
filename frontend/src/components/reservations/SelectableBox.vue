@@ -1,34 +1,47 @@
 <template>
-  <div
-    class="selectable-box"
-    :class="{ selected: selected }"
-    tabindex="0"
-    @click="toggle"
-  >
+  <div class="selectable-box" :class="{ selected: isSelected }" tabindex="0">
     <div class="flex">
       <slot></slot>
     </div>
-    <div :class="{ show: selected }" class="checkmark flex-item">
-      <vue-feather type="check" size="16" />
+    <div :class="{ show: isSelected }" class="checkmark flex-item">
+      <vue-feather type="check" size="32" />
     </div>
+    <input
+      v-model="selectedValue"
+      type="radio"
+      :name="radioGroup"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target?.value)"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import VueFeather from "vue-feather";
 
-defineProps({
+const props = defineProps({
   disabled: {
     type: Boolean,
   },
+  radioGroup: {
+    type: String,
+    default: "radioGroup",
+  },
+  modelValue: {
+    type: String,
+    required: true,
+  },
 });
 
-const selected = ref(false);
+defineEmits(["update:modelValue"]);
 
-function toggle() {
-  selected.value = !selected.value;
-}
+const selectedValue = ref("");
+
+const isSelected = computed(() => {
+  console.log("selected", selectedValue.value);
+  return selectedValue.value === props.modelValue;
+});
 </script>
 
 <style scoped>
@@ -60,8 +73,9 @@ function toggle() {
 
 .flex {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   align-items: center;
+  height: 100%;
 }
 
 .checkmark {
@@ -71,10 +85,8 @@ function toggle() {
   text-align: center;
   background-color: var(--red-dark);
   border-radius: 50%;
-  height: 18px;
-  width: 18px;
   color: var(--white);
-  padding: 2px;
+  padding: 4px;
   margin-left: 12px;
   visibility: hidden;
 }

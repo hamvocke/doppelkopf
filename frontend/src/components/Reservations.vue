@@ -19,46 +19,53 @@
 
     <div class="dark-box">
       <h1>Spiel mit Partner</h1>
-      <p>
-        Du möchtest mit einem Partner gegen zwei andere Spieler spielen. Wer
-        dein Partner ist, musst du erst noch herausfinden.
-      </p>
-      <div class="reservations-wrapper">
-        <div class="reservation selectable" tabindex="0">
-          <h2>Gesund!</h2>
-          <div class="description">
-            <img
-              src="@/assets/img/healthy.png"
-              alt="healthy icon"
-              class="reservation-icon"
-            />
-            <p>
+      <div class="flex-row">
+        <img
+          src="@/assets/img/handshake.png"
+          alt="normal game icon"
+          class="reservation-icon"
+        />
+        <p>
+          Du möchtest mit einem Partner gegen zwei andere Spieler spielen. Wer
+          dein Partner ist, musst du erst noch herausfinden.
+        </p>
+      </div>
+
+      <div class="flex-container">
+        <selectable-box v-model="reservation" class="flex-item">
+          <img
+            src="@/assets/img/healthy.png"
+            alt="healthy icon"
+            class="reservation-icon"
+          />
+          <div class="flex-col">
+            <h2 class="large-text">Gesund!</h2>
+            <p class="regular-text">
               Du möchtest ein normales Spiel spielen und meldest keinen
               Vorbehalt an.
             </p>
           </div>
-        </div>
+        </selectable-box>
 
-        <div class="reservation disabled">
-          <h2>Hochzeit</h2>
-          <span class="badge">coming soon</span>
-          <div class="description">
-            <img
-              src="@/assets/img/rings.png"
-              alt="wedding icon"
-              class="reservation-icon"
-            />
-            <p>
+        <selectable-box v-model="reservation" class="flex-item" disabled>
+          <img
+            src="@/assets/img/rings.png"
+            alt="wedding icon"
+            class="reservation-icon"
+          />
+          <div class="flex-col">
+            <h2 class="large-text">Hochzeit</h2>
+            <p class="regular-text">
               Du hast beide Re-Damen. Wer den ersten Stich gewinnt, wird dein
               Partner.
             </p>
           </div>
-        </div>
+        </selectable-box>
       </div>
 
-      <div class="reservation-wrapper solos">
+      <div class="flex-container solos">
         <h1>Solo</h1>
-        <div class="description">
+        <div class="flex-row">
           <img
             src="@/assets/img/team.png"
             alt="solo icon"
@@ -154,6 +161,7 @@ import Modal from "@/components/Modal.vue";
 import Hand from "@/components/Hand.vue";
 import { PropType, ref } from "vue";
 import VueFeather from "vue-feather";
+import SelectableBox from "./reservations/SelectableBox.vue";
 
 defineProps({
   game: {
@@ -163,6 +171,7 @@ defineProps({
 });
 
 const showVorbehalt = ref(false);
+const reservation = ref("");
 </script>
 
 <style scoped>
@@ -180,15 +189,43 @@ p {
   border-radius: 0 0 6px 6px;
   margin-bottom: 24px;
 }
-.reservations-wrapper {
+
+.flex-container {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  justify-content: center;
+}
+
+.flex-item {
+  flex: 1 0 0;
+  flex-basis: 0;
+  flex-shrink: 1;
 }
 
 .selectable {
   cursor: pointer;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.large-text {
+  font-size: 1.4em;
+  margin: 0;
+}
+
+.regular-text {
+  margin: 0;
 }
 
 .reservation {
@@ -201,26 +238,6 @@ p {
   background: var(--white);
 }
 
-.reservation:hover,
-.reservation:active,
-.solo:hover,
-.solo:active {
-  border-color: var(--white-600);
-}
-
-.reservation.selected {
-  border-color: var(--red-dark);
-}
-
-.reservation.disabled {
-  opacity: 0.6;
-}
-
-.reservation h2 {
-  margin-top: 0;
-  display: inline-block;
-}
-
 .badge {
   display: inline-block;
   color: var(--white);
@@ -229,21 +246,6 @@ p {
   border-radius: 12px;
   font-size: 0.8em;
   margin-left: 6px;
-}
-
-.description {
-  display: flex;
-  align-items: top;
-  gap: 16px;
-  margin-bottom: 12px;
-}
-
-.description i {
-  flex-shrink: 0;
-}
-
-.description p {
-  margin: 0;
 }
 
 .hand-wrapper {
