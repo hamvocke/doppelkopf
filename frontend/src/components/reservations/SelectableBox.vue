@@ -8,8 +8,8 @@
     <div class="flex">
       <slot></slot>
     </div>
-    <div :class="{ show: selected }" class="checkmark flex-item">
-      <vue-feather type="check" size="32" />
+    <div :class="{ show: selected }" class="checkmark">
+      <vue-feather type="check" size="16" />
     </div>
   </div>
 </template>
@@ -48,6 +48,7 @@ function select() {
 @import "../../assets/css/vars.css";
 
 .selectable-box {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -59,7 +60,7 @@ function select() {
 
 .selectable-box:active:not(.disabled),
 .selectable-box:focus:not(.disabled) {
-  outline: 3px solid var(--outline-color);
+  outline: 2px solid var(--outline-color);
 }
 
 .selectable-box:hover:not(.disabled),
@@ -83,15 +84,13 @@ function select() {
 }
 
 .checkmark {
-  display: inline-flex;
-  justify-items: center;
-  align-content: center;
-  text-align: center;
+  position: absolute;
+  top: 12px;
+  right: 12px;
   background-color: var(--red-dark);
   border-radius: 50%;
   color: var(--white);
-  padding: 4px;
-  margin-left: 12px;
+  padding: 6px;
   visibility: hidden;
 }
 

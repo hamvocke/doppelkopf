@@ -18,7 +18,7 @@
     </div>
 
     <div class="dark-box">
-      <h1>Spiel mit Partner</h1>
+      <h2>Spiel mit Partner</h2>
       <div class="flex-row">
         <img
           src="@/assets/img/handshake.png"
@@ -44,7 +44,7 @@
             class="reservation-icon"
           />
           <div class="flex-col">
-            <h2 class="large-text">Gesund!</h2>
+            <h3 class="large-text">Gesund!</h3>
             <p class="regular-text">
               Du möchtest ein normales Spiel spielen und meldest keinen
               Vorbehalt an.
@@ -64,7 +64,9 @@
             class="reservation-icon"
           />
           <div class="flex-col">
-            <h2 class="large-text">Hochzeit</h2>
+            <h3 class="large-text">
+              Hochzeit <span class="badge">Coming soon!</span>
+            </h3>
             <p class="regular-text">
               Du hast beide Re-Damen. Wer den ersten Stich gewinnt, wird dein
               Partner.
@@ -73,8 +75,8 @@
         </selectable-box>
       </div>
 
-      <div class="flex-container solos">
-        <h1>Solo</h1>
+      <div class="flex-container">
+        <h2>Solo</h2>
         <div class="flex-row">
           <img
             src="@/assets/img/team.png"
@@ -87,32 +89,40 @@
           </p>
         </div>
 
-        <div class="solo-wrapper">
-          <div class="solo selectable" tabindex="0">
-            <img
-              src="@/assets/img/queen.png"
-              alt="queen icon"
-              class="reservation-icon"
-            />
-            <input id="damensolo" type="radio" name="solo" value="damensolo" />
-            <label for="damensolo">
-              Damensolo
-              <small>Damen sind Trumpf, alle anderen Karten sind Fehl</small>
-            </label>
-          </div>
+        <div class="flex-container">
+          <selectable-box
+            v-model="reservation"
+            selected-value="damensolo"
+            :selected="reservation === 'damensolo'"
+            class="flex-item"
+          >
+            <div class="flex-col centered-col">
+              <img
+                src="@/assets/img/queen.png"
+                alt="queen icon"
+                class="reservation-icon"
+              />
+              <p class="regular-text bold">Damensolo</p>
+              <small> Damen sind Trumpf, alle anderen Karten sind Fehl. </small>
+            </div>
+          </selectable-box>
 
-          <div class="solo selectable" tabindex="0">
-            <img
-              src="@/assets/img/jack.png"
-              alt="jack icon"
-              class="reservation-icon"
-            />
-            <input id="bubensolo" type="radio" name="solo" value="bubensolo" />
-            <label for="bubensolo">
-              Bubensolo
-              <small>Buben sind Trumpf, alle anderen Karten sind Fehl</small>
-            </label>
-          </div>
+          <selectable-box
+            v-model="reservation"
+            selected-value="bubensolo"
+            :selected="reservation === 'bubensolo'"
+            class="flex-item"
+          >
+            <div class="flex-col centered-col">
+              <img
+                src="@/assets/img/jack.png"
+                alt="jack icon"
+                class="reservation-icon"
+              />
+              <p class="regular-text bold">Bubensolo</p>
+              <small> Buben sind Trumpf, alle anderen Karten sind Fehl. </small>
+            </div>
+          </selectable-box>
 
           <div class="solo-selector">
             <div class="solo selectable" tabindex="0">
@@ -135,26 +145,25 @@
             </div>
           </div>
 
-          <div class="solo selectable" tabindex="0">
-            <img
-              src="@/assets/img/skeleton.png"
-              alt="skeleton icon"
-              class="reservation-icon"
-            />
-            <input
-              id="fleischlos"
-              type="radio"
-              name="solo"
-              value="fleischlos"
-            />
-            <label for="fleischlos">
-              Fleischloser
+          <selectable-box
+            v-model="reservation"
+            selected-value="fleischloser"
+            :selected="reservation === 'fleischloser'"
+            class="flex-item"
+          >
+            <div class="flex-col centered-col">
+              <img
+                src="@/assets/img/skeleton.png"
+                alt="skeleton icon"
+                class="reservation-icon"
+              />
+              <p class="regular-text bold">Fleischloser</p>
               <small>
                 Es gibt keine Trümpfe, alle Karten sind Fehl und werden
                 eingereiht
               </small>
-            </label>
-          </div>
+            </div>
+          </selectable-box>
         </div>
       </div>
     </div>
@@ -189,6 +198,9 @@ p {
   color: var(--black);
 }
 
+h2 {
+  margin-bottom: 4px;
+}
 .dark-box {
   background: var(--white-100);
   padding: 16px;
@@ -227,33 +239,37 @@ p {
   justify-content: space-between;
 }
 
+.centered-col {
+  align-items: center;
+  text-align: center;
+}
+
 .large-text {
   font-size: 1.4em;
   margin: 0;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .regular-text {
   margin: 0;
 }
 
-.reservation {
-  min-width: 200px;
-  padding: 16px;
-  flex: 1 1 0px;
-  margin: 16px 0;
-  border-radius: 8px;
-  border: 1px solid var(--white-400);
-  background: var(--white);
-}
-
 .badge {
+  font-family: sans-serif;
+  font-weight: regular;
+  font-style: normal;
   display: inline-block;
   color: var(--white);
   background: var(--lightblue);
   padding: 3px 8px;
   border-radius: 12px;
-  font-size: 0.8em;
+  font-size: 12px;
   margin-left: 6px;
+  margin-bottom: 4px;
+  vertical-align: middle;
 }
 
 .hand-wrapper {
@@ -262,17 +278,6 @@ p {
   padding: 24px;
   border: 1px solid var(--black);
   border-bottom: none;
-}
-
-.solo-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.solos {
-  padding: 12px;
-  border-radius: 8px;
 }
 
 .solo {
@@ -348,14 +353,6 @@ p {
   margin-top: 4px;
   font-weight: normal;
   font-style: italic;
-}
-
-input {
-  accent-color: var(--red);
-}
-
-input:checked + label {
-  color: var(--red);
 }
 
 .reservation-icon {
