@@ -5,7 +5,7 @@
     tabindex="0"
     @click="select"
   >
-    <div class="flex">
+    <div class="flex spaced">
       <slot></slot>
     </div>
     <div :class="{ show: selected }" class="checkmark">
@@ -52,10 +52,10 @@ function select() {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
   border: 1px solid var(--white-400);
   background-color: var(--white);
   border-radius: 6px;
+  cursor: pointer;
 }
 
 .selectable-box:active:not(.disabled),
@@ -74,6 +74,7 @@ function select() {
 
 .disabled {
   opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .flex {
@@ -83,6 +84,10 @@ function select() {
   height: 100%;
 }
 
+.spaced {
+  margin: 16px;
+}
+
 .checkmark {
   position: absolute;
   top: 12px;
@@ -90,6 +95,7 @@ function select() {
   background-color: var(--red-dark);
   border-radius: 50%;
   color: var(--white);
+  border: 2px solid var(--white);
   padding: 6px;
   visibility: hidden;
 }

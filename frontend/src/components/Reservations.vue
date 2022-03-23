@@ -124,26 +124,12 @@
             </div>
           </selectable-box>
 
-          <div class="solo-selector">
-            <div class="solo selectable" tabindex="0">
-              <img
-                src="@/assets/img/heart.png"
-                alt="heart icon"
-                class="reservation-icon"
-              />
-              <input id="kreuzsolo" type="radio" name="solo" value="kreuzsolo" />
-              <label for="kreuzsolo">
-                Farbsolo
-                <small>Kreuz ersetzt Karo als Trumpffarbe</small>
-              </label>
-            </div>
-            <div class="solo-suits">
-              <div class="suit-box black">♣</div>
-              <div class="suit-box black active">♠</div>
-              <div class="suit-box red">♥</div>
-              <div class="suit-box red">♦</div>
-            </div>
-          </div>
+          <suit-selector-box
+            v-model="reservation"
+            selected-value="farbsolo"
+            :selected="reservation === 'farbsolo'"
+            class="flex-item"
+          />
 
           <selectable-box
             v-model="reservation"
@@ -180,6 +166,7 @@ import Modal from "@/components/Modal.vue";
 import Hand from "@/components/Hand.vue";
 import { PropType, ref } from "vue";
 import SelectableBox from "./reservations/SelectableBox.vue";
+import SuitSelectorBox from "./reservations/SuitSelectorBox.vue";
 
 defineProps({
   game: {
@@ -220,10 +207,6 @@ h2 {
   flex: 1 0 0;
   flex-basis: 0;
   flex-shrink: 1;
-}
-
-.selectable {
-  cursor: pointer;
 }
 
 .flex-row {
@@ -278,81 +261,6 @@ h2 {
   padding: 24px;
   border: 1px solid var(--black);
   border-bottom: none;
-}
-
-.solo {
-  flex: 1 0 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 0;
-  border-radius: 8px;
-  border: 1px solid var(--white-400);
-  background: var(--white);
-}
-
-.solo-selector {
-  flex: 1 0 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.solo-selector .solo {
-  border-radius: 8px 8px 0 0;
-}
-
-.solo-suits {
-  display: flex;
-  justify-content: space-between;
-}
-
-.suit-box {
-  padding: 8px 6px;
-  margin-top: -2px;
-  background-color: var(--white-050);
-  border: 1px solid var(--white-400);
-  border-right: none;
-  width: 100%;
-  text-align: center;
-  border-radius: 0 0 8px 8px;
-}
-
-.solo:hover ~ .solo-suits .suit-box {
-  border-color: var(--white-500);
-}
-
-.suit-box.active {
-  background-color: var(--white);
-  border-top: none;
-  border-radius: 0 0 8px 8px;
-}
-
-.suit-box:last-of-type {
-  border: 1px solid var(--white-400);
-}
-
-.suit-box.red {
-  color: var(--red);
-}
-
-.suit-box.black {
-  color: var(--black);
-}
-.solo input {
-  display: none;
-}
-
-.solo label {
-  text-align: center;
-  display: inline-flex;
-  flex-direction: column;
-  font-weight: bold;
-}
-
-.solo small {
-  margin-top: 4px;
-  font-weight: normal;
-  font-style: italic;
 }
 
 .reservation-icon {
