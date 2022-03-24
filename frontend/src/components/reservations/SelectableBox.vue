@@ -4,6 +4,8 @@
     :class="{ selected, disabled }"
     tabindex="0"
     @click="select"
+    @keydown.enter="select"
+    @keydown.space="select"
   >
     <div class="flex spaced">
       <slot></slot>
@@ -58,14 +60,14 @@ function select() {
   cursor: pointer;
 }
 
-.selectable-box:active:not(.disabled),
-.selectable-box:focus:not(.disabled) {
-  outline: 2px solid var(--outline-color);
-}
-
 .selectable-box:hover:not(.disabled),
 .selectable-box:active:not(.disabled) {
   border-color: var(--white-500);
+  background-color: var(--white-050);
+}
+
+.selectable-box:focus:not(.disabled) {
+  outline: 1px solid var(--white-500);
 }
 
 .selected {

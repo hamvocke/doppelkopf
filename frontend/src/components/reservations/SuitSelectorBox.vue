@@ -5,6 +5,8 @@
       :class="{ selected, disabled }"
       tabindex="0"
       @click="select"
+      @keydown.enter="select"
+      @keydown.space="select"
     >
       <div class="flex-col spaced">
         <img
@@ -81,14 +83,14 @@ p {
   border-radius: 6px 6px 0 0;
 }
 
-.selectable-box:active:not(.disabled),
-.selectable-box:focus:not(.disabled) {
-  outline: 2px solid var(--outline-color);
-}
-
 .selectable-box:hover:not(.disabled),
 .selectable-box:active:not(.disabled) {
   border-color: var(--white-500);
+  background-color: var(--white-050);
+}
+
+.selectable-box:focus:not(.disabled) {
+  outline: 1px solid var(--white-500);
 }
 
 .selected {
@@ -172,6 +174,11 @@ p {
   background-color: var(--white);
   border-top: none;
   border-radius: 0 0 8px 8px;
+}
+
+.suit-box:not(.activee):hover {
+  border-color: var(--white-500);
+  background-color: var(--white-100);
 }
 
 .selected ~ .suits .suit-box {
