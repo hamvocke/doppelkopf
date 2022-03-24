@@ -63,7 +63,6 @@ function select() {
 .selectable-box:hover:not(.disabled),
 .selectable-box:active:not(.disabled) {
   border-color: var(--white-500);
-  background-color: var(--white-050);
 }
 
 .selectable-box:focus:not(.disabled) {

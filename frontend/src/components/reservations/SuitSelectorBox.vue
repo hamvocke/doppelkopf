@@ -83,10 +83,8 @@ p {
   border-radius: 6px 6px 0 0;
 }
 
-.selectable-box:hover:not(.disabled),
-.selectable-box:active:not(.disabled) {
+.selectable-box:hover:not(.disabled) {
   border-color: var(--white-500);
-  background-color: var(--white-050);
 }
 
 .selectable-box:focus:not(.disabled) {
@@ -176,7 +174,7 @@ p {
   border-radius: 0 0 8px 8px;
 }
 
-.suit-box:not(.activee):hover {
+.suit-box:not(.active):hover {
   border-color: var(--white-500);
   background-color: var(--white-100);
 }
