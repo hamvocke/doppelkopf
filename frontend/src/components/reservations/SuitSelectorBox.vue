@@ -22,15 +22,31 @@
       </div>
     </div>
     <div class="suits">
-      <div class="suit-box black">♣</div>
-      <div class="suit-box black active">♠</div>
-      <div class="suit-box red">♥</div>
-      <div class="suit-box red">♦</div>
+      <div class="suit-box black" :class="{ active: current() === Suit.Clubs }">
+        {{ Suit.Clubs }}
+      </div>
+      <div
+        class="suit-box black"
+        :class="{ active: current() === Suit.Spades }"
+      >
+        {{ Suit.Spades }}
+      </div>
+      <div class="suit-box red" :class="{ active: current() === Suit.Hearts }">
+        {{ Suit.Hearts }}
+      </div>
+      <div
+        class="suit-box red"
+        :class="{ active: current() === Suit.Diamonds }"
+      >
+        {{ Suit.Diamonds }}
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+import { Suit } from "@/models/card";
 import VueFeather from "vue-feather";
 
 const props = defineProps({
@@ -41,22 +57,37 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  selectedValue: {
-    type: String,
-    required: true,
-  },
   selected: {
     type: Boolean,
   },
 });
 
+const allSuites = [Suit.Clubs, Suit.Spades, Suit.Hearts, Suit.Diamonds];
+
+let currentlySelected = 0;
+
 const emit = defineEmits(["update:modelValue"]);
+const selectedValue = ref(current());
+
+function current() {
+  return allSuites[currentlySelected];
+}
+
+function next() {
+  currentlySelected = ++currentlySelected % allSuites.length;
+  return allSuites[currentlySelected];
+}
 
 function select() {
   if (props.disabled) {
     return;
   }
-  emit("update:modelValue", props.selectedValue);
+
+  if (props.selected) {
+    selectedValue.value = next();
+  }
+
+  emit("update:modelValue", selectedValue.value);
 }
 </script>
 
@@ -172,6 +203,7 @@ p {
   background-color: var(--white);
   border-top: none;
   border-radius: 0 0 8px 8px;
+  z-index: 2;
 }
 
 .suit-box:not(.active):hover {
@@ -184,7 +216,7 @@ p {
 }
 
 .suit-box:last-of-type {
-  border: 1px solid var(--white-400);
+  border-right: 1px solid var(--white-400);
 }
 
 .suit-box.red {

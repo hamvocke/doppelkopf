@@ -42,6 +42,7 @@ function select() {
   if (props.disabled) {
     return;
   }
+
   emit("update:modelValue", props.selectedValue);
 }
 </script>

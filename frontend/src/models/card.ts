@@ -1,9 +1,11 @@
 export enum Suit {
   Clubs = "♣",
-  Diamonds = "♦",
-  Hearts = "♥",
   Spades = "♠",
+  Hearts = "♥",
+  Diamonds = "♦",
 }
+
+export const allSuits = [Suit.Clubs, Suit.Spades, Suit.Hearts, Suit.Diamonds];
 
 export enum Rank {
   Ace = "A",
@@ -26,7 +28,7 @@ export class Card {
   rank: Rank;
   suit: Suit;
 
-  constructor(rank: Rank, suit = Suit.Clubs, id: number = 0) {
+  constructor(rank: Rank, suit = Suit.Clubs, id = 0) {
     this.rank = rank;
     this.suit = suit;
     this.id = id;

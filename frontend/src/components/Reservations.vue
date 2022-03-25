@@ -126,8 +126,7 @@
 
           <suit-selector-box
             v-model="reservation"
-            selected-value="farbsolo"
-            :selected="reservation === 'farbsolo'"
+            :selected="isSuitSoloSelected()"
             class="flex-item"
           />
 
@@ -167,6 +166,7 @@ import Hand from "@/components/Hand.vue";
 import { PropType, ref } from "vue";
 import SelectableBox from "./reservations/SelectableBox.vue";
 import SuitSelectorBox from "./reservations/SuitSelectorBox.vue";
+import { allSuits } from "@/models/card";
 
 defineProps({
   game: {
@@ -176,6 +176,10 @@ defineProps({
 });
 
 const reservation = ref("");
+
+function isSuitSoloSelected() {
+  return allSuits.map((s) => s.valueOf()).includes(reservation.value);
+}
 </script>
 
 <style scoped>
