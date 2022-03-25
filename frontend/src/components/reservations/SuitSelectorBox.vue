@@ -118,10 +118,6 @@ p {
   border-color: var(--white-500);
 }
 
-.selectable-box:focus:not(.disabled) {
-  outline: 1px solid var(--white-500);
-}
-
 .selected {
   border: 1px solid var(--red-dark);
 }
@@ -204,6 +200,15 @@ p {
   border-top: none;
   border-radius: 0 0 8px 8px;
   z-index: 2;
+}
+
+.suit-box:not(.active) {
+  background: linear-gradient(
+    180deg,
+    var(--white-300) 0%,
+    var(--white-050) 15%,
+    var(--white-050) 100%
+  );
 }
 
 .suit-box:not(.active):hover {
