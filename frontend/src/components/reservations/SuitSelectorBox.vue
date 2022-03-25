@@ -173,9 +173,6 @@ p {
   max-width: 64px;
   max-height: 64px;
 }
-.selected:hover {
-  border: 1px solid var(--red-dark);
-}
 
 .suits {
   width: 100%;
@@ -188,7 +185,6 @@ p {
   margin-top: -2px;
   background-color: var(--white-050);
   border: 1px solid var(--white-400);
-  border-right: none;
   width: 100%;
   text-align: center;
   border-radius: 0 0 8px 8px;
@@ -198,8 +194,6 @@ p {
 .suit-box.active {
   background-color: var(--white);
   border-top: none;
-  border-radius: 0 0 8px 8px;
-  z-index: 2;
 }
 
 .suit-box:not(.active) {
@@ -209,11 +203,6 @@ p {
     var(--white-050) 15%,
     var(--white-050) 100%
   );
-}
-
-.suit-box:not(.active):hover {
-  border-color: var(--white-500);
-  background-color: var(--white-100);
 }
 
 .selected ~ .suits .suit-box {
@@ -232,7 +221,20 @@ p {
   color: var(--black);
 }
 
+.suit-box:not(.active):hover {
+  border-color: var(--white-500);
+  background-color: var(--white-100);
+}
+
 .selectable-box:hover ~ .suits .suit-box {
+  border-color: var(--white-500);
+}
+
+.selectable-box.selected ~ .suits .suit-box.active {
+  border-color: var(--red-dark);
+}
+
+.selectable-box.selected:hover ~ .suits .suit-box.active {
   border-color: var(--white-500);
 }
 </style>
