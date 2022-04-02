@@ -10,8 +10,8 @@
     >
       <div class="flex-col spaced">
         <img
-          src="@/assets/img/heart.png"
-          alt="heart icon"
+          :src="currentImagePath()"
+          :alt="$t(current())"
           class="reservation-icon"
         />
         <p class="bold">{{ $t("suit_solo_title") }}</p>
@@ -68,6 +68,12 @@ const props = defineProps({
 });
 
 const allSuites = [Suit.Clubs, Suit.Spades, Suit.Hearts, Suit.Diamonds];
+const imageFiles: { [key in Suit]: string } = {
+  [Suit.Clubs]: "clubs.png",
+  [Suit.Spades]: "spades.png",
+  [Suit.Hearts]: "heart.png",
+  [Suit.Diamonds]: "diamonds.png",
+};
 
 let currentlySelected = 0;
 
@@ -76,6 +82,12 @@ const selectedValue = ref(current());
 
 function current() {
   return allSuites[currentlySelected];
+}
+
+function currentImagePath() {
+  const img = imageFiles[current()];
+  console.log("resolved", img);
+  return `src/assets/img/${img}`;
 }
 
 function next() {
