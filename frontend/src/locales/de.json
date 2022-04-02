@@ -97,5 +97,7 @@
   "enter_name_input": "Dein Name",
   "enter_name_label": "Wie heißt du?",
   "show_last_trick_header": "Letzter Stich",
-  "show_last_trick_label": "Den letzten Stich hat {name} gewonnen"
+  "show_last_trick_label": "Den letzten Stich hat {name} gewonnen",
+  "suit_solo_title": "Farbsolo",
+  "suit_solo_description": "{suit} ersetzt {replaced} als Trumpffarbe"
 }

@@ -14,8 +14,13 @@
           alt="heart icon"
           class="reservation-icon"
         />
-        <p class="bold">Farbsolo</p>
-        <small>Kreuz ersetzt Karo als Trumpffarbe</small>
+        <p class="bold">{{ $t("suit_solo_title") }}</p>
+        <small>{{
+          $t("suit_solo_description", {
+            suit: $t(current()),
+            replaced: $t(Suit.Diamonds),
+          })
+        }}</small>
       </div>
       <div :class="{ show: selected }" class="checkmark">
         <vue-feather type="check" size="16" />
