@@ -10,16 +10,12 @@
     <div class="flex spaced">
       <slot></slot>
     </div>
-    <Transition>
-      <div v-if="selected" class="checkmark">
-        <vue-feather type="check" size="16" />
-      </div>
-    </Transition>
+    <Checkbox :selected="selected" />
   </div>
 </template>
 
 <script setup lang="ts">
-import VueFeather from "vue-feather";
+import Checkbox from "./Checkbox.vue";
 
 const props = defineProps({
   disabled: {
@@ -76,6 +72,10 @@ function select() {
   border: 1px solid var(--red-dark);
 }
 
+.selected:hover {
+  border: 1px solid var(--red-dark);
+}
+
 .disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -90,36 +90,5 @@ function select() {
 
 .spaced {
   margin: 16px;
-}
-
-.checkmark {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background-color: var(--red-dark);
-  border-radius: 50%;
-  color: var(--white);
-  border: 2px solid var(--white);
-  padding: 6px;
-}
-
-.checkmark i {
-  display: block;
-  height: 100%;
-  width: 100%;
-}
-
-.selected:hover {
-  border: 1px solid var(--red-dark);
-}
-
-.v-enter-active,
-.v-leave-active {
-  transition: transform 0.1s ease-out;
-}
-
-.v-enter-from,
-.v-leave-to {
-  transform: scale(0);
 }
 </style>

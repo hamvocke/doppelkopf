@@ -22,11 +22,7 @@
           })
         }}</small>
       </div>
-      <Transition>
-        <div v-if="selected" class="checkmark">
-          <vue-feather type="check" size="16" />
-        </div>
-      </Transition>
+      <Checkbox :selected="selected" />
     </div>
     <div class="suits">
       <div class="suit-box black" :class="{ active: current() === Suit.Clubs }">
@@ -54,7 +50,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Suit } from "@/models/card";
-import VueFeather from "vue-feather";
+import Checkbox from "./Checkbox.vue";
+
 
 const props = defineProps({
   disabled: {
@@ -165,34 +162,6 @@ p {
 
 .bold {
   font-weight: bold;
-}
-
-.checkmark {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background-color: var(--red-dark);
-  border-radius: 50%;
-  color: var(--white);
-  border: 2px solid var(--white);
-  padding: 6px;
-}
-
-.checkmark i {
-  display: block;
-  height: 100%;
-  width: 100%;
-}
-
-
-.v-enter-active,
-.v-leave-active {
-  transition: transform 0.1s ease-out;
-}
-
-.v-enter-from,
-.v-leave-to {
-  transform: scale(0);
 }
 
 .reservation-icon {
