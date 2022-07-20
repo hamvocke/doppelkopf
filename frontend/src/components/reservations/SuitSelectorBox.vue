@@ -22,9 +22,11 @@
           })
         }}</small>
       </div>
-      <div :class="{ show: selected }" class="checkmark">
-        <vue-feather type="check" size="16" />
-      </div>
+      <Transition>
+        <div v-if="selected" class="checkmark">
+          <vue-feather type="check" size="16" />
+        </div>
+      </Transition>
     </div>
     <div class="suits">
       <div class="suit-box black" :class="{ active: current() === Suit.Clubs }">
@@ -174,16 +176,23 @@ p {
   color: var(--white);
   border: 2px solid var(--white);
   padding: 6px;
-  visibility: hidden;
 }
 
-.show {
-  visibility: visible;
-}
 .checkmark i {
   display: block;
   height: 100%;
   width: 100%;
+}
+
+
+.v-enter-active,
+.v-leave-active {
+  transition: transform 0.1s ease-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  transform: scale(0);
 }
 
 .reservation-icon {
