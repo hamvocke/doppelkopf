@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import Checkbox from "./Checkbox.vue";
+import Checkbox from "@/components/reservations/Checkbox.vue";
 
 const props = defineProps({
   disabled: {

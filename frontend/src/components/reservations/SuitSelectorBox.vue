@@ -50,8 +50,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Suit } from "@/models/card";
-import Checkbox from "./Checkbox.vue";
-
+import Checkbox from "@/components/reservations/Checkbox.vue";
 
 const props = defineProps({
   disabled: {

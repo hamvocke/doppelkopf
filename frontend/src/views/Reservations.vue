@@ -164,8 +164,8 @@ import { Game } from "@/models/game";
 import Modal from "@/components/Modal.vue";
 import Hand from "@/components/Hand.vue";
 import { PropType, ref } from "vue";
-import SelectableBox from "./reservations/SelectableBox.vue";
-import SuitSelectorBox from "./reservations/SuitSelectorBox.vue";
+import SelectableBox from "@/components/reservations/SelectableBox.vue";
+import SuitSelectorBox from "@/components/reservations/SuitSelectorBox.vue";
 import { allSuits } from "@/models/card";
 
 defineProps({

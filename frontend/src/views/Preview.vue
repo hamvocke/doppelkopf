@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { Game } from "@/models/game";
-import Reservations from "@/components/Reservations.vue";
+import Reservations from "@/views/Reservations.vue";
 
 const props = defineProps({
   game: {
