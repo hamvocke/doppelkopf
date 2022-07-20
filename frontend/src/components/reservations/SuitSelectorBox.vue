@@ -22,7 +22,7 @@
           })
         }}</small>
       </div>
-      <Checkbox :selected="selected" />
+      <Checkbox :checked="selected" />
     </div>
     <div class="suits">
       <div class="suit-box black" :class="{ active: current() === Suit.Clubs }">

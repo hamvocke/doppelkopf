@@ -1,6 +1,6 @@
 <template>
   <Transition>
-    <div v-if="selected" class="checkmark">
+    <div v-if="checked" class="checkmark">
       <vue-feather type="check" size="16" />
     </div>
   </Transition>
@@ -10,7 +10,7 @@
 import VueFeather from "vue-feather";
 
 defineProps({
-  selected: {
+  checked: {
     type: Boolean,
   },
 });

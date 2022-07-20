@@ -10,7 +10,7 @@
     <div class="flex spaced">
       <slot></slot>
     </div>
-    <Checkbox :selected="selected" />
+    <Checkbox :checked="selected" />
   </div>
 </template>
 
