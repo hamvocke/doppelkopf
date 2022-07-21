@@ -84,7 +84,6 @@ function current() {
 
 function currentImagePath() {
   const img = imageFiles[current()];
-  console.log("resolved", img);
   return `src/assets/img/${img}`;
 }
 

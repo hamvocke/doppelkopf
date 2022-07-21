@@ -10,15 +10,13 @@ import { languages, defaultLocale } from "./i18n";
 
 const messages = Object.assign(languages);
 
-console.log(messages);
-
 const i18n = createI18n({
   locale: navigator.language.split("-")[0] || defaultLocale,
   fallbackLocale: "en",
   messages,
 });
 
-let app = createApp(App);
+const app = createApp(App);
 
 if (!Config.debug) {
   Sentry.init({
