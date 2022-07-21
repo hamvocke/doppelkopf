@@ -34,11 +34,13 @@ To work on the frontend, go to the `frontend/` directory
 
     cd frontend
 
+Make sure you use node v16 or greater.
+
 Install frontend dependencies:
 
     npm install
 
-Serve the frontend development server on [localhost:3000](http://localhost:3000).
+Serve the frontend development server on [localhost:5173](http://localhost:5173).
 
     npm run dev
 
