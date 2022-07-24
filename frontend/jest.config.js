@@ -9,6 +9,5 @@ module.exports = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
-  transformIgnorePatterns: ["<rootDir>/node_modules/(?!lodash-es)"],
   testEnvironment: "jsdom",
 };
