@@ -16,15 +16,7 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
-__pycache__/
-.pytest_cache/
-.mypy_cache/
 .cache/
 .env
-*.sqlite
-*.sqlite.bak
-backend/db/
 chromedriver.log
-caddy_data/
-backend/db/
 frontend/coverage/
