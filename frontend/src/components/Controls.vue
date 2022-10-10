@@ -49,7 +49,7 @@ function showFinishRoundButton() {
 }
 
 const enableAnnouncements = ref(false);
-enableAnnouncements.value = Features.get().enableAnnouncements;
+enableAnnouncements.value = Features.enableAnnouncements;
 </script>
 
 <style scoped>

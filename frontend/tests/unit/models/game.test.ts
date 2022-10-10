@@ -1,13 +1,10 @@
 import { Game } from "@/models/game";
 import { TrickStack } from "@/models/trickStack";
 import { Trick } from "@/models/trick";
-import { Telemetry } from "@/models/telemetry";
 
 let game: Game;
-const telemetryMock = jest.fn();
 
 beforeEach(() => {
-  Telemetry.newGame = telemetryMock;
   game = Game.singlePlayer();
 });
 
@@ -86,10 +83,4 @@ test("should keep track of opening order", () => {
 
   game.nextRound();
   expect(game.playerOpening).toBe(game.players[0]);
-});
-
-test("should fire new game event", () => {
-  telemetryMock.mockClear();
-  Game.singlePlayer();
-  expect(telemetryMock).toHaveBeenCalledTimes(1);
 });

@@ -1,5 +1,4 @@
 import Home from "@/views/Home.vue";
-import { Features } from "@/models/features";
 import { shallowMount, config } from "@vue/test-utils";
 import { RouterLinkStub } from "@vue/test-utils";
 
@@ -21,21 +20,6 @@ describe("Home.vue", () => {
 
     expect(wrapper.find(".welcome").exists()).toBe(true);
     expect(wrapper.find(".start-game").exists()).toBe(true);
-  });
-
-  test("should show tutorial link when feature is disabled", () => {
-    Features.get = () => {
-      return {
-        enableTutorial: false,
-        enableAnnouncements: false,
-      };
-    };
-
-    const wrapper = shallowMount(Home, {
-      global: { stubs: { "router-link": RouterLinkStub } },
-      props: { showTutorial: false },
-    });
-    expect(wrapper.find(".tutorial-link").exists()).toBe(true);
   });
 
   test("should save player name", async () => {

@@ -5,7 +5,6 @@ import { Hand } from "@/models/hand";
 import { Scorecard } from "@/models/scorecard";
 import { RingQueue } from "@/models/ringQueue";
 import { generateNames } from "@/models/random";
-import { Telemetry } from "@/models/telemetry";
 import { TablePosition } from "./tablePosition";
 
 export class Game {
@@ -28,7 +27,6 @@ export class Game {
       this.playerOpeningOrder.current()
     );
     this.initializeAffinities();
-    Telemetry.newGame();
   }
 
   static singlePlayer() {

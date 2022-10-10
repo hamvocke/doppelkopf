@@ -54,7 +54,7 @@ import Logo from "@/components/Logo.vue";
 import Notifications from "@/components/Notifications.vue";
 
 const playerName = ref((localStorage.name as string) || "");
-const showTutorial = ref(Features.get().enableTutorial);
+const showTutorial = ref(Features.enableTutorial);
 
 function saveName() {
   if (playerName.value) {
