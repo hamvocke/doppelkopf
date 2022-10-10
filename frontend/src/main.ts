@@ -5,7 +5,6 @@ import App from "./App.vue";
 import router from "./router";
 import "@/assets/css/app.css";
 import { Config } from "@/models/config";
-import { Features } from "@/models/features";
 import { languages, defaultLocale } from "./i18n";
 
 const messages = Object.assign(languages);
@@ -26,6 +25,3 @@ if (!Config.debug) {
 }
 
 app.use(i18n).use(router).mount("#app");
-
-// load feature toggles
-Features.fetch();
