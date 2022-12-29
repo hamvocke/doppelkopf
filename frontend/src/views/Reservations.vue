@@ -46,8 +46,8 @@
           <div class="flex-col">
             <h3 class="large-text">Gesund!</h3>
             <p class="regular-text">
-              Du möchtest ein normales Spiel spielen und meldest keinen
-              Vorbehalt an.
+              Du möchtest ein <strong>normales Spiel</strong> spielen und
+              meldest keinen Vorbehalt an.
             </p>
           </div>
         </selectable-box>
@@ -154,7 +154,7 @@
     </div>
 
     <div>
-      <button type="button" class="button">Vorbehalt anmelden</button>
+      <button type="button" class="button">{{ buttonText() }}</button>
     </div>
   </modal>
 </template>
@@ -176,6 +176,12 @@ defineProps({
 });
 
 const reservation = ref("");
+
+function buttonText() {
+  return reservation.value === "gesund"
+    ? "Normales Spiel spielen"
+    : "Vorbehalt anmelden";
+}
 
 function isSuitSoloSelected() {
   return allSuits.map((s) => s.valueOf()).includes(reservation.value);
