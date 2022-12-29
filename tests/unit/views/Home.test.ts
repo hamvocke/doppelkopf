@@ -1,6 +1,5 @@
 import Home from "@/views/Home.vue";
-import { shallowMount, config } from "@vue/test-utils";
-import { RouterLinkStub } from "@vue/test-utils";
+import { config, RouterLinkStub, shallowMount } from "@vue/test-utils";
 
 config.global.mocks["$t"] = (msg: string) => msg;
 config.global.mocks["$tc"] = (msg: string) => msg;
@@ -15,7 +14,7 @@ beforeEach(() => {
 describe("Home.vue", () => {
   test("should show start button", () => {
     const wrapper = shallowMount(Home, {
-      global: { stubs: { "router-link": RouterLinkStub } },
+      global: { stubs: { RouterLink: RouterLinkStub } },
     });
 
     expect(wrapper.find(".welcome").exists()).toBe(true);
@@ -24,7 +23,7 @@ describe("Home.vue", () => {
 
   test("should save player name", async () => {
     const wrapper = shallowMount(Home, {
-      global: { stubs: { "router-link": RouterLinkStub } },
+      global: { stubs: { RouterLink: RouterLinkStub } },
     });
 
     const nameInput = wrapper.find("#player-name");

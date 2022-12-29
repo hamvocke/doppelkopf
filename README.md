@@ -28,11 +28,11 @@ To work on the application, check out this repository and open the root of this 
 
 Make sure you use the latest node LTS version.
 
-Install frontend dependencies:
+Install dependencies:
 
     npm install
 
-Serve the frontend development server on [localhost:5173](http://localhost:5173).
+Serve the development server on [localhost:5173](http://localhost:5173).
 
     npm run dev
 
