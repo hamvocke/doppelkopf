@@ -29,5 +29,5 @@ Some things that will increase the chance that we're going to accept your pull r
 
     * write tests!
     * write [good commit messages](https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
-    * provide a description what your pull request does
+    * provide a description of what your pull request does
 
