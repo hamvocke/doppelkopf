@@ -39,6 +39,6 @@ jobs:
 
 workflows:
   version: 2
-  build-all-deploy:
+  build-test:
     jobs:
       - frontend
