@@ -13,26 +13,26 @@ jobs:
       - attach_workspace:
           at: ~/hamvocke/doppelkopf
       - restore_cache:
-          key: v1-frontend-npm-{{ checksum "frontend/package-lock.json" }}
+          key: v1-frontend-npm-{{ checksum "package-lock.json" }}
       - run:
           name: Install frontend dependencies
-          command: 'pushd frontend && npm install && popd'
+          command: 'npm install'
       - save_cache:
-          key: v1-frontend-npm-{{ checksum "frontend/package-lock.json" }}
+          key: v1-frontend-npm-{{ checksum "package-lock.json" }}
           paths:
-            - frontend/node_modules
+            - node_modules
       - run:
           name: Test frontend
-          command: 'pushd frontend && npm run test:ci && popd'
+          command: 'npm run test:ci'
       - store_artifacts:
           path: coverage
       - run:
           name: Build frontend
-          command: 'pushd frontend && npm run build && popd'
+          command: 'npm run build'
       - persist_to_workspace:
           root: .
           paths:
-            - frontend/dist
+            - dist
       - codecov/upload:
           file: coverage/coverage-final.json
           flags: frontend
