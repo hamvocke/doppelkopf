@@ -11,13 +11,13 @@
       <div class="flex-col spaced">
         <img
           :src="currentImagePath()"
-          :alt="$t(current())"
+          :alt="$t(suitName[selectedValue])"
           class="reservation-icon"
         />
         <p class="bold">{{ $t("suit_solo_title") }}</p>
         <small>{{
           $t("suit_solo_description", {
-            suit: $t(current()),
+            suit: $t(suitName[selectedValue]),
             replaced: $t(Suit.Diamonds),
           })
         }}</small>
@@ -25,21 +25,21 @@
       <Checkbox :checked="selected" />
     </div>
     <div class="suits">
-      <div class="suit-box black" :class="{ active: current() === Suit.Clubs }">
+      <div class="suit-box black" :class="{ active: selectedValue === Reservation.ClubsSolo }">
         {{ Suit.Clubs }}
       </div>
       <div
         class="suit-box black"
-        :class="{ active: current() === Suit.Spades }"
+        :class="{ active: selectedValue === Reservation.SpadesSolo }"
       >
         {{ Suit.Spades }}
       </div>
-      <div class="suit-box red" :class="{ active: current() === Suit.Hearts }">
+      <div class="suit-box red" :class="{ active: selectedValue === Reservation.HeartsSolo }">
         {{ Suit.Hearts }}
       </div>
       <div
         class="suit-box red"
-        :class="{ active: current() === Suit.Diamonds }"
+        :class="{ active: selectedValue === Reservation.DiamondsSolo }"
       >
         {{ Suit.Diamonds }}
       </div>
@@ -50,6 +50,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Suit } from "@/models/card";
+import { Reservation } from "@/models/reservation";
 import Checkbox from "@/components/reservations/Checkbox.vue";
 
 const props = defineProps({
@@ -57,7 +58,6 @@ const props = defineProps({
     type: Boolean,
   },
   modelValue: {
-    type: String,
     required: true,
   },
   selected: {
@@ -65,31 +65,40 @@ const props = defineProps({
   },
 });
 
-const allSuites = [Suit.Clubs, Suit.Spades, Suit.Hearts, Suit.Diamonds];
-const imageFiles: { [key in Suit]: string } = {
-  [Suit.Clubs]: "clubs.png",
-  [Suit.Spades]: "spades.png",
-  [Suit.Hearts]: "heart.png",
-  [Suit.Diamonds]: "diamonds.png",
+type SuitSolo = Reservation.ClubsSolo | Reservation.SpadesSolo | Reservation.HeartsSolo | Reservation.DiamondsSolo;
+
+const imageFiles: { [key in SuitSolo]: string } = {
+  [Reservation.ClubsSolo]: "clubs.png",
+  [Reservation.SpadesSolo]: "spades.png",
+  [Reservation.HeartsSolo]: "heart.png",
+  [Reservation.DiamondsSolo]: "diamonds.png",
 };
 
-let currentlySelected = 0;
+const nextSelection: { [key in SuitSolo]: SuitSolo } = {
+  [Reservation.ClubsSolo]: Reservation.SpadesSolo,
+  [Reservation.SpadesSolo]: Reservation.HeartsSolo,
+  [Reservation.HeartsSolo]: Reservation.DiamondsSolo,
+  [Reservation.DiamondsSolo]: Reservation.ClubsSolo,
+};
+
+const suitName: { [key in SuitSolo]: string } = {
+  [Reservation.ClubsSolo]: Suit.Clubs,
+  [Reservation.SpadesSolo]: Suit.Spades,
+  [Reservation.HeartsSolo]: Suit.Hearts,
+  [Reservation.DiamondsSolo]: Suit.Diamonds,
+};
 
 const emit = defineEmits(["update:modelValue"]);
-const selectedValue = ref(current());
+let selectedValue = ref<SuitSolo>(Reservation.ClubsSolo);
 
-function current() {
-  return allSuites[currentlySelected];
-}
 
 function currentImagePath() {
-  const img = imageFiles[current()];
+  const img = imageFiles[selectedValue.value];
   return `src/assets/img/${img}`;
 }
 
 function next() {
-  currentlySelected = ++currentlySelected % allSuites.length;
-  return allSuites[currentlySelected];
+  selectedValue.value = nextSelection[selectedValue.value]
 }
 
 function select() {
@@ -98,7 +107,7 @@ function select() {
   }
 
   if (props.selected) {
-    selectedValue.value = next();
+    next();
   }
 
   emit("update:modelValue", selectedValue.value);

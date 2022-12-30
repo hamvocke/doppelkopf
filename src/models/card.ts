@@ -5,8 +5,6 @@ export enum Suit {
   Diamonds = "♦",
 }
 
-export const allSuits = [Suit.Clubs, Suit.Spades, Suit.Hearts, Suit.Diamonds];
-
 export enum Rank {
   Ace = "A",
   Ten = "10",

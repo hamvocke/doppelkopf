@@ -1,7 +1,7 @@
 <template>
   <div
     class="selectable-box"
-    :class="{ selected, disabled }"
+    :class="{ selected: selected(), disabled }"
     tabindex="0"
     @click="select"
     @keydown.enter="select"
@@ -10,7 +10,7 @@
     <div class="flex spaced">
       <slot></slot>
     </div>
-    <Checkbox :checked="selected" />
+    <Checkbox :checked="selected()" />
   </div>
 </template>
 
@@ -22,19 +22,15 @@ const props = defineProps({
     type: Boolean,
   },
   modelValue: {
-    type: String,
     required: true,
   },
   selectedValue: {
-    type: String,
     required: true,
-  },
-  selected: {
-    type: Boolean,
-  },
+  }
 });
 
 const emit = defineEmits(["update:modelValue"]);
+const selected = () => props.modelValue === props.selectedValue
 
 function select() {
   if (props.disabled) {

@@ -34,8 +34,7 @@
       <div class="flex-container">
         <selectable-box
           v-model="reservation"
-          selected-value="gesund"
-          :selected="reservation === 'gesund'"
+          :selected-value="Reservation.None"
           class="flex-item"
         >
           <img
@@ -54,7 +53,7 @@
 
         <selectable-box
           v-model="reservation"
-          selected-value="hochzeit"
+          :selected-value="Reservation.Wedding"
           class="flex-item"
           disabled
         >
@@ -92,8 +91,7 @@
         <div class="flex-container">
           <selectable-box
             v-model="reservation"
-            selected-value="damensolo"
-            :selected="reservation === 'damensolo'"
+            :selected-value="Reservation.QueenSolo"
             class="flex-item"
           >
             <div class="flex-col centered-col">
@@ -109,8 +107,7 @@
 
           <selectable-box
             v-model="reservation"
-            selected-value="bubensolo"
-            :selected="reservation === 'bubensolo'"
+            :selected-value="Reservation.JackSolo"
             class="flex-item"
           >
             <div class="flex-col centered-col">
@@ -132,8 +129,7 @@
 
           <selectable-box
             v-model="reservation"
-            selected-value="fleischloser"
-            :selected="reservation === 'fleischloser'"
+            :selected-value="Reservation.AceSolo"
             class="flex-item"
           >
             <div class="flex-col centered-col">
@@ -166,7 +162,7 @@ import Hand from "@/components/Hand.vue";
 import { PropType, ref } from "vue";
 import SelectableBox from "@/components/reservations/SelectableBox.vue";
 import SuitSelectorBox from "@/components/reservations/SuitSelectorBox.vue";
-import { allSuits } from "@/models/card";
+import { Reservation } from "@/models/reservation"
 
 defineProps({
   game: {
@@ -175,16 +171,21 @@ defineProps({
   },
 });
 
-const reservation = ref("");
+const reservation = ref<Reservation>(Reservation.None);
 
 function buttonText() {
-  return reservation.value === "gesund"
+  return reservation.value === Reservation.None
     ? "Normales Spiel spielen"
     : "Vorbehalt anmelden";
 }
 
 function isSuitSoloSelected() {
-  return allSuits.map((s) => s.valueOf()).includes(reservation.value);
+  return [
+    Reservation.ClubsSolo,
+    Reservation.SpadesSolo,
+    Reservation.HeartsSolo,
+    Reservation.DiamondsSolo
+  ].includes(reservation.value);
 }
 </script>
 

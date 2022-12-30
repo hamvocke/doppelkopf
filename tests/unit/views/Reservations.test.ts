@@ -14,4 +14,12 @@ describe("Reservations.vue", () => {
 
     expect(wrapper.find(".hand").exists()).toBe(true);
   });
+
+  test("should render Hand", () => {
+    const wrapper = mount(Reservations, {
+      props: { game: GameModel.singlePlayer() },
+    });
+
+    expect(wrapper.find(".hand").exists()).toBe(true);
+  });
 });
