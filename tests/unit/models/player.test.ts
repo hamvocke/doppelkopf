@@ -10,6 +10,7 @@ import { Announcement } from "@/models/announcements";
 import { Trick } from "@/models/trick";
 import { Affinities } from "@/models/affinities";
 import { aHandWith, aHandWithout } from "../../builders/handBuilder";
+import { Reservation } from "@/models/reservations";
 
 let game: any;
 let player: Player;
@@ -300,6 +301,16 @@ test("should clear announcements when resetting player", () => {
   player.reset();
 
   expect(player.announcements).toEqual(new Set());
+});
+
+test("should clear reservation when resetting player", () => {
+  player.claimReservation(Reservation.JackSolo);
+
+  expect(player.reservation).toEqual(Reservation.JackSolo);
+
+  player.reset();
+
+  expect(player.reservation).toEqual(Reservation.None);
 });
 
 describe("announcements", () => {

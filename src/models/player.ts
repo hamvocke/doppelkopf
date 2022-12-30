@@ -148,10 +148,15 @@ export class Player {
     this.announcements = new Set();
     this.memory.clearMemory();
     this.behavior.reset();
+    this.reservation = Reservation.None;
   }
 
   points() {
     return this.trickStack.points();
+  }
+
+  claimReservation(reservation: Reservation) {
+    this.reservation = reservation;
   }
 
   announce(announcement: Announcement) {
