@@ -86,6 +86,25 @@ describe("SuitSelectorBox.vue", () => {
 
     expect(wrapper.find(".checkmark").exists()).toBe(false);
     expect(wrapper.find(".selectable-box").classes()).not.toContain("selected");
+  });
 
+  test("should select suit when clicking suit tab directly", async () => {
+    const wrapper = mount(SuitSelectorBox, {
+      props: { disabled: false, modelValue: Reservation.None, selected: false },
+    });
+
+    await wrapper.findAll(".suit-box")[2].trigger("click");
+
+    expect(wrapper.text()).toContain("suit-solo-hearts-title");
+  });
+
+  test("should not select suit when clicking suit tab  if component is disabled", async () => {
+    const wrapper = mount(SuitSelectorBox, {
+      props: { disabled: true, modelValue: Reservation.None, selected: false },
+    });
+
+    await wrapper.findAll(".suit-box")[2].trigger("click");
+
+    expect(wrapper.text()).toContain("suit-solo-clubs-title");
   });
 });

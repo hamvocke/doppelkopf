@@ -22,21 +22,31 @@
       <Checkbox :checked="selected" />
     </div>
     <div class="suits">
-      <div class="suit-box black" :class="{ active: selectedValue === Reservation.ClubsSolo }">
+      <div
+        class="suit-box black"
+        :class="{ active: selectedValue === Reservation.ClubsSolo }"
+        @click="selectSuit(Reservation.ClubsSolo)"
+      >
         {{ Suit.Clubs }}
       </div>
       <div
         class="suit-box black"
         :class="{ active: selectedValue === Reservation.SpadesSolo }"
+        @click="selectSuit(Reservation.SpadesSolo)"
       >
         {{ Suit.Spades }}
       </div>
-      <div class="suit-box red" :class="{ active: selectedValue === Reservation.HeartsSolo }">
+      <div
+        class="suit-box red"
+        :class="{ active: selectedValue === Reservation.HeartsSolo }"
+        @click="selectSuit(Reservation.HeartsSolo)"
+      >
         {{ Suit.Hearts }}
       </div>
       <div
         class="suit-box red"
         :class="{ active: selectedValue === Reservation.DiamondsSolo }"
+        @click="selectSuit(Reservation.DiamondsSolo)"
       >
         {{ Suit.Diamonds }}
       </div>
@@ -127,6 +137,15 @@ function select() {
     next();
   }
 
+  emit("update:modelValue", selectedValue.value);
+}
+
+function selectSuit(suit: SuitSolo) {
+  if (props.disabled) {
+    return;
+  }
+
+  selectedValue.value = suit;
   emit("update:modelValue", selectedValue.value);
 }
 </script>
