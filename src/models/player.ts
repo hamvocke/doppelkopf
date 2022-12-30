@@ -14,6 +14,7 @@ import { TablePosition } from "./tablePosition";
 import { Affinities, AffinityEvent } from "@/models/affinities";
 import { allCards } from "./deck";
 import { findParties, Party, PartyName } from "./party";
+import { Reservation } from "./reservations";
 
 // TODO: break circular dependency between player & game, make game non-null
 export class Player {
@@ -28,6 +29,7 @@ export class Player {
   game?: Game;
   behavior: Behavior;
   memory: Memory;
+  reservation: Reservation;
 
   constructor(
     name: string,
@@ -46,6 +48,7 @@ export class Player {
     this.game = game;
     this.behavior = new behaviour(this.id, new Affinities(this));
     this.memory = memory;
+    this.reservation = Reservation.None;
 
     this.reset();
   }

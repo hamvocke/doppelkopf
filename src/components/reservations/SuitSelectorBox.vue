@@ -57,7 +57,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Suit } from "@/models/card";
-import { Reservation } from "@/models/reservation";
+import { Reservation } from "@/models/reservations";
 import Checkbox from "@/components/reservations/Checkbox.vue";
 
 const props = defineProps({

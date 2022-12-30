@@ -1,5 +1,5 @@
 import SuitSelectorBox from "@/components/reservations/SuitSelectorBox.vue";
-import { Reservation } from "@/models/reservation";
+import { Reservation } from "@/models/reservations";
 import { mount, config } from "@vue/test-utils";
 
 config.global.mocks["$t"] = (msg: string) => msg;
