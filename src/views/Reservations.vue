@@ -149,6 +149,7 @@
       </div>
     </div>
 
+    <div>Selected Game Type: {{ reservation }}</div>
     <div>
       <button type="button" class="button">{{ buttonText() }}</button>
     </div>

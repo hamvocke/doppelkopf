@@ -11,15 +11,12 @@
       <div class="flex-col spaced">
         <img
           :src="currentImagePath()"
-          :alt="$t(suitName[selectedValue])"
+          :alt="$t(current().suitSoloTitleI18nKey)"
           class="reservation-icon"
         />
-        <p class="bold">{{ $t("suit_solo_title") }}</p>
+        <p class="bold">{{ $t(current().suitSoloTitleI18nKey) }}</p>
         <small>{{
-          $t("suit_solo_description", {
-            suit: $t(suitName[selectedValue]),
-            replaced: $t(Suit.Diamonds),
-          })
+          $t(current().suitSoloTextI18nKey)
         }}</small>
       </div>
       <Checkbox :checked="selected" />
@@ -64,41 +61,61 @@ const props = defineProps({
     type: Boolean,
   },
 });
+const emit = defineEmits(["update:modelValue"]);
 
 type SuitSolo = Reservation.ClubsSolo | Reservation.SpadesSolo | Reservation.HeartsSolo | Reservation.DiamondsSolo;
+interface SoloConfiguration {
+  imagePath: string,
+  nextSoloType: SuitSolo,
+  suitName: Suit,
+  suitSoloTitleI18nKey: string,
+  suitSoloTextI18nKey: string
+}
 
-const imageFiles: { [key in SuitSolo]: string } = {
-  [Reservation.ClubsSolo]: "clubs.png",
-  [Reservation.SpadesSolo]: "spades.png",
-  [Reservation.HeartsSolo]: "heart.png",
-  [Reservation.DiamondsSolo]: "diamonds.png",
-};
+const soloConfig: { [key in SuitSolo]: SoloConfiguration } = {
+  [Reservation.ClubsSolo]: {
+    imagePath: "clubs.png",
+    nextSoloType: Reservation.SpadesSolo,
+    suitName: Suit.Clubs,
+    suitSoloTitleI18nKey: "suit-solo-clubs-title",
+    suitSoloTextI18nKey: "suit-solo-clubs-text"
+  },
+  [Reservation.SpadesSolo]: {
+    imagePath: "spades.png",
+    nextSoloType: Reservation.HeartsSolo,
+    suitName: Suit.Spades,
+    suitSoloTitleI18nKey: "suit-solo-spades-title",
+    suitSoloTextI18nKey: "suit-solo-spades-text"
+  },
+  [Reservation.HeartsSolo]: {
+    imagePath: "heart.png",
+    nextSoloType: Reservation.DiamondsSolo,
+    suitName: Suit.Hearts,
+    suitSoloTitleI18nKey: "suit-solo-hearts-title",
+    suitSoloTextI18nKey: "suit-solo-hearts-text"
+  },
+  [Reservation.DiamondsSolo]: {
+    imagePath: "diamonds.png",
+    nextSoloType: Reservation.ClubsSolo,
+    suitName: Suit.Diamonds,
+    suitSoloTitleI18nKey: "suit-solo-diamonds-title",
+    suitSoloTextI18nKey: "suit-solo-diamonds-text"
+  },
+}
 
-const nextSelection: { [key in SuitSolo]: SuitSolo } = {
-  [Reservation.ClubsSolo]: Reservation.SpadesSolo,
-  [Reservation.SpadesSolo]: Reservation.HeartsSolo,
-  [Reservation.HeartsSolo]: Reservation.DiamondsSolo,
-  [Reservation.DiamondsSolo]: Reservation.ClubsSolo,
-};
-
-const suitName: { [key in SuitSolo]: string } = {
-  [Reservation.ClubsSolo]: Suit.Clubs,
-  [Reservation.SpadesSolo]: Suit.Spades,
-  [Reservation.HeartsSolo]: Suit.Hearts,
-  [Reservation.DiamondsSolo]: Suit.Diamonds,
-};
-
-const emit = defineEmits(["update:modelValue"]);
 let selectedValue = ref<SuitSolo>(Reservation.ClubsSolo);
 
+function current() {
+  return soloConfig[selectedValue.value]
+}
 
 function currentImagePath() {
-  const img = imageFiles[selectedValue.value];
+  const img = current().imagePath;
   return `src/assets/img/${img}`;
 }
 
 function next() {
-  selectedValue.value = nextSelection[selectedValue.value]
+  selectedValue.value = current().nextSoloType
 }
 
 function select() {

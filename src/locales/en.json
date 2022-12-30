@@ -98,6 +98,12 @@
   "enter_name_label": "What's your name?",
   "show_last_trick_header": "Previous trick",
   "show_last_trick_label": "{name} has won the previous trick",
-  "suit_solo_title": "Suit Solo",
-  "suit_solo_description": "{suit} replaces {replaced} as the trick suit"
+  "suit-solo-clubs-title": "Clubs Solo",
+  "suit-solo-clubs-text": "Clubs replace Diamonds as trump suit",
+  "suit-solo-spades-title": "Spades Solo",
+  "suit-solo-spades-text": "Spades replace Diamonds as trump suit",
+  "suit-solo-hearts-title": "Hearts Solo",
+  "suit-solo-hearts-text": "Hearts replace Diamonds as trump suit",
+  "suit-solo-diamonds-title": "Diamonds Solo",
+  "suit-solo-diamonds-text": "Diamonds remain the trump suit but you play on your own"
 }
