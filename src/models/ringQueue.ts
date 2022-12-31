@@ -1,5 +1,5 @@
 export class RingQueue<T> {
-  private elements: T[];
+  elements: T[]; // TODO: make private again
   private currentIndex = 0;
 
   constructor(elements: T[]) {

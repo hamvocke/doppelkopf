@@ -44,7 +44,7 @@ export class Game {
 
   // todo: make this configurable for playing with 9s
   deal() {
-    let hands = [];
+    const hands = [];
 
     do {
       this.deck = new Deck();

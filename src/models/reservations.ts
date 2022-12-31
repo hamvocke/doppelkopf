@@ -1,4 +1,5 @@
 import { Player } from "@/models/player";
+import { RingQueue } from "./ringQueue";
 
 export enum Reservation {
   None,
@@ -13,15 +14,32 @@ export enum Reservation {
 }
 
 export class Reservations {
-  players: Player[];
+  players: RingQueue<Player>;
 
-  constructor(players: Player[]) {
+  constructor(players: RingQueue<Player>) {
     this.players = players;
   }
 
   isEveryoneHealthy(): boolean {
-    return this.players
+    return this.players.elements
       .map((p) => p.reservation)
       .every((r) => r == Reservation.None);
+  }
+
+  findGameType(): Reservation {
+    const solos = this.findSolos();
+
+    if (solos.length == 1) {
+      return solos[0];
+    }
+
+    return Reservation.None;
+  }
+
+  private findSolos(): Reservation[] {
+    const nonSoloTypes = [Reservation.None, Reservation.Wedding];
+    return this.players.elements
+      .map((p) => p.reservation)
+      .filter((r) => !nonSoloTypes.includes(r));
   }
 }

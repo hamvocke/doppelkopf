@@ -23,7 +23,7 @@ export class Round {
     scorecard: any = {},
     openingPlayer: Player
   ) {
-    this.players = players;
+    this.players = players; // TODO: remove - we don't need both, a list of players and a RingQueue of players
     this.parties = findParties(players);
     this.scorecard = scorecard;
     this.score = undefined;
@@ -31,14 +31,12 @@ export class Round {
     this.currentTrick = this.nextTrick();
 
     this.playerOrder = new RingQueue(this.players);
-    if (openingPlayer) {
-      this.playerOrder.prioritize(openingPlayer);
-    }
+    this.playerOrder.prioritize(openingPlayer);
   }
 
   nextTrick() {
     this.previousTrick = this.currentTrick;
-    let trick = new Trick(this.players);
+    const trick = new Trick(this.players);
     if (this.cardsLeft() <= this.players.length) trick.setLastTrickInRound();
     return trick;
   }
@@ -104,7 +102,7 @@ export class Round {
   }
 
   async showExtras() {
-    for (let extra of this.currentTrick.extras()) {
+    for (const extra of this.currentTrick.extras()) {
       switch (extra) {
         case extras.doppelkopf:
           // todo i18n

@@ -155,7 +155,7 @@ export class Player {
     return this.trickStack.points();
   }
 
-  claimReservation(reservation: Reservation) {
+  declareReservation(reservation: Reservation) {
     this.reservation = reservation;
   }
 

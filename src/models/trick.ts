@@ -15,7 +15,7 @@ export class Trick {
   private expectedNumberOfCards: number;
 
   constructor(players: Array<Player>) {
-    this.players = players;
+    this.players = players; // TODO: remove 'players' field from 'trick' class to avoid circular dependency
     this.expectedNumberOfCards = players.length;
     this.playedCards = [];
     this.finished = false;

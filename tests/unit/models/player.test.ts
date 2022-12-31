@@ -304,7 +304,7 @@ test("should clear announcements when resetting player", () => {
 });
 
 test("should clear reservation when resetting player", () => {
-  player.claimReservation(Reservation.JackSolo);
+  player.declareReservation(Reservation.JackSolo);
 
   expect(player.reservation).toEqual(Reservation.JackSolo);
 
