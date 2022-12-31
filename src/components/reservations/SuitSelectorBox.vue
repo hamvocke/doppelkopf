@@ -15,9 +15,7 @@
           class="reservation-icon"
         />
         <p class="bold">{{ $t(current().suitSoloTitleI18nKey) }}</p>
-        <small>{{
-          $t(current().suitSoloTextI18nKey)
-        }}</small>
+        <small>{{ $t(current().suitSoloTextI18nKey) }}</small>
       </div>
       <Checkbox :checked="selected" />
     </div>
@@ -73,13 +71,18 @@ const props = defineProps({
 });
 const emit = defineEmits(["update:modelValue"]);
 
-type SuitSolo = Reservation.ClubsSolo | Reservation.SpadesSolo | Reservation.HeartsSolo | Reservation.DiamondsSolo;
+type SuitSolo =
+  | Reservation.ClubsSolo
+  | Reservation.SpadesSolo
+  | Reservation.HeartsSolo
+  | Reservation.DiamondsSolo;
+
 interface SoloConfiguration {
-  imagePath: string,
-  nextSoloType: SuitSolo,
-  suitName: Suit,
-  suitSoloTitleI18nKey: string,
-  suitSoloTextI18nKey: string
+  imagePath: string;
+  nextSoloType: SuitSolo;
+  suitName: Suit;
+  suitSoloTitleI18nKey: string;
+  suitSoloTextI18nKey: string;
 }
 
 const soloConfig: { [key in SuitSolo]: SoloConfiguration } = {
@@ -88,35 +91,35 @@ const soloConfig: { [key in SuitSolo]: SoloConfiguration } = {
     nextSoloType: Reservation.SpadesSolo,
     suitName: Suit.Clubs,
     suitSoloTitleI18nKey: "suit-solo-clubs-title",
-    suitSoloTextI18nKey: "suit-solo-clubs-text"
+    suitSoloTextI18nKey: "suit-solo-clubs-text",
   },
   [Reservation.SpadesSolo]: {
     imagePath: "spades.png",
     nextSoloType: Reservation.HeartsSolo,
     suitName: Suit.Spades,
     suitSoloTitleI18nKey: "suit-solo-spades-title",
-    suitSoloTextI18nKey: "suit-solo-spades-text"
+    suitSoloTextI18nKey: "suit-solo-spades-text",
   },
   [Reservation.HeartsSolo]: {
     imagePath: "heart.png",
     nextSoloType: Reservation.DiamondsSolo,
     suitName: Suit.Hearts,
     suitSoloTitleI18nKey: "suit-solo-hearts-title",
-    suitSoloTextI18nKey: "suit-solo-hearts-text"
+    suitSoloTextI18nKey: "suit-solo-hearts-text",
   },
   [Reservation.DiamondsSolo]: {
     imagePath: "diamonds.png",
     nextSoloType: Reservation.ClubsSolo,
     suitName: Suit.Diamonds,
     suitSoloTitleI18nKey: "suit-solo-diamonds-title",
-    suitSoloTextI18nKey: "suit-solo-diamonds-text"
+    suitSoloTextI18nKey: "suit-solo-diamonds-text",
   },
-}
+};
 
-let selectedValue = ref<SuitSolo>(Reservation.ClubsSolo);
+const selectedValue = ref<SuitSolo>(Reservation.ClubsSolo);
 
 function current() {
-  return soloConfig[selectedValue.value]
+  return soloConfig[selectedValue.value];
 }
 
 function currentImagePath() {
@@ -125,7 +128,7 @@ function currentImagePath() {
 }
 
 function next() {
-  selectedValue.value = current().nextSoloType
+  selectedValue.value = current().nextSoloType;
 }
 
 function select() {
