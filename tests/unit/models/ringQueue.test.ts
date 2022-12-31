@@ -47,4 +47,12 @@ describe("ring queue", () => {
       "can't prioritize unknown element '4'"
     );
   });
+
+  test("should iterate over elements in order", () => {
+    let currentIndex = 0;
+    const elements = ["A", "B", "C", "D"];
+    const queue = new RingQueue(elements);
+
+    queue.forEach((el) => expect(el === elements[currentIndex++]));
+  });
 });
