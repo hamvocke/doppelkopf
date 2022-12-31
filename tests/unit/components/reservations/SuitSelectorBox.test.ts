@@ -98,7 +98,7 @@ describe("SuitSelectorBox.vue", () => {
     expect(wrapper.text()).toContain("suit-solo-hearts-title");
   });
 
-  test("should not select suit when clicking suit tab  if component is disabled", async () => {
+  test("should not select suit when clicking suit tab if component is disabled", async () => {
     const wrapper = mount(SuitSelectorBox, {
       props: { disabled: true, modelValue: Reservation.None, selected: false },
     });
@@ -106,5 +106,43 @@ describe("SuitSelectorBox.vue", () => {
     await wrapper.findAll(".suit-box")[2].trigger("click");
 
     expect(wrapper.text()).toContain("suit-solo-clubs-title");
+  });
+
+  test("should select next suit when pressing right arrow on a selected component", async () => {
+    const wrapper = mount(SuitSelectorBox, {
+      props: { disabled: false, modelValue: Reservation.None, selected: true },
+    });
+
+    await wrapper
+      .find(".selectable-box")
+      .trigger("keydown", { key: "ArrowRight" });
+
+    expect(wrapper.text()).toContain("suit-solo-spades-title");
+    expect(wrapper.find(".suit-box.active").text()).toEqual("♠");
+  });
+
+  test("should select previous suit when pressing left arrow on a selected component", async () => {
+    const wrapper = mount(SuitSelectorBox, {
+      props: { disabled: false, modelValue: Reservation.None, selected: true },
+    });
+
+    await wrapper
+      .find(".selectable-box")
+      .trigger("keydown", { key: "ArrowRight" });
+
+    await wrapper
+      .find(".selectable-box")
+      .trigger("keydown", { key: "ArrowRight" });
+
+    await wrapper
+      .find(".selectable-box")
+      .trigger("keydown", { key: "ArrowRight" });
+
+    await wrapper
+      .find(".selectable-box")
+      .trigger("keydown", { key: "ArrowLeft" });
+
+    expect(wrapper.text()).toContain("suit-solo-hearts-title");
+    expect(wrapper.find(".suit-box.active").text()).toEqual("♥");
   });
 });

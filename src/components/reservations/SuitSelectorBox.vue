@@ -4,9 +4,11 @@
       class="selectable-box"
       :class="{ selected, disabled }"
       tabindex="0"
-      @click="select"
-      @keydown.enter="select"
-      @keydown.space="select"
+      @click="selectNext"
+      @keydown.enter="selectNext"
+      @keydown.space="selectNext"
+      @keydown.arrow-right="selectNext"
+      @keydown.arrow-left="selectPrevious"
     >
       <div class="flex-col spaced">
         <img
@@ -80,6 +82,7 @@ type SuitSolo =
 interface SoloConfiguration {
   imagePath: string;
   nextSoloType: SuitSolo;
+  previousSoloType: SuitSolo;
   suitName: Suit;
   suitSoloTitleI18nKey: string;
   suitSoloTextI18nKey: string;
@@ -89,6 +92,7 @@ const soloConfig: { [key in SuitSolo]: SoloConfiguration } = {
   [Reservation.ClubsSolo]: {
     imagePath: "clubs.png",
     nextSoloType: Reservation.SpadesSolo,
+    previousSoloType: Reservation.DiamondsSolo,
     suitName: Suit.Clubs,
     suitSoloTitleI18nKey: "suit-solo-clubs-title",
     suitSoloTextI18nKey: "suit-solo-clubs-text",
@@ -96,6 +100,7 @@ const soloConfig: { [key in SuitSolo]: SoloConfiguration } = {
   [Reservation.SpadesSolo]: {
     imagePath: "spades.png",
     nextSoloType: Reservation.HeartsSolo,
+    previousSoloType: Reservation.ClubsSolo,
     suitName: Suit.Spades,
     suitSoloTitleI18nKey: "suit-solo-spades-title",
     suitSoloTextI18nKey: "suit-solo-spades-text",
@@ -103,6 +108,7 @@ const soloConfig: { [key in SuitSolo]: SoloConfiguration } = {
   [Reservation.HeartsSolo]: {
     imagePath: "heart.png",
     nextSoloType: Reservation.DiamondsSolo,
+    previousSoloType: Reservation.SpadesSolo,
     suitName: Suit.Hearts,
     suitSoloTitleI18nKey: "suit-solo-hearts-title",
     suitSoloTextI18nKey: "suit-solo-hearts-text",
@@ -110,6 +116,7 @@ const soloConfig: { [key in SuitSolo]: SoloConfiguration } = {
   [Reservation.DiamondsSolo]: {
     imagePath: "diamonds.png",
     nextSoloType: Reservation.ClubsSolo,
+    previousSoloType: Reservation.HeartsSolo,
     suitName: Suit.Diamonds,
     suitSoloTitleI18nKey: "suit-solo-diamonds-title",
     suitSoloTextI18nKey: "suit-solo-diamonds-text",
@@ -127,20 +134,12 @@ function currentImagePath() {
   return `src/assets/img/${img}`;
 }
 
-function next() {
-  selectedValue.value = current().nextSoloType;
+function selectNext() {
+  selectSuit(props.selected ? current().nextSoloType : selectedValue.value);
 }
 
-function select() {
-  if (props.disabled) {
-    return;
-  }
-
-  if (props.selected) {
-    next();
-  }
-
-  emit("update:modelValue", selectedValue.value);
+function selectPrevious() {
+  selectSuit(props.selected ? current().previousSoloType : selectedValue.value);
 }
 
 function selectSuit(suit: SuitSolo) {
