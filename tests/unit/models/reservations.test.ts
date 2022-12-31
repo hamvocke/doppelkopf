@@ -1,4 +1,4 @@
-import { Reservation, Reservations } from "@/models/reservations";
+import { Reservation, GameType, findGameType } from "@/models/reservations";
 import { RingQueue } from "@/models/ringQueue";
 import { PlayerBuilder } from "../../builders/playerBuilder";
 
@@ -14,32 +14,48 @@ beforeEach(() => {
   players.asList().forEach((p) => p.reset());
 });
 
-describe("Reservations", () => {
-  test("should initialize all players as 'healthy' by default", () => {
-    const reservations = new Reservations(players);
+describe("findGameType()", () => {
+  test("should detect a normal game if each player is healthy", () => {
+    const gameType = findGameType(players);
 
-    expect(reservations.isEveryoneHealthy()).toBe(true);
+    expect(gameType).toEqual(GameType.normalGame());
   });
 
-  test("should detect if a player declares a reservation", () => {
-    player3.declareReservation(Reservation.QueenSolo);
-
-    const reservations = new Reservations(players);
-
-    expect(reservations.isEveryoneHealthy()).toBe(false);
-  });
-
-  test("should come up with a normal game if each player is 'healthy'", () => {
-    const reservation = new Reservations(players);
-
-    expect(reservation.findGameType()).toEqual(Reservation.None);
-  });
-
-  test("should come up with a solo game if a player declares a solo", () => {
+  test("should detect with a solo game if a player declares a solo", () => {
     player4.declareReservation(Reservation.AceSolo);
 
-    const reservation = new Reservations(players);
+    const gameType = findGameType(players);
 
-    expect(reservation.findGameType()).toEqual(Reservation.AceSolo);
+    expect(gameType.reservation).toEqual(Reservation.AceSolo);
+    expect(gameType.player).toEqual(player4);
+  });
+
+  test("should prioritize by player order if multiple players declare a solo", () => {
+    player4.declareReservation(Reservation.AceSolo);
+    player3.declareReservation(Reservation.QueenSolo);
+
+    const gameType = findGameType(players);
+
+    expect(gameType.reservation).toEqual(Reservation.QueenSolo);
+    expect(gameType.player).toEqual(player3);
+  });
+
+  test("should detect wedding", () => {
+    player2.declareReservation(Reservation.Wedding);
+
+    const gameType = findGameType(players);
+
+    expect(gameType.reservation).toEqual(Reservation.Wedding);
+    expect(gameType.player).toEqual(player2);
+  });
+
+  test("should prioritize solo over wedding", () => {
+    player2.declareReservation(Reservation.Wedding);
+    player4.declareReservation(Reservation.JackSolo);
+
+    const gameType = findGameType(players);
+
+    expect(gameType.reservation).toEqual(Reservation.JackSolo);
+    expect(gameType.player).toEqual(player4);
   });
 });

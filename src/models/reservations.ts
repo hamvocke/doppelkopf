@@ -13,35 +13,38 @@ export enum Reservation {
   Wedding,
 }
 
-export class Reservations {
-  players: RingQueue<Player>;
+const nonSoloTypes = [Reservation.None, Reservation.Wedding];
 
-  constructor(players: RingQueue<Player>) {
-    this.players = players;
+export class GameType {
+  reservation: Reservation;
+  player?: Player;
+
+  constructor(reservation: Reservation, player?: Player) {
+    this.reservation = reservation;
+    this.player = player;
   }
 
-  isEveryoneHealthy(): boolean {
-    return this.players
-      .asList()
-      .map((p) => p.reservation)
-      .every((r) => r == Reservation.None);
+  static normalGame() {
+    return new GameType(Reservation.None);
+  }
+}
+
+export function findGameType(players: RingQueue<Player>): GameType {
+  const gameTypeCandidates = players
+    .asList()
+    .map((p) => new GameType(p.reservation, p));
+
+  const solos = gameTypeCandidates.filter(
+    (c) => !nonSoloTypes.includes(c.reservation)
+  );
+
+  if (solos.length > 0) {
+    return solos[0];
   }
 
-  findGameType(): Reservation {
-    const solos = this.findSolos();
+  const wedding = gameTypeCandidates.find(
+    (c) => c.reservation === Reservation.Wedding
+  );
 
-    if (solos.length == 1) {
-      return solos[0];
-    }
-
-    return Reservation.None;
-  }
-
-  private findSolos(): Reservation[] {
-    const nonSoloTypes = [Reservation.None, Reservation.Wedding];
-    return this.players
-      .asList()
-      .map((p) => p.reservation)
-      .filter((r) => !nonSoloTypes.includes(r));
-  }
+  return wedding || GameType.normalGame();
 }
