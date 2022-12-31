@@ -30,7 +30,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:modelValue"]);
-const selected = () => props.modelValue === props.selectedValue
+const selected = () => props.modelValue === props.selectedValue;
 
 function select() {
   if (props.disabled) {
@@ -55,13 +55,12 @@ function select() {
   cursor: pointer;
 }
 
-.selectable-box:hover:not(.disabled),
-.selectable-box:active:not(.disabled) {
+.selectable-box:hover:not(.disabled) {
   border-color: var(--white-500);
 }
 
-.selectable-box:focus:not(.disabled) {
-  outline: 1px solid var(--white-500);
+.selectable-box:focus {
+  outline: 3px solid var(--white-300);
 }
 
 .selected {

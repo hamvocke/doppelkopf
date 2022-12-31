@@ -180,6 +180,10 @@ p {
   border-color: var(--white-500);
 }
 
+.selectable-box:focus {
+  outline: 3px solid var(--white-300);
+}
+
 .selected {
   border: 1px solid var(--red-dark);
 }
@@ -219,6 +223,11 @@ p {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  border-radius: 0 0 8px 8px;
+}
+
+.selectable-box:focus ~ .suits {
+  outline: 3px solid var(--white-300);
 }
 
 .suit-box {

@@ -163,7 +163,7 @@ import Hand from "@/components/Hand.vue";
 import { PropType, ref } from "vue";
 import SelectableBox from "@/components/reservations/SelectableBox.vue";
 import SuitSelectorBox from "@/components/reservations/SuitSelectorBox.vue";
-import { Reservation } from "@/models/reservations"
+import { Reservation } from "@/models/reservations";
 
 defineProps({
   game: {
