@@ -1,33 +1,18 @@
 # Contributing
 
 Hey there! Happy to have you here <3
-We welcome all contributions, minor and major, from everyone.
+
+This is a personal pet project. My goal is to build something that people like to use while giving me a chance to work on something fun in my free time. That means that I'm not looking for big feature contributions from the wider community at this point in time.
+
+The following kinds of contribution are more than welcome, from everyone out there:
+
+* bug reports
+* feature requests
+* questions
+* small bug fix pull requests
+
+However, I am *not looking for pull requests* that introduce new functionality or change existing functionality in any non-trivial way.
+
+Over the years I learned that I just can't find the time, motivation, and energy to discuss technical design, review pull requests, and go through the back-and-forth required to turn a pull request into something that both I and a new contributor are happy with.
 
 By participating in this project, you agree to follow our [Code of Conduct](https://github.com/hamvocke/doppelkopf/blob/master/CODE_OF_CONDUCT.md).
-
-## Getting started
-The [Readme](https://github.com/hamvocke/doppelkopf/blob/master/README.md) has instructions how to start coding on your machine.
-
-## Things to work on
-If you're looking for things to work on, the [Roadmap](https://github.com/hamvocke/doppelkopf/projects/1) shows an overview over features, ideas and bugs that we want to address in the near future. The [issue tracker](https://github.com/hamvocke/doppelkopf/issues) is another good source of information.
-
-Apart from code contributions, there are many other things you could contribute to this project:
-    * bug reports
-    * feature ideas
-    * wireframes and design sketches
-    * typo fixes, copy tweaks
-    * learning material
-    * promotional stuff
-
-## Submitting your work
-* Submit a *pull request* for code changes
-* Create an *issue* for bug reports, feature requests, questions, discussions, ideas
-* When in doubt, or if you don't want to discuss things publicly, reach out to us [via email](mailto:ham@hamvocke.com)
-
-## Pull Requests
-Some things that will increase the chance that we're going to accept your pull request:
-
-    * write tests!
-    * write [good commit messages](https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
-    * provide a description of what your pull request does
-

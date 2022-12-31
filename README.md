@@ -72,4 +72,4 @@ We're using [prettier](https://prettier.io/) to format the code. Either set up y
 We're also using [eslint](https://eslint.org/) for static code analysis and to point out and find potential problems and inconsistencies. You can run it via `npm run lint` or by setting up your editor of choice correctly.
 
 ## Contributing
-Contributions in the form of bug fixes, feature requests, bug reports, and feature implementations are welcome - but I'm notoriously slow to respond. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+Contributions in the form of feature requests, bug reports, and small bug fixes are welcome. I am **not** looking for pull requests that introduce new or change existing functionality in a non-trivial way. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
