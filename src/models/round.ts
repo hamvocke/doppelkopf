@@ -24,20 +24,21 @@ export class Round {
     openingPlayer: Player
   ) {
     this.players = players; // TODO: remove - we don't need both, a list of players and a RingQueue of players
+    this.playerOrder = new RingQueue(players);
+    this.playerOrder.prioritize(openingPlayer);
     this.parties = findParties(players);
     this.scorecard = scorecard;
     this.score = undefined;
     this.finished = false;
     this.currentTrick = this.nextTrick();
-
-    this.playerOrder = new RingQueue(this.players);
-    this.playerOrder.prioritize(openingPlayer);
   }
 
   nextTrick() {
     this.previousTrick = this.currentTrick;
-    const trick = new Trick(this.players);
-    if (this.cardsLeft() <= this.players.length) trick.setLastTrickInRound();
+    const trick = new Trick(this.playerOrder.asList());
+    if (this.cardsLeft() <= this.playerOrder.length()) {
+      trick.setLastTrickInRound();
+    }
     return trick;
   }
 
@@ -66,9 +67,8 @@ export class Round {
   }
 
   cardsLeft() {
-    const sumCardsFn = (acc: number, player: Player) =>
-      acc + player.numberOfCardsLeft();
-    return this.players.reduce(sumCardsFn, 0);
+    const sumCardsFn = (acc: number, player: Player) => acc + player.numberOfCardsLeft();
+    return this.playerOrder.asList().reduce(sumCardsFn, 0);
   }
 
   isFinished() {
@@ -88,13 +88,16 @@ export class Round {
   async evaluateLatestTrick() {
     const winner = this.currentTrick.winner()!;
 
-    this.players.forEach((player) =>
-      player.memory.memorizeTrick(
-        this.currentTrick.id,
-        this.currentTrick.baseCard()!,
-        winner
-      )
-    );
+    // TODO: remove this, migrate to an event-based approach (see comment in trick.ts)
+    this.playerOrder
+      .asList()
+      .forEach((player) =>
+        player.memory.memorizeTrick(
+          this.currentTrick.id,
+          this.currentTrick.baseCard()!,
+          winner
+        )
+      );
 
     winner.win(this.currentTrick);
     this.playerOrder.prioritize(winner);

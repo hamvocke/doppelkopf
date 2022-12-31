@@ -11,7 +11,7 @@ const players = new RingQueue([player1, player2, player3, player4]);
 
 beforeEach(() => {
   // reset reservations and anything else, to make sure they don't stick around between tests
-  players.elements.forEach((p) => p.reset());
+  players.asList().forEach((p) => p.reset());
 });
 
 describe("Reservations", () => {

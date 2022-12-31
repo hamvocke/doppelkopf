@@ -164,8 +164,6 @@ describe("extras", () => {
     player4.isRe = () => false;
   });
 
-  // tests here
-
   test("should find Doppelkopf", () => {
     const trick = new Trick(players);
 

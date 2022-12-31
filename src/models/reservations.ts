@@ -21,7 +21,8 @@ export class Reservations {
   }
 
   isEveryoneHealthy(): boolean {
-    return this.players.elements
+    return this.players
+      .asList()
       .map((p) => p.reservation)
       .every((r) => r == Reservation.None);
   }
@@ -38,7 +39,8 @@ export class Reservations {
 
   private findSolos(): Reservation[] {
     const nonSoloTypes = [Reservation.None, Reservation.Wedding];
-    return this.players.elements
+    return this.players
+      .asList()
       .map((p) => p.reservation)
       .filter((r) => !nonSoloTypes.includes(r));
   }

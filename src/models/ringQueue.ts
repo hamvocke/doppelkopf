@@ -1,5 +1,5 @@
 export class RingQueue<T> {
-  elements: T[];
+  private elements: T[];
   private currentIndex = 0;
 
   constructor(elements: T[]) {
@@ -29,11 +29,7 @@ export class RingQueue<T> {
     this.currentIndex = foundIndex;
   }
 
-  forEach(callbackfn: (value: T, index: number, array: T[]) => void) {
-    return this.elements.forEach(callbackfn);
-  }
-
-  map(callbackfn: (value: T, index: number, array: T[]) => T): RingQueue<T> {
-    return new RingQueue(this.elements.map(callbackfn));
+  asList() {
+    return this.elements;
   }
 }

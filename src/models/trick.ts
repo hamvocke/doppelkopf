@@ -40,6 +40,8 @@ export class Trick {
       this.finished = true;
     }
 
+    // TODO: refactor this (and the affinity event below) so it becomes an event-driven mechanism.
+    // playing a card should fire a global event that players (and their behavior) can subscribe to and choose to memorize or not.
     this.players.forEach((playerLoop) => {
       playerLoop.memory.memorize(new PlayedCard(card, player), this.id);
     });
