@@ -67,7 +67,7 @@ export class Round {
 
   cardsLeft() {
     const sumCardsFn = (acc: number, player: Player) =>
-      acc + player.hand.cards.length;
+      acc + player.numberOfCardsLeft();
     return this.players.reduce(sumCardsFn, 0);
   }
 
