@@ -32,4 +32,8 @@ export class RingQueue<T> {
   forEach(callbackfn: (value: T, index: number, array: T[]) => void) {
     return this.elements.forEach(callbackfn);
   }
+
+  map(callbackfn: (value: T, index: number, array: T[]) => T): RingQueue<T> {
+    return new RingQueue(this.elements.map(callbackfn));
+  }
 }

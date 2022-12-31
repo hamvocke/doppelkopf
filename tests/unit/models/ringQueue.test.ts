@@ -55,4 +55,13 @@ describe("ring queue", () => {
 
     queue.forEach((el) => expect(el === elements[currentIndex++]));
   });
+
+  test("should map elements in order", () => {
+    const queue = new RingQueue([1, 2]);
+
+    const modifiedQueue = queue.map((el) => el * 2);
+
+    expect(modifiedQueue.current()).toBe(2);
+    expect(modifiedQueue.next()).toBe(4);
+  });
 });
