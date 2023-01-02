@@ -3,6 +3,7 @@ import { RingQueue } from "./ringQueue";
 
 export enum Reservation {
   None,
+  Healthy, // player wants to play a regular game. "Gesund" in German Doppelkopf parlance.
   QueenSolo,
   JackSolo,
   AceSolo,
@@ -13,7 +14,7 @@ export enum Reservation {
   Wedding,
 }
 
-const nonSoloTypes = [Reservation.None, Reservation.Wedding];
+const nonSoloTypes = [Reservation.Healthy, Reservation.Wedding];
 
 export class GameType {
   reservation: Reservation;
@@ -25,14 +26,21 @@ export class GameType {
   }
 
   static normalGame() {
-    return new GameType(Reservation.None);
+    return new GameType(Reservation.Healthy);
   }
 }
 
-export function findGameType(players: RingQueue<Player>): GameType {
+export function findGameType(players: RingQueue<Player>): GameType | undefined {
   const gameTypeCandidates = players
     .asList()
     .map((p) => new GameType(p.reservation, p));
+
+  const missingReservations = gameTypeCandidates.find(
+    (c) => c.reservation === Reservation.None
+  );
+  if (missingReservations) {
+    return undefined;
+  }
 
   const solos = gameTypeCandidates.filter(
     (c) => !nonSoloTypes.includes(c.reservation)

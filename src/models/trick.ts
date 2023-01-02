@@ -114,10 +114,9 @@ export class Trick {
   }
 
   highestCard(): PlayedCard | undefined {
-    if (!this.playedCards[0]) {
+    if (!this.playedCards) {
       return undefined;
     }
-
     let highestPlayed = this.playedCards[0];
     for (const played of this.playedCards) {
       if (played.card.beats(highestPlayed.card)) {

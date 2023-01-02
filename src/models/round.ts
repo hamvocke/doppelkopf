@@ -7,13 +7,20 @@ import { extras } from "@/models/extras";
 import { PartyName, findParties, Party } from "@/models/party";
 import { Player } from "./player";
 import { Scorecard } from "./scorecard";
+import { findGameType } from "./reservations";
+
+export enum RoundState {
+  AskingForReservations,
+  Started,
+  Finished,
+}
 
 export class Round {
   players: Player[];
   parties: { [name: string]: Party };
   scorecard: Scorecard;
   score?: Score;
-  finished: boolean;
+  roundState: RoundState;
   previousTrick?: Trick;
   currentTrick: Trick;
   playerOrder: RingQueue<Player>;
@@ -29,7 +36,7 @@ export class Round {
     this.parties = findParties(players);
     this.scorecard = scorecard;
     this.score = undefined;
-    this.finished = false;
+    this.roundState = RoundState.AskingForReservations;
     this.currentTrick = this.nextTrick();
   }
 
@@ -72,7 +79,7 @@ export class Round {
   }
 
   isFinished() {
-    return this.finished;
+    return this.roundState === RoundState.Finished;
   }
 
   async finishTrick() {
@@ -134,6 +141,6 @@ export class Round {
       this.parties[PartyName.Kontra]
     );
     this.scorecard.addScore(this.score);
-    this.finished = true;
+    this.roundState = RoundState.Finished;
   }
 }

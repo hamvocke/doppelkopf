@@ -1,5 +1,5 @@
 import { Game } from "@/models/game";
-import { Round } from "@/models/round";
+import { Round, RoundState } from "@/models/round";
 import { notifier } from "@/models/notifier";
 import { jack, Suit, ace } from "@/models/card";
 import { options } from "@/models/options";
@@ -96,7 +96,7 @@ test("should not autoplay if round is finished", async () => {
   mockedComputerPlayer.autoplay = jest.fn();
   round.playerOrder.prioritize(mockedComputerPlayer);
   round.currentTrick.finished = false;
-  round.finished = true;
+  round.roundState = RoundState.Finished;
 
   await round.nextMove();
 
