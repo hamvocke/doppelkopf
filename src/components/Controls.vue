@@ -32,7 +32,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["nextTrick", "finishRound"]);
+defineEmits(["nextTrick", "finishRound"]);
 
 function showNextTrickButton() {
   return (

@@ -138,8 +138,9 @@ export class Trick {
     );
   }
 
+  // TODO: refactor - move to a new "trickEvaluator" or "extrasCalculator" (or simply "extras"?)
   extras(): Extra[] {
-    let extras = new Array<Extra>();
+    let extras: Extra[] = [];
     if (this.points() >= 40) {
       extras.push(extrasModel.doppelkopf);
     }
@@ -160,7 +161,7 @@ export class Trick {
   }
 
   caughtFox(): Extra[] {
-    let extras: Array<Extra> = [];
+    const extras: Extra[] = [];
     this.findFox().forEach((fox) => {
       const caughtByOtherParty =
         (fox.player.isRe() && !this.winner()?.isRe()) ||
@@ -197,9 +198,8 @@ export class Trick {
       // first charlie has to be highest card in trick
       const charlie = charlies[0];
       const charlie_trump =
-        ((charlie.player.isRe() && this.winner()!.isRe()) ||
-          (charlie.player.isKontra() && this.winner()!.isKontra())) &&
-        // here is the magic
+        ((charlie.player.isRe() && this.winner()?.isRe() === true) ||
+          (charlie.player.isKontra() && this.winner()?.isKontra() === true)) &&
         this.highestCard() === charlie;
       return charlie_trump;
     }

@@ -86,7 +86,11 @@ export class Round {
   }
 
   async evaluateLatestTrick() {
-    const winner = this.currentTrick.winner()!;
+    const winner = this.currentTrick.winner();
+
+    if (!winner) {
+      return;
+    }
 
     // TODO: remove this, migrate to an event-based approach (see comment in trick.ts)
     this.playerOrder

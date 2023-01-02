@@ -9,9 +9,9 @@
 
     <Controls
       :game="game"
-      @nextTrick="finishTrick()"
-      @nextMove="nextMove()"
-      @finishRound="finishRound()"
+      @next-trick="finishTrick()"
+      @next-move="nextMove()"
+      @finish-round="finishRound()"
     />
 
     <Player :player="game.players[3]" class="right" />
@@ -21,8 +21,8 @@
       v-if="game.currentRound.score && game.currentRound.isFinished()"
       :scorecard="game.scorecard"
       :players="game.players"
-      :currentScore="game.currentRound.score"
-      @nextRound="nextRound()"
+      :current-score="game.currentRound.score"
+      @next-round="nextRound()"
     />
   </div>
 </template>
