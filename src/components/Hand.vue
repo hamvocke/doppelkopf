@@ -16,7 +16,7 @@
           :is-covered="isCovered"
           :is-highlighted="highlight(card)"
           :position="position"
-          @click.native="select(card)"
+          @click="select(card)"
         />
       </transition-group>
     </div>
