@@ -15,11 +15,24 @@ describe("Reservations.vue", () => {
     expect(wrapper.find(".hand").exists()).toBe(true);
   });
 
-  test("should render Hand", () => {
+  test("should render 'healthy' button text if player selects normal game", async () => {
     const wrapper = mount(Reservations, {
       props: { game: GameModel.singlePlayer() },
     });
 
-    expect(wrapper.find(".hand").exists()).toBe(true);
+    await wrapper.find("#ace-solo-option").trigger("click");
+    await wrapper.find("#healthy-option").trigger("click");
+
+    expect(wrapper.find("button").text()).toEqual("Normales Spiel spielen");
+  });
+
+  test("should render 'solo' button text if player selects a solo game", async () => {
+    const wrapper = mount(Reservations, {
+      props: { game: GameModel.singlePlayer() },
+    });
+
+    await wrapper.find("#ace-solo-option").trigger("click");
+
+    expect(wrapper.find("button").text()).toEqual("Vorbehalt anmelden");
   });
 });

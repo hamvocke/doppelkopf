@@ -33,6 +33,7 @@
 
       <div class="flex-container">
         <selectable-box
+          id="healthy-option"
           v-model="reservation"
           :selected-value="Reservation.None"
           class="flex-item"
@@ -52,6 +53,7 @@
         </selectable-box>
 
         <selectable-box
+          id="wedding-option"
           v-model="reservation"
           :selected-value="Reservation.Wedding"
           class="flex-item"
@@ -90,6 +92,7 @@
 
         <div class="flex-container">
           <selectable-box
+            id="queen-solo-option"
             v-model="reservation"
             :selected-value="Reservation.QueenSolo"
             class="flex-item"
@@ -106,6 +109,7 @@
           </selectable-box>
 
           <selectable-box
+            id="jack-solo-option"
             v-model="reservation"
             :selected-value="Reservation.JackSolo"
             class="flex-item"
@@ -122,12 +126,14 @@
           </selectable-box>
 
           <suit-selector-box
+            id="suit-solo-option"
             v-model="reservation"
             :selected="isSuitSoloSelected()"
             class="flex-item"
           />
 
           <selectable-box
+            id="ace-solo-option"
             v-model="reservation"
             :selected-value="Reservation.AceSolo"
             class="flex-item"
@@ -149,7 +155,6 @@
       </div>
     </div>
 
-    <div>Selected Game Type: {{ reservation }}</div>
     <div>
       <button type="button" class="button">{{ buttonText() }}</button>
     </div>
