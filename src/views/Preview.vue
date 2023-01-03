@@ -2,7 +2,7 @@
 
 <template>
   <div id="root">
-    <reservations :game="game" />
+    <reservations :player="game.players[0]" />
   </div>
 </template>
 
