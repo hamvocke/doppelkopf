@@ -1,4 +1,4 @@
-import Reservations from "@/views/Reservations.vue";
+import Reservations from "@/components/reservations/Reservations.vue";
 import { Game as GameModel } from "@/models/game";
 import { mount, config } from "@vue/test-utils";
 

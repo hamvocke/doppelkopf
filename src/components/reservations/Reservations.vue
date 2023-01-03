@@ -191,7 +191,7 @@ function isSuitSoloSelected() {
 </script>
 
 <style scoped>
-@import "../assets/css/vars.css";
+@import "../../assets/css/vars.css";
 
 p {
   color: var(--black);
