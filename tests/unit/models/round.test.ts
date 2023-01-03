@@ -8,6 +8,7 @@ import { TrickStack } from "@/models/trickStack";
 import { Trick } from "@/models/trick";
 import { Extra } from "@/models/extras";
 import { Affinities } from "@/models/affinities";
+import { Reservation } from "@/models/reservations";
 
 const game = Game.singlePlayer();
 let round = game.currentRound;
@@ -25,6 +26,21 @@ test("round has 4 players", () => {
 
 test("should know the scorecard", () => {
   expect(round.scorecard).toBe(game.scorecard);
+});
+
+describe("start round", () => {
+  beforeEach(() => {
+    round = Game.singlePlayer().currentRound;
+  });
+
+  test("should set round to 'started'", () => {
+    round.roundState = RoundState.AskingForReservations;
+
+    round.players[0].declareReservation(Reservation.Healthy);
+    round.startRound();
+
+    expect(round.roundState).toEqual(RoundState.Started);
+  });
 });
 
 test("game starts with an empty trick", () => {
@@ -149,6 +165,7 @@ describe("player order", () => {
       cardToPlay: (hand: Hand) => hand.cards[0],
       announcementToMake: jest.fn(() => null),
       handleAffinityEvent: jest.fn(() => null),
+      reservationToDeclare: () => Reservation.Healthy,
     };
     round.playerOrder.prioritize(round.players[3]);
     round.players[3].behavior = playFirstCardBehavior;

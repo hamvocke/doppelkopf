@@ -19,12 +19,17 @@ import {
   chanceAnnouncement,
   conservativeAnnouncement,
 } from "@/models/announcementRules";
+import { Reservation } from "./reservations";
 
 export abstract class Behavior {
   constructor(public playerId: string, public affinities: Affinities) {}
 
   reset() {
     this.affinities.reset();
+  }
+
+  reservationToDeclare(): Reservation {
+    return Reservation.Healthy;
   }
 
   abstract cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card;

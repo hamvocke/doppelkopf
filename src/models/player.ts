@@ -66,14 +66,6 @@ export class Player {
     return findParties(this.game!.players)[partyName];
   }
 
-  getReservation() {
-    if (this.isHuman && !this.reservation) {
-      return;
-    }
-
-    // TODO: ask behavior for the right reservation
-  }
-
   async autoplay() {
     const cardToBePlayed = this.behavior.cardToPlay(
       this.hand,
@@ -165,6 +157,18 @@ export class Player {
 
   declareReservation(reservation: Reservation) {
     this.reservation = reservation;
+  }
+
+  promptForReservation() {
+    if (this.isHuman && this.reservation === Reservation.None) {
+      throw new Error("human player didn't declare a reservation");
+    }
+
+    if (this.reservation === Reservation.None) {
+      this.declareReservation(this.behavior.reservationToDeclare());
+    }
+
+    return this.reservation;
   }
 
   announce(announcement: Announcement) {

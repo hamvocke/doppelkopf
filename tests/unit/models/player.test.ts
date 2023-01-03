@@ -12,7 +12,7 @@ import { Affinities } from "@/models/affinities";
 import { aHandWith, aHandWithout } from "../../builders/handBuilder";
 import { Reservation } from "@/models/reservations";
 
-let game: any;
+let game: Game;
 let player: Player;
 
 jest.useFakeTimers();
@@ -20,7 +20,7 @@ jest.useFakeTimers();
 beforeEach(() => {
   game = Game.singlePlayer();
   player = game.players[0];
-  game!.currentRound.waitingForPlayer = () => player;
+  game.currentRound.waitingForPlayer = () => player;
   options.autoplay = false;
   jest.runAllTimers();
 });
@@ -163,6 +163,7 @@ test("should autoplay a card", async () => {
     cardToPlay: jest.fn(() => kingOnHand),
     announcementToMake: jest.fn(() => null),
     handleAffinityEvent: jest.fn(() => null),
+    reservationToDeclare: () => Reservation.Healthy,
   };
 
   await player.autoplay();
@@ -185,6 +186,7 @@ test("should try to make an announcement", async () => {
     cardToPlay: jest.fn(() => player.hand.cards[0]),
     announcementToMake: jest.fn(() => null),
     handleAffinityEvent: jest.fn(() => null),
+    reservationToDeclare: () => Reservation.Healthy,
   };
 
   await player.autoplay();
@@ -313,6 +315,25 @@ test("should clear reservation when resetting player", () => {
   expect(player.reservation).toEqual(Reservation.None);
 });
 
+test("should throw error when prompting human player for reservation and they haven't decided yet", () => {
+  expect(player.reservation).toEqual(Reservation.None);
+
+  const failingPrompt = () => player.promptForReservation();
+
+  expect(failingPrompt).toThrowError(
+    "human player didn't declare a reservation"
+  );
+});
+
+test("should return behavior-based reservation for non-human players", () => {
+  const computerPlayer = game.players[1];
+  computerPlayer.behavior.reservationToDeclare = () => Reservation.AceSolo;
+
+  const reservation = computerPlayer.promptForReservation();
+
+  expect(reservation).toEqual(Reservation.AceSolo);
+});
+
 describe("announcements", () => {
   test("should announce", () => {
     player.hand = aHandWith(10, queen.of(Suit.Clubs));
@@ -325,7 +346,7 @@ describe("announcements", () => {
   test("should validate announcement", () => {
     player.hand = aHandWith(7, queen.of(Suit.Clubs));
 
-    let failingAnnouncement = () => player.announce(Announcement.No90);
+    const failingAnnouncement = () => player.announce(Announcement.No90);
 
     expect(failingAnnouncement).toThrowError("Invalid announcement");
   });

@@ -41,20 +41,24 @@ export class Round {
   }
 
   startRound() {
-    // triggered by button click, only clickable if everyone has declared
-
     if (this.roundState !== RoundState.AskingForReservations) {
       return;
     }
 
-    const gameType = findGameType(this.playerOrder);
+    // ask all other players for their announcements
+    this.playerOrder.asList().forEach((p) => p.promptForReservation());
 
+    const gameType = findGameType(this.playerOrder);
     // set game type on current round
+
+    // TODO: check if game type is okay
+    this.roundState = RoundState.Started;
+    // set roundState to "Started"
+
     // send notification ("alle gesund", "Hubert spielt ein Solo")
     // sort cards on hand
-    
+
     // set trumps for current round
-    // set roundState to "Started"
   }
 
   nextTrick() {
