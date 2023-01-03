@@ -1,7 +1,7 @@
 <template>
   <div id="game">
     <Notifications />
-    <Reservations v-if="askForReservations()" :game="game" />
+    <Reservations v-if="askForReservations()" :player="game.players[0]" />
     <Table :game="game" />
     <OptionsMenu />
     <ShowPreviousTrick :trick="game.previousTrick" />

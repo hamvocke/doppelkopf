@@ -6,10 +6,12 @@ config.global.mocks["$t"] = (msg: string) => msg;
 config.global.mocks["$tc"] = (msg: string) => msg;
 config.global.mocks["$i18n"] = { locale: "en" };
 
+const player = GameModel.singlePlayer().players[0];
+
 describe("Reservations.vue", () => {
   test("should render Hand", () => {
     const wrapper = mount(Reservations, {
-      props: { game: GameModel.singlePlayer() },
+      props: { player: player },
     });
 
     expect(wrapper.find(".hand").exists()).toBe(true);
@@ -17,7 +19,7 @@ describe("Reservations.vue", () => {
 
   test("should render 'healthy' button text if player selects normal game", async () => {
     const wrapper = mount(Reservations, {
-      props: { game: GameModel.singlePlayer() },
+      props: { player: player },
     });
 
     await wrapper.find("#ace-solo-option").trigger("click");
@@ -28,7 +30,7 @@ describe("Reservations.vue", () => {
 
   test("should render 'solo' button text if player selects a solo game", async () => {
     const wrapper = mount(Reservations, {
-      props: { game: GameModel.singlePlayer() },
+      props: { player: player },
     });
 
     await wrapper.find("#ace-solo-option").trigger("click");

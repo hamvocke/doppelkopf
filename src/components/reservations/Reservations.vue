@@ -9,8 +9,8 @@
 
     <div class="hand-wrapper">
       <hand
-        :hand="game.players[0].hand"
-        :position="game.players[0].tablePosition"
+        :hand="player.hand"
+        :position="player.tablePosition"
         :is-selectable="false"
         :is-covered="false"
         :playable-cards="[]"
@@ -162,7 +162,7 @@
 </template>
 
 <script setup lang="ts">
-import { Game } from "@/models/game";
+import { Player } from "@/models/player";
 import Modal from "@/components/Modal.vue";
 import Hand from "@/components/Hand.vue";
 import { PropType, ref } from "vue";
@@ -171,8 +171,8 @@ import SuitSelectorBox from "@/components/reservations/SuitSelectorBox.vue";
 import { Reservation } from "@/models/reservations";
 
 defineProps({
-  game: {
-    type: Object as PropType<Game>,
+  player: {
+    type: Object as PropType<Player>,
     required: true,
   },
 });
