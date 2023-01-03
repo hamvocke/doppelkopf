@@ -1,7 +1,11 @@
 <template>
   <div id="game">
     <Notifications />
-    <Reservations v-if="askForReservations()" :player="game.players[0]" />
+    <Reservations
+      v-if="askForReservations()"
+      :player="game.players[0]"
+      @reservation-selected="declareReservation"
+    />
     <Table :game="game" />
     <OptionsMenu />
     <ShowPreviousTrick :trick="game.previousTrick" />
@@ -18,6 +22,7 @@ import Reservations from "@/components/reservations/Reservations.vue";
 import { Game } from "@/models/game";
 import { Features } from "@/models/features";
 import { RoundState } from "@/models/round";
+import { Reservation } from "@/models/reservations";
 
 const props = defineProps({
   game: {
@@ -37,6 +42,11 @@ function askForReservations() {
   }
 
   return game.currentRound.roundState === RoundState.AskingForReservations;
+}
+
+function declareReservation(reservation: Reservation) {
+  game.players[0].declareReservation(reservation);
+  game.currentRound.startRound();
 }
 </script>
 
