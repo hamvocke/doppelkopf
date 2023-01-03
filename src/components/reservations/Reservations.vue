@@ -156,7 +156,9 @@
     </div>
 
     <div>
-      <button type="button" class="button">{{ buttonText() }}</button>
+      <button type="button" class="button" @click="reservationButtonClicked">
+        {{ buttonText() }}
+      </button>
     </div>
   </modal>
 </template>
@@ -178,6 +180,7 @@ defineProps({
 });
 
 const reservation = ref<Reservation>(Reservation.None);
+const emit = defineEmits(["reservation-selected"]);
 
 function buttonText() {
   return reservation.value === Reservation.None
@@ -190,8 +193,12 @@ function isSuitSoloSelected() {
     Reservation.ClubsSolo,
     Reservation.SpadesSolo,
     Reservation.HeartsSolo,
-    Reservation.DiamondsSolo
+    Reservation.DiamondsSolo,
   ].includes(reservation.value);
+}
+
+function reservationButtonClicked() {
+  emit("reservation-selected", reservation.value);
 }
 </script>
 
