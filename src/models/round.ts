@@ -40,6 +40,23 @@ export class Round {
     this.currentTrick = this.nextTrick();
   }
 
+  startRound() {
+    // triggered by button click, only clickable if everyone has declared
+
+    if (this.roundState !== RoundState.AskingForReservations) {
+      return;
+    }
+
+    const gameType = findGameType(this.playerOrder);
+
+    // set game type on current round
+    // send notification ("alle gesund", "Hubert spielt ein Solo")
+    // sort cards on hand
+    
+    // set trumps for current round
+    // set roundState to "Started"
+  }
+
   nextTrick() {
     this.previousTrick = this.currentTrick;
     const trick = new Trick(this.playerOrder.asList());

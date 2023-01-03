@@ -66,6 +66,14 @@ export class Player {
     return findParties(this.game!.players)[partyName];
   }
 
+  getReservation() {
+    if (this.isHuman && !this.reservation) {
+      return;
+    }
+
+    // TODO: ask behavior for the right reservation
+  }
+
   async autoplay() {
     const cardToBePlayed = this.behavior.cardToPlay(
       this.hand,
