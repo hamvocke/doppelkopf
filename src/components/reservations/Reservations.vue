@@ -1,5 +1,5 @@
 <template>
-  <modal :visible="true">
+  <modal id="reservations-modal" :visible="true">
     <h1>Alle Gesund?</h1>
 
     <p>
@@ -35,7 +35,7 @@
         <selectable-box
           id="healthy-option"
           v-model="reservation"
-          :selected-value="Reservation.None"
+          :selected-value="Reservation.Healthy"
           class="flex-item"
         >
           <img
@@ -156,7 +156,12 @@
     </div>
 
     <div>
-      <button type="button" class="button" @click="reservationButtonClicked">
+      <button
+        id="reservation-button"
+        type="button"
+        class="button"
+        @click="reservationButtonClicked"
+      >
         {{ buttonText() }}
       </button>
     </div>
@@ -179,11 +184,11 @@ defineProps({
   },
 });
 
-const reservation = ref<Reservation>(Reservation.None);
+const reservation = ref<Reservation>(Reservation.Healthy);
 const emit = defineEmits(["reservation-selected"]);
 
 function buttonText() {
-  return reservation.value === Reservation.None
+  return reservation.value === Reservation.Healthy
     ? "Normales Spiel spielen"
     : "Vorbehalt anmelden";
 }
