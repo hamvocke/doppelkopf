@@ -41,6 +41,19 @@ describe("start round", () => {
 
     expect(round.roundState).toEqual(RoundState.Started);
   });
+
+  test("should set game type", () => {
+    round.roundState = RoundState.AskingForReservations;
+
+    round.players[0].declareReservation(Reservation.Healthy);
+    round.players[1].declareReservation(Reservation.Healthy);
+    round.players[2].declareReservation(Reservation.AceSolo);
+    round.players[3].declareReservation(Reservation.Healthy);
+    round.startRound();
+
+    expect(round.gameType?.reservation).toEqual(Reservation.AceSolo);
+    expect(round.gameType?.player).toEqual(round.players[2]);
+  });
 });
 
 test("game starts with an empty trick", () => {

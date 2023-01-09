@@ -7,7 +7,7 @@ import { extras } from "@/models/extras";
 import { PartyName, findParties, Party } from "@/models/party";
 import { Player } from "./player";
 import { Scorecard } from "./scorecard";
-import { findGameType } from "./reservations";
+import { findGameType, GameType } from "./reservations";
 
 export enum RoundState {
   AskingForReservations,
@@ -21,6 +21,7 @@ export class Round {
   scorecard: Scorecard;
   score?: Score;
   roundState: RoundState;
+  gameType?: GameType;
   previousTrick?: Trick;
   currentTrick: Trick;
   playerOrder: RingQueue<Player>;
@@ -45,15 +46,11 @@ export class Round {
       return;
     }
 
-    // ask all other players for their announcements
     this.playerOrder.asList().forEach((p) => p.promptForReservation());
 
     const gameType = findGameType(this.playerOrder);
-    // set game type on current round
-
-    // TODO: check if game type is okay
+    this.gameType = gameType;
     this.roundState = RoundState.Started;
-    // set roundState to "Started"
 
     // send notification ("alle gesund", "Hubert spielt ein Solo")
     // sort cards on hand
