@@ -56,13 +56,13 @@ export enum AffinityEvent {
 interface PlayerAffinity {
   player: Player;
   affinity: number;
-  declaredParty: boolean;
+  declaredParty: boolean; // TODO: do we need to remember anything but the affinity score really?
   playedQueenOfClubs: boolean;
 }
 
 export class Affinities {
   me: Player;
-  affinityTable: PlayerAffinity[] = [];
+  affinityTable: PlayerAffinity[] = []; // TODO: this should be a dictionary with the player as key
 
   constructor(me: Player, players?: Player[]) {
     this.me = me;

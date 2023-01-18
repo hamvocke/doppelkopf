@@ -49,6 +49,7 @@
     <div class="trickCountSmall">
       {{ $tc("trick", player.trickStack.tricks.length) }}
     </div>
+    <AffinityDebugger :affinities="player.behavior.affinities" />
   </div>
 </template>
 
@@ -60,6 +61,7 @@ import { Player as PlayerModel } from "@/models/player";
 import { playableCards } from "@/models/playableCardFinder";
 import { Card } from "@/models/card";
 import { PropType } from "vue";
+import AffinityDebugger from "./AffinityDebugger.vue";
 
 const props = defineProps({
   player: {
