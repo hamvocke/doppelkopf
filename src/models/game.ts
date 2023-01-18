@@ -80,7 +80,6 @@ export class Game {
       this.playerOpeningOrder.next()
     );
     this.resetPlayers();
-    this.currentRound.nextMove();
   }
 
   resetPlayers() {

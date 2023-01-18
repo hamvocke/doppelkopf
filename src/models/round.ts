@@ -56,6 +56,8 @@ export class Round {
     // sort cards on hand
 
     // set trumps for current round
+
+    this.nextMove();
   }
 
   nextTrick() {
