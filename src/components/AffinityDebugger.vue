@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="Config.showAffinityDebugger" class="affinity-debugger">
     <table>
       <thead>
         <tr>
@@ -22,10 +22,10 @@
 
 <script setup lang="ts">
 import { Affinities } from "@/models/affinities";
+import { Config } from "@/models/config";
 import { PropType } from "vue";
-import VueFeather from "vue-feather";
 
-const props = defineProps({
+defineProps({
   affinities: {
     required: true,
     type: Object as PropType<Affinities>,
@@ -35,5 +35,4 @@ const props = defineProps({
 
 <style scoped>
 @import "../assets/css/vars.css";
-
 </style>

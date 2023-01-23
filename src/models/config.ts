@@ -8,6 +8,7 @@ type ConfigValues = {
   base_url: string;
   debug: boolean;
   testing: boolean;
+  showAffinityDebugger: boolean;
 };
 
 const config: Config = {
@@ -15,16 +16,19 @@ const config: Config = {
     base_url: "http://localhost:8080",
     debug: true,
     testing: true,
+    showAffinityDebugger: false,
   },
   development: {
     base_url: "http://localhost:8080",
     debug: true,
     testing: false,
+    showAffinityDebugger: true,
   },
   production: {
     base_url: "https://doppelkopf.ham.codes",
     debug: false,
     testing: false,
+    showAffinityDebugger: false,
   },
 };
 

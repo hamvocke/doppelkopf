@@ -47,4 +47,10 @@ describe("Game.vue", () => {
 
     expect(wrapper.find("#reservations-modal").exists()).toBe(false);
   });
+
+  test("should show notification after player announced", () => {
+    Features.enableReservations = true;
+
+    const game = GameModel.singlePlayer();
+  });
 });
