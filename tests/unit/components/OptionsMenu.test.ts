@@ -25,4 +25,12 @@ describe("OptionsMenu.vue", () => {
 
     expect(wrapper.find(".modal").exists()).toBe(true);
   });
+
+  test("should show affinity debugger option in debug mode", async () => {
+    const wrapper = mount(OptionsMenu);
+
+    await wrapper.find(".icon.icon-options").trigger("click");
+
+    expect(wrapper.find(".modal .affinity-debugger").exists()).toBe(true);
+  });
 });

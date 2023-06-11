@@ -1,8 +1,13 @@
 <template>
-  <div class="toggle" :class="{ disabled }" @click="toggle">
+  <div class="toggle" :class="{ disabled }">
     <label>
-      {{ labelText }}
-      <input :checked="checked" type="checkbox" @change="toggle" />
+      {{ label }}
+      <input
+        :modelValue="modelValue"
+        type="checkbox"
+        :disabled="props.disabled"
+        @change="toggle"
+      />
     </label>
   </div>
 </template>
@@ -12,24 +17,24 @@ const props = defineProps({
   disabled: {
     type: Boolean,
   },
-  labelText: {
+  label: {
     type: String,
     required: true,
   },
-  checked: {
+  modelValue: {
     type: Boolean,
     required: true,
   },
 });
 
-const emit = defineEmits(["update:checked"]);
+const emit = defineEmits(["update:modelValue"]);
 
 function toggle() {
   if (props.disabled) {
     return;
   }
 
-  emit("update:checked", !props.checked);
+  emit("update:modelValue", !props.modelValue);
 }
 </script>
 

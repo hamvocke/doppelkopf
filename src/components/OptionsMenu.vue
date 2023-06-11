@@ -14,6 +14,14 @@
         <LanguagePicker />
       </div>
 
+      <div class="option affinity-debugger">
+        <Toggle
+          v-model="config.showAffinityDebugger"
+          :disabled="false"
+          label="Show affinity debugger"
+        />
+      </div>
+
       <div v-if="config.debug" class="option">
         <span class="label">Debug Mode</span>
         <div>Enabled</div>
@@ -27,8 +35,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import LanguagePicker from "./LanguagePicker.vue";
+import Toggle from "./Toggle.vue";
 import Modal from "./Modal.vue";
 import { Config } from "@/models/config";
 import VueFeather from "vue-feather";
@@ -43,6 +52,11 @@ function toggleMenu() {
 function hideMenu() {
   visible.value = false;
 }
+
+watch(config.value, (newConfig, oldConfig) => {
+  Config.showAffinityDebugger = newConfig.showAffinityDebugger;
+  console.log(Config);
+});
 </script>
 
 <style scoped>

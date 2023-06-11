@@ -22,7 +22,7 @@ const config: Config = {
     base_url: "http://localhost:8080",
     debug: true,
     testing: false,
-    showAffinityDebugger: true,
+    showAffinityDebugger: false,
   },
   production: {
     base_url: "https://doppelkopf.ham.codes",

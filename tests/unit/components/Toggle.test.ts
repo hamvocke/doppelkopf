@@ -10,8 +10,8 @@ describe("Toggle.vue", () => {
     const wrapper = mount(Toggle, {
       props: {
         disabled: false,
-        labelText: "some label",
-        checked: false,
+        label: "some label",
+        modelValue: false,
       },
     });
     const toggle = wrapper.find(".toggle");
@@ -24,8 +24,8 @@ describe("Toggle.vue", () => {
     const wrapper = mount(Toggle, {
       props: {
         disabled: true,
-        labelText: "some label",
-        checked: false,
+        label: "some label",
+        modelValue: false,
       },
     });
     const toggle = wrapper.find(".toggle");
@@ -36,29 +36,29 @@ describe("Toggle.vue", () => {
     const wrapper = mount(Toggle, {
       props: {
         disabled: false,
-        labelText: "some label",
-        checked: false,
+        label: "some label",
+        modelValue: false,
       },
     });
-    const toggle = wrapper.find(".toggle");
+    const toggleInput = wrapper.find(".toggle input");
 
-    await toggle.trigger("click");
+    await toggleInput.setValue(true);
 
-    expect(wrapper.emitted()).toHaveProperty("update:checked");
+    expect(wrapper.emitted()).toHaveProperty("update:modelValue");
   });
 
   test("should not emit value if toggle is disabled", async () => {
     const wrapper = mount(Toggle, {
       props: {
         disabled: true,
-        labelText: "some label",
-        checked: false,
+        label: "some label",
+        modelValue: false,
       },
     });
-    const toggle = wrapper.find(".toggle");
+    const toggleInput = wrapper.find(".toggle input");
 
-    await toggle.trigger("click");
+    await toggleInput.setValue(true);
 
-    expect(wrapper.emitted()).not.toHaveProperty("update:checked");
+    expect(wrapper.emitted()).not.toHaveProperty("update:modelValue");
   });
 });
