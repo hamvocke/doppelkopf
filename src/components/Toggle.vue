@@ -4,6 +4,7 @@
       {{ label }}
       <input
         :modelValue="modelValue"
+        :checked="modelValue"
         type="checkbox"
         :disabled="props.disabled"
         @change="toggle"
