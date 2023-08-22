@@ -6,6 +6,7 @@ import { Scorecard } from "@/models/scorecard";
 import { RingQueue } from "@/models/ringQueue";
 import { generateNames } from "@/models/random";
 import { TablePosition } from "./tablePosition";
+import { Features } from "./features";
 
 export class Game {
   players: Player[];
@@ -80,6 +81,12 @@ export class Game {
       this.playerOpeningOrder.next()
     );
     this.resetPlayers();
+
+    // if the 'reservations' feature is disabled, we don't want to wait for declarations.
+    // start the next round right away.
+    if (!Features.enableReservations) {
+      this.currentRound.startRound();
+    }
   }
 
   resetPlayers() {

@@ -1,6 +1,8 @@
 import { Game } from "@/models/game";
 import { TrickStack } from "@/models/trickStack";
 import { Trick } from "@/models/trick";
+import { Features } from "@/models/features";
+import { RoundState } from "@/models/round";
 
 let game: Game;
 
@@ -41,7 +43,8 @@ test("game starts with an empty scorecard", () => {
   expect(game.scorecard).toBeDefined();
 });
 
-test("should start a new round", () => {
+test("should start a new round if 'reservations' feature is disabled", () => {
+  Features.enableReservations = false;
   const previousRound = game.currentRound;
   game.players[0].hand.cards = [];
 
@@ -49,6 +52,19 @@ test("should start a new round", () => {
 
   expect(game.currentRound).not.toBe(previousRound);
   expect(game.players[0].hand.cards).toHaveLength(10);
+  expect(game.currentRound.roundState).toBe(RoundState.Started);
+});
+
+test("should wait for reservations round if 'reservations' feature is enabled", () => {
+  Features.enableReservations = true;
+  const previousRound = game.currentRound;
+  game.players[0].hand.cards = [];
+
+  game.nextRound();
+
+  expect(game.currentRound).not.toBe(previousRound);
+  expect(game.players[0].hand.cards).toHaveLength(10);
+  expect(game.currentRound.roundState).toBe(RoundState.AskingForReservations);
 });
 
 test("should reset all players stacks when starting a new round", () => {

@@ -15,6 +15,7 @@ import { Affinities, AffinityEvent } from "@/models/affinities";
 import { allCards } from "./deck";
 import { findParties, Party, PartyName } from "./party";
 import { Reservation } from "./reservations";
+import { Features } from "./features";
 
 // TODO: break circular dependency between player & game, make game non-null
 export class Player {
@@ -160,6 +161,12 @@ export class Player {
   }
 
   promptForReservation() {
+    // assume regular game when reservations feature is disabled
+    if (!Features.enableReservations) {
+      this.declareReservation(Reservation.Healthy);
+      return this.reservation;
+    }
+
     if (this.isHuman && this.reservation === Reservation.None) {
       throw new Error("human player didn't declare a reservation");
     }
