@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test } from "vitest";
 import Scorecard from "@/components/Scorecard.vue";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import { Player } from "@/models/player";
@@ -60,7 +61,7 @@ beforeEach(() => {
 });
 
 describe("Scorecard.vue", () => {
-  it("should display scorecard", () => {
+  test("should display scorecard", () => {
     const wrapper = mount(Scorecard, {
       props: {
         scorecard: scorecard,
@@ -72,7 +73,7 @@ describe("Scorecard.vue", () => {
     expect(wrapper.find("table").exists()).toBe(true);
   });
 
-  it("should display next round button", () => {
+  test("should display next round button", () => {
     const wrapper = mount(Scorecard, {
       props: {
         scorecard: scorecard,
@@ -97,7 +98,7 @@ describe("Scorecard.vue", () => {
     expect(wrapper.emitted().nextRound).toHaveLength(1);
   });
 
-  it("should show 'you win' message when player won", () => {
+  test("should show 'you win' message when player won", () => {
     stubScoreHumanPlayerWins();
     const wrapper = mount(Scorecard, {
       props: {
@@ -110,7 +111,7 @@ describe("Scorecard.vue", () => {
     expect(wrapper.find("h1.message").text()).toContain("you_win");
   });
 
-  it("should show 'you lose' message when player lost", () => {
+  test("should show 'you lose' message when player lost", () => {
     players = [
       stubPlayer("Player 1", PartyName.Re, 60),
       stubPlayer("Player 2", PartyName.Re, 59),
@@ -139,7 +140,7 @@ describe("Scorecard.vue", () => {
     expect(wrapper.find("h1.message").text()).toContain("you_lose");
   });
 
-  it("should make last scoreline bold", () => {
+  test("should make last scoreline bold", () => {
     scorecard.addScore(
       new ScoreBuilder()
         .withWinners(PartyName.Re, players[0], players[1])
@@ -170,7 +171,7 @@ describe("Scorecard.vue", () => {
     expect(scorelines[1].classes("bold")).toBe(true);
   });
 
-  it("should show points", () => {
+  test("should show points", () => {
     scorecard.addScore(
       new ScoreBuilder()
         .withWinners(PartyName.Re, players[0], players[1])
@@ -201,7 +202,7 @@ describe("Scorecard.vue", () => {
     expect(scorelines[1].text().replace(/\s*/g, "")).toEqual("-26-624");
   });
 
-  it("should show extras list", () => {
+  test("should show extras list", () => {
     const wrapper = mount(Scorecard, {
       props: {
         scorecard: scorecard,
@@ -215,7 +216,7 @@ describe("Scorecard.vue", () => {
     expect(kontraExtrasList[0].text()).toContain("win");
   });
 
-  it("should show sum of scores for winning party", () => {
+  test("should show sum of scores for winning party", () => {
     const wrapper = mount(Scorecard, {
       props: {
         scorecard: scorecard,

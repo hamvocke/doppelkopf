@@ -1,3 +1,4 @@
+import { afterEach, describe, expect, test, vi } from "vitest";
 import Notifications from "@/components/Notifications.vue";
 import { notifier } from "@/models/notifier";
 import { mount, config } from "@vue/test-utils";
@@ -5,14 +6,14 @@ import { nextTick } from "vue";
 
 config.global.mocks["$t"] = (msg: string) => msg;
 config.global.mocks["$tc"] = (msg: string) => msg;
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe("Notifications.vue", () => {
   afterEach(() => {
-    jest.runAllTimers();
+    vi.runAllTimers();
   });
 
-  it("should display message", async () => {
+  test("should display message", async () => {
     const wrapper = mount(Notifications);
 
     notifier.info("Hello World");
@@ -25,7 +26,7 @@ describe("Notifications.vue", () => {
     expect(wrapper.findAll(".msg")[0].text()).toBe("Hello World");
   });
 
-  it("should display flash message", async () => {
+  test("should display flash message", async () => {
     const wrapper = mount(Notifications);
 
     notifier.flash("Doppelkopf");
@@ -35,10 +36,10 @@ describe("Notifications.vue", () => {
     expect(wrapper.findAll(".flashMessage")[0].text()).toBe("Doppelkopf");
   });
 
-  it("should display sticky messages", async () => {
+  test("should display sticky messages", async () => {
     const wrapper = mount(Notifications);
 
-    notifier.sticky("An update is available!", undefined, jest.fn());
+    notifier.sticky("An update is available!", undefined, vi.fn());
     await nextTick();
 
     expect(wrapper.findAll(".msg.sticky")).toHaveLength(1);
@@ -47,10 +48,10 @@ describe("Notifications.vue", () => {
     );
   });
 
-  it("should handle sticky messages click", async () => {
+  test("should handle sticky messages click", async () => {
     notifier.stickies = [];
     const wrapper = mount(Notifications);
-    const onClick = jest.fn();
+    const onClick = vi.fn();
 
     notifier.sticky("An update is available!", undefined, onClick);
     await nextTick();
@@ -59,11 +60,11 @@ describe("Notifications.vue", () => {
     expect(onClick).toHaveBeenCalled();
   });
 
-  it("should dismiss sticky message on dismiss click", async () => {
+  test("should dismiss sticky message on dismiss click", async () => {
     notifier.stickies = [];
     const wrapper = mount(Notifications);
-    const onDismiss = jest.fn();
-    notifier.sticky("An update is available!", undefined, jest.fn(), onDismiss);
+    const onDismiss = vi.fn();
+    notifier.sticky("An update is available!", undefined, vi.fn(), onDismiss);
     await nextTick();
 
     const stickyCloseButton = wrapper.find(".msg.clickable .close-button");

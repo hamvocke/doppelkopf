@@ -1,9 +1,10 @@
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { notifier } from "@/models/notifier";
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 beforeEach(() => {
-  jest.runAllTimers();
+  vi.runAllTimers();
 });
 
 test("should add notification", () => {
@@ -25,7 +26,7 @@ test("should add flash message", () => {
 });
 
 test("should add sticky message", () => {
-  const onClick = jest.fn();
+  const onClick = vi.fn();
   notifier.sticky("Update available", undefined, onClick);
 
   expect(notifier.notifications).toHaveLength(0);
@@ -39,7 +40,7 @@ test("should remove notification after timeout", () => {
 
   expect(notifier.notifications[0].text).toBe("Hello World");
 
-  jest.runAllTimers();
+  vi.runAllTimers();
 
   return promise.then(() => {
     expect(notifier.notifications).toEqual([]);
@@ -51,7 +52,7 @@ test("should remove flash message after timeout", () => {
 
   expect(notifier.flashMessages[0].text).toBe("Hello World");
 
-  jest.runAllTimers();
+  vi.runAllTimers();
 
   return promise.then(() => {
     expect(notifier.flashMessages).toEqual([]);

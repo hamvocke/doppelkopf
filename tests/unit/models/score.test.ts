@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { describe, expect, test } from "vitest";
 import { Score } from "@/models/score";
 import { PartyName } from "@/models/party";
 import { Extra, extras } from "@/models/extras";

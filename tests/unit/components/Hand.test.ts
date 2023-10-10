@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import Hand from "@/components/Hand.vue";
 import { ace, queen, Suit } from "@/models/card";
 import { Hand as HandModel } from "@/models/hand";
@@ -27,7 +28,7 @@ describe("Hand.vue", () => {
     expect(wrapper.findAll("div.card").length).toBe(4);
   });
 
-  it("should render card position", () => {
+  test("should render card position", () => {
     const wrapper = mount(Hand, {
       props: { hand: reHand, playableCards: [], position: "left" },
     });

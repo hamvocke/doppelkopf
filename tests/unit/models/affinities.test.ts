@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { Announcement } from "@/models/announcements";
 import { queen, Suit } from "@/models/card";
 import { Game } from "@/models/game";
@@ -184,7 +185,7 @@ describe("Affinities", () => {
     let game = new Game(players);
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
       game = new Game(players);
       player1.reset();
       player2.reset();
@@ -194,10 +195,10 @@ describe("Affinities", () => {
       player2.behavior.affinities.setPlayers(players);
       player3.behavior.affinities.setPlayers(players);
       player4.behavior.affinities.setPlayers(players);
-      player2.possibleAnnouncements = jest
+      player2.possibleAnnouncements = vi
         .fn()
         .mockReturnValue(new Set([Announcement.Re]));
-      player3.possibleAnnouncements = jest
+      player3.possibleAnnouncements = vi
         .fn()
         .mockReturnValue(new Set([Announcement.Kontra]));
     });
@@ -217,13 +218,13 @@ describe("Affinities", () => {
     });
 
     test("Queen of clubs played twice - everybody knows now", async () => {
-      player2.behavior.affinities.hasPlayedQueenOfClubs = jest
+      player2.behavior.affinities.hasPlayedQueenOfClubs = vi
         .fn()
         .mockReturnValue(true);
-      player3.behavior.affinities.hasPlayedQueenOfClubs = jest
+      player3.behavior.affinities.hasPlayedQueenOfClubs = vi
         .fn()
         .mockReturnValue(true);
-      player4.behavior.affinities.hasPlayedQueenOfClubs = jest
+      player4.behavior.affinities.hasPlayedQueenOfClubs = vi
         .fn()
         .mockReturnValue(true);
       player1.hand = new Hand([queen.of(Suit.Clubs).second()]);

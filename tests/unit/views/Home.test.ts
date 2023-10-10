@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import Home from "@/views/Home.vue";
 import { config, RouterLinkStub, shallowMount } from "@vue/test-utils";
 
@@ -5,10 +6,10 @@ config.global.mocks["$t"] = (msg: string) => msg;
 config.global.mocks["$tc"] = (msg: string) => msg;
 config.global.mocks["$i18n"] = { locale: "en" };
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 beforeEach(() => {
-  jest.runAllTimers();
+  vi.runAllTimers();
 });
 
 describe("Home.vue", () => {

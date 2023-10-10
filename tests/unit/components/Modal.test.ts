@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import Modal from "@/components/Modal.vue";
 import { mount, config } from "@vue/test-utils";
 

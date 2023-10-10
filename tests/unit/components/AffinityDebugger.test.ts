@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import AffinityDebugger from "@/components/AffinityDebugger.vue";
 import { Config } from "@/models/config";
 import { Game } from "@/models/game";

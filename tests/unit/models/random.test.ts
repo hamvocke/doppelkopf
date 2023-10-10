@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import { generateNames, sampleSize, sample } from "@/models/random";
 
 describe("Random", () => {

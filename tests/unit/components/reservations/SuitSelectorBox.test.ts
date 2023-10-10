@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import SuitSelectorBox from "@/components/reservations/SuitSelectorBox.vue";
 import { Reservation } from "@/models/reservations";
 import { mount, config } from "@vue/test-utils";

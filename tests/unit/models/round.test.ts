@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { Game } from "@/models/game";
 import { Round, RoundState } from "@/models/round";
 import { notifier } from "@/models/notifier";
@@ -14,11 +15,11 @@ const game = Game.singlePlayer();
 let round = game.currentRound;
 let players = round.playerOrder.asList();
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 beforeEach(() => {
   options.autoplay = false;
-  jest.runAllTimers();
+  vi.runAllTimers();
 });
 
 test("round has 4 players", () => {
@@ -70,7 +71,7 @@ test("should give current trick to winner", async () => {
   round.currentTrick.add(jack.of(Suit.Clubs), players[0]);
 
   await round.finishTrick();
-  jest.runAllTimers();
+  vi.runAllTimers();
 
   expect(players[0].trickStack.tricks).toHaveLength(1);
 });
@@ -79,21 +80,21 @@ test("should trigger next move when finishing trick", async () => {
   expect.assertions(1);
   options.autoplay = true;
 
-  players[1].autoplay = jest.fn();
+  players[1].autoplay = vi.fn();
   round.currentTrick.add(jack.of(Suit.Clubs), players[1]);
   round.currentTrick.add(jack.of(Suit.Spades), players[2]);
   round.currentTrick.add(jack.of(Suit.Hearts), players[3]);
   round.currentTrick.add(jack.of(Suit.Diamonds), players[0]);
 
   await round.finishTrick();
-  jest.runAllTimers();
+  vi.runAllTimers();
 
   expect(players[1].autoplay).toBeCalled();
 });
 
 test("should autoplay for computer players", async () => {
   const mockedComputerPlayer = players[1];
-  mockedComputerPlayer.autoplay = jest.fn();
+  mockedComputerPlayer.autoplay = vi.fn();
   round.playerOrder.prioritize(mockedComputerPlayer);
 
   await round.nextMove();
@@ -103,7 +104,7 @@ test("should autoplay for computer players", async () => {
 
 test("should not autoplay for human players", async () => {
   const mockedHumanPlayer = players[0];
-  mockedHumanPlayer.autoplay = jest.fn();
+  mockedHumanPlayer.autoplay = vi.fn();
   round.playerOrder.prioritize(mockedHumanPlayer);
 
   await round.nextMove();
@@ -113,7 +114,7 @@ test("should not autoplay for human players", async () => {
 
 test("should not autoplay if trick is finished", async () => {
   const mockedComputerPlayer = players[1];
-  mockedComputerPlayer.autoplay = jest.fn();
+  mockedComputerPlayer.autoplay = vi.fn();
   round.playerOrder.prioritize(mockedComputerPlayer);
   round.currentTrick.finished = true;
 
@@ -124,7 +125,7 @@ test("should not autoplay if trick is finished", async () => {
 
 test("should not autoplay if round is finished", async () => {
   const mockedComputerPlayer = players[1];
-  mockedComputerPlayer.autoplay = jest.fn();
+  mockedComputerPlayer.autoplay = vi.fn();
   round.playerOrder.prioritize(mockedComputerPlayer);
   round.currentTrick.finished = false;
   round.roundState = RoundState.Finished;
@@ -141,10 +142,10 @@ test("should show extras as flash message", async () => {
   round.currentTrick.add(ace.of(Suit.Hearts), players[3]);
   round.currentTrick.add(ace.of(Suit.Diamonds), players[0]);
 
-  notifier.flash = jest.fn();
+  notifier.flash = vi.fn();
 
   await round.finishTrick();
-  jest.runAllTimers();
+  vi.runAllTimers();
 
   expect(notifier.flash).toHaveBeenCalled();
 });
@@ -169,7 +170,7 @@ describe("player order", () => {
     round.currentTrick.add(jack.of(Suit.Clubs), players[0]);
 
     await round.finishTrick();
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(round.waitingForPlayer().id).toEqual(players[3].id);
   });
@@ -178,10 +179,10 @@ describe("player order", () => {
     const playFirstCardBehavior = {
       playerId: "p4",
       affinities: new Affinities(players[3]),
-      reset: jest.fn(() => null),
+      reset: vi.fn(() => null),
       cardToPlay: (hand: Hand) => hand.cards[0],
-      announcementToMake: jest.fn(() => null),
-      handleAffinityEvent: jest.fn(() => null),
+      announcementToMake: vi.fn(() => null),
+      handleAffinityEvent: vi.fn(() => null),
       reservationToDeclare: () => Reservation.Healthy,
     };
     round.playerOrder.prioritize(players[3]);
@@ -221,7 +222,7 @@ describe("finish round", () => {
     setupGameKontraWins();
 
     await round.finishRound();
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     const scorecard = round.scorecard;
     expect(scorecard.totalPointsFor(players[0])).toBe(-2);
@@ -237,7 +238,7 @@ describe("finish round", () => {
     setupGameKontraWins();
 
     await round.finishRound();
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(round.isFinished()).toBe(true);
   });
@@ -248,7 +249,7 @@ describe("finish round", () => {
     expect(round.currentTrick.cards()).toHaveLength(4);
 
     await round.finishRound();
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(round.currentTrick.cards()).toHaveLength(0);
   });
@@ -269,7 +270,7 @@ function setupGameKontraWins() {
   players[2].isRe = () => false;
   players[3].isRe = () => false;
 
-  players[3].win = jest.fn();
+  players[3].win = vi.fn();
 
   round.currentTrick.add(jack.of(Suit.Hearts), players[0]);
   round.currentTrick.add(jack.of(Suit.Spades), players[1]);

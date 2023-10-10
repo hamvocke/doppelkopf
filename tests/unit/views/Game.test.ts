@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import Game from "@/views/Game.vue";
 import { Game as GameModel } from "@/models/game";
 import { mount, config } from "@vue/test-utils";

@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test } from "vitest";
 import Table from "@/components/Table.vue";
 import { Game } from "@/models/game";
 import { Score } from "@/models/score";

@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import OptionsMenu from "@/components/OptionsMenu.vue";
 import { mount, config } from "@vue/test-utils";
 

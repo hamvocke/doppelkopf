@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { PlayedCard } from "@/models/playedCard";
@@ -16,7 +17,7 @@ players.forEach((p) => {
 });
 
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 test("new trick is empty", () => {
@@ -312,11 +313,11 @@ describe("extras", () => {
 
   describe("Affinity event handling", () => {
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     test("should call queen of clubs event", () => {
-      const affinityEvents = (player2.behavior.handleAffinityEvent = jest.fn());
+      const affinityEvents = (player2.behavior.handleAffinityEvent = vi.fn());
       const trick = new Trick(players);
       trick.add(queen.of(Suit.Clubs), player1);
       expect(affinityEvents).toHaveBeenCalledWith(
@@ -326,7 +327,7 @@ describe("extras", () => {
     });
 
     test("should call queen of clubs tricked event", () => {
-      const affinityEvents = (player1.behavior.handleAffinityEvent = jest.fn());
+      const affinityEvents = (player1.behavior.handleAffinityEvent = vi.fn());
       const trick = new Trick(players);
       trick.add(queen.of(Suit.Clubs), player1);
       trick.add(jack.of(Suit.Spades), player2);
@@ -338,7 +339,7 @@ describe("extras", () => {
     });
 
     test("should call queen of clubs greased event when ace of diamonds added", () => {
-      const affinityEvents = (player1.behavior.handleAffinityEvent = jest.fn());
+      const affinityEvents = (player1.behavior.handleAffinityEvent = vi.fn());
       const trick = new Trick(players);
       trick.add(queen.of(Suit.Clubs), player1);
       trick.add(ace.of(Suit.Diamonds), player2);
@@ -350,7 +351,7 @@ describe("extras", () => {
     });
 
     test("should call queen of clubs greased event when ten of diamonds added", () => {
-      const affinityEvents = (player1.behavior.handleAffinityEvent = jest.fn());
+      const affinityEvents = (player1.behavior.handleAffinityEvent = vi.fn());
       const trick = new Trick(players);
       trick.add(queen.of(Suit.Clubs), player1);
       trick.add(ten.of(Suit.Diamonds), player2);

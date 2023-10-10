@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import Toggle from "@/components/Toggle.vue";
 import { mount, config } from "@vue/test-utils";
 

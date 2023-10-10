@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import {
   RuleBasedBehaviour,
   HighestCardBehavior,
@@ -12,7 +13,7 @@ import { PerfectMemory } from "@/models/memory";
 import { PlayedCard } from "@/models/playedCard";
 import { Affinities } from "@/models/affinities";
 
-jest.mock("@/models/random", () => ({
+vi.mock("@/models/random", () => ({
   __esModule: true,
   chance: () => true,
   sample: (arr: Array<any>) => arr[0],
@@ -498,7 +499,7 @@ describe("Rule Based Card Behavior", () => {
 
   describe("Standard Trump play", () => {
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
       players.forEach((p) => p.memory.clearMemory());
     });
 
@@ -530,11 +531,11 @@ describe("Rule Based Card Behavior", () => {
 
   describe("Knowing your teammate", () => {
     beforeEach(() => {
-      jest.clearAllMocks();
-      player1.isRe = jest.fn().mockReturnValue(true);
-      player2.isRe = jest.fn().mockReturnValue(true);
-      player3.isRe = jest.fn().mockReturnValue(false);
-      player4.isRe = jest.fn().mockReturnValue(false);
+      vi.clearAllMocks();
+      player1.isRe = vi.fn().mockReturnValue(true);
+      player2.isRe = vi.fn().mockReturnValue(true);
+      player3.isRe = vi.fn().mockReturnValue(false);
+      player4.isRe = vi.fn().mockReturnValue(false);
       players.forEach((p) => {
         p.memory.clearMemory();
         p.behavior.affinities.setPlayers(players);
@@ -550,7 +551,7 @@ describe("Rule Based Card Behavior", () => {
         king.of(Suit.Spades).first(),
         jack.of(Suit.Spades).first(),
       ]);
-      player1.memory.hasSuitBeenThrownByPlayer = jest
+      player1.memory.hasSuitBeenThrownByPlayer = vi
         .fn()
         .mockImplementation(
           (suit, player) => suit === Suit.Spades && player.id === player2.id
@@ -569,7 +570,7 @@ describe("Rule Based Card Behavior", () => {
         king.of(Suit.Spades).first(),
         jack.of(Suit.Spades).first(),
       ]);
-      player1.memory.hasSuitBeenThrownByPlayer = jest
+      player1.memory.hasSuitBeenThrownByPlayer = vi
         .fn()
         .mockImplementation(
           (suit, player) =>
@@ -655,7 +656,7 @@ describe("Rule Based Card Behavior", () => {
       ]);
       const trick = new Trick(players);
       trick.add(jack.of(Suit.Spades), player3);
-      const play = jest.spyOn(RuleBasedBehaviour.prototype, "defaultPlay");
+      const play = vi.spyOn(RuleBasedBehaviour.prototype, "defaultPlay");
       const cardToPlay = player1.behavior.cardToPlay(hand, trick);
       expect(play).toHaveBeenCalled();
       expect(cardToPlay).toEqual(expect.any(Card));

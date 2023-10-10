@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test } from "vitest";
 import Trick from "@/components/Trick.vue";
 import { Game } from "@/models/game";
 import { Trick as TrickModel } from "@/models/trick";

@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import { Trick } from "@/models/trick";
 import { PartyName, Party } from "@/models/party";
 import { extras } from "@/models/extras";

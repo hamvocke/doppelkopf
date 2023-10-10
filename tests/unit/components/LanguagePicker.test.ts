@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import LanguagePicker from "@/components/LanguagePicker.vue";
 import { mount, config } from "@vue/test-utils";
 

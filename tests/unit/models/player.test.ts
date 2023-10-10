@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { Player } from "@/models/player";
 import { Game } from "@/models/game";
 import { Hand } from "@/models/hand";
@@ -15,14 +16,14 @@ import { Reservation } from "@/models/reservations";
 let game: Game;
 let player: Player;
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 beforeEach(() => {
   game = Game.singlePlayer();
   player = game.players[0];
   game.currentRound.waitingForPlayer = () => player;
   options.autoplay = false;
-  jest.runAllTimers();
+  vi.runAllTimers();
 });
 
 test("player has a name", () => {
@@ -68,7 +69,7 @@ test("player can play card from hand", async () => {
 });
 
 test("should move to next player after playing a card", async () => {
-  player.game!.currentRound.nextPlayer = jest.fn();
+  player.game!.currentRound.nextPlayer = vi.fn();
   const kingOnHand = king.of(Suit.Diamonds);
   player.hand = new Hand([kingOnHand]);
 
@@ -80,13 +81,13 @@ test("should move to next player after playing a card", async () => {
 test("should trigger next move if autoplay option is enabled", async () => {
   options.autoplay = true;
   expect.assertions(1);
-  const nextMoveMock = jest.fn();
+  const nextMoveMock = vi.fn();
   player.game!.currentRound.nextMove = nextMoveMock;
   const kingOnHand = king.of(Suit.Diamonds);
   player.hand = new Hand([kingOnHand]);
 
   let promise = player.play(kingOnHand);
-  jest.runAllTimers();
+  vi.runAllTimers();
   await promise;
 
   expect(nextMoveMock).toHaveBeenCalled();
@@ -95,13 +96,13 @@ test("should trigger next move if autoplay option is enabled", async () => {
 test("should not trigger next move if autoplay option is disabled", async () => {
   options.autoplay = false;
   expect.assertions(1);
-  const nextMoveMock = jest.fn();
+  const nextMoveMock = vi.fn();
   player.game!.currentRound.nextMove = nextMoveMock;
   const kingOnHand = king.of(Suit.Diamonds);
   player.hand = new Hand([kingOnHand]);
 
   const promise = player.play(kingOnHand);
-  jest.runAllTimers();
+  vi.runAllTimers();
   await promise;
 
   expect(nextMoveMock).not.toHaveBeenCalled();
@@ -159,10 +160,10 @@ test("should autoplay a card", async () => {
   player.behavior = {
     playerId: player.id,
     affinities: new Affinities(player),
-    reset: jest.fn(() => null),
-    cardToPlay: jest.fn(() => kingOnHand),
-    announcementToMake: jest.fn(() => null),
-    handleAffinityEvent: jest.fn(() => null),
+    reset: vi.fn(() => null),
+    cardToPlay: vi.fn(() => kingOnHand),
+    announcementToMake: vi.fn(() => null),
+    handleAffinityEvent: vi.fn(() => null),
     reservationToDeclare: () => Reservation.Healthy,
   };
 
@@ -182,10 +183,10 @@ test("should try to make an announcement", async () => {
   player.behavior = {
     playerId: player.id,
     affinities: new Affinities(player),
-    reset: jest.fn(() => null),
-    cardToPlay: jest.fn(() => player.hand.cards[0]),
-    announcementToMake: jest.fn(() => null),
-    handleAffinityEvent: jest.fn(() => null),
+    reset: vi.fn(() => null),
+    cardToPlay: vi.fn(() => player.hand.cards[0]),
+    announcementToMake: vi.fn(() => null),
+    handleAffinityEvent: vi.fn(() => null),
     reservationToDeclare: () => Reservation.Healthy,
   };
 

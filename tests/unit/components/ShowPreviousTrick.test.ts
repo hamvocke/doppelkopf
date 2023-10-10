@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test } from "vitest";
 import ShowPreviousTrick from "@/components/ShowPreviousTrick.vue";
 import { mount, config } from "@vue/test-utils";
 import { Trick } from "@/models/trick";
