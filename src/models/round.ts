@@ -16,7 +16,6 @@ export enum RoundState {
 }
 
 export class Round {
-  players: Player[];
   parties: { [name: string]: Party };
   scorecard: Scorecard;
   score?: Score;
@@ -31,7 +30,6 @@ export class Round {
     scorecard: any = {},
     openingPlayer: Player
   ) {
-    this.players = players; // TODO: remove - we don't need both, a list of players and a RingQueue of players
     this.playerOrder = new RingQueue(players);
     this.playerOrder.prioritize(openingPlayer);
     this.parties = findParties(players);
@@ -155,7 +153,7 @@ export class Round {
 
     this.currentTrick = this.nextTrick();
 
-    this.parties = findParties(this.players);
+    this.parties = findParties(this.playerOrder.asList());
     this.score = new Score(
       this.parties[PartyName.Re],
       this.parties[PartyName.Kontra]
