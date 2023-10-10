@@ -60,7 +60,7 @@ We're using [composition style API](https://vuejs.org/guide/introduction.html#ap
 Vue components are strictly only doing UI work. The entire game logic lives outside of vue components and is completely framework-agnostic. The game code shouldn't know whether the game is running in a browser or any other environment. The `models/` directory is the home of the game logic exclusively. Separating UI from game logic allows us to test-drive our game logic's implementation and makes the game independent of any chosen frontend technology. There are no plans to use anything else than vue for the foreseeable future, but keeping that option is good and helps us keep the codebase healthy in the long-term.
 
 ### Testing
-We're very serious about testing. All bug fixes and new features should come with new tests. Unit tests with [Jest](https://jestjs.io/) and frontend end-to-end tests with [nightwatch.js](https://nightwatchjs.org/).
+We're very serious about testing. All bug fixes and new features should come with new tests. Unit tests with [Jest](https://jestjs.io/) (we're using [Vitest](https://vitest.dev) but the API is compatible). End-to-End tests are not a thing at the moment (we used to have a few, but our unit tests seem to be sufficient for now).
 
 ### IDE Setup
 If you want to set up your development environment, here are a few helpful pointers:
