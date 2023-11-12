@@ -206,11 +206,9 @@ function partyMembers(party: string) {
 @import "../assets/css/vars.css";
 
 .scorecard {
-  box-sizing: border-box;
   font-family: sans-serif;
   text-align: left;
-  background: white;
-  margin: 6px;
+  background: var(--white);
   border-radius: 6px;
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
     0 5px 15px 0 rgba(0, 0, 0, 0.08);
@@ -231,8 +229,13 @@ function partyMembers(party: string) {
 
 .scroll-container {
   overflow-y: auto;
-  flex-grow: 10;
+  border-radius: inherit;
   padding: 12px;
+
+  --g:radial-gradient(50% 20px, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+  background:
+    linear-gradient(rgba(0, 0, 0, 0) calc(100% - 40px), var(--white) calc(100% - 20px)) local,
+    var(--g) top / 100% 200%;
 }
 
 h1,
@@ -386,10 +389,6 @@ td {
 
   th {
     font-size: 0.9em;
-  }
-
-  .button-row {
-    box-shadow: -1px 0 8px 3px rgba(0, 0, 0, 0.08);
   }
 }
 </style>
