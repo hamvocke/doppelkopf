@@ -4,6 +4,7 @@ import Home from "@/views/Home.vue";
 import GameView from "@/views/Game.vue";
 import Tutorial from "@/views/Tutorial.vue";
 import PreviewReservations from "@/views/previews/PreviewReservations.vue";
+import PreviewScorecard from "@/views/previews/PreviewScorecard.vue";
 
 const routes = [
   {
@@ -29,6 +30,12 @@ if (Config.debug) {
     path: "/preview/reservations",
     name: "previewReservations",
     component: PreviewReservations,
+  });
+
+  routes.push({
+    path: "/preview/scorecard",
+    name: "previewScorecard",
+    component: PreviewScorecard,
   });
 }
 
