@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { Game } from "@/models/game";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
-import { ScoreBuilder } from "/tests/builders/scoreBuilder";
+import { ScoreBuilder } from "../../../tests/builders/scoreBuilder";
 import { PartyName } from "@/models/party";
 import Scorecard from "@/components/Scorecard.vue";
 
