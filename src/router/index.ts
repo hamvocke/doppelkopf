@@ -3,7 +3,7 @@ import { Config } from "@/models/config";
 import Home from "@/views/Home.vue";
 import GameView from "@/views/Game.vue";
 import Tutorial from "@/views/Tutorial.vue";
-import Preview from "@/views/Preview.vue";
+import PreviewReservations from "@/views/previews/PreviewReservations.vue";
 
 const routes = [
   {
@@ -26,9 +26,9 @@ const routes = [
 
 if (Config.debug) {
   routes.push({
-    path: "/preview",
-    name: "preview",
-    component: Preview,
+    path: "/preview/reservations",
+    name: "previewReservations",
+    component: PreviewReservations,
   });
 }
 
