@@ -2,6 +2,7 @@
   "name": "doppelkopf",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -23,11 +24,11 @@
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
-    "@types/feather-icons": "^4.29.1",
     "@playwright/test": "^1.49.0",
     "@tsconfig/node22": "^22.0.0",
+    "@types/feather-icons": "^4.29.1",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^22.9.3",
+    "@types/node": "^22.10.1",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitest/eslint-plugin": "1.1.10",
     "@vue/eslint-config-prettier": "^10.1.0",

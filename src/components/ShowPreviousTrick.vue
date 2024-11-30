@@ -1,11 +1,6 @@
 <template>
   <div class="options">
-    <div
-      v-if="trick"
-      class="icon icon-rewind"
-      :title="$t('show_last_trick_header')"
-      @click="toggleVisibility()"
-    >
+    <div v-if="trick" class="icon icon-rewind" :title="$t('show_last_trick_header')" @click="toggleVisibility()">
       <vue-feather type="rotate-ccw" />
     </div>
     <modal v-if="trick" :visible="visible" @clickaway="hideMenu()">
@@ -23,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref } from "vue";
+import { type PropType, ref } from "vue";
 import { Trick as TrickModel } from "@/models/trick";
 import Trick from "@/components/Trick.vue";
 import Modal from "@/components/Modal.vue";

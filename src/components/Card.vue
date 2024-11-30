@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from "vue";
+import { type PropType } from "vue";
 import { Suit, Card as CardModel } from "@/models/card";
 
 const props = defineProps({
@@ -77,7 +77,8 @@ function cardClasses() {
 
 .card-inner {
   position: relative;
-  top: 0px; /* necessary for css transition */
+  top: 0px;
+  /* necessary for css transition */
   height: 85px;
   width: 58px;
   color: var(--black);

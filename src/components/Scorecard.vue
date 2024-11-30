@@ -5,10 +5,7 @@
 
       <div class="parties">
         <div class="party-wrapper">
-          <div
-            v-if="currentScore.winningPartyName() === PartyName.Re"
-            class="winner-balloon"
-          >
+          <div v-if="currentScore.winningPartyName() === PartyName.Re" class="winner-balloon">
             🎈 {{ $t("winner") }}
           </div>
           <div class="party-bubble">
@@ -20,10 +17,7 @@
         </div>
 
         <div class="party-wrapper">
-          <div
-            v-if="currentScore.winningPartyName() === PartyName.Kontra"
-            class="winner-balloon"
-          >
+          <div v-if="currentScore.winningPartyName() === PartyName.Kontra" class="winner-balloon">
             🎈 {{ $t("winner") }}
           </div>
           <div class="party-bubble">
@@ -36,10 +30,8 @@
       </div>
 
       <div class="meter">
-        <PointMeter
-          :re-points="currentScore.trickPoints(PartyName.Re)"
-          :kontra-points="currentScore.trickPoints(PartyName.Kontra)"
-        />
+        <PointMeter :re-points="currentScore.trickPoints(PartyName.Re)"
+          :kontra-points="currentScore.trickPoints(PartyName.Kontra)" />
       </div>
 
       <div class="row">
@@ -84,9 +76,7 @@
                   </span>
                 </td>
                 <td colspan="2" class="sum kontra">
-                  <span
-                    v-if="currentScore.winningPartyName() === PartyName.Kontra"
-                  >
+                  <span v-if="currentScore.winningPartyName() === PartyName.Kontra">
                     {{
                       $tc("points", currentScore.totalPoints(PartyName.Kontra))
                     }}
@@ -101,26 +91,14 @@
           <h2>{{ $t("scorecard") }}</h2>
           <table>
             <tr>
-              <th
-                v-for="player in players"
-                :key="player.id"
-                class="player right-aligned"
-              >
+              <th v-for="player in players" :key="player.id" class="player right-aligned">
                 {{ player.name }}
               </th>
               <th class="right-aligned">{{ $t("points-plain") }}</th>
             </tr>
-            <tr
-              v-for="(scoreLine, index) in scorecard.scoreLines"
-              :key="scoreLine.id"
-              class="scoreLine"
-              :class="{ bold: isLastLine(index) }"
-            >
-              <td
-                v-for="player in players"
-                :key="player.id"
-                class="right-aligned"
-              >
+            <tr v-for="(scoreLine, index) in scorecard.scoreLines" :key="scoreLine.id" class="scoreLine"
+              :class="{ bold: isLastLine(index) }">
+              <td v-for="player in players" :key="player.id" class="right-aligned">
                 {{ scoreLine.totalPoints[player.id] }}
               </td>
               <td class="right-aligned">
@@ -146,7 +124,7 @@ import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import { Player } from "@/models/player";
 import { Score } from "@/models/score";
 import { PartyName } from "@/models/party";
-import { PropType } from "vue";
+import { type PropType } from "vue";
 
 const props = defineProps({
   scorecard: {
@@ -232,7 +210,7 @@ function partyMembers(party: string) {
   border-radius: inherit;
   padding: 12px;
 
-  --g:radial-gradient(50% 20px, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+  --g: radial-gradient(50% 20px, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
   background:
     linear-gradient(rgba(0, 0, 0, 0) calc(100% - 40px), var(--white) calc(100% - 20px)) local,
     var(--g) top / 100% 200%;

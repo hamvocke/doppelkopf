@@ -4,13 +4,8 @@
       <div class="name-info">
         <div class="name title-font">
           {{ player.name }}
-          <vue-feather
-            v-if="isWinner()"
-            type="award"
-            class="winner"
-            :title="$t('badge_description', { name: player.name })"
-            size="18"
-          />
+          <vue-feather v-if="isWinner()" type="award" class="winner"
+            :title="$t('badge_description', { name: player.name })" size="18" />
         </div>
       </div>
       <div class="stats">
@@ -19,31 +14,18 @@
           {{ player.hand.isRe() ? "Re" : "Kontra" }}
         </div>
         <div class="announcements">
-          <div
-            v-if="player.announcements.size > 0"
-            class="announcement flag-icon"
-          >
+          <div v-if="player.announcements.size > 0" class="announcement flag-icon">
             <vue-feather type="flag" size="14" />
           </div>
-          <div
-            v-for="announcement in player.announcements"
-            :key="announcement"
-            class="announcement"
-          >
+          <div v-for="announcement in player.announcements" :key="announcement" class="announcement">
             {{ $t(`${announcement}_short`) }}
           </div>
         </div>
       </div>
     </div>
     <div class="container">
-      <Hand
-        :hand="player.hand"
-        :is-covered="isCovered"
-        :is-selectable="isHandSelectable"
-        :position="player.tablePosition"
-        :playable-cards="playable()"
-        @play="play"
-      />
+      <Hand :hand="player.hand" :is-covered="isCovered" :is-selectable="isHandSelectable"
+        :position="player.tablePosition" :playable-cards="playable()" @play="play" />
       <TrickStack :trick-stack="player.trickStack" />
     </div>
     <div class="trickCountSmall">
@@ -60,7 +42,7 @@ import VueFeather from "vue-feather";
 import { Player as PlayerModel } from "@/models/player";
 import { playableCards } from "@/models/playableCardFinder";
 import { Card } from "@/models/card";
-import { PropType } from "vue";
+import { type PropType } from "vue";
 import AffinityDebugger from "./AffinityDebugger.vue";
 
 const props = defineProps({
@@ -94,6 +76,7 @@ function playable() {
 
 <style scoped>
 @import "../assets/css/vars.css";
+
 .player {
   display: flex;
   flex-direction: column;

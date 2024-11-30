@@ -1,21 +1,12 @@
 <template>
   <div v-show="canAnnounce()" class="announcements-button">
-    <button
-      class="toggle button"
-      :class="{ open: isOpen }"
-      @click="toggleDropdown"
-    >
+    <button class="toggle button" :class="{ open: isOpen }" @click="toggleDropdown">
       <vue-feather type="flag" size="20" />
       <span class="button-text">{{ $t("announce") }}</span>
       <vue-feather type="chevron-up" size="16" />
     </button>
     <div v-show="isOpen" class="dropdown">
-      <button
-        v-for="a in allAnnouncements()"
-        :key="a"
-        class="button"
-        @click="announce(a)"
-      >
+      <button v-for="a in allAnnouncements()" :key="a" class="button" @click="announce(a)">
         {{ $t(a) }}
       </button>
     </div>
@@ -23,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType } from "vue";
+import { ref, type PropType } from "vue";
 import VueFeather from "vue-feather";
 import { Player } from "@/models/player";
 import { Announcement } from "@/models/announcements";
@@ -94,9 +85,9 @@ function allAnnouncements() {
   background: var(--red-dark);
 }
 
-.dropdown button:hover ~ button,
-.dropdown button:active ~ button,
-.dropdown button:focus ~ button {
+.dropdown button:hover~button,
+.dropdown button:active~button,
+.dropdown button:focus~button {
   background: var(--red-dark);
 }
 

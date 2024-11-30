@@ -7,23 +7,13 @@
       <Trick :trick="game.currentTrick" />
     </div>
 
-    <Controls
-      :game="game"
-      @next-trick="finishTrick()"
-      @next-move="nextMove()"
-      @finish-round="finishRound()"
-    />
+    <Controls :game="game" @next-trick="finishTrick()" @next-move="nextMove()" @finish-round="finishRound()" />
 
     <Player :player="game.players[3]" class="right" />
     <Player :player="game.players[0]" class="bottom" />
 
-    <Scorecard
-      v-if="game.currentRound.score && game.currentRound.isFinished()"
-      :scorecard="game.scorecard"
-      :players="game.players"
-      :current-score="game.currentRound.score"
-      @next-round="nextRound()"
-    />
+    <Scorecard v-if="game.currentRound.score && game.currentRound.isFinished()" :scorecard="game.scorecard"
+      :players="game.players" :current-score="game.currentRound.score" @next-round="nextRound()" />
   </div>
 </template>
 
@@ -33,7 +23,7 @@ import Trick from "./Trick.vue";
 import Controls from "./Controls.vue";
 import Scorecard from "./Scorecard.vue";
 import { Game } from "@/models/game";
-import { PropType } from "vue";
+import { type PropType } from "vue";
 
 const props = defineProps({
   game: {

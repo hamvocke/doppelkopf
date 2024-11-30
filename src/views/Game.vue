@@ -1,11 +1,7 @@
 <template>
   <div id="game">
     <Notifications />
-    <Reservations
-      v-if="askForReservations()"
-      :player="game.players[0]"
-      @reservation-selected="declareReservation"
-    />
+    <Reservations v-if="askForReservations()" :player="game.players[0]" @reservation-selected="declareReservation" />
     <Table :game="game" />
     <OptionsMenu />
     <ShowPreviousTrick :trick="game.previousTrick" />
@@ -13,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, reactive } from "vue";
+import { type PropType, reactive } from "vue";
 import Notifications from "@/components/Notifications.vue";
 import Table from "@/components/Table.vue";
 import OptionsMenu from "@/components/OptionsMenu.vue";

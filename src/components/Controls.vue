@@ -1,17 +1,9 @@
 <template>
   <div class="controls">
-    <button
-      v-if="showNextTrickButton()"
-      class="button next"
-      @click="$emit('nextTrick')"
-    >
+    <button v-if="showNextTrickButton()" class="button next" @click="$emit('nextTrick')">
       {{ $t("next-trick") }}
     </button>
-    <button
-      v-if="showFinishRoundButton()"
-      class="button finish"
-      @click="$emit('finishRound')"
-    >
+    <button v-if="showFinishRoundButton()" class="button finish" @click="$emit('finishRound')">
       {{ $t("finish-round") }}
     </button>
 
@@ -20,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType } from "vue";
+import { ref, type PropType } from "vue";
 import AnnouncementsButton from "@/components/AnnouncementsButton.vue";
 import { Features } from "@/models/features";
 import { Game } from "@/models/game";

@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import Card from "./Card.vue";
 import { TrickStack as TrickStackModel } from "@/models/trickStack";
-import { PropType } from "vue";
+import { type PropType } from "vue";
 
 const props = defineProps({
   trickStack: {

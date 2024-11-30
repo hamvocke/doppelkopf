@@ -8,23 +8,14 @@
     </p>
 
     <div class="hand-wrapper">
-      <hand
-        :hand="player.hand"
-        :position="player.tablePosition"
-        :is-selectable="false"
-        :is-covered="false"
-        :playable-cards="[]"
-      />
+      <hand :hand="player.hand" :position="player.tablePosition" :is-selectable="false" :is-covered="false"
+        :playable-cards="[]" />
     </div>
 
     <div class="dark-box">
       <h2>Spiel mit Partner</h2>
       <div class="flex-row">
-        <img
-          src="@/assets/img/handshake.png"
-          alt="normal game icon"
-          class="reservation-icon"
-        />
+        <img src="@/assets/img/handshake.png" alt="normal game icon" class="reservation-icon" />
         <p>
           Du möchtest mit einem Partner gegen zwei andere Spieler spielen. Wer
           dein Partner ist, musst du erst noch herausfinden.
@@ -32,17 +23,9 @@
       </div>
 
       <div class="flex-container">
-        <selectable-box
-          id="healthy-option"
-          v-model="reservation"
-          :selected-value="Reservation.Healthy"
-          class="flex-item"
-        >
-          <img
-            src="@/assets/img/healthy.png"
-            alt="healthy icon"
-            class="reservation-icon"
-          />
+        <selectable-box id="healthy-option" v-model="reservation" :selected-value="Reservation.Healthy"
+          class="flex-item">
+          <img src="@/assets/img/healthy.png" alt="healthy icon" class="reservation-icon" />
           <div class="flex-col">
             <h3 class="large-text">Gesund!</h3>
             <p class="regular-text">
@@ -52,18 +35,9 @@
           </div>
         </selectable-box>
 
-        <selectable-box
-          id="wedding-option"
-          v-model="reservation"
-          :selected-value="Reservation.Wedding"
-          class="flex-item"
-          disabled
-        >
-          <img
-            src="@/assets/img/rings.png"
-            alt="wedding icon"
-            class="reservation-icon"
-          />
+        <selectable-box id="wedding-option" v-model="reservation" :selected-value="Reservation.Wedding"
+          class="flex-item" disabled>
+          <img src="@/assets/img/rings.png" alt="wedding icon" class="reservation-icon" />
           <div class="flex-col">
             <h3 class="large-text">
               Hochzeit <span class="badge">Coming soon!</span>
@@ -79,11 +53,7 @@
       <div class="flex-container">
         <h2>Solo</h2>
         <div class="flex-row">
-          <img
-            src="@/assets/img/team.png"
-            alt="solo icon"
-            class="reservation-icon"
-          />
+          <img src="@/assets/img/team.png" alt="solo icon" class="reservation-icon" />
           <p>
             Du spielst allein gegen die drei anderen Spieler. Gewinnst du,
             erhältst du die dreifache Punktzahl.
@@ -91,59 +61,31 @@
         </div>
 
         <div class="flex-container">
-          <selectable-box
-            id="queen-solo-option"
-            v-model="reservation"
-            :selected-value="Reservation.QueenSolo"
-            class="flex-item"
-          >
+          <selectable-box id="queen-solo-option" v-model="reservation" :selected-value="Reservation.QueenSolo"
+            class="flex-item">
             <div class="flex-col centered-col">
-              <img
-                src="@/assets/img/queen.png"
-                alt="queen icon"
-                class="reservation-icon"
-              />
+              <img src="@/assets/img/queen.png" alt="queen icon" class="reservation-icon" />
               <p class="regular-text bold">Damensolo</p>
               <small> Damen sind Trumpf, alle anderen Karten sind Fehl. </small>
             </div>
           </selectable-box>
 
-          <selectable-box
-            id="jack-solo-option"
-            v-model="reservation"
-            :selected-value="Reservation.JackSolo"
-            class="flex-item"
-          >
+          <selectable-box id="jack-solo-option" v-model="reservation" :selected-value="Reservation.JackSolo"
+            class="flex-item">
             <div class="flex-col centered-col">
-              <img
-                src="@/assets/img/jack.png"
-                alt="jack icon"
-                class="reservation-icon"
-              />
+              <img src="@/assets/img/jack.png" alt="jack icon" class="reservation-icon" />
               <p class="regular-text bold">Bubensolo</p>
               <small> Buben sind Trumpf, alle anderen Karten sind Fehl. </small>
             </div>
           </selectable-box>
 
-          <suit-selector-box
-            id="suit-solo-option"
-            v-model="reservation"
-            :selected="isSuitSoloSelected()"
-            class="flex-item"
-          />
+          <suit-selector-box id="suit-solo-option" v-model="reservation" :selected="isSuitSoloSelected()"
+            class="flex-item" />
 
-          <selectable-box
-            id="ace-solo-option"
-            v-model="reservation"
-            :selected-value="Reservation.AceSolo"
-            class="flex-item"
-          >
+          <selectable-box id="ace-solo-option" v-model="reservation" :selected-value="Reservation.AceSolo"
+            class="flex-item">
             <div class="flex-col centered-col">
-              <img
-                src="@/assets/img/skeleton.png"
-                alt="skeleton icon"
-                class="reservation-icon"
-              />
+              <img src="@/assets/img/skeleton.png" alt="skeleton icon" class="reservation-icon" />
               <p class="regular-text bold">Fleischloser</p>
               <small>
                 Es gibt keine Trümpfe, alle Karten sind Fehl und werden
@@ -156,12 +98,7 @@
     </div>
 
     <div>
-      <button
-        id="reservation-button"
-        type="button"
-        class="button"
-        @click="reservationButtonClicked"
-      >
+      <button id="reservation-button" type="button" class="button" @click="reservationButtonClicked">
         {{ buttonText() }}
       </button>
     </div>
@@ -172,7 +109,7 @@
 import { Player } from "@/models/player";
 import Modal from "@/components/Modal.vue";
 import Hand from "@/components/Hand.vue";
-import { PropType, ref } from "vue";
+import { type PropType, ref } from "vue";
 import SelectableBox from "@/components/reservations/SelectableBox.vue";
 import SuitSelectorBox from "@/components/reservations/SuitSelectorBox.vue";
 import { Reservation } from "@/models/reservations";
@@ -217,6 +154,7 @@ p {
 h2 {
   margin-bottom: 4px;
 }
+
 .dark-box {
   background: var(--white-100);
   padding: 16px;

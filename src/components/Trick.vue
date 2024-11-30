@@ -2,20 +2,15 @@
   <div class="trick">
     <div class="cards">
       <transition-group name="card" tag="span">
-        <Card
-          v-for="playedCard in cards()"
-          :key="playedCard.id"
-          :card="playedCard.card"
-          :player="playedCard.player"
-          :position="playedCard.player.tablePosition"
-        />
+        <Card v-for="playedCard in cards()" :key="playedCard.id" :card="playedCard.card" :player="playedCard.player"
+          :position="playedCard.player.tablePosition" />
       </transition-group>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { PropType } from "vue";
+import { type PropType } from "vue";
 import Card from "./Card.vue";
 import { Trick as TrickModel } from "@/models/trick";
 
@@ -40,7 +35,7 @@ function cards() {
   justify-content: center;
 }
 
-.cards > span {
+.cards>span {
   display: grid;
   grid-template-areas:
     "top top top"
@@ -80,7 +75,8 @@ function cards() {
 
 .card-enter-active {
   transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition-delay: 0.5s; /* needs to be in sync with the leave transition duration in Hand.vue */
+  transition-delay: 0.5s;
+  /* needs to be in sync with the leave transition duration in Hand.vue */
 }
 
 .card-leave-active {
