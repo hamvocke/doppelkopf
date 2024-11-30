@@ -119,27 +119,27 @@ test("playing a card adds it to the current trick", async () => {
   expect(game.currentTrick.cards()).toEqual([expectedCard]);
 });
 
-test("player cannot play card that is not on their hand", () => {
+test("player cannot play card that is not on their hand", async () => {
   player.hand = new Hand([king.of(Suit.Diamonds)]);
 
   async function invalidMove() {
     await player.play(queen.of(Suit.Diamonds));
   }
 
-  expect(invalidMove()).rejects.toThrowError(
-    "can't play a card that's not on the player's hand"
+  await expect(invalidMove()).rejects.toThrowError(
+    "can't play a card that's not on the player's hand",
   );
 });
 
-test("player cannot play undefined card", () => {
+test("player cannot play undefined card", async () => {
   player.hand = new Hand([king.of(Suit.Diamonds)]);
 
   async function invalidMove() {
     await player.play(king.of(Suit.Clubs));
   }
 
-  expect(invalidMove()).rejects.toThrowError(
-    "can't play a card that's not on the player's hand"
+  await expect(invalidMove()).rejects.toThrowError(
+    "can't play a card that's not on the player's hand",
   );
 });
 
@@ -173,7 +173,7 @@ test("should autoplay a card", async () => {
   expect(player.behavior.cardToPlay).toBeCalledWith(
     player.hand,
     player.game!.currentTrick,
-    player.memory
+    player.memory,
   );
 });
 
@@ -192,10 +192,7 @@ test("should try to make an announcement", async () => {
 
   await player.autoplay();
 
-  expect(player.behavior.announcementToMake).toBeCalledWith(
-    expect.any(Set),
-    expect.any(Hand)
-  );
+  expect(player.behavior.announcementToMake).toBeCalledWith(expect.any(Set), expect.any(Hand));
 });
 
 test("should not play a card if its not the players turn", async () => {
@@ -321,9 +318,7 @@ test("should throw error when prompting human player for reservation and they ha
 
   const failingPrompt = () => player.promptForReservation();
 
-  expect(failingPrompt).toThrowError(
-    "human player didn't declare a reservation"
-  );
+  expect(failingPrompt).toThrowError("human player didn't declare a reservation");
 });
 
 test("should return behavior-based reservation for non-human players", () => {
@@ -364,7 +359,7 @@ describe("announcements", () => {
         Announcement.No60,
         Announcement.No30,
         Announcement.NoPoints,
-      ])
+      ]),
     );
   });
 
@@ -417,11 +412,7 @@ describe("announcements", () => {
     {
       numberOfCards: 7,
       previousAnnouncements: [Announcement.Re, Announcement.No90],
-      expectedAnnouncements: [
-        Announcement.No60,
-        Announcement.No30,
-        Announcement.NoPoints,
-      ],
+      expectedAnnouncements: [Announcement.No60, Announcement.No30, Announcement.NoPoints],
     },
     {
       numberOfCards: 7,
@@ -430,11 +421,7 @@ describe("announcements", () => {
     },
     {
       numberOfCards: 6,
-      previousAnnouncements: [
-        Announcement.Re,
-        Announcement.No90,
-        Announcement.No60,
-      ],
+      previousAnnouncements: [Announcement.Re, Announcement.No90, Announcement.No60],
       expectedAnnouncements: [Announcement.No30, Announcement.NoPoints],
     },
     {
@@ -454,11 +441,7 @@ describe("announcements", () => {
     },
     {
       numberOfCards: 5,
-      previousAnnouncements: [
-        Announcement.Re,
-        Announcement.No90,
-        Announcement.No60,
-      ],
+      previousAnnouncements: [Announcement.Re, Announcement.No90, Announcement.No60],
       expectedAnnouncements: [],
     },
   ];
@@ -472,7 +455,7 @@ describe("announcements", () => {
       const possibleAnnouncements = player.possibleAnnouncements();
 
       expect([...possibleAnnouncements]).toEqual(expectedAnnouncements);
-    }
+    },
   );
 
   test("should not be able to make same announcement twice", () => {

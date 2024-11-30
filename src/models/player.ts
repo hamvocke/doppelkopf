@@ -67,7 +67,7 @@ export class Player {
   async autoplay() {
     const cardToBePlayed = this.behavior.cardToPlay(
       this.hand,
-      this.game?.currentTrick!,
+      this.game!.currentTrick,
       this.memory,
     );
 
@@ -113,7 +113,7 @@ export class Player {
         await new Promise((r) => setTimeout(r, 800)); // timeout to accommodate for animation duration when playing a card
         await this.game?.currentRound.nextMove();
       }
-    } catch (error) {
+    } catch {
       if (this.isHuman) {
         notifier.info("not-your-turn");
         return;
@@ -207,6 +207,6 @@ export class Player {
 
   // ToDo use better way to find out if game sharp doko
   private getStartingCards(): number {
-    return allCards.length / this.game?.players.length!;
+    return allCards.length / this.game!.players.length;
   }
 }
