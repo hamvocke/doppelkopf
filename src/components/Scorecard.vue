@@ -46,43 +46,47 @@
                 <col class="pointsCol" />
                 <col class="extrasCol" />
               </colgroup>
-              <tr>
-                <th colspan="2">
-                  <div class="summary">
-                    <strong>Re</strong>
-                  </div>
-                </th>
+              <thead>
+                <tr>
+                  <th colspan="2">
+                    <div class="summary">
+                      <strong>Re</strong>
+                    </div>
+                  </th>
 
-                <th colspan="2">
-                  <div class="summary">
-                    <strong>Kontra</strong>
-                  </div>
-                </th>
-              </tr>
-              <tr v-for="i in extrasLength()" :key="i" class="extras">
-                <td v-if="reExtra(i)">{{ reExtra(i).points }}</td>
-                <td v-if="reExtra(i)" class="re">
-                  {{ $t(reExtra(i).i18nKey) }}
-                </td>
-                <td v-if="kontraExtra(i)">{{ kontraExtra(i).points }}</td>
-                <td v-if="kontraExtra(i)" class="kontra">
-                  {{ $t(kontraExtra(i).i18nKey) }}
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2" class="sum re">
-                  <span v-if="currentScore.winningPartyName() === PartyName.Re">
-                    {{ $tc("points", currentScore.totalPoints(PartyName.Re)) }}
-                  </span>
-                </td>
-                <td colspan="2" class="sum kontra">
-                  <span v-if="currentScore.winningPartyName() === PartyName.Kontra">
-                    {{
-                      $tc("points", currentScore.totalPoints(PartyName.Kontra))
-                    }}
-                  </span>
-                </td>
-              </tr>
+                  <th colspan="2">
+                    <div class="summary">
+                      <strong>Kontra</strong>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="i in extrasLength()" :key="i" class="extras">
+                  <td v-if="reExtra(i)">{{ reExtra(i).points }}</td>
+                  <td v-if="reExtra(i)" class="re">
+                    {{ $t(reExtra(i).i18nKey) }}
+                  </td>
+                  <td v-if="kontraExtra(i)">{{ kontraExtra(i).points }}</td>
+                  <td v-if="kontraExtra(i)" class="kontra">
+                    {{ $t(kontraExtra(i).i18nKey) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="sum re">
+                    <span v-if="currentScore.winningPartyName() === PartyName.Re">
+                      {{ $tc("points", currentScore.totalPoints(PartyName.Re)) }}
+                    </span>
+                  </td>
+                  <td colspan="2" class="sum kontra">
+                    <span v-if="currentScore.winningPartyName() === PartyName.Kontra">
+                      {{
+                        $tc("points", currentScore.totalPoints(PartyName.Kontra))
+                      }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -90,21 +94,25 @@
         <div class="column">
           <h2>{{ $t("scorecard") }}</h2>
           <table>
-            <tr>
-              <th v-for="player in players" :key="player.id" class="player right-aligned">
-                {{ player.name }}
-              </th>
-              <th class="right-aligned">{{ $t("points-plain") }}</th>
-            </tr>
-            <tr v-for="(scoreLine, index) in scorecard.scoreLines" :key="scoreLine.id" class="scoreLine"
-              :class="{ bold: isLastLine(index) }">
-              <td v-for="player in players" :key="player.id" class="right-aligned">
-                {{ scoreLine.totalPoints[player.id] }}
-              </td>
-              <td class="right-aligned">
-                {{ scoreLine.points }}
-              </td>
-            </tr>
+            <thead>
+              <tr>
+                <th v-for="player in players" :key="player.id" class="player right-aligned">
+                  {{ player.name }}
+                </th>
+                <th class="right-aligned">{{ $t("points-plain") }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(scoreLine, index) in scorecard.scoreLines" :key="scoreLine.id" class="scoreLine"
+                :class="{ bold: isLastLine(index) }">
+                <td v-for="player in players" :key="player.id" class="right-aligned">
+                  {{ scoreLine.totalPoints[player.id] }}
+                </td>
+                <td class="right-aligned">
+                  {{ scoreLine.points }}
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
