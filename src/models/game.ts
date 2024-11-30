@@ -22,11 +22,7 @@ export class Game {
     this.deck = new Deck();
     this.deal();
     this.scorecard = new Scorecard(this.players);
-    this.currentRound = new Round(
-      this.players,
-      this.scorecard,
-      this.playerOpeningOrder.current()
-    );
+    this.currentRound = new Round(this.players, this.scorecard, this.playerOpeningOrder.current());
     this.initializeAffinities();
   }
 
@@ -36,10 +32,10 @@ export class Game {
     const randomNames = generateNames(4);
     const playerName = localStorage.getItem("name") || randomNames[0];
     return new Game([
-      new Player(playerName, isHuman, true, TablePosition.Bottom),
-      new Player(randomNames[1], isComputer, false, TablePosition.Left),
-      new Player(randomNames[2], isComputer, false, TablePosition.Top),
-      new Player(randomNames[3], isComputer, false, TablePosition.Right),
+      new Player(playerName, isHuman, TablePosition.Bottom),
+      new Player(randomNames[1], isComputer, TablePosition.Left),
+      new Player(randomNames[2], isComputer, TablePosition.Top),
+      new Player(randomNames[3], isComputer, TablePosition.Right),
     ]);
   }
 
@@ -75,11 +71,7 @@ export class Game {
 
   nextRound() {
     this.deal();
-    this.currentRound = new Round(
-      this.players,
-      this.scorecard,
-      this.playerOpeningOrder.next()
-    );
+    this.currentRound = new Round(this.players, this.scorecard, this.playerOpeningOrder.next());
     this.resetPlayers();
 
     // if the 'reservations' feature is disabled, we don't want to wait for declarations.
@@ -94,8 +86,6 @@ export class Game {
   }
 
   initializeAffinities() {
-    this.players.forEach((player) =>
-      player.behavior.affinities.setPlayers(this.players)
-    );
+    this.players.forEach((player) => player.behavior.affinities.setPlayers(this.players));
   }
 }

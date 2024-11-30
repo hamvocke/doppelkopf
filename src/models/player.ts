@@ -25,7 +25,6 @@ export class Player {
   trickStack: TrickStack = new TrickStack();
   announcements: Set<Announcement> = new Set();
   isHuman: boolean;
-  isMe: boolean;
   tablePosition: string;
   game?: Game;
   behavior: Behavior;
@@ -35,16 +34,14 @@ export class Player {
   constructor(
     name: string,
     isHuman = false,
-    isMe = false,
     tablePosition = TablePosition.Bottom,
     game?: Game,
     behaviour = RuleBasedBehaviour,
-    memory = new PerfectMemory()
+    memory = new PerfectMemory(),
   ) {
     this.name = name;
     this.hand = new Hand();
     this.isHuman = isHuman;
-    this.isMe = isMe;
     this.tablePosition = tablePosition;
     this.game = game;
     this.behavior = new behaviour(this.id, new Affinities(this));
@@ -71,17 +68,14 @@ export class Player {
     const cardToBePlayed = this.behavior.cardToPlay(
       this.hand,
       this.game?.currentTrick!,
-      this.memory
+      this.memory,
     );
 
     if (cardToBePlayed) {
       await this.play(cardToBePlayed);
     }
 
-    const announcement = this.behavior.announcementToMake(
-      this.possibleAnnouncements(),
-      this.hand
-    );
+    const announcement = this.behavior.announcementToMake(this.possibleAnnouncements(), this.hand);
     if (announcement !== null) {
       this.announce(announcement);
     }
@@ -91,10 +85,7 @@ export class Player {
     if (!card || !this.hand.find(card)) {
       throw new Error("can't play a card that's not on the player's hand");
     }
-    if (
-      this.game?.currentTrick.isFinished &&
-      this.game?.currentTrick.winner() === this
-    ) {
+    if (this.game?.currentTrick.isFinished && this.game?.currentTrick.winner() === this) {
       await this.game?.currentRound.finishTrick();
       await this.playAction(card);
       return;
@@ -195,9 +186,7 @@ export class Player {
   }
 
   hasPartyAnnounced(...announcements: Announcement[]): boolean {
-    return announcements.every((a) =>
-      [...this.getPartyAnnouncements()].includes(a)
-    );
+    return announcements.every((a) => [...this.getPartyAnnouncements()].includes(a));
   }
 
   private getPartyAnnouncements(): Set<Announcement> {
@@ -205,18 +194,13 @@ export class Player {
   }
 
   possibleAnnouncements(): Set<Announcement> {
-    const diff = Math.max(
-      0,
-      this.getStartingCards() - this.numberOfCardsLeft() - 1
-    );
+    const diff = Math.max(0, this.getStartingCards() - this.numberOfCardsLeft() - 1);
     const announcements = getAnnouncementOrder(this.isRe());
     const cardBasedAllowedAnnouncements = announcements.slice(0, diff);
     const leftOverAnnouncements = announcements.slice(diff);
     return this.hasPartyAnnounced(...cardBasedAllowedAnnouncements)
       ? new Set<Announcement>(
-          leftOverAnnouncements.filter(
-            (a) => ![...this.getPartyAnnouncements()].includes(a)
-          )
+          leftOverAnnouncements.filter((a) => ![...this.getPartyAnnouncements()].includes(a)),
         )
       : new Set<Announcement>();
   }
