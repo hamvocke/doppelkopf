@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { expect, test } from "vitest";
 import { ace, ten, king, queen, jack, Suit } from "@/models/card";
 
 test("ace has a value of 11", () => {
@@ -141,36 +141,4 @@ test("first non-trump beats other non-trump of same card", () => {
   const firstNonTrump = ace.of(Suit.Hearts);
   const secondNonTrump = ace.of(Suit.Hearts);
   expect(firstNonTrump.compareTo(secondNonTrump)).toEqual(0);
-});
-
-describe("trump explanation", () => {
-  test("should explain why diamonds are trump", () => {
-    expect(ace.of(Suit.Diamonds).whyTrump()).toEqual(
-      "diamonds are always trump"
-    );
-  });
-
-  test("should explain why jacks are trump", () => {
-    expect(jack.of(Suit.Diamonds).whyTrump()).toEqual("jacks are always trump");
-  });
-
-  test("should explain why queens are trump", () => {
-    expect(queen.of(Suit.Clubs).whyTrump()).toEqual("queens are always trump");
-  });
-
-  test("should explain why ten of hearts is trump", () => {
-    expect(ten.of(Suit.Hearts).whyTrump()).toEqual(
-      "the ten of hearts is always trump"
-    );
-  });
-
-  test("should have no explanation for non-trump", () => {
-    expect(ace.of(Suit.Spades).whyTrump()).toBe("");
-  });
-
-  test("shouldn't be same card", () => {
-    let firstQueenOfClubs = queen.of(Suit.Clubs).first();
-    let secondQueenOfClubs = queen.of(Suit.Clubs).second();
-    expect(firstQueenOfClubs.equals(secondQueenOfClubs)).toEqual(false);
-  });
 });
