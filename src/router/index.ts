@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import { Config } from "@/models/config";
 import Home from "@/views/Home.vue";
 import GameView from "@/views/Game.vue";
-import Tutorial from "@/views/Tutorial.vue";
 import PreviewReservations from "@/views/previews/PreviewReservations.vue";
 import PreviewScorecard from "@/views/previews/PreviewScorecard.vue";
 
@@ -16,11 +15,6 @@ const routes = [
     path: "/play",
     name: "play",
     component: GameView,
-  },
-  {
-    path: "/learn",
-    name: "tutorial",
-    component: Tutorial,
   },
   { path: "/:pathMatch(.*)*", name: "NotFound", component: Home },
 ];

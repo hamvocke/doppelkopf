@@ -56,30 +56,6 @@ export class Card {
     return trumps.some((c) => c.is(this));
   }
 
-  /**
-   * Explains why this card is a trump card
-   * @return {string} the explanation, if trump, or an empty string otherwise
-   */
-  whyTrump(): string {
-    if (this.rank === Rank.Queen) {
-      return "queens are always trump";
-    }
-
-    if (this.rank === Rank.Jack) {
-      return "jacks are always trump";
-    }
-
-    if (this.suit === Suit.Diamonds) {
-      return "diamonds are always trump";
-    }
-
-    if (this.rank === Rank.Ten && this.suit === Suit.Hearts) {
-      return "the ten of hearts is always trump";
-    }
-
-    return "";
-  }
-
   beats(anotherCard: Card | undefined) {
     if (!anotherCard) {
       return false;
@@ -101,10 +77,7 @@ export class Card {
     }
 
     if (thisIsTrump && otherCardIsTrump) {
-      return (
-        trumps.findIndex((c) => c.is(this)) -
-        trumps.findIndex((c) => c.is(anotherCard))
-      );
+      return trumps.findIndex((c) => c.is(this)) - trumps.findIndex((c) => c.is(anotherCard));
     }
 
     if (!thisIsTrump && !otherCardIsTrump) {
@@ -122,9 +95,7 @@ export class Card {
     }
 
     return (
-      this.rank == anotherCard.rank &&
-      this.suit == anotherCard.suit &&
-      this.id == anotherCard.id
+      this.rank == anotherCard.rank && this.suit == anotherCard.suit && this.id == anotherCard.id
     );
   }
 
