@@ -13,13 +13,15 @@
     </div>
 
     <div class="dark-box">
-      <h2>Spiel mit Partner</h2>
-      <div class="flex-row">
-        <img src="@/assets/img/handshake.png" alt="normal game icon" class="reservation-icon" />
-        <p>
-          Du möchtest mit einem Partner gegen zwei andere Spieler spielen. Wer
-          dein Partner ist, musst du erst noch herausfinden.
-        </p>
+      <div class="category">
+        <h2>Spiel mit Partner</h2>
+        <div class="flex-row">
+          <img src="@/assets/img/handshake.png" alt="normal game icon" class="reservation-icon" />
+          <p>
+            Du möchtest mit einem Partner gegen zwei andere Spieler spielen. Wer
+            dein Partner ist, musst du erst noch herausfinden.
+          </p>
+        </div>
       </div>
 
       <div class="flex-container">
@@ -51,13 +53,15 @@
       </div>
 
       <div class="flex-container">
-        <h2>Solo</h2>
-        <div class="flex-row">
-          <img src="@/assets/img/team.png" alt="solo icon" class="reservation-icon" />
-          <p>
-            Du spielst allein gegen die drei anderen Spieler. Gewinnst du,
-            erhältst du die dreifache Punktzahl.
-          </p>
+        <div class="category">
+          <h2>Solo</h2>
+          <div class="flex-row">
+            <img src="@/assets/img/team.png" alt="solo icon" class="reservation-icon" />
+            <p>
+              Du spielst allein gegen die drei anderen Spieler. Gewinnst du,
+              erhältst du die dreifache Punktzahl.
+            </p>
+          </div>
         </div>
 
         <div class="flex-container">
@@ -187,6 +191,11 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
 }
 
 .centered-col {
