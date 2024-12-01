@@ -11,13 +11,13 @@
     align-items: center;
     border-bottom: 5px solid var(--red-darkest);
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.3);
+    cursor: pointer;
 }
 
 .button:hover,
 .button:active,
 .button:focus {
     background: var(--red-dark);
-    cursor: pointer;
 }
 
 .button:focus {
