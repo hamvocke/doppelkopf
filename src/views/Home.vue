@@ -55,7 +55,7 @@ function saveName() {
   overflow-x: auto;
   display: grid;
   align-content: center;
-  width: min(100%, 90ch);
+  width: min(100%, 60ch);
   margin: auto;
 }
 
