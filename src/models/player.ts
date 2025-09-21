@@ -85,11 +85,6 @@ export class Player {
     if (!card || !this.hand.find(card)) {
       throw new Error("can't play a card that's not on the player's hand");
     }
-    if (this.game?.currentTrick.isFinished && this.game?.currentTrick.winner() === this) {
-      await this.game?.currentRound.finishTrick();
-      await this.playAction(card);
-      return;
-    }
     if (!this.canPlay(card)) {
       notifier.info("cant-play-card");
       return;
