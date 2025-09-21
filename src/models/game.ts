@@ -57,10 +57,6 @@ export class Game {
     this.players[3].hand = hands[3];
   }
 
-  get playerOpening() {
-    return this.playerOpeningOrder.current();
-  }
-
   get currentTrick() {
     return this.currentRound.currentTrick;
   }

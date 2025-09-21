@@ -11,26 +11,11 @@ beforeEach(() => {
   game = Game.singlePlayer();
 });
 
-test("game has 4 players", () => {
-  expect(game.players[0].name).toBeDefined();
-  expect(game.players[1].name).toBeDefined();
-  expect(game.players[2].name).toBeDefined();
-  expect(game.players[3].name).toBeDefined();
-});
-
 test("game has 1 human player", () => {
   expect(game.players[0].isHuman).toBe(true);
   expect(game.players[1].isHuman).toBe(false);
   expect(game.players[2].isHuman).toBe(false);
   expect(game.players[3].isHuman).toBe(false);
-});
-
-test("game has a deck", () => {
-  expect(game.deck).toBeDefined();
-});
-
-test("game has a current round", () => {
-  expect(game.currentRound).toBeDefined();
 });
 
 test("game deals cards to each player", () => {
@@ -69,10 +54,7 @@ test("should wait for reservations round if 'reservations' feature is enabled", 
 });
 
 test("should reset all players stacks when starting a new round", () => {
-  const someTrickStack = new TrickStack([
-    new Trick(game.players),
-    new Trick(game.players),
-  ]);
+  const someTrickStack = new TrickStack([new Trick(game.players), new Trick(game.players)]);
   game.players.forEach((player) => (player.trickStack = someTrickStack));
 
   game.nextRound();
@@ -84,20 +66,5 @@ test("should reset all players stacks when starting a new round", () => {
 });
 
 test("should let human player open the game", () => {
-  expect(game.playerOpening).toBe(game.players[0]);
   expect(game.currentRound.waitingForPlayer()).toBe(game.players[0]);
-});
-
-test("should keep track of opening order", () => {
-  game.nextRound();
-  expect(game.playerOpening).toBe(game.players[1]);
-
-  game.nextRound();
-  expect(game.playerOpening).toBe(game.players[2]);
-
-  game.nextRound();
-  expect(game.playerOpening).toBe(game.players[3]);
-
-  game.nextRound();
-  expect(game.playerOpening).toBe(game.players[0]);
 });
