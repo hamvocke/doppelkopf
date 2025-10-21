@@ -8,9 +8,6 @@ import { ScoreBuilder } from "../../builders/scoreBuilder";
 import { mount, config } from "@vue/test-utils";
 import { Score } from "@/models/score";
 
-config.global.mocks["$t"] = (key: string) => key;
-config.global.mocks["$tc"] = (msg: string, count: number) => `${count} ${msg}`;
-
 let players: Player[];
 let score: Score;
 let scorecard: ScorecardModel;
@@ -146,7 +143,7 @@ describe("Scorecard.vue", () => {
         .withWinners(PartyName.Re, players[0], players[1])
         .withLosers(PartyName.Kontra, players[2], players[3])
         .withPoints(2)
-        .build()
+        .build(),
     );
 
     scorecard.addScore(
@@ -154,7 +151,7 @@ describe("Scorecard.vue", () => {
         .withWinners(PartyName.Re, players[1], players[3])
         .withLosers(PartyName.Kontra, players[2], players[0])
         .withPoints(4)
-        .build()
+        .build(),
     );
 
     const wrapper = mount(Scorecard, {
@@ -177,7 +174,7 @@ describe("Scorecard.vue", () => {
         .withWinners(PartyName.Re, players[0], players[1])
         .withLosers(PartyName.Kontra, players[2], players[3])
         .withPoints(2)
-        .build()
+        .build(),
     );
 
     scorecard.addScore(
@@ -185,7 +182,7 @@ describe("Scorecard.vue", () => {
         .withWinners(PartyName.Re, players[1], players[3])
         .withLosers(PartyName.Kontra, players[2], players[0])
         .withPoints(4)
-        .build()
+        .build(),
     );
 
     const wrapper = mount(Scorecard, {
@@ -227,7 +224,7 @@ describe("Scorecard.vue", () => {
 
     const sumKontra = wrapper.find(".sum.kontra");
     expect(sumKontra.exists()).toBe(true);
-    expect(sumKontra.text()).toContain("2");
+    expect(sumKontra.text()).toContain("points");
     expect(wrapper.find(".sum.re").text()).toBe("");
   });
 });

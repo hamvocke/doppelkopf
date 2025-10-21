@@ -4,8 +4,7 @@ import { ace, queen, Suit } from "@/models/card";
 import { Hand as HandModel } from "@/models/hand";
 import { mount, config } from "@vue/test-utils";
 
-config.global.mocks["$t"] = () => {};
-config.global.mocks["$tc"] = () => {};
+config.global.mocks["t"] = () => {};
 
 const reHand = new HandModel([
   queen.of(Suit.Clubs),
@@ -68,9 +67,7 @@ describe("Hand.vue", () => {
 
     await wrapper.findAll("div.card")[0].trigger("click");
 
-    expect(
-      wrapper.findAll("div.card")[0].find(".card-inner").classes()
-    ).toContain("selected");
+    expect(wrapper.findAll("div.card")[0].find(".card-inner").classes()).toContain("selected");
   });
 
   test("clicking on card twice should emit event", async () => {
@@ -93,8 +90,6 @@ describe("Hand.vue", () => {
 
     await wrapper.findAll("div.card")[0].trigger("click");
 
-    expect(
-      wrapper.findAll("div.card")[0].find(".card-inner").classes()
-    ).not.toContain("selected");
+    expect(wrapper.findAll("div.card")[0].find(".card-inner").classes()).not.toContain("selected");
   });
 });

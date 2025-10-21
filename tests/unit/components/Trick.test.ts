@@ -5,8 +5,7 @@ import { Trick as TrickModel } from "@/models/trick";
 import { ace, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
 
-config.global.mocks["$t"] = () => {};
-config.global.mocks["$tc"] = () => {};
+config.global.mocks["t"] = () => {};
 
 let game: Game;
 let trick: TrickModel;

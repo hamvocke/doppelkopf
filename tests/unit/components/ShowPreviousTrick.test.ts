@@ -5,9 +5,8 @@ import { Trick } from "@/models/trick";
 import { Player } from "@/models/player";
 import { ace, Suit } from "@/models/card";
 
-config.global.mocks["$t"] = (msg: string) => msg;
-config.global.mocks["$tc"] = (msg: string) => msg;
-config.global.mocks["$i18n"] = { locale: "en" };
+config.global.mocks["t"] = (msg: string) => msg;
+config.global.mocks["locale"] = { locale: "en" };
 
 const p1 = new Player("1");
 const p2 = new Player("2");

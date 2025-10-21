@@ -4,8 +4,7 @@ import { notifier } from "@/models/notifier";
 import { mount, config } from "@vue/test-utils";
 import { nextTick } from "vue";
 
-config.global.mocks["$t"] = (msg: string) => msg;
-config.global.mocks["$tc"] = (msg: string) => msg;
+config.global.mocks["t"] = (msg: string) => msg;
 vi.useFakeTimers();
 
 describe("Notifications.vue", () => {
@@ -19,9 +18,7 @@ describe("Notifications.vue", () => {
     notifier.info("Hello World");
     await nextTick();
 
-    expect(
-      wrapper.find(".notification-container .flashMessages").exists()
-    ).toBe(true);
+    expect(wrapper.find(".notification-container .flashMessages").exists()).toBe(true);
     expect(wrapper.findAll(".msg")).toHaveLength(1);
     expect(wrapper.findAll(".msg")[0].text()).toBe("Hello World");
   });
@@ -43,9 +40,7 @@ describe("Notifications.vue", () => {
     await nextTick();
 
     expect(wrapper.findAll(".msg.sticky")).toHaveLength(1);
-    expect(wrapper.findAll(".msg.sticky")[0].text()).toBe(
-      "An update is available!"
-    );
+    expect(wrapper.findAll(".msg.sticky")[0].text()).toBe("An update is available!");
   });
 
   test("should handle sticky messages click", async () => {

@@ -2,8 +2,7 @@ import { describe, expect, test } from "vitest";
 import FlashMessage from "@/components/FlashMessage.vue";
 import { mount, config } from "@vue/test-utils";
 
-config.global.mocks["$t"] = () => {};
-config.global.mocks["$tc"] = () => {};
+config.global.mocks["t"] = () => {};
 
 describe("FlashMessage.vue", () => {
   test("should show message", () => {

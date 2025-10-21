@@ -4,8 +4,7 @@ import { Game } from "@/models/game";
 import { ace, ten, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
 
-config.global.mocks["$t"] = (key: string) => key;
-config.global.mocks["$tc"] = (msg: string) => msg;
+config.global.mocks["t"] = (key: string) => key;
 
 const game = Game.singlePlayer();
 
@@ -74,7 +73,7 @@ describe("Player.vue", () => {
   });
 
   test("should render winner", () => {
-    let game = Game.singlePlayer();
+    const game = Game.singlePlayer();
     game.players[0].hand.cards = [ten.of(Suit.Hearts)];
     game.players[1].hand.cards = [ace.of(Suit.Diamonds)];
     game.players[2].hand.cards = [ace.of(Suit.Diamonds)];
@@ -92,7 +91,7 @@ describe("Player.vue", () => {
   });
 
   test("should not render winner if trick isn't finished", () => {
-    let game = Game.singlePlayer();
+    const game = Game.singlePlayer();
     const cards = [
       ten.of(Suit.Hearts),
       ace.of(Suit.Diamonds),

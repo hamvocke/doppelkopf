@@ -4,8 +4,7 @@ import { Announcement } from "@/models/announcements";
 import { Game } from "@/models/game";
 import { mount, config } from "@vue/test-utils";
 
-config.global.mocks["$t"] = () => {};
-config.global.mocks["$tc"] = () => {};
+config.global.mocks["t"] = () => {};
 
 let game: Game;
 
@@ -35,7 +34,7 @@ describe("AnnouncementsButton.vue", () => {
   });
 
   test("should hide possible announcements after announcing", async () => {
-    let player = game.players[0];
+    const player = game.players[0];
     const wrapper = mount(AnnouncementsButton, {
       props: { player: player },
     });
@@ -47,7 +46,7 @@ describe("AnnouncementsButton.vue", () => {
   });
 
   test("should hide entire button if no announcements can be made", () => {
-    let player = game.players[0];
+    const player = game.players[0];
     player.possibleAnnouncements = () => new Set<Announcement>();
 
     const wrapper = mount(AnnouncementsButton, {

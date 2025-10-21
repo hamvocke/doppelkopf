@@ -2,9 +2,8 @@ import { describe, expect, test } from "vitest";
 import Modal from "@/components/Modal.vue";
 import { mount, config } from "@vue/test-utils";
 
-config.global.mocks["$t"] = (msg: string) => msg;
-config.global.mocks["$tc"] = (msg: string) => msg;
-config.global.mocks["$i18n"] = { locale: "en" };
+config.global.mocks["t"] = (msg: string) => msg;
+config.global.mocks["locale"] = { locale: "en" };
 
 describe("Modal.vue", () => {
   test("should not show modal", () => {

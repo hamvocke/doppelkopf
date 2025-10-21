@@ -4,9 +4,8 @@ import { Config } from "@/models/config";
 import { Game } from "@/models/game";
 import { mount, config } from "@vue/test-utils";
 
-config.global.mocks["$t"] = (msg: string) => msg;
-config.global.mocks["$tc"] = (msg: string) => msg;
-config.global.mocks["$i18n"] = { locale: "en" };
+config.global.mocks["t"] = (msg: string) => msg;
+config.global.mocks["locale"] = { locale: "en" };
 
 const game = Game.singlePlayer();
 

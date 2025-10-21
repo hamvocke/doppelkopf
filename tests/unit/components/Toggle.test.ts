@@ -2,9 +2,8 @@ import { describe, expect, test } from "vitest";
 import Toggle from "@/components/Toggle.vue";
 import { mount, config } from "@vue/test-utils";
 
-config.global.mocks["$t"] = (msg: string) => msg;
-config.global.mocks["$tc"] = (msg: string) => msg;
-config.global.mocks["$i18n"] = { locale: "en" };
+config.global.mocks["t"] = (msg: string) => msg;
+config.global.mocks["locale"] = { locale: "en" };
 
 describe("Toggle.vue", () => {
   test("should render toggle", () => {

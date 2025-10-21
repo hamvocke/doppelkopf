@@ -6,8 +6,7 @@ import { Player } from "@/models/player";
 import { ace, queen, Suit } from "@/models/card";
 import { mount, config } from "@vue/test-utils";
 
-config.global.mocks["$t"] = () => {};
-config.global.mocks["$tc"] = () => {};
+config.global.mocks["t"] = () => {};
 
 const player1 = new Player("player 1");
 const player2 = new Player("player 2");

@@ -2,9 +2,8 @@ import { describe, expect, test } from "vitest";
 import OptionsMenu from "@/components/OptionsMenu.vue";
 import { mount, config } from "@vue/test-utils";
 
-config.global.mocks["$t"] = (msg: string) => msg;
-config.global.mocks["$tc"] = (msg: string) => msg;
-config.global.mocks["$i18n"] = { locale: "en" };
+config.global.mocks["t"] = (msg: string) => msg;
+config.global.mocks["locale"] = { locale: "en" };
 
 describe("OptionsMenu.vue", () => {
   test("should show options icon", () => {
