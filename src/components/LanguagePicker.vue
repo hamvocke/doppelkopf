@@ -1,14 +1,16 @@
 <template>
   <div id="languages">
     <span v-for="(lang, i) in availableLanguages" :key="i" class="language">
-      <input :id="lang" v-model="$i18n.locale" type="radio" :value="lang" />
-      <label :for="lang">{{ $t(lang) }}</label>
+      <input :id="lang" v-model="locale" type="radio" :value="lang" />
+      <label :for="lang">{{ t(lang) }}</label>
     </span>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useI18n } from 'vue-i18n'
+const { locale, t } = useI18n();
 
 const availableLanguages = ref(["en", "de"]);
 </script>

@@ -2,15 +2,15 @@
   <div class="options">
     <div
       class="icon icon-options"
-      :title="$t('options-header')"
+      :title="t('options-header')"
       @click="toggleMenu"
     >
       <vue-feather type="settings" />
     </div>
     <modal :visible="visible" @clickaway="hideMenu">
-      <h2>{{ $t("options-header") }}</h2>
+      <h2>{{ t("options-header") }}</h2>
       <div class="option">
-        <span class="label">{{ $t("language") }}</span>
+        <span class="label">{{ t("language") }}</span>
         <LanguagePicker />
       </div>
 
@@ -36,11 +36,14 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import LanguagePicker from "./LanguagePicker.vue";
 import Toggle from "./Toggle.vue";
 import Modal from "./Modal.vue";
 import { config } from "@/components/config";
 import VueFeather from "vue-feather";
+
+const { t } = useI18n();
 
 const visible = ref(false);
 

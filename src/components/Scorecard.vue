@@ -1,12 +1,12 @@
 <template>
   <div class="scorecard">
     <div class="scroll-container">
-      <h1 class="message">{{ $t(message()) }}</h1>
+      <h1 class="message">{{ t(message()) }}</h1>
 
       <div class="parties">
         <div class="party-wrapper">
           <div v-if="currentScore.winningPartyName() === PartyName.Re" class="winner-balloon">
-            🎈 {{ $t("winner") }}
+            🎈 {{ t("winner") }}
           </div>
           <div class="party-bubble">
             <div class="party re">Re</div>
@@ -18,7 +18,7 @@
 
         <div class="party-wrapper">
           <div v-if="currentScore.winningPartyName() === PartyName.Kontra" class="winner-balloon">
-            🎈 {{ $t("winner") }}
+            🎈 {{ t("winner") }}
           </div>
           <div class="party-bubble">
             <div class="party kontra">Kontra</div>
@@ -36,7 +36,7 @@
 
       <div class="row">
         <div class="column">
-          <h2>{{ $t("score") }}</h2>
+          <h2>{{ t("score") }}</h2>
 
           <div class="row">
             <table>
@@ -65,23 +65,23 @@
                 <tr v-for="i in extrasLength()" :key="i" class="extras">
                   <td v-if="reExtra(i)">{{ reExtra(i).points }}</td>
                   <td v-if="reExtra(i)" class="re">
-                    {{ $t(reExtra(i).i18nKey) }}
+                    {{ t(reExtra(i).i18nKey) }}
                   </td>
                   <td v-if="kontraExtra(i)">{{ kontraExtra(i).points }}</td>
                   <td v-if="kontraExtra(i)" class="kontra">
-                    {{ $t(kontraExtra(i).i18nKey) }}
+                    {{ t(kontraExtra(i).i18nKey) }}
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2" class="sum re">
                     <span v-if="currentScore.winningPartyName() === PartyName.Re">
-                      {{ $tc("points", currentScore.totalPoints(PartyName.Re)) }}
+                      {{ t("points", currentScore.totalPoints(PartyName.Re)) }}
                     </span>
                   </td>
                   <td colspan="2" class="sum kontra">
                     <span v-if="currentScore.winningPartyName() === PartyName.Kontra">
                       {{
-                        $tc("points", currentScore.totalPoints(PartyName.Kontra))
+                        t("points", currentScore.totalPoints(PartyName.Kontra))
                       }}
                     </span>
                   </td>
@@ -92,14 +92,14 @@
         </div>
 
         <div class="column">
-          <h2>{{ $t("scorecard") }}</h2>
+          <h2>{{ t("scorecard") }}</h2>
           <table>
             <thead>
               <tr>
                 <th v-for="player in players" :key="player.id" class="player right-aligned">
                   {{ player.name }}
                 </th>
-                <th class="right-aligned">{{ $t("points-plain") }}</th>
+                <th class="right-aligned">{{ t("points-plain") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -120,19 +120,22 @@
 
     <div class="button-row">
       <button class="button next-round" @click="triggerNextRound">
-        {{ $t("next-round") }}
+        {{ t("next-round") }}
       </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import PointMeter from "./scorecard/PointMeter.vue";
 import { Scorecard as ScorecardModel } from "@/models/scorecard";
 import { Player } from "@/models/player";
 import { Score } from "@/models/score";
 import { PartyName } from "@/models/party";
 import { type PropType } from "vue";
+
+const { t } = useI18n();
 
 const props = defineProps({
   scorecard: {

@@ -4,10 +4,10 @@
       <vue-feather type="rotate-ccw" />
     </div>
     <modal v-if="trick" :visible="visible" @clickaway="hideMenu()">
-      <h2>{{ $t("show_last_trick_header") }}</h2>
+      <h2>{{ t("show_last_trick_header") }}</h2>
       <div class="option">
         <span class="label">
-          {{ $t("show_last_trick_label", { name: trick.winner()?.name }) }}
+          {{ t("show_last_trick_label", { name: trick.winner()?.name }) }}
         </span>
       </div>
       <div class="background-wrapper">
@@ -18,6 +18,7 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import { type PropType, ref } from "vue";
 import { Trick as TrickModel } from "@/models/trick";
 import Trick from "@/components/Trick.vue";
@@ -32,6 +33,7 @@ defineProps({
   },
 });
 
+const { t } = useI18n();
 const visible = ref(false);
 
 function toggleVisibility() {

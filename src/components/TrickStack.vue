@@ -8,11 +8,12 @@
         <Card :is-covered="true" />
       </div>
     </transition>
-    <div class="trickCount">{{ $tc("trick", trickStack.tricks.length) }}</div>
+    <div class="trickCount">{{ t("trick", trickStack.tricks.length) }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import Card from "./Card.vue";
 import { TrickStack as TrickStackModel } from "@/models/trickStack";
 import { type PropType } from "vue";
@@ -23,6 +24,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const { t }  = useI18n();
 
 function isHidden() {
   return props.trickStack.tricks.length < 1;

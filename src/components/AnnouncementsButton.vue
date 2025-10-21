@@ -2,12 +2,12 @@
   <div v-show="canAnnounce()" class="announcements-button">
     <button class="toggle button" :class="{ open: isOpen }" @click="toggleDropdown">
       <vue-feather type="flag" size="20" />
-      <span class="button-text">{{ $t("announce") }}</span>
+      <span class="button-text">{{ t("announce") }}</span>
       <vue-feather type="chevron-up" size="16" />
     </button>
     <div v-show="isOpen" class="dropdown">
       <button v-for="a in allAnnouncements()" :key="a" class="button" @click="announce(a)">
-        {{ $t(a) }}
+        {{ t(a) }}
       </button>
     </div>
   </div>
@@ -15,10 +15,13 @@
 
 <script setup lang="ts">
 import { ref, type PropType } from "vue";
+import { useI18n } from 'vue-i18n'
+
 import VueFeather from "vue-feather";
 import { Player } from "@/models/player";
 import { Announcement } from "@/models/announcements";
 
+const { t } = useI18n();
 const isOpen = ref(false);
 
 const props = defineProps({

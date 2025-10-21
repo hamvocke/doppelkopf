@@ -5,7 +5,7 @@
         <div class="name title-font">
           {{ player.name }}
           <vue-feather v-if="isWinner()" type="award" class="winner"
-            :title="$t('badge_description', { name: player.name })" size="18" />
+            :title="t('badge_description', { name: player.name })" size="18" />
         </div>
       </div>
       <div class="stats">
@@ -18,7 +18,7 @@
             <vue-feather type="flag" size="14" />
           </div>
           <div v-for="announcement in player.announcements" :key="announcement" class="announcement">
-            {{ $t(`${announcement}_short`) }}
+            {{ t(`${announcement}_short`) }}
           </div>
         </div>
       </div>
@@ -29,13 +29,14 @@
       <TrickStack :trick-stack="player.trickStack" />
     </div>
     <div class="trickCountSmall">
-      {{ $tc("trick", player.trickStack.tricks.length) }}
+      {{ t("trick", player.trickStack.tricks?.length) }}
     </div>
     <AffinityDebugger :affinities="player.behavior.affinities" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import Hand from "./Hand.vue";
 import TrickStack from "./TrickStack.vue";
 import VueFeather from "vue-feather";
@@ -51,6 +52,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const { t } = useI18n();
 
 const isCovered = !props.player.isHuman;
 const isHandSelectable = props.player.isHuman;

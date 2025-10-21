@@ -8,7 +8,7 @@
           class="msg clickable sticky"
           @click="sticky.onClick"
         >
-          {{ $t(sticky.text, sticky.args) }}
+          {{ t(sticky.text, sticky.args) }}
           <button class="close-button" @click.stop.prevent="sticky.onDismiss">
             <vue-feather type="x" size="20" />
           </button>
@@ -20,7 +20,7 @@
           :key="notification.id"
           class="msg"
         >
-          {{ $t(notification.text, notification.args) }}
+          {{ t(notification.text, notification.args) }}
         </div>
       </transition-group>
     </div>
@@ -31,9 +31,12 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n} from "vue-i18n";
 import { notifier } from "@/models/notifier";
 import FlashMessage from "@/components/FlashMessage.vue";
 import VueFeather from "vue-feather";
+
+const { t } = useI18n();
 
 const { stickies, notifications, flashMessages } = notifier;
 </script>

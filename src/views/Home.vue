@@ -6,26 +6,26 @@
 
       <h1>Doppelkopf</h1>
 
-      <p class="lead">{{ $t("home-page-teaser-lead") }}</p>
-      <p>{{ $t("home-page-teaser-text") }}</p>
+      <p class="lead">{{ t("home-page-teaser-lead") }}</p>
+      <p>{{ t("home-page-teaser-text") }}</p>
     </div>
     <div class="name-form">
       <label for="player-name">
-        {{ $t("enter_name_label") }}
+        {{ t("enter_name_label") }}
       </label>
-      <input id="player-name" v-model="playerName" class="input" :placeholder="$t('enter_name_input')"
+      <input id="player-name" v-model="playerName" class="input" :placeholder="t('enter_name_input')"
         @blur="saveName()" />
     </div>
     <div class="buttons">
       <router-link to="/play">
-        <button class="button start-game">{{ $t("start-game") }}</button>
+        <button class="button start-game">{{ t("start-game") }}</button>
       </router-link>
 
       <router-link v-if="showTutorial" to="/learn">
-        <button class="button button-secondary tutorial">{{ $t("how-to-play") }}</button>
+        <button class="button button-secondary tutorial">{{ t("how-to-play") }}</button>
       </router-link>
-      <a v-else :href="$t('tutorial-link')" target="_blank" class="button button-secondary tutorial-link">
-        {{ $t("how-to-play") }}
+      <a v-else :href="t('tutorial-link')" target="_blank" class="button button-secondary tutorial-link">
+        {{ t("how-to-play") }}
       </a>
     </div>
   </div>
@@ -33,9 +33,12 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { Features } from "@/models/features";
 import Logo from "@/components/Logo.vue";
 import OptionsMenu from "@/components/OptionsMenu.vue";
+
+const { t } = useI18n();
 
 const playerName = ref((localStorage.name as string) || "");
 const showTutorial = ref(Features.enableTutorial);

@@ -10,6 +10,7 @@ import { languages, defaultLocale } from "./i18n";
 const messages = Object.assign(languages);
 
 const i18n = createI18n({
+  legacy: false,
   locale: navigator.language.split("-")[0] || defaultLocale,
   fallbackLocale: "en",
   messages,

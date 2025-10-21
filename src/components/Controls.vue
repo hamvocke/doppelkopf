@@ -1,10 +1,10 @@
 <template>
   <div class="controls">
     <button v-if="showNextTrickButton()" class="button next" @click="$emit('nextTrick')">
-      {{ $t("next-trick") }}
+      {{ t("next-trick") }}
     </button>
     <button v-if="showFinishRoundButton()" class="button finish" @click="$emit('finishRound')">
-      {{ $t("finish-round") }}
+      {{ t("finish-round") }}
     </button>
 
     <AnnouncementsButton v-if="enableAnnouncements" :player="game.players[0]" />
@@ -13,9 +13,11 @@
 
 <script setup lang="ts">
 import { ref, type PropType } from "vue";
+import { useI18n } from 'vue-i18n'
 import AnnouncementsButton from "@/components/AnnouncementsButton.vue";
 import { Features } from "@/models/features";
 import { Game } from "@/models/game";
+const { t } = useI18n();
 
 const props = defineProps({
   game: {
