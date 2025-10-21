@@ -15,4 +15,4 @@ However, I am *not looking for pull requests* that introduce new functionality o
 
 Over the years I learned that I just can't find the time, motivation, and energy to discuss technical design, review pull requests, and go through the back-and-forth required to turn a pull request into something that both I and a new contributor are happy with.
 
-By participating in this project, you agree to follow our [Code of Conduct](https://github.com/hamvocke/doppelkopf/blob/master/CODE_OF_CONDUCT.md).
+By participating in this project, you agree to follow our [Code of Conduct](https://github.com/hamvocke/doppelkopf/blob/main/CODE_OF_CONDUCT.md).

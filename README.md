@@ -1,5 +1,5 @@
 # Doppelkopf
-[![Build & Test](https://github.com/hamvocke/doppelkopf/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/hamvocke/doppelkopf/actions/workflows/build-and-test.yml) [![codecov](https://codecov.io/gh/hamvocke/doppelkopf/branch/master/graph/badge.svg?token=00G78SO5HF)](https://codecov.io/gh/hamvocke/doppelkopf)
+[![Build & Test](https://github.com/hamvocke/doppelkopf/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/hamvocke/doppelkopf/actions/workflows/build-and-test.yml) [![codecov](https://codecov.io/gh/hamvocke/doppelkopf/branch/main/graph/badge.svg?token=00G78SO5HF)](https://codecov.io/gh/hamvocke/doppelkopf)
 
 An in-browser implementation of the traditional German [Doppelkopf](https://en.wikipedia.org/wiki/Doppelkopf) card game.
 
