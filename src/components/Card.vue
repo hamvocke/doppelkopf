@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
+import { useI18n } from "vue-i18n";
 import { type PropType } from "vue";
 import { Suit, Card as CardModel } from "@/models/card";
 const { t } = useI18n();
@@ -88,7 +88,9 @@ function cardClasses() {
   padding: 6px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.72), 0 0 3px rgba(0, 0, 0, 0.24);
+  box-shadow:
+    0 0 1px rgba(0, 0, 0, 0.72),
+    0 0 3px rgba(0, 0, 0, 0.24);
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-property: top, box-shadow;
   user-select: none;
@@ -109,7 +111,9 @@ function cardClasses() {
 
 .selected {
   top: -10px;
-  box-shadow: 0 20px 38px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
+  box-shadow:
+    0 20px 38px rgba(0, 0, 0, 0.25),
+    0 15px 12px rgba(0, 0, 0, 0.22);
   z-index: var(--card-selected-layer);
 }
 

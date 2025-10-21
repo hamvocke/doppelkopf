@@ -127,9 +127,7 @@ export class Affinities {
 
   setAffinity(player: Player, value: number, hasDeclared: boolean = false) {
     if (!this.isMe(player) && !this.hasDeclaredParty(player)) {
-      let index = this.affinityTable.findIndex(
-        (x) => x.player.id === player.id
-      );
+      let index = this.affinityTable.findIndex((x) => x.player.id === player.id);
       this.affinityTable[index].affinity = value;
       this.affinityTable[index].declaredParty = hasDeclared;
     }
@@ -144,8 +142,7 @@ export class Affinities {
     this.affinityTable
       .filter(
         (playerAffinity) =>
-          !this.isMe(playerAffinity.player) &&
-          playerAffinity.player.id !== player.id
+          !this.isMe(playerAffinity.player) && playerAffinity.player.id !== player.id,
       )
       .forEach((playerAffinity) => this.setAffinity(playerAffinity.player, 1));
   }
@@ -169,10 +166,7 @@ export class Affinities {
   }
 
   private affinitySum(): number {
-    return this.affinityTable.reduce(
-      (accu, playerAffinity) => accu + playerAffinity.affinity,
-      0
-    );
+    return this.affinityTable.reduce((accu, playerAffinity) => accu + playerAffinity.affinity, 0);
   }
 
   private balanceAffinities(): void {

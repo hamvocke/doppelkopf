@@ -2,14 +2,16 @@
   <modal id="reservations-modal" :visible="true">
     <h1>Alle Gesund?</h1>
 
-    <p>
-      Hier sind deine Karten. Willst du ein normales Spiel oder ein Sonderspiel
-      spielen?
-    </p>
+    <p>Hier sind deine Karten. Willst du ein normales Spiel oder ein Sonderspiel spielen?</p>
 
     <div class="hand-wrapper">
-      <hand :hand="player.hand" :position="player.tablePosition" :is-selectable="false" :is-covered="false"
-        :playable-cards="[]" />
+      <hand
+        :hand="player.hand"
+        :position="player.tablePosition"
+        :is-selectable="false"
+        :is-covered="false"
+        :playable-cards="[]"
+      />
     </div>
 
     <div class="dark-box">
@@ -18,35 +20,41 @@
         <div class="flex-row">
           <img src="@/assets/img/handshake.png" alt="normal game icon" class="reservation-icon" />
           <p>
-            Du möchtest mit einem Partner gegen zwei andere Spieler spielen. Wer
-            dein Partner ist, musst du erst noch herausfinden.
+            Du möchtest mit einem Partner gegen zwei andere Spieler spielen. Wer dein Partner ist,
+            musst du erst noch herausfinden.
           </p>
         </div>
       </div>
 
       <div class="flex-container">
-        <selectable-box id="healthy-option" v-model="reservation" :selected-value="Reservation.Healthy"
-          class="flex-item">
+        <selectable-box
+          id="healthy-option"
+          v-model="reservation"
+          :selected-value="Reservation.Healthy"
+          class="flex-item"
+        >
           <img src="@/assets/img/healthy.png" alt="healthy icon" class="reservation-icon" />
           <div class="flex-col">
             <h3 class="large-text">Gesund!</h3>
             <p class="regular-text">
-              Du möchtest ein <strong>normales Spiel</strong> spielen und
-              meldest keinen Vorbehalt an.
+              Du möchtest ein <strong>normales Spiel</strong> spielen und meldest keinen Vorbehalt
+              an.
             </p>
           </div>
         </selectable-box>
 
-        <selectable-box id="wedding-option" v-model="reservation" :selected-value="Reservation.Wedding"
-          class="flex-item" disabled>
+        <selectable-box
+          id="wedding-option"
+          v-model="reservation"
+          :selected-value="Reservation.Wedding"
+          class="flex-item"
+          disabled
+        >
           <img src="@/assets/img/rings.png" alt="wedding icon" class="reservation-icon" />
           <div class="flex-col">
-            <h3 class="large-text">
-              Hochzeit <span class="badge">Coming soon!</span>
-            </h3>
+            <h3 class="large-text">Hochzeit <span class="badge">Coming soon!</span></h3>
             <p class="regular-text">
-              Du hast beide Re-Damen. Wer den ersten Stich gewinnt, wird dein
-              Partner.
+              Du hast beide Re-Damen. Wer den ersten Stich gewinnt, wird dein Partner.
             </p>
           </div>
         </selectable-box>
@@ -58,15 +66,19 @@
           <div class="flex-row">
             <img src="@/assets/img/team.png" alt="solo icon" class="reservation-icon" />
             <p>
-              Du spielst allein gegen die drei anderen Spieler. Gewinnst du,
-              erhältst du die dreifache Punktzahl.
+              Du spielst allein gegen die drei anderen Spieler. Gewinnst du, erhältst du die
+              dreifache Punktzahl.
             </p>
           </div>
         </div>
 
         <div class="flex-container">
-          <selectable-box id="queen-solo-option" v-model="reservation" :selected-value="Reservation.QueenSolo"
-            class="flex-item">
+          <selectable-box
+            id="queen-solo-option"
+            v-model="reservation"
+            :selected-value="Reservation.QueenSolo"
+            class="flex-item"
+          >
             <div class="flex-col centered-col">
               <img src="@/assets/img/queen.png" alt="queen icon" class="reservation-icon" />
               <p class="regular-text bold">Damensolo</p>
@@ -74,8 +86,12 @@
             </div>
           </selectable-box>
 
-          <selectable-box id="jack-solo-option" v-model="reservation" :selected-value="Reservation.JackSolo"
-            class="flex-item">
+          <selectable-box
+            id="jack-solo-option"
+            v-model="reservation"
+            :selected-value="Reservation.JackSolo"
+            class="flex-item"
+          >
             <div class="flex-col centered-col">
               <img src="@/assets/img/jack.png" alt="jack icon" class="reservation-icon" />
               <p class="regular-text bold">Bubensolo</p>
@@ -83,18 +99,23 @@
             </div>
           </selectable-box>
 
-          <suit-selector-box id="suit-solo-option" v-model="reservation" :selected="isSuitSoloSelected()"
-            class="flex-item" />
+          <suit-selector-box
+            id="suit-solo-option"
+            v-model="reservation"
+            :selected="isSuitSoloSelected()"
+            class="flex-item"
+          />
 
-          <selectable-box id="ace-solo-option" v-model="reservation" :selected-value="Reservation.AceSolo"
-            class="flex-item">
+          <selectable-box
+            id="ace-solo-option"
+            v-model="reservation"
+            :selected-value="Reservation.AceSolo"
+            class="flex-item"
+          >
             <div class="flex-col centered-col">
               <img src="@/assets/img/skeleton.png" alt="skeleton icon" class="reservation-icon" />
               <p class="regular-text bold">Fleischloser</p>
-              <small>
-                Es gibt keine Trümpfe, alle Karten sind Fehl und werden
-                eingereiht
-              </small>
+              <small> Es gibt keine Trümpfe, alle Karten sind Fehl und werden eingereiht </small>
             </div>
           </selectable-box>
         </div>
@@ -102,7 +123,12 @@
     </div>
 
     <div>
-      <button id="reservation-button" type="button" class="button" @click="reservationButtonClicked">
+      <button
+        id="reservation-button"
+        type="button"
+        class="button"
+        @click="reservationButtonClicked"
+      >
         {{ buttonText() }}
       </button>
     </div>

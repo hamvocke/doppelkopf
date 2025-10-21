@@ -25,7 +25,7 @@ const props = defineProps({
   },
 });
 
-const { t }  = useI18n();
+const { t } = useI18n();
 
 function isHidden() {
   return props.trickStack.tricks.length < 1;

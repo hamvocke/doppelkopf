@@ -1,9 +1,9 @@
-import type { Extra } from './extras'
-import { Player } from './player'
+import type { Extra } from "./extras";
+import { Player } from "./player";
 
 export enum PartyName {
-  Re = 'Re',
-  Kontra = 'Kontra',
+  Re = "Re",
+  Kontra = "Kontra",
 }
 
 export function findParties(players: Player[]) {
@@ -13,42 +13,42 @@ export function findParties(players: Player[]) {
       PartyName.Kontra,
       ...players.filter((player) => player.isKontra()),
     ),
-  }
+  };
 }
 
 export function getPartyName(player: Player): PartyName {
-  return player.isRe() ? PartyName.Re : PartyName.Kontra
+  return player.isRe() ? PartyName.Re : PartyName.Kontra;
 }
 
 export class Party {
-  name: PartyName
-  players: Player[]
+  name: PartyName;
+  players: Player[];
 
   constructor(name: PartyName, ...players: Player[]) {
-    this.name = name
-    this.players = players
+    this.name = name;
+    this.players = players;
   }
 
   isPlayingSolo() {
-    return this.players.length === 1
+    return this.players.length === 1;
   }
 
   points() {
-    return this.players.reduce((acc, player) => acc + player.points(), 0)
+    return this.players.reduce((acc, player) => acc + player.points(), 0);
   }
 
   announcements() {
-    return this.players.flatMap((p) => [...p.announcements])
+    return this.players.flatMap((p) => [...p.announcements]);
   }
 
   extras() {
     return this.players.reduce(
       (acc, player) => acc.concat(player.trickStack.extras()),
       new Array<Extra>(),
-    )
+    );
   }
 
   playerNames(): string {
-    return this.players.map((player) => player.name).join(' & ')
+    return this.players.map((player) => player.name).join(" & ");
   }
 }

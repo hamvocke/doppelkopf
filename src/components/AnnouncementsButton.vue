@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { ref, type PropType } from "vue";
-import { useI18n } from 'vue-i18n'
+import { useI18n } from "vue-i18n";
 
 import VueFeather from "vue-feather";
 import { Player } from "@/models/player";
@@ -88,9 +88,9 @@ function allAnnouncements() {
   background: var(--red-dark);
 }
 
-.dropdown button:hover~button,
-.dropdown button:active~button,
-.dropdown button:focus~button {
+.dropdown button:hover ~ button,
+.dropdown button:active ~ button,
+.dropdown button:focus ~ button {
   background: var(--red-dark);
 }
 

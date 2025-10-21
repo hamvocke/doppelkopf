@@ -22,11 +22,7 @@ export class Scorecard {
         : this.totalPointsFor(p) + loserPoints;
     });
 
-    const scoreline = new Scoreline(
-      newTotalPoints,
-      winningPlayers!,
-      winnerPoints
-    );
+    const scoreline = new Scoreline(newTotalPoints, winningPlayers!, winnerPoints);
     this.scoreLines.push(scoreline);
   }
 
@@ -46,11 +42,7 @@ export class Scoreline {
   winners: Player[];
   points: number;
 
-  constructor(
-    totalPoints: { [playerId: string]: number },
-    winners: Player[],
-    points: number
-  ) {
+  constructor(totalPoints: { [playerId: string]: number }, winners: Player[], points: number) {
     this.id = lineIndex++;
     this.totalPoints = totalPoints;
     this.winners = winners;

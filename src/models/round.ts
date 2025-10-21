@@ -25,11 +25,7 @@ export class Round {
   currentTrick: Trick;
   playerOrder: RingQueue<Player>;
 
-  constructor(
-    players: Player[] = [],
-    scorecard: any = {},
-    openingPlayer: Player
-  ) {
+  constructor(players: Player[] = [], scorecard: any = {}, openingPlayer: Player) {
     this.playerOrder = new RingQueue(players);
     this.playerOrder.prioritize(openingPlayer);
     this.parties = findParties(players);
@@ -121,11 +117,7 @@ export class Round {
     this.playerOrder
       .asList()
       .forEach((player) =>
-        player.memory.memorizeTrick(
-          this.currentTrick.id,
-          this.currentTrick.baseCard()!,
-          winner
-        )
+        player.memory.memorizeTrick(this.currentTrick.id, this.currentTrick.baseCard()!, winner),
       );
 
     winner.win(this.currentTrick);
@@ -154,10 +146,7 @@ export class Round {
     this.currentTrick = this.nextTrick();
 
     this.parties = findParties(this.playerOrder.asList());
-    this.score = new Score(
-      this.parties[PartyName.Re],
-      this.parties[PartyName.Kontra]
-    );
+    this.score = new Score(this.parties[PartyName.Re], this.parties[PartyName.Kontra]);
     this.scorecard.addScore(this.score);
     this.roundState = RoundState.Finished;
   }

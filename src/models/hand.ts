@@ -67,9 +67,7 @@ export class Hand {
   }
 
   lowValues(): Card[] {
-    return this.cards.filter((card) =>
-      [values.J, values.K, values.Q].includes(card.value)
-    );
+    return this.cards.filter((card) => [values.J, values.K, values.Q].includes(card.value));
   }
 
   trumps(): Card[] {

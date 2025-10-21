@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { ref, type PropType } from "vue";
-import { useI18n } from 'vue-i18n'
+import { useI18n } from "vue-i18n";
 import AnnouncementsButton from "@/components/AnnouncementsButton.vue";
 import { Features } from "@/models/features";
 import { Game } from "@/models/game";
@@ -29,17 +29,11 @@ const props = defineProps({
 defineEmits(["nextTrick", "finishRound"]);
 
 function showNextTrickButton() {
-  return (
-    props.game.currentTrick.isFinished() &&
-    !props.game.currentRound.noMoreCardsLeft()
-  );
+  return props.game.currentTrick.isFinished() && !props.game.currentRound.noMoreCardsLeft();
 }
 
 function showFinishRoundButton() {
-  return (
-    props.game.currentRound.noMoreCardsLeft() &&
-    !props.game.currentRound.isFinished()
-  );
+  return props.game.currentRound.noMoreCardsLeft() && !props.game.currentRound.isFinished();
 }
 
 const enableAnnouncements = ref(false);

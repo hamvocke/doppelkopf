@@ -30,8 +30,10 @@
       </div>
 
       <div class="meter">
-        <PointMeter :re-points="currentScore.trickPoints(PartyName.Re)"
-          :kontra-points="currentScore.trickPoints(PartyName.Kontra)" />
+        <PointMeter
+          :re-points="currentScore.trickPoints(PartyName.Re)"
+          :kontra-points="currentScore.trickPoints(PartyName.Kontra)"
+        />
       </div>
 
       <div class="row">
@@ -80,9 +82,7 @@
                   </td>
                   <td colspan="2" class="sum kontra">
                     <span v-if="currentScore.winningPartyName() === PartyName.Kontra">
-                      {{
-                        t("points", currentScore.totalPoints(PartyName.Kontra))
-                      }}
+                      {{ t("points", currentScore.totalPoints(PartyName.Kontra)) }}
                     </span>
                   </td>
                 </tr>
@@ -103,8 +103,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(scoreLine, index) in scorecard.scoreLines" :key="scoreLine.id" class="scoreLine"
-                :class="{ bold: isLastLine(index) }">
+              <tr
+                v-for="(scoreLine, index) in scorecard.scoreLines"
+                :key="scoreLine.id"
+                class="scoreLine"
+                :class="{ bold: isLastLine(index) }"
+              >
                 <td v-for="player in players" :key="player.id" class="right-aligned">
                   {{ scoreLine.totalPoints[player.id] }}
                 </td>
@@ -199,7 +203,8 @@ function partyMembers(party: string) {
   text-align: left;
   background: var(--white);
   border-radius: 6px;
-  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
+  box-shadow:
+    0 15px 30px 0 rgba(0, 0, 0, 0.11),
     0 5px 15px 0 rgba(0, 0, 0, 0.08);
   position: fixed;
   top: 24px;

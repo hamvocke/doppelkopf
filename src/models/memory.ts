@@ -29,9 +29,7 @@ export abstract class Memory {
       ...this.memorizedCards.map((mcard) => mcard.playedCard.card),
       ...(hand?.cards || []),
     ];
-    let leftOverCards = cardOrder.filter(
-      (x) => !allKnownCards.some((y) => x.equals(y))
-    );
+    let leftOverCards = cardOrder.filter((x) => !allKnownCards.some((y) => x.equals(y)));
     return leftOverCards.length > 0 && card.compareTo(leftOverCards[0]) <= 0;
   }
 
@@ -52,16 +50,13 @@ export abstract class Memory {
   hasSuitBeenStartedBefore(suit: Suit): boolean {
     return (
       this.memorizedTricks.filter(
-        (memTrick) =>
-          memTrick.baseCard.suit === suit && !memTrick.baseCard.isTrump()
+        (memTrick) => memTrick.baseCard.suit === suit && !memTrick.baseCard.isTrump(),
       ).length > 0
     );
   }
 
   hasSuitBeenThrown(suit: Suit): boolean {
-    return (
-      this.hasSuitBeenPlayedBefore(suit) && !this.hasSuitBeenStartedBefore(suit)
-    );
+    return this.hasSuitBeenPlayedBefore(suit) && !this.hasSuitBeenStartedBefore(suit);
   }
 
   hasSuitBeenThrownByPlayer(suit: Suit, player: Player): boolean {
@@ -83,7 +78,7 @@ export abstract class Memory {
         (memCards) =>
           memCards.playedCard.card.suit === suit &&
           !memCards.playedCard.card.isTrump() &&
-          (memCards.trickId !== trickId || !trickId)
+          (memCards.trickId !== trickId || !trickId),
       )
       .map((memCards) => memCards.playedCard.player);
   }
@@ -107,9 +102,7 @@ export abstract class Memory {
         .reduce((accu, card) => accu + card.value, 0) -
       this.memorizedCards
         .filter(
-          (element) =>
-            element.playedCard.card.suit === suit &&
-            !element.playedCard.card.isTrump()
+          (element) => element.playedCard.card.suit === suit && !element.playedCard.card.isTrump(),
         )
         .reduce((accu, element) => accu + element.playedCard.card.value, 0)
     );
@@ -130,8 +123,7 @@ export class PercentageMemory extends Memory {
    * @param {string} trickId - The trick Identifier the card was played in
    */
   memorize(playedCard: PlayedCard, trickId?: string) {
-    if (chance(this.percentage))
-      this.memorizedCards.push({ playedCard, trickId });
+    if (chance(this.percentage)) this.memorizedCards.push({ playedCard, trickId });
   }
 }
 

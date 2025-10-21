@@ -26,7 +26,7 @@ const props = defineProps({
   },
   selectedValue: {
     required: true,
-  }
+  },
 });
 
 const emit = defineEmits(["update:modelValue"]);

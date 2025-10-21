@@ -31,28 +31,20 @@ export class GameType {
 }
 
 export function findGameType(players: RingQueue<Player>): GameType | undefined {
-  const gameTypeCandidates = players
-    .asList()
-    .map((p) => new GameType(p.reservation, p));
+  const gameTypeCandidates = players.asList().map((p) => new GameType(p.reservation, p));
 
-  const missingReservations = gameTypeCandidates.find(
-    (c) => c.reservation === Reservation.None
-  );
+  const missingReservations = gameTypeCandidates.find((c) => c.reservation === Reservation.None);
   if (missingReservations) {
     return undefined;
   }
 
-  const solos = gameTypeCandidates.filter(
-    (c) => !nonSoloTypes.includes(c.reservation)
-  );
+  const solos = gameTypeCandidates.filter((c) => !nonSoloTypes.includes(c.reservation));
 
   if (solos.length > 0) {
     return solos[0];
   }
 
-  const wedding = gameTypeCandidates.find(
-    (c) => c.reservation === Reservation.Wedding
-  );
+  const wedding = gameTypeCandidates.find((c) => c.reservation === Reservation.Wedding);
 
   return wedding || GameType.normalGame();
 }

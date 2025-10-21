@@ -13,8 +13,13 @@
       <label for="player-name">
         {{ t("enter_name_label") }}
       </label>
-      <input id="player-name" v-model="playerName" class="input" :placeholder="t('enter_name_input')"
-        @blur="saveName()" />
+      <input
+        id="player-name"
+        v-model="playerName"
+        class="input"
+        :placeholder="t('enter_name_input')"
+        @blur="saveName()"
+      />
     </div>
     <div class="buttons">
       <router-link to="/play">
@@ -24,7 +29,12 @@
       <router-link v-if="showTutorial" to="/learn">
         <button class="button button-secondary tutorial">{{ t("how-to-play") }}</button>
       </router-link>
-      <a v-else :href="t('tutorial-link')" target="_blank" class="button button-secondary tutorial-link">
+      <a
+        v-else
+        :href="t('tutorial-link')"
+        target="_blank"
+        class="button button-secondary tutorial-link"
+      >
         {{ t("how-to-play") }}
       </a>
     </div>
@@ -65,9 +75,14 @@ function saveName() {
 .welcome h1 {
   color: var(--white-200);
   display: block;
-  text-shadow: 1px 1px 0 var(--black), 2px 2px 0 var(--black),
-    3px 3px 0 var(--black), 4px 4px 0 var(--black), 5px 5px 0 var(--black),
-    6px 6px 0 var(--red), 7px 7px 0 var(--red);
+  text-shadow:
+    1px 1px 0 var(--black),
+    2px 2px 0 var(--black),
+    3px 3px 0 var(--black),
+    4px 4px 0 var(--black),
+    5px 5px 0 var(--black),
+    6px 6px 0 var(--red),
+    7px 7px 0 var(--red);
   font-size: clamp(48px, 10vw, 96px);
   margin: 1rem 0 3rem;
   text-align: center;

@@ -3,8 +3,16 @@
     <div class="cards" :class="position">
       <Card v-if="isEmpty()" :is-covered="false" class="placeholder" :position="position" />
       <transition-group v-else name="card" tag="span">
-        <Card v-for="card in hand.cards" :key="card.cardId" :card="card" :is-selected="card.equals(selectedCard)"
-          :is-covered="isCovered" :is-highlighted="highlight(card)" :position="position" @click="select(card)" />
+        <Card
+          v-for="card in hand.cards"
+          :key="card.cardId"
+          :card="card"
+          :is-selected="card.equals(selectedCard)"
+          :is-covered="isCovered"
+          :is-highlighted="highlight(card)"
+          :position="position"
+          @click="select(card)"
+        />
       </transition-group>
     </div>
   </div>
@@ -59,7 +67,7 @@ function highlight(card: CardModel) {
 <style scoped>
 @import "../assets/css/vars.css";
 
-.cards>span {
+.cards > span {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -72,19 +80,19 @@ function highlight(card: CardModel) {
   border-radius: 8px;
 }
 
-.top>span {
+.top > span {
   flex-direction: row-reverse;
 }
 
-.bottom>span {
+.bottom > span {
   flex-direction: row;
 }
 
-.left>span {
+.left > span {
   flex-direction: column;
 }
 
-.right>span {
+.right > span {
   flex-direction: column-reverse;
 }
 
@@ -137,7 +145,6 @@ function highlight(card: CardModel) {
 }
 
 @media screen and (max-width: 680px) {
-
   .top .card,
   .bottom .card {
     margin-left: -12px;

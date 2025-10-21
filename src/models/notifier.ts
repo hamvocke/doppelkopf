@@ -12,12 +12,7 @@ export class Notifier {
     this.notifications.pop();
   }
 
-  sticky(
-    message: string,
-    args?: {},
-    onClick?: () => void,
-    onDismiss?: () => void
-  ) {
+  sticky(message: string, args?: {}, onClick?: () => void, onDismiss?: () => void) {
     const id = uuidv4();
     const onDismissDefault = () => {
       this.stickies = this.stickies.filter((n) => n.id !== id);
@@ -27,7 +22,7 @@ export class Notifier {
       message,
       args,
       onClick,
-      onDismiss ?? onDismissDefault
+      onDismiss ?? onDismissDefault,
     );
 
     this.stickies.push(notification);
@@ -51,13 +46,7 @@ export class Notification {
   args: {};
   onClick?: () => void;
   onDismiss?: () => void;
-  constructor(
-    id: string,
-    text: string,
-    args?: {},
-    onClick?: () => void,
-    onDismiss?: () => void
-  ) {
+  constructor(id: string, text: string, args?: {}, onClick?: () => void, onDismiss?: () => void) {
     this.id = id;
     this.text = text;
     this.args = args || {};

@@ -2,8 +2,13 @@
   <div class="trick">
     <div class="cards">
       <transition-group name="card" tag="span">
-        <Card v-for="playedCard in cards()" :key="playedCard.id" :card="playedCard.card" :player="playedCard.player"
-          :position="playedCard.player.tablePosition" />
+        <Card
+          v-for="playedCard in cards()"
+          :key="playedCard.id"
+          :card="playedCard.card"
+          :player="playedCard.player"
+          :position="playedCard.player.tablePosition"
+        />
       </transition-group>
     </div>
   </div>
@@ -35,7 +40,7 @@ function cards() {
   justify-content: center;
 }
 
-.cards>span {
+.cards > span {
   display: grid;
   grid-template-areas:
     "top top top"

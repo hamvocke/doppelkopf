@@ -4,10 +4,7 @@ import { Rank, Suit, ten } from "@/models/card";
 import { chance } from "@/models/random";
 
 export interface announcementRules {
-  announcementToMake(
-    possibleAnnouncements: Set<Announcement>,
-    hand?: Hand
-  ): Announcement | null;
+  announcementToMake(possibleAnnouncements: Set<Announcement>, hand?: Hand): Announcement | null;
 }
 
 export class chanceAnnouncement implements announcementRules {
@@ -17,10 +14,7 @@ export class chanceAnnouncement implements announcementRules {
     this.announcementChance = chance;
   }
 
-  announcementToMake(
-    possibleAnnouncements: Set<Announcement>,
-    hand?: Hand
-  ): Announcement | null {
+  announcementToMake(possibleAnnouncements: Set<Announcement>, hand?: Hand): Announcement | null {
     if (possibleAnnouncements.size === 0) {
       return null;
     }
@@ -34,10 +28,7 @@ export class chanceAnnouncement implements announcementRules {
 }
 
 export class goodyAnnouncement implements announcementRules {
-  announcementToMake(
-    possibleAnnouncements: Set<Announcement>,
-    hand: Hand
-  ): Announcement | null {
+  announcementToMake(possibleAnnouncements: Set<Announcement>, hand: Hand): Announcement | null {
     if (
       [...possibleAnnouncements].includes(Announcement.Kontra) ||
       [...possibleAnnouncements].includes(Announcement.Re)
@@ -45,8 +36,7 @@ export class goodyAnnouncement implements announcementRules {
       let counter = 0;
       if (hand.getBlankAces().length > 0) counter++;
       if (hand.trumps().length >= 7) counter++;
-      if (hand.cards.filter((c) => c.is(ten.of(Suit.Hearts))).length === 2)
-        counter++;
+      if (hand.cards.filter((c) => c.is(ten.of(Suit.Hearts))).length === 2) counter++;
       counter += hand.getMissingSuites().length;
       return counter > 2 ? [...possibleAnnouncements][0] : null;
     }
@@ -55,10 +45,7 @@ export class goodyAnnouncement implements announcementRules {
 }
 
 export class conservativeAnnouncement implements announcementRules {
-  announcementToMake(
-    possibleAnnouncements: Set<Announcement>,
-    hand: Hand
-  ): Announcement | null {
+  announcementToMake(possibleAnnouncements: Set<Announcement>, hand: Hand): Announcement | null {
     if (
       [...possibleAnnouncements].includes(Announcement.Kontra) ||
       [...possibleAnnouncements].includes(Announcement.Re)

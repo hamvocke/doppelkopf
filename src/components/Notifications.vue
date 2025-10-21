@@ -15,11 +15,7 @@
         </div>
       </transition-group>
       <transition-group name="message">
-        <div
-          v-for="notification in notifications"
-          :key="notification.id"
-          class="msg"
-        >
+        <div v-for="notification in notifications" :key="notification.id" class="msg">
           {{ t(notification.text, notification.args) }}
         </div>
       </transition-group>
@@ -31,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 import { notifier } from "@/models/notifier";
 import FlashMessage from "@/components/FlashMessage.vue";
 import VueFeather from "vue-feather";

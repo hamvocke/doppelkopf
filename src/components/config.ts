@@ -2,7 +2,6 @@
 // This wrapper helps keep the model blissfully unaware of vue.js shenanigans
 
 import { Config } from "@/models/config";
-import { reactive } from 'vue';
+import { reactive } from "vue";
 
 export const config = reactive(Config);
-
