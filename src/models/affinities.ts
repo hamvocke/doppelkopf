@@ -80,7 +80,7 @@ export class Affinities {
       }));
   }
 
-  private suggestPartyForPlayer(player: Player, party: PartyName): void {
+  suggestPartyForPlayer(player: Player, party: PartyName): void {
     this.setAffinity(player, getPartyName(this.me) === party ? 1 : -1);
     this.balanceAffinities();
   }
@@ -127,7 +127,7 @@ export class Affinities {
 
   setAffinity(player: Player, value: number, hasDeclared: boolean = false) {
     if (!this.isMe(player) && !this.hasDeclaredParty(player)) {
-      let index = this.affinityTable.findIndex((x) => x.player.id === player.id);
+      const index = this.affinityTable.findIndex((x) => x.player.id === player.id);
       this.affinityTable[index].affinity = value;
       this.affinityTable[index].declaredParty = hasDeclared;
     }
@@ -138,7 +138,7 @@ export class Affinities {
     this.setPlayers(this.affinityTable.map((x) => x.player));
   }
 
-  private makeTeammatesExcept(player: Player) {
+  makeTeammatesExcept(player: Player) {
     this.affinityTable
       .filter(
         (playerAffinity) =>
@@ -147,29 +147,29 @@ export class Affinities {
       .forEach((playerAffinity) => this.setAffinity(playerAffinity.player, 1));
   }
 
-  private setAllAffinities(): void {
+  setAllAffinities(): void {
     this.affinityTable.forEach((x) => {
       this.setAffinity(x.player, this.isInMyParty(x.player) ? 1 : -1);
     });
   }
 
-  private isInMyParty(player: Player) {
+  isInMyParty(player: Player) {
     return this.me.isRe() === player.isRe();
   }
 
-  private isMe(player: Player) {
+  isMe(player: Player) {
     return this.me.id === player.id;
   }
 
-  private getContainerFor(player: Player): PlayerAffinity {
+  getContainerFor(player: Player): PlayerAffinity {
     return this.affinityTable.find((x) => x.player.id === player.id)!;
   }
 
-  private affinitySum(): number {
+  affinitySum(): number {
     return this.affinityTable.reduce((accu, playerAffinity) => accu + playerAffinity.affinity, 0);
   }
 
-  private balanceAffinities(): void {
+  balanceAffinities(): void {
     if (this.affinitySum() == -2) {
       this.affinityTable.forEach((pA) => {
         if (pA.affinity === 0) {

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="config.showAffinityDebugger" class="affinity-debugger">
+  <div v-if="configuration.showAffinityDebugger" class="affinity-debugger">
     <table>
       <thead>
         <tr>
@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { Affinities } from "@/models/affinities";
-import { config } from "@/components/config";
+import { configuration } from "@/components/configuration";
 import { type PropType } from "vue";
 
 defineProps({

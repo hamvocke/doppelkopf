@@ -2,7 +2,7 @@ import { Card, Suit, Rank, values, compare, jack } from "@/models/card";
 
 export class Hand {
   cards: Array<Card>;
-  private isReParty: boolean;
+  isReParty: boolean;
 
   constructor(cards = new Array<Card>()) {
     this.cards = cards;
@@ -30,7 +30,7 @@ export class Hand {
     return this.cards.find((c) => c.suit === suit && c.rank === rank);
   }
 
-  contains(card: Card): Boolean {
+  contains(card: Card): boolean {
     return !!this.findAny(card.suit, card.rank);
   }
 
@@ -55,7 +55,7 @@ export class Hand {
       this.cards.filter((card) => card.rank === Rank.King).length < 5 &&
       this.cards.filter((card) => card.value >= 10).length < 7 &&
       this.highest().compareTo(jack.of(Suit.Diamonds)) < 0 &&
-      // ToDo remove last line as soon as poverty is playable
+      // TODO: remove last line as soon as poverty is playable
       this.trumps().length > 3
     );
   }
@@ -75,15 +75,15 @@ export class Hand {
   }
 
   getBlankAces(): Card[] {
-    let aces = new Array<Card>();
+    const aces = new Array<Card>();
     [Suit.Clubs, Suit.Spades, Suit.Hearts].forEach((suit) => {
-      let ace = this.getBlankAce(suit);
+      const ace = this.getBlankAce(suit);
       if (ace) aces.push(ace);
     });
     return aces;
   }
 
-  private getBlankAce(suit: Suit): Card | undefined {
+  getBlankAce(suit: Suit): Card | undefined {
     const nonTrumpCards = this.nonTrumps(suit);
 
     if (nonTrumpCards.length > 1) {
@@ -94,7 +94,7 @@ export class Hand {
   }
 
   getMissingSuites(): Suit[] {
-    let suits = new Array<Suit>();
+    const suits = new Array<Suit>();
     [Suit.Clubs, Suit.Spades, Suit.Hearts].forEach((suit) => {
       if (this.nonTrumps(suit).length === 0) suits.push(suit);
     });

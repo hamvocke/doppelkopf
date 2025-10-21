@@ -10,7 +10,7 @@ import { Features } from "./features";
 
 export class Game {
   players: Player[];
-  private playerOpeningOrder: RingQueue<Player>;
+  playerOpeningOrder: RingQueue<Player>;
   deck: Deck;
   scorecard: Scorecard;
   currentRound: Round;

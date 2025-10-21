@@ -97,7 +97,7 @@ export class Player {
     await this.playAction(card);
   }
 
-  private async playAction(card: Card) {
+  async playAction(card: Card) {
     try {
       this.game?.currentTrick.add(card, this);
       this.hand.remove(card);
@@ -184,7 +184,7 @@ export class Player {
     return announcements.every((a) => [...this.getPartyAnnouncements()].includes(a));
   }
 
-  private getPartyAnnouncements(): Set<Announcement> {
+  getPartyAnnouncements(): Set<Announcement> {
     return new Set<Announcement>(this.getParty().announcements());
   }
 
@@ -201,7 +201,7 @@ export class Player {
   }
 
   // ToDo use better way to find out if game sharp doko
-  private getStartingCards(): number {
+  getStartingCards(): number {
     return allCards.length / this.game!.players.length;
   }
 }

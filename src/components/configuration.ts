@@ -4,4 +4,4 @@
 import { Config } from "@/models/config";
 import { reactive } from "vue";
 
-export const config = reactive(Config);
+export const configuration = reactive(Config);

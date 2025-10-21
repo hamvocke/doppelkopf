@@ -12,7 +12,7 @@ export class Trick {
   id: string;
   lastTrickInRound: boolean;
   finished: boolean;
-  private expectedNumberOfCards: number;
+  expectedNumberOfCards: number;
 
   constructor(players: Array<Player>) {
     this.players = players; // TODO: remove 'players' field from 'trick' class to avoid circular dependency

@@ -10,21 +10,21 @@
         <LanguagePicker />
       </div>
 
-      <div v-if="config.debug" class="option affinity-debugger">
+      <div v-if="configuration.debug" class="option affinity-debugger">
         <Toggle
-          v-model="config.showAffinityDebugger"
+          v-model="configuration.showAffinityDebugger"
           :disabled="false"
           label="Show affinity debugger"
         />
       </div>
 
-      <div v-if="config.debug" class="option">
+      <div v-if="configuration.debug" class="option">
         <span class="label">Debug Mode</span>
         <div>Enabled</div>
       </div>
-      <div v-if="config.debug" class="option">
+      <div v-if="configuration.debug" class="option">
         <span class="label">Config</span>
-        <pre><code>{{ JSON.stringify(config, null, 2) }}</code></pre>
+        <pre><code>{{ JSON.stringify(configuration, null, 2) }}</code></pre>
       </div>
     </modal>
   </div>
@@ -36,7 +36,7 @@ import { useI18n } from "vue-i18n";
 import LanguagePicker from "./LanguagePicker.vue";
 import Toggle from "./Toggle.vue";
 import Modal from "./Modal.vue";
-import { config } from "@/components/config";
+import { configuration } from "@/components/configuration";
 import VueFeather from "vue-feather";
 
 const { t } = useI18n();

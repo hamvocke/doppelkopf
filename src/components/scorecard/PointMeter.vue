@@ -15,13 +15,15 @@
       <div class="bar kontra" :style="kontraStyle()"></div>
     </div>
     <div class="points">
-      <span>{{ $tc("eyes", rePoints) }}</span>
-      <span>{{ $tc("eyes", kontraPoints) }}</span>
+      <span>{{ t("eyes", rePoints) }}</span>
+      <span>{{ t("eyes", kontraPoints) }}</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
+
 const props = defineProps({
   rePoints: {
     type: Number,
@@ -32,6 +34,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const { t } = useI18n();
 
 function reStyle() {
   return `width: ${(props.rePoints / 240) * 100}%`;

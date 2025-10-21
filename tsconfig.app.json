@@ -3,10 +3,13 @@
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "tests/builders/**/*"],
   "exclude": ["tests/**/*"],
   "compilerOptions": {
+    "noUncheckedIndexedAccess": false,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
     "paths": {
       "@/*": ["./src/*"],
     },
+
+    "types": ["node"],
   }
 }

@@ -87,7 +87,7 @@ export class RuleBasedBehaviour extends Behavior {
   }
 
   cardToPlay(hand: Hand, trick: Trick, memory?: Memory): Card {
-    let baseCard = trick.baseCard();
+    const baseCard = trick.baseCard();
     // Teammate will win trick no matter what
     if (this.teammateWinsTrick(trick, hand, memory))
       return this.findMostSuitableGreasingCard(hand, trick);
@@ -145,13 +145,13 @@ export class RuleBasedBehaviour extends Behavior {
         let teammateThrew = false;
         let enemiesThrew = false;
         // is there a teammate who has thrown
-        for (let teammate of this.getTeammates()) {
+        for (const teammate of this.getTeammates()) {
           if (memory?.hasSuitBeenThrownByPlayer(suit, teammate)) {
             teammateThrew = true;
           }
         }
         // is there an enemy who has thrown
-        for (let enemy of this.getEnemies()) {
+        for (const enemy of this.getEnemies()) {
           if (memory?.hasSuitBeenThrownByPlayer(suit, enemy)) {
             enemiesThrew = true;
           }
@@ -176,7 +176,7 @@ export class RuleBasedBehaviour extends Behavior {
   }
 
   nonTrumpRule(hand: Hand, trick: Trick, memory?: Memory): Card {
-    let baseCard = trick.baseCard()!;
+    const baseCard = trick.baseCard()!;
     if (hand.nonTrumps(baseCard.suit).length) {
       return this.serveNonTrump(hand, trick, memory);
     }
@@ -199,7 +199,7 @@ export class RuleBasedBehaviour extends Behavior {
     if (this.isTeammateKnown() && this.isCurrentWinnerTeammate(trick)) {
       return this.findMostSuitableGreasingCard(hand, trick);
     }
-    let winningTrump = this.findMostValuableWinningTrump(
+    const winningTrump = this.findMostValuableWinningTrump(
       new Hand(playableCards(hand.cards, trick.baseCard()!)),
       trick,
     );
@@ -211,7 +211,7 @@ export class RuleBasedBehaviour extends Behavior {
     return this.findLeastValuableLosingCard(hand, trick);
   }
 
-  teammateWinsTrick(trick: Trick, hand: Hand, memory?: Memory): Boolean {
+  teammateWinsTrick(trick: Trick, hand: Hand, memory?: Memory): boolean {
     return (
       this.isTeammateKnown() &&
       this.isCurrentWinnerTeammate(trick) &&
@@ -219,7 +219,7 @@ export class RuleBasedBehaviour extends Behavior {
     );
   }
 
-  trickCannotBeWon(hand: Hand, trick: Trick, memory?: Memory): Boolean {
+  trickCannotBeWon(hand: Hand, trick: Trick, memory?: Memory): boolean {
     return (
       !!trick.baseCard()?.isTrump() &&
       (!hand.highest().beats(trick.highestCard()!.card) ||
@@ -227,39 +227,39 @@ export class RuleBasedBehaviour extends Behavior {
     );
   }
 
-  private isTeammateKnown(): Boolean {
+  isTeammateKnown(): boolean {
     return (
       this.affinities.affinityTable.filter((playerAffinity) => playerAffinity.affinity === 1)
         .length > 0
     );
   }
 
-  private getTeammates(): Player[] {
+  getTeammates(): Player[] {
     return this.affinities.affinityTable
       .filter((playerAffinity) => playerAffinity.affinity === 1)
       .map((playerAffinity) => playerAffinity.player);
   }
 
-  private getEnemies(): Player[] {
+  getEnemies(): Player[] {
     return this.affinities.affinityTable
       .filter((playerAffinity) => playerAffinity.affinity === -1)
       .map((playerAffinity) => playerAffinity.player);
   }
 
-  private isCurrentWinnerTeammate(trick: Trick): Boolean {
+  isCurrentWinnerTeammate(trick: Trick): boolean {
     return trick.highestCard()?.player.isRe() === this.getMyPlayer(trick)?.isRe();
   }
 
-  private isTeammateAfterMe(trick: Trick): Boolean {
+  isTeammateAfterMe(trick: Trick): boolean {
     const playersPlayed = trick.playedCards.map((playedCard) => playedCard.player);
     return this.getTeammates().filter((mate) => !playersPlayed.includes(mate)).length > 0;
   }
 
-  private hasHighValueTrump(hand: Hand): Boolean {
+  hasHighValueTrump(hand: Hand): boolean {
     return hand.contains(ace.of(Suit.Diamonds)) || hand.contains(ten.of(Suit.Diamonds));
   }
 
-  private getMyPlayer(trick: Trick): Player {
+  getMyPlayer(trick: Trick): Player {
     return trick.players.find((player) => player.id === this.playerId)!;
   }
 
