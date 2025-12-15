@@ -19,37 +19,37 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@sentry/vue": "^10.29.0",
+    "@sentry/vue": "^10.30.0",
     "uuid": "^13.0.0",
     "vue": "^3.5.25",
     "vue-feather": "^2.0.0",
     "vue-i18n": "^11.2.2",
-    "vue-router": "^4.6.3"
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@playwright/test": "^1.57.0",
     "@tsconfig/node22": "^22.0.5",
     "@types/feather-icons": "^4.29.4",
     "@types/jsdom": "^27.0.0",
-    "@types/node": "^24.10.1",
-    "@vitejs/plugin-vue": "^6.0.2",
+    "@types/node": "^25.0.2",
+    "@vitejs/plugin-vue": "^6.0.3",
     "@vitest/coverage-v8": "^4.0.15",
     "@vitest/eslint-plugin": "1.5.2",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.8.1",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "eslint-plugin-playwright": "^2.4.0",
     "eslint-plugin-vue": "~10.6.2",
     "jiti": "^2.5.1",
-    "jsdom": "^27.2.0",
+    "jsdom": "^27.3.0",
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.7.4",
     "typescript": "~5.9.0",
     "vite": "^7.2.7",
     "vite-plugin-vue-devtools": "^8.0.5",
     "vitest": "^4.0.8",
-    "vue-tsc": "^3.1.7"
+    "vue-tsc": "^3.1.8"
   }
 }
