@@ -3,10 +3,12 @@
 
 An in-browser implementation of the traditional German [Doppelkopf](https://en.wikipedia.org/wiki/Doppelkopf) card game.
 
-## Live Demo
-[![Screenshot](https://i.imgur.com/qQPyE3I.png)](https://doppelkopf.party)
+> [!NOTE]
+> **This is a public archive**.
+> You're welcome to explore, fork, learn from this code base - but I'm no longer actively maintaining it myself. I've since rewritten the entire application and hosted it alongside an interactive tutorial over on [Doppelkopf Club](https://doppelkopf.club). Check it out, if you're looking to learn the game or play a quick round on the go.
 
-<h3 align="center"><a href="https://doppelkopf.party/">Try the Live Demo at doppelkopf.party</a></h3>
+
+![Screenshot](https://i.imgur.com/qQPyE3I.png)]
 
 ## Features
 
@@ -17,6 +19,9 @@ Things that are not yet part of the game but are planned to be built eventually 
 * [ ] Playing solo
 * [ ] Weddings ("Hochzeit")
 * [ ] Custom rules: "Karlchen", "Zweite Dulle sticht die erste", "Schweinchen", etc.
+
+
+> You can find a feature-complete implementation on [Doppelkopf Club](https://doppelkopf.club).
 
 ## Development
 The game is implemented using Typescript and [vue.js](https://vuejs.org/). It's a small, frontend-only standalone web application that can be hosted anywhere you can host static websites. It's using [Vite](https://vitejs.dev/) for building, bundling, and running the application locally.
